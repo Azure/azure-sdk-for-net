@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeletedManagedHsmResource" /> and their operations.
-    /// Each <see cref="DeletedManagedHsmResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="DeletedManagedHsmCollection" /> instance call the GetDeletedManagedHsms method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="DeletedManagedHsmResource"/> and their operations.
+    /// Each <see cref="DeletedManagedHsmResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="DeletedManagedHsmCollection"/> instance call the GetDeletedManagedHsms method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class DeletedManagedHsmCollection : ArmCollection
     {

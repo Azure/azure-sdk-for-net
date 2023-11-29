@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VMwareDatastoreResource" /> and their operations.
-    /// Each <see cref="VMwareDatastoreResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="VMwareDatastoreCollection" /> instance call the GetVMwareDatastores method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="VMwareDatastoreResource"/> and their operations.
+    /// Each <see cref="VMwareDatastoreResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="VMwareDatastoreCollection"/> instance call the GetVMwareDatastores method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class VMwareDatastoreCollection : ArmCollection, IEnumerable<VMwareDatastoreResource>, IAsyncEnumerable<VMwareDatastoreResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareDatastoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareDatastoreDatastoresRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareDatastoreResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareDatastoreDatastoresRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

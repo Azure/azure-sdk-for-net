@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningFeatureSetVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningFeatureSetVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningFeatureSetVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningFeatureSetContainerResource" /> using the GetMachineLearningFeatureSetVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningFeatureSetVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningFeatureSetVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningFeatureSetContainerResource"/> using the GetMachineLearningFeatureSetVersion method.
     /// </summary>
     public partial class MachineLearningFeatureSetVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningFeatureSetVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="version"> The version. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featuresets/{name}/versions/{version}";
@@ -42,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningFeatureSetVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningFeatureSetVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningFeatureSetVersionResource(ArmClient client, MachineLearningFeatureSetVersionData data) : this(client, data.Id)
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An object representing collection of MachineLearningFeatureResources and their operations over a MachineLearningFeatureResource. </returns>
         public virtual MachineLearningFeatureCollection GetMachineLearningFeatures()
         {
-            return GetCachedClient(Client => new MachineLearningFeatureCollection(Client, Id));
+            return GetCachedClient(client => new MachineLearningFeatureCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +115,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="featureName"> Feature Name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MachineLearningFeatureResource>> GetMachineLearningFeatureAsync(string featureName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +138,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="featureName"> Feature Name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningFeatureResource> GetMachineLearningFeature(string featureName, CancellationToken cancellationToken = default)
         {
@@ -443,7 +448,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="featureWindowStart"> Start time of the feature window to filter materialization jobs. </param>
         /// <param name="featureWindowEnd"> End time of the feature window to filter materialization jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningFeatureSetJob" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningFeatureSetJob"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningFeatureSetJob> GetMaterializationJobsAsync(string skip = null, string filters = null, string featureWindowStart = null, string featureWindowEnd = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
@@ -469,7 +474,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="featureWindowStart"> Start time of the feature window to filter materialization jobs. </param>
         /// <param name="featureWindowEnd"> End time of the feature window to filter materialization jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningFeatureSetJob" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningFeatureSetJob"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningFeatureSetJob> GetMaterializationJobs(string skip = null, string filters = null, string featureWindowStart = null, string featureWindowEnd = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeStorageContainerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/>. </summary>
         /// <param name="dataFormat"> DataFormat for Container. </param>
         public DataBoxEdgeStorageContainerData(DataBoxEdgeStorageContainerDataFormat dataFormat)
         {
             DataFormat = dataFormat;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

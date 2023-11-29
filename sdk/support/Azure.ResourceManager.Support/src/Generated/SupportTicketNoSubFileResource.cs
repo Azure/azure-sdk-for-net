@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SupportTicketNoSubFile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportTicketNoSubFileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportTicketNoSubFileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantFileWorkspaceResource" /> using the GetSupportTicketNoSubFile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketNoSubFileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSupportTicketNoSubFileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantFileWorkspaceResource"/> using the GetSupportTicketNoSubFile method.
     /// </summary>
     public partial class SupportTicketNoSubFileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SupportTicketNoSubFileResource"/> instance. </summary>
+        /// <param name="fileWorkspaceName"> The fileWorkspaceName. </param>
+        /// <param name="fileName"> The fileName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string fileWorkspaceName, string fileName)
         {
             var resourceId = $"/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Support
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportTicketNoSubFileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubFileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportTicketNoSubFileResource(ArmClient client, SupportFileDetailData data) : this(client, data.Id)

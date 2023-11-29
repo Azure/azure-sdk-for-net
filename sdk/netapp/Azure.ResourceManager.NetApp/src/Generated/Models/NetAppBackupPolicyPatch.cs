@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Backup policy Details for create and update. </summary>
     public partial class NetAppBackupPolicyPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppBackupPolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppBackupPolicyPatch(AzureLocation location) : base(location)
         {

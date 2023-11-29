@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> The status of a blueprint assignment. This field is readonly. </summary>
     public partial class AssignmentStatus : BlueprintResourceStatusBase
     {
-        /// <summary> Initializes a new instance of AssignmentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentStatus"/>. </summary>
         internal AssignmentStatus()
         {
             ManagedResources = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentStatus"/>. </summary>
         /// <param name="timeCreated"> Creation time of this blueprint definition. </param>
         /// <param name="lastModified"> Last modified time of this blueprint definition. </param>
         /// <param name="managedResources"> List of resources that were created by the blueprint assignment. </param>

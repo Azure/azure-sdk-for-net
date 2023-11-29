@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> A set of rules governing the network accessibility. </summary>
     public partial class CognitiveServicesNetworkRuleSet
     {
-        /// <summary> Initializes a new instance of CognitiveServicesNetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesNetworkRuleSet"/>. </summary>
         public CognitiveServicesNetworkRuleSet()
         {
             IPRules = new ChangeTrackingList<CognitiveServicesIPRule>();
             VirtualNetworkRules = new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesNetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesNetworkRuleSet"/>. </summary>
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>

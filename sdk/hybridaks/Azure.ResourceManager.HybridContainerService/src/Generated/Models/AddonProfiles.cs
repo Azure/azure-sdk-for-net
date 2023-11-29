@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Addon configurations. </summary>
     public partial class AddonProfiles
     {
-        /// <summary> Initializes a new instance of AddonProfiles. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonProfiles"/>. </summary>
         public AddonProfiles()
         {
             Config = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AddonProfiles. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonProfiles"/>. </summary>
         /// <param name="config"> Config - Key-value pairs for configuring an add-on. </param>
         /// <param name="enabled"> Enabled - Whether the add-on is enabled or not. </param>
         internal AddonProfiles(IDictionary<string, string> config, bool? enabled)

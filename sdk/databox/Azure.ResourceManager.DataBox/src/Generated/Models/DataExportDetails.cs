@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Details of the data to be used for exporting data from azure. </summary>
     public partial class DataExportDetails
     {
-        /// <summary> Initializes a new instance of DataExportDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExportDetails"/>. </summary>
         /// <param name="transferConfiguration"> Configuration for the data transfer. </param>
         /// <param name="accountDetails">
         /// Account details of the data to be transferred
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
             AccountDetails = accountDetails;
         }
 
-        /// <summary> Initializes a new instance of DataExportDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExportDetails"/>. </summary>
         /// <param name="transferConfiguration"> Configuration for the data transfer. </param>
         /// <param name="logCollectionLevel"> Level of the logs to be collected. </param>
         /// <param name="accountDetails">

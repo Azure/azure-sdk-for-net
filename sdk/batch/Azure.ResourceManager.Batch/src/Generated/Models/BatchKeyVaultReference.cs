@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Identifies the Azure key vault associated with a Batch account. </summary>
     public partial class BatchKeyVaultReference
     {
-        /// <summary> Initializes a new instance of BatchKeyVaultReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchKeyVaultReference"/>. </summary>
         /// <param name="id"> The resource ID of the Azure key vault associated with the Batch account. </param>
         /// <param name="uri"> The URL of the Azure key vault associated with the Batch account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="uri"/> is null. </exception>

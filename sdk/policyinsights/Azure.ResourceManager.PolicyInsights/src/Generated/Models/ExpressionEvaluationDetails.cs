@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Evaluation details of policy language expressions. </summary>
     public partial class ExpressionEvaluationDetails
     {
-        /// <summary> Initializes a new instance of ExpressionEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationDetails"/>. </summary>
         internal ExpressionEvaluationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressionEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationDetails"/>. </summary>
         /// <param name="result"> Evaluation result. </param>
         /// <param name="expression"> Expression evaluated. </param>
         /// <param name="expressionKind"> The kind of expression that was evaluated. </param>

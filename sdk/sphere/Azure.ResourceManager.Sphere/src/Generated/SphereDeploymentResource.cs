@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
     /// A Class representing a SphereDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SphereDeploymentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSphereDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SphereDeviceGroupResource" /> using the GetSphereDeployment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereDeploymentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSphereDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SphereDeviceGroupResource"/> using the GetSphereDeployment method.
     /// </summary>
     public partial class SphereDeploymentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SphereDeploymentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="catalogName"> The catalogName. </param>
+        /// <param name="productName"> The productName. </param>
+        /// <param name="deviceGroupName"> The deviceGroupName. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deploymentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/deployments/{deploymentName}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.Sphere
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SphereDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SphereDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SphereDeploymentResource(ArmClient client, SphereDeploymentData data) : this(client, data.Id)

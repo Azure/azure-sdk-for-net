@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingSucceeded event. </summary>
     public partial class ContainerServiceNodePoolRollingSucceededEventData : ContainerServiceNodePoolRollingEventData
     {
-        /// <summary> Initializes a new instance of ContainerServiceNodePoolRollingSucceededEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingSucceededEventData"/>. </summary>
         internal ContainerServiceNodePoolRollingSucceededEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceNodePoolRollingSucceededEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingSucceededEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
         internal ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName) : base(nodePoolName)
         {

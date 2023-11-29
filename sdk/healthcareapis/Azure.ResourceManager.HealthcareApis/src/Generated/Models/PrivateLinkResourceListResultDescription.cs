@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class PrivateLinkResourceListResultDescription
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceListResultDescription"/>. </summary>
         internal PrivateLinkResourceListResultDescription()
         {
             Value = new ChangeTrackingList<HealthcareApisPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceListResultDescription"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal PrivateLinkResourceListResultDescription(IReadOnlyList<HealthcareApisPrivateLinkResourceData> value)
         {

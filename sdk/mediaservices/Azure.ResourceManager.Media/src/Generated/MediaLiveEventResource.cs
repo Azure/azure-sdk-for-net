@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a MediaLiveEvent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaLiveEventResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMediaLiveEventResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetMediaLiveEvent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MediaLiveEventResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMediaLiveEventResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource"/> using the GetMediaLiveEvent method.
     /// </summary>
     public partial class MediaLiveEventResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MediaLiveEventResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="liveEventName"> The liveEventName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string liveEventName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.Media
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MediaLiveEventResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaLiveEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MediaLiveEventResource(ArmClient client, MediaLiveEventData data) : this(client, data.Id)
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaLiveOutputResources and their operations over a MediaLiveOutputResource. </returns>
         public virtual MediaLiveOutputCollection GetMediaLiveOutputs()
         {
-            return GetCachedClient(Client => new MediaLiveOutputCollection(Client, Id));
+            return GetCachedClient(client => new MediaLiveOutputCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="liveOutputName"> The name of the live output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaLiveOutputResource>> GetMediaLiveOutputAsync(string liveOutputName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +137,8 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="liveOutputName"> The name of the live output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaLiveOutputResource> GetMediaLiveOutput(string liveOutputName, CancellationToken cancellationToken = default)
         {

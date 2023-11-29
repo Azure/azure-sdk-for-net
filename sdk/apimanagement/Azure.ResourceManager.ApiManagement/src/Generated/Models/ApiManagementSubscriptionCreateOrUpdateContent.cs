@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Subscription create details. </summary>
     public partial class ApiManagementSubscriptionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementSubscriptionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionCreateOrUpdateContent"/>. </summary>
         public ApiManagementSubscriptionCreateOrUpdateContent()
         {
         }

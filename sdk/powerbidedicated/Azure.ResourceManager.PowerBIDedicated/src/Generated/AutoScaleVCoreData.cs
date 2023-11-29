@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
     /// </summary>
     public partial class AutoScaleVCoreData : PowerBIDedicatedResourceData
     {
-        /// <summary> Initializes a new instance of AutoScaleVCoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreData"/>. </summary>
         /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
         /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of AutoScaleVCoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreData"/>. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
         /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Network Profile for the cloud service. </summary>
     public partial class CloudServiceNetworkProfile
     {
-        /// <summary> Initializes a new instance of CloudServiceNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceNetworkProfile"/>. </summary>
         public CloudServiceNetworkProfile()
         {
             LoadBalancerConfigurations = new ChangeTrackingList<CloudServiceLoadBalancerConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceNetworkProfile"/>. </summary>
         /// <param name="loadBalancerConfigurations"> List of Load balancer configurations. Cloud service can have up to two load balancer configurations, corresponding to a Public Load Balancer and an Internal Load Balancer. </param>
         /// <param name="slotType">
         /// Slot type for the cloud service.

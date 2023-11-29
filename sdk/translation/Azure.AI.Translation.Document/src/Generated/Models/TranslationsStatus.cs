@@ -16,7 +16,7 @@ namespace Azure.AI.Translation.Document.Models
     /// <summary> Translation job Status Response. </summary>
     internal partial class TranslationsStatus
     {
-        /// <summary> Initializes a new instance of TranslationsStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationsStatus"/>. </summary>
         /// <param name="value"> The summary status of individual operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TranslationsStatus(IEnumerable<TranslationStatusResult> value)
@@ -26,7 +26,7 @@ namespace Azure.AI.Translation.Document.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TranslationsStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationsStatus"/>. </summary>
         /// <param name="value"> The summary status of individual operation. </param>
         /// <param name="nextLink"> Url for the next page.  Null if no more pages available. </param>
         internal TranslationsStatus(IReadOnlyList<TranslationStatusResult> value, string nextLink)

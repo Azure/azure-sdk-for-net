@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// </summary>
     public partial class DataProtectionBackupJobData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobData"/>. </summary>
         public DataProtectionBackupJobData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

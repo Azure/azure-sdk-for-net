@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a DefaultSecurityRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DefaultSecurityRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDefaultSecurityRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityGroupResource" /> using the GetDefaultSecurityRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DefaultSecurityRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDefaultSecurityRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityGroupResource"/> using the GetDefaultSecurityRule method.
     /// </summary>
     public partial class DefaultSecurityRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DefaultSecurityRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkSecurityGroupName"> The networkSecurityGroupName. </param>
+        /// <param name="defaultSecurityRuleName"> The defaultSecurityRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DefaultSecurityRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DefaultSecurityRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DefaultSecurityRuleResource(ArmClient client, SecurityRuleData data) : this(client, data.Id)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The reference to a user assigned identity associated with the Batch pool which a compute node will use. </summary>
     internal partial class ComputeNodeIdentityReference
     {
-        /// <summary> Initializes a new instance of ComputeNodeIdentityReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeNodeIdentityReference"/>. </summary>
         public ComputeNodeIdentityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeNodeIdentityReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeNodeIdentityReference"/>. </summary>
         /// <param name="resourceId"> The ARM resource id of the user assigned identity. </param>
         internal ComputeNodeIdentityReference(ResourceIdentifier resourceId)
         {

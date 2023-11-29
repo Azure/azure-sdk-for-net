@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for GetConnectionSharedKey API service call. </summary>
     public partial class ConnectionSharedKey : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of ConnectionSharedKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionSharedKey"/>. </summary>
         /// <param name="value"> The virtual network connection shared key value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionSharedKey(string value)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of ConnectionSharedKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionSharedKey"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="value"> The virtual network connection shared key value. </param>
         internal ConnectionSharedKey(ResourceIdentifier id, string value) : base(id)

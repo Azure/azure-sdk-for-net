@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list key vault keys definition. </summary>
     public partial class IntegrationAccountListKeyVaultKeyContent
     {
-        /// <summary> Initializes a new instance of IntegrationAccountListKeyVaultKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountListKeyVaultKeyContent"/>. </summary>
         /// <param name="keyVault"> The key vault reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVault"/> is null. </exception>
         public IntegrationAccountListKeyVaultKeyContent(IntegrationAccountKeyVaultNameReference keyVault)

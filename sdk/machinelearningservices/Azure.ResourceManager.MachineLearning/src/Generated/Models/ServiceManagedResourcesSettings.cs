@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ServiceManagedResourcesSettings. </summary>
     internal partial class ServiceManagedResourcesSettings
     {
-        /// <summary> Initializes a new instance of ServiceManagedResourcesSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceManagedResourcesSettings"/>. </summary>
         public ServiceManagedResourcesSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceManagedResourcesSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceManagedResourcesSettings"/>. </summary>
         /// <param name="cosmosDb"></param>
         internal ServiceManagedResourcesSettings(CosmosDbSettings cosmosDb)
         {

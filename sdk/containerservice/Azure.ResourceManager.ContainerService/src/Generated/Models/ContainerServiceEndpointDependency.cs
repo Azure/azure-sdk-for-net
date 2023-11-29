@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> A domain name that AKS agent nodes are reaching at. </summary>
     public partial class ContainerServiceEndpointDependency
     {
-        /// <summary> Initializes a new instance of ContainerServiceEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDependency"/>. </summary>
         internal ContainerServiceEndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<ContainerServiceEndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The Ports and Protocols used when connecting to domainName. </param>
         internal ContainerServiceEndpointDependency(string domainName, IReadOnlyList<ContainerServiceEndpointDetail> endpointDetails)

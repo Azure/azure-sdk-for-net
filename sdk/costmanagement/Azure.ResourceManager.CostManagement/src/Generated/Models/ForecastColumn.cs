@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Forecast column properties. </summary>
     public partial class ForecastColumn
     {
-        /// <summary> Initializes a new instance of ForecastColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastColumn"/>. </summary>
         internal ForecastColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of ForecastColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastColumn"/>. </summary>
         /// <param name="name"> The name of column. </param>
         /// <param name="forecastColumnType"> The type of column. </param>
         internal ForecastColumn(string name, string forecastColumnType)

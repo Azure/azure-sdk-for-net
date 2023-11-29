@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Server restart parameters. </summary>
     public partial class MySqlFlexibleServerRestartParameter
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerRestartParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerRestartParameter"/>. </summary>
         public MySqlFlexibleServerRestartParameter()
         {
         }

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The encryption configuration used to update a user managed Key Vault key. </summary>
     internal partial class UpdateEncryptionConfig
     {
-        /// <summary> Initializes a new instance of UpdateEncryptionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateEncryptionConfig"/>. </summary>
         public UpdateEncryptionConfig()
         {
         }

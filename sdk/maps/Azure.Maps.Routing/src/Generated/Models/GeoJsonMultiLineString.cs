@@ -15,7 +15,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> A valid `GeoJSON MultiLineString` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.5) for details. </summary>
     internal partial class GeoJsonMultiLineString : GeoJsonGeometry
     {
-        /// <summary> Initializes a new instance of GeoJsonMultiLineString. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonMultiLineString"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiLineString` geometry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonMultiLineString(IEnumerable<IList<IList<double>>> coordinates)

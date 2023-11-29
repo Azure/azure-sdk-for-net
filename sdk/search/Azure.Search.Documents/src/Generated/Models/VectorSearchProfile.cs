@@ -13,35 +13,22 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a combination of configurations to use with vector search. </summary>
     public partial class VectorSearchProfile
     {
-        /// <summary> Initializes a new instance of VectorSearchProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchProfile"/>. </summary>
         /// <param name="name"> The name to associate with this particular vector search profile. </param>
-        /// <param name="algorithm"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="algorithm"/> is null. </exception>
-        public VectorSearchProfile(string name, string algorithm)
+        /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="algorithmConfigurationName"/> is null. </exception>
+        public VectorSearchProfile(string name, string algorithmConfigurationName)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(algorithm, nameof(algorithm));
+            Argument.AssertNotNull(algorithmConfigurationName, nameof(algorithmConfigurationName));
 
             Name = name;
-            Algorithm = algorithm;
-        }
-
-        /// <summary> Initializes a new instance of VectorSearchProfile. </summary>
-        /// <param name="name"> The name to associate with this particular vector search profile. </param>
-        /// <param name="algorithm"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
-        /// <param name="vectorizer"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        internal VectorSearchProfile(string name, string algorithm, string vectorizer)
-        {
-            Name = name;
-            Algorithm = algorithm;
-            Vectorizer = vectorizer;
+            AlgorithmConfigurationName = algorithmConfigurationName;
         }
 
         /// <summary> The name to associate with this particular vector search profile. </summary>
         public string Name { get; set; }
         /// <summary> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </summary>
-        public string Algorithm { get; set; }
-        /// <summary> The name of the kind of vectorization method being configured for use with vector search. </summary>
-        public string Vectorizer { get; set; }
+        public string AlgorithmConfigurationName { get; set; }
     }
 }

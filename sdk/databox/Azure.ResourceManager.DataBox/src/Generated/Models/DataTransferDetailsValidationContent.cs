@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request to validate export and import data details. </summary>
     public partial class DataTransferDetailsValidationContent : DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of DataTransferDetailsValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferDetailsValidationContent"/>. </summary>
         /// <param name="deviceType"> Device type. </param>
         /// <param name="transferType"> Type of the transfer. </param>
         public DataTransferDetailsValidationContent(DataBoxSkuName deviceType, DataBoxJobTransferType transferType)

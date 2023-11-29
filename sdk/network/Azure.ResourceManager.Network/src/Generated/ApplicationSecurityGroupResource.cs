@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ApplicationSecurityGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApplicationSecurityGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApplicationSecurityGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetApplicationSecurityGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApplicationSecurityGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApplicationSecurityGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApplicationSecurityGroup method.
     /// </summary>
     public partial class ApplicationSecurityGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApplicationSecurityGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="applicationSecurityGroupName"> The applicationSecurityGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApplicationSecurityGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationSecurityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApplicationSecurityGroupResource(ArmClient client, ApplicationSecurityGroupData data) : this(client, data.Id)

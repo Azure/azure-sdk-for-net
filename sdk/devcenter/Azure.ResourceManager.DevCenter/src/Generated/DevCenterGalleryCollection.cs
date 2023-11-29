@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterGalleryResource" /> and their operations.
-    /// Each <see cref="DevCenterGalleryResource" /> in the collection will belong to the same instance of <see cref="DevCenterResource" />.
-    /// To get a <see cref="DevCenterGalleryCollection" /> instance call the GetDevCenterGalleries method from an instance of <see cref="DevCenterResource" />.
+    /// A class representing a collection of <see cref="DevCenterGalleryResource"/> and their operations.
+    /// Each <see cref="DevCenterGalleryResource"/> in the collection will belong to the same instance of <see cref="DevCenterResource"/>.
+    /// To get a <see cref="DevCenterGalleryCollection"/> instance call the GetDevCenterGalleries method from an instance of <see cref="DevCenterResource"/>.
     /// </summary>
     public partial class DevCenterGalleryCollection : ArmCollection, IEnumerable<DevCenterGalleryResource>, IAsyncEnumerable<DevCenterGalleryResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterGalleryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterGalleryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterGalleryResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterGalleryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterGalleryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterGalleryResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);

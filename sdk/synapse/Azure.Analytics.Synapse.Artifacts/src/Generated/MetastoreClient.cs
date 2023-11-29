@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Initializes a new instance of MetastoreClient. </summary>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public MetastoreClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Initializes a new instance of MetastoreClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         internal MetastoreClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Gets status of the database. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MetastoreRequestSuccessResponse>> GetDatabaseOperationsAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Gets status of the database. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MetastoreRequestSuccessResponse> GetDatabaseOperations(string id, CancellationToken cancellationToken = default)
         {
@@ -174,7 +174,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Remove files in Syms. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Remove files in Syms. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string id, CancellationToken cancellationToken = default)
         {

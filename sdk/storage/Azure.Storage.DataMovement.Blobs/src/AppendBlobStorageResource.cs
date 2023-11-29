@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        protected override long MaxChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
+        protected override long MaxSupportedChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
@@ -295,8 +295,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options?.HttpHeaders,
                 _options?.AccessTier,
                 _options?.Metadata,
-                _options?.Tags,
-                default); // TODO: Update when we support encryption scopes
+                _options?.Tags);
         }
 
         private void GrabEtag(Response response)

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricAccessControlList along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricAccessControlListResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricAccessControlListResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabricAccessControlList method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricAccessControlListResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricAccessControlListResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabricAccessControlList method.
     /// </summary>
     public partial class NetworkFabricAccessControlListResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricAccessControlListResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accessControlListName"> The accessControlListName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accessControlListName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricAccessControlListResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricAccessControlListResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricAccessControlListResource(ArmClient client, NetworkFabricAccessControlListData data) : this(client, data.Id)

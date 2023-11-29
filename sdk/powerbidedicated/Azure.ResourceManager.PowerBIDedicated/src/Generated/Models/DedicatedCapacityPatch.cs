@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Provision request specification. </summary>
     public partial class DedicatedCapacityPatch
     {
-        /// <summary> Initializes a new instance of DedicatedCapacityPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityPatch"/>. </summary>
         public DedicatedCapacityPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

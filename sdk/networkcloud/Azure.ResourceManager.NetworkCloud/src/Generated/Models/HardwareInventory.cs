@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> HardwareInventory represents the hardware configuration of this machine as exposed to the customer, including information acquired from the model/sku information and from the ironic inspector. </summary>
     public partial class HardwareInventory
     {
-        /// <summary> Initializes a new instance of HardwareInventory. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareInventory"/>. </summary>
         internal HardwareInventory()
         {
             Interfaces = new ChangeTrackingList<HardwareInventoryNetworkInterface>();
             Nics = new ChangeTrackingList<NetworkCloudNic>();
         }
 
-        /// <summary> Initializes a new instance of HardwareInventory. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareInventory"/>. </summary>
         /// <param name="additionalHostInformation"> Freeform data extracted from the environment about this machine. This information varies depending on the specific hardware and configuration. </param>
         /// <param name="interfaces"> The list of network interfaces and associated details for the bare metal machine. </param>
         /// <param name="nics"> Field Deprecated. Will be removed in an upcoming version. The list of network interface cards and associated details for the bare metal machine. </param>

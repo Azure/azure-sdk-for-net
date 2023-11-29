@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
     public partial class IntegrationRuntimeCustomSetupScriptProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeCustomSetupScriptProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeCustomSetupScriptProperties"/>. </summary>
         public IntegrationRuntimeCustomSetupScriptProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeCustomSetupScriptProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeCustomSetupScriptProperties"/>. </summary>
         /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
         /// <param name="sasToken"> The SAS token of the Azure blob container. </param>
         internal IntegrationRuntimeCustomSetupScriptProperties(string blobContainerUri, SecureString sasToken)

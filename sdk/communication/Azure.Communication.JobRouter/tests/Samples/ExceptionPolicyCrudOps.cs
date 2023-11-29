@@ -38,8 +38,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 ClassificationPolicyId = "escalation-on-q-over-flow",
                 LabelsToUpsert =
                 {
-                    ["EscalateJob"] = new LabelValue(true),
-                    ["EscalationReasonCode"] = new LabelValue("QueueOverFlow")
+                    ["EscalateJob"] = new RouterValue(true),
+                    ["EscalationReasonCode"] = new RouterValue("QueueOverFlow")
                 }
             };
 
@@ -53,8 +53,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 ClassificationPolicyId = "escalation-on-wait-time-exceeded",
                 LabelsToUpsert =
                 {
-                    ["EscalateJob"] = new LabelValue(true),
-                    ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded")
+                    ["EscalateJob"] = new RouterValue(true),
+                    ["EscalationReasonCode"] = new RouterValue("WaitTimeExceeded")
                 }
             };
 
@@ -108,8 +108,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 ClassificationPolicyId = "escalation-on-wait-time-exceeded",
                 LabelsToUpsert =
                 {
-                    ["EscalateJob"] = new LabelValue(true),
-                    ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded2Min")
+                    ["EscalateJob"] = new RouterValue(true),
+                    ["EscalationReasonCode"] = new RouterValue("WaitTimeExceeded2Min")
                 }
             };
 
@@ -140,7 +140,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicies
 
-            Pageable<ExceptionPolicy> exceptionPolicies = routerClient.GetExceptionPolicies();
+            Pageable<ExceptionPolicy> exceptionPolicies = routerClient.GetExceptionPolicies(cancellationToken: default);
             foreach (Page<ExceptionPolicy> asPage in exceptionPolicies.AsPages(pageSizeHint: 10))
             {
                 foreach (ExceptionPolicy? policy in asPage.Values)

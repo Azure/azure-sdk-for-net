@@ -105,14 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CompressionLevel))
             {
                 writer.WritePropertyName("compressionLevel"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CompressionLevel);
-#else
-                using (JsonDocument document = JsonDocument.Parse(CompressionLevel))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, CompressionLevel);
             }
             if (Optional.IsDefined(QuoteChar))
             {
@@ -169,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> rowDelimiter = default;
             Optional<DataFactoryElement<string>> encodingName = default;
             Optional<DataFactoryElement<string>> compressionCodec = default;
-            Optional<BinaryData> compressionLevel = default;
+            Optional<DataFactoryElement<string>> compressionLevel = default;
             Optional<DataFactoryElement<string>> quoteChar = default;
             Optional<DataFactoryElement<string>> escapeChar = default;
             Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
@@ -315,7 +308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            compressionLevel = BinaryData.FromString(property0.Value.GetRawText());
+                            compressionLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("quoteChar"u8))

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class ActivityLogAlertAnyOfOrLeafCondition : AlertRuleLeafCondition
     {
-        /// <summary> Initializes a new instance of ActivityLogAlertAnyOfOrLeafCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertAnyOfOrLeafCondition"/>. </summary>
         public ActivityLogAlertAnyOfOrLeafCondition()
         {
             AnyOf = new ChangeTrackingList<AlertRuleLeafCondition>();
         }
 
-        /// <summary> Initializes a new instance of ActivityLogAlertAnyOfOrLeafCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertAnyOfOrLeafCondition"/>. </summary>
         /// <param name="field">
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.

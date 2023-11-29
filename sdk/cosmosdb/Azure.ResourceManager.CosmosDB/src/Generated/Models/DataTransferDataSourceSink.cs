@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// </summary>
     public abstract partial class DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of DataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferDataSourceSink"/>. </summary>
         protected DataTransferDataSourceSink()
         {
         }
 
-        /// <summary> Initializes a new instance of DataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
         internal DataTransferDataSourceSink(DataTransferComponent component)
         {

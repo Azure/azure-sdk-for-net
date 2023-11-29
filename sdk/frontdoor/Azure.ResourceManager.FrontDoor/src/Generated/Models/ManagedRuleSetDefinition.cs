@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Describes the a managed rule set definition. </summary>
     public partial class ManagedRuleSetDefinition : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedRuleSetDefinition(AzureLocation location) : base(location)
         {
             RuleGroups = new ChangeTrackingList<ManagedRuleGroupDefinition>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

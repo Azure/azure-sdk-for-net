@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class FirewallPolicyRuleCollectionGroupData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupData"/>. </summary>
         public FirewallPolicyRuleCollectionGroupData()
         {
             RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -17,13 +17,13 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureChatExtensionsMessageContext
     {
-        /// <summary> Initializes a new instance of AzureChatExtensionsMessageContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
         public AzureChatExtensionsMessageContext()
         {
             Messages = new ChangeTrackingList<ChatMessage>();
         }
 
-        /// <summary> Initializes a new instance of AzureChatExtensionsMessageContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
         /// <param name="messages">
         ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
         ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the

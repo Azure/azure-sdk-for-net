@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DefaultSecurityRuleResource" /> and their operations.
-    /// Each <see cref="DefaultSecurityRuleResource" /> in the collection will belong to the same instance of <see cref="NetworkSecurityGroupResource" />.
-    /// To get a <see cref="DefaultSecurityRuleCollection" /> instance call the GetDefaultSecurityRules method from an instance of <see cref="NetworkSecurityGroupResource" />.
+    /// A class representing a collection of <see cref="DefaultSecurityRuleResource"/> and their operations.
+    /// Each <see cref="DefaultSecurityRuleResource"/> in the collection will belong to the same instance of <see cref="NetworkSecurityGroupResource"/>.
+    /// To get a <see cref="DefaultSecurityRuleCollection"/> instance call the GetDefaultSecurityRules method from an instance of <see cref="NetworkSecurityGroupResource"/>.
     /// </summary>
     public partial class DefaultSecurityRuleCollection : ArmCollection, IEnumerable<DefaultSecurityRuleResource>, IAsyncEnumerable<DefaultSecurityRuleResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DefaultSecurityRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DefaultSecurityRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DefaultSecurityRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultSecurityRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DefaultSecurityRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DefaultSecurityRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DefaultSecurityRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultSecurityRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

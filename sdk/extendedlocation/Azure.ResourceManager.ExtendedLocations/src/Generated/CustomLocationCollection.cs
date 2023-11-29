@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ExtendedLocations
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CustomLocationResource" /> and their operations.
-    /// Each <see cref="CustomLocationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CustomLocationCollection" /> instance call the GetCustomLocations method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="CustomLocationResource"/> and their operations.
+    /// Each <see cref="CustomLocationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CustomLocationCollection"/> instance call the GetCustomLocations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class CustomLocationCollection : ArmCollection, IEnumerable<CustomLocationResource>, IAsyncEnumerable<CustomLocationResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CustomLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customLocationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CustomLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customLocationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

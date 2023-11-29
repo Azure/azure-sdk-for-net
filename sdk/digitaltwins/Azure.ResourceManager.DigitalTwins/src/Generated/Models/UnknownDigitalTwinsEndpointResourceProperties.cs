@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The UnknownDigitalTwinsEndpointResourceProperties. </summary>
     internal partial class UnknownDigitalTwinsEndpointResourceProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of UnknownDigitalTwinsEndpointResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDigitalTwinsEndpointResourceProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Custom domain analysis. </summary>
     public partial class ContainerAppCustomHostnameAnalysisResult
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomHostnameAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomHostnameAnalysisResult"/>. </summary>
         internal ContainerAppCustomHostnameAnalysisResult()
         {
             CNameRecords = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             AlternateTxtRecords = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomHostnameAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomHostnameAnalysisResult"/>. </summary>
         /// <param name="hostName"> Host name that was analyzed. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="customDomainVerificationTest"> DNS verification test result. </param>

@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an AzureWebCategory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AzureWebCategoryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAzureWebCategoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetAzureWebCategory method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AzureWebCategoryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAzureWebCategoryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetAzureWebCategory method.
     /// </summary>
     public partial class AzureWebCategoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AzureWebCategoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AzureWebCategoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureWebCategoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AzureWebCategoryResource(ArmClient client, AzureWebCategoryData data) : this(client, data.Id)

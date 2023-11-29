@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The definition of suggested relationship for the type. </summary>
     public partial class RelationshipsLookup
     {
-        /// <summary> Initializes a new instance of RelationshipsLookup. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipsLookup"/>. </summary>
         internal RelationshipsLookup()
         {
             ProfilePropertyReferences = new ChangeTrackingList<ParticipantProfilePropertyReference>();
             RelatedProfilePropertyReferences = new ChangeTrackingList<ParticipantProfilePropertyReference>();
         }
 
-        /// <summary> Initializes a new instance of RelationshipsLookup. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipsLookup"/>. </summary>
         /// <param name="profileName"> The relationship profile. </param>
         /// <param name="profilePropertyReferences"> The property references for the profile type. </param>
         /// <param name="relatedProfileName"> The related profile. </param>

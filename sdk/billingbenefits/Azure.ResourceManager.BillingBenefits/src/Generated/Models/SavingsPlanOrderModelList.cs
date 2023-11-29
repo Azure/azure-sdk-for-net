@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The SavingsPlanOrderModelList. </summary>
     internal partial class SavingsPlanOrderModelList
     {
-        /// <summary> Initializes a new instance of SavingsPlanOrderModelList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderModelList"/>. </summary>
         internal SavingsPlanOrderModelList()
         {
             Value = new ChangeTrackingList<BillingBenefitsSavingsPlanOrderData>();
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanOrderModelList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderModelList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Url to get the next page. </param>
         internal SavingsPlanOrderModelList(IReadOnlyList<BillingBenefitsSavingsPlanOrderData> value, string nextLink)

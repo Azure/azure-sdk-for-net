@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Data encryption properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerDataEncryption
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDataEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerDataEncryption"/>. </summary>
         public PostgreSqlFlexibleServerDataEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDataEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerDataEncryption"/>. </summary>
         /// <param name="primaryKeyUri"> URI for the key in keyvault for data encryption of the primary server. </param>
         /// <param name="primaryUserAssignedIdentityId"> Resource Id for the User assigned identity to be used for data encryption of the primary server. </param>
         /// <param name="geoBackupKeyUri"> URI for the key in keyvault for data encryption for geo-backup of server. </param>

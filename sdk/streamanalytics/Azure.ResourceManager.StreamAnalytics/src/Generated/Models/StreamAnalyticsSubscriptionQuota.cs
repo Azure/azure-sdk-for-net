@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes the current quota for the subscription. </summary>
     public partial class StreamAnalyticsSubscriptionQuota : StreamAnalyticsSubResource
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsSubscriptionQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubscriptionQuota"/>. </summary>
         public StreamAnalyticsSubscriptionQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsSubscriptionQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubscriptionQuota"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

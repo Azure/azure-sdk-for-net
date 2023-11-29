@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The properties of the volume. </summary>
     public partial class ContainerVolume
     {
-        /// <summary> Initializes a new instance of ContainerVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerVolume"/>. </summary>
         /// <param name="name"> The name of the volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerVolume(string name)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Secret = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerVolume"/>. </summary>
         /// <param name="name"> The name of the volume. </param>
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="emptyDir"> The empty directory volume. </param>

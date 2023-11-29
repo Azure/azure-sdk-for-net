@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
     /// <summary> The template object used to create templates. </summary>
     internal partial class MessageTemplateInternal
     {
-        /// <summary> Initializes a new instance of MessageTemplateInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateInternal"/>. </summary>
         /// <param name="name"> Name of the template. </param>
         /// <param name="language"> The codes for the supported languages for templates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>

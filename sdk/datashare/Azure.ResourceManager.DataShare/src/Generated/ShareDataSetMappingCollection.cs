@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ShareDataSetMappingResource" /> and their operations.
-    /// Each <see cref="ShareDataSetMappingResource" /> in the collection will belong to the same instance of <see cref="ShareSubscriptionResource" />.
-    /// To get a <see cref="ShareDataSetMappingCollection" /> instance call the GetShareDataSetMappings method from an instance of <see cref="ShareSubscriptionResource" />.
+    /// A class representing a collection of <see cref="ShareDataSetMappingResource"/> and their operations.
+    /// Each <see cref="ShareDataSetMappingResource"/> in the collection will belong to the same instance of <see cref="ShareSubscriptionResource"/>.
+    /// To get a <see cref="ShareDataSetMappingCollection"/> instance call the GetShareDataSetMappings method from an instance of <see cref="ShareSubscriptionResource"/>.
     /// </summary>
     public partial class ShareDataSetMappingCollection : ArmCollection, IEnumerable<ShareDataSetMappingResource>, IAsyncEnumerable<ShareDataSetMappingResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ShareDataSetMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ShareDataSetMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ShareDataSetMappingResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ShareDataSetMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ShareDataSetMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ShareDataSetMappingResource> GetAll(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);

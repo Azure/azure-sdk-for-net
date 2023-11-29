@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.GraphServices.Models
     /// <summary> Request payload used to update an existing resource's tags. </summary>
     public partial class GraphServicesTagUpdate
     {
-        /// <summary> Initializes a new instance of GraphServicesTagUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesTagUpdate"/>. </summary>
         public GraphServicesTagUpdate()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

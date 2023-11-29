@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Monitoring data point coming from SDK, which includes metrics, documents and other metadata info. </summary>
     internal partial class MonitoringDataPoint
     {
-        /// <summary> Initializes a new instance of MonitoringDataPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringDataPoint"/>. </summary>
         public MonitoringDataPoint()
         {
             Metrics = new ChangeTrackingList<MetricPoint>();

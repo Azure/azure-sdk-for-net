@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudTrunkedNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudTrunkedNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudTrunkedNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudTrunkedNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudTrunkedNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudTrunkedNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudTrunkedNetwork method.
     /// </summary>
     public partial class NetworkCloudTrunkedNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudTrunkedNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="trunkedNetworkName"> The trunkedNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string trunkedNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/trunkedNetworks/{trunkedNetworkName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudTrunkedNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudTrunkedNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudTrunkedNetworkResource(ArmClient client, NetworkCloudTrunkedNetworkData data) : this(client, data.Id)

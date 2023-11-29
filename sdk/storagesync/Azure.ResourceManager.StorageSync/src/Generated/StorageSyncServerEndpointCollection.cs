@@ -21,9 +21,9 @@ using Azure.ResourceManager.StorageSync.Models;
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StorageSyncServerEndpointResource" /> and their operations.
-    /// Each <see cref="StorageSyncServerEndpointResource" /> in the collection will belong to the same instance of <see cref="StorageSyncGroupResource" />.
-    /// To get a <see cref="StorageSyncServerEndpointCollection" /> instance call the GetStorageSyncServerEndpoints method from an instance of <see cref="StorageSyncGroupResource" />.
+    /// A class representing a collection of <see cref="StorageSyncServerEndpointResource"/> and their operations.
+    /// Each <see cref="StorageSyncServerEndpointResource"/> in the collection will belong to the same instance of <see cref="StorageSyncGroupResource"/>.
+    /// To get a <see cref="StorageSyncServerEndpointCollection"/> instance call the GetStorageSyncServerEndpoints method from an instance of <see cref="StorageSyncGroupResource"/>.
     /// </summary>
     public partial class StorageSyncServerEndpointCollection : ArmCollection, IEnumerable<StorageSyncServerEndpointResource>, IAsyncEnumerable<StorageSyncServerEndpointResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageSyncServerEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageSyncServerEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageSyncServerEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncServerEndpointServerEndpointsRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageSyncServerEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageSyncServerEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageSyncServerEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncServerEndpointServerEndpointsRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

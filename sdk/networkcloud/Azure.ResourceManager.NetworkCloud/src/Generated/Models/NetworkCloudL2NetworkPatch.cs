@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> L2NetworkPatchParameters represents the body of the request to patch the L2 network. </summary>
     public partial class NetworkCloudL2NetworkPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudL2NetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkPatch"/>. </summary>
         public NetworkCloudL2NetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

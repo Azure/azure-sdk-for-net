@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> An update to a SQL Migration Service. </summary>
     public partial class SqlMigrationServicePatch
     {
-        /// <summary> Initializes a new instance of SqlMigrationServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationServicePatch"/>. </summary>
         public SqlMigrationServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

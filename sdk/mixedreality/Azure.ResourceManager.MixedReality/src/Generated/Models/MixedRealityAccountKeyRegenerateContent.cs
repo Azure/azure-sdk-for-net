@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MixedReality.Models
     /// <summary> Request for account key regeneration. </summary>
     public partial class MixedRealityAccountKeyRegenerateContent
     {
-        /// <summary> Initializes a new instance of MixedRealityAccountKeyRegenerateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MixedRealityAccountKeyRegenerateContent"/>. </summary>
         public MixedRealityAccountKeyRegenerateContent()
         {
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Planned failover model properties. </summary>
     public partial class PlannedFailoverModelProperties
     {
-        /// <summary> Initializes a new instance of PlannedFailoverModelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverModelProperties"/>. </summary>
         /// <param name="customProperties">
         /// Planned failover model custom properties.
         /// Please note <see cref="PlannedFailoverModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a baseline metadata value. </summary>
     public partial class MonitorBaselineMetadata
     {
-        /// <summary> Initializes a new instance of MonitorBaselineMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorBaselineMetadata"/>. </summary>
         /// <param name="name"> Name of the baseline metadata. </param>
         /// <param name="value"> Value of the baseline metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

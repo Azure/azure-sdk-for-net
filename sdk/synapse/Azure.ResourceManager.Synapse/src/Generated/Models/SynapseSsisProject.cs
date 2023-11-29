@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Ssis project. </summary>
     public partial class SynapseSsisProject : SynapseSsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SynapseSsisProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisProject"/>. </summary>
         internal SynapseSsisProject()
         {
             EnvironmentRefs = new ChangeTrackingList<SynapseSsisEnvironmentReference>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Synapse.Models
             MetadataType = SynapseSsisObjectMetadataType.Project;
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisProject"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

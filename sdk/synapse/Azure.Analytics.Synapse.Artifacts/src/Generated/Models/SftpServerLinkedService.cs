@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A linked service for an SSH File Transfer Protocol (SFTP) server. </summary>
     public partial class SftpServerLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SftpServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpServerLinkedService"/>. </summary>
         /// <param name="host"> The SFTP server host name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public SftpServerLinkedService(object host)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Sftp";
         }
 
-        /// <summary> Initializes a new instance of SftpServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpServerLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

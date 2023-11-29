@@ -15,41 +15,57 @@ namespace Azure.AI.OpenAI
     /// <summary> Model factory for models. </summary>
     public static partial class AzureOpenAIModelFactory
     {
-        /// <summary> Initializes a new instance of Embeddings. </summary>
-        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
-        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
-        /// <returns> A new <see cref="OpenAI.Embeddings"/> instance for mocking. </returns>
-        public static Embeddings Embeddings(IEnumerable<EmbeddingItem> data = null, EmbeddingsUsage usage = null)
-        {
-            data ??= new List<EmbeddingItem>();
-
-            return new Embeddings(data?.ToList(), usage);
-        }
-
-        /// <summary> Initializes a new instance of EmbeddingItem. </summary>
-        /// <param name="embedding">
-        /// List of embeddings value for the input prompt. These represent a measurement of the
-        /// vector-based relatedness of the provided input.
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranscriptionSegment"/>. </summary>
+        /// <param name="id"> The 0-based index of this segment within a transcription. </param>
+        /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
+        /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
+        /// <param name="text"> The transcribed text that was part of this audio segment. </param>
+        /// <param name="temperature"> The temperature score associated with this audio segment. </param>
+        /// <param name="averageLogProbability"> The average log probability associated with this audio segment. </param>
+        /// <param name="compressionRatio"> The compression ratio of this audio segment. </param>
+        /// <param name="noSpeechProbability"> The probability of no speech detection within this audio segment. </param>
+        /// <param name="tokens"> The token IDs matching the transcribed text in this audio segment. </param>
+        /// <param name="seek">
+        /// The seek position associated with the processing of this audio segment.
+        /// Seek positions are expressed as hundredths of seconds.
+        /// The model may process several segments from a single seek position, so while the seek position will never represent
+        /// a later time than the segment's start, the segment's start may represent a significantly later time than the
+        /// segment's associated seek position.
         /// </param>
-        /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
-        /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
-        public static EmbeddingItem EmbeddingItem(IEnumerable<float> embedding = null, int index = default)
+        /// <returns> A new <see cref="OpenAI.AudioTranscriptionSegment"/> instance for mocking. </returns>
+        public static AudioTranscriptionSegment AudioTranscriptionSegment(int id = default, TimeSpan start = default, TimeSpan end = default, string text = null, float temperature = default, float averageLogProbability = default, float compressionRatio = default, float noSpeechProbability = default, IEnumerable<int> tokens = null, int seek = default)
         {
-            embedding ??= new List<float>();
+            tokens ??= new List<int>();
 
-            return new EmbeddingItem(embedding?.ToList(), index);
+            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
         }
 
-        /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
-        /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
-        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
-        /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
-        public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranslationSegment"/>. </summary>
+        /// <param name="id"> The 0-based index of this segment within a translation. </param>
+        /// <param name="start"> The time at which this segment started relative to the beginning of the translated audio. </param>
+        /// <param name="end"> The time at which this segment ended relative to the beginning of the translated audio. </param>
+        /// <param name="text"> The translated text that was part of this audio segment. </param>
+        /// <param name="temperature"> The temperature score associated with this audio segment. </param>
+        /// <param name="averageLogProbability"> The average log probability associated with this audio segment. </param>
+        /// <param name="compressionRatio"> The compression ratio of this audio segment. </param>
+        /// <param name="noSpeechProbability"> The probability of no speech detection within this audio segment. </param>
+        /// <param name="tokens"> The token IDs matching the translated text in this audio segment. </param>
+        /// <param name="seek">
+        /// The seek position associated with the processing of this audio segment.
+        /// Seek positions are expressed as hundredths of seconds.
+        /// The model may process several segments from a single seek position, so while the seek position will never represent
+        /// a later time than the segment's start, the segment's start may represent a significantly later time than the
+        /// segment's associated seek position.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.AudioTranslationSegment"/> instance for mocking. </returns>
+        public static AudioTranslationSegment AudioTranslationSegment(int id = default, TimeSpan start = default, TimeSpan end = default, string text = null, float temperature = default, float averageLogProbability = default, float compressionRatio = default, float noSpeechProbability = default, IEnumerable<int> tokens = null, int seek = default)
         {
-            return new EmbeddingsUsage(promptTokens, totalTokens);
+            tokens ??= new List<int>();
+
+            return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
         }
 
-        /// <summary> Initializes a new instance of Completions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.Completions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -74,7 +90,7 @@ namespace Azure.AI.OpenAI
             return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
         }
 
-        /// <summary> Initializes a new instance of PromptFilterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.PromptFilterResult"/>. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         /// <param name="contentFilterResults"> Content filtering results for this prompt. </param>
         /// <returns> A new <see cref="OpenAI.PromptFilterResult"/> instance for mocking. </returns>
@@ -83,7 +99,7 @@ namespace Azure.AI.OpenAI
             return new PromptFilterResult(promptIndex, contentFilterResults);
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResults"/>. </summary>
         /// <param name="sexual">
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
@@ -115,7 +131,7 @@ namespace Azure.AI.OpenAI
             return new ContentFilterResults(sexual, violence, hate, selfHarm, error);
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResult"/>. </summary>
         /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <returns> A new <see cref="OpenAI.ContentFilterResult"/> instance for mocking. </returns>
@@ -124,7 +140,7 @@ namespace Azure.AI.OpenAI
             return new ContentFilterResult(severity, filtered);
         }
 
-        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.Choice"/>. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="contentFilterResults">
@@ -140,7 +156,7 @@ namespace Azure.AI.OpenAI
             return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
         }
 
-        /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsLogProbabilityModel"/>. </summary>
         /// <param name="tokens"> The textual forms of tokens evaluated in this probability model. </param>
         /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
         /// <param name="topLogProbabilities"> A mapping of tokens to maximum log probability values in this completions data. </param>
@@ -156,7 +172,7 @@ namespace Azure.AI.OpenAI
             return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CompletionsUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsUsage"/>. </summary>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
@@ -166,7 +182,7 @@ namespace Azure.AI.OpenAI
             return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
         }
 
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -191,7 +207,7 @@ namespace Azure.AI.OpenAI
             return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage);
         }
 
-        /// <summary> Initializes a new instance of ImageGenerations. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerations"/>. </summary>
         /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
         /// <param name="data"> The images generated by the operator. </param>
         /// <returns> A new <see cref="OpenAI.ImageGenerations"/> instance for mocking. </returns>
@@ -202,7 +218,7 @@ namespace Azure.AI.OpenAI
             return new ImageGenerations(created, data?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ImageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ImageLocation"/>. </summary>
         /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ImageLocation"/> instance for mocking. </returns>
@@ -216,54 +232,36 @@ namespace Azure.AI.OpenAI
             return new ImageLocation(url);
         }
 
-        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
-        /// <param name="id"> The 0-based index of this segment within a transcription. </param>
-        /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
-        /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
-        /// <param name="text"> The transcribed text that was part of this audio segment. </param>
-        /// <param name="temperature"> The temperature score associated with this audio segment. </param>
-        /// <param name="averageLogProbability"> The average log probability associated with this audio segment. </param>
-        /// <param name="compressionRatio"> The compression ratio of this audio segment. </param>
-        /// <param name="noSpeechProbability"> The probability of no speech detection within this audio segment. </param>
-        /// <param name="tokens"> The token IDs matching the transcribed text in this audio segment. </param>
-        /// <param name="seek">
-        /// The seek position associated with the processing of this audio segment.
-        /// Seek positions are expressed as hundredths of seconds.
-        /// The model may process several segments from a single seek position, so while the seek position will never represent
-        /// a later time than the segment's start, the segment's start may represent a significantly later time than the
-        /// segment's associated seek position.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.AudioTranscriptionSegment"/> instance for mocking. </returns>
-        public static AudioTranscriptionSegment AudioTranscriptionSegment(int id = default, TimeSpan start = default, TimeSpan end = default, string text = null, float temperature = default, float averageLogProbability = default, float compressionRatio = default, float noSpeechProbability = default, IEnumerable<int> tokens = null, int seek = default)
+        /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>
+        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
+        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
+        /// <returns> A new <see cref="OpenAI.Embeddings"/> instance for mocking. </returns>
+        public static Embeddings Embeddings(IEnumerable<EmbeddingItem> data = null, EmbeddingsUsage usage = null)
         {
-            tokens ??= new List<int>();
+            data ??= new List<EmbeddingItem>();
 
-            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
+            return new Embeddings(data?.ToList(), usage);
         }
 
-        /// <summary> Initializes a new instance of AudioTranslationSegment. </summary>
-        /// <param name="id"> The 0-based index of this segment within a translation. </param>
-        /// <param name="start"> The time at which this segment started relative to the beginning of the translated audio. </param>
-        /// <param name="end"> The time at which this segment ended relative to the beginning of the translated audio. </param>
-        /// <param name="text"> The translated text that was part of this audio segment. </param>
-        /// <param name="temperature"> The temperature score associated with this audio segment. </param>
-        /// <param name="averageLogProbability"> The average log probability associated with this audio segment. </param>
-        /// <param name="compressionRatio"> The compression ratio of this audio segment. </param>
-        /// <param name="noSpeechProbability"> The probability of no speech detection within this audio segment. </param>
-        /// <param name="tokens"> The token IDs matching the translated text in this audio segment. </param>
-        /// <param name="seek">
-        /// The seek position associated with the processing of this audio segment.
-        /// Seek positions are expressed as hundredths of seconds.
-        /// The model may process several segments from a single seek position, so while the seek position will never represent
-        /// a later time than the segment's start, the segment's start may represent a significantly later time than the
-        /// segment's associated seek position.
+        /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingItem"/>. </summary>
+        /// <param name="embedding">
+        /// List of embeddings value for the input prompt. These represent a measurement of the
+        /// vector-based relatedness of the provided input.
         /// </param>
-        /// <returns> A new <see cref="OpenAI.AudioTranslationSegment"/> instance for mocking. </returns>
-        public static AudioTranslationSegment AudioTranslationSegment(int id = default, TimeSpan start = default, TimeSpan end = default, string text = null, float temperature = default, float averageLogProbability = default, float compressionRatio = default, float noSpeechProbability = default, IEnumerable<int> tokens = null, int seek = default)
+        /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
+        /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
+        public static EmbeddingItem EmbeddingItem(ReadOnlyMemory<float> embedding = default, int index = default)
         {
-            tokens ??= new List<int>();
+            return new EmbeddingItem(embedding, index);
+        }
 
-            return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
+        /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingsUsage"/>. </summary>
+        /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
+        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
+        /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
+        public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
+        {
+            return new EmbeddingsUsage(promptTokens, totalTokens);
         }
     }
 }

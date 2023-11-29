@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CassandraDataCenterResource" /> and their operations.
-    /// Each <see cref="CassandraDataCenterResource" /> in the collection will belong to the same instance of <see cref="CassandraClusterResource" />.
-    /// To get a <see cref="CassandraDataCenterCollection" /> instance call the GetCassandraDataCenters method from an instance of <see cref="CassandraClusterResource" />.
+    /// A class representing a collection of <see cref="CassandraDataCenterResource"/> and their operations.
+    /// Each <see cref="CassandraDataCenterResource"/> in the collection will belong to the same instance of <see cref="CassandraClusterResource"/>.
+    /// To get a <see cref="CassandraDataCenterCollection"/> instance call the GetCassandraDataCenters method from an instance of <see cref="CassandraClusterResource"/>.
     /// </summary>
     public partial class CassandraDataCenterCollection : ArmCollection, IEnumerable<CassandraDataCenterResource>, IAsyncEnumerable<CassandraDataCenterResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraDataCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CassandraDataCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CassandraDataCenterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraDataCenterRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CassandraDataCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CassandraDataCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CassandraDataCenterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraDataCenterRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

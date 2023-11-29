@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing a ScalingPlanPersonalSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScalingPlanPersonalScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScalingPlanPersonalScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ScalingPlanResource" /> using the GetScalingPlanPersonalSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScalingPlanPersonalScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScalingPlanPersonalScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ScalingPlanResource"/> using the GetScalingPlanPersonalSchedule method.
     /// </summary>
     public partial class ScalingPlanPersonalScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScalingPlanPersonalScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scalingPlanName"> The scalingPlanName. </param>
+        /// <param name="scalingPlanScheduleName"> The scalingPlanScheduleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScalingPlanPersonalScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScalingPlanPersonalScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScalingPlanPersonalScheduleResource(ArmClient client, ScalingPlanPersonalScheduleData data) : this(client, data.Id)

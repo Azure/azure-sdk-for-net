@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     public partial class RelayPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelayPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateLinkResourceData"/>. </summary>
         internal RelayPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RelayPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

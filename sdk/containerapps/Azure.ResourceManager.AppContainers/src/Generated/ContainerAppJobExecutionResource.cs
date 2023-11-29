@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppJobExecution along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppJobExecutionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppJobExecutionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppJobResource" /> using the GetContainerAppJobExecution method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppJobExecutionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppJobExecutionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppJobResource"/> using the GetContainerAppJobExecution method.
     /// </summary>
     public partial class ContainerAppJobExecutionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppJobExecutionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="jobName"> The jobName. </param>
+        /// <param name="jobExecutionName"> The jobExecutionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName, string jobExecutionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions/{jobExecutionName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppJobExecutionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobExecutionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppJobExecutionResource(ArmClient client, ContainerAppJobExecutionData data) : this(client, data.Id)

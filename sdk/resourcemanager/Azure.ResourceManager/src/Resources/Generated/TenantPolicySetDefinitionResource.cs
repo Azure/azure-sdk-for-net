@@ -18,13 +18,14 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a TenantPolicySetDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantPolicySetDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantPolicySetDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantPolicySetDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantPolicySetDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantPolicySetDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantPolicySetDefinition method.
     /// </summary>
     public partial class TenantPolicySetDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantPolicySetDefinitionResource"/> instance. </summary>
+        /// <param name="policySetDefinitionName"> The policySetDefinitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string policySetDefinitionName)
         {
             var resourceId = $"/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}";
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantPolicySetDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicySetDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantPolicySetDefinitionResource(ArmClient client, PolicySetDefinitionData data) : this(client, data.Id)

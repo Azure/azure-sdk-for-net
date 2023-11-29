@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PreRulestackRuleResource" /> and their operations.
-    /// Each <see cref="PreRulestackRuleResource" /> in the collection will belong to the same instance of <see cref="GlobalRulestackResource" />.
-    /// To get a <see cref="PreRulestackRuleCollection" /> instance call the GetPreRulestackRules method from an instance of <see cref="GlobalRulestackResource" />.
+    /// A class representing a collection of <see cref="PreRulestackRuleResource"/> and their operations.
+    /// Each <see cref="PreRulestackRuleResource"/> in the collection will belong to the same instance of <see cref="GlobalRulestackResource"/>.
+    /// To get a <see cref="PreRulestackRuleCollection"/> instance call the GetPreRulestackRules method from an instance of <see cref="GlobalRulestackResource"/>.
     /// </summary>
     public partial class PreRulestackRuleCollection : ArmCollection, IEnumerable<PreRulestackRuleResource>, IAsyncEnumerable<PreRulestackRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PreRulestackRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PreRulestackRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PreRulestackRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preRulestackRulePreRulesRestClient.CreateListRequest(Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PreRulestackRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PreRulestackRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PreRulestackRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preRulestackRulePreRulesRestClient.CreateListRequest(Id.Name);

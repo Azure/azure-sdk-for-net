@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration service environment skus. </summary>
     internal partial class IntegrationServiceEnvironmentSkuList
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuList"/>. </summary>
         internal IntegrationServiceEnvironmentSkuList()
         {
             Value = new ChangeTrackingList<IntegrationServiceEnvironmentSkuDefinition>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuList"/>. </summary>
         /// <param name="value"> The list of integration service environment skus. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationServiceEnvironmentSkuList(IReadOnlyList<IntegrationServiceEnvironmentSkuDefinition> value, string nextLink)

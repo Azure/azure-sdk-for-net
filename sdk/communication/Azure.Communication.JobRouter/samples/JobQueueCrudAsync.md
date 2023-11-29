@@ -53,14 +53,14 @@ Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSeri
 Response<RouterQueue> updatedJobQueue = await routerAdministrationClient.UpdateQueueAsync(
     new RouterQueue(jobQueueId)
     {
-        Labels = { ["Additional-Queue-Label"] = new LabelValue("ChatQueue") }
+        Labels = { ["Additional-Queue-Label"] = new RouterValue("ChatQueue") }
     });
 ```
 
 ## List job queues
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueues_Async
-AsyncPageable<RouterQueue> jobQueues = routerAdministrationClient.GetQueuesAsync();
+AsyncPageable<RouterQueue> jobQueues = routerAdministrationClient.GetQueuesAsync(cancellationToken: default);
 await foreach (Page<RouterQueue> asPage in jobQueues.AsPages(pageSizeHint: 10))
 {
     foreach (RouterQueue? policy in asPage.Values)

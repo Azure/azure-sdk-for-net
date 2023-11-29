@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Synapse Analytics (Artifacts) linked service. </summary>
     public partial class AzureSynapseArtifactsLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureSynapseArtifactsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSynapseArtifactsLinkedService"/>. </summary>
         /// <param name="endpoint"> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public AzureSynapseArtifactsLinkedService(DataFactoryElement<string> endpoint)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AzureSynapseArtifacts";
         }
 
-        /// <summary> Initializes a new instance of AzureSynapseArtifactsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSynapseArtifactsLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

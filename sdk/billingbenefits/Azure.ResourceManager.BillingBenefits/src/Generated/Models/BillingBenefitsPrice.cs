@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The BillingBenefitsPrice. </summary>
     public partial class BillingBenefitsPrice
     {
-        /// <summary> Initializes a new instance of BillingBenefitsPrice. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsPrice"/>. </summary>
         public BillingBenefitsPrice()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsPrice. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsPrice"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         internal BillingBenefitsPrice(string currencyCode, double? amount)

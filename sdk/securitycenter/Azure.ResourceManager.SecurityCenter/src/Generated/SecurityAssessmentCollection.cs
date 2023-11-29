@@ -17,9 +17,9 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityAssessmentResource" /> and their operations.
-    /// Each <see cref="SecurityAssessmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="SecurityAssessmentCollection" /> instance call the GetSecurityAssessments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="SecurityAssessmentResource"/> and their operations.
+    /// Each <see cref="SecurityAssessmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityAssessmentCollection"/> instance call the GetSecurityAssessments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityAssessmentCollection : ArmCollection
     {

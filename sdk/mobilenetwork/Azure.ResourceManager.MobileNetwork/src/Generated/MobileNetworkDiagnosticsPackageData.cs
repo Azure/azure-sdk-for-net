@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkDiagnosticsPackageData : ResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkDiagnosticsPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkDiagnosticsPackageData"/>. </summary>
         public MobileNetworkDiagnosticsPackageData()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkDiagnosticsPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkDiagnosticsPackageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

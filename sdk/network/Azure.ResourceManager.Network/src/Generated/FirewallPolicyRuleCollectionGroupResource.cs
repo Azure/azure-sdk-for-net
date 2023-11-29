@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a FirewallPolicyRuleCollectionGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirewallPolicyRuleCollectionGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFirewallPolicyRuleCollectionGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FirewallPolicyResource" /> using the GetFirewallPolicyRuleCollectionGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FirewallPolicyRuleCollectionGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFirewallPolicyRuleCollectionGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FirewallPolicyResource"/> using the GetFirewallPolicyRuleCollectionGroup method.
     /// </summary>
     public partial class FirewallPolicyRuleCollectionGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FirewallPolicyRuleCollectionGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="firewallPolicyName"> The firewallPolicyName. </param>
+        /// <param name="ruleCollectionGroupName"> The ruleCollectionGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FirewallPolicyRuleCollectionGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FirewallPolicyRuleCollectionGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FirewallPolicyRuleCollectionGroupResource(ArmClient client, FirewallPolicyRuleCollectionGroupData data) : this(client, data.Id)

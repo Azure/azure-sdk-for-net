@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A Class representing a SecurityInsightsBookmark along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsBookmarkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsBookmarkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsBookmark method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsBookmarkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsBookmarkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsBookmark method.
     /// </summary>
     public partial class SecurityInsightsBookmarkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsBookmarkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="bookmarkId"> The bookmarkId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsBookmarkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsBookmarkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsBookmarkResource(ArmClient client, SecurityInsightsBookmarkData data) : this(client, data.Id)

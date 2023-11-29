@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Spark user plugin. </summary>
     public partial class SparkUserPlugin
     {
-        /// <summary> Initializes a new instance of SparkUserPlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkUserPlugin"/>. </summary>
         /// <param name="path"> Fully qualified path to the folder containing the plugins. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public SparkUserPlugin(string path)

@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a CommunityGalleryImageVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommunityGalleryImageVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCommunityGalleryImageVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CommunityGalleryImageResource" /> using the GetCommunityGalleryImageVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommunityGalleryImageVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommunityGalleryImageVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CommunityGalleryImageResource"/> using the GetCommunityGalleryImageVersion method.
     /// </summary>
     public partial class CommunityGalleryImageVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunityGalleryImageVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="publicGalleryName"> The publicGalleryName. </param>
+        /// <param name="galleryImageName"> The galleryImageName. </param>
+        /// <param name="galleryImageVersionName"> The galleryImageVersionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CommunityGalleryImageVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunityGalleryImageVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CommunityGalleryImageVersionResource(ArmClient client, CommunityGalleryImageVersionData data) : this(client, data.Id)

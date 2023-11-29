@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The core usage details. </summary>
     public partial class DevCenterUsage
     {
-        /// <summary> Initializes a new instance of DevCenterUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterUsage"/>. </summary>
         internal DevCenterUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterUsage"/>. </summary>
         /// <param name="currentValue"> The current usage. </param>
         /// <param name="limit"> The limit integer. </param>
         /// <param name="unit"> The unit details. </param>

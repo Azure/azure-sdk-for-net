@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The response from the List namespace operation. </summary>
     internal partial class AuthorizationRuleListResult
     {
-        /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRuleListResult"/>. </summary>
         internal AuthorizationRuleListResult()
         {
             Value = new ChangeTrackingList<EventHubsAuthorizationRuleData>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRuleListResult"/>. </summary>
         /// <param name="value"> Result of the List Authorization Rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains an incomplete list of Authorization Rules. </param>
         internal AuthorizationRuleListResult(IReadOnlyList<EventHubsAuthorizationRuleData> value, string nextLink)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of clusters. </summary>
     internal partial class ClusterList
     {
-        /// <summary> Initializes a new instance of ClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterList"/>. </summary>
         internal ClusterList()
         {
             Value = new ChangeTrackingList<AvsPrivateCloudClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterList"/>. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal ClusterList(IReadOnlyList<AvsPrivateCloudClusterData> value, string nextLink)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of all the roles on the Data Box Edge device. </summary>
     internal partial class RoleList
     {
-        /// <summary> Initializes a new instance of RoleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleList"/>. </summary>
         internal RoleList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeRoleData>();
         }
 
-        /// <summary> Initializes a new instance of RoleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleList"/>. </summary>
         /// <param name="value">
         /// The Value.
         /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

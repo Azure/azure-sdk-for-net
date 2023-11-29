@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Request Report data. </summary>
     public partial class RequestReportRecordContract
     {
-        /// <summary> Initializes a new instance of RequestReportRecordContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestReportRecordContract"/>. </summary>
         internal RequestReportRecordContract()
         {
         }
 
-        /// <summary> Initializes a new instance of RequestReportRecordContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestReportRecordContract"/>. </summary>
         /// <param name="apiId"> API identifier path. /apis/{apiId}. </param>
         /// <param name="operationId"> Operation identifier path. /apis/{apiId}/operations/{operationId}. </param>
         /// <param name="productId"> Product identifier path. /products/{productId}. </param>

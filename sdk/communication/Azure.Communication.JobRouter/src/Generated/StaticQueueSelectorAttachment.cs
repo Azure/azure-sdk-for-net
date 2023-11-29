@@ -10,24 +10,18 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Describes a queue selector that will be attached to the job. </summary>
+    /// <summary> Describes a queue selector that will be attached to a job. </summary>
     public partial class StaticQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
-        /// <param name="queueSelector">
-        /// Describes a condition that must be met against a set of labels for queue
-        /// selection
-        /// </param>
-        internal StaticQueueSelectorAttachment(string kind, RouterQueueSelector queueSelector) : base(kind)
+        /// <param name="queueSelector"> The queue selector to attach. </param>
+        internal StaticQueueSelectorAttachment(QueueSelectorAttachmentKind kind, RouterQueueSelector queueSelector) : base(kind)
         {
             QueueSelector = queueSelector;
         }
 
-        /// <summary>
-        /// Describes a condition that must be met against a set of labels for queue
-        /// selection
-        /// </summary>
+        /// <summary> The queue selector to attach. </summary>
         public RouterQueueSelector QueueSelector { get; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The scheduled query rule resource for patch operations. </summary>
     public partial class ScheduledQueryRulePatch
     {
-        /// <summary> Initializes a new instance of ScheduledQueryRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRulePatch"/>. </summary>
         public ScheduledQueryRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

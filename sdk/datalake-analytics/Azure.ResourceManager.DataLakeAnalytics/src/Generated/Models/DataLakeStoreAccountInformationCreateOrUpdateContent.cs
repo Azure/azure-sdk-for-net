@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeStoreAccountInformationCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountInformationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountInformationCreateOrUpdateContent"/>. </summary>
         public DataLakeStoreAccountInformationCreateOrUpdateContent()
         {
         }

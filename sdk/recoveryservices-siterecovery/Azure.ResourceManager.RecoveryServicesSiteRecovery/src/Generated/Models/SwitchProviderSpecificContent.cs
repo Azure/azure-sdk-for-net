@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class SwitchProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of SwitchProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchProviderSpecificContent"/>. </summary>
         protected SwitchProviderSpecificContent()
         {
         }

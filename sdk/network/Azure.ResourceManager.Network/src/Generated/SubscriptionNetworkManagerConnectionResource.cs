@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a SubscriptionNetworkManagerConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionNetworkManagerConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionNetworkManagerConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionNetworkManagerConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionNetworkManagerConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionNetworkManagerConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionNetworkManagerConnection method.
     /// </summary>
     public partial class SubscriptionNetworkManagerConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionNetworkManagerConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="networkManagerConnectionName"> The networkManagerConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string networkManagerConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionNetworkManagerConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionNetworkManagerConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionNetworkManagerConnectionResource(ArmClient client, NetworkManagerConnectionData data) : this(client, data.Id)

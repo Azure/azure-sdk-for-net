@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatChoice
     {
-        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
         internal ChatChoice(int index, CompletionsFinishReason? finishReason)
@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI
             FinishReason = finishReason;
         }
 
-        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
         /// <param name="message"> The chat message for a given chat completions prompt. </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>

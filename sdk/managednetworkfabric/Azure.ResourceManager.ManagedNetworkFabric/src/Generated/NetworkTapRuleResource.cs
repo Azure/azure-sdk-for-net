@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkTapRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkTapRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkTapRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkTapRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkTapRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkTapRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkTapRule method.
     /// </summary>
     public partial class NetworkTapRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkTapRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkTapRuleName"> The networkTapRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkTapRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkTapRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkTapRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkTapRuleResource(ArmClient client, NetworkTapRuleData data) : this(client, data.Id)

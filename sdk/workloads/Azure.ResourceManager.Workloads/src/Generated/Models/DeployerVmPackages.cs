@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the url and storage account ID where deployer VM packages are uploaded. </summary>
     public partial class DeployerVmPackages
     {
-        /// <summary> Initializes a new instance of DeployerVmPackages. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeployerVmPackages"/>. </summary>
         public DeployerVmPackages()
         {
         }
 
-        /// <summary> Initializes a new instance of DeployerVmPackages. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeployerVmPackages"/>. </summary>
         /// <param name="packageUri"> The URL to the deployer VM packages file. </param>
         /// <param name="storageAccountId"> The deployer VM packages storage account id. </param>
         internal DeployerVmPackages(Uri packageUri, string storageAccountId)

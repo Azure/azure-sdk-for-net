@@ -169,31 +169,55 @@ namespace Azure.Storage.DataMovement
                 }
 
                 StorageResource current = enumerator.Current;
-                if (!existingSources.Contains(current.Uri))
+
+                if (current.IsContainer)
                 {
+                    // Create sub-container
                     string containerUriPath = _sourceResourceContainer.Uri.GetPath();
-                    string sourceName = string.IsNullOrEmpty(containerUriPath)
+                    string subContainerPath = string.IsNullOrEmpty(containerUriPath)
                         ? current.Uri.GetPath()
                         : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
+                    StorageResourceContainer subContainer =
+                        _destinationResourceContainer.GetChildStorageResourceContainer(subContainerPath);
 
-                    StreamToUriJobPart part;
                     try
                     {
-                        part = await StreamToUriJobPart.CreateJobPartAsync(
-                            job: this,
-                            partNumber: partNumber,
-                            sourceResource: (StorageResourceItem)current,
-                            destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName))
-                            .ConfigureAwait(false);
-                        AppendJobPart(part);
+                        await subContainer.CreateIfNotExistsAsync(_cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
                         await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                         yield break;
                     }
-                    yield return part;
-                    partNumber++;
+                }
+                else
+                {
+                    if (!existingSources.Contains(current.Uri))
+                    {
+                        string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                        string sourceName = string.IsNullOrEmpty(containerUriPath)
+                            ? current.Uri.GetPath()
+                            : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
+
+                        StreamToUriJobPart part;
+                        try
+                        {
+                            part = await StreamToUriJobPart.CreateJobPartAsync(
+                                job: this,
+                                partNumber: partNumber,
+                                sourceResource: (StorageResourceItem)current,
+                                destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName))
+                                .ConfigureAwait(false);
+                            AppendJobPart(part);
+                        }
+                        catch (Exception ex)
+                        {
+                            await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+                            yield break;
+                        }
+                        yield return part;
+                        partNumber++;
+                    }
                 }
             }
         }

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Datadog
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MonitoringTagRuleResource" /> and their operations.
-    /// Each <see cref="MonitoringTagRuleResource" /> in the collection will belong to the same instance of <see cref="DatadogMonitorResource" />.
-    /// To get a <see cref="MonitoringTagRuleCollection" /> instance call the GetMonitoringTagRules method from an instance of <see cref="DatadogMonitorResource" />.
+    /// A class representing a collection of <see cref="MonitoringTagRuleResource"/> and their operations.
+    /// Each <see cref="MonitoringTagRuleResource"/> in the collection will belong to the same instance of <see cref="DatadogMonitorResource"/>.
+    /// To get a <see cref="MonitoringTagRuleCollection"/> instance call the GetMonitoringTagRules method from an instance of <see cref="DatadogMonitorResource"/>.
     /// </summary>
     public partial class MonitoringTagRuleCollection : ArmCollection, IEnumerable<MonitoringTagRuleResource>, IAsyncEnumerable<MonitoringTagRuleResource>
     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Datadog
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ruleSetName"> Rule set name. </param>
-        /// <param name="data"> The MonitoringTagRule to use. </param>
+        /// <param name="data"> The <see cref="MonitoringTagRuleData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Datadog
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ruleSetName"> Rule set name. </param>
-        /// <param name="data"> The MonitoringTagRule to use. </param>
+        /// <param name="data"> The <see cref="MonitoringTagRuleData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoringTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitoringTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitoringTagRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoringTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitoringTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitoringTagRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

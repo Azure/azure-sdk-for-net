@@ -21,9 +21,9 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationConnectionResource" /> and their operations.
-    /// Each <see cref="AutomationConnectionResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get an <see cref="AutomationConnectionCollection" /> instance call the GetAutomationConnections method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="AutomationConnectionResource"/> and their operations.
+    /// Each <see cref="AutomationConnectionResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get an <see cref="AutomationConnectionCollection"/> instance call the GetAutomationConnections method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationConnectionCollection : ArmCollection, IEnumerable<AutomationConnectionResource>, IAsyncEnumerable<AutomationConnectionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationConnectionConnectionRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationConnectionConnectionRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

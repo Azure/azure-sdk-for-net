@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> The status of the blueprint. This field is readonly. </summary>
     public partial class BlueprintStatus : BlueprintResourceStatusBase
     {
-        /// <summary> Initializes a new instance of BlueprintStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintStatus"/>. </summary>
         internal BlueprintStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of BlueprintStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintStatus"/>. </summary>
         /// <param name="timeCreated"> Creation time of this blueprint definition. </param>
         /// <param name="lastModified"> Last modified time of this blueprint definition. </param>
         internal BlueprintStatus(DateTimeOffset? timeCreated, DateTimeOffset? lastModified) : base(timeCreated, lastModified)

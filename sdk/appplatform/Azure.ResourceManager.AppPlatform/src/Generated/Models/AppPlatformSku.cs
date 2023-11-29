@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Sku of Azure Spring Apps. </summary>
     public partial class AppPlatformSku
     {
-        /// <summary> Initializes a new instance of AppPlatformSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSku"/>. </summary>
         public AppPlatformSku()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSku"/>. </summary>
         /// <param name="name"> Name of the Sku. </param>
         /// <param name="tier"> Tier of the Sku. </param>
         /// <param name="capacity"> Current capacity of the target resource. </param>

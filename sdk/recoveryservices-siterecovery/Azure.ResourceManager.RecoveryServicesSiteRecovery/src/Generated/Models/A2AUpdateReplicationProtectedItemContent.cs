@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMage Azure V2 input to update replication protected item. </summary>
     public partial class A2AUpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent
     {
-        /// <summary> Initializes a new instance of A2AUpdateReplicationProtectedItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AUpdateReplicationProtectedItemContent"/>. </summary>
         public A2AUpdateReplicationProtectedItemContent()
         {
             ManagedDiskUpdateDetails = new ChangeTrackingList<A2AVmManagedDiskUpdateDetails>();

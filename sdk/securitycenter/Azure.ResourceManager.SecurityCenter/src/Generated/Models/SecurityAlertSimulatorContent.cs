@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Alert Simulator request body. </summary>
     public partial class SecurityAlertSimulatorContent
     {
-        /// <summary> Initializes a new instance of SecurityAlertSimulatorContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorContent"/>. </summary>
         public SecurityAlertSimulatorContent()
         {
         }

@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletionsOptions
     {
-        /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
         /// <param name="messages">
         /// The collection of context messages associated with this chat completions request.
         /// Typical usage begins with a chat message for the System role that provides instructions for
@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI
         /// decrease the likelihood of the model repeating the same statements verbatim.
         /// </param>
         /// <param name="internalShouldStreamResponse"> A value indicating whether chat completions should be streamed for this request. </param>
-        /// <param name="internalNonAzureModelName">
+        /// <param name="deploymentName">
         /// The model name to provide as part of this completions request.
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
@@ -89,7 +89,7 @@ namespace Azure.AI.OpenAI
         ///   The configuration entries for Azure OpenAI chat extensions that use them.
         ///   This additional specification is only compatible with Azure OpenAI.
         /// </param>
-        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources)
+        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources)
         {
             Messages = messages;
             Functions = functions;
@@ -104,7 +104,7 @@ namespace Azure.AI.OpenAI
             PresencePenalty = presencePenalty;
             FrequencyPenalty = frequencyPenalty;
             InternalShouldStreamResponse = internalShouldStreamResponse;
-            InternalNonAzureModelName = internalNonAzureModelName;
+            DeploymentName = deploymentName;
             InternalAzureExtensionsDataSources = internalAzureExtensionsDataSources;
         }
 

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The parameters of the export operation. </summary>
     public partial class DevTestLabExportResourceUsageContent
     {
-        /// <summary> Initializes a new instance of DevTestLabExportResourceUsageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabExportResourceUsageContent"/>. </summary>
         public DevTestLabExportResourceUsageContent()
         {
         }

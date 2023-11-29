@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// A Class representing a DataReplicationVault along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataReplicationVaultResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataReplicationVaultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataReplicationVault method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationVaultResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationVaultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataReplicationVault method.
     /// </summary>
     public partial class DataReplicationVaultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataReplicationVaultResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataReplicationVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationVaultResource(ArmClient client, DataReplicationVaultData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationEmailConfigurationResources and their operations over a DataReplicationEmailConfigurationResource. </returns>
         public virtual DataReplicationEmailConfigurationCollection GetDataReplicationEmailConfigurations()
         {
-            return GetCachedClient(Client => new DataReplicationEmailConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new DataReplicationEmailConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="emailConfigurationName"> The email configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="emailConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="emailConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataReplicationEmailConfigurationResource>> GetDataReplicationEmailConfigurationAsync(string emailConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="emailConfigurationName"> The email configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="emailConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="emailConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataReplicationEmailConfigurationResource> GetDataReplicationEmailConfiguration(string emailConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationEventResources and their operations over a DataReplicationEventResource. </returns>
         public virtual DataReplicationEventCollection GetDataReplicationEvents()
         {
-            return GetCachedClient(Client => new DataReplicationEventCollection(Client, Id));
+            return GetCachedClient(client => new DataReplicationEventCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataReplicationEventResource>> GetDataReplicationEventAsync(string eventName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="eventName"> The event name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataReplicationEventResource> GetDataReplicationEvent(string eventName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationPolicyResources and their operations over a DataReplicationPolicyResource. </returns>
         public virtual DataReplicationPolicyCollection GetDataReplicationPolicies()
         {
-            return GetCachedClient(Client => new DataReplicationPolicyCollection(Client, Id));
+            return GetCachedClient(client => new DataReplicationPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +220,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataReplicationPolicyResource>> GetDataReplicationPolicyAsync(string policyName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +243,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataReplicationPolicyResource> GetDataReplicationPolicy(string policyName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationProtectedItemResources and their operations over a DataReplicationProtectedItemResource. </returns>
         public virtual DataReplicationProtectedItemCollection GetDataReplicationProtectedItems()
         {
-            return GetCachedClient(Client => new DataReplicationProtectedItemCollection(Client, Id));
+            return GetCachedClient(client => new DataReplicationProtectedItemCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +273,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataReplicationProtectedItemResource>> GetDataReplicationProtectedItemAsync(string protectedItemName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +296,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataReplicationProtectedItemResource> GetDataReplicationProtectedItem(string protectedItemName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationReplicationExtensionResources and their operations over a DataReplicationReplicationExtensionResource. </returns>
         public virtual DataReplicationReplicationExtensionCollection GetDataReplicationReplicationExtensions()
         {
-            return GetCachedClient(Client => new DataReplicationReplicationExtensionCollection(Client, Id));
+            return GetCachedClient(client => new DataReplicationReplicationExtensionCollection(client, Id));
         }
 
         /// <summary>
@@ -323,8 +326,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataReplicationReplicationExtensionResource>> GetDataReplicationReplicationExtensionAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +349,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="replicationExtensionName"> The replication extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataReplicationReplicationExtensionResource> GetDataReplicationReplicationExtension(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
@@ -358,7 +361,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationWorkflowResources and their operations over a DataReplicationWorkflowResource. </returns>
         public virtual DataReplicationWorkflowCollection GetDataReplicationWorkflows()
         {
-            return GetCachedClient(Client => new DataReplicationWorkflowCollection(Client, Id));
+            return GetCachedClient(client => new DataReplicationWorkflowCollection(client, Id));
         }
 
         /// <summary>
@@ -376,8 +379,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataReplicationWorkflowResource>> GetDataReplicationWorkflowAsync(string jobName, CancellationToken cancellationToken = default)
         {
@@ -399,8 +402,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="jobName"> The job (workflow) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataReplicationWorkflowResource> GetDataReplicationWorkflow(string jobName, CancellationToken cancellationToken = default)
         {

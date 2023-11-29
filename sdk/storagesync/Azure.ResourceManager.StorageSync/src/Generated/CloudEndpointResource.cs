@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
     /// A Class representing a CloudEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CloudEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCloudEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageSyncGroupResource" /> using the GetCloudEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CloudEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCloudEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageSyncGroupResource"/> using the GetCloudEndpoint method.
     /// </summary>
     public partial class CloudEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageSyncServiceName"> The storageSyncServiceName. </param>
+        /// <param name="syncGroupName"> The syncGroupName. </param>
+        /// <param name="cloudEndpointName"> The cloudEndpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}/cloudEndpoints/{cloudEndpointName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.StorageSync
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CloudEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CloudEndpointResource(ArmClient client, CloudEndpointData data) : this(client, data.Id)

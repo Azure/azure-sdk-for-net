@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ControlPlaneNodePatchConfiguration represents the properties of the control plane that can be patched for this Kubernetes cluster. </summary>
     internal partial class ControlPlaneNodePatchConfiguration
     {
-        /// <summary> Initializes a new instance of ControlPlaneNodePatchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneNodePatchConfiguration"/>. </summary>
         public ControlPlaneNodePatchConfiguration()
         {
         }

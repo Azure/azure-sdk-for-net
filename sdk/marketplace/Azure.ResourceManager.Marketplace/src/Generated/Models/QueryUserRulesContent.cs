@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Query user's rules properties. </summary>
     public partial class QueryUserRulesContent
     {
-        /// <summary> Initializes a new instance of QueryUserRulesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryUserRulesContent"/>. </summary>
         public QueryUserRulesContent()
         {
             SubscriptionIds = new ChangeTrackingList<string>();

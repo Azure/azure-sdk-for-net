@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudRackData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudRackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="availabilityZone"> The value that will be used for machines in this rack to represent the availability zones that can be referenced by Hybrid AKS Clusters for node arrangement. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud
             RackSkuId = rackSkuId;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudRackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

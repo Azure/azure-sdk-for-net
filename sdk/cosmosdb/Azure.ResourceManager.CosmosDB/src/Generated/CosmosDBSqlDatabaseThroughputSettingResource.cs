@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBSqlDatabaseThroughputSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBSqlDatabaseThroughputSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBSqlDatabaseResource" /> using the GetCosmosDBSqlDatabaseThroughputSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBSqlDatabaseThroughputSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBSqlDatabaseResource"/> using the GetCosmosDBSqlDatabaseThroughputSetting method.
     /// </summary>
     public partial class CosmosDBSqlDatabaseThroughputSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBSqlDatabaseThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBSqlDatabaseThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)

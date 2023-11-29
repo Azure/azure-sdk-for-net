@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// <summary> The DataLakeStoreAccountInformationCollectionGetAllOptions. </summary>
     public partial class DataLakeStoreAccountInformationCollectionGetAllOptions
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountInformationCollectionGetAllOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountInformationCollectionGetAllOptions"/>. </summary>
         public DataLakeStoreAccountInformationCollectionGetAllOptions()
         {
         }

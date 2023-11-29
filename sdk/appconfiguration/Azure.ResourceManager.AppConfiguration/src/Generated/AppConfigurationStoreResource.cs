@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A Class representing an AppConfigurationStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppConfigurationStoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppConfigurationStoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppConfigurationStore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppConfigurationStoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppConfigurationStoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppConfigurationStore method.
     /// </summary>
     public partial class AppConfigurationStoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppConfigurationStoreResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="configStoreName"> The configStoreName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configStoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}";
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppConfigurationStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppConfigurationStoreResource(ArmClient client, AppConfigurationStoreData data) : this(client, data.Id)
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationPrivateEndpointConnectionResources and their operations over a AppConfigurationPrivateEndpointConnectionResource. </returns>
         public virtual AppConfigurationPrivateEndpointConnectionCollection GetAppConfigurationPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new AppConfigurationPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AppConfigurationPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +115,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationPrivateEndpointConnectionResource>> GetAppConfigurationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationPrivateEndpointConnectionResource> GetAppConfigurationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -147,7 +150,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationPrivateLinkResources and their operations over a AppConfigurationPrivateLinkResource. </returns>
         public virtual AppConfigurationPrivateLinkResourceCollection GetAppConfigurationPrivateLinkResources()
         {
-            return GetCachedClient(Client => new AppConfigurationPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new AppConfigurationPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -165,8 +168,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationPrivateLinkResource>> GetAppConfigurationPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -188,8 +191,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationPrivateLinkResource> GetAppConfigurationPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
@@ -200,7 +203,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationKeyValueResources and their operations over a AppConfigurationKeyValueResource. </returns>
         public virtual AppConfigurationKeyValueCollection GetAppConfigurationKeyValues()
         {
-            return GetCachedClient(Client => new AppConfigurationKeyValueCollection(Client, Id));
+            return GetCachedClient(client => new AppConfigurationKeyValueCollection(client, Id));
         }
 
         /// <summary>
@@ -218,8 +221,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationKeyValueResource>> GetAppConfigurationKeyValueAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
@@ -241,8 +244,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationKeyValueResource> GetAppConfigurationKeyValue(string keyValueName, CancellationToken cancellationToken = default)
         {
@@ -472,7 +475,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppConfigurationStoreApiKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppConfigurationStoreApiKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppConfigurationStoreApiKey> GetKeysAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
@@ -495,7 +498,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppConfigurationStoreApiKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppConfigurationStoreApiKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppConfigurationStoreApiKey> GetKeys(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);

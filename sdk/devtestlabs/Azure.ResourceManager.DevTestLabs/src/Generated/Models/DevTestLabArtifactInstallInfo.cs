@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of an artifact. </summary>
     public partial class DevTestLabArtifactInstallInfo
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactInstallInfo"/>. </summary>
         public DevTestLabArtifactInstallInfo()
         {
             Parameters = new ChangeTrackingList<DevTestLabArtifactParameter>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactInstallInfo"/>. </summary>
         /// <param name="artifactId"> The artifact's identifier. </param>
         /// <param name="artifactTitle"> The artifact's title. </param>
         /// <param name="parameters"> The parameters of the artifact. </param>

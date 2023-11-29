@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBSqlUserDefinedFunctionResource" /> and their operations.
-    /// Each <see cref="CosmosDBSqlUserDefinedFunctionResource" /> in the collection will belong to the same instance of <see cref="CosmosDBSqlContainerResource" />.
-    /// To get a <see cref="CosmosDBSqlUserDefinedFunctionCollection" /> instance call the GetCosmosDBSqlUserDefinedFunctions method from an instance of <see cref="CosmosDBSqlContainerResource" />.
+    /// A class representing a collection of <see cref="CosmosDBSqlUserDefinedFunctionResource"/> and their operations.
+    /// Each <see cref="CosmosDBSqlUserDefinedFunctionResource"/> in the collection will belong to the same instance of <see cref="CosmosDBSqlContainerResource"/>.
+    /// To get a <see cref="CosmosDBSqlUserDefinedFunctionCollection"/> instance call the GetCosmosDBSqlUserDefinedFunctions method from an instance of <see cref="CosmosDBSqlContainerResource"/>.
     /// </summary>
     public partial class CosmosDBSqlUserDefinedFunctionCollection : ArmCollection, IEnumerable<CosmosDBSqlUserDefinedFunctionResource>, IAsyncEnumerable<CosmosDBSqlUserDefinedFunctionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBSqlUserDefinedFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBSqlUserDefinedFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBSqlUserDefinedFunctionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateListSqlUserDefinedFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBSqlUserDefinedFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBSqlUserDefinedFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBSqlUserDefinedFunctionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateListSqlUserDefinedFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

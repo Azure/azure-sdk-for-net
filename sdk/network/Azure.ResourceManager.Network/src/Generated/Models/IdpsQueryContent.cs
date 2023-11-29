@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Will describe the query to run against the IDPS signatures DB. </summary>
     public partial class IdpsQueryContent
     {
-        /// <summary> Initializes a new instance of IdpsQueryContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryContent"/>. </summary>
         public IdpsQueryContent()
         {
             Filters = new ChangeTrackingList<IdpsQueryFilterItems>();

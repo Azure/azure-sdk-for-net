@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of scope connections. </summary>
     internal partial class ScopeConnectionListResult
     {
-        /// <summary> Initializes a new instance of ScopeConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeConnectionListResult"/>. </summary>
         internal ScopeConnectionListResult()
         {
             Value = new ChangeTrackingList<ScopeConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ScopeConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeConnectionListResult"/>. </summary>
         /// <param name="value"> List of scope connections. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         internal ScopeConnectionListResult(IReadOnlyList<ScopeConnectionData> value, string nextLink)

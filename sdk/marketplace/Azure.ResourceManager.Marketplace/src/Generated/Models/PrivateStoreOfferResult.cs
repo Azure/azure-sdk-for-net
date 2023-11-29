@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The PrivateStoreOfferResult. </summary>
     public partial class PrivateStoreOfferResult
     {
-        /// <summary> Initializes a new instance of PrivateStoreOfferResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferResult"/>. </summary>
         internal PrivateStoreOfferResult()
         {
             SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Plans = new ChangeTrackingList<PrivateStorePlan>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreOfferResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferResult"/>. </summary>
         /// <param name="uniqueOfferId"> Offers unique id. </param>
         /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>

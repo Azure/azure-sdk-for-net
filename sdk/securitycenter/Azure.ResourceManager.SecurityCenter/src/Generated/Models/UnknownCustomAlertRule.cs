@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The UnknownCustomAlertRule. </summary>
     internal partial class UnknownCustomAlertRule : CustomAlertRule
     {
-        /// <summary> Initializes a new instance of UnknownCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>

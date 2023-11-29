@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> Specifies which key should be generated. </summary>
     public partial class RegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of RegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> The key to regenerate. </param>
         public RegenerateKeyContent(FluidRelayKeyName keyName)
         {

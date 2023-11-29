@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> Request parameters to transfer billing subscription. </summary>
     public partial class BillingSubscriptionMoveContent
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionMoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMoveContent"/>. </summary>
         public BillingSubscriptionMoveContent()
         {
         }

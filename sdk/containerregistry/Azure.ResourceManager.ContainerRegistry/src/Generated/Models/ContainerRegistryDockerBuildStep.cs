@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The Docker build step. </summary>
     public partial class ContainerRegistryDockerBuildStep : ContainerRegistryTaskStepProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryDockerBuildStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryDockerBuildStep"/>. </summary>
         /// <param name="dockerFilePath"> The Docker file path relative to the source context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dockerFilePath"/> is null. </exception>
         public ContainerRegistryDockerBuildStep(string dockerFilePath)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryTaskStepType = ContainerRegistryTaskStepType.Docker;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryDockerBuildStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryDockerBuildStep"/>. </summary>
         /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>

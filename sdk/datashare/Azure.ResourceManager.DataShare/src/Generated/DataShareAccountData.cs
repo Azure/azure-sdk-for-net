@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class DataShareAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataShareAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Identity Info on the Account. Current supported identity types: SystemAssigned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataShare
             Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of DataShareAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// </summary>
     public partial class ContainerServiceFleetUpdateRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunData"/>. </summary>
         public ContainerServiceFleetUpdateRunData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

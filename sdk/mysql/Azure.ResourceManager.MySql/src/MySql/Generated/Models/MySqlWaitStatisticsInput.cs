@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Input to get wait statistics. </summary>
     public partial class MySqlWaitStatisticsInput
     {
-        /// <summary> Initializes a new instance of MySqlWaitStatisticsInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsInput"/>. </summary>
         /// <param name="observationStartOn"> Observation start time. </param>
         /// <param name="observationEndOn"> Observation end time. </param>
         /// <param name="aggregationWindow"> Aggregation interval type in ISO 8601 format. </param>

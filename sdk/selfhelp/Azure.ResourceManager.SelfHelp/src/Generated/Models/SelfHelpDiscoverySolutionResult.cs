@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Discovery response. </summary>
     internal partial class SelfHelpDiscoverySolutionResult
     {
-        /// <summary> Initializes a new instance of SelfHelpDiscoverySolutionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiscoverySolutionResult"/>. </summary>
         internal SelfHelpDiscoverySolutionResult()
         {
             Value = new ChangeTrackingList<SelfHelpSolutionMetadata>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiscoverySolutionResult. </summary>
-        /// <param name="value"> The list of solution metadata. </param>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiscoverySolutionResult"/>. </summary>
+        /// <param name="value"> The list of metadata. </param>
         /// <param name="nextLink"> The link used to get the next page of solution metadata. </param>
         internal SelfHelpDiscoverySolutionResult(IReadOnlyList<SelfHelpSolutionMetadata> value, string nextLink)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             NextLink = nextLink;
         }
 
-        /// <summary> The list of solution metadata. </summary>
+        /// <summary> The list of metadata. </summary>
         public IReadOnlyList<SelfHelpSolutionMetadata> Value { get; }
         /// <summary> The link used to get the next page of solution metadata. </summary>
         public string NextLink { get; }

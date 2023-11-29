@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The UnknownThreeTierCustomResourceNames. </summary>
     internal partial class UnknownThreeTierCustomResourceNames : ThreeTierCustomResourceNames
     {
-        /// <summary> Initializes a new instance of UnknownThreeTierCustomResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownThreeTierCustomResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
         internal UnknownThreeTierCustomResourceNames(SapNamingPatternType namingPatternType) : base(namingPatternType)
         {

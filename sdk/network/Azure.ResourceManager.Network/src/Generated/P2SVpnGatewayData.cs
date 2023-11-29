@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class P2SVpnGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of P2SVpnGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="P2SVpnGatewayData"/>. </summary>
         public P2SVpnGatewayData()
         {
             P2SConnectionConfigurations = new ChangeTrackingList<P2SConnectionConfiguration>();
             CustomDnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of P2SVpnGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="P2SVpnGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

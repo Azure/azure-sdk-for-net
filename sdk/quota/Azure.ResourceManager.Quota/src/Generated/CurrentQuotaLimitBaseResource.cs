@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A Class representing a CurrentQuotaLimitBase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CurrentQuotaLimitBaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCurrentQuotaLimitBaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetCurrentQuotaLimitBase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CurrentQuotaLimitBaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCurrentQuotaLimitBaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCurrentQuotaLimitBase method.
     /// </summary>
     public partial class CurrentQuotaLimitBaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CurrentQuotaLimitBaseResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string resourceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Quota/quotas/{resourceName}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Quota
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CurrentQuotaLimitBaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CurrentQuotaLimitBaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CurrentQuotaLimitBaseResource(ArmClient client, CurrentQuotaLimitBaseData data) : this(client, data.Id)

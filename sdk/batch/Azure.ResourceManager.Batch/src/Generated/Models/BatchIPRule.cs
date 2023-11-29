@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Rule to filter client IP address. </summary>
     public partial class BatchIPRule
     {
-        /// <summary> Initializes a new instance of BatchIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchIPRule"/>. </summary>
         /// <param name="value"> IPv4 address, or IPv4 address range in CIDR format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchIPRule(string value)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Batch.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of BatchIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchIPRule"/>. </summary>
         /// <param name="action"> Action when client IP address is matched. </param>
         /// <param name="value"> IPv4 address, or IPv4 address range in CIDR format. </param>
         internal BatchIPRule(BatchIPRuleAction action, string value)

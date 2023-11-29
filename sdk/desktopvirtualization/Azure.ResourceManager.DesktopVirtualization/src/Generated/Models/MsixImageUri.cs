@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Represents URI referring to MSIX Image. </summary>
     public partial class MsixImageUri
     {
-        /// <summary> Initializes a new instance of MsixImageUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixImageUri"/>. </summary>
         public MsixImageUri()
         {
         }

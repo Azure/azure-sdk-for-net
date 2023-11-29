@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing a HybridComputeMachineExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridComputeMachineExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridComputeMachineExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HybridComputeMachineResource" /> using the GetHybridComputeMachineExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeMachineExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputeMachineExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridComputeMachineResource"/> using the GetHybridComputeMachineExtension method.
     /// </summary>
     public partial class HybridComputeMachineExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridComputeMachineExtensionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="machineName"> The machineName. </param>
+        /// <param name="extensionName"> The extensionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName, string extensionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridComputeMachineExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputeMachineExtensionResource(ArmClient client, HybridComputeMachineExtensionData data) : this(client, data.Id)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
     public partial class WebPubSubNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of WebPubSubNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNameAvailabilityContent"/>. </summary>
         /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </param>
         /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>

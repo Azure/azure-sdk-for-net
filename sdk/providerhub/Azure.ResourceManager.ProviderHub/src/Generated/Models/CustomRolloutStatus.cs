@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CustomRolloutStatus. </summary>
     public partial class CustomRolloutStatus
     {
-        /// <summary> Initializes a new instance of CustomRolloutStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRolloutStatus"/>. </summary>
         public CustomRolloutStatus()
         {
             CompletedRegions = new ChangeTrackingList<AzureLocation>();
             FailedOrSkippedRegions = new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of CustomRolloutStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRolloutStatus"/>. </summary>
         /// <param name="completedRegions"></param>
         /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
         internal CustomRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions)

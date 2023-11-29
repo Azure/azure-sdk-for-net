@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
     public partial class CosmosDBContainerPartitionKey
     {
-        /// <summary> Initializes a new instance of CosmosDBContainerPartitionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBContainerPartitionKey"/>. </summary>
         public CosmosDBContainerPartitionKey()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBContainerPartitionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBContainerPartitionKey"/>. </summary>
         /// <param name="paths"> List of paths using which data within the container can be partitioned. </param>
         /// <param name="kind"> Indicates the kind of algorithm used for partitioning. For MultiHash, multiple partition keys (upto three maximum) are supported for container create. </param>
         /// <param name="version"> Indicates the version of the partition key definition. </param>

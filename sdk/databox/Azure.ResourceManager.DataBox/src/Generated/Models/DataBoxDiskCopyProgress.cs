@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> DataBox Disk Copy Progress. </summary>
     public partial class DataBoxDiskCopyProgress
     {
-        /// <summary> Initializes a new instance of DataBoxDiskCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyProgress"/>. </summary>
         internal DataBoxDiskCopyProgress()
         {
             Actions = new ChangeTrackingList<CustomerResolutionCode>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyProgress"/>. </summary>
         /// <param name="serialNumber"> The serial number of the disk. </param>
         /// <param name="bytesCopied"> Bytes copied during the copy of disk. </param>
         /// <param name="percentComplete"> Indicates the percentage completed for the copy of the disk. </param>

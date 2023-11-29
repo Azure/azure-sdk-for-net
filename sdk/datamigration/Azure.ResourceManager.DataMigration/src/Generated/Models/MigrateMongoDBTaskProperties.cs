@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that migrates data between MongoDB data sources. </summary>
     public partial class MigrateMongoDBTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMongoDBTaskProperties"/>. </summary>
         public MigrateMongoDBTaskProperties()
         {
             Output = new ChangeTrackingList<MongoDBProgress>();
             TaskType = TaskType.MigrateMongoDB;
         }
 
-        /// <summary> Initializes a new instance of MigrateMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMongoDBTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

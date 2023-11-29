@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBuildService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBuildServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBuildServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformBuildService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBuildServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBuildServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformBuildService method.
     /// </summary>
     public partial class AppPlatformBuildServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformBuildServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="buildServiceName"> The buildServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBuildServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBuildServiceResource(ArmClient client, AppPlatformBuildServiceData data) : this(client, data.Id)
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformBuildResources and their operations over a AppPlatformBuildResource. </returns>
         public virtual AppPlatformBuildCollection GetAppPlatformBuilds()
         {
-            return GetCachedClient(Client => new AppPlatformBuildCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformBuildCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +113,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildName"> The name of the build resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformBuildResource>> GetAppPlatformBuildAsync(string buildName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +136,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildName"> The name of the build resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformBuildResource> GetAppPlatformBuild(string buildName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformSupportedBuildpackResources and their operations over a AppPlatformSupportedBuildpackResource. </returns>
         public virtual AppPlatformSupportedBuildpackCollection GetAppPlatformSupportedBuildpacks()
         {
-            return GetCachedClient(Client => new AppPlatformSupportedBuildpackCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformSupportedBuildpackCollection(client, Id));
         }
 
         /// <summary>
@@ -162,8 +166,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildpackName"> The name of the buildpack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildpackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildpackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformSupportedBuildpackResource>> GetAppPlatformSupportedBuildpackAsync(string buildpackName, CancellationToken cancellationToken = default)
         {
@@ -185,8 +189,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildpackName"> The name of the buildpack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildpackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildpackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformSupportedBuildpackResource> GetAppPlatformSupportedBuildpack(string buildpackName, CancellationToken cancellationToken = default)
         {
@@ -197,7 +201,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformSupportedStackResources and their operations over a AppPlatformSupportedStackResource. </returns>
         public virtual AppPlatformSupportedStackCollection GetAppPlatformSupportedStacks()
         {
-            return GetCachedClient(Client => new AppPlatformSupportedStackCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformSupportedStackCollection(client, Id));
         }
 
         /// <summary>
@@ -215,8 +219,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="stackName"> The name of the stack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformSupportedStackResource>> GetAppPlatformSupportedStackAsync(string stackName, CancellationToken cancellationToken = default)
         {
@@ -238,8 +242,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="stackName"> The name of the stack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformSupportedStackResource> GetAppPlatformSupportedStack(string stackName, CancellationToken cancellationToken = default)
         {
@@ -250,7 +254,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformBuilderResources and their operations over a AppPlatformBuilderResource. </returns>
         public virtual AppPlatformBuilderCollection GetAppPlatformBuilders()
         {
-            return GetCachedClient(Client => new AppPlatformBuilderCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformBuilderCollection(client, Id));
         }
 
         /// <summary>
@@ -268,8 +272,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="builderName"> The name of the builder resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformBuilderResource>> GetAppPlatformBuilderAsync(string builderName, CancellationToken cancellationToken = default)
         {
@@ -291,8 +295,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="builderName"> The name of the builder resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformBuilderResource> GetAppPlatformBuilder(string builderName, CancellationToken cancellationToken = default)
         {
@@ -303,7 +307,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformBuildServiceAgentPoolResources and their operations over a AppPlatformBuildServiceAgentPoolResource. </returns>
         public virtual AppPlatformBuildServiceAgentPoolCollection GetAppPlatformBuildServiceAgentPools()
         {
-            return GetCachedClient(Client => new AppPlatformBuildServiceAgentPoolCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformBuildServiceAgentPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -321,8 +325,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="agentPoolName"> The name of the build service agent pool resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformBuildServiceAgentPoolResource>> GetAppPlatformBuildServiceAgentPoolAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
@@ -344,8 +348,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="agentPoolName"> The name of the build service agent pool resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformBuildServiceAgentPoolResource> GetAppPlatformBuildServiceAgentPool(string agentPoolName, CancellationToken cancellationToken = default)
         {

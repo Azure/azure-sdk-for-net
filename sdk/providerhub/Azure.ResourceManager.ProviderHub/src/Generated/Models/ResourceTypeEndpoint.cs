@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeEndpoint. </summary>
     public partial class ResourceTypeEndpoint
     {
-        /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
         public ResourceTypeEndpoint()
         {
             ApiVersions = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Extensions = new ChangeTrackingList<ResourceTypeExtension>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
         /// <param name="isEnabled"></param>
         /// <param name="apiVersions"></param>
         /// <param name="locations"></param>

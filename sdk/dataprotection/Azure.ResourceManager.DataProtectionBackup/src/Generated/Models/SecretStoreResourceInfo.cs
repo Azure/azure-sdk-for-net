@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Class representing a secret store resource. </summary>
     public partial class SecretStoreResourceInfo
     {
-        /// <summary> Initializes a new instance of SecretStoreResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretStoreResourceInfo"/>. </summary>
         /// <param name="secretStoreType"> Gets or sets the type of secret store. </param>
         public SecretStoreResourceInfo(SecretStoreType secretStoreType)
         {
             SecretStoreType = secretStoreType;
         }
 
-        /// <summary> Initializes a new instance of SecretStoreResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretStoreResourceInfo"/>. </summary>
         /// <param name="uri"> Uri to get to the resource. </param>
         /// <param name="secretStoreType"> Gets or sets the type of secret store. </param>
         /// <param name="value"> Gets or sets value stored in secret store resource. </param>

@@ -8,31 +8,25 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// The matching mode to be applied to this job.
-    ///
-    /// Supported types:
-    ///
-    ///
-    /// QueueAndMatchMode: Used when matching worker to a job is required to be
-    /// done right after job is queued.
-    /// ScheduleAndSuspendMode: Used for scheduling
-    /// jobs to be queued at a future time. At specified time, matching of a worker to
-    /// the job will not start automatically.
-    /// SuspendMode: Used when matching workers
-    /// to a job needs to be suspended.
+    /// A matching mode of one of the following types:
+    /// QueueAndMatchMode: Used when matching worker to a job is required to be done right after job is queued.
+    /// ScheduleAndSuspendMode: Used for scheduling jobs to be queued at a future time. At specified time, matching of a worker to the job will not start automatically.
+    /// SuspendMode: Used when matching workers to a job needs to be suspended.
     /// Please note <see cref="JobMatchingMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ScheduleAndSuspendMode"/>, <see cref="QueueAndMatchMode"/> and <see cref="SuspendMode"/>.
     /// </summary>
     public abstract partial class JobMatchingMode
     {
-        /// <summary> Initializes a new instance of JobMatchingMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobMatchingMode"/>. </summary>
+        protected JobMatchingMode()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobMatchingMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
-        internal JobMatchingMode(string kind)
+        internal JobMatchingMode(JobMatchingModeKind kind)
         {
             Kind = kind;
         }
-
-        /// <summary> The type discriminator describing a sub-type of JobMatchingMode. </summary>
-        internal string Kind { get; set; }
     }
 }

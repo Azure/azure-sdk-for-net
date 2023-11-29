@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of NetApp account resources. </summary>
     internal partial class NetAppAccountList
     {
-        /// <summary> Initializes a new instance of NetAppAccountList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountList"/>. </summary>
         internal NetAppAccountList()
         {
             Value = new ChangeTrackingList<NetAppAccountData>();
         }
 
-        /// <summary> Initializes a new instance of NetAppAccountList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountList"/>. </summary>
         /// <param name="value"> Multiple NetApp accounts. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal NetAppAccountList(IReadOnlyList<NetAppAccountData> value, string nextLink)

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a cloud application entity. </summary>
     public partial class SecurityInsightsCloudApplicationEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsCloudApplicationEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsCloudApplicationEntity"/>. </summary>
         public SecurityInsightsCloudApplicationEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.CloudApplication;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsCloudApplicationEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsCloudApplicationEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

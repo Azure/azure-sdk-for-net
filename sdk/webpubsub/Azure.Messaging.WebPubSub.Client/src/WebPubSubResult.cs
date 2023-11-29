@@ -15,7 +15,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The ack id of message just sent. If the operation is fire-and-forget, it will be null.
         /// </summary>
-        public ulong? AckId { get; }
+        public long? AckId { get; }
 
         /// <summary>
         /// Whether the message is duplicated, if true, the message with the ack id has been processed by service
@@ -26,7 +26,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         {
         }
 
-        internal WebPubSubResult(ulong? ackId, bool isDuplicated)
+        internal WebPubSubResult(long? ackId, bool isDuplicated)
         {
             AckId = ackId;
             IsDuplicated = isDuplicated;

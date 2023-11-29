@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Defender for servers connection configuration. </summary>
     public partial class GcpDefenderForServersInfo
     {
-        /// <summary> Initializes a new instance of GcpDefenderForServersInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpDefenderForServersInfo"/>. </summary>
         public GcpDefenderForServersInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of GcpDefenderForServersInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpDefenderForServersInfo"/>. </summary>
         /// <param name="workloadIdentityProviderId"> The workload identity provider id in GCP for this feature. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this feature. </param>
         internal GcpDefenderForServersInfo(string workloadIdentityProviderId, string serviceAccountEmailAddress)

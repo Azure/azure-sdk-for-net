@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The validation error information. </summary>
     public partial class HDInsightClusterValidationErrorInfo
     {
-        /// <summary> Initializes a new instance of HDInsightClusterValidationErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterValidationErrorInfo"/>. </summary>
         internal HDInsightClusterValidationErrorInfo()
         {
             MessageArguments = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterValidationErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterValidationErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="errorResource"> The error resource. </param>

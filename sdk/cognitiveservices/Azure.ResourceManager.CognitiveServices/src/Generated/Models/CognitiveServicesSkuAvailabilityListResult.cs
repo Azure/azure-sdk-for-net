@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Check SKU availability result list. </summary>
     internal partial class CognitiveServicesSkuAvailabilityListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityListResult"/>. </summary>
         internal CognitiveServicesSkuAvailabilityListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesSkuAvailabilityList>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityListResult"/>. </summary>
         /// <param name="value"> Check SKU availability result list. </param>
         internal CognitiveServicesSkuAvailabilityListResult(IReadOnlyList<CognitiveServicesSkuAvailabilityList> value)
         {

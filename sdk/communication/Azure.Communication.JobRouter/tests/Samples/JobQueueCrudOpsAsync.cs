@@ -60,14 +60,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterQueue> updatedJobQueue = await routerAdministrationClient.UpdateQueueAsync(
                 new RouterQueue(jobQueueId)
                 {
-                    Labels = { ["Additional-Queue-Label"] = new LabelValue("ChatQueue") }
+                    Labels = { ["Additional-Queue-Label"] = new RouterValue("ChatQueue") }
                 });
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueues_Async
 
-            AsyncPageable<RouterQueue> jobQueues = routerAdministrationClient.GetQueuesAsync();
+            AsyncPageable<RouterQueue> jobQueues = routerAdministrationClient.GetQueuesAsync(cancellationToken: default);
             await foreach (Page<RouterQueue> asPage in jobQueues.AsPages(pageSizeHint: 10))
             {
                 foreach (RouterQueue? policy in asPage.Values)

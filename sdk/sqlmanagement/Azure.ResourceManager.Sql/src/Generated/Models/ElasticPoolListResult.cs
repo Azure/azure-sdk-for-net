@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The result of an elastic pool list request. </summary>
     internal partial class ElasticPoolListResult
     {
-        /// <summary> Initializes a new instance of ElasticPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolListResult"/>. </summary>
         internal ElasticPoolListResult()
         {
             Value = new ChangeTrackingList<ElasticPoolData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ElasticPoolListResult(IReadOnlyList<ElasticPoolData> value, string nextLink)

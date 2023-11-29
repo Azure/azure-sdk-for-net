@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan test failover input properties. </summary>
     public partial class RecoveryPlanTestFailoverProperties
     {
-        /// <summary> Initializes a new instance of RecoveryPlanTestFailoverProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanTestFailoverProperties"/>. </summary>
         /// <param name="failoverDirection"> The failover direction. </param>
         /// <param name="networkType"> The network type to be used for test failover. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkType"/> is null. </exception>

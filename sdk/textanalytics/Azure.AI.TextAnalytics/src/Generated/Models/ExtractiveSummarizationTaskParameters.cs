@@ -12,12 +12,12 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Supported parameters for an Extractive Summarization task. </summary>
     internal partial class ExtractiveSummarizationTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of ExtractiveSummarizationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
         public ExtractiveSummarizationTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtractiveSummarizationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="modelVersion"></param>
         /// <param name="sentenceCount"></param>

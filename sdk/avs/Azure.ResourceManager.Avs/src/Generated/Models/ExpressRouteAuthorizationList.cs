@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of ExpressRoute Circuit Authorizations. </summary>
     internal partial class ExpressRouteAuthorizationList
     {
-        /// <summary> Initializes a new instance of ExpressRouteAuthorizationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteAuthorizationList"/>. </summary>
         internal ExpressRouteAuthorizationList()
         {
             Value = new ChangeTrackingList<ExpressRouteAuthorizationData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteAuthorizationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteAuthorizationList"/>. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal ExpressRouteAuthorizationList(IReadOnlyList<ExpressRouteAuthorizationData> value, string nextLink)

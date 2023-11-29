@@ -18,13 +18,14 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an ExtensionTopic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExtensionTopicResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExtensionTopicResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetExtensionTopic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExtensionTopicResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExtensionTopicResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetExtensionTopic method.
     /// </summary>
     public partial class ExtensionTopicResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExtensionTopicResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope)
         {
             var resourceId = $"{scope}/providers/Microsoft.EventGrid/extensionTopics/default";
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExtensionTopicResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExtensionTopicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExtensionTopicResource(ArmClient client, ExtensionTopicData data) : this(client, data.Id)

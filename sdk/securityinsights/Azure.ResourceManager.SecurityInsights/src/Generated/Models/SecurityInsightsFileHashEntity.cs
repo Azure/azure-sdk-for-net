@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a file hash entity. </summary>
     public partial class SecurityInsightsFileHashEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsFileHashEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileHashEntity"/>. </summary>
         public SecurityInsightsFileHashEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.FileHash;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsFileHashEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileHashEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

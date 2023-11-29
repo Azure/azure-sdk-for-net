@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The check availability result. </summary>
     public partial class DevCenterNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DevCenterNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterNameAvailabilityResult"/>. </summary>
         internal DevCenterNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>

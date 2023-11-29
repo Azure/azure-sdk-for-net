@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the triggers and their properties. </summary>
     internal partial class CosmosDBSqlTriggerListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlTriggerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlTriggerListResult"/>. </summary>
         internal CosmosDBSqlTriggerListResult()
         {
             Value = new ChangeTrackingList<CosmosDBSqlTriggerData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlTriggerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlTriggerListResult"/>. </summary>
         /// <param name="value"> List of triggers and their properties. </param>
         internal CosmosDBSqlTriggerListResult(IReadOnlyList<CosmosDBSqlTriggerData> value)
         {

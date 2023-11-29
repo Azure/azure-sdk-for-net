@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a migration resource for patch. </summary>
     public partial class PostgreSqlMigrationPatch
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationPatch"/>. </summary>
         public PostgreSqlMigrationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

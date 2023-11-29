@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Source connection details. </summary>
     public partial class MapperConnection
     {
-        /// <summary> Initializes a new instance of MapperConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperConnection"/>. </summary>
         /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
         public MapperConnection(MapperConnectionType connectionType)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CommonDslConnectorProperties = new ChangeTrackingList<MapperDslConnectorProperties>();
         }
 
-        /// <summary> Initializes a new instance of MapperConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperConnection"/>. </summary>
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="linkedServiceType"> Type of the linked service e.g.: AzureBlobFS. </param>
         /// <param name="connectionType"> Type of connection via linked service or dataset. </param>

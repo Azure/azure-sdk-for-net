@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a PaloAltoNetworksFirewall along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PaloAltoNetworksFirewallResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPaloAltoNetworksFirewallResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPaloAltoNetworksFirewall method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PaloAltoNetworksFirewallResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPaloAltoNetworksFirewallResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPaloAltoNetworksFirewall method.
     /// </summary>
     public partial class PaloAltoNetworksFirewallResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PaloAltoNetworksFirewallResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="firewallName"> The firewallName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PaloAltoNetworksFirewallResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PaloAltoNetworksFirewallResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PaloAltoNetworksFirewallResource(ArmClient client, PaloAltoNetworksFirewallData data) : this(client, data.Id)
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary> Gets an object representing a PaloAltoNetworksFirewallStatusResource along with the instance operations that can be performed on it in the PaloAltoNetworksFirewall. </summary>
-        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource"/> object. </returns>
         public virtual PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatus()
         {
             return new PaloAltoNetworksFirewallStatusResource(Client, Id.AppendChildResource("statuses", "default"));
@@ -491,7 +494,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="logSettings"> The FirewallLogSettings to use. </param>
+        /// <param name="logSettings"> The <see cref="FirewallLogSettings"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SaveLogProfileAsync(FirewallLogSettings logSettings = null, CancellationToken cancellationToken = default)
         {
@@ -522,7 +525,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="logSettings"> The FirewallLogSettings to use. </param>
+        /// <param name="logSettings"> The <see cref="FirewallLogSettings"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SaveLogProfile(FirewallLogSettings logSettings = null, CancellationToken cancellationToken = default)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Details of storage account sas token . </summary>
     public partial class AccountSasToken
     {
-        /// <summary> Initializes a new instance of AccountSasToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountSasToken"/>. </summary>
         /// <param name="storageAccountSasToken"> Field to specify storage account sas token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountSasToken"/> is null. </exception>
         internal AccountSasToken(string storageAccountSasToken)

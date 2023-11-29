@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Neighbor Group. </summary>
     internal partial class NeighborGroupsListResult
     {
-        /// <summary> Initializes a new instance of NeighborGroupsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeighborGroupsListResult"/>. </summary>
         internal NeighborGroupsListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricNeighborGroupData>();
         }
 
-        /// <summary> Initializes a new instance of NeighborGroupsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeighborGroupsListResult"/>. </summary>
         /// <param name="value"> List of Neighbor Group resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NeighborGroupsListResult(IReadOnlyList<NetworkFabricNeighborGroupData> value, string nextLink)

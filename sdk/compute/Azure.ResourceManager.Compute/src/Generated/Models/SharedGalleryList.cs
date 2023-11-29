@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Shared Galleries operation response. </summary>
     internal partial class SharedGalleryList
     {
-        /// <summary> Initializes a new instance of SharedGalleryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryList"/>. </summary>
         /// <param name="value"> A list of shared galleries. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SharedGalleryList(IEnumerable<SharedGalleryData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryList"/>. </summary>
         /// <param name="value"> A list of shared galleries. </param>
         /// <param name="nextLink"> The uri to fetch the next page of shared galleries. Call ListNext() with this to fetch the next page of shared galleries. </param>
         internal SharedGalleryList(IReadOnlyList<SharedGalleryData> value, string nextLink)

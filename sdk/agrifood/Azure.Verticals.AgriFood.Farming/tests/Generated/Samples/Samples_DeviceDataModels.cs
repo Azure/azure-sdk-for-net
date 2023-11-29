@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -22,8 +23,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceDataModelId>", content);
@@ -36,8 +38,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", content);
@@ -50,8 +53,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -99,8 +103,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -148,8 +153,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceDataModel_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetDeviceDataModel("<sensorPartnerId>", "<deviceDataModelId>", null);
 
@@ -161,8 +167,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeviceDataModel_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>", null);
 
@@ -174,8 +181,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceDataModel_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetDeviceDataModel("<sensorPartnerId>", "<deviceDataModelId>", null);
 
@@ -202,8 +210,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeviceDataModel_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>", null);
 
@@ -230,8 +239,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>");
 
@@ -242,8 +252,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>");
 
@@ -254,8 +265,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>");
 
@@ -266,8 +278,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>");
 
@@ -278,8 +291,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceDataModels_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetDeviceDataModels("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -292,8 +306,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeviceDataModels_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -306,8 +321,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceDataModels_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetDeviceDataModels("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -335,8 +351,9 @@ type = "<type>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeviceDataModels_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {

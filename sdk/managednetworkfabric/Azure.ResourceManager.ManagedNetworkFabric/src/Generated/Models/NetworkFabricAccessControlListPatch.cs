@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Access Control Lists patch resource definition. </summary>
     public partial class NetworkFabricAccessControlListPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricAccessControlListPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
         public NetworkFabricAccessControlListPatch()
         {
             MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();

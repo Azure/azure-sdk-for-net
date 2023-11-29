@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for RequestBody match conditions. </summary>
     public partial class RequestBodyMatchCondition
     {
-        /// <summary> Initializes a new instance of RequestBodyMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestBodyMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestBodyOperator"> Describes operator to be matched. </param>
         public RequestBodyMatchCondition(RequestBodyMatchConditionType conditionType, RequestBodyOperator requestBodyOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of RequestBodyMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestBodyMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestBodyOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The DataCollector. </summary>
     public partial class DataCollector
     {
-        /// <summary> Initializes a new instance of DataCollector. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollector"/>. </summary>
         /// <param name="collections">
         /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
         /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Collections = collections;
         }
 
-        /// <summary> Initializes a new instance of DataCollector. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollector"/>. </summary>
         /// <param name="collections">
         /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
         /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerAzureADAdministratorResource" /> and their operations.
-    /// Each <see cref="SqlServerAzureADAdministratorResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="SqlServerAzureADAdministratorCollection" /> instance call the GetSqlServerAzureADAdministrators method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="SqlServerAzureADAdministratorResource"/> and their operations.
+    /// Each <see cref="SqlServerAzureADAdministratorResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="SqlServerAzureADAdministratorCollection"/> instance call the GetSqlServerAzureADAdministrators method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class SqlServerAzureADAdministratorCollection : ArmCollection, IEnumerable<SqlServerAzureADAdministratorResource>, IAsyncEnumerable<SqlServerAzureADAdministratorResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerAzureADAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerAzureADAdministratorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerAzureADAdministratorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerAzureADAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerAzureADAdministratorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerAzureADAdministratorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

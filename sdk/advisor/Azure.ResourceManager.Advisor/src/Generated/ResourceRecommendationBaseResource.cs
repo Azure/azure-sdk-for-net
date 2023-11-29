@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
     /// A Class representing a ResourceRecommendationBase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceRecommendationBaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceRecommendationBaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetResourceRecommendationBase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceRecommendationBaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceRecommendationBaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetResourceRecommendationBase method.
     /// </summary>
     public partial class ResourceRecommendationBaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceRecommendationBaseResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="recommendationId"> The recommendationId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string recommendationId)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Advisor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceRecommendationBaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceRecommendationBaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceRecommendationBaseResource(ArmClient client, ResourceRecommendationBaseData data) : this(client, data.Id)
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An object representing collection of SuppressionContractResources and their operations over a SuppressionContractResource. </returns>
         public virtual SuppressionContractCollection GetSuppressionContracts()
         {
-            return GetCachedClient(Client => new SuppressionContractCollection(Client, Id));
+            return GetCachedClient(client => new SuppressionContractCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +110,8 @@ namespace Azure.ResourceManager.Advisor
         /// </summary>
         /// <param name="name"> The name of the suppression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SuppressionContractResource>> GetSuppressionContractAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -131,8 +133,8 @@ namespace Azure.ResourceManager.Advisor
         /// </summary>
         /// <param name="name"> The name of the suppression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SuppressionContractResource> GetSuppressionContract(string name, CancellationToken cancellationToken = default)
         {

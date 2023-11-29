@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class ShareSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ShareSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionData"/>. </summary>
         /// <param name="invitationId"> The invitation id. </param>
         /// <param name="sourceShareLocation"> Source share location. </param>
         public ShareSubscriptionData(Guid invitationId, AzureLocation sourceShareLocation)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataShare
             SourceShareLocation = sourceShareLocation;
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

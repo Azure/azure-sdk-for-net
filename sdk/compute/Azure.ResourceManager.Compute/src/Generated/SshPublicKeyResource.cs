@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a SshPublicKey along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SshPublicKeyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSshPublicKeyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSshPublicKey method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SshPublicKeyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSshPublicKeyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSshPublicKey method.
     /// </summary>
     public partial class SshPublicKeyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SshPublicKeyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sshPublicKeyName"> The sshPublicKeyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sshPublicKeyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SshPublicKeyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SshPublicKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SshPublicKeyResource(ArmClient client, SshPublicKeyData data) : this(client, data.Id)

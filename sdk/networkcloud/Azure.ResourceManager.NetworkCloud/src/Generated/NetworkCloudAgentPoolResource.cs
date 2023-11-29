@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudAgentPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudAgentPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudAgentPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudKubernetesClusterResource" /> using the GetNetworkCloudAgentPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudAgentPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudAgentPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudKubernetesClusterResource"/> using the GetNetworkCloudAgentPool method.
     /// </summary>
     public partial class NetworkCloudAgentPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudAgentPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="kubernetesClusterName"> The kubernetesClusterName. </param>
+        /// <param name="agentPoolName"> The agentPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}/agentPools/{agentPoolName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudAgentPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudAgentPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudAgentPoolResource(ArmClient client, NetworkCloudAgentPoolData data) : this(client, data.Id)

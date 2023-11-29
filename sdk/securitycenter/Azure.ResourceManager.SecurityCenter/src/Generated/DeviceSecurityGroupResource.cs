@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a DeviceSecurityGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceSecurityGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceSecurityGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetDeviceSecurityGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceSecurityGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceSecurityGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDeviceSecurityGroup method.
     /// </summary>
     public partial class DeviceSecurityGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeviceSecurityGroupResource"/> instance. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="deviceSecurityGroupName"> The deviceSecurityGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string deviceSecurityGroupName)
         {
             var resourceId0 = $"{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceSecurityGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceSecurityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceSecurityGroupResource(ArmClient client, DeviceSecurityGroupData data) : this(client, data.Id)

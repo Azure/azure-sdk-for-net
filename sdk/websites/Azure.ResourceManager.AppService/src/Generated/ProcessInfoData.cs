@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class ProcessInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProcessInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessInfoData"/>. </summary>
         public ProcessInfoData()
         {
             Children = new ChangeTrackingList<string>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ProcessInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

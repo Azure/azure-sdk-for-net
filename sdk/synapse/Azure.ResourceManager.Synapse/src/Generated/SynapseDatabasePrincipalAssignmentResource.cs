@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseDatabasePrincipalAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseDatabasePrincipalAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseDatabasePrincipalAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseDatabaseResource" /> using the GetSynapseDatabasePrincipalAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseDatabasePrincipalAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseDatabasePrincipalAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseDatabaseResource"/> using the GetSynapseDatabasePrincipalAssignment method.
     /// </summary>
     public partial class SynapseDatabasePrincipalAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseDatabasePrincipalAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="kustoPoolName"> The kustoPoolName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="principalAssignmentName"> The principalAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseDatabasePrincipalAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseDatabasePrincipalAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseDatabasePrincipalAssignmentResource(ArmClient client, SynapseDatabasePrincipalAssignmentData data) : this(client, data.Id)

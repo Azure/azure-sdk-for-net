@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
             string key = default;
             LabelOperator labelOperator = default;
             Optional<double> expiresAfterSeconds = default;
-            string kind = default;
+            WorkerSelectorAttachmentKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new WorkerSelectorAttachmentKind(property.Value.GetString());
                     continue;
                 }
             }

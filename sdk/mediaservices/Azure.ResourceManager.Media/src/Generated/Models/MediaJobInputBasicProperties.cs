@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class MediaJobInputBasicProperties
     {
-        /// <summary> Initializes a new instance of MediaJobInputBasicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputBasicProperties"/>. </summary>
         protected MediaJobInputBasicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputBasicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputBasicProperties"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal MediaJobInputBasicProperties(string odataType)
         {

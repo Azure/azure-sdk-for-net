@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KustoManagedPrivateEndpointResource" /> and their operations.
-    /// Each <see cref="KustoManagedPrivateEndpointResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
-    /// To get a <see cref="KustoManagedPrivateEndpointCollection" /> instance call the GetKustoManagedPrivateEndpoints method from an instance of <see cref="KustoClusterResource" />.
+    /// A class representing a collection of <see cref="KustoManagedPrivateEndpointResource"/> and their operations.
+    /// Each <see cref="KustoManagedPrivateEndpointResource"/> in the collection will belong to the same instance of <see cref="KustoClusterResource"/>.
+    /// To get a <see cref="KustoManagedPrivateEndpointCollection"/> instance call the GetKustoManagedPrivateEndpoints method from an instance of <see cref="KustoClusterResource"/>.
     /// </summary>
     public partial class KustoManagedPrivateEndpointCollection : ArmCollection, IEnumerable<KustoManagedPrivateEndpointResource>, IAsyncEnumerable<KustoManagedPrivateEndpointResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoManagedPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoManagedPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoManagedPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoManagedPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoManagedPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoManagedPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

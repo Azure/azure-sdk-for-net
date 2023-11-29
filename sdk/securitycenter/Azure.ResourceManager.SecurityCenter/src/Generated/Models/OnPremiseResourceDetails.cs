@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public partial class OnPremiseResourceDetails : SecurityCenterResourceDetails
     {
-        /// <summary> Initializes a new instance of OnPremiseResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnPremiseResourceDetails"/>. </summary>
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
         /// <param name="vmUuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Source = Source.OnPremise;
         }
 
-        /// <summary> Initializes a new instance of OnPremiseResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnPremiseResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
         /// <param name="vmUuid"> The unique Id of the machine. </param>

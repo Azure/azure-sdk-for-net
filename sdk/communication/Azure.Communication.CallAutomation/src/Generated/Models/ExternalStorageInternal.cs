@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The ExternalStorage. </summary>
     internal partial class ExternalStorageInternal
     {
-        /// <summary> Initializes a new instance of ExternalStorageInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
         /// <param name="storageType"> Defines the type of external storage. </param>
         public ExternalStorageInternal(RecordingStorageType storageType)
         {

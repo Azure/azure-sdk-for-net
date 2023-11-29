@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPrivateEndpointConnectionData"/>. </summary>
         public BatchPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BatchPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

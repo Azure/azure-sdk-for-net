@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Resource Skus operation response. </summary>
     internal partial class ResourceSkusResult
     {
-        /// <summary> Initializes a new instance of ResourceSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkusResult"/>. </summary>
         /// <param name="value"> The list of skus available for the subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceSkusResult(IEnumerable<ComputeResourceSku> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkusResult"/>. </summary>
         /// <param name="value"> The list of skus available for the subscription. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus. </param>
         internal ResourceSkusResult(IReadOnlyList<ComputeResourceSku> value, string nextLink)

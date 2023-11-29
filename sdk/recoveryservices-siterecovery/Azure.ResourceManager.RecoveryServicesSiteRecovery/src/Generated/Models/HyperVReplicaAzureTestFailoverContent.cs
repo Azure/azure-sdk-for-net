@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> HvrA provider specific input for test failover. </summary>
     public partial class HyperVReplicaAzureTestFailoverContent : TestFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureTestFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureTestFailoverContent"/>. </summary>
         public HyperVReplicaAzureTestFailoverContent()
         {
             InstanceType = "HyperVReplicaAzure";

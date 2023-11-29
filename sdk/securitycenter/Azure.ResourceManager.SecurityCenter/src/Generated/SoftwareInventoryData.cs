@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SoftwareInventoryData : ResourceData
     {
-        /// <summary> Initializes a new instance of SoftwareInventoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareInventoryData"/>. </summary>
         public SoftwareInventoryData()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareInventoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareInventoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

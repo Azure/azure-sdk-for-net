@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CapacityReservationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CapacityReservationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
             VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

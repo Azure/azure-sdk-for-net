@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a BaseAdminRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BaseAdminRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBaseAdminRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AdminRuleGroupResource" /> using the GetBaseAdminRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BaseAdminRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBaseAdminRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AdminRuleGroupResource"/> using the GetBaseAdminRule method.
     /// </summary>
     public partial class BaseAdminRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BaseAdminRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
+        /// <param name="ruleCollectionName"> The ruleCollectionName. </param>
+        /// <param name="ruleName"> The ruleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityAdminConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BaseAdminRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BaseAdminRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BaseAdminRuleResource(ArmClient client, BaseAdminRuleData data) : this(client, data.Id)

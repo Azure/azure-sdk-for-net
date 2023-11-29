@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Application logs azure blob storage configuration. </summary>
     public partial class AppServiceBlobStorageApplicationLogsConfig
     {
-        /// <summary> Initializes a new instance of AppServiceBlobStorageApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageApplicationLogsConfig"/>. </summary>
         public AppServiceBlobStorageApplicationLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceBlobStorageApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageApplicationLogsConfig"/>. </summary>
         /// <param name="level"> Log level. </param>
         /// <param name="sasUri"> SAS url to a azure blob container with read/write/list/delete permissions. </param>
         /// <param name="retentionInDays">

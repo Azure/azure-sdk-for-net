@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The capabilities to add or drop from a container. </summary>
     public partial class ContainerSecurityContextCapabilitiesDefinition
     {
-        /// <summary> Initializes a new instance of ContainerSecurityContextCapabilitiesDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSecurityContextCapabilitiesDefinition"/>. </summary>
         public ContainerSecurityContextCapabilitiesDefinition()
         {
             Add = new ChangeTrackingList<string>();
             Drop = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerSecurityContextCapabilitiesDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSecurityContextCapabilitiesDefinition"/>. </summary>
         /// <param name="add"> The capabilities to add to the container. </param>
         /// <param name="drop"> The capabilities to drop from the container. </param>
         internal ContainerSecurityContextCapabilitiesDefinition(IList<string> @add, IList<string> drop)

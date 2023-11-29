@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionData"/>. </summary>
         public EventHubsPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
