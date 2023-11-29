@@ -591,6 +591,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     {
                         ServiceFabricManagedNodeTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -624,6 +625,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     {
                         ServiceFabricManagedNodeTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
