@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvailableScopesContent"/>. </summary>
+        /// <param name="properties"> Available scope request properties. </param>
+        internal AvailableScopesContent(AvailableScopeRequestProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Available scope request properties. </summary>
         internal AvailableScopeRequestProperties Properties { get; set; }
         /// <summary> Gets the scopes. </summary>

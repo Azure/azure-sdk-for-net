@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             VirtualMachines = virtualMachines.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateContent"/>. </summary>
+        /// <param name="virtualMachines"> A list of virtual machines &amp; ports to open access for. </param>
+        /// <param name="justification"> The justification for making the initiate request. </param>
+        internal JitNetworkAccessPolicyInitiateContent(IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification)
+        {
+            VirtualMachines = virtualMachines;
+            Justification = justification;
+        }
+
         /// <summary> A list of virtual machines &amp; ports to open access for. </summary>
         public IList<JitNetworkAccessPolicyInitiateVirtualMachine> VirtualMachines { get; }
         /// <summary> The justification for making the initiate request. </summary>

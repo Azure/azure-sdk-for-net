@@ -30,6 +30,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageRcmReprotectContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="reprotectAgentId"> The reprotect agent Id. </param>
+        /// <param name="datastoreName"> The target datastore name. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="policyId"> The Policy Id. </param>
+        internal InMageRcmReprotectContent(string instanceType, string reprotectAgentId, string datastoreName, ResourceIdentifier logStorageAccountId, ResourceIdentifier policyId) : base(instanceType)
+        {
+            ReprotectAgentId = reprotectAgentId;
+            DatastoreName = datastoreName;
+            LogStorageAccountId = logStorageAccountId;
+            PolicyId = policyId;
+            InstanceType = instanceType ?? "InMageRcm";
+        }
+
         /// <summary> The reprotect agent Id. </summary>
         public string ReprotectAgentId { get; }
         /// <summary> The target datastore name. </summary>

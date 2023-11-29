@@ -23,6 +23,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryNetworkId = recoveryNetworkId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateReplicationNetworkMappingProperties"/>. </summary>
+        /// <param name="recoveryFabricName"> Recovery fabric Name. </param>
+        /// <param name="recoveryNetworkId"> Recovery network Id. </param>
+        /// <param name="fabricSpecificDetails">
+        /// Fabric specific input properties.
+        /// Please note <see cref="FabricSpecificCreateNetworkMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2ACreateNetworkMappingContent"/>, <see cref="VmmToAzureCreateNetworkMappingContent"/> and <see cref="VmmToVmmCreateNetworkMappingContent"/>.
+        /// </param>
+        internal SiteRecoveryCreateReplicationNetworkMappingProperties(string recoveryFabricName, ResourceIdentifier recoveryNetworkId, FabricSpecificCreateNetworkMappingContent fabricSpecificDetails)
+        {
+            RecoveryFabricName = recoveryFabricName;
+            RecoveryNetworkId = recoveryNetworkId;
+            FabricSpecificDetails = fabricSpecificDetails;
+        }
+
         /// <summary> Recovery fabric Name. </summary>
         public string RecoveryFabricName { get; set; }
         /// <summary> Recovery network Id. </summary>

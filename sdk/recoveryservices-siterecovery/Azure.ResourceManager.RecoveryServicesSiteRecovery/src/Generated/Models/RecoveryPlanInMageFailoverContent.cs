@@ -18,6 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMage";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanInMageFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
+        internal RecoveryPlanInMageFailoverContent(string instanceType, RpInMageRecoveryPointType recoveryPointType) : base(instanceType)
+        {
+            RecoveryPointType = recoveryPointType;
+            InstanceType = instanceType ?? "InMage";
+        }
+
         /// <summary> The recovery point type. </summary>
         public RpInMageRecoveryPointType RecoveryPointType { get; }
     }

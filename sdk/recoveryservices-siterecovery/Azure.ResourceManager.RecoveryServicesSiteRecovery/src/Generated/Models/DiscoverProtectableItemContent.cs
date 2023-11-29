@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DiscoverProtectableItemContent"/>. </summary>
+        /// <param name="properties"> The properties of a discover protectable item request. </param>
+        internal DiscoverProtectableItemContent(DiscoverProtectableItemProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> The properties of a discover protectable item request. </summary>
         public DiscoverProtectableItemProperties Properties { get; set; }
     }

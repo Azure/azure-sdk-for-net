@@ -18,6 +18,16 @@ namespace Azure.ResourceManager.Sphere.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SphereDevicePatch"/>. </summary>
+        /// <param name="deviceGroupId">
+        /// Device group id
+        /// Serialized Name: DeviceUpdate.properties.deviceGroupId
+        /// </param>
+        internal SphereDevicePatch(string deviceGroupId)
+        {
+            DeviceGroupId = deviceGroupId;
+        }
+
         /// <summary>
         /// Device group id
         /// Serialized Name: DeviceUpdate.properties.deviceGroupId

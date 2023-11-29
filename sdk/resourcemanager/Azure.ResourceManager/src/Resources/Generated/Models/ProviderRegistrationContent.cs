@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationContent"/>. </summary>
+        /// <param name="thirdPartyProviderConsent"> The provider consent. </param>
+        internal ProviderRegistrationContent(ProviderConsentDefinition thirdPartyProviderConsent)
+        {
+            ThirdPartyProviderConsent = thirdPartyProviderConsent;
+        }
+
         /// <summary> The provider consent. </summary>
         internal ProviderConsentDefinition ThirdPartyProviderConsent { get; set; }
         /// <summary> A value indicating whether authorization is consented or not. </summary>

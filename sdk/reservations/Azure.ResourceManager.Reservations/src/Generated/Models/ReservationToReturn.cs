@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ReservationToReturn"/>. </summary>
+        /// <param name="reservationId"> Fully qualified identifier of the reservation being returned. </param>
+        /// <param name="quantity"> Quantity to be returned. Must be greater than zero. </param>
+        internal ReservationToReturn(ResourceIdentifier reservationId, int? quantity)
+        {
+            ReservationId = reservationId;
+            Quantity = quantity;
+        }
+
         /// <summary> Fully qualified identifier of the reservation being returned. </summary>
         public ResourceIdentifier ReservationId { get; set; }
         /// <summary> Quantity to be returned. Must be greater than zero. </summary>

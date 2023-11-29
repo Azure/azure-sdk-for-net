@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateContainerMappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="enableAgentAutoUpgrade"> A value indicating whether agent auto upgrade has to be enabled. </param>
+        internal InMageRcmUpdateContainerMappingContent(string instanceType, string enableAgentAutoUpgrade) : base(instanceType)
+        {
+            EnableAgentAutoUpgrade = enableAgentAutoUpgrade;
+            InstanceType = instanceType ?? "InMageRcm";
+        }
+
         /// <summary> A value indicating whether agent auto upgrade has to be enabled. </summary>
         public string EnableAgentAutoUpgrade { get; }
     }
