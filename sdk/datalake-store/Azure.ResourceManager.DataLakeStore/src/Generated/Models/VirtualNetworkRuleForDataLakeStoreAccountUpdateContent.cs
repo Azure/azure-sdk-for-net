@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleForDataLakeStoreAccountUpdateContent"/>. </summary>
+        /// <param name="name"> The unique name of the virtual network rule to update. </param>
+        /// <param name="subnetId"> The resource identifier for the subnet. </param>
+        internal VirtualNetworkRuleForDataLakeStoreAccountUpdateContent(string name, ResourceIdentifier subnetId)
+        {
+            Name = name;
+            SubnetId = subnetId;
+        }
+
         /// <summary> The unique name of the virtual network rule to update. </summary>
         public string Name { get; }
         /// <summary> The resource identifier for the subnet. </summary>

@@ -17,6 +17,34 @@ namespace Azure.Communication.Messages
             Kind = kind;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueInternal"/>. </summary>
+        /// <param name="kind"> The template value kind. </param>
+        /// <param name="text"> The message template's text value information. </param>
+        /// <param name="image">
+        /// The message template's media value information.
+        /// Could be an image, document or video.
+        /// </param>
+        /// <param name="document">
+        /// The message template's media value information.
+        /// Could be an image, document or video.
+        /// </param>
+        /// <param name="video">
+        /// The message template's media value information.
+        /// Could be an image, document or video.
+        /// </param>
+        /// <param name="location"> The message template's location value information. </param>
+        /// <param name="quickAction"> The message template's quick action value information. </param>
+        internal MessageTemplateValueInternal(MessageTemplateValueKind kind, MessageTemplateValueText text, MessageTemplateValueMedia image, MessageTemplateValueMedia document, MessageTemplateValueMedia video, MessageTemplateParameterLocation location, MessageTemplateValueQuickAction quickAction)
+        {
+            Kind = kind;
+            Text = text;
+            Image = image;
+            Document = document;
+            Video = video;
+            Location = location;
+            QuickAction = quickAction;
+        }
+
         /// <summary> The template value kind. </summary>
         public MessageTemplateValueKind Kind { get; }
         /// <summary> The message template's text value information. </summary>

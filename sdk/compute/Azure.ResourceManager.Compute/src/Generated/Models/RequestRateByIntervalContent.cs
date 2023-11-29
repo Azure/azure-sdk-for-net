@@ -26,6 +26,21 @@ namespace Azure.ResourceManager.Compute.Models
             IntervalLength = intervalLength;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RequestRateByIntervalContent"/>. </summary>
+        /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
+        /// <param name="fromTime"> From time of the query. </param>
+        /// <param name="toTime"> To time of the query. </param>
+        /// <param name="groupByThrottlePolicy"> Group query result by Throttle Policy applied. </param>
+        /// <param name="groupByOperationName"> Group query result by Operation Name. </param>
+        /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
+        /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
+        /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
+        /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
+        internal RequestRateByIntervalContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent)
+        {
+            IntervalLength = intervalLength;
+        }
+
         /// <summary> Interval value in minutes used to create LogAnalytics call rate logs. </summary>
         public IntervalInMins IntervalLength { get; }
     }

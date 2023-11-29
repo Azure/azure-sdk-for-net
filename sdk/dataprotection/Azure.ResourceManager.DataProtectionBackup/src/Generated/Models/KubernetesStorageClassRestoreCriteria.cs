@@ -16,6 +16,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "KubernetesStorageClassRestoreCriteria";
         }
 
+        /// <summary> Initializes a new instance of <see cref="KubernetesStorageClassRestoreCriteria"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="selectedStorageClassName"> Selected storage class name. </param>
+        /// <param name="provisioner"> Provisioner of the storage class. </param>
+        internal KubernetesStorageClassRestoreCriteria(string objectType, string selectedStorageClassName, string provisioner) : base(objectType)
+        {
+            SelectedStorageClassName = selectedStorageClassName;
+            Provisioner = provisioner;
+            ObjectType = objectType ?? "KubernetesStorageClassRestoreCriteria";
+        }
+
         /// <summary> Selected storage class name. </summary>
         public string SelectedStorageClassName { get; set; }
         /// <summary> Provisioner of the storage class. </summary>

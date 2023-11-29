@@ -19,6 +19,13 @@ namespace Azure.Communication.Rooms
             Participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsRequest"/>. </summary>
+        /// <param name="participants"> Participants to be updated. </param>
+        internal UpdateParticipantsRequest(IDictionary<string, ParticipantProperties> participants)
+        {
+            Participants = participants;
+        }
+
         /// <summary> Participants to be updated. </summary>
         public IDictionary<string, ParticipantProperties> Participants { get; }
     }

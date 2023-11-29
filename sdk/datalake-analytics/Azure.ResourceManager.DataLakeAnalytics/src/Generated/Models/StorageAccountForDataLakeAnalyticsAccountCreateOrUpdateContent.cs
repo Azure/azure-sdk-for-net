@@ -35,6 +35,26 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             AccessKey = accessKey;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
+        /// <param name="name">
+        /// The unique name of the Azure Storage account to add.
+        /// Serialized Name: AddStorageAccountWithAccountParameters.name
+        /// </param>
+        /// <param name="accessKey">
+        /// The access key associated with this Azure Storage account that will be used to connect to it.
+        /// Serialized Name: AddStorageAccountWithAccountParameters.properties.accessKey
+        /// </param>
+        /// <param name="suffix">
+        /// The optional suffix for the storage account.
+        /// Serialized Name: AddStorageAccountWithAccountParameters.properties.suffix
+        /// </param>
+        internal StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, string accessKey, string suffix)
+        {
+            Name = name;
+            AccessKey = accessKey;
+            Suffix = suffix;
+        }
+
         /// <summary>
         /// The unique name of the Azure Storage account to add.
         /// Serialized Name: AddStorageAccountWithAccountParameters.name

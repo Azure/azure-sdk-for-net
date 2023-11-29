@@ -16,6 +16,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "FeatureValidationRequest";
         }
 
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationContent"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="featureType"> backup support feature type. </param>
+        /// <param name="featureName"> backup support feature name. </param>
+        internal BackupFeatureValidationContent(string objectType, BackupSupportedFeatureType? featureType, string featureName) : base(objectType)
+        {
+            FeatureType = featureType;
+            FeatureName = featureName;
+            ObjectType = objectType ?? "FeatureValidationRequest";
+        }
+
         /// <summary> backup support feature type. </summary>
         public BackupSupportedFeatureType? FeatureType { get; set; }
         /// <summary> backup support feature name. </summary>

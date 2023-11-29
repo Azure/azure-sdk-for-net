@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             Command = command;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandContent"/>. </summary>
+        /// <param name="command"> The command to run. </param>
+        /// <param name="context"> A base64 encoded zip file containing the files required by the command. </param>
+        /// <param name="clusterToken"> AuthToken issued for AKS AAD Server App. </param>
+        internal ManagedClusterRunCommandContent(string command, string context, string clusterToken)
+        {
+            Command = command;
+            Context = context;
+            ClusterToken = clusterToken;
+        }
+
         /// <summary> The command to run. </summary>
         public string Command { get; }
         /// <summary> A base64 encoded zip file containing the files required by the command. </summary>

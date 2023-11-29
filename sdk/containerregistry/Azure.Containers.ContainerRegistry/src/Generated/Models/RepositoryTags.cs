@@ -19,6 +19,15 @@ namespace Azure.Containers.ContainerRegistry
             Tags = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RepositoryTags"/>. </summary>
+        /// <param name="name"> Name of the image. </param>
+        /// <param name="tags"> List of tags. </param>
+        internal RepositoryTags(string name, IReadOnlyList<string> tags)
+        {
+            Name = name;
+            Tags = tags;
+        }
+
         /// <summary> Name of the image. </summary>
         public string Name { get; }
         /// <summary> List of tags. </summary>
