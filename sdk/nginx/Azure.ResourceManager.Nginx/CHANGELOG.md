@@ -12,16 +12,6 @@
 
 - Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.2 (2023-05-30)
 
 ### Features Added
