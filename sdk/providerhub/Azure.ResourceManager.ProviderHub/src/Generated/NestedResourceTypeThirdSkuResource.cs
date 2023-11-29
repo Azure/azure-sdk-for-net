@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
     /// A Class representing a NestedResourceTypeThirdSku along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NestedResourceTypeThirdSkuResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNestedResourceTypeThirdSkuResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource" /> using the GetNestedResourceTypeThirdSku method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NestedResourceTypeThirdSkuResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNestedResourceTypeThirdSkuResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource"/> using the GetNestedResourceTypeThirdSku method.
     /// </summary>
     public partial class NestedResourceTypeThirdSkuResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NestedResourceTypeThirdSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NestedResourceTypeThirdSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NestedResourceTypeThirdSkuResource(ArmClient client, ResourceTypeSkuData data) : this(client, data.Id)

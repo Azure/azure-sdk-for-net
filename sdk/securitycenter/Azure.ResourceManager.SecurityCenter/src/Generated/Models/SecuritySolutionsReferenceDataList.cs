@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The SecuritySolutionsReferenceDataList. </summary>
     internal partial class SecuritySolutionsReferenceDataList
     {
-        /// <summary> Initializes a new instance of SecuritySolutionsReferenceDataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceDataList"/>. </summary>
         internal SecuritySolutionsReferenceDataList()
         {
             Value = new ChangeTrackingList<SecuritySolutionsReferenceData>();
         }
 
-        /// <summary> Initializes a new instance of SecuritySolutionsReferenceDataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceDataList"/>. </summary>
         /// <param name="value"></param>
         internal SecuritySolutionsReferenceDataList(IReadOnlyList<SecuritySolutionsReferenceData> value)
         {

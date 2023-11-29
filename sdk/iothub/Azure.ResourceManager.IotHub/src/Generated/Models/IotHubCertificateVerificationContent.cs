@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized leaf certificate. </summary>
     public partial class IotHubCertificateVerificationContent
     {
-        /// <summary> Initializes a new instance of IotHubCertificateVerificationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateVerificationContent"/>. </summary>
         public IotHubCertificateVerificationContent()
         {
         }

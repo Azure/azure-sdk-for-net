@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskProperties"/>. </summary>
         public GetUserTablesSqlSyncTaskProperties()
         {
             Output = new ChangeTrackingList<GetUserTablesSqlSyncTaskOutput>();
             TaskType = TaskType.GetUserTablesAzureSqlDBSync;
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

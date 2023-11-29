@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> A list of server configurations. </summary>
     internal partial class CosmosDBForPostgreSqlServerConfigurationListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerConfigurationListResult"/>. </summary>
         internal CosmosDBForPostgreSqlServerConfigurationListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlServerConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of server configurations. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal CosmosDBForPostgreSqlServerConfigurationListResult(IReadOnlyList<CosmosDBForPostgreSqlServerConfigurationData> value, string nextLink)

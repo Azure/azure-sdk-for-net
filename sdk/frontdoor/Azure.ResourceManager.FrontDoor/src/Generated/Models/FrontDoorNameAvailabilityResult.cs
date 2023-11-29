@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Output of check name availability API. </summary>
     public partial class FrontDoorNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of FrontDoorNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNameAvailabilityResult"/>. </summary>
         internal FrontDoorNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailability"> Indicates whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. </param>
         /// <param name="message"> The detailed error message describing why the name is not available. </param>

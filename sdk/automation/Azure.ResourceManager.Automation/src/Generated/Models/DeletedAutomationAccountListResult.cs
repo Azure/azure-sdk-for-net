@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list deleted automation account. </summary>
     internal partial class DeletedAutomationAccountListResult
     {
-        /// <summary> Initializes a new instance of DeletedAutomationAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAutomationAccountListResult"/>. </summary>
         internal DeletedAutomationAccountListResult()
         {
             Value = new ChangeTrackingList<DeletedAutomationAccount>();
         }
 
-        /// <summary> Initializes a new instance of DeletedAutomationAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAutomationAccountListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of deleted automation accounts. </param>
         internal DeletedAutomationAccountListResult(IReadOnlyList<DeletedAutomationAccount> value)
         {

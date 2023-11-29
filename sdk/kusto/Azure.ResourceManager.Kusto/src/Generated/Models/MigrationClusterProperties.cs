@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Represents a properties of a cluster that is part of a migration. </summary>
     public partial class MigrationClusterProperties
     {
-        /// <summary> Initializes a new instance of MigrationClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationClusterProperties"/>. </summary>
         internal MigrationClusterProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationClusterProperties"/>. </summary>
         /// <param name="id"> The resource ID of the cluster. </param>
         /// <param name="uri"> The public URL of the cluster. </param>
         /// <param name="dataIngestionUri"> The public data ingestion URL of the cluster. </param>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Package input path specified with name and version. </summary>
     public partial class PackageInputPathVersion : PackageInputPathBase
     {
-        /// <summary> Initializes a new instance of PackageInputPathVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageInputPathVersion"/>. </summary>
         public PackageInputPathVersion()
         {
             InputPathType = InputPathType.PathVersion;
         }
 
-        /// <summary> Initializes a new instance of PackageInputPathVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageInputPathVersion"/>. </summary>
         /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
         /// <param name="resourceName"> Input resource name. </param>
         /// <param name="resourceVersion"> Input resource version. </param>

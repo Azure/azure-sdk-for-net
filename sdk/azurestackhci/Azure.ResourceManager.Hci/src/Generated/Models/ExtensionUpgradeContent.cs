@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Describes the parameters for Extension upgrade. </summary>
     public partial class ExtensionUpgradeContent
     {
-        /// <summary> Initializes a new instance of ExtensionUpgradeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionUpgradeContent"/>. </summary>
         public ExtensionUpgradeContent()
         {
         }

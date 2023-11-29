@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> OAuth Server Secrets Contract. </summary>
     public partial class AuthorizationServerSecretsContract
     {
-        /// <summary> Initializes a new instance of AuthorizationServerSecretsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerSecretsContract"/>. </summary>
         internal AuthorizationServerSecretsContract()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationServerSecretsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerSecretsContract"/>. </summary>
         /// <param name="clientSecret"> oAuth Authorization Server Secrets. </param>
         /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
         /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>

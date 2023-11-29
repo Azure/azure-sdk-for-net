@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRouteCircuitConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteCircuitConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteCircuitConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitPeeringResource" /> using the GetExpressRouteCircuitConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteCircuitConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteCircuitConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitPeeringResource"/> using the GetExpressRouteCircuitConnection method.
     /// </summary>
     public partial class ExpressRouteCircuitConnectionResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCircuitConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteCircuitConnectionResource(ArmClient client, ExpressRouteCircuitConnectionData data) : this(client, data.Id)

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Disk Restore Points operation response. </summary>
     internal partial class DiskRestorePointList
     {
-        /// <summary> Initializes a new instance of DiskRestorePointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointList"/>. </summary>
         /// <param name="value"> A list of disk restore points. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskRestorePointList(IEnumerable<DiskRestorePointData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiskRestorePointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointList"/>. </summary>
         /// <param name="value"> A list of disk restore points. </param>
         /// <param name="nextLink"> The uri to fetch the next page of disk restore points. Call ListNext() with this to fetch the next page of disk restore points. </param>
         internal DiskRestorePointList(IReadOnlyList<DiskRestorePointData> value, string nextLink)

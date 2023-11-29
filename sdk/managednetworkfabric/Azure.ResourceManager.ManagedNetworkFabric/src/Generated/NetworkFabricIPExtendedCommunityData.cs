@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricIPExtendedCommunityData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricIPExtendedCommunityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityRules"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             IPExtendedCommunityRules = ipExtendedCommunityRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricIPExtendedCommunityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The String to use. </param>
-        /// <param name="containerName"> The String to use. </param>
-        /// <param name="protectedItemName"> The String to use. </param>
-        /// <param name="recoveryPointId"> The String to use. </param>
+        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
+        /// <param name="containerName"> The <see cref="string"/> to use. </param>
+        /// <param name="protectedItemName"> The <see cref="string"/> to use. </param>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
         /// <param name="content"> Move Resource Across Tiers Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/>, <paramref name="recoveryPointId"/> or <paramref name="content"/> is null. </exception>
@@ -265,10 +265,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The String to use. </param>
-        /// <param name="containerName"> The String to use. </param>
-        /// <param name="protectedItemName"> The String to use. </param>
-        /// <param name="recoveryPointId"> The String to use. </param>
+        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
+        /// <param name="containerName"> The <see cref="string"/> to use. </param>
+        /// <param name="protectedItemName"> The <see cref="string"/> to use. </param>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
         /// <param name="content"> Move Resource Across Tiers Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/>, <paramref name="recoveryPointId"/> or <paramref name="content"/> is null. </exception>

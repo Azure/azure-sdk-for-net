@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing usage details. It contains a list of available usage details in reverse chronological order by billing period. </summary>
     internal partial class UsageDetailsListResult
     {
-        /// <summary> Initializes a new instance of UsageDetailsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageDetailsListResult"/>. </summary>
         internal UsageDetailsListResult()
         {
             Value = new ChangeTrackingList<ConsumptionUsageDetail>();
         }
 
-        /// <summary> Initializes a new instance of UsageDetailsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageDetailsListResult"/>. </summary>
         /// <param name="value">
         /// The list of usage details.
         /// Please note <see cref="ConsumptionUsageDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

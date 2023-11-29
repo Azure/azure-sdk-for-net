@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for generating an upload URI. </summary>
     public partial class DevTestLabGenerateUploadUriContent
     {
-        /// <summary> Initializes a new instance of DevTestLabGenerateUploadUriContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGenerateUploadUriContent"/>. </summary>
         public DevTestLabGenerateUploadUriContent()
         {
         }

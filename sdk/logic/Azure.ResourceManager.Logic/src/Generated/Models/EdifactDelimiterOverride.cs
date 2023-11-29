@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact delimiter override settings. </summary>
     public partial class EdifactDelimiterOverride
     {
-        /// <summary> Initializes a new instance of EdifactDelimiterOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactDelimiterOverride"/>. </summary>
         /// <param name="dataElementSeparator"> The data element separator. </param>
         /// <param name="componentSeparator"> The component separator. </param>
         /// <param name="segmentTerminator"> The segment terminator. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             ReleaseIndicator = releaseIndicator;
         }
 
-        /// <summary> Initializes a new instance of EdifactDelimiterOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactDelimiterOverride"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="messageVersion"> The message version. </param>
         /// <param name="messageRelease"> The message release. </param>

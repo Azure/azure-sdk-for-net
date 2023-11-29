@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list VpnServerConfigurationPolicyGroups. It contains a list of VpnServerConfigurationPolicyGroups and a URL nextLink to get the next set of results. </summary>
     internal partial class ListVpnServerConfigurationPolicyGroupsResult
     {
-        /// <summary> Initializes a new instance of ListVpnServerConfigurationPolicyGroupsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnServerConfigurationPolicyGroupsResult"/>. </summary>
         internal ListVpnServerConfigurationPolicyGroupsResult()
         {
             Value = new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ListVpnServerConfigurationPolicyGroupsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnServerConfigurationPolicyGroupsResult"/>. </summary>
         /// <param name="value"> List of VpnServerConfigurationPolicyGroups. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
         internal ListVpnServerConfigurationPolicyGroupsResult(IReadOnlyList<VpnServerConfigurationPolicyGroupData> value, string nextLink)

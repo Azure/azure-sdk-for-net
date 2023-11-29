@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Class encapsulating target details, used where the destination is not a datasource. </summary>
     public partial class RestoreFilesTargetDetails
     {
-        /// <summary> Initializes a new instance of RestoreFilesTargetDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetDetails"/>. </summary>
         /// <param name="filePrefix">
         /// Restore operation may create multiple files inside location pointed by Url
         /// Below will be the common prefix for all of them

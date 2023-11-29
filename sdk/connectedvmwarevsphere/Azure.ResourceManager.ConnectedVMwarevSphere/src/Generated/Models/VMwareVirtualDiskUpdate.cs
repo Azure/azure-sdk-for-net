@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the virtual disk update. </summary>
     public partial class VMwareVirtualDiskUpdate
     {
-        /// <summary> Initializes a new instance of VMwareVirtualDiskUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualDiskUpdate"/>. </summary>
         public VMwareVirtualDiskUpdate()
         {
         }

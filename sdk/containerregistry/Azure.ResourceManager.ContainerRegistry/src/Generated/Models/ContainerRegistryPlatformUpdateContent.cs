@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating the platform configuration. </summary>
     public partial class ContainerRegistryPlatformUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPlatformUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPlatformUpdateContent"/>. </summary>
         public ContainerRegistryPlatformUpdateContent()
         {
         }

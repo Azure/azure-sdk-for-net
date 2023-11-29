@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A container mapping input. </summary>
     public partial class A2AContainerMappingContent : ReplicationProviderSpecificContainerMappingContent
     {
-        /// <summary> Initializes a new instance of A2AContainerMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AContainerMappingContent"/>. </summary>
         public A2AContainerMappingContent()
         {
             InstanceType = "A2A";

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class WidgetTypeResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of WidgetTypeResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WidgetTypeResourceFormatData"/>. </summary>
         public WidgetTypeResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WidgetTypeResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WidgetTypeResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,90 +14,103 @@
 // limitations under the License.
 // </copyright>
 
-using System;
 using System.Diagnostics.Tracing;
 using OpenTelemetry.Internal;
 
-namespace OpenTelemetry.Instrumentation.Http.Implementation
+namespace OpenTelemetry.Instrumentation.Http.Implementation;
+
+/// <summary>
+/// EventSource events emitted from the project.
+/// </summary>
+[EventSource(Name = "OpenTelemetry-Instrumentation-Http")]
+internal sealed class HttpInstrumentationEventSource : EventSource
 {
-    /// <summary>
-    /// EventSource events emitted from the project.
-    /// </summary>
-    [EventSource(Name = "OpenTelemetry-Instrumentation-Http")]
-    internal sealed class HttpInstrumentationEventSource : EventSource
+    public static HttpInstrumentationEventSource Log = new();
+
+    [NonEvent]
+    public void FailedProcessResult(Exception ex)
     {
-        public static HttpInstrumentationEventSource Log = new();
-
-        [NonEvent]
-        public void FailedProcessResult(Exception ex)
+        if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
         {
-            if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
-            {
-                this.FailedProcessResult(ex.ToInvariantString());
-            }
+            this.FailedProcessResult(ex.ToInvariantString());
         }
+    }
 
-        [NonEvent]
-        public void RequestFilterException(Exception ex)
+    [NonEvent]
+    public void RequestFilterException(Exception ex)
+    {
+        if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
         {
-            if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
-            {
-                this.RequestFilterException(ex.ToInvariantString());
-            }
+            this.RequestFilterException(ex.ToInvariantString());
         }
+    }
 
-        [NonEvent]
-        public void ExceptionInitializingInstrumentation(string instrumentationType, Exception ex)
+    [NonEvent]
+    public void ExceptionInitializingInstrumentation(string instrumentationType, Exception ex)
+    {
+        if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
         {
-            if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
-            {
-                this.ExceptionInitializingInstrumentation(instrumentationType, ex.ToInvariantString());
-            }
+            this.ExceptionInitializingInstrumentation(instrumentationType, ex.ToInvariantString());
         }
+    }
 
-        [Event(1, Message = "Failed to process result: '{0}'", Level = EventLevel.Error)]
-        public void FailedProcessResult(string ex)
+    [NonEvent]
+    public void UnknownErrorProcessingEvent(string handlerName, string eventName, Exception ex)
+    {
+        if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
         {
-            this.WriteEvent(1, ex);
+            this.UnknownErrorProcessingEvent(handlerName, eventName, ex.ToInvariantString());
         }
+    }
 
-        [Event(2, Message = "Error initializing instrumentation type {0}. Exception : {1}", Level = EventLevel.Error)]
-        public void ExceptionInitializingInstrumentation(string instrumentationType, string ex)
-        {
-            this.WriteEvent(2, instrumentationType, ex);
-        }
+    [Event(1, Message = "Failed to process result: '{0}'", Level = EventLevel.Error)]
+    public void FailedProcessResult(string ex)
+    {
+        this.WriteEvent(1, ex);
+    }
 
-        [Event(3, Message = "Payload is NULL in event '{1}' from handler '{0}', span will not be recorded.", Level = EventLevel.Warning)]
-        public void NullPayload(string handlerName, string eventName)
-        {
-            this.WriteEvent(3, handlerName, eventName);
-        }
+    [Event(2, Message = "Error initializing instrumentation type {0}. Exception : {1}", Level = EventLevel.Error)]
+    public void ExceptionInitializingInstrumentation(string instrumentationType, string ex)
+    {
+        this.WriteEvent(2, instrumentationType, ex);
+    }
 
-        [Event(4, Message = "Filter threw exception. Request will not be collected. Exception {0}.", Level = EventLevel.Error)]
-        public void RequestFilterException(string exception)
-        {
-            this.WriteEvent(4, exception);
-        }
+    [Event(3, Message = "Payload is NULL in event '{1}' from handler '{0}', span will not be recorded.", Level = EventLevel.Warning)]
+    public void NullPayload(string handlerName, string eventName)
+    {
+        this.WriteEvent(3, handlerName, eventName);
+    }
 
-        [NonEvent]
-        public void EnrichmentException(Exception ex)
-        {
-            if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
-            {
-                this.EnrichmentException(ex.ToInvariantString());
-            }
-        }
+    [Event(4, Message = "Filter threw exception. Request will not be collected. Exception {0}.", Level = EventLevel.Error)]
+    public void RequestFilterException(string exception)
+    {
+        this.WriteEvent(4, exception);
+    }
 
-        [Event(5, Message = "Enrich threw exception. Exception {0}.", Level = EventLevel.Error)]
-        public void EnrichmentException(string exception)
+    [NonEvent]
+    public void EnrichmentException(Exception ex)
+    {
+        if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
         {
-            this.WriteEvent(5, exception);
+            this.EnrichmentException(ex.ToInvariantString());
         }
+    }
 
-        [Event(6, Message = "Request is filtered out.", Level = EventLevel.Verbose)]
-        public void RequestIsFilteredOut(string eventName)
-        {
-            this.WriteEvent(6, eventName);
-        }
+    [Event(5, Message = "Enrich threw exception. Exception {0}.", Level = EventLevel.Error)]
+    public void EnrichmentException(string exception)
+    {
+        this.WriteEvent(5, exception);
+    }
+
+    [Event(6, Message = "Request is filtered out.", Level = EventLevel.Verbose)]
+    public void RequestIsFilteredOut(string eventName)
+    {
+        this.WriteEvent(6, eventName);
+    }
+
+    [Event(7, Message = "Unknown error processing event '{1}' from handler '{0}', Exception: {2}", Level = EventLevel.Error)]
+    public void UnknownErrorProcessingEvent(string handlerName, string eventName, string ex)
+    {
+        this.WriteEvent(7, handlerName, eventName, ex);
     }
 }

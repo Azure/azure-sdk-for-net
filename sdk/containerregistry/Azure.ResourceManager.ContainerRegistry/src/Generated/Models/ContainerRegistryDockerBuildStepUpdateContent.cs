@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating a docker build step. </summary>
     public partial class ContainerRegistryDockerBuildStepUpdateContent : ContainerRegistryTaskStepUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryDockerBuildStepUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryDockerBuildStepUpdateContent"/>. </summary>
         public ContainerRegistryDockerBuildStepUpdateContent()
         {
             ImageNames = new ChangeTrackingList<string>();

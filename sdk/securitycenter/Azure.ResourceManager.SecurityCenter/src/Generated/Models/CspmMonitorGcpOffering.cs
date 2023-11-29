@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The CSPM monitoring for GCP offering. </summary>
     public partial class CspmMonitorGcpOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of CspmMonitorGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOffering"/>. </summary>
         public CspmMonitorGcpOffering()
         {
             OfferingType = OfferingType.CspmMonitorGcp;
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>

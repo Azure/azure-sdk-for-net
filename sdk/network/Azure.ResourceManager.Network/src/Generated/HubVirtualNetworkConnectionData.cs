@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class HubVirtualNetworkConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of HubVirtualNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubVirtualNetworkConnectionData"/>. </summary>
         public HubVirtualNetworkConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of HubVirtualNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubVirtualNetworkConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

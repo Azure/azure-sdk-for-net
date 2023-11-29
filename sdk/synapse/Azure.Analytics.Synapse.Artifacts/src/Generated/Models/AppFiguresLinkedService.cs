@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service for AppFigures. </summary>
     public partial class AppFiguresLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AppFiguresLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/>. </summary>
         /// <param name="userName"> The username of the Appfigures source. </param>
         /// <param name="password">
         /// The password of the AppFigures source.
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AppFigures";
         }
 
-        /// <summary> Initializes a new instance of AppFiguresLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

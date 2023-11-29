@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureDataLakeStorageGen2DataFeedPatch. </summary>
     internal partial class AzureDataLakeStorageGen2DataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2DataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2DataFeedPatch"/>. </summary>
         public AzureDataLakeStorageGen2DataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.AzureDataLakeStorage;

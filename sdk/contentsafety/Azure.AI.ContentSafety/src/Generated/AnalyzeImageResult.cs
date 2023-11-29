@@ -15,7 +15,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> The image analysis response. </summary>
     public partial class AnalyzeImageResult
     {
-        /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageResult"/>. </summary>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoriesAnalysis"/> is null. </exception>
         internal AnalyzeImageResult(IEnumerable<ImageCategoriesAnalysis> categoriesAnalysis)
@@ -25,7 +25,7 @@ namespace Azure.AI.ContentSafety
             CategoriesAnalysis = categoriesAnalysis.ToList();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageResult"/>. </summary>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
         internal AnalyzeImageResult(IReadOnlyList<ImageCategoriesAnalysis> categoriesAnalysis)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan update properties. </summary>
     internal partial class UpdateRecoveryPlanContentProperties
     {
-        /// <summary> Initializes a new instance of UpdateRecoveryPlanContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateRecoveryPlanContentProperties"/>. </summary>
         public UpdateRecoveryPlanContentProperties()
         {
             Groups = new ChangeTrackingList<SiteRecoveryPlanGroup>();

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> A private link resource. </summary>
     public partial class ContainerServicePrivateLinkResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServicePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourceData"/>. </summary>
         public ContainerServicePrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServicePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The ID of the private link resource. </param>
         /// <param name="name"> The name of the private link resource. </param>
         /// <param name="resourceType"> The resource type. </param>

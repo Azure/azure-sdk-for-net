@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ApplicationGatewayResource" />.
-    /// To get an <see cref="ApplicationGatewayPrivateEndpointConnectionCollection" /> instance call the GetApplicationGatewayPrivateEndpointConnections method from an instance of <see cref="ApplicationGatewayResource" />.
+    /// A class representing a collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ApplicationGatewayResource"/>.
+    /// To get an <see cref="ApplicationGatewayPrivateEndpointConnectionCollection"/> instance call the GetApplicationGatewayPrivateEndpointConnections method from an instance of <see cref="ApplicationGatewayResource"/>.
     /// </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ApplicationGatewayPrivateEndpointConnectionResource>, IAsyncEnumerable<ApplicationGatewayPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

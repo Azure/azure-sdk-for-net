@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ManagementPartner
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PartnerResponseResource" /> and their operations.
-    /// Each <see cref="PartnerResponseResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="PartnerResponseCollection" /> instance call the GetPartnerResponses method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="PartnerResponseResource"/> and their operations.
+    /// Each <see cref="PartnerResponseResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="PartnerResponseCollection"/> instance call the GetPartnerResponses method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class PartnerResponseCollection : ArmCollection
     {

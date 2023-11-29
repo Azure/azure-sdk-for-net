@@ -13,7 +13,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> The result of blocklist match. </summary>
     public partial class TextBlocklistMatch
     {
-        /// <summary> Initializes a new instance of TextBlocklistMatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextBlocklistMatch"/>. </summary>
         /// <param name="blocklistName"> The name of the matched blocklist. </param>
         /// <param name="blocklistItemId"> The ID of the matched item. </param>
         /// <param name="blocklistItemText"> The content of the matched item. </param>

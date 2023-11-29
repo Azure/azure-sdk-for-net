@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.VoiceServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VoiceServicesTestLineResource" /> and their operations.
-    /// Each <see cref="VoiceServicesTestLineResource" /> in the collection will belong to the same instance of <see cref="VoiceServicesCommunicationsGatewayResource" />.
-    /// To get a <see cref="VoiceServicesTestLineCollection" /> instance call the GetVoiceServicesTestLines method from an instance of <see cref="VoiceServicesCommunicationsGatewayResource" />.
+    /// A class representing a collection of <see cref="VoiceServicesTestLineResource"/> and their operations.
+    /// Each <see cref="VoiceServicesTestLineResource"/> in the collection will belong to the same instance of <see cref="VoiceServicesCommunicationsGatewayResource"/>.
+    /// To get a <see cref="VoiceServicesTestLineCollection"/> instance call the GetVoiceServicesTestLines method from an instance of <see cref="VoiceServicesCommunicationsGatewayResource"/>.
     /// </summary>
     public partial class VoiceServicesTestLineCollection : ArmCollection, IEnumerable<VoiceServicesTestLineResource>, IAsyncEnumerable<VoiceServicesTestLineResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VoiceServicesTestLineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VoiceServicesTestLineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VoiceServicesTestLineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VoiceServicesTestLineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VoiceServicesTestLineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VoiceServicesTestLineResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

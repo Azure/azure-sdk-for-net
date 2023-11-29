@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Trial component definition. </summary>
     public partial class MachineLearningTrialComponent
     {
-        /// <summary> Initializes a new instance of MachineLearningTrialComponent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTrialComponent"/>. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTrialComponent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTrialComponent"/>. </summary>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="distribution">

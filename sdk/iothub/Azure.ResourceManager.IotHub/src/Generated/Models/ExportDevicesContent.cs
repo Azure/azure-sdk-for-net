@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Use to provide parameters when requesting an export of all devices in the IoT hub. </summary>
     public partial class ExportDevicesContent
     {
-        /// <summary> Initializes a new instance of ExportDevicesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDevicesContent"/>. </summary>
         /// <param name="exportBlobContainerUri"> The export blob container URI. </param>
         /// <param name="excludeKeys"> The value indicating whether keys should be excluded during export. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportBlobContainerUri"/> is null. </exception>

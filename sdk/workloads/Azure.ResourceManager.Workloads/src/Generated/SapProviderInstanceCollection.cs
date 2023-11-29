@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SapProviderInstanceResource" /> and their operations.
-    /// Each <see cref="SapProviderInstanceResource" /> in the collection will belong to the same instance of <see cref="SapMonitorResource" />.
-    /// To get a <see cref="SapProviderInstanceCollection" /> instance call the GetSapProviderInstances method from an instance of <see cref="SapMonitorResource" />.
+    /// A class representing a collection of <see cref="SapProviderInstanceResource"/> and their operations.
+    /// Each <see cref="SapProviderInstanceResource"/> in the collection will belong to the same instance of <see cref="SapMonitorResource"/>.
+    /// To get a <see cref="SapProviderInstanceCollection"/> instance call the GetSapProviderInstances method from an instance of <see cref="SapMonitorResource"/>.
     /// </summary>
     public partial class SapProviderInstanceCollection : ArmCollection, IEnumerable<SapProviderInstanceResource>, IAsyncEnumerable<SapProviderInstanceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SapProviderInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapProviderInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapProviderInstanceProviderInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapProviderInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapProviderInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapProviderInstanceProviderInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

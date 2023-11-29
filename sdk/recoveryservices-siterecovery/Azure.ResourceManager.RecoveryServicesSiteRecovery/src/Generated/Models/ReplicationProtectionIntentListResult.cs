@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication protection intent objects collection. </summary>
     internal partial class ReplicationProtectionIntentListResult
     {
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentListResult"/>. </summary>
         internal ReplicationProtectionIntentListResult()
         {
             Value = new ChangeTrackingList<ReplicationProtectionIntentData>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentListResult"/>. </summary>
         /// <param name="value"> The Replication protection intent details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal ReplicationProtectionIntentListResult(IReadOnlyList<ReplicationProtectionIntentData> value, string nextLink)

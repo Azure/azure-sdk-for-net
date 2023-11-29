@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The policy details. </summary>
     public partial class PolicyDetails
     {
-        /// <summary> Initializes a new instance of PolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDetails"/>. </summary>
         internal PolicyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDetails"/>. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition. </param>
         /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
         /// <param name="policyAssignmentDisplayName"> The display name of the policy assignment. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public abstract partial class AlertRuleAction
     {
-        /// <summary> Initializes a new instance of AlertRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleAction"/>. </summary>
         protected AlertRuleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleAction"/>. </summary>
         /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
         internal AlertRuleAction(string odataType)
         {

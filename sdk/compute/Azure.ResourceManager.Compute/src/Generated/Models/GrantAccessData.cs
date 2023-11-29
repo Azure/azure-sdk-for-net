@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Data used for requesting a SAS. </summary>
     public partial class GrantAccessData
     {
-        /// <summary> Initializes a new instance of GrantAccessData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrantAccessData"/>. </summary>
         /// <param name="access"> The Access Level, accepted values include None, Read, Write. </param>
         /// <param name="durationInSeconds"> Time duration in seconds until the SAS access expires. </param>
         public GrantAccessData(AccessLevel access, int durationInSeconds)

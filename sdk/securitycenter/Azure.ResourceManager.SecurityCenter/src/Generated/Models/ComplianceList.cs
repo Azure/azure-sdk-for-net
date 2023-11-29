@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of Compliance objects response. </summary>
     internal partial class ComplianceList
     {
-        /// <summary> Initializes a new instance of ComplianceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceList"/>. </summary>
         internal ComplianceList()
         {
             Value = new ChangeTrackingList<SecurityComplianceData>();
         }
 
-        /// <summary> Initializes a new instance of ComplianceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceList"/>. </summary>
         /// <param name="value"> List of Compliance objects. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal ComplianceList(IReadOnlyList<SecurityComplianceData> value, string nextLink)

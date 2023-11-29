@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
     public partial class TwitterRegistration
     {
-        /// <summary> Initializes a new instance of TwitterRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwitterRegistration"/>. </summary>
         public TwitterRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of TwitterRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwitterRegistration"/>. </summary>
         /// <param name="consumerKey">
         /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.

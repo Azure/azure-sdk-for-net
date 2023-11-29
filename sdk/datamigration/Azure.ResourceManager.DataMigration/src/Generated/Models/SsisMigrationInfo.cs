@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> SSIS migration info with SSIS store type, overwrite policy. </summary>
     public partial class SsisMigrationInfo
     {
-        /// <summary> Initializes a new instance of SsisMigrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisMigrationInfo"/>. </summary>
         public SsisMigrationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisMigrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisMigrationInfo"/>. </summary>
         /// <param name="ssisStoreType"> The SSIS store type of source, only SSIS catalog is supported now in DMS. </param>
         /// <param name="projectOverwriteOption"> The overwrite option for the SSIS project migration. </param>
         /// <param name="environmentOverwriteOption"> The overwrite option for the SSIS environment migration. </param>

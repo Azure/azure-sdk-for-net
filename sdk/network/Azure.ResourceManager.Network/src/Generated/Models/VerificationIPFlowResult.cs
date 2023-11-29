@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Results of IP flow verification on the target resource. </summary>
     public partial class VerificationIPFlowResult
     {
-        /// <summary> Initializes a new instance of VerificationIPFlowResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerificationIPFlowResult"/>. </summary>
         internal VerificationIPFlowResult()
         {
         }
 
-        /// <summary> Initializes a new instance of VerificationIPFlowResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerificationIPFlowResult"/>. </summary>
         /// <param name="access"> Indicates whether the traffic is allowed or denied. </param>
         /// <param name="ruleName"> Name of the rule. If input is not matched against any security rule, it is not displayed. </param>
         internal VerificationIPFlowResult(NetworkAccess? access, string ruleName)

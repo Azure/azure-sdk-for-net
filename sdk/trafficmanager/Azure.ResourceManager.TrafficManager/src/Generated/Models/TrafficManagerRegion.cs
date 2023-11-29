@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing a region in the Geographic hierarchy used with the Geographic traffic routing method. </summary>
     public partial class TrafficManagerRegion
     {
-        /// <summary> Initializes a new instance of TrafficManagerRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerRegion"/>. </summary>
         public TrafficManagerRegion()
         {
             Regions = new ChangeTrackingList<TrafficManagerRegion>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerRegion"/>. </summary>
         /// <param name="code"> The code of the region. </param>
         /// <param name="name"> The name of the region. </param>
         /// <param name="regions"> The list of Regions grouped under this Region in the Geographic Hierarchy. </param>

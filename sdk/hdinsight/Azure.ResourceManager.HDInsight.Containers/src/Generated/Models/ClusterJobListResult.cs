@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Collection of cluster job. </summary>
     internal partial class ClusterJobListResult
     {
-        /// <summary> Initializes a new instance of ClusterJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterJobListResult"/>. </summary>
         /// <param name="value"> Collection of cluster job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ClusterJobListResult(IEnumerable<ClusterJob> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClusterJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterJobListResult"/>. </summary>
         /// <param name="value"> Collection of cluster job. </param>
         /// <param name="nextLink"> The Url of next result page. </param>
         internal ClusterJobListResult(IReadOnlyList<ClusterJob> value, string nextLink)

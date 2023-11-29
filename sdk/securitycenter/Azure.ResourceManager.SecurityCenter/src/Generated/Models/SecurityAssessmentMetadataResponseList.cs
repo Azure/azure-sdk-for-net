@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security assessment metadata. </summary>
     internal partial class SecurityAssessmentMetadataResponseList
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataResponseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataResponseList"/>. </summary>
         internal SecurityAssessmentMetadataResponseList()
         {
             Value = new ChangeTrackingList<SecurityAssessmentMetadataData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataResponseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataResponseList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal SecurityAssessmentMetadataResponseList(IReadOnlyList<SecurityAssessmentMetadataData> value, string nextLink)

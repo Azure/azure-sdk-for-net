@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The Data Box Edge/Gateway device patch. </summary>
     public partial class DataBoxEdgeDevicePatch
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDevicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDevicePatch"/>. </summary>
         public DataBoxEdgeDevicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

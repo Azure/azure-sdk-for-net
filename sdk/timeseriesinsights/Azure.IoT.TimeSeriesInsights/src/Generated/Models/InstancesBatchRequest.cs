@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to perform a single operation on a batch of instances. Exactly one of "get", "put", "update" or "delete" must be set. </summary>
     internal partial class InstancesBatchRequest
     {
-        /// <summary> Initializes a new instance of InstancesBatchRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesBatchRequest"/>. </summary>
         public InstancesBatchRequest()
         {
             Put = new ChangeTrackingList<TimeSeriesInstance>();

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Vpn Client Connection configuration PolicyGroup member. </summary>
     public partial class VirtualNetworkGatewayPolicyGroupMember
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroupMember. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroupMember"/>. </summary>
         public VirtualNetworkGatewayPolicyGroupMember()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroupMember. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroupMember"/>. </summary>
         /// <param name="name"> Name of the VirtualNetworkGatewayPolicyGroupMember. </param>
         /// <param name="attributeType"> The Vpn Policy member attribute type. </param>
         /// <param name="attributeValue"> The value of Attribute used for this VirtualNetworkGatewayPolicyGroupMember. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the request body for resource move operation. </summary>
     public partial class MoverResourceMoveContent
     {
-        /// <summary> Initializes a new instance of MoverResourceMoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceMoveContent"/>. </summary>
         /// <param name="moverResources"> Gets or sets the list of resource Id's, by default it accepts move resource id's unless the input type is switched via moveResourceInputType property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResources"/> is null. </exception>
         public MoverResourceMoveContent(IEnumerable<ResourceIdentifier> moverResources)

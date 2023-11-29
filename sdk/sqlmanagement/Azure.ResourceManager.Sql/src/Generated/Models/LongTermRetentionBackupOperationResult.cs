@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A LongTermRetentionBackup operation result resource. </summary>
     public partial class LongTermRetentionBackupOperationResult : ResourceData
     {
-        /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupOperationResult"/>. </summary>
         public LongTermRetentionBackupOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

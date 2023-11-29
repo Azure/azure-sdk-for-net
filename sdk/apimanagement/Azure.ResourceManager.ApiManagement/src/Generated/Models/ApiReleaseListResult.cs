@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged ApiRelease list representation. </summary>
     internal partial class ApiReleaseListResult
     {
-        /// <summary> Initializes a new instance of ApiReleaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiReleaseListResult"/>. </summary>
         internal ApiReleaseListResult()
         {
             Value = new ChangeTrackingList<ApiReleaseData>();
         }
 
-        /// <summary> Initializes a new instance of ApiReleaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiReleaseListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

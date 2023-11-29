@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Represents a log file. </summary>
     public partial class MySqlLogFile : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlLogFile"/>. </summary>
         public MySqlLogFile()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

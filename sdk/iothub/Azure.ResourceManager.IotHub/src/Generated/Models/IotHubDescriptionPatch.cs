@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on an IoT Hub instance. </summary>
     public partial class IotHubDescriptionPatch
     {
-        /// <summary> Initializes a new instance of IotHubDescriptionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDescriptionPatch"/>. </summary>
         public IotHubDescriptionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> A partial update to the RedisEnterprise database. </summary>
     public partial class RedisEnterpriseDatabasePatch
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseDatabasePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabasePatch"/>. </summary>
         public RedisEnterpriseDatabasePatch()
         {
             Modules = new ChangeTrackingList<RedisEnterpriseModule>();

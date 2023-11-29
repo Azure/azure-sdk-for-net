@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Base class for feature object. </summary>
     public partial class BackupFeatureValidationContent : BackupFeatureValidationContentBase
     {
-        /// <summary> Initializes a new instance of BackupFeatureValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationContent"/>. </summary>
         public BackupFeatureValidationContent()
         {
             ObjectType = "FeatureValidationRequest";

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Holds Customer subscription details. Clients can display available products to unregistered customers by explicitly passing subscription details. </summary>
     public partial class CustomerSubscriptionDetails
     {
-        /// <summary> Initializes a new instance of CustomerSubscriptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerSubscriptionDetails"/>. </summary>
         /// <param name="quotaId"> Quota ID of a subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaId"/> is null. </exception>
         public CustomerSubscriptionDetails(string quotaId)

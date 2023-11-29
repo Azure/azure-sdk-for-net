@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SAP HANA Linked Service. </summary>
     public partial class SapHanaLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SapHanaLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapHanaLinkedService"/>. </summary>
         public SapHanaLinkedService()
         {
             LinkedServiceType = "SapHana";
         }
 
-        /// <summary> Initializes a new instance of SapHanaLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapHanaLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

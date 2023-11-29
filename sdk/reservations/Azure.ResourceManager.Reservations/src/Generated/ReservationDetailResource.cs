@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
     /// A Class representing a ReservationDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReservationDetailResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReservationDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ReservationOrderResource" /> using the GetReservationDetail method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReservationDetailResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetReservationDetailResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ReservationOrderResource"/> using the GetReservationDetail method.
     /// </summary>
     public partial class ReservationDetailResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Reservations
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ReservationDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReservationDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReservationDetailResource(ArmClient client, ReservationDetailData data) : this(client, data.Id)

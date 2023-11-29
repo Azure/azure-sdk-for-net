@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB Gremlin database event. </summary>
     public partial class RestorableGremlinDatabase : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableGremlinDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinDatabase"/>. </summary>
         internal RestorableGremlinDatabase()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableGremlinDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

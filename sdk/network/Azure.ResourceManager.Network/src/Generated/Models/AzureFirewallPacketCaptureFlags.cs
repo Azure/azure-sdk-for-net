@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the AzureFirewallRCAction. </summary>
     public partial class AzureFirewallPacketCaptureFlags
     {
-        /// <summary> Initializes a new instance of AzureFirewallPacketCaptureFlags. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureFlags"/>. </summary>
         public AzureFirewallPacketCaptureFlags()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallPacketCaptureFlags. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureFlags"/>. </summary>
         /// <param name="flagsType"> Flags to capture. </param>
         internal AzureFirewallPacketCaptureFlags(AzureFirewallPacketCaptureFlagsType? flagsType)
         {

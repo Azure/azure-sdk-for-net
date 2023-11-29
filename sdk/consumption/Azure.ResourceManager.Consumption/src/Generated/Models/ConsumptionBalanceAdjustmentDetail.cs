@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The ConsumptionBalanceAdjustmentDetail. </summary>
     public partial class ConsumptionBalanceAdjustmentDetail
     {
-        /// <summary> Initializes a new instance of ConsumptionBalanceAdjustmentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceAdjustmentDetail"/>. </summary>
         internal ConsumptionBalanceAdjustmentDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBalanceAdjustmentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceAdjustmentDetail"/>. </summary>
         /// <param name="name"> the name of new adjustment. </param>
         /// <param name="value"> the value of new adjustment. </param>
         internal ConsumptionBalanceAdjustmentDetail(string name, decimal? value)

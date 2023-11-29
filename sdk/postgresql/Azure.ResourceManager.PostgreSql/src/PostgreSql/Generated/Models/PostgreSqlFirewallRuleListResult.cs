@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A list of firewall rules. </summary>
     internal partial class PostgreSqlFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFirewallRuleListResult"/>. </summary>
         internal PostgreSqlFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFirewallRuleListResult"/>. </summary>
         /// <param name="value"> The list of firewall rules in a server. </param>
         internal PostgreSqlFirewallRuleListResult(IReadOnlyList<PostgreSqlFirewallRuleData> value)
         {

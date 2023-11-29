@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The request history. </summary>
     public partial class LogicWorkflowRequestHistoryProperties
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRequestHistoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequestHistoryProperties"/>. </summary>
         public LogicWorkflowRequestHistoryProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRequestHistoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequestHistoryProperties"/>. </summary>
         /// <param name="startOn"> The time the request started. </param>
         /// <param name="endOn"> The time the request ended. </param>
         /// <param name="request"> The request. </param>

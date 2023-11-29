@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes threat intelligence metric. </summary>
     public partial class ThreatIntelligenceMetric
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetric"/>. </summary>
         internal ThreatIntelligenceMetric()
         {
             ThreatTypeMetrics = new ChangeTrackingList<ThreatIntelligenceMetricEntity>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SourceMetrics = new ChangeTrackingList<ThreatIntelligenceMetricEntity>();
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetric"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated indicator metric. </param>
         /// <param name="threatTypeMetrics"> Threat type metrics. </param>
         /// <param name="patternTypeMetrics"> Pattern type metrics. </param>

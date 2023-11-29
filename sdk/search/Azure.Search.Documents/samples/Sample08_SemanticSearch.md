@@ -15,7 +15,7 @@ Let's consider the example of a `Hotel`. First, we need to create an index for s
 To accomplish this, we will create an instace of `SearchIndex` and define `Hotel` fields.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Index
-string indexName = "Hotel";
+string indexName = "hotel";
 SearchIndex searchIndex = new(indexName)
 {
     Fields =

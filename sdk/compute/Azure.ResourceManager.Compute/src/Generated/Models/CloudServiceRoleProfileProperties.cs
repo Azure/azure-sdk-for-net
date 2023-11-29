@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the role properties. </summary>
     public partial class CloudServiceRoleProfileProperties
     {
-        /// <summary> Initializes a new instance of CloudServiceRoleProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleProfileProperties"/>. </summary>
         public CloudServiceRoleProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleProfileProperties"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="sku"> Describes the cloud service role sku. </param>
         internal CloudServiceRoleProfileProperties(string name, CloudServiceRoleSku sku)

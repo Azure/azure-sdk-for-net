@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of an enrichment that your IoT hub applies to messages delivered to endpoints. </summary>
     public partial class IotHubEnrichmentProperties
     {
-        /// <summary> Initializes a new instance of IotHubEnrichmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubEnrichmentProperties"/>. </summary>
         /// <param name="key"> The key or name for the enrichment property. </param>
         /// <param name="value"> The value for the enrichment property. </param>
         /// <param name="endpointNames"> The list of endpoints for which the enrichment is applied to the message. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotHub.Models
             EndpointNames = endpointNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of IotHubEnrichmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubEnrichmentProperties"/>. </summary>
         /// <param name="key"> The key or name for the enrichment property. </param>
         /// <param name="value"> The value for the enrichment property. </param>
         /// <param name="endpointNames"> The list of endpoints for which the enrichment is applied to the message. </param>

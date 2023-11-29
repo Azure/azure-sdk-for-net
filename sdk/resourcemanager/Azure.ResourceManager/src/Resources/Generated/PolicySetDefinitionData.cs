@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class PolicySetDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySetDefinitionData"/>. </summary>
         public PolicySetDefinitionData()
         {
             Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameter>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources
             PolicyDefinitionGroups = new ChangeTrackingList<PolicyDefinitionGroup>();
         }
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySetDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

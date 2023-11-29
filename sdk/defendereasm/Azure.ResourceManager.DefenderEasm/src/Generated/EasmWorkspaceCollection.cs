@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DefenderEasm
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EasmWorkspaceResource" /> and their operations.
-    /// Each <see cref="EasmWorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="EasmWorkspaceCollection" /> instance call the GetEasmWorkspaces method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="EasmWorkspaceResource"/> and their operations.
+    /// Each <see cref="EasmWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="EasmWorkspaceCollection"/> instance call the GetEasmWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EasmWorkspaceCollection : ArmCollection, IEnumerable<EasmWorkspaceResource>, IAsyncEnumerable<EasmWorkspaceResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EasmWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EasmWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EasmWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EasmWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

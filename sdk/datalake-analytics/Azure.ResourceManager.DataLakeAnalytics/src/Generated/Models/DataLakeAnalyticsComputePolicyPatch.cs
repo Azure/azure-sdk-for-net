@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsComputePolicyPatch
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyPatch"/>. </summary>
         public DataLakeAnalyticsComputePolicyPatch()
         {
         }

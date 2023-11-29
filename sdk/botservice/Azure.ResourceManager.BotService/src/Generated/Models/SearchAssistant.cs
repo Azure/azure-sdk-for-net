@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> SearchAssistant definition. </summary>
     public partial class SearchAssistant : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of SearchAssistant. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAssistant"/>. </summary>
         public SearchAssistant()
         {
             ChannelName = "SearchAssistant";
         }
 
-        /// <summary> Initializes a new instance of SearchAssistant. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAssistant"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

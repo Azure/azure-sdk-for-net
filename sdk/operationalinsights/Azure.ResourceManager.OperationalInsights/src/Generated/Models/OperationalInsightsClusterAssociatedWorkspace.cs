@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list of Log Analytics workspaces associated with the cluster. </summary>
     public partial class OperationalInsightsClusterAssociatedWorkspace
     {
-        /// <summary> Initializes a new instance of OperationalInsightsClusterAssociatedWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterAssociatedWorkspace"/>. </summary>
         public OperationalInsightsClusterAssociatedWorkspace()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsClusterAssociatedWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterAssociatedWorkspace"/>. </summary>
         /// <param name="workspaceId"> The id of the assigned workspace. </param>
         /// <param name="workspaceName"> The name id the assigned workspace. </param>
         /// <param name="resourceId"> The ResourceId id the assigned workspace. </param>

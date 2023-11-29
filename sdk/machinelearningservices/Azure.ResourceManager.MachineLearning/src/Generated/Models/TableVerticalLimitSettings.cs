@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Job execution constraints. </summary>
     public partial class TableVerticalLimitSettings
     {
-        /// <summary> Initializes a new instance of TableVerticalLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableVerticalLimitSettings"/>. </summary>
         public TableVerticalLimitSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of TableVerticalLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableVerticalLimitSettings"/>. </summary>
         /// <param name="enableEarlyTermination"> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </param>
         /// <param name="exitScore"> Exit score for the AutoML job. </param>
         /// <param name="maxConcurrentTrials"> Maximum Concurrent iterations. </param>

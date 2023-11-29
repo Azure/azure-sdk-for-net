@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The ServiceAccountThrottlingRule. </summary>
     public partial class ServiceAccountThrottlingRule
     {
-        /// <summary> Initializes a new instance of ServiceAccountThrottlingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingRule"/>. </summary>
         internal ServiceAccountThrottlingRule()
         {
             MatchPatterns = new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountThrottlingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingRule"/>. </summary>
         /// <param name="key"></param>
         /// <param name="renewalPeriod"></param>
         /// <param name="count"></param>

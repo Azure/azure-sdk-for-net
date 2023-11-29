@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapsePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapsePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapsePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapsePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapsePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapsePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapsePrivateEndpointConnection method.
     /// </summary>
     public partial class SynapsePrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapsePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapsePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapsePrivateEndpointConnectionResource(ArmClient client, SynapsePrivateEndpointConnectionData data) : this(client, data.Id)

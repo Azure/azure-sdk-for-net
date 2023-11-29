@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The port range. </summary>
     public partial class AgentPoolNetworkPortRange
     {
-        /// <summary> Initializes a new instance of AgentPoolNetworkPortRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkPortRange"/>. </summary>
         public AgentPoolNetworkPortRange()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolNetworkPortRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkPortRange"/>. </summary>
         /// <param name="portStart"> The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd. </param>
         /// <param name="portEnd"> The maximum port that is included in the range. It should be ranged from 1 to 65535, and be greater than or equal to portStart. </param>
         /// <param name="protocol"> The network protocol of the port. </param>

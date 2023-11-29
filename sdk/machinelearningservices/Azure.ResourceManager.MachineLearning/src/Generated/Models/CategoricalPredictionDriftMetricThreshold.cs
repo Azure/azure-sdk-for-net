@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CategoricalPredictionDriftMetricThreshold. </summary>
     public partial class CategoricalPredictionDriftMetricThreshold : PredictionDriftMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of CategoricalPredictionDriftMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="CategoricalPredictionDriftMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The categorical prediction drift metric to calculate. </param>
         public CategoricalPredictionDriftMetricThreshold(CategoricalPredictionDriftMetric metric)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataType = MonitoringFeatureDataType.Categorical;
         }
 
-        /// <summary> Initializes a new instance of CategoricalPredictionDriftMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="CategoricalPredictionDriftMetricThreshold"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         /// <param name="metric"> [Required] The categorical prediction drift metric to calculate. </param>

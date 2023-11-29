@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines modifiable attributes of an Experiment. </summary>
     public partial class FrontDoorExperimentPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorExperimentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentPatch"/>. </summary>
         public FrontDoorExperimentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

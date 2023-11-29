@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> user request details. </summary>
     public partial class PlanRequesterInfo
     {
-        /// <summary> Initializes a new instance of PlanRequesterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanRequesterInfo"/>. </summary>
         internal PlanRequesterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PlanRequesterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanRequesterInfo"/>. </summary>
         /// <param name="user"> Gets user id. </param>
         /// <param name="date"> Gets request date. </param>
         /// <param name="justification"> Gets justification. </param>

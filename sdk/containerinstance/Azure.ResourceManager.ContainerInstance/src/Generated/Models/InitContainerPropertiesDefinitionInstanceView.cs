@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The instance view of the init container. Only valid in response. </summary>
     public partial class InitContainerPropertiesDefinitionInstanceView
     {
-        /// <summary> Initializes a new instance of InitContainerPropertiesDefinitionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
         internal InitContainerPropertiesDefinitionInstanceView()
         {
             Events = new ChangeTrackingList<ContainerEvent>();
         }
 
-        /// <summary> Initializes a new instance of InitContainerPropertiesDefinitionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
         /// <param name="restartCount"> The number of times that the init container has been restarted. </param>
         /// <param name="currentState"> The current state of the init container. </param>
         /// <param name="previousState"> The previous state of the init container. </param>

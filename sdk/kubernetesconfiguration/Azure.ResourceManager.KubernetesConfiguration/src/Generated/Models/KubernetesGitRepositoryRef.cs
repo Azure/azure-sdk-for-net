@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> The source reference for the GitRepository object. </summary>
     public partial class KubernetesGitRepositoryRef
     {
-        /// <summary> Initializes a new instance of KubernetesGitRepositoryRef. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesGitRepositoryRef"/>. </summary>
         public KubernetesGitRepositoryRef()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesGitRepositoryRef. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesGitRepositoryRef"/>. </summary>
         /// <param name="branch"> The git repository branch name to checkout. </param>
         /// <param name="tag"> The git repository tag name to checkout. This takes precedence over branch. </param>
         /// <param name="semver"> The semver range used to match against git repository tags. This takes precedence over tag. </param>

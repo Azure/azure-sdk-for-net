@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Instance view status. </summary>
     public partial class ResourceInstanceViewStatus
     {
-        /// <summary> Initializes a new instance of ResourceInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceInstanceViewStatus"/>. </summary>
         internal ResourceInstanceViewStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceInstanceViewStatus"/>. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>

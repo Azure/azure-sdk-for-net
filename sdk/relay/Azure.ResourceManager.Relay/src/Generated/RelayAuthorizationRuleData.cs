@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     public partial class RelayAuthorizationRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelayAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayAuthorizationRuleData"/>. </summary>
         public RelayAuthorizationRuleData()
         {
             Rights = new ChangeTrackingList<RelayAccessRight>();
         }
 
-        /// <summary> Initializes a new instance of RelayAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayAuthorizationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A Class representing a SecurityInsightsAlertRuleAction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsAlertRuleActionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsAlertRuleActionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityInsightsAlertRuleResource" /> using the GetSecurityInsightsAlertRuleAction method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsAlertRuleActionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsAlertRuleActionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityInsightsAlertRuleResource"/> using the GetSecurityInsightsAlertRuleAction method.
     /// </summary>
     public partial class SecurityInsightsAlertRuleActionResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsAlertRuleActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAlertRuleActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsAlertRuleActionResource(ArmClient client, SecurityInsightsAlertRuleActionData data) : this(client, data.Id)

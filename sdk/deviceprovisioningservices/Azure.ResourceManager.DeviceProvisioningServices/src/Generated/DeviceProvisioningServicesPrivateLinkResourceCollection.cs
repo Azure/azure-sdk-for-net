@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeviceProvisioningServicesPrivateLinkResource" /> and their operations.
-    /// Each <see cref="DeviceProvisioningServicesPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource" />.
-    /// To get a <see cref="DeviceProvisioningServicesPrivateLinkResourceCollection" /> instance call the GetDeviceProvisioningServicesPrivateLinkResources method from an instance of <see cref="DeviceProvisioningServiceResource" />.
+    /// A class representing a collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> and their operations.
+    /// Each <see cref="DeviceProvisioningServicesPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource"/>.
+    /// To get a <see cref="DeviceProvisioningServicesPrivateLinkResourceCollection"/> instance call the GetDeviceProvisioningServicesPrivateLinkResources method from an instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateLinkResourceCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesPrivateLinkResource>, IAsyncEnumerable<DeviceProvisioningServicesPrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

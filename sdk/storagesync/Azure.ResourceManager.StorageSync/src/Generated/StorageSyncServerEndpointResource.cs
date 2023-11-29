@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
     /// A Class representing a StorageSyncServerEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageSyncServerEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageSyncServerEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageSyncGroupResource" /> using the GetStorageSyncServerEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageSyncServerEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageSyncServerEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageSyncGroupResource"/> using the GetStorageSyncServerEndpoint method.
     /// </summary>
     public partial class StorageSyncServerEndpointResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StorageSync
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageSyncServerEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncServerEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageSyncServerEndpointResource(ArmClient client, StorageSyncServerEndpointData data) : this(client, data.Id)

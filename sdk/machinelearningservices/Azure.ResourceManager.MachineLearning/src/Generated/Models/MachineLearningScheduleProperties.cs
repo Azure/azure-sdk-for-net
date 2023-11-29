@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition of a schedule. </summary>
     public partial class MachineLearningScheduleProperties : MachineLearningResourceBase
     {
-        /// <summary> Initializes a new instance of MachineLearningScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/>. </summary>
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
         /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Trigger = trigger;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

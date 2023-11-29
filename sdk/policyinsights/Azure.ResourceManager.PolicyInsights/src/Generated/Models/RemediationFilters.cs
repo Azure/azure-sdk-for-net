@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
     internal partial class RemediationFilters
     {
-        /// <summary> Initializes a new instance of RemediationFilters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationFilters"/>. </summary>
         public RemediationFilters()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of RemediationFilters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationFilters"/>. </summary>
         /// <param name="locations"> The resource locations that will be remediated. </param>
         internal RemediationFilters(IList<AzureLocation> locations)
         {

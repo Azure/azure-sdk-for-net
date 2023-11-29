@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> NamedValue update Parameters. </summary>
     public partial class ApiManagementNamedValuePatch
     {
-        /// <summary> Initializes a new instance of ApiManagementNamedValuePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValuePatch"/>. </summary>
         public ApiManagementNamedValuePatch()
         {
             Tags = new ChangeTrackingList<string>();

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specification of which command to run where. </summary>
     public partial class CassandraCommandPostBody
     {
-        /// <summary> Initializes a new instance of CassandraCommandPostBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraCommandPostBody"/>. </summary>
         /// <param name="command"> The command which should be run. </param>
         /// <param name="host"> IP address of the cassandra host to run the command on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="host"/> is null. </exception>

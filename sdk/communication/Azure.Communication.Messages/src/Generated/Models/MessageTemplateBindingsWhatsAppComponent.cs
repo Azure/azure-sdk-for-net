@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
     /// <summary> The template bindings component for WhatsApp. </summary>
     internal partial class MessageTemplateBindingsWhatsAppComponent
     {
-        /// <summary> Initializes a new instance of MessageTemplateBindingsWhatsAppComponent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppComponent"/>. </summary>
         /// <param name="refValue"> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
         public MessageTemplateBindingsWhatsAppComponent(string refValue)

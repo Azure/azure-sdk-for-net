@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppJobExecutionResource" /> and their operations.
-    /// Each <see cref="ContainerAppJobExecutionResource" /> in the collection will belong to the same instance of <see cref="ContainerAppJobResource" />.
-    /// To get a <see cref="ContainerAppJobExecutionCollection" /> instance call the GetContainerAppJobExecutions method from an instance of <see cref="ContainerAppJobResource" />.
+    /// A class representing a collection of <see cref="ContainerAppJobExecutionResource"/> and their operations.
+    /// Each <see cref="ContainerAppJobExecutionResource"/> in the collection will belong to the same instance of <see cref="ContainerAppJobResource"/>.
+    /// To get a <see cref="ContainerAppJobExecutionCollection"/> instance call the GetContainerAppJobExecutions method from an instance of <see cref="ContainerAppJobResource"/>.
     /// </summary>
     public partial class ContainerAppJobExecutionCollection : ArmCollection, IEnumerable<ContainerAppJobExecutionResource>, IAsyncEnumerable<ContainerAppJobExecutionResource>
     {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppJobExecutionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppJobExecutionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);

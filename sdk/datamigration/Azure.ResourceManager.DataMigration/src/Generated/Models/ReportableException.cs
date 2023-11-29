@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Exception object for all custom exceptions. </summary>
     public partial class ReportableException
     {
-        /// <summary> Initializes a new instance of ReportableException. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportableException"/>. </summary>
         internal ReportableException()
         {
         }
 
-        /// <summary> Initializes a new instance of ReportableException. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportableException"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="actionableMessage"> Actionable steps for this exception. </param>
         /// <param name="filePath"> The path to the file where exception occurred. </param>

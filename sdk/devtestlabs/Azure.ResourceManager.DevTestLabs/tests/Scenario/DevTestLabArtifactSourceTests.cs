@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Tests
 {
+    [NonParallelizable]
     internal class DevTestLabArtifactSourceTests : DevTestLabsManagementTestBase
     {
         private DevTestLabArtifactSourceCollection _artifactSourceCollection => TestDevTestLab.GetDevTestLabArtifactSources();
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task ExistGetGetAll()
         {
             // GetAll

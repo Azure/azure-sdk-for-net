@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ElasticSanPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="ElasticSanPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ElasticSanResource" />.
-    /// To get an <see cref="ElasticSanPrivateEndpointConnectionCollection" /> instance call the GetElasticSanPrivateEndpointConnections method from an instance of <see cref="ElasticSanResource" />.
+    /// A class representing a collection of <see cref="ElasticSanPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="ElasticSanPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ElasticSanResource"/>.
+    /// To get an <see cref="ElasticSanPrivateEndpointConnectionCollection"/> instance call the GetElasticSanPrivateEndpointConnections method from an instance of <see cref="ElasticSanResource"/>.
     /// </summary>
     public partial class ElasticSanPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ElasticSanPrivateEndpointConnectionResource>, IAsyncEnumerable<ElasticSanPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticSanPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ElasticSanPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticSanPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticSanPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticSanPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticSanPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

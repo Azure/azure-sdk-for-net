@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Schema for MSIX Package Application properties. </summary>
     public partial class MsixPackageApplications
     {
-        /// <summary> Initializes a new instance of MsixPackageApplications. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageApplications"/>. </summary>
         public MsixPackageApplications()
         {
         }
 
-        /// <summary> Initializes a new instance of MsixPackageApplications. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageApplications"/>. </summary>
         /// <param name="appId"> Package Application Id, found in appxmanifest.xml. </param>
         /// <param name="description"> Description of Package Application. </param>
         /// <param name="appUserModelId"> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </param>

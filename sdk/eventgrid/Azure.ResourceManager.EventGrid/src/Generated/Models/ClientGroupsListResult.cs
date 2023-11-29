@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Client Group operation. </summary>
     internal partial class ClientGroupsListResult
     {
-        /// <summary> Initializes a new instance of ClientGroupsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientGroupsListResult"/>. </summary>
         internal ClientGroupsListResult()
         {
             Value = new ChangeTrackingList<EventGridNamespaceClientGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ClientGroupsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientGroupsListResult"/>. </summary>
         /// <param name="value"> A collection of Client Group. </param>
         /// <param name="nextLink"> A link for the next page of Client Group. </param>
         internal ClientGroupsListResult(IReadOnlyList<EventGridNamespaceClientGroupData> value, string nextLink)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> A domain name that dedicated hsm services are reaching at. </summary>
     public partial class EndpointDependency
     {
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDependency"/>. </summary>
         internal EndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<EndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The Ports and Protocols used when connecting to domainName. </param>
         internal EndpointDependency(string domainName, IReadOnlyList<EndpointDetail> endpointDetails)

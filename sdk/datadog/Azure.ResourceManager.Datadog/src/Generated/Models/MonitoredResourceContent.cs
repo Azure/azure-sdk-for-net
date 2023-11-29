@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The properties of a resource currently being monitored by the Datadog monitor resource. </summary>
     public partial class MonitoredResourceContent
     {
-        /// <summary> Initializes a new instance of MonitoredResourceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceContent"/>. </summary>
         internal MonitoredResourceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoredResourceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceContent"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to Datadog. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>

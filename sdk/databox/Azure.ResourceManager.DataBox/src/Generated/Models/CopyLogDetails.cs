@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class CopyLogDetails
     {
-        /// <summary> Initializes a new instance of CopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyLogDetails"/>. </summary>
         protected CopyLogDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         internal CopyLogDetails(DataBoxOrderType copyLogDetailsType)
         {

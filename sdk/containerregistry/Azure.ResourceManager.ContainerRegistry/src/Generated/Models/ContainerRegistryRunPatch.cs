@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The set of run properties that can be updated. </summary>
     public partial class ContainerRegistryRunPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunPatch"/>. </summary>
         public ContainerRegistryRunPatch()
         {
         }

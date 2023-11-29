@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a Hub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HubResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHub method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HubResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHub method.
     /// </summary>
     public partial class HubResource : ArmResource
     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HubResource(ArmClient client, HubData data) : this(client, data.Id)
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleResourceFormat" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoleResourceFormat"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleResourceFormat> GetRolesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleResourceFormat" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoleResourceFormat"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleResourceFormat> GetRoles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

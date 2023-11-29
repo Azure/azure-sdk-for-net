@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB region to online or offline. </summary>
     public partial class RegionForOnlineOffline
     {
-        /// <summary> Initializes a new instance of RegionForOnlineOffline. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionForOnlineOffline"/>. </summary>
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         public RegionForOnlineOffline(string region)

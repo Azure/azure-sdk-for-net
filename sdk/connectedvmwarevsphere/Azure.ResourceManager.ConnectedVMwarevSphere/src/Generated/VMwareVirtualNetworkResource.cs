@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
     /// A Class representing a VMwareVirtualNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VMwareVirtualNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVMwareVirtualNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVMwareVirtualNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VMwareVirtualNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVMwareVirtualNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVMwareVirtualNetwork method.
     /// </summary>
     public partial class VMwareVirtualNetworkResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VMwareVirtualNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VMwareVirtualNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VMwareVirtualNetworkResource(ArmClient client, VMwareVirtualNetworkData data) : this(client, data.Id)

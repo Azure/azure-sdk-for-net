@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk input details. </summary>
     public partial class InMageAzureV2DiskDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2DiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2DiskDetails"/>. </summary>
         public InMageAzureV2DiskDetails()
         {
         }

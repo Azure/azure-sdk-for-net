@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Microsoft Defender settings for the security profile. </summary>
     public partial class ManagedClusterSecurityProfileDefender
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefender. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefender"/>. </summary>
         public ManagedClusterSecurityProfileDefender()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefender. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefender"/>. </summary>
         /// <param name="logAnalyticsWorkspaceResourceId"> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </param>
         /// <param name="securityMonitoring"> Microsoft Defender threat detection for Cloud settings for the security profile. </param>
         internal ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId, ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring)

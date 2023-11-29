@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a virtual machine run command. </summary>
     public partial class VirtualMachineRunCommandInstanceView
     {
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandInstanceView"/>. </summary>
         internal VirtualMachineRunCommandInstanceView()
         {
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandInstanceView"/>. </summary>
         /// <param name="executionState"> Script execution status. </param>
         /// <param name="executionMessage"> Communicate script configuration errors or execution messages. </param>
         /// <param name="exitCode"> Exit code returned from script execution. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The resource limits. </summary>
     public partial class ContainerResourceLimits
     {
-        /// <summary> Initializes a new instance of ContainerResourceLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceLimits"/>. </summary>
         public ContainerResourceLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerResourceLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceLimits"/>. </summary>
         /// <param name="memoryInGB"> The memory limit in GB of this container instance. </param>
         /// <param name="cpu"> The CPU limit of this container instance. </param>
         /// <param name="gpu"> The GPU limit of this container instance. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB MongoDB collection resource object. </summary>
     public partial class MongoDBCollectionResourceInfo
     {
-        /// <summary> Initializes a new instance of MongoDBCollectionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public MongoDBCollectionResourceInfo(string collectionName)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Indexes = new ChangeTrackingList<MongoDBIndex>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>

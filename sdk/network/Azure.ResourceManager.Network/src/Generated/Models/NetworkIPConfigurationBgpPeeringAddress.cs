@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of IPConfigurationBgpPeeringAddress. </summary>
     public partial class NetworkIPConfigurationBgpPeeringAddress
     {
-        /// <summary> Initializes a new instance of NetworkIPConfigurationBgpPeeringAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIPConfigurationBgpPeeringAddress"/>. </summary>
         public NetworkIPConfigurationBgpPeeringAddress()
         {
             DefaultBgpIPAddresses = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             TunnelIPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkIPConfigurationBgpPeeringAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIPConfigurationBgpPeeringAddress"/>. </summary>
         /// <param name="ipConfigurationId"> The ID of IP configuration which belongs to gateway. </param>
         /// <param name="defaultBgpIPAddresses"> The list of default BGP peering addresses which belong to IP configuration. </param>
         /// <param name="customBgpIPAddresses"> The list of custom BGP peering addresses which belong to IP configuration. </param>

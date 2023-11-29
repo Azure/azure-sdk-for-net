@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Details needed if the VM was encrypted at the time of backup. </summary>
     public partial class VmEncryptionDetails
     {
-        /// <summary> Initializes a new instance of VmEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmEncryptionDetails"/>. </summary>
         public VmEncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of VmEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmEncryptionDetails"/>. </summary>
         /// <param name="isEncryptionEnabled"> Identifies whether this backup copy represents an encrypted VM at the time of backup. </param>
         /// <param name="kekUri"> Key Url. </param>
         /// <param name="secretKeyUri"> Secret Url. </param>

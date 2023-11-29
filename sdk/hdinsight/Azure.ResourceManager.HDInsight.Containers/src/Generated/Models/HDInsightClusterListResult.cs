@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The list cluster operation response. </summary>
     internal partial class HDInsightClusterListResult
     {
-        /// <summary> Initializes a new instance of HDInsightClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterListResult"/>. </summary>
         internal HDInsightClusterListResult()
         {
             Value = new ChangeTrackingList<HDInsightClusterData>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterListResult"/>. </summary>
         /// <param name="value"> The list of clusters. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal HDInsightClusterListResult(IReadOnlyList<HDInsightClusterData> value, string nextLink)

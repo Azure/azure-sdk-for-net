@@ -14,7 +14,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> The image analysis request. </summary>
     public partial class AnalyzeImageOptions
     {
-        /// <summary> Initializes a new instance of AnalyzeImageOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageOptions"/>. </summary>
         /// <param name="image"> The image needs to be analyzed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
         public AnalyzeImageOptions(ContentSafetyImageData image)
@@ -25,7 +25,7 @@ namespace Azure.AI.ContentSafety
             Categories = new ChangeTrackingList<ImageCategory>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeImageOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageOptions"/>. </summary>
         /// <param name="image"> The image needs to be analyzed. </param>
         /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
         /// <param name="outputType"> This refers to the type of image analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>

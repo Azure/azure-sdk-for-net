@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A recoverable server resource. </summary>
     public partial class MySqlRecoverableServerResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlRecoverableServerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlRecoverableServerResourceData"/>. </summary>
         public MySqlRecoverableServerResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlRecoverableServerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlRecoverableServerResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

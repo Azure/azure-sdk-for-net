@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Azure Active Directory Application. </summary>
     public partial class AzureActiveDirectoryApp
     {
-        /// <summary> Initializes a new instance of AzureActiveDirectoryApp. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureActiveDirectoryApp"/>. </summary>
         public AzureActiveDirectoryApp()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureActiveDirectoryApp. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureActiveDirectoryApp"/>. </summary>
         /// <param name="applicationId"> Application ID of the Azure Active Directory Application. </param>
         /// <param name="appKey"> Key used to authenticate to the Azure Active Directory Application. </param>
         /// <param name="tenantId"> Tenant id of the customer. </param>

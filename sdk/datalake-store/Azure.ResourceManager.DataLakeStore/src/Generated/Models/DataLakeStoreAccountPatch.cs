@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Data Lake Store account information to update. </summary>
     public partial class DataLakeStoreAccountPatch
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountPatch"/>. </summary>
         public DataLakeStoreAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains FQDN of the DNS record associated with the public IP address. </summary>
     public partial class PublicIPAddressDnsSettings
     {
-        /// <summary> Initializes a new instance of PublicIPAddressDnsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressDnsSettings"/>. </summary>
         public PublicIPAddressDnsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressDnsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressDnsSettings"/>. </summary>
         /// <param name="domainNameLabel"> The domain name label. The concatenation of the domain name label and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address. If a domain name label is specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system. </param>
         /// <param name="domainNameLabelScope"> The domain name label scope. If a domain name label and a domain name label scope are specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system with a hashed value includes in FQDN. </param>
         /// <param name="fqdn"> The Fully Qualified Domain Name of the A DNS record associated with the public IP. This is the concatenation of the domainNameLabel and the regionalized DNS zone. </param>

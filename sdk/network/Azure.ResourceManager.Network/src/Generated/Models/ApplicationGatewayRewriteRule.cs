@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Rewrite rule of an application gateway. </summary>
     public partial class ApplicationGatewayRewriteRule
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRule"/>. </summary>
         public ApplicationGatewayRewriteRule()
         {
             Conditions = new ChangeTrackingList<ApplicationGatewayRewriteRuleCondition>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRule"/>. </summary>
         /// <param name="name"> Name of the rewrite rule that is unique within an Application Gateway. </param>
         /// <param name="ruleSequence"> Rule Sequence of the rewrite rule that determines the order of execution of a particular rule in a RewriteRuleSet. </param>
         /// <param name="conditions"> Conditions based on which the action set execution will be evaluated. </param>

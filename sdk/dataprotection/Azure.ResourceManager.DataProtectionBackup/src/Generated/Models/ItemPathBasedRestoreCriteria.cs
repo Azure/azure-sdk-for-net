@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Prefix criteria to be used to during restore. </summary>
     public partial class ItemPathBasedRestoreCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of ItemPathBasedRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/>. </summary>
         /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
         /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemPath"/> is null. </exception>

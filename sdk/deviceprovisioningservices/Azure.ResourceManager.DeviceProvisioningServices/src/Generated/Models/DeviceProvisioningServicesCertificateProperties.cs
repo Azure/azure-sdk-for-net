@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The description of an X509 CA Certificate. </summary>
     public partial class DeviceProvisioningServicesCertificateProperties
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateProperties"/>. </summary>
         public DeviceProvisioningServicesCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateProperties"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprint"> The certificate's thumbprint. </param>

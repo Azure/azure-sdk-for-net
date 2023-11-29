@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Input for InstallPatches as directly received by the API. </summary>
     public partial class MachineInstallPatchesContent
     {
-        /// <summary> Initializes a new instance of MachineInstallPatchesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesContent"/>. </summary>
         /// <param name="maximumDuration"> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </param>
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
         public MachineInstallPatchesContent(TimeSpan maximumDuration, VmGuestPatchRebootSetting rebootSetting)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Advance configuration for AKS networking. </summary>
     public partial class MachineLearningAksNetworkingConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningAksNetworkingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksNetworkingConfiguration"/>. </summary>
         public MachineLearningAksNetworkingConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAksNetworkingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksNetworkingConfiguration"/>. </summary>
         /// <param name="subnetId"> Virtual network subnet resource ID the compute nodes belong to. </param>
         /// <param name="serviceCidr"> A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </param>
         /// <param name="dnsServiceIP"> An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </param>

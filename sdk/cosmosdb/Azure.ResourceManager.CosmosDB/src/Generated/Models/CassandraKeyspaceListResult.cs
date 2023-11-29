@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the Cassandra keyspaces and their properties. </summary>
     internal partial class CassandraKeyspaceListResult
     {
-        /// <summary> Initializes a new instance of CassandraKeyspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceListResult"/>. </summary>
         internal CassandraKeyspaceListResult()
         {
             Value = new ChangeTrackingList<CassandraKeyspaceData>();
         }
 
-        /// <summary> Initializes a new instance of CassandraKeyspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceListResult"/>. </summary>
         /// <param name="value"> List of Cassandra keyspaces and their properties. </param>
         internal CassandraKeyspaceListResult(IReadOnlyList<CassandraKeyspaceData> value)
         {

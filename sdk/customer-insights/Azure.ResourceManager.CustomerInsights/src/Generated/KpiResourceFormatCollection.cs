@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KpiResourceFormatResource" /> and their operations.
-    /// Each <see cref="KpiResourceFormatResource" /> in the collection will belong to the same instance of <see cref="HubResource" />.
-    /// To get a <see cref="KpiResourceFormatCollection" /> instance call the GetKpiResourceFormats method from an instance of <see cref="HubResource" />.
+    /// A class representing a collection of <see cref="KpiResourceFormatResource"/> and their operations.
+    /// Each <see cref="KpiResourceFormatResource"/> in the collection will belong to the same instance of <see cref="HubResource"/>.
+    /// To get a <see cref="KpiResourceFormatCollection"/> instance call the GetKpiResourceFormats method from an instance of <see cref="HubResource"/>.
     /// </summary>
     public partial class KpiResourceFormatCollection : ArmCollection, IEnumerable<KpiResourceFormatResource>, IAsyncEnumerable<KpiResourceFormatResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KpiResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KpiResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KpiResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KpiResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KpiResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KpiResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

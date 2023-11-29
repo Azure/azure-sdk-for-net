@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class ProblemClassificationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProblemClassificationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationData"/>. </summary>
         internal ProblemClassificationData()
         {
             SecondaryConsentEnabled = new ChangeTrackingList<SecondaryConsentEnabled>();
         }
 
-        /// <summary> Initializes a new instance of ProblemClassificationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

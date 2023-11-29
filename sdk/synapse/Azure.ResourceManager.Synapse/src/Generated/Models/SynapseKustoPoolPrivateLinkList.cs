@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list Kusto Private Link Resources operation response. </summary>
     internal partial class SynapseKustoPoolPrivateLinkList
     {
-        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolPrivateLinkList"/>. </summary>
         internal SynapseKustoPoolPrivateLinkList()
         {
             Value = new ChangeTrackingList<SynapseKustoPoolPrivateLinkData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolPrivateLinkList"/>. </summary>
         /// <param name="value"> The list of Kusto Private Link Resources. </param>
         internal SynapseKustoPoolPrivateLinkList(IReadOnlyList<SynapseKustoPoolPrivateLinkData> value)
         {

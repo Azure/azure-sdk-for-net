@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Migration Validation Result. </summary>
     public partial class MigrationValidationResult
     {
-        /// <summary> Initializes a new instance of MigrationValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationResult"/>. </summary>
         internal MigrationValidationResult()
         {
             SummaryResults = new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>();
         }
 
-        /// <summary> Initializes a new instance of MigrationValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationResult"/>. </summary>
         /// <param name="id"> Migration validation result identifier. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="summaryResults"> Validation summary results for each database. </param>

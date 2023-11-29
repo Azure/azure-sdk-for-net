@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Storage information about the data disks present in the custom image. </summary>
     public partial class DevTestLabDataDiskStorageTypeInfo
     {
-        /// <summary> Initializes a new instance of DevTestLabDataDiskStorageTypeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDataDiskStorageTypeInfo"/>. </summary>
         public DevTestLabDataDiskStorageTypeInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabDataDiskStorageTypeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDataDiskStorageTypeInfo"/>. </summary>
         /// <param name="lun"> Disk Lun. </param>
         /// <param name="storageType"> Disk Storage Type. </param>
         internal DevTestLabDataDiskStorageTypeInfo(string lun, DevTestLabStorageType? storageType)

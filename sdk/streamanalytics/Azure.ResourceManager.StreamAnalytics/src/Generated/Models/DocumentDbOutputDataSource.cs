@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes a DocumentDB output data source. </summary>
     public partial class DocumentDbOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of DocumentDbOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentDbOutputDataSource"/>. </summary>
         public DocumentDbOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.Storage/DocumentDB";
         }
 
-        /// <summary> Initializes a new instance of DocumentDbOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentDbOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountId"> The DocumentDB account name or ID. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountKey"> The account key for the DocumentDB account. Required on PUT (CreateOrReplace) requests. </param>

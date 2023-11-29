@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Sku for ARM resource. </summary>
     public partial class StoragePoolSku
     {
-        /// <summary> Initializes a new instance of StoragePoolSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSku"/>. </summary>
         /// <param name="name"> Sku name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public StoragePoolSku(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSku"/>. </summary>
         /// <param name="name"> Sku name. </param>
         /// <param name="tier"> Sku tier. </param>
         internal StoragePoolSku(string name, string tier)

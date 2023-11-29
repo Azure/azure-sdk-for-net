@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Presto server linked service. </summary>
     public partial class PrestoLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of PrestoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
         /// <param name="host"> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </param>
         /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t). </param>
         /// <param name="catalog"> The catalog context for all request against the server. </param>
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Presto";
         }
 
-        /// <summary> Initializes a new instance of PrestoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

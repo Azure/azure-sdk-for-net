@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Storage mapping input. </summary>
     public partial class StorageClassificationMappingCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of StorageClassificationMappingCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationMappingCreateOrUpdateContent"/>. </summary>
         public StorageClassificationMappingCreateOrUpdateContent()
         {
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The log profile resource for patch operations. </summary>
     public partial class LogProfilePatch
     {
-        /// <summary> Initializes a new instance of LogProfilePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfilePatch"/>. </summary>
         public LogProfilePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

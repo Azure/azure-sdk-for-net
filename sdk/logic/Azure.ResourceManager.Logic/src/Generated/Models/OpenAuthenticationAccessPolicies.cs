@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> AuthenticationPolicy of type Open. </summary>
     internal partial class OpenAuthenticationAccessPolicies
     {
-        /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicies"/>. </summary>
         public OpenAuthenticationAccessPolicies()
         {
             AccessPolicies = new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>();
         }
 
-        /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicies"/>. </summary>
         /// <param name="accessPolicies"> Open authentication policies. </param>
         internal OpenAuthenticationAccessPolicies(IDictionary<string, OpenAuthenticationAccessPolicy> accessPolicies)
         {

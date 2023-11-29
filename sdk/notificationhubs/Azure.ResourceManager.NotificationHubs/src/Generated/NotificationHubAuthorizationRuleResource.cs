@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
     /// A Class representing a NotificationHubAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NotificationHubAuthorizationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNotificationHubAuthorizationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NotificationHubResource" /> using the GetNotificationHubAuthorizationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NotificationHubAuthorizationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNotificationHubAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NotificationHubResource"/> using the GetNotificationHubAuthorizationRule method.
     /// </summary>
     public partial class NotificationHubAuthorizationRuleResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NotificationHubAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NotificationHubAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NotificationHubAuthorizationRuleResource(ArmClient client, NotificationHubAuthorizationRuleData data) : this(client, data.Id)

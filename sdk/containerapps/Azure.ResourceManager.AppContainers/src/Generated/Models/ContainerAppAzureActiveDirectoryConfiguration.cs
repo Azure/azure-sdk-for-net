@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the Azure Active directory provider. </summary>
     public partial class ContainerAppAzureActiveDirectoryConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureActiveDirectoryConfiguration"/>. </summary>
         public ContainerAppAzureActiveDirectoryConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureActiveDirectoryConfiguration"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the Azure Active Directory app registration. </param>
         /// <param name="login"> The configuration settings of the Azure Active Directory login flow. </param>

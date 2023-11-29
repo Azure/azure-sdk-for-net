@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> A certificate to update. </summary>
     public partial class ContainerAppCertificatePatch
     {
-        /// <summary> Initializes a new instance of ContainerAppCertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificatePatch"/>. </summary>
         public ContainerAppCertificatePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

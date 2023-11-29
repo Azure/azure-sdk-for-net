@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a KubeEnvironment when patching. </summary>
     public partial class KubeEnvironmentPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of KubeEnvironmentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeEnvironmentPatch"/>. </summary>
         public KubeEnvironmentPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeEnvironmentPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

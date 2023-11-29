@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the service task to install an OCI driver. </summary>
     internal partial class InstallOciDriverTaskInput
     {
-        /// <summary> Initializes a new instance of InstallOciDriverTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskInput"/>. </summary>
         public InstallOciDriverTaskInput()
         {
         }
 
-        /// <summary> Initializes a new instance of InstallOciDriverTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskInput"/>. </summary>
         /// <param name="driverPackageName"> Name of the uploaded driver package to install. </param>
         internal InstallOciDriverTaskInput(string driverPackageName)
         {

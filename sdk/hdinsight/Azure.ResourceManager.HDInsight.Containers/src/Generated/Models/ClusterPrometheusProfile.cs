@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster Prometheus profile. </summary>
     internal partial class ClusterPrometheusProfile
     {
-        /// <summary> Initializes a new instance of ClusterPrometheusProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPrometheusProfile"/>. </summary>
         /// <param name="isEnabled"> Enable Prometheus for cluster or not. </param>
         public ClusterPrometheusProfile(bool isEnabled)
         {

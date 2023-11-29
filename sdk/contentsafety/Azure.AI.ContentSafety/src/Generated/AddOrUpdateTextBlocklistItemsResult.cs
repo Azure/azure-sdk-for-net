@@ -15,7 +15,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> The response of adding blocklistItems to the text blocklist. </summary>
     public partial class AddOrUpdateTextBlocklistItemsResult
     {
-        /// <summary> Initializes a new instance of AddOrUpdateTextBlocklistItemsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddOrUpdateTextBlocklistItemsResult"/>. </summary>
         /// <param name="blocklistItems"> Array of blocklistItems have been added. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistItems"/> is null. </exception>
         internal AddOrUpdateTextBlocklistItemsResult(IEnumerable<TextBlocklistItem> blocklistItems)
@@ -25,7 +25,7 @@ namespace Azure.AI.ContentSafety
             BlocklistItems = blocklistItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of AddOrUpdateTextBlocklistItemsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddOrUpdateTextBlocklistItemsResult"/>. </summary>
         /// <param name="blocklistItems"> Array of blocklistItems have been added. </param>
         internal AddOrUpdateTextBlocklistItemsResult(IReadOnlyList<TextBlocklistItem> blocklistItems)
         {

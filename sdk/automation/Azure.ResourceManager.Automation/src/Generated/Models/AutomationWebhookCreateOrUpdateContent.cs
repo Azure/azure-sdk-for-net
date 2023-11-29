@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update webhook operation. </summary>
     public partial class AutomationWebhookCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationWebhookCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the webhook. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AutomationWebhookCreateOrUpdateContent(string name)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Sysctl settings for Linux agent nodes. </summary>
     public partial class SysctlConfig
     {
-        /// <summary> Initializes a new instance of SysctlConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="SysctlConfig"/>. </summary>
         public SysctlConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of SysctlConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="SysctlConfig"/>. </summary>
         /// <param name="netCoreSomaxconn"> Sysctl setting net.core.somaxconn. </param>
         /// <param name="netCoreNetdevMaxBacklog"> Sysctl setting net.core.netdev_max_backlog. </param>
         /// <param name="netCoreRmemDefault"> Sysctl setting net.core.rmem_default. </param>

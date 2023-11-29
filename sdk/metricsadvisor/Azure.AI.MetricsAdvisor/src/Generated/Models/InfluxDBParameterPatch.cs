@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The InfluxDBParameterPatch. </summary>
     internal partial class InfluxDBParameterPatch
     {
-        /// <summary> Initializes a new instance of InfluxDBParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfluxDBParameterPatch"/>. </summary>
         public InfluxDBParameterPatch()
         {
         }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class AvsPrivateCloudClusterData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterData"/>. </summary>
         /// <param name="sku"> The cluster SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AvsPrivateCloudClusterData(AvsSku sku)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs
             Hosts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

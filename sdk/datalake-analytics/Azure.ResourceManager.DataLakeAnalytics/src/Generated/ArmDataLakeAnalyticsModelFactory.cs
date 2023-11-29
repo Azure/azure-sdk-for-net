@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDataLakeAnalyticsModelFactory
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountBasic. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsAccountBasic"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsAccountBasic(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, location, tags);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeAnalyticsAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsAccountData(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, defaultDataLakeStoreAccount, dataLakeStoreAccounts?.ToList(), publicDataLakeStoreAccounts?.ToList(), storageAccounts?.ToList(), computePolicies?.ToList(), hiveMetastores?.ToList(), virtualNetworkRules?.ToList(), firewallRules?.ToList(), firewallState, firewallAllowAzureIPs, newTier, currentTier, maxJobCount, maxActiveJobCountPerUser, maxQueuedJobCountPerUser, maxJobRunningTimeInMin, systemMaxJobCount, maxDegreeOfParallelism, systemMaxDegreeOfParallelism, maxDegreeOfParallelismPerJob, minPriorityPerJob, queryStoreRetention, debugDataAccessLevel, location, tags);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountInformationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeStoreAccountInformationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeStoreAccountInformationData(id, name, resourceType, systemData, suffix);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsStorageAccountInformationData(id, name, resourceType, systemData, suffix);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeAnalyticsComputePolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsComputePolicyData(id, name, resourceType, systemData, objectId, objectType, maxDegreeOfParallelismPerJob, minPriorityPerJob);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsHiveMetastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsHiveMetastore"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsHiveMetastore(id, name, resourceType, systemData, serverUri, databaseName, runtimeVersion, userName, password, nestedResourceProvisioningState);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsVirtualNetworkRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsVirtualNetworkRule(id, name, resourceType, systemData, subnetId, virtualNetworkRuleState);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeAnalyticsStorageContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsStorageContainerData(id, name, resourceType, systemData, lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsSasTokenInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsSasTokenInformation"/>. </summary>
         /// <param name="accessToken">
         /// The access token for the associated Azure Storage Container.
         /// Serialized Name: SasTokenInformation.accessToken
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsSasTokenInformation(accessToken);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsCapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsCapabilityInformation"/>. </summary>
         /// <param name="subscriptionId">
         /// The subscription credentials that uniquely identifies the subscription.
         /// Serialized Name: CapabilityInformation.subscriptionId
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsCapabilityInformation(subscriptionId, state, maxAccountCount, accountCount, isUnderMigrationState);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsAccountNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable">
         /// The Boolean value of true or false to indicate whether the Data Lake Analytics account name is available or not.
         /// Serialized Name: NameAvailabilityInformation.nameAvailable

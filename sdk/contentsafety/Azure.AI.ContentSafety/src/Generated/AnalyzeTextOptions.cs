@@ -14,7 +14,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> The text analysis request. </summary>
     public partial class AnalyzeTextOptions
     {
-        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/>. </summary>
         /// <param name="text"> The text needs to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AnalyzeTextOptions(string text)
@@ -26,7 +26,7 @@ namespace Azure.AI.ContentSafety
             BlocklistNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/>. </summary>
         /// <param name="text"> The text needs to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
         /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
         /// <param name="blocklistNames"> The names of blocklists. </param>

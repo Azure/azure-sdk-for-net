@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> The RP custom operation error info. </summary>
     public partial class AffectedMoverResourceInfo
     {
-        /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AffectedMoverResourceInfo"/>. </summary>
         internal AffectedMoverResourceInfo()
         {
             MoverResources = new ChangeTrackingList<AffectedMoverResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AffectedMoverResourceInfo"/>. </summary>
         /// <param name="id"> The affected move resource id. </param>
         /// <param name="sourceId"> The affected move resource source id. </param>
         /// <param name="moverResources"> The affected move resources. </param>

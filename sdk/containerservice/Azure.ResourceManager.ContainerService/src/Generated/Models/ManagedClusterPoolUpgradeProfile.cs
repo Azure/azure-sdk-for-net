@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The list of available upgrade versions. </summary>
     public partial class ManagedClusterPoolUpgradeProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterPoolUpgradeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfile"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Upgrades = new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPoolUpgradeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfile"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="name"> The Agent Pool name. </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>

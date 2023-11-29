@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Storage profile for the container service cluster. </summary>
     public partial class ManagedClusterStorageProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfile"/>. </summary>
         public ManagedClusterStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfile"/>. </summary>
         /// <param name="diskCsiDriver"> AzureDisk CSI Driver settings for the storage profile. </param>
         /// <param name="fileCsiDriver"> AzureFile CSI Driver settings for the storage profile. </param>
         /// <param name="snapshotController"> Snapshot Controller settings for the storage profile. </param>

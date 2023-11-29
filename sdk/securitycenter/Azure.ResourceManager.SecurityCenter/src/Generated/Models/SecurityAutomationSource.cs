@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The source event types which evaluate the security automation set of rules. For example - security alerts and security assessments. To learn more about the supported security events data models schemas - please visit https://aka.ms/ASCAutomationSchemas. </summary>
     public partial class SecurityAutomationSource
     {
-        /// <summary> Initializes a new instance of SecurityAutomationSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationSource"/>. </summary>
         public SecurityAutomationSource()
         {
             RuleSets = new ChangeTrackingList<SecurityAutomationRuleSet>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationSource"/>. </summary>
         /// <param name="eventSource"> A valid event source type. </param>
         /// <param name="ruleSets"> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical 'or'). </param>
         internal SecurityAutomationSource(SecurityEventSource? eventSource, IList<SecurityAutomationRuleSet> ruleSets)

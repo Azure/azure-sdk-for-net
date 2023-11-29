@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the managed HSM Pool. </summary>
     public partial class ManagedHsmProperties
     {
-        /// <summary> Initializes a new instance of ManagedHsmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmProperties"/>. </summary>
         public ManagedHsmProperties()
         {
             InitialAdminObjectIds = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             PrivateEndpointConnections = new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmProperties"/>. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </param>
         /// <param name="initialAdminObjectIds"> Array of initial administrators object ids for this managed hsm pool. </param>
         /// <param name="hsmUri"> The URI of the managed hsm pool for performing operations on keys. </param>

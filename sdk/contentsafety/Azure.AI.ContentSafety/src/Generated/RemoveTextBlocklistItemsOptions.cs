@@ -15,7 +15,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> The request to remove blocklistItems from a text blocklist. </summary>
     public partial class RemoveTextBlocklistItemsOptions
     {
-        /// <summary> Initializes a new instance of RemoveTextBlocklistItemsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveTextBlocklistItemsOptions"/>. </summary>
         /// <param name="blocklistItemIds"> Array of blocklistItemIds to remove. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistItemIds"/> is null. </exception>
         public RemoveTextBlocklistItemsOptions(IEnumerable<string> blocklistItemIds)
@@ -25,7 +25,7 @@ namespace Azure.AI.ContentSafety
             BlocklistItemIds = blocklistItemIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of RemoveTextBlocklistItemsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveTextBlocklistItemsOptions"/>. </summary>
         /// <param name="blocklistItemIds"> Array of blocklistItemIds to remove. </param>
         internal RemoveTextBlocklistItemsOptions(IList<string> blocklistItemIds)
         {

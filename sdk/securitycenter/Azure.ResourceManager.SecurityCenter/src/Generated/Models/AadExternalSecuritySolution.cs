@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents an AAD identity protection solution which sends logs to an OMS workspace. </summary>
     public partial class AadExternalSecuritySolution : ExternalSecuritySolution
     {
-        /// <summary> Initializes a new instance of AadExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadExternalSecuritySolution"/>. </summary>
         public AadExternalSecuritySolution()
         {
             Kind = ExternalSecuritySolutionKind.Aad;
         }
 
-        /// <summary> Initializes a new instance of AadExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

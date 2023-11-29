@@ -15,7 +15,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> The text analysis response. </summary>
     public partial class AnalyzeTextResult
     {
-        /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoriesAnalysis"/> is null. </exception>
         internal AnalyzeTextResult(IEnumerable<TextCategoriesAnalysis> categoriesAnalysis)
@@ -26,7 +26,7 @@ namespace Azure.AI.ContentSafety
             CategoriesAnalysis = categoriesAnalysis.ToList();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
         /// <param name="blocklistsMatch"> The blocklist match details. </param>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
         internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatch> blocklistsMatch, IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis)

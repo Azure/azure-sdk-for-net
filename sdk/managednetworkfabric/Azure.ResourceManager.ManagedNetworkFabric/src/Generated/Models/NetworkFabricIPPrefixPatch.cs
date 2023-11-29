@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The IP Prefix patch resource definition. </summary>
     public partial class NetworkFabricIPPrefixPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricIPPrefixPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixPatch"/>. </summary>
         public NetworkFabricIPPrefixPatch()
         {
             IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();

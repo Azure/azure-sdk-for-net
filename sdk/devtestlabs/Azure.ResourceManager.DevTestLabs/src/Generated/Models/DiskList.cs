@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class DiskList
     {
-        /// <summary> Initializes a new instance of DiskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskList"/>. </summary>
         internal DiskList()
         {
             Value = new ChangeTrackingList<DevTestLabDiskData>();
         }
 
-        /// <summary> Initializes a new instance of DiskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal DiskList(IReadOnlyList<DevTestLabDiskData> value, string nextLink)

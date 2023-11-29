@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of network function definition group resources. </summary>
     internal partial class NetworkFunctionDefinitionGroupListResult
     {
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupListResult"/>. </summary>
         internal NetworkFunctionDefinitionGroupListResult()
         {
             Value = new ChangeTrackingList<NetworkFunctionDefinitionGroupData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupListResult"/>. </summary>
         /// <param name="value"> A list of network function definition group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NetworkFunctionDefinitionGroupListResult(IReadOnlyList<NetworkFunctionDefinitionGroupData> value, string nextLink)

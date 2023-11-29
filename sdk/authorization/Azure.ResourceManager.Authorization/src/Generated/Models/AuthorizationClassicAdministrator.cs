@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Classic Administrators. </summary>
     public partial class AuthorizationClassicAdministrator : ResourceData
     {
-        /// <summary> Initializes a new instance of AuthorizationClassicAdministrator. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationClassicAdministrator"/>. </summary>
         internal AuthorizationClassicAdministrator()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationClassicAdministrator. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationClassicAdministrator"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

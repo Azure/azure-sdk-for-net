@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> The response of listUpgradeNotifications. </summary>
     internal partial class RedisUpgradeNotificationListResponse
     {
-        /// <summary> Initializes a new instance of RedisUpgradeNotificationListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisUpgradeNotificationListResponse"/>. </summary>
         internal RedisUpgradeNotificationListResponse()
         {
             Value = new ChangeTrackingList<RedisUpgradeNotification>();
         }
 
-        /// <summary> Initializes a new instance of RedisUpgradeNotificationListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisUpgradeNotificationListResponse"/>. </summary>
         /// <param name="value"> List of all notifications. </param>
         /// <param name="nextLink"> Link for next set of notifications. </param>
         internal RedisUpgradeNotificationListResponse(IReadOnlyList<RedisUpgradeNotification> value, string nextLink)

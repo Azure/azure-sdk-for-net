@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Mutable configuration for notification. </summary>
     internal partial class PartialNotificationSetting
     {
-        /// <summary> Initializes a new instance of PartialNotificationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartialNotificationSetting"/>. </summary>
         public PartialNotificationSetting()
         {
             Webhooks = new ChangeTrackingDictionary<string, MachineLearningWebhook>();

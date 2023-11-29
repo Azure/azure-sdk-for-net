@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes node info. </summary>
     public partial class EdgeKubernetesNodeInfo
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesNodeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesNodeInfo"/>. </summary>
         internal EdgeKubernetesNodeInfo()
         {
             IPConfiguration = new ChangeTrackingList<EdgeKubernetesIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesNodeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesNodeInfo"/>. </summary>
         /// <param name="name"> Node name. </param>
         /// <param name="nodeType"> Node type - Master/Worker. </param>
         /// <param name="ipConfiguration"> IP Configuration of the Kubernetes node. </param>

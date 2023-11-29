@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity AmazonRdsForOracle source. </summary>
     public partial class AmazonRdsForOracleSource : CopySource
     {
-        /// <summary> Initializes a new instance of AmazonRdsForOracleSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleSource"/>. </summary>
         public AmazonRdsForOracleSource()
         {
             Type = "AmazonRdsForOracleSource";
         }
 
-        /// <summary> Initializes a new instance of AmazonRdsForOracleSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

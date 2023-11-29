@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The list capacity reservation operation response. </summary>
     internal partial class CapacityReservationListResult
     {
-        /// <summary> Initializes a new instance of CapacityReservationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationListResult"/>. </summary>
         /// <param name="value"> The list of capacity reservations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CapacityReservationListResult(IEnumerable<CapacityReservationData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationListResult"/>. </summary>
         /// <param name="value"> The list of capacity reservations. </param>
         /// <param name="nextLink"> The URI to fetch the next page of capacity reservations. Call ListNext() with this URI to fetch the next page of capacity reservations. </param>
         internal CapacityReservationListResult(IReadOnlyList<CapacityReservationData> value, string nextLink)

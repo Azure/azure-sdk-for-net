@@ -2,15 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using OpenTelemetry;
-using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
@@ -18,73 +16,27 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
     {
         private bool _disposed;
         private LiveMetricsResource? _resource;
-        internal readonly MeterProvider? _meterProvider;
-        private readonly Meter _meter;
-
-        private readonly Counter<long> _requests;
-        private readonly Histogram<double> _requestDuration;
-        private readonly Counter<long> _requestSucceededPerSecond;
-        private readonly Counter<long> _requestFailedPerSecond;
-        private readonly Counter<long> _dependency;
-        private readonly Histogram<double> _dependencyDuration;
-        private readonly Counter<long> _dependencySucceededPerSecond;
-        private readonly Counter<long> _dependencyFailedPerSecond;
-        private readonly Counter<long> _exceptionsPerSecond;
-
-        private readonly DoubleBuffer _doubleBuffer;
-
-        internal static readonly IReadOnlyDictionary<string, string> s_liveMetricNameMapping = new Dictionary<string, string>()
-        {
-            [LiveMetricConstants.RequestDurationInstrumentName] = LiveMetricConstants.RequestDurationMetricIdValue,
-            [LiveMetricConstants.RequestsInstrumentName] = LiveMetricConstants.RequestsPerSecondMetricIdValue,
-            [LiveMetricConstants.RequestsSucceededPerSecondInstrumentName] = LiveMetricConstants.RequestsSucceededPerSecondMetricIdValue,
-            [LiveMetricConstants.RequestsFailedPerSecondInstrumentName] = LiveMetricConstants.RequestsFailedPerSecondMetricIdValue,
-            [LiveMetricConstants.DependencyDurationInstrumentName] = LiveMetricConstants.DependencyDurationMetricIdValue,
-            [LiveMetricConstants.DependencyInstrumentName] = LiveMetricConstants.DependenciesPerSecondMetricIdValue,
-            [LiveMetricConstants.DependencySucceededPerSecondInstrumentName] = LiveMetricConstants.DependencySucceededPerSecondMetricIdValue,
-            [LiveMetricConstants.DependencyFailedPerSecondInstrumentName] = LiveMetricConstants.DependencyFailedPerSecondMetricIdValue,
-            [LiveMetricConstants.ExceptionsPerSecondInstrumentName] = LiveMetricConstants.ExceptionsPerSecondMetricIdValue,
-            [LiveMetricConstants.MemoryCommittedBytesInstrumentName] = LiveMetricConstants.MemoryCommittedBytesMetricIdValue,
-            [LiveMetricConstants.ProcessorTimeInstrumentName] = LiveMetricConstants.ProcessorTimeMetricIdValue,
-        };
+        private readonly Manager _manager;
+        //private readonly DoubleBuffer _doubleBuffer;
 
         internal LiveMetricsResource? LiveMetricsResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
-        internal LiveMetricsExtractionProcessor(DoubleBuffer doubleBuffer, LiveMetricsExporter liveMetricExporter)
+        internal LiveMetricsExtractionProcessor(Manager manager)
         {
-            //_meterProvider = Sdk.CreateMeterProviderBuilder()
-            //    .AddMeter(LiveMetricConstants.LiveMetricMeterName)
-            //    .AddReader(new PeriodicExportingMetricReader(exporter: liveMetricExporter, exportIntervalMilliseconds:5000)
-            //    { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
-            //    // TODO: Remove Console Exporter
-            //    .AddConsoleExporter()
-            //    .Build();
-
-            _meter = new Meter(LiveMetricConstants.LiveMetricMeterName);
-
-            // REQUEST
-            _requests = _meter.CreateCounter<long>(LiveMetricConstants.RequestsInstrumentName);
-            _requestDuration = _meter.CreateHistogram<double>(LiveMetricConstants.RequestDurationInstrumentName);
-            _requestSucceededPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.RequestsSucceededPerSecondInstrumentName);
-            _requestFailedPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.RequestsFailedPerSecondInstrumentName);
-
-            // DEPENDENCY
-            _dependency = _meter.CreateCounter<long>(LiveMetricConstants.DependencyInstrumentName);
-            _dependencyDuration = _meter.CreateHistogram<double>(LiveMetricConstants.DependencyDurationInstrumentName);
-            _dependencySucceededPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.DependencySucceededPerSecondInstrumentName);
-            _dependencyFailedPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.DependencyFailedPerSecondInstrumentName);
-
-            // EXCEPTIONS
-            _exceptionsPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.ExceptionsPerSecondInstrumentName);
-            _doubleBuffer = doubleBuffer;
+            _manager = manager;
         }
 
         public override void OnEnd(Activity activity)
         {
             // Validate if live metrics is enabled.
-            if (!_requests.Enabled)
+            if (!_manager._state.IsEnabled())
             {
                 return;
+            }
+
+            if (_manager.liveMetricsResource == null && LiveMetricsResource != null)
+            {
+                _manager.liveMetricsResource = LiveMetricsResource;
             }
 
             string? statusCodeAttributeValue = null;
@@ -100,36 +52,36 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
-                _requests.Add(1);
+                _manager._metricsContainer._requests.Add(1);
                 // Export needs to divide by count to get the average.
                 // this.AIRequestDurationAveInMs = requestCount > 0 ? (double)requestDurationInTicks / TimeSpan.TicksPerMillisecond / requestCount : 0;
-                _requestDuration.Record(activity.Duration.TotalMilliseconds);
+                _manager._metricsContainer._requestDuration.Record(activity.Duration.TotalMilliseconds);
                 if (IsSuccess(activity, statusCodeAttributeValue))
                 {
-                    _requestSucceededPerSecond.Add(1);
+                    _manager._metricsContainer._requestSucceededPerSecond.Add(1);
                 }
                 else
                 {
-                    _requestFailedPerSecond.Add(1);
+                    _manager._metricsContainer._requestFailedPerSecond.Add(1);
                 }
 
                 AddRequestDocument(activity, statusCodeAttributeValue);
             }
             else
             {
-                _dependency.Add(1);
+                _manager._metricsContainer._dependency.Add(1);
                 // Export needs to divide by count to get the average.
                 // this.AIDependencyCallDurationAveInMs = dependencyCount > 0 ? (double)dependencyDurationInTicks / TimeSpan.TicksPerMillisecond / dependencyCount : 0;
                 // Export DependencyDurationLiveMetric, Meter: LiveMetricMeterName
                 // (2023 - 11 - 03T23: 20:56.0282406Z, 2023 - 11 - 03T23: 21:00.9830153Z] Histogram Value: Sum: 798.9463000000001 Count: 7 Min: 4.9172 Max: 651.8997
-                _dependencyDuration.Record(activity.Duration.TotalMilliseconds);
+                _manager._metricsContainer._dependencyDuration.Record(activity.Duration.TotalMilliseconds);
                 if (IsSuccess(activity, statusCodeAttributeValue))
                 {
-                    _dependencySucceededPerSecond.Add(1);
+                    _manager._metricsContainer._dependencySucceededPerSecond.Add(1);
                 }
                 else
                 {
-                    _dependencyFailedPerSecond.Add(1);
+                    _manager._metricsContainer._dependencyFailedPerSecond.Add(1);
                 }
 
                 AddRemoteDependencyDocument(activity);
@@ -141,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 {
                     if (@event.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        _exceptionsPerSecond.Add(1);
+                        _manager._metricsContainer._exceptionsPerSecond.Add(1);
                     }
 
                     string? exceptionType = null;
@@ -175,8 +127,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 {
                     try
                     {
-                        _meterProvider?.Dispose();
-                        _meter?.Dispose();
                     }
                     catch (Exception)
                     {
@@ -200,7 +150,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
 
-            _doubleBuffer.WriteDocument(exceptionDocumentIngress);
+            _manager._metricsContainer._doubleBuffer.WriteDocument(exceptionDocumentIngress);
         }
 
         private void AddRemoteDependencyDocument(Activity activity)
@@ -221,7 +171,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
 
-            _doubleBuffer.WriteDocument(remoteDependencyDocumentIngress);
+            _manager._metricsContainer._doubleBuffer.WriteDocument(remoteDependencyDocumentIngress);
         }
 
         private void AddRequestDocument(Activity activity, string? statusCodeAttributeValue)
@@ -241,7 +191,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
 
-            _doubleBuffer.WriteDocument(requestDocumentIngress);
+            _manager._metricsContainer._doubleBuffer.WriteDocument(requestDocumentIngress);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

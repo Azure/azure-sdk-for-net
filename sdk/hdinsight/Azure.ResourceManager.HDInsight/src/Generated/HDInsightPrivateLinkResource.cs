@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A Class representing a HDInsightPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHDInsightPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource" /> using the GetHDInsightPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHDInsightPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetHDInsightPrivateLinkResource method.
     /// </summary>
     public partial class HDInsightPrivateLinkResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HDInsightPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HDInsightPrivateLinkResource(ArmClient client, HDInsightPrivateLinkResourceData data) : this(client, data.Id)

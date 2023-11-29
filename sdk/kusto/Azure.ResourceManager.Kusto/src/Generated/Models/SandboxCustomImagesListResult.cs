@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto sandbox custom images operation response. </summary>
     internal partial class SandboxCustomImagesListResult
     {
-        /// <summary> Initializes a new instance of SandboxCustomImagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SandboxCustomImagesListResult"/>. </summary>
         internal SandboxCustomImagesListResult()
         {
             Value = new ChangeTrackingList<SandboxCustomImageData>();
         }
 
-        /// <summary> Initializes a new instance of SandboxCustomImagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SandboxCustomImagesListResult"/>. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> The list of Kusto sandbox custom images. </param>
         internal SandboxCustomImagesListResult(string nextLink, IReadOnlyList<SandboxCustomImageData> value)
