@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> The Private Endpoint resource. </summary>
     internal partial class PrivateEndpoint
     {
-        /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
         public PrivateEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
         /// <param name="stringId"> The ARM identifier for Private Endpoint. </param>
         internal PrivateEndpoint(string stringId)
         {
