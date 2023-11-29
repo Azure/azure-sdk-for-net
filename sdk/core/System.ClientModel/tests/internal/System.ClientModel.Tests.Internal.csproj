@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
     <Description>Tests of System.ClientModel internal types and internal contracts.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
     <Nullable>enable</Nullable>
+    <PackageIcon>DotNetPackageIconNew.png</PackageIcon>
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +15,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
     <ProjectReference Include="..\client\System.ClientModel.Tests.Client.csproj" />
