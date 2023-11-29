@@ -20,65 +20,36 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            Optional<IReadOnlyList<TextBlocklistMatchResult>> blocklistsMatchResults = default;
-            Optional<TextAnalyzeSeverityResult> hateResult = default;
-            Optional<TextAnalyzeSeverityResult> selfHarmResult = default;
-            Optional<TextAnalyzeSeverityResult> sexualResult = default;
-            Optional<TextAnalyzeSeverityResult> violenceResult = default;
+            Optional<IReadOnlyList<TextBlocklistMatch>> blocklistsMatch = default;
+            IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blocklistsMatchResults"u8))
+                if (property.NameEquals("blocklistsMatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<TextBlocklistMatchResult> array = new List<TextBlocklistMatchResult>();
+                    List<TextBlocklistMatch> array = new List<TextBlocklistMatch>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextBlocklistMatchResult.DeserializeTextBlocklistMatchResult(item));
+                        array.Add(TextBlocklistMatch.DeserializeTextBlocklistMatch(item));
                     }
-                    blocklistsMatchResults = array;
+                    blocklistsMatch = array;
                     continue;
                 }
-                if (property.NameEquals("hateResult"u8))
+                if (property.NameEquals("categoriesAnalysis"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<TextCategoriesAnalysis> array = new List<TextCategoriesAnalysis>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(TextCategoriesAnalysis.DeserializeTextCategoriesAnalysis(item));
                     }
-                    hateResult = TextAnalyzeSeverityResult.DeserializeTextAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("selfHarmResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    selfHarmResult = TextAnalyzeSeverityResult.DeserializeTextAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sexualResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sexualResult = TextAnalyzeSeverityResult.DeserializeTextAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("violenceResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    violenceResult = TextAnalyzeSeverityResult.DeserializeTextAnalyzeSeverityResult(property.Value);
+                    categoriesAnalysis = array;
                     continue;
                 }
             }
-            return new AnalyzeTextResult(Optional.ToList(blocklistsMatchResults), hateResult.Value, selfHarmResult.Value, sexualResult.Value, violenceResult.Value);
+            return new AnalyzeTextResult(Optional.ToList(blocklistsMatch), categoriesAnalysis);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

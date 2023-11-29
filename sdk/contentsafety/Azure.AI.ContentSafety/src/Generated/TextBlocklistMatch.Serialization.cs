@@ -7,48 +7,47 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class TextBlockItem
+    public partial class TextBlocklistMatch
     {
-        internal static TextBlockItem DeserializeTextBlockItem(JsonElement element)
+        internal static TextBlocklistMatch DeserializeTextBlocklistMatch(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string blockItemId = default;
-            Optional<string> description = default;
-            string text = default;
+            string blocklistName = default;
+            string blocklistItemId = default;
+            string blocklistItemText = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blockItemId"u8))
+                if (property.NameEquals("blocklistName"u8))
                 {
-                    blockItemId = property.Value.GetString();
+                    blocklistName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (property.NameEquals("blocklistItemId"u8))
                 {
-                    description = property.Value.GetString();
+                    blocklistItemId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("text"u8))
+                if (property.NameEquals("blocklistItemText"u8))
                 {
-                    text = property.Value.GetString();
+                    blocklistItemText = property.Value.GetString();
                     continue;
                 }
             }
-            return new TextBlockItem(blockItemId, description.Value, text);
+            return new TextBlocklistMatch(blocklistName, blocklistItemId, blocklistItemText);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TextBlockItem FromResponse(Response response)
+        internal static TextBlocklistMatch FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTextBlockItem(document.RootElement);
+            return DeserializeTextBlocklistMatch(document.RootElement);
         }
     }
 }
