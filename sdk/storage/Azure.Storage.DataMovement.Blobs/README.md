@@ -159,8 +159,8 @@ BlobsStorageResourceProvider blobs = new(tokenCredential);
 
 For workflows that require specific credentials for specific Blob Storage resources, the resource provider can be initialized with a delegate to construct the appropriate credential from the resource's URI. The following demonstrates a provider that produces a sas scoped to the resource from a `StorageSharedKeyCredential`.
 
-```C# Snippet:MakeProvider_SasFactory
-public AzureSasCredential GenerateSas(Uri uri, bool readonly)
+```C# Snippet:MakeProvider_SasFactory_Blobs
+AzureSasCredential GenerateSas(Uri uri, bool readOnly)
 {
     // Quick sample demonstrating minimal steps
     // Construct your SAS according to your needs
@@ -170,9 +170,9 @@ public AzureSasCredential GenerateSas(Uri uri, bool readonly)
         BlobContainerName = blobUri.BlobContainerName,
         BlobName = blobUri.BlobName,
     };
-    return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString())
+    return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString());
 }
-BlobStorageResourceProvider blobs = new(GenerateSas);
+BlobsStorageResourceProvider blobs = new(GenerateSas);
 ```
 
 To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer`.
@@ -183,13 +183,13 @@ StorageResource container = blobs.FromContainer(
 
 // block blobs are the default if no options are specified
 StorageResource blockBlob = blobs.FromBlob(
-    "http://myaccount.blob.core.windows.net/container",
+    "http://myaccount.blob.core.windows.net/container/sample-blob-block",
     new BlockBlobStorageResourceOptions());
 StorageResource pageBlob = blobs.FromBlob(
-    "http://myaccount.blob.core.windows.net/container",
+    "http://myaccount.blob.core.windows.net/container/sample-blob-page",
     new PageBlobStorageResourceOptions());
-StorageResource blockBlob = blobs.FromBlob(
-    "http://myaccount.blob.core.windows.net/container",
+StorageResource appendBlob = blobs.FromBlob(
+    "http://myaccount.blob.core.windows.net/container/sample-blob-append",
     new AppendBlobStorageResourceOptions());
 ```
 
@@ -246,7 +246,7 @@ Upload a directory as a specific blob type.
 
 ```C# Snippet:SimpleDirectoryUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromDirectory(sourceLocalPath),
+    sourceResource: files.FromDirectory(sourcePath),
     destinationResource: blobs.FromContainer(
         blobContainerUri,
         new BlobStorageResourceContainerOptions()
@@ -255,7 +255,6 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
             BlobType = BlobType.Block,
             BlobDirectoryPrefix = optionalDestinationPrefix,
         }));
-await dataTransfer.WaitForCompletionAsync();
 ```
 
 ### Download
@@ -267,7 +266,7 @@ Download a blob.
 ```C# Snippet:SimpleBlockBlobDownload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: blobs.FromBlob(sourceBlobUri),
-    destinationResource: files.FromFile(destinationLocalPath));
+    destinationResource: files.FromFile(downloadPath));
 await dataTransfer.WaitForCompletionAsync();
 ```
 
@@ -294,7 +293,7 @@ Copy a single blob. Note the destination blob is an append blob, regardless of t
 ```C# Snippet:s2sCopyBlob
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: blobs.FromBlob(sourceBlobUri),
-    destinationResource: blobs.FromBlob(destinationBlobUri), new AppendBlobStorageResourceOptions());
+    destinationResource: blobs.FromBlob(destinationBlobUri, new AppendBlobStorageResourceOptions()));
 await dataTransfer.WaitForCompletionAsync();
 ```
 
@@ -302,21 +301,21 @@ Copy a blob container.
 
 ```C# Snippet:s2sCopyBlobContainer
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromContainer(
-        sourceContainerUri,
-        new BlobStorageResourceContainerOptions()
-        {
-            BlobDirectoryPrefix = optionalSourcePrefix
-        }),
-    destinationResource: blobs.FromClient(
-        destinationContainer,
-        new BlobStorageResourceContainerOptions()
-        {
-            // all source blobs will be copied as a single type of destination blob
-            // defaults to block blobs if unspecified
-            BlobType = BlobType.Block,
-            BlobDirectoryPrefix = optionalDestinationPrefix
-        }));
+sourceResource: blobs.FromContainer(
+    sourceContainerUri,
+    new BlobStorageResourceContainerOptions()
+    {
+        BlobDirectoryPrefix = sourceDirectoryName
+    }),
+destinationResource: blobs.FromContainer(
+    destinationContainerUri,
+    new BlobStorageResourceContainerOptions()
+    {
+        // all source blobs will be copied as a single type of destination blob
+        // defaults to block blobs if unspecified
+        BlobType = BlobType.Block,
+        BlobDirectoryPrefix = downloadPath
+    }));
 await dataTransfer.WaitForCompletionAsync();
 ```
 

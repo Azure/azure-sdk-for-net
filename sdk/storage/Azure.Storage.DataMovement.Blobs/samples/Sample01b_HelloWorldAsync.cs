@@ -37,44 +37,65 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             await blobContainerClient.CreateIfNotExistsAsync();
             try
             {
-                TokenCredential tokenCredential =
-                new ClientSecretCredential(
-                    ActiveDirectoryTenantId,
-                    ActiveDirectoryApplicationId,
-                    ActiveDirectoryApplicationSecret,
-                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                {
+                    TokenCredential tokenCredential =
+                    new ClientSecretCredential(
+                        ActiveDirectoryTenantId,
+                        ActiveDirectoryApplicationId,
+                        ActiveDirectoryApplicationSecret,
+                        new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
 
-                TransferManager transferManager = new TransferManager();
+                    TransferManager transferManager = new TransferManager();
 
-                // Get local filesystem provider
-                LocalFilesStorageResourceProvider files = new();
+                    // Get local filesystem provider
+                    LocalFilesStorageResourceProvider files = new();
 
-                // Get blobs provider with credential
-                #region Snippet:MakeProvider_TokenCredential
-                BlobsStorageResourceProvider blobs = new(tokenCredential);
-                #endregion
+                    // Get blobs provider with credential
+                    #region Snippet:MakeProvider_TokenCredential
+                    BlobsStorageResourceProvider blobs = new(tokenCredential);
+                    #endregion
 
-                // Get a reference to a destination blobs
-                BlockBlobClient blockBlobClient = blobContainerClient.GetBlockBlobClient("sample-blob-block");
-                PageBlobClient pageBlobClient = blobContainerClient.GetPageBlobClient("sample-blob-page");
-                AppendBlobClient appendBlobClient = blobContainerClient.GetAppendBlobClient("sample-blob-append");
+                    // Get a reference to a destination blobs
+                    BlockBlobClient blockBlobClient = blobContainerClient.GetBlockBlobClient("sample-blob-block");
+                    PageBlobClient pageBlobClient = blobContainerClient.GetPageBlobClient("sample-blob-page");
+                    AppendBlobClient appendBlobClient = blobContainerClient.GetAppendBlobClient("sample-blob-append");
 
-                // Construct simple blob resources for data movement
-                #region Snippet:ResourceConstruction_Blobs
-                StorageResource container = blobs.FromContainer(
-                    "http://myaccount.blob.core.windows.net/container");
+                    // Construct simple blob resources for data movement
+                    #region Snippet:ResourceConstruction_Blobs
+                    StorageResource container = blobs.FromContainer(
+                        "http://myaccount.blob.core.windows.net/container");
 
-                // block blobs are the default if no options are specified
-                StorageResource blockBlob = blobs.FromBlob(
-                    "http://myaccount.blob.core.windows.net/container/sample-blob-block",
-                    new BlockBlobStorageResourceOptions());
-                StorageResource pageBlob = blobs.FromBlob(
-                    "http://myaccount.blob.core.windows.net/container/sample-blob-page",
-                    new PageBlobStorageResourceOptions());
-                StorageResource appendBlob = blobs.FromBlob(
-                    "http://myaccount.blob.core.windows.net/container/sample-blob-append",
-                    new AppendBlobStorageResourceOptions());
-                #endregion
+                    // block blobs are the default if no options are specified
+                    StorageResource blockBlob = blobs.FromBlob(
+                        "http://myaccount.blob.core.windows.net/container/sample-blob-block",
+                        new BlockBlobStorageResourceOptions());
+                    StorageResource pageBlob = blobs.FromBlob(
+                        "http://myaccount.blob.core.windows.net/container/sample-blob-page",
+                        new PageBlobStorageResourceOptions());
+                    StorageResource appendBlob = blobs.FromBlob(
+                        "http://myaccount.blob.core.windows.net/container/sample-blob-append",
+                        new AppendBlobStorageResourceOptions());
+                    #endregion
+                }
+                {
+                    StorageSharedKeyCredential sharedKeyCredential = new(StorageAccountName, StorageAccountKey);
+                    // Get blobs provider with credential
+                    #region Snippet:MakeProvider_SasFactory_Blobs
+                    AzureSasCredential GenerateSas(Uri uri, bool readOnly)
+                    {
+                        // Quick sample demonstrating minimal steps
+                        // Construct your SAS according to your needs
+                        BlobUriBuilder blobUri = new(uri);
+                        BlobSasBuilder sas = new(BlobSasPermissions.All, DateTimeOffset.Now.AddHours(1))
+                        {
+                            BlobContainerName = blobUri.BlobContainerName,
+                            BlobName = blobUri.BlobName,
+                        };
+                        return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString());
+                    }
+                    BlobsStorageResourceProvider blobs = new(GenerateSas);
+                    #endregion
+                }
             }
             finally
             {
@@ -113,7 +134,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await appendBlobClient.CreateAsync();
 
                 // Construct simple blob resources for data movement
-                #region Snippet:ResourceConstruction_Blobs
+                #region Snippet:ResourceConstruction_FromClients_Blobs
                 BlobsStorageResourceProvider blobs = new();
                 StorageResource containerResource = blobs.FromClient(blobContainerClient);
                 StorageResource blockBlobResource = blobs.FromClient(blockBlobClient);
@@ -894,12 +915,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferIfRunningAsync(transferId);
 
                 // Resume all transfers
-                #region Snippet:ResumeAllTransfers
+                #region Snippet:DataMovement_ResumeAll
                 List<DataTransfer> transfers = await transferManager.ResumeAllTransfersAsync();
                 #endregion
 
                 // Resume a single transfer
-                #region Snippet:ResumeSingleTransfer
+                #region Snippet:DataMovement_ResumeSingle
                 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
                 #endregion
 

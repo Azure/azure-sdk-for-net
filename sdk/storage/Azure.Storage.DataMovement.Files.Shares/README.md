@@ -76,45 +76,45 @@ This section demonstrates usage of Data Movement for interacting with file share
 
 Azure.Storage.DataMovement.Files.Shares exposes `ShareFilesStorageResourceProvider` to create `StorageResource` instances for files and directories. The resource provider should be initialized with a credential to properly authenticate the storage resources. The following demonstrates this using an `Azure.Core` token credential.
 
-```C# Snippet:MakeProvider_TokenCredential
+```C# Snippet:MakeProvider_TokenCredential_Shares
 ShareFilesStorageResourceProvider shares = new(tokenCredential);
 ```
 
 For workflows that require specific credentials for specific Share resources, the resource provider can be initialized with a delegate to construct the appropriate credential from the resource's URI. The following demonstrates a provider that produces a sas scoped to the resource from a `StorageSharedKeyCredential`.
 
-```C# Snippet:MakeProvider_SasFactory
-public AzureSasCredential GenerateSas(Uri uri, bool readonly)
+```C# Snippet:MakeProvider_SasFactory_Shares
+AzureSasCredential GenerateSas(string uri, bool readOnly)
 {
     // Quick sample demonstrating minimal steps
     // Construct your SAS according to your needs
-    ShareUriBuilder shareUri = new(uri);
+    ShareUriBuilder pathUri = new(new Uri(uri));
     ShareSasBuilder sas = new(ShareSasPermissions.All, DateTimeOffset.Now.AddHours(1))
     {
-        ShareName = shareUri.ShareName,
-        FilePath = shareUri.FilePath,
+        ShareName = pathUri.ShareName,
+        FilePath = pathUri.DirectoryOrFilePath,
     };
-    return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString())
+    return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString());
 }
 ShareFilesStorageResourceProvider shares = new(GenerateSas);
 ```
 
 To create a share `StorageResource`, use the methods `FromFile` or `FromDirectory`.
 
-```C# Snippet:MakeProvider_SasFactory
+```C# Snippet:ResourceConstruction_Shares
 StorageResource directory = shares.FromDirectory(
-    "http://myaccount.file.core.windows.net/share/dirpath");
+    "http://myaccount.files.core.windows.net/share/path/to/directory");
 StorageResource rootDirectory = shares.FromDirectory(
-    "http://myaccount.file.core.windows.net/share");
-StorageResource file = shares.Fromfile(
-    "http://myaccount.file.core.windows.net/share/path/to/file.txt");
+    "http://myaccount.files.core.windows.net/share");
+StorageResource file = shares.FromFile(
+    "http://myaccount.files.core.windows.net/share/path/to/file.txt");
 ```
 
 Storage resources can also be initialized with the appropriate client object from Azure.Storage.Files.Shares. Since these resources will use the credential already present in the client object, no credential is required in the provider when using `FromClient()`. **However**, a `ShareFilesStorageResourceProvider` must still have a credential if it is to be used in `TransferManagerOptions` for resuming a transfer.
 
-```C# Snippet:ResourceConstruction_Files
+```C# Snippet:ResourceConstruction_FromClients_Shares
 ShareFilesStorageResourceProvider shares = new();
-StorageResource directory = shares.FromClient(ShareDirectoryClient);
-StorageResource file = shares.FromClient(ShareFileClient);
+StorageResource shareDirectoryResource = shares.FromClient(directoryClient);
+StorageResource shareFileResource = shares.FromClient(fileClient);
 ```
 
 ### Upload
@@ -123,20 +123,20 @@ An upload takes place between a local file `StorageResource` as source and file 
 
 Upload a file.
 
-```C# Snippet:SimplefileUpload
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromFile(sourceLocalPath),
+```C# Snippet:SimplefileUpload_Shares
+DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+    sourceResource: files.FromFile(sourceLocalFile),
     destinationResource: shares.FromFile(destinationFileUri));
-await dataTransfer.WaitForCompletionAsync();
+await fileTransfer.WaitForCompletionAsync();
 ```
 
 Upload a directory.
 
-```C# Snippet:SimpleDirectoryUpload
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromDirectory(sourceLocalPath),
-    destinationResource: shares.FromDirectory(destinationDirectoryUri));
-await dataTransfer.WaitForCompletionAsync();
+```C# Snippet:SimpleDirectoryUpload_Shares
+DataTransfer folderTransfer = await transferManager.StartTransferAsync(
+    sourceResource: files.FromFile(sourceLocalDirectory),
+    destinationResource: shares.FromDirectory(destinationFolderUri));
+await folderTransfer.WaitForCompletionAsync();
 ```
 
 ### Download
@@ -145,20 +145,20 @@ A download takes place between a file share `StorageResource` as source and loca
 
 Download a file.
 
-```C# Snippet:SimpleFileDownload
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+```C# Snippet:SimpleFileDownload_Shares
+DataTransfer fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: shares.FromFile(sourceFileUri),
-    destinationResource: files.FromFile(destinationLocalPath));
-await dataTransfer.WaitForCompletionAsync();
+    destinationResource: files.FromFile(destinationLocalFile));
+await fileTransfer.WaitForCompletionAsync();
 ```
 
 Download a Directory.
 
-```C# Snippet:SimpleDirectoryDownload
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: shares.FromClient(sourceDirectoryUri),
-    destinationResource: files.FromDirectory(downloadPath));
-await dataTransfer.WaitForCompletionAsync();
+```C# Snippet:SimpleDirectoryDownload_Shares
+DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
+    sourceResource: shares.FromDirectory(sourceDirectoryUri),
+    destinationResource: files.FromDirectory(destinationLocalDirectory));
+await directoryTransfer.WaitForCompletionAsync();
 ```
 
 ### File Copy
@@ -167,20 +167,20 @@ A copy takes place between two share `StorageResource` instances. Copying betwee
 
 Copy a single file.
 
-```C# Snippet:s2sCopyFile
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+```C# Snippet:s2sCopyFile_Shares
+DataTransfer fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: shares.FromFile(sourceFileUri),
     destinationResource: shares.FromFile(destinationFileUri));
-await dataTransfer.WaitForCompletionAsync();
+await fileTransfer.WaitForCompletionAsync();
 ```
 
 Copy a directory.
 
-```C# Snippet:s2sCopyDirectory
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+```C# Snippet:s2sCopyDirectory_Shares
+DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
     sourceResource: shares.FromDirectory(sourceDirectoryUri),
     destinationResource: shares.FromDirectory(destinationDirectoryUri));
-await dataTransfer.WaitForCompletionAsync();
+await directoryTransfer.WaitForCompletionAsync();
 ```
 
 ## Troubleshooting

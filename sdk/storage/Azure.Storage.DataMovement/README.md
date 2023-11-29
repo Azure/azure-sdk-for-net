@@ -114,13 +114,13 @@ TransferManager transferManager = new(new TransferManagerOptions()
 
 With a transfer manager configured as above, resuming all transfers is done as follows:
 
-```C# Snippet:ResumeAllTransfers
+```C# Snippet:DataMovement_ResumeAll
 List<DataTransfer> transfers = await transferManager.ResumeAllTransfersAsync();
 ```
 
 An individual transfer can be resumed by transfer ID:
 
-```C# Snippet:ResumeSingleTransfer
+```C# Snippet:DataMovement_ResumeSingle
 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
 ```
 
@@ -239,7 +239,7 @@ transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
     {
         // Specifying specific resources that failed, since its a directory transfer
         // maybe only one file failed out of many
-        logStream.WriteLine($"Exception occurred with TransferId: {args.TransferId}," +
+        logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
             $"Source Resource: {args.SourceResource.Path}, +" +
             $"Destination Resource: {args.DestinationResource.Path}," +
             $"Exception Message: {args.Exception.Message}");
