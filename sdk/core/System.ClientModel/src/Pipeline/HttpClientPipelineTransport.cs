@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
+using System.ClientModel.Internal;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Internal;
+namespace System.ClientModel.Primitives;
 
-internal class HttpClientPipelineTransport : PipelineTransport
+public class HttpClientPipelineTransport : PipelineTransport
 {
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
@@ -65,7 +65,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
         };
     }
 
-    public override PipelineMessage CreateMessage()
+    protected override PipelineMessage CreateMessageCore()
     {
         PipelineRequest request = new HttpPipelineRequest();
         PipelineMessage message = new PipelineMessage(request);
@@ -73,7 +73,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
         return message;
     }
 
-    public override void Process(PipelineMessage message)
+    protected override void ProcessCore(PipelineMessage message)
     {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
 
@@ -95,7 +95,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
-    public override async ValueTask ProcessAsync(PipelineMessage message)
+    protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
         => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
 #pragma warning disable CA1801 // async parameter unused on netstandard
@@ -183,11 +183,6 @@ internal class HttpClientPipelineTransport : PipelineTransport
         if (contentStream is not null)
         {
             message.Response.ContentStream = contentStream;
-        }
-
-        if (message.MessageClassifier != null)
-        {
-            message.Response.IsError = message.MessageClassifier.IsError(message);
         }
     }
 
