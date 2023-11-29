@@ -22,5 +22,20 @@ namespace Azure.AI.TextAnalytics.Legacy
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTask>();
             SentimentAnalysisTasks = new ChangeTrackingList<SentimentAnalysisTask>();
         }
+
+        /// <summary> Initializes a new instance of <see cref="JobManifestTasks"/>. </summary>
+        /// <param name="entityRecognitionTasks"></param>
+        /// <param name="entityRecognitionPiiTasks"></param>
+        /// <param name="keyPhraseExtractionTasks"></param>
+        /// <param name="entityLinkingTasks"></param>
+        /// <param name="sentimentAnalysisTasks"></param>
+        internal JobManifestTasks(IList<EntitiesTask> entityRecognitionTasks, IList<PiiTask> entityRecognitionPiiTasks, IList<KeyPhrasesTask> keyPhraseExtractionTasks, IList<EntityLinkingTask> entityLinkingTasks, IList<SentimentAnalysisTask> sentimentAnalysisTasks)
+        {
+            EntityRecognitionTasks = entityRecognitionTasks;
+            EntityRecognitionPiiTasks = entityRecognitionPiiTasks;
+            KeyPhraseExtractionTasks = keyPhraseExtractionTasks;
+            EntityLinkingTasks = entityLinkingTasks;
+            SentimentAnalysisTasks = sentimentAnalysisTasks;
+        }
     }
 }

@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Synapse.Models
             ResourceType = KustoPoolType.MicrosoftSynapseWorkspacesKustoPools;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KustoPoolNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Kusto Pool name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools. </param>
+        internal KustoPoolNameAvailabilityContent(string name, KustoPoolType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Kusto Pool name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools. </summary>

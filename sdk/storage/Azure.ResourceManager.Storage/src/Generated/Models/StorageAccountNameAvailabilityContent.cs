@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Storage.Models
             ResourceType = "Microsoft.Storage/storageAccounts";
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The storage account name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
+        internal StorageAccountNameAvailabilityContent(string name, ResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The storage account name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>

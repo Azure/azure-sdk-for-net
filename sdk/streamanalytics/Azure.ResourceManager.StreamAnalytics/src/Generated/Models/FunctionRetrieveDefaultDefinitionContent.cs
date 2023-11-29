@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FunctionRetrieveDefaultDefinitionContent"/>. </summary>
+        /// <param name="bindingType"> Indicates the function binding type. </param>
+        internal FunctionRetrieveDefaultDefinitionContent(string bindingType)
+        {
+            BindingType = bindingType;
+        }
+
         /// <summary> Indicates the function binding type. </summary>
         internal string BindingType { get; set; }
     }

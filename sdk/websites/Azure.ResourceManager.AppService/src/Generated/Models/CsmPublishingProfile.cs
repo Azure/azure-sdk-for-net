@@ -15,6 +15,20 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CsmPublishingProfile"/>. </summary>
+        /// <param name="format">
+        /// Name of the format. Valid values are:
+        /// FileZilla3
+        /// WebDeploy -- default
+        /// Ftp
+        /// </param>
+        /// <param name="isIncludeDisasterRecoveryEndpoints"> Include the DisasterRecover endpoint if true. </param>
+        internal CsmPublishingProfile(PublishingProfileFormat? format, bool? isIncludeDisasterRecoveryEndpoints)
+        {
+            Format = format;
+            IsIncludeDisasterRecoveryEndpoints = isIncludeDisasterRecoveryEndpoints;
+        }
+
         /// <summary>
         /// Name of the format. Valid values are:
         /// FileZilla3

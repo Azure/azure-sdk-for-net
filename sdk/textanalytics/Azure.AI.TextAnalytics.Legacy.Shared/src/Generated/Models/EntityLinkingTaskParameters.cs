@@ -17,6 +17,17 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskParameters"/>. </summary>
+        /// <param name="modelVersion"></param>
+        /// <param name="loggingOptOut"></param>
+        /// <param name="stringIndexType"></param>
+        internal EntityLinkingTaskParameters(string modelVersion, bool? loggingOptOut, StringIndexType? stringIndexType)
+        {
+            ModelVersion = modelVersion;
+            LoggingOptOut = loggingOptOut;
+            StringIndexType = stringIndexType;
+        }
+
         /// <summary> Gets or sets the model version. </summary>
         public string ModelVersion { get; set; }
         /// <summary> Gets or sets the logging opt out. </summary>
