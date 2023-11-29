@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Synapse.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoPatch"/>. </summary>
+        /// <param name="tags"> Updated tags for the Big Data pool. </param>
+        internal SynapseBigDataPoolInfoPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Updated tags for the Big Data pool. </summary>
         public IDictionary<string, string> Tags { get; }
     }

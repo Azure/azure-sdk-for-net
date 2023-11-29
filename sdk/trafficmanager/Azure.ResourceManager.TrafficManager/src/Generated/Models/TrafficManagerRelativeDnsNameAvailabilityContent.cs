@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.TrafficManager.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerRelativeDnsNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        internal TrafficManagerRelativeDnsNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The name of the resource. </summary>
         public string Name { get; set; }
         /// <summary> The type of the resource. </summary>

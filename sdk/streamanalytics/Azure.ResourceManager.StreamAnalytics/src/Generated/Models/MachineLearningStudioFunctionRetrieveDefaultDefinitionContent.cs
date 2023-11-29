@@ -16,6 +16,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             BindingType = "Microsoft.MachineLearning/WebService";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStudioFunctionRetrieveDefaultDefinitionContent"/>. </summary>
+        /// <param name="bindingType"> Indicates the function binding type. </param>
+        /// <param name="executeEndpoint"> The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs. </param>
+        /// <param name="udfType"> The function type. </param>
+        internal MachineLearningStudioFunctionRetrieveDefaultDefinitionContent(string bindingType, string executeEndpoint, StreamingJobFunctionUdfType? udfType) : base(bindingType)
+        {
+            ExecuteEndpoint = executeEndpoint;
+            UdfType = udfType;
+            BindingType = bindingType ?? "Microsoft.MachineLearning/WebService";
+        }
+
         /// <summary> The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs. </summary>
         public string ExecuteEndpoint { get; set; }
         /// <summary> The function type. </summary>

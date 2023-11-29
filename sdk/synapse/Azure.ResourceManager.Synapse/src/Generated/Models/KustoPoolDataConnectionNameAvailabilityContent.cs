@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Synapse.Models
             ResourceType = SynapseDataConnectionType.MicrosoftSynapseWorkspacesKustoPoolsDatabasesDataConnections;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDataConnectionNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Data Connection name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections. </param>
+        internal KustoPoolDataConnectionNameAvailabilityContent(string name, SynapseDataConnectionType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Data Connection name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections. </summary>
