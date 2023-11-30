@@ -9,6 +9,7 @@ namespace System.ClientModel.Primitives;
 public class PipelineMessage : IDisposable
 {
     private PipelineResponse? _response;
+    private ArrayBackedPropertyBag<ulong, object> _propertyBag;
     private bool _disposed;
 
     protected internal PipelineMessage(PipelineRequest request)
@@ -53,8 +54,6 @@ public class PipelineMessage : IDisposable
         // client-user type RequestOptions.
         options.Apply(this, messageClassifier);
     }
-
-    private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
     public bool TryGetProperty(Type type, out object? value) =>
         _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
