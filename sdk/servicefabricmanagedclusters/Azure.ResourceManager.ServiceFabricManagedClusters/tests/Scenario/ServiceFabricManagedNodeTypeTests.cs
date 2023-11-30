@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
     {
         private ServiceFabricManagedClusterResource _cluster;
         private ServiceFabricManagedNodeTypeCollection _nodeTypeCollection;
-        public ServiceFabricManagedNodeTypeTests(bool isAsync) : base(isAsync)
+        public ServiceFabricManagedNodeTypeTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             ValidatePurviewAccount(primaryNodeType.Data, primaryNodeTypeName);
             ValidatePurviewAccount(secondaryNodeType.Data, secondaryNodeTypeName);
 
+            //Update
+            var updateNodetype_lro = await primaryNodeType.UpdateAsync(new ServiceFabricManagedNodeTypePatch()
+            {
+                Tags =
+                {
+                    ["UpdateKey1"] = "UpdateValue1",
+                    ["UpdateKey2"] = "UpdateValue2",
+                }
+            });
+            var updateNodetype = updateNodetype_lro.Value;
             // Delete
             await secondaryNodeType.DeleteAsync(WaitUntil.Completed);
             var flag = await _nodeTypeCollection.ExistsAsync(secondaryNodeTypeName);
