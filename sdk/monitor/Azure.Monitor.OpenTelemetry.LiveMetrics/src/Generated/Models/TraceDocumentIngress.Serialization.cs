@@ -41,11 +41,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in Properties)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
