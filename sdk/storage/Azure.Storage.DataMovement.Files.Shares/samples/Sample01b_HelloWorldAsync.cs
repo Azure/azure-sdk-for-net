@@ -76,7 +76,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     StorageSharedKeyCredential sharedKeyCredential = new(StorageAccountName, StorageAccountKey);
                     // Get blobs provider with credential
-                    #region Snippet:MakeProvider_SasFactory_Shares
                     AzureSasCredential GenerateSas(string uri, bool readOnly)
                     {
                         // Quick sample demonstrating minimal steps
@@ -90,7 +89,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString());
                     }
                     ShareFilesStorageResourceProvider shares = new(GenerateSas);
-                    #endregion
                 }
             }
             finally

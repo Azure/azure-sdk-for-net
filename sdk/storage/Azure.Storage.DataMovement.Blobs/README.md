@@ -157,23 +157,6 @@ Azure.Storage.DataMovement.Blobs exposes `BlobsStorageResourceProvider` to creat
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 ```
 
-For workflows that require specific credentials for specific Blob Storage resources, the resource provider can be initialized with a delegate to construct the appropriate credential from the resource's URI. The following demonstrates a provider that produces a SAS scoped to the resource from a `StorageSharedKeyCredential`.
-
-```C# Snippet:MakeProvider_SasFactory_Blobs
-AzureSasCredential GenerateSas(Uri uri, bool readOnly)
-{
-    // Construct your SAS according to your needs
-    BlobUriBuilder blobUri = new(uri);
-    BlobSasBuilder sas = new(BlobSasPermissions.All, DateTimeOffset.Now.AddHours(1))
-    {
-        BlobContainerName = blobUri.BlobContainerName,
-        BlobName = blobUri.BlobName,
-    };
-    return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString());
-}
-BlobsStorageResourceProvider blobs = new(GenerateSas);
-```
-
 To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer`.
 
 ```C# Snippet:ResourceConstruction_Blobs

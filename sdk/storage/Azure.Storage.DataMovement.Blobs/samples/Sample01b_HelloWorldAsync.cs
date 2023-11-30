@@ -80,7 +80,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     StorageSharedKeyCredential sharedKeyCredential = new(StorageAccountName, StorageAccountKey);
                     // Get blobs provider with credential
-                    #region Snippet:MakeProvider_SasFactory_Blobs
                     AzureSasCredential GenerateSas(Uri uri, bool readOnly)
                     {
                         // Construct your SAS according to your needs
@@ -93,7 +92,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString());
                     }
                     BlobsStorageResourceProvider blobs = new(GenerateSas);
-                    #endregion
                 }
             }
             finally
@@ -914,9 +912,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferIfRunningAsync(transferId);
 
                 // Resume all transfers
-                #region Snippet:DataMovement_ResumeAll
                 List<DataTransfer> transfers = await transferManager.ResumeAllTransfersAsync();
-                #endregion
 
                 // Resume a single transfer
                 #region Snippet:DataMovement_ResumeSingle

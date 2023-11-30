@@ -80,24 +80,6 @@ Azure.Storage.DataMovement.Files.Shares exposes `ShareFilesStorageResourceProvid
 ShareFilesStorageResourceProvider shares = new(tokenCredential);
 ```
 
-For workflows that require specific credentials for specific Share resources, the resource provider can be initialized with a delegate to construct the appropriate credential from the resource's URI. The following demonstrates a provider that produces a sas scoped to the resource from a `StorageSharedKeyCredential`.
-
-```C# Snippet:MakeProvider_SasFactory_Shares
-AzureSasCredential GenerateSas(string uri, bool readOnly)
-{
-    // Quick sample demonstrating minimal steps
-    // Construct your SAS according to your needs
-    ShareUriBuilder pathUri = new(new Uri(uri));
-    ShareSasBuilder sas = new(ShareSasPermissions.All, DateTimeOffset.Now.AddHours(1))
-    {
-        ShareName = pathUri.ShareName,
-        FilePath = pathUri.DirectoryOrFilePath,
-    };
-    return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString());
-}
-ShareFilesStorageResourceProvider shares = new(GenerateSas);
-```
-
 To create a share `StorageResource`, use the methods `FromFile` or `FromDirectory`.
 
 ```C# Snippet:ResourceConstruction_Shares

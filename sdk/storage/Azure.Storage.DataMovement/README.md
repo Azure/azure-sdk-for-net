@@ -112,13 +112,7 @@ TransferManager transferManager = new(new TransferManagerOptions()
 });
 ```
 
-With a transfer manager configured as above, resuming all transfers is done as follows:
-
-```C# Snippet:DataMovement_ResumeAll
-List<DataTransfer> transfers = await transferManager.ResumeAllTransfersAsync();
-```
-
-An individual transfer can be resumed by transfer ID:
+To resume a transfer, provide the transfer's ID, as shown below. In the case where your application does not have the desired transfer ID available, use `TransferManager.GetTransfersAsync()` to find that transfer and it's ID.
 
 ```C# Snippet:DataMovement_ResumeSingle
 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
