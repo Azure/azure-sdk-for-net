@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace System.ClientModel;
 
-public abstract class OutputMessage<T> : OptionalOutputMessage<T>
+public class OutputMessage<T> : OptionalOutputMessage<T>
 {
     internal OutputMessage(T value, PipelineResponse response) : base(value, response)
     {

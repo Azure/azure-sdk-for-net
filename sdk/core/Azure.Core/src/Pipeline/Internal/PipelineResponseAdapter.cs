@@ -20,9 +20,6 @@ namespace Azure.Core
 
         public override string ReasonPhrase => _response.ReasonPhrase;
 
-        // TODO: implement
-        public override MessageHeaders Headers => throw new NotSupportedException();
-
         public override Stream? ContentStream
         {
             get => _response.ContentStream;
@@ -33,6 +30,11 @@ namespace Azure.Core
         {
             var response = _response;
             response?.Dispose();
+        }
+
+        protected override MessageHeaders GetHeadersCore()
+        {
+            throw new NotImplementedException();
         }
     }
 }

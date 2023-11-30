@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Core
@@ -14,7 +15,7 @@ namespace Azure.Core
         /// <summary>
         /// Parses the error details from the provided <see cref="Response"/>.
         /// </summary>
-        /// <param name="response">The <see cref="Response"/> to parse. The <see cref="Response.ContentStream"/> will already be buffered.</param>
+        /// <param name="response">The <see cref="Response"/> to parse. The <see cref="PipelineResponse.ContentStream"/> will already be buffered.</param>
         /// <param name="error">The <see cref="ResponseError"/> describing the parsed error details.</param>
         /// <param name="data">Data to be applied to the <see cref="Exception.Data"/> property.</param>
         /// <returns><c>true</c> if successful, otherwise <c>false</c>.</returns>

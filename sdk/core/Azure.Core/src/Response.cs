@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -13,24 +13,9 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : IDisposable
+    public abstract class Response : PipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        /// <summary>
-        /// Gets the HTTP status code.
-        /// </summary>
-        public abstract int Status { get; }
-
-        /// <summary>
-        /// Gets the HTTP reason phrase.
-        /// </summary>
-        public abstract string ReasonPhrase { get; }
-
-        /// <summary>
-        /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
-        /// </summary>
-        public abstract Stream? ContentStream { get; set; }
-
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
@@ -39,58 +24,20 @@ namespace Azure
         /// <summary>
         /// Get the HTTP response headers.
         /// </summary>
-        public virtual ResponseHeaders Headers => new ResponseHeaders(this);
+        // TODO: is is possible to not new-slot this?
+        public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
-        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
-
-        /// <summary>
-        /// Gets the contents of HTTP response, if it is available.
-        /// </summary>
-        /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
-        /// </remarks>
-        public virtual BinaryData Content
+        /// <inheritdoc/>
+        protected override MessageHeaders GetHeadersCore()
         {
-            get
-            {
-                if (ContentStream == null)
-                {
-                    return s_EmptyBinaryData;
-                }
-
-                MemoryStream? memoryContent = ContentStream as MemoryStream;
-
-                if (memoryContent == null)
-                {
-                    throw new InvalidOperationException($"The response is not fully buffered.");
-                }
-
-                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-                {
-                    return new BinaryData(segment.AsMemory());
-                }
-                else
-                {
-                    return new BinaryData(memoryContent.ToArray());
-                }
-            }
+            throw new System.NotImplementedException();
         }
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Response"/> instance.
-        /// </summary>
-        public abstract void Dispose();
-
-        /// <summary>
-        /// Indicates whether the status code of the returned response is considered
-        /// an error code.
-        /// </summary>
-        public virtual bool IsError { get; internal set; }
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
+
+        internal void SetIsError(bool value) => IsError = value;
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.

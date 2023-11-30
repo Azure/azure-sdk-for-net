@@ -137,8 +137,6 @@ public class ClientPipelineTests
 
             public override string ReasonPhrase => throw new NotImplementedException();
 
-            public override MessageHeaders Headers => throw new NotImplementedException();
-
             public override Stream? ContentStream
             {
                 get => null;
@@ -146,6 +144,11 @@ public class ClientPipelineTests
             }
 
             public override void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override MessageHeaders GetHeadersCore()
             {
                 throw new NotImplementedException();
             }

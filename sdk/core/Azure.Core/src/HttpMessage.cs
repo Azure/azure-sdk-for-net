@@ -73,7 +73,6 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        // TODO: revisit this per not shadowing anymore
         public ResponseClassifier ResponseClassifier
         {
             get
@@ -144,6 +143,7 @@ namespace Azure.Core
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
+        #region Message Properties
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
         /// </summary>
@@ -182,10 +182,16 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
+        /// </summary>
+        private class MessagePropertyKey { }
+        #endregion
+
+        /// <summary>
         /// Returns the response content stream and releases it ownership to the caller.
         ///
         /// After calling this method, any attempt to use the
-        /// <see cref="Response.ContentStream"/> or <see cref="Response.Content"/>
+        /// <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/>
         /// properties on <see cref="Response"/> will result in an exception being thrown.
         /// </summary>
         /// <returns>The content stream, or <code>null</code> if <see cref="Response"/>
@@ -254,11 +260,6 @@ namespace Azure.Core
                 set => throw CreateException();
             }
         }
-
-        /// <summary>
-        /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
-        /// </summary>
-        private class MessagePropertyKey { }
 
         private static PipelineRequest ToPipelineRequest(Request request)
         {

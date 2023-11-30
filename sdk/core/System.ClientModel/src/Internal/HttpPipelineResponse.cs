@@ -33,7 +33,7 @@ internal class HttpPipelineResponse : PipelineResponse
     public override string ReasonPhrase
         => _httpResponse.ReasonPhrase ?? string.Empty;
 
-    public override MessageHeaders Headers
+    protected override MessageHeaders GetHeadersCore()
         => new PipelineResponseHeaders(_httpResponse, _httpResponseContent);
 
     public override Stream? ContentStream

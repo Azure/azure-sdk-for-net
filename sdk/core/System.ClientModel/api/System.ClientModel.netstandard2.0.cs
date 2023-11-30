@@ -203,11 +203,12 @@ namespace System.ClientModel.Primitives
         protected PipelineResponse() { }
         public System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
-        public abstract System.ClientModel.Primitives.MessageHeaders Headers { get; }
-        public bool IsError { get { throw null; } }
+        public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
+        public bool IsError { get { throw null; } protected internal set { } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
+        protected abstract System.ClientModel.Primitives.MessageHeaders GetHeadersCore();
     }
     public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy
     {

@@ -296,9 +296,12 @@ namespace Azure
 
             public override string ReasonPhrase => throw new NotSupportedException();
 
-            public override MessageHeaders Headers => throw new NotSupportedException();
-
             public override void Dispose() => throw new NotSupportedException();
+
+            protected override MessageHeaders GetHeadersCore()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
