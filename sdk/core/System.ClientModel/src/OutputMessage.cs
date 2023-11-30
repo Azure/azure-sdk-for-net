@@ -42,4 +42,25 @@ public abstract class OutputMessage
 
         public override PipelineResponse GetRawResponse() => _response;
     }
+
+    private class SimpleOptionalOutputMessage<T> : OptionalOutputMessage<T>
+    {
+        private readonly T? _value;
+        private readonly PipelineResponse _response;
+
+        public SimpleOptionalOutputMessage(T? value, PipelineResponse response)
+        {
+            if (response is null) throw new ArgumentNullException(nameof(response));
+
+            _response = response;
+            _value = value;
+        }
+
+        public override T? Value => _value;
+
+        public override bool HasValue => _value != null;
+
+        public override PipelineResponse GetRawResponse() => _response;
+    }
+
 }
