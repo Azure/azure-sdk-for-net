@@ -20,7 +20,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(IpAddressProvisioningType))
             {
                 writer.WritePropertyName("provision"u8);
-                writer.WriteStringValue(IpAddressProvisioningType.Value.ToString());
+                writer.WriteStringValue(IpAddressProvisioningType);
             }
             if (Optional.IsCollectionDefined(IpAddressIds))
             {
@@ -41,17 +41,13 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Optional<IPAddressProvisioningType> provision = default;
+            Optional<string> provision = default;
             Optional<IList<string>> ipAddressIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provision"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provision = new IPAddressProvisioningType(property.Value.GetString());
+                    provision = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ipAddressIds"u8))
@@ -69,7 +65,7 @@ namespace Azure.Compute.Batch
                     continue;
                 }
             }
-            return new PublicIpAddressConfiguration(Optional.ToNullable(provision), Optional.ToList(ipAddressIds));
+            return new PublicIpAddressConfiguration(provision.Value, Optional.ToList(ipAddressIds));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

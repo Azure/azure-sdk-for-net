@@ -22,14 +22,14 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of PublicIpAddressConfiguration. </summary>
         /// <param name="ipAddressProvisioningType"> The provisioning type for Public IP Addresses for the Pool. The default value is BatchManaged. </param>
         /// <param name="ipAddressIds"> The list of public IPs which the Batch service will use when provisioning Compute Nodes. The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/Low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
-        internal PublicIpAddressConfiguration(IPAddressProvisioningType? ipAddressProvisioningType, IList<string> ipAddressIds)
+        internal PublicIpAddressConfiguration(string ipAddressProvisioningType, IList<string> ipAddressIds)
         {
             IpAddressProvisioningType = ipAddressProvisioningType;
             IpAddressIds = ipAddressIds;
         }
 
         /// <summary> The provisioning type for Public IP Addresses for the Pool. The default value is BatchManaged. </summary>
-        public IPAddressProvisioningType? IpAddressProvisioningType { get; set; }
+        public string IpAddressProvisioningType { get; set; }
         /// <summary> The list of public IPs which the Batch service will use when provisioning Compute Nodes. The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/Low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </summary>
         public IList<string> IpAddressIds { get; }
     }

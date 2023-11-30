@@ -22,11 +22,12 @@ namespace Azure.Compute.Batch
         /// <param name="imageReference"> The reference to the Azure Virtual Machine's Marketplace Image. </param>
         /// <param name="osType"> The type of operating system (e.g. Windows or Linux) of the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeAgentSkuId"/> or <paramref name="imageReference"/> is null. </exception>
-        internal ImageInformation(string nodeAgentSkuId, ImageReference imageReference, OSType osType, VerificationType verificationType)
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeAgentSkuId"/>, <paramref name="imageReference"/> or <paramref name="verificationType"/> is null. </exception>
+        internal ImageInformation(string nodeAgentSkuId, ImageReference imageReference, OSType osType, string verificationType)
         {
             Argument.AssertNotNull(nodeAgentSkuId, nameof(nodeAgentSkuId));
             Argument.AssertNotNull(imageReference, nameof(imageReference));
+            Argument.AssertNotNull(verificationType, nameof(verificationType));
 
             NodeAgentSkuId = nodeAgentSkuId;
             ImageReference = imageReference;
@@ -42,7 +43,7 @@ namespace Azure.Compute.Batch
         /// <param name="capabilities"> The capabilities or features which the Image supports. Not every capability of the Image is listed. Capabilities in this list are considered of special interest and are generally related to integration with other features in the Azure Batch service. </param>
         /// <param name="batchSupportEndOfLife"> The time when the Azure Batch service will stop accepting create Pool requests for the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
-        internal ImageInformation(string nodeAgentSkuId, ImageReference imageReference, OSType osType, IReadOnlyList<string> capabilities, DateTimeOffset? batchSupportEndOfLife, VerificationType verificationType)
+        internal ImageInformation(string nodeAgentSkuId, ImageReference imageReference, OSType osType, IReadOnlyList<string> capabilities, DateTimeOffset? batchSupportEndOfLife, string verificationType)
         {
             NodeAgentSkuId = nodeAgentSkuId;
             ImageReference = imageReference;
@@ -63,6 +64,6 @@ namespace Azure.Compute.Batch
         /// <summary> The time when the Azure Batch service will stop accepting create Pool requests for the Image. </summary>
         public DateTimeOffset? BatchSupportEndOfLife { get; }
         /// <summary> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </summary>
-        public VerificationType VerificationType { get; }
+        public string VerificationType { get; }
     }
 }

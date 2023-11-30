@@ -26,7 +26,7 @@ namespace Azure.Compute.Batch
             OSType osType = default;
             Optional<IReadOnlyList<string>> capabilities = default;
             Optional<DateTimeOffset> batchSupportEndOfLife = default;
-            VerificationType verificationType = default;
+            string verificationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeAgentSKUId"u8))
@@ -69,7 +69,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("verificationType"u8))
                 {
-                    verificationType = new VerificationType(property.Value.GetString());
+                    verificationType = property.Value.GetString();
                     continue;
                 }
             }

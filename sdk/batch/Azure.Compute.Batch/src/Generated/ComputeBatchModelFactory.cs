@@ -14,17 +14,6 @@ namespace Azure.Compute.Batch
     /// <summary> Model factory for models. </summary>
     public static partial class ComputeBatchModelFactory
     {
-        /// <summary> Initializes a new instance of ApplicationListResult. </summary>
-        /// <param name="value"> The list of applications available in the Account. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.ApplicationListResult"/> instance for mocking. </returns>
-        public static ApplicationListResult ApplicationListResult(IEnumerable<BatchApplication> value = null, string odataNextLink = null)
-        {
-            value ??= new List<BatchApplication>();
-
-            return new ApplicationListResult(value?.ToList(), odataNextLink);
-        }
-
         /// <summary> Initializes a new instance of BatchApplication. </summary>
         /// <param name="id"> A string that uniquely identifies the application within the Account. </param>
         /// <param name="displayName"> The display name for the application. </param>
@@ -35,17 +24,6 @@ namespace Azure.Compute.Batch
             versions ??= new List<string>();
 
             return new BatchApplication(id, displayName, versions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PoolListUsageMetricsResult. </summary>
-        /// <param name="value"> The Pool usage metrics data. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.PoolListUsageMetricsResult"/> instance for mocking. </returns>
-        public static PoolListUsageMetricsResult PoolListUsageMetricsResult(IEnumerable<PoolUsageMetrics> value = null, string odataNextLink = null)
-        {
-            value ??= new List<PoolUsageMetrics>();
-
-            return new PoolListUsageMetricsResult(value?.ToList(), odataNextLink);
         }
 
         /// <summary> Initializes a new instance of PoolUsageMetrics. </summary>
@@ -81,17 +59,6 @@ namespace Azure.Compute.Batch
         public static ImageReference ImageReference(string publisher = null, string offer = null, string sku = null, string version = null, string virtualMachineImageId = null, string exactVersion = null)
         {
             return new ImageReference(publisher, offer, sku, version, virtualMachineImageId, exactVersion);
-        }
-
-        /// <summary> Initializes a new instance of BatchPoolListResult. </summary>
-        /// <param name="value"> The list of Pools. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.BatchPoolListResult"/> instance for mocking. </returns>
-        public static BatchPoolListResult BatchPoolListResult(IEnumerable<BatchPool> value = null, string odataNextLink = null)
-        {
-            value ??= new List<BatchPool>();
-
-            return new BatchPoolListResult(value?.ToList(), odataNextLink);
         }
 
         /// <summary> Initializes a new instance of BatchPool. </summary>
@@ -249,17 +216,6 @@ namespace Azure.Compute.Batch
             return new UserAssignedIdentity(resourceId, clientId, principalId);
         }
 
-        /// <summary> Initializes a new instance of AccountListSupportedImagesResult. </summary>
-        /// <param name="value"> The list of supported Virtual Machine Images. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.AccountListSupportedImagesResult"/> instance for mocking. </returns>
-        public static AccountListSupportedImagesResult AccountListSupportedImagesResult(IEnumerable<ImageInformation> value = null, string odataNextLink = null)
-        {
-            value ??= new List<ImageInformation>();
-
-            return new AccountListSupportedImagesResult(value?.ToList(), odataNextLink);
-        }
-
         /// <summary> Initializes a new instance of ImageInformation. </summary>
         /// <param name="nodeAgentSkuId"> The ID of the Compute Node agent SKU which the Image supports. </param>
         /// <param name="imageReference"> The reference to the Azure Virtual Machine's Marketplace Image. </param>
@@ -268,22 +224,11 @@ namespace Azure.Compute.Batch
         /// <param name="batchSupportEndOfLife"> The time when the Azure Batch service will stop accepting create Pool requests for the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
         /// <returns> A new <see cref="Batch.ImageInformation"/> instance for mocking. </returns>
-        public static ImageInformation ImageInformation(string nodeAgentSkuId = null, ImageReference imageReference = null, OSType osType = default, IEnumerable<string> capabilities = null, DateTimeOffset? batchSupportEndOfLife = null, VerificationType verificationType = default)
+        public static ImageInformation ImageInformation(string nodeAgentSkuId = null, ImageReference imageReference = null, OSType osType = default, IEnumerable<string> capabilities = null, DateTimeOffset? batchSupportEndOfLife = null, string verificationType = null)
         {
             capabilities ??= new List<string>();
 
             return new ImageInformation(nodeAgentSkuId, imageReference, osType, capabilities?.ToList(), batchSupportEndOfLife, verificationType);
-        }
-
-        /// <summary> Initializes a new instance of PoolNodeCountsListResult. </summary>
-        /// <param name="value"> A list of Compute Node counts by Pool. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.PoolNodeCountsListResult"/> instance for mocking. </returns>
-        public static PoolNodeCountsListResult PoolNodeCountsListResult(IEnumerable<PoolNodeCounts> value = null, string odataNextLink = null)
-        {
-            value ??= new List<PoolNodeCounts>();
-
-            return new PoolNodeCountsListResult(value?.ToList(), odataNextLink);
         }
 
         /// <summary> Initializes a new instance of PoolNodeCounts. </summary>
@@ -351,28 +296,6 @@ namespace Azure.Compute.Batch
             metadata ??= new List<MetadataItem>();
 
             return new BatchJob(id, displayName, usesTaskDependencies, url, eTag, lastModified, creationTime, state, stateTransitionTime, previousState, previousStateTransitionTime, priority, allowTaskPreemption, maxParallelTasks, constraints, jobManagerTask, jobPreparationTask, jobReleaseTask, commonEnvironmentSettings?.ToList(), poolInfo, onAllTasksComplete, onTaskFailure, networkConfiguration, metadata?.ToList(), executionInfo, stats);
-        }
-
-        /// <summary> Initializes a new instance of BatchJobListResult. </summary>
-        /// <param name="value"> The list of Jobs. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.BatchJobListResult"/> instance for mocking. </returns>
-        public static BatchJobListResult BatchJobListResult(IEnumerable<BatchJob> value = null, string odataNextLink = null)
-        {
-            value ??= new List<BatchJob>();
-
-            return new BatchJobListResult(value?.ToList(), odataNextLink);
-        }
-
-        /// <summary> Initializes a new instance of BatchJobListPreparationAndReleaseTaskStatusResult. </summary>
-        /// <param name="value"> A list of Job Preparation and Job Release Task execution information. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.BatchJobListPreparationAndReleaseTaskStatusResult"/> instance for mocking. </returns>
-        public static BatchJobListPreparationAndReleaseTaskStatusResult BatchJobListPreparationAndReleaseTaskStatusResult(IEnumerable<JobPreparationAndReleaseTaskExecutionInformation> value = null, string odataNextLink = null)
-        {
-            value ??= new List<JobPreparationAndReleaseTaskExecutionInformation>();
-
-            return new BatchJobListPreparationAndReleaseTaskStatusResult(value?.ToList(), odataNextLink);
         }
 
         /// <summary> Initializes a new instance of JobPreparationAndReleaseTaskExecutionInformation. </summary>
@@ -483,17 +406,6 @@ namespace Azure.Compute.Batch
             return new BatchCertificate(thumbprint, thumbprintAlgorithm, url, state, stateTransitionTime, previousState, previousStateTransitionTime, publicData, deleteCertificateError, data, certificateFormat, password);
         }
 
-        /// <summary> Initializes a new instance of CertificateListResult. </summary>
-        /// <param name="value"> The list of Certificates. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.CertificateListResult"/> instance for mocking. </returns>
-        public static CertificateListResult CertificateListResult(IEnumerable<BatchCertificate> value = null, string odataNextLink = null)
-        {
-            value ??= new List<BatchCertificate>();
-
-            return new CertificateListResult(value?.ToList(), odataNextLink);
-        }
-
         /// <summary> Initializes a new instance of BatchJobSchedule. </summary>
         /// <param name="id"> A string that uniquely identifies the schedule within the Account. </param>
         /// <param name="displayName"> The display name for the schedule. </param>
@@ -516,28 +428,6 @@ namespace Azure.Compute.Batch
             metadata ??= new List<MetadataItem>();
 
             return new BatchJobSchedule(id, displayName, url, eTag, lastModified, creationTime, state, stateTransitionTime, previousState, previousStateTransitionTime, schedule, jobSpecification, executionInfo, metadata?.ToList(), stats);
-        }
-
-        /// <summary> Initializes a new instance of BatchJobScheduleListResult. </summary>
-        /// <param name="value"> The list of Job Schedules. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.BatchJobScheduleListResult"/> instance for mocking. </returns>
-        public static BatchJobScheduleListResult BatchJobScheduleListResult(IEnumerable<BatchJobSchedule> value = null, string odataNextLink = null)
-        {
-            value ??= new List<BatchJobSchedule>();
-
-            return new BatchJobScheduleListResult(value?.ToList(), odataNextLink);
-        }
-
-        /// <summary> Initializes a new instance of BatchTaskListResult. </summary>
-        /// <param name="value"> The list of Tasks. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.BatchTaskListResult"/> instance for mocking. </returns>
-        public static BatchTaskListResult BatchTaskListResult(IEnumerable<BatchTask> value = null, string odataNextLink = null)
-        {
-            value ??= new List<BatchTask>();
-
-            return new BatchTaskListResult(value?.ToList(), odataNextLink);
         }
 
         /// <summary> Initializes a new instance of BatchTask. </summary>
@@ -659,17 +549,6 @@ namespace Azure.Compute.Batch
         public static SubtaskInformation SubtaskInformation(int? id = null, BatchNodeInformation nodeInfo = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, int? exitCode = null, TaskContainerExecutionInformation containerInfo = null, TaskFailureInformation failureInfo = null, SubtaskState? state = null, DateTimeOffset? stateTransitionTime = null, SubtaskState? previousState = null, DateTimeOffset? previousStateTransitionTime = null, TaskExecutionResult? result = null)
         {
             return new SubtaskInformation(id, nodeInfo, startTime, endTime, exitCode, containerInfo, failureInfo, state, stateTransitionTime, previousState, previousStateTransitionTime, result);
-        }
-
-        /// <summary> Initializes a new instance of NodeFileListResult. </summary>
-        /// <param name="value"> The list of files. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.NodeFileListResult"/> instance for mocking. </returns>
-        public static NodeFileListResult NodeFileListResult(IEnumerable<NodeFile> value = null, string odataNextLink = null)
-        {
-            value ??= new List<NodeFile>();
-
-            return new NodeFileListResult(value?.ToList(), odataNextLink);
         }
 
         /// <summary> Initializes a new instance of NodeFile. </summary>
@@ -851,17 +730,6 @@ namespace Azure.Compute.Batch
             return new UploadBatchServiceLogsResult(virtualDirectoryName, numberOfFilesUploaded);
         }
 
-        /// <summary> Initializes a new instance of BatchNodeListResult. </summary>
-        /// <param name="value"> The list of Compute Nodes. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.BatchNodeListResult"/> instance for mocking. </returns>
-        public static BatchNodeListResult BatchNodeListResult(IEnumerable<BatchNode> value = null, string odataNextLink = null)
-        {
-            value ??= new List<BatchNode>();
-
-            return new BatchNodeListResult(value?.ToList(), odataNextLink);
-        }
-
         /// <summary> Initializes a new instance of NodeVMExtension. </summary>
         /// <param name="provisioningState"> The provisioning state of the virtual machine extension. </param>
         /// <param name="vmExtension"> The virtual machine extension. </param>
@@ -895,17 +763,6 @@ namespace Azure.Compute.Batch
         public static InstanceViewStatus InstanceViewStatus(string code = null, string displayStatus = null, StatusLevelTypes? level = null, string message = null, string time = null)
         {
             return new InstanceViewStatus(code, displayStatus, level, message, time);
-        }
-
-        /// <summary> Initializes a new instance of NodeVMExtensionList. </summary>
-        /// <param name="value"> The list of Compute Node extensions. </param>
-        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Batch.NodeVMExtensionList"/> instance for mocking. </returns>
-        public static NodeVMExtensionList NodeVMExtensionList(IEnumerable<NodeVMExtension> value = null, string odataNextLink = null)
-        {
-            value ??= new List<NodeVMExtension>();
-
-            return new NodeVMExtensionList(value?.ToList(), odataNextLink);
         }
     }
 }
