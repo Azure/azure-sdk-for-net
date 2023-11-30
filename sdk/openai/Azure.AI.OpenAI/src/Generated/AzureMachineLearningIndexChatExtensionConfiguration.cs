@@ -11,8 +11,8 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary>
-    /// A specific representation of configurable options for Azure Machine Learning index when using it as an Azure OpenAI chat
-    /// extension.
+    /// A specific representation of configurable options for Azure Machine Learning vector index when using it as an Azure
+    /// OpenAI chat extension.
     /// </summary>
     public partial class AzureMachineLearningIndexChatExtensionConfiguration : AzureChatExtensionConfiguration
     {
@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// </param>
-        /// <param name="parameters"> The parameters for the Azure Machine Learning index chat extension. </param>
+        /// <param name="parameters"> The parameters for the Azure Machine Learning vector index chat extension. </param>
         internal AzureMachineLearningIndexChatExtensionConfiguration(AzureChatExtensionType type, AzureMachineLearningIndexChatExtensionParameters parameters) : base(type)
         {
             Parameters = parameters;

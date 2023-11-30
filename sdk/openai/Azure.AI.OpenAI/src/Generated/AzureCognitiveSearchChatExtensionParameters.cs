@@ -14,7 +14,13 @@ namespace Azure.AI.OpenAI
     internal partial class AzureCognitiveSearchChatExtensionParameters
     {
         /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionParameters"/>. </summary>
-        /// <param name="authentication"> The authentication option to access the data. </param>
+        /// <param name="authentication">
+        /// The authentication method to use when accessing the defined data source.
+        /// Each data source type supports a specific set of available authentication methods; please see the documentation of
+        /// the data source for supported mechanisms.
+        /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
+        /// authentication.
+        /// </param>
         /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
         /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
         /// <param name="strictness"> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </param>
@@ -29,7 +35,7 @@ namespace Azure.AI.OpenAI
         /// <param name="embeddingEndpoint"> When using embeddings for search, specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of format https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings?api-version={api-version}. </param>
         /// <param name="embeddingKey"> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </param>
         /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
-        internal AzureCognitiveSearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, Uri searchEndpoint, string indexName, string key, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, AzureCognitiveSearchQueryType? queryType, string semanticConfiguration, string filter, Uri embeddingEndpoint, string embeddingKey, OnYourDataEmbeddingDependency embeddingDependency)
+        internal AzureCognitiveSearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, Uri searchEndpoint, string indexName, string key, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, AzureCognitiveSearchQueryType? queryType, string semanticConfiguration, string filter, Uri embeddingEndpoint, string embeddingKey, OnYourDataVectorizationSource embeddingDependency)
         {
             Authentication = authentication;
             DocumentCount = documentCount;
@@ -49,7 +55,11 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary>
-        /// The authentication option to access the data.
+        /// The authentication method to use when accessing the defined data source.
+        /// Each data source type supports a specific set of available authentication methods; please see the documentation of
+        /// the data source for supported mechanisms.
+        /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
+        /// authentication.
         /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
         /// </summary>
@@ -78,9 +88,9 @@ namespace Azure.AI.OpenAI
         public string EmbeddingKey { get; set; }
         /// <summary>
         /// The embedding dependency for vector search.
-        /// Please note <see cref="OnYourDataEmbeddingDependency"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataEmbeddingEndpointDependency"/>, <see cref="OnYourDataEmbeddingDeploymentNameDependency"/> and <see cref="OnYourDataEmbeddingModelIdDependency"/>.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataEndpointVectorizationSource"/>, <see cref="OnYourDataDeploymentNameVectorizationSource"/> and <see cref="OnYourDataModelIdVectorizationSource"/>.
         /// </summary>
-        public OnYourDataEmbeddingDependency EmbeddingDependency { get; set; }
+        public OnYourDataVectorizationSource EmbeddingDependency { get; set; }
     }
 }

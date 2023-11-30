@@ -10,28 +10,31 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The embedding dependency based on endpoint URL. </summary>
-    public partial class OnYourDataEmbeddingEndpointDependency : OnYourDataEmbeddingDependency
+    /// <summary>
+    /// The details of a a vectorization source, used by Azure OpenAI On Your Data when applying vector search, that is based
+    /// on a public Azure OpenAI endpoint call for embeddings.
+    /// </summary>
+    public partial class OnYourDataEndpointVectorizationSource : OnYourDataVectorizationSource
     {
-        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingEndpointDependency"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEndpointVectorizationSource"/>. </summary>
         /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
         /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="authentication"/> is null. </exception>
-        public OnYourDataEmbeddingEndpointDependency(Uri endpoint, OnYourDataAuthenticationOptions authentication)
+        public OnYourDataEndpointVectorizationSource(Uri endpoint, OnYourDataAuthenticationOptions authentication)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(authentication, nameof(authentication));
 
-            Type = OnYourDataEmbeddingDependencyType.Endpoint;
+            Type = OnYourDataVectorizationSourceType.Endpoint;
             Endpoint = endpoint;
             Authentication = authentication;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingEndpointDependency"/>. </summary>
-        /// <param name="type"> Embedding dependency types for vector search. </param>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEndpointVectorizationSource"/>. </summary>
+        /// <param name="type"> The type of vectorization source to use. </param>
         /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
         /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>
-        internal OnYourDataEmbeddingEndpointDependency(OnYourDataEmbeddingDependencyType type, Uri endpoint, OnYourDataAuthenticationOptions authentication) : base(type)
+        internal OnYourDataEndpointVectorizationSource(OnYourDataVectorizationSourceType type, Uri endpoint, OnYourDataAuthenticationOptions authentication) : base(type)
         {
             Endpoint = endpoint;
             Authentication = authentication;

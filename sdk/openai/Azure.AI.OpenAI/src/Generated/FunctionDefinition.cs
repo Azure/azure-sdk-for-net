@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
         /// A description of what the function does. The model will use this description when selecting the function and
         /// interpreting its parameters.
         /// </param>
-        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        /// <param name="parameters"> The parameters the function accepts, described as a JSON Schema object. </param>
         internal FunctionDefinition(string name, string description, BinaryData parameters)
         {
             Name = name;
@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// The parameters the functions accepts, described as a JSON Schema object.
+        /// The parameters the function accepts, described as a JSON Schema object.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

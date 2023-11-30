@@ -72,7 +72,7 @@ public partial class AzureCosmosDBChatExtensionConfiguration : AzureChatExtensio
         set => Parameters.FieldMappingOptions = value;
     }
     /// <inheritdoc cref="AzureCosmosDBChatExtensionParameters.EmbeddingDependency"/>
-    public OnYourDataEmbeddingDependency EmbeddingDependency
+    public OnYourDataVectorizationSource VectorizationSource
     {
         get => Parameters.EmbeddingDependency;
         set => Parameters.EmbeddingDependency = value;

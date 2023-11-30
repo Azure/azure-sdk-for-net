@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Optional settings to control how fields are processed when using a configured Elasticsearch resource. </summary>
+    /// <summary> Optional settings to control how fields are processed when using a configured Elasticsearch® resource. </summary>
     public partial class ElasticsearchIndexFieldMappingOptions
     {
         /// <summary> Initializes a new instance of <see cref="ElasticsearchIndexFieldMappingOptions"/>. </summary>

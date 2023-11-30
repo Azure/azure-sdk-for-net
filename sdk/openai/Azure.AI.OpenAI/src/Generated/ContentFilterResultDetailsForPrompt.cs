@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -16,14 +15,9 @@ namespace Azure.AI.OpenAI
     public partial class ContentFilterResultDetailsForPrompt
     {
         /// <summary> Initializes a new instance of <see cref="ContentFilterResultDetailsForPrompt"/>. </summary>
-        /// <param name="jailbreak"> Whether a jailbreak attempt was detected in the prompt. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jailbreak"/> is null. </exception>
-        internal ContentFilterResultDetailsForPrompt(ContentFilterDetectionResult jailbreak)
+        internal ContentFilterResultDetailsForPrompt()
         {
-            Argument.AssertNotNull(jailbreak, nameof(jailbreak));
-
             CustomBlocklists = new ChangeTrackingList<ContentFilterBlocklistIdResult>();
-            Jailbreak = jailbreak;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentFilterResultDetailsForPrompt"/>. </summary>

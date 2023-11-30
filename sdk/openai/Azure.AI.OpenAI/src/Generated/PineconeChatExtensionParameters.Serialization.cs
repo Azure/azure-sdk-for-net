@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(RoleInformation);
             }
             writer.WritePropertyName("environment"u8);
-            writer.WriteStringValue(Environment);
+            writer.WriteStringValue(EnvironmentName);
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
             writer.WritePropertyName("fieldsMapping"u8);

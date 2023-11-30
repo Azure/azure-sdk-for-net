@@ -23,8 +23,8 @@ internal partial class AzureCosmosDBChatExtensionParameters
     public AzureCosmosDBFieldMappingOptions FieldMappingOptions { get; set; }
     /// <summary>
     /// The embedding dependency for vector search.
-    /// Please note <see cref="OnYourDataEmbeddingDependency"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="OnYourDataEmbeddingEndpointDependency"/>, <see cref="OnYourDataEmbeddingDeploymentNameDependency"/> and <see cref="OnYourDataEmbeddingModelIdDependency"/>.
+    /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="OnYourDataEndpointVectorizationSource"/>, <see cref="OnYourDataDeploymentNameVectorizationSource"/> and <see cref="OnYourDataModelIdVectorizationSource"/>.
     /// </summary>
-    public OnYourDataEmbeddingDependency EmbeddingDependency { get; set; }
+    public OnYourDataVectorizationSource EmbeddingDependency { get; set; }
 }

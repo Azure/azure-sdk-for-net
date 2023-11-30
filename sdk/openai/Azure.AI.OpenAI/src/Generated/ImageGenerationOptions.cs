@@ -24,7 +24,10 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageGenerationOptions"/>. </summary>
-        /// <param name="deploymentName"> The model to use for image generation. </param>
+        /// <param name="deploymentName">
+        /// The model name or Azure OpenAI model deployment name to use for image generation. If not specified, dall-e-2 will be
+        /// inferred as a default.
+        /// </param>
         /// <param name="prompt"> A description of the desired images. </param>
         /// <param name="imageCount">
         /// The number of images to generate.
@@ -58,7 +61,10 @@ namespace Azure.AI.OpenAI
             User = user;
         }
 
-        /// <summary> The model to use for image generation. </summary>
+        /// <summary>
+        /// The model name or Azure OpenAI model deployment name to use for image generation. If not specified, dall-e-2 will be
+        /// inferred as a default.
+        /// </summary>
         public string DeploymentName { get; set; }
         /// <summary>
         /// The number of images to generate.

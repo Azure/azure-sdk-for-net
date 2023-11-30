@@ -103,7 +103,7 @@ public partial class AzureCognitiveSearchChatExtensionConfiguration : AzureChatE
         set => Parameters.EmbeddingKey = value;
     }
     /// <inheritdoc cref="AzureCognitiveSearchChatExtensionParameters.EmbeddingDependency"/>
-    public OnYourDataEmbeddingDependency EmbeddingDependency
+    public OnYourDataVectorizationSource VectorizationSource
     {
         get => Parameters.EmbeddingDependency;
         set => Parameters.EmbeddingDependency = value;

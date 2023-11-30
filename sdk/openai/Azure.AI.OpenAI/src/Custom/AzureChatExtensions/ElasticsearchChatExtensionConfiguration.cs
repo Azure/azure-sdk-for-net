@@ -73,7 +73,7 @@ public partial class ElasticsearchChatExtensionConfiguration : AzureChatExtensio
         set => Parameters.QueryType = value;
     }
     /// <inheritdoc cref="ElasticsearchChatExtensionParameters.EmbeddingDependency"/>
-    public OnYourDataEmbeddingDependency EmbeddingDependency
+    public OnYourDataVectorizationSource VectorizationSource
     {
         get => Parameters.EmbeddingDependency;
         set => Parameters.EmbeddingDependency = value;

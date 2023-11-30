@@ -10,13 +10,15 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class OnYourDataEmbeddingModelIdDependency : IUtf8JsonSerializable
+    public partial class OnYourDataEndpointVectorizationSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("modelId"u8);
-            writer.WriteStringValue(ModelId);
+            writer.WritePropertyName("endpoint"u8);
+            writer.WriteStringValue(Endpoint.AbsoluteUri);
+            writer.WritePropertyName("authentication"u8);
+            writer.WriteObjectValue(Authentication);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WriteEndObject();

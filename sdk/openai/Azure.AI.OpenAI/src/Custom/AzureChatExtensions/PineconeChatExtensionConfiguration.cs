@@ -66,7 +66,7 @@ public partial class PineconeChatExtensionConfiguration : AzureChatExtensionConf
         set => Parameters.FieldMappingOptions = value;
     }
     /// <inheritdoc cref="PineconeChatExtensionParameters.EmbeddingDependency"/>
-    public OnYourDataEmbeddingDependency EmbeddingDependency
+    public OnYourDataVectorizationSource VectorizationSource
     {
         get => Parameters.EmbeddingDependency;
         set => Parameters.EmbeddingDependency = value;

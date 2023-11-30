@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The type of Elasticsearch retrieval query that should be executed when using it as an Azure OpenAI chat extension. </summary>
+    /// <summary> The type of Elasticsearch® retrieval query that should be executed when using it as an Azure OpenAI chat extension. </summary>
     public readonly partial struct ElasticsearchQueryType : IEquatable<ElasticsearchQueryType>
     {
         private readonly string _value;

@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class OnYourDataEmbeddingDeploymentNameDependency : IUtf8JsonSerializable
+    public partial class OnYourDataModelIdVectorizationSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("deploymentName"u8);
-            writer.WriteStringValue(DeploymentName);
+            writer.WritePropertyName("modelId"u8);
+            writer.WriteStringValue(ModelId);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WriteEndObject();

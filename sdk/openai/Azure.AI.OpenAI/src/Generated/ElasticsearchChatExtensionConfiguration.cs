@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// </param>
-        /// <param name="parameters"> The parameters to use when configuring Elasticsearch. </param>
+        /// <param name="parameters"> The parameters to use when configuring Elasticsearch®. </param>
         internal ElasticsearchChatExtensionConfiguration(AzureChatExtensionType type, ElasticsearchChatExtensionParameters parameters) : base(type)
         {
             Parameters = parameters;

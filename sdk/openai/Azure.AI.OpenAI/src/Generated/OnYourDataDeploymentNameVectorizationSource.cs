@@ -10,24 +10,27 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The embedding dependency based on deployment name. </summary>
-    public partial class OnYourDataEmbeddingDeploymentNameDependency : OnYourDataEmbeddingDependency
+    /// <summary>
+    /// The details of a a vectorization source, used by Azure OpenAI On Your Data when applying vector search, that is based
+    /// on an internal embeddings model deployment name in the same Azure OpenAI resource.
+    /// </summary>
+    public partial class OnYourDataDeploymentNameVectorizationSource : OnYourDataVectorizationSource
     {
-        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingDeploymentNameDependency"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataDeploymentNameVectorizationSource"/>. </summary>
         /// <param name="deploymentName"> The embedding model deployment name within the same Azure OpenAI resource. This enables you to use vector search without Azure OpenAI api-key and without Azure OpenAI public network access. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public OnYourDataEmbeddingDeploymentNameDependency(string deploymentName)
+        public OnYourDataDeploymentNameVectorizationSource(string deploymentName)
         {
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
-            Type = OnYourDataEmbeddingDependencyType.DeploymentName;
+            Type = OnYourDataVectorizationSourceType.DeploymentName;
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnYourDataEmbeddingDeploymentNameDependency"/>. </summary>
-        /// <param name="type"> Embedding dependency types for vector search. </param>
+        /// <summary> Initializes a new instance of <see cref="OnYourDataDeploymentNameVectorizationSource"/>. </summary>
+        /// <param name="type"> The type of vectorization source to use. </param>
         /// <param name="deploymentName"> The embedding model deployment name within the same Azure OpenAI resource. This enables you to use vector search without Azure OpenAI api-key and without Azure OpenAI public network access. </param>
-        internal OnYourDataEmbeddingDeploymentNameDependency(OnYourDataEmbeddingDependencyType type, string deploymentName) : base(type)
+        internal OnYourDataDeploymentNameVectorizationSource(OnYourDataVectorizationSourceType type, string deploymentName) : base(type)
         {
             DeploymentName = deploymentName;
         }

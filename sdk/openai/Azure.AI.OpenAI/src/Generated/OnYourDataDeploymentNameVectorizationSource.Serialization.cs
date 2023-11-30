@@ -10,18 +10,20 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class OnYourDataEmbeddingDependency : IUtf8JsonSerializable
+    public partial class OnYourDataDeploymentNameVectorizationSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("deploymentName"u8);
+            writer.WriteStringValue(DeploymentName);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WriteEndObject();
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

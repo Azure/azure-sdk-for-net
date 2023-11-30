@@ -150,7 +150,6 @@ namespace Azure.AI.OpenAI
         public AzureCognitiveSearchChatExtensionConfiguration() { }
         public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
         public int? DocumentCount { get { throw null; } set { } }
-        public Azure.AI.OpenAI.OnYourDataEmbeddingDependency EmbeddingDependency { get { throw null; } set { } }
         public System.Uri EmbeddingEndpoint { get { throw null; } set { } }
         public string EmbeddingKey { get { throw null; } set { } }
         public Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
@@ -163,6 +162,7 @@ namespace Azure.AI.OpenAI
         public string SemanticConfiguration { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }
+        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } set { } }
     }
     public partial class AzureCognitiveSearchIndexFieldMappingOptions
     {
@@ -203,12 +203,12 @@ namespace Azure.AI.OpenAI
         public string ContainerName { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
         public int? DocumentCount { get { throw null; } set { } }
-        public Azure.AI.OpenAI.OnYourDataEmbeddingDependency EmbeddingDependency { get { throw null; } set { } }
         public Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
         public string IndexName { get { throw null; } set { } }
         public string RoleInformation { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }
+        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } set { } }
     }
     public partial class AzureCosmosDBFieldMappingOptions
     {
@@ -638,7 +638,6 @@ namespace Azure.AI.OpenAI
         public ElasticsearchChatExtensionConfiguration() { }
         public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
         public int? DocumentCount { get { throw null; } set { } }
-        public Azure.AI.OpenAI.OnYourDataEmbeddingDependency EmbeddingDependency { get { throw null; } set { } }
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.AI.OpenAI.ElasticsearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
         public string IndexName { get { throw null; } set { } }
@@ -646,6 +645,7 @@ namespace Azure.AI.OpenAI
         public string RoleInformation { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }
+        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } set { } }
     }
     public partial class ElasticsearchIndexFieldMappingOptions
     {
@@ -817,31 +817,27 @@ namespace Azure.AI.OpenAI
         public OnYourDataConnectionStringAuthenticationOptions(string connectionString) { }
         public string ConnectionString { get { throw null; } }
     }
-    public abstract partial class OnYourDataEmbeddingDependency
+    public partial class OnYourDataDeploymentNameVectorizationSource : Azure.AI.OpenAI.OnYourDataVectorizationSource
     {
-        protected OnYourDataEmbeddingDependency() { }
-    }
-    public partial class OnYourDataEmbeddingDeploymentNameDependency : Azure.AI.OpenAI.OnYourDataEmbeddingDependency
-    {
-        public OnYourDataEmbeddingDeploymentNameDependency(string deploymentName) { }
+        public OnYourDataDeploymentNameVectorizationSource(string deploymentName) { }
         public string DeploymentName { get { throw null; } }
     }
-    public partial class OnYourDataEmbeddingEndpointDependency : Azure.AI.OpenAI.OnYourDataEmbeddingDependency
+    public partial class OnYourDataEndpointVectorizationSource : Azure.AI.OpenAI.OnYourDataVectorizationSource
     {
-        public OnYourDataEmbeddingEndpointDependency(System.Uri endpoint, Azure.AI.OpenAI.OnYourDataAuthenticationOptions authentication) { }
+        public OnYourDataEndpointVectorizationSource(System.Uri endpoint, Azure.AI.OpenAI.OnYourDataAuthenticationOptions authentication) { }
         public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } }
         public System.Uri Endpoint { get { throw null; } }
-    }
-    public partial class OnYourDataEmbeddingModelIdDependency : Azure.AI.OpenAI.OnYourDataEmbeddingDependency
-    {
-        public OnYourDataEmbeddingModelIdDependency(string modelId) { }
-        public string ModelId { get { throw null; } }
     }
     public partial class OnYourDataKeyAndKeyIdAuthenticationOptions : Azure.AI.OpenAI.OnYourDataAuthenticationOptions
     {
         public OnYourDataKeyAndKeyIdAuthenticationOptions(string key, string keyId) { }
         public string Key { get { throw null; } }
         public string KeyId { get { throw null; } }
+    }
+    public partial class OnYourDataModelIdVectorizationSource : Azure.AI.OpenAI.OnYourDataVectorizationSource
+    {
+        public OnYourDataModelIdVectorizationSource(string modelId) { }
+        public string ModelId { get { throw null; } }
     }
     public partial class OnYourDataSystemAssignedManagedIdentityAuthenticationOptions : Azure.AI.OpenAI.OnYourDataAuthenticationOptions
     {
@@ -851,6 +847,10 @@ namespace Azure.AI.OpenAI
     {
         public OnYourDataUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId) { }
         public string ManagedIdentityResourceId { get { throw null; } }
+    }
+    public abstract partial class OnYourDataVectorizationSource
+    {
+        protected OnYourDataVectorizationSource() { }
     }
     public partial class OpenAIClient
     {
@@ -898,13 +898,13 @@ namespace Azure.AI.OpenAI
         public PineconeChatExtensionConfiguration() { }
         public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
         public int? DocumentCount { get { throw null; } set { } }
-        public Azure.AI.OpenAI.OnYourDataEmbeddingDependency EmbeddingDependency { get { throw null; } set { } }
         public string Environment { get { throw null; } set { } }
         public Azure.AI.OpenAI.PineconeFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
         public string IndexName { get { throw null; } set { } }
         public string RoleInformation { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }
+        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } set { } }
     }
     public partial class PineconeFieldMappingOptions
     {

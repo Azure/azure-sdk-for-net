@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             Optional<ContentFilterDetectionResult> profanity = default;
             Optional<IReadOnlyList<ContentFilterBlocklistIdResult>> customBlocklists = default;
             Optional<ResponseError> error = default;
-            ContentFilterDetectionResult jailbreak = default;
+            Optional<ContentFilterDetectionResult> jailbreak = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
@@ -100,11 +100,15 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("jailbreak"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     jailbreak = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value);
                     continue;
                 }
             }
-            return new ContentFilterResultDetailsForPrompt(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, Optional.ToList(customBlocklists), error.Value, jailbreak);
+            return new ContentFilterResultDetailsForPrompt(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, Optional.ToList(customBlocklists), error.Value, jailbreak.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
