@@ -206,7 +206,7 @@ namespace System.ClientModel.Primitives
         public System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
-        public bool IsError { get { throw null; } protected internal set { } }
+        public virtual bool IsError { get { throw null; } protected internal set { } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();

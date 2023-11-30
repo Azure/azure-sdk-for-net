@@ -23,6 +23,10 @@ public abstract class PipelineResponse : IDisposable
     public MessageHeaders Headers { get => GetHeadersCore(); }
 
     // TODO: When we rework headers, are we able to remove this?
+    /// <summary>
+    /// Get header collection returned by response.Headers.
+    /// </summary>
+    /// <returns></returns>
     protected abstract MessageHeaders GetHeadersCore();
 
     /// <summary>
@@ -61,7 +65,7 @@ public abstract class PipelineResponse : IDisposable
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
     /// </summary>
-    public bool IsError { get; protected internal set; }
+    public virtual bool IsError { get; protected internal set; }
 
     #endregion
 
