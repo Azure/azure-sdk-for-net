@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPropertiesBase"/>. </summary>
+        /// <param name="containerSettings"> Container settings. </param>
+        /// <param name="storageAccountSettings"> Storage Account settings. </param>
+        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
+        /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
+        /// <param name="status"> Contains the results of script execution. </param>
+        /// <param name="outputs"> List of script outputs. </param>
+        internal ArmDeploymentScriptPropertiesBase(ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs)
+        {
+            ContainerSettings = containerSettings;
+            StorageAccountSettings = storageAccountSettings;
+            CleanupPreference = cleanupPreference;
+            ProvisioningState = provisioningState;
+            Status = status;
+            Outputs = outputs;
+        }
+
         /// <summary> Container settings. </summary>
         internal ContainerConfiguration ContainerSettings { get; }
 

@@ -22,6 +22,16 @@ namespace Azure.ResourceManager.Sphere.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SphereCatalogPatch"/>. </summary>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: CatalogUpdate.tags
+        /// </param>
+        internal SphereCatalogPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary>
         /// Resource tags.
         /// Serialized Name: CatalogUpdate.tags

@@ -15,5 +15,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             InstanceType = "A2ACrossClusterMigration";
         }
+
+        /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationContainerCreationContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal A2ACrossClusterMigrationContainerCreationContent(string instanceType) : base(instanceType)
+        {
+            InstanceType = instanceType ?? "A2ACrossClusterMigration";
+        }
     }
 }

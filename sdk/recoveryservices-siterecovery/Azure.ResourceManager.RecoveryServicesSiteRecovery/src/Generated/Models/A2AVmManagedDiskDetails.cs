@@ -29,6 +29,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryResourceGroupId = recoveryResourceGroupId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskDetails"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Arm Id. </param>
+        /// <param name="recoveryResourceGroupId"> The target resource group Arm Id. </param>
+        /// <param name="recoveryReplicaDiskAccountType"> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
+        /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for one / single pass flows). </param>
+        internal A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo)
+        {
+            DiskId = diskId;
+            PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
+            RecoveryResourceGroupId = recoveryResourceGroupId;
+            RecoveryReplicaDiskAccountType = recoveryReplicaDiskAccountType;
+            RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
+            RecoveryDiskEncryptionSetId = recoveryDiskEncryptionSetId;
+            DiskEncryptionInfo = diskEncryptionInfo;
+        }
+
         /// <summary> The disk Id. </summary>
         public string DiskId { get; }
         /// <summary> The primary staging storage account Arm Id. </summary>

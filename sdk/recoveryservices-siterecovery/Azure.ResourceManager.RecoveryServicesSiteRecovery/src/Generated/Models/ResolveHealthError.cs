@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthError"/>. </summary>
+        /// <param name="healthErrorId"> Health error id. </param>
+        internal ResolveHealthError(string healthErrorId)
+        {
+            HealthErrorId = healthErrorId;
+        }
+
         /// <summary> Health error id. </summary>
         public string HealthErrorId { get; set; }
     }

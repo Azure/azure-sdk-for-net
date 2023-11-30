@@ -20,6 +20,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskSignatureOptions = new ChangeTrackingList<InMageDiskSignatureExclusionOptions>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageDiskExclusionContent"/>. </summary>
+        /// <param name="volumeOptions"> The volume label based option for disk exclusion. </param>
+        /// <param name="diskSignatureOptions"> The guest disk signature based option for disk exclusion. </param>
+        internal InMageDiskExclusionContent(IList<InMageVolumeExclusionOptions> volumeOptions, IList<InMageDiskSignatureExclusionOptions> diskSignatureOptions)
+        {
+            VolumeOptions = volumeOptions;
+            DiskSignatureOptions = diskSignatureOptions;
+        }
+
         /// <summary> The volume label based option for disk exclusion. </summary>
         public IList<InMageVolumeExclusionOptions> VolumeOptions { get; }
         /// <summary> The guest disk signature based option for disk exclusion. </summary>

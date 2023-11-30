@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterPatch"/>. </summary>
+        /// <param name="tags"> Managed cluster update parameters. </param>
+        internal ServiceFabricManagedClusterPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Managed cluster update parameters. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationMappingCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Storage mapping input properties. </param>
+        internal StorageClassificationMappingCreateOrUpdateContent(StorageMappingProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Storage mapping input properties. </summary>
         internal StorageMappingProperties Properties { get; set; }
         /// <summary> The ID of the storage object. </summary>

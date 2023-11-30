@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Nodes = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NodeTypeActionContent"/>. </summary>
+        /// <param name="nodes"> List of node names from the node type. </param>
+        /// <param name="isForced"> Force the action to go through. </param>
+        /// <param name="updateType"> Specifies the way the operation will be performed. </param>
+        internal NodeTypeActionContent(IList<string> nodes, bool? isForced, ServiceFabricManagedClusterUpdateType? updateType)
+        {
+            Nodes = nodes;
+            IsForced = isForced;
+            UpdateType = updateType;
+        }
+
         /// <summary> List of node names from the node type. </summary>
         public IList<string> Nodes { get; }
         /// <summary> Force the action to go through. </summary>

@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FeatureSupportContent"/>. </summary>
+        /// <param name="featureType"> backup support feature type. </param>
+        internal FeatureSupportContent(string featureType)
+        {
+            FeatureType = featureType;
+        }
+
         /// <summary> backup support feature type. </summary>
         internal string FeatureType { get; set; }
     }

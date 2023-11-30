@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RemoveProtectionContainerMappingProperties"/>. </summary>
+        /// <param name="providerSpecificContent"> Provider specific input for unpairing. </param>
+        internal RemoveProtectionContainerMappingProperties(ReplicationProviderContainerUnmappingContent providerSpecificContent)
+        {
+            ProviderSpecificContent = providerSpecificContent;
+        }
+
         /// <summary> Provider specific input for unpairing. </summary>
         internal ReplicationProviderContainerUnmappingContent ProviderSpecificContent { get; set; }
         /// <summary> The class type. </summary>

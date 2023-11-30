@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryContent"/>. </summary>
+        /// <param name="destinationTenantId"> Tenant id GUID that reservation order is to be transferred to. </param>
+        internal ChangeDirectoryContent(Guid? destinationTenantId)
+        {
+            DestinationTenantId = destinationTenantId;
+        }
+
         /// <summary> Tenant id GUID that reservation order is to be transferred to. </summary>
         public Guid? DestinationTenantId { get; set; }
     }

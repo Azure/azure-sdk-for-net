@@ -32,6 +32,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SourceContainerArmIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="TriggerDataMoveContent"/>. </summary>
+        /// <param name="sourceResourceId"> ARM Id of source vault. </param>
+        /// <param name="sourceRegion"> Source Region. </param>
+        /// <param name="dataMoveLevel"> DataMove Level. </param>
+        /// <param name="correlationId"> Correlation Id. </param>
+        /// <param name="sourceContainerArmIds"> Source Container ArmIds. </param>
+        /// <param name="doesPauseGC"> Pause GC. </param>
+        internal TriggerDataMoveContent(ResourceIdentifier sourceResourceId, AzureLocation sourceRegion, DataMoveLevel dataMoveLevel, string correlationId, IList<ResourceIdentifier> sourceContainerArmIds, bool? doesPauseGC)
+        {
+            SourceResourceId = sourceResourceId;
+            SourceRegion = sourceRegion;
+            DataMoveLevel = dataMoveLevel;
+            CorrelationId = correlationId;
+            SourceContainerArmIds = sourceContainerArmIds;
+            DoesPauseGC = doesPauseGC;
+        }
+
         /// <summary> ARM Id of source vault. </summary>
         public ResourceIdentifier SourceResourceId { get; }
         /// <summary> Source Region. </summary>

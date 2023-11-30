@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Reservations.Models
             Scopes = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvailableScopeRequestProperties"/>. </summary>
+        /// <param name="scopes"></param>
+        internal AvailableScopeRequestProperties(IList<string> scopes)
+        {
+            Scopes = scopes;
+        }
+
         /// <summary> Gets the scopes. </summary>
         public IList<string> Scopes { get; }
     }
