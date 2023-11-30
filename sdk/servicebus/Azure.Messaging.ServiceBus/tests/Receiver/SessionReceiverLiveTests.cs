@@ -1157,7 +1157,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 CancellationTokenSource cts = new CancellationTokenSource();
                 cts.CancelAfter(TimeSpan.FromSeconds(60));
 
-                var receive= ReceiveMessagesAsync();
+                var receive = ReceiveMessagesAsync();
 
                 var send = SendMessagesAsync();
 
