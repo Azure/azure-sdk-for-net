@@ -17,14 +17,7 @@ namespace Azure.Communication.CallAutomation
         {
         }
 
-<<<<<<< HEAD
-        /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
-=======
         /// <summary> Initializes a new instance of <see cref="RecordingStateChanged"/>. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
->>>>>>> main
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>

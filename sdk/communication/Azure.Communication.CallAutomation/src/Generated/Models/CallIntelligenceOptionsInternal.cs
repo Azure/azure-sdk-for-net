@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> AI options for the call. </summary>
     internal partial class CallIntelligenceOptionsInternal
     {
-        /// <summary> Initializes a new instance of CallIntelligenceOptionsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallIntelligenceOptionsInternal"/>. </summary>
         public CallIntelligenceOptionsInternal()
         {
         }

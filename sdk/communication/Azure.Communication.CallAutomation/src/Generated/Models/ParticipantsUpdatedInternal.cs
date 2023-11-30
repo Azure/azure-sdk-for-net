@@ -19,13 +19,9 @@ namespace Azure.Communication.CallAutomation
             Participants = new ChangeTrackingList<CallParticipantInternal>();
         }
 
-<<<<<<< HEAD
-        /// <summary> Initializes a new instance of ParticipantsUpdatedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantsUpdatedInternal"/>. </summary>
         /// <param name="participants"> The list of participants in the call. </param>
         /// <param name="sequenceNumber"></param>
-=======
-        /// <summary> Initializes a new instance of <see cref="ParticipantsUpdatedInternal"/>. </summary>
->>>>>>> main
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

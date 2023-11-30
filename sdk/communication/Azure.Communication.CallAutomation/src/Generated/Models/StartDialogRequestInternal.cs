@@ -13,8 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The StartDialogRequest. </summary>
     internal partial class StartDialogRequestInternal
     {
-<<<<<<< HEAD
-        /// <summary> Initializes a new instance of StartDialogRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
         /// <param name="dialog">
         /// Defines the dialog.
         /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -22,13 +21,6 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dialog"/> is null. </exception>
         public StartDialogRequestInternal(BaseDialog dialog)
-=======
-        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
-        /// <param name="dialogOptions"> Defines options for dialog. </param>
-        /// <param name="dialogInputType"> Determines the type of the dialog. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dialogOptions"/> is null. </exception>
-        public StartDialogRequestInternal(DialogOptionsInternal dialogOptions, DialogInputType dialogInputType)
->>>>>>> main
         {
             Argument.AssertNotNull(dialog, nameof(dialog));
 

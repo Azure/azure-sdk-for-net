@@ -10,24 +10,15 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Successful cancel add participant event. </summary>
     internal partial class CancelAddParticipantSucceededInternal
     {
-<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/CancelAddParticipantSucceededInternal.cs
-        /// <summary> Initializes a new instance of CancelAddParticipantSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantSucceededInternal"/>. </summary>
         internal CancelAddParticipantSucceededInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CancelAddParticipantSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantSucceededInternal"/>. </summary>
         /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"></param>
-=======
-        /// <summary> Initializes a new instance of <see cref="AddParticipantCancelledInternal"/>. </summary>
-        internal AddParticipantCancelledInternal()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AddParticipantCancelledInternal"/>. </summary>
->>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/AddParticipantCancelledInternal.cs
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

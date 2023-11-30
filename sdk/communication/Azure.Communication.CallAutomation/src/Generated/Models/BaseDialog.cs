@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public abstract partial class BaseDialog
     {
-        /// <summary> Initializes a new instance of BaseDialog. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseDialog"/>. </summary>
         /// <param name="context"> Dialog context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="context"/> is null. </exception>
         protected BaseDialog(IDictionary<string, object> context)
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
             Context = context;
         }
 
-        /// <summary> Initializes a new instance of BaseDialog. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseDialog"/>. </summary>
         /// <param name="kind"> Determines the type of the dialog. </param>
         /// <param name="context"> Dialog context. </param>
         internal BaseDialog(DialogInputType kind, IDictionary<string, object> context)

@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The TranscriptionUpdated. </summary>
     internal partial class TranscriptionUpdated
     {
-        /// <summary> Initializes a new instance of TranscriptionUpdated. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionUpdated"/>. </summary>
         internal TranscriptionUpdated()
         {
         }

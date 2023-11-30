@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Model factory for models. </summary>
     public static partial class CallAutomationModelFactory
     {
-        /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TransferCallToParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.TransferCallToParticipantResult"/> instance for mocking. </returns>
         public static TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null)
@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of SendDtmfTonesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SendDtmfTonesResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.SendDtmfTonesResult"/> instance for mocking. </returns>
         public static SendDtmfTonesResult SendDtmfTonesResult(string operationContext = null)
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             return new SendDtmfTonesResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of MuteParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MuteParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.MuteParticipantResult"/> instance for mocking. </returns>
         public static MuteParticipantResult MuteParticipantResult(string operationContext = null)
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
             return new MuteParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of UnmuteParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.UnmuteParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.UnmuteParticipantResult"/> instance for mocking. </returns>
         public static UnmuteParticipantResult UnmuteParticipantResult(string operationContext = null)
@@ -46,7 +46,7 @@ namespace Azure.Communication.CallAutomation
             return new UnmuteParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
         /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="message"> Detail message that describes the current result. </param>
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallAutomation
             return new ResultInformation(code, subCode, message);
         }
 
-        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.CollectTonesResult"/>. </summary>
         /// <param name="tones"></param>
         /// <returns> A new <see cref="CallAutomation.CollectTonesResult"/> instance for mocking. </returns>
         public static CollectTonesResult CollectTonesResult(IEnumerable<DtmfTone> tones = null)
@@ -66,7 +66,7 @@ namespace Azure.Communication.CallAutomation
             return new CollectTonesResult(tones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DtmfResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.DtmfResult"/>. </summary>
         /// <param name="tones"></param>
         /// <returns> A new <see cref="CallAutomation.DtmfResult"/> instance for mocking. </returns>
         public static DtmfResult DtmfResult(IEnumerable<DtmfTone> tones = null)
@@ -76,7 +76,7 @@ namespace Azure.Communication.CallAutomation
             return new DtmfResult(tones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SpeechResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
         /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
         public static SpeechResult SpeechResult(string speech = null)
@@ -84,7 +84,7 @@ namespace Azure.Communication.CallAutomation
             return new SpeechResult(speech);
         }
 
-        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ChoiceResult"/>. </summary>
         /// <param name="label"> Label is the primary identifier for the choice detected. </param>
         /// <param name="recognizedPhrase">
         /// Phrases are set to the value if choice is selected via phrase detection.
@@ -96,7 +96,7 @@ namespace Azure.Communication.CallAutomation
             return new ChoiceResult(label, recognizedPhrase);
         }
 
-        /// <summary> Initializes a new instance of UserConsent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.UserConsent"/>. </summary>
         /// <param name="recording"></param>
         /// <returns> A new <see cref="CallAutomation.UserConsent"/> instance for mocking. </returns>
         public static UserConsent UserConsent(int? recording = null)
@@ -104,7 +104,7 @@ namespace Azure.Communication.CallAutomation
             return new UserConsent(recording);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionStarted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStarted"/>. </summary>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
@@ -117,7 +117,7 @@ namespace Azure.Communication.CallAutomation
             return new TranscriptionStarted(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdate"/>. </summary>
         /// <param name="transcriptionStatus"></param>
         /// <param name="transcriptionStatusDetails"></param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionUpdate"/> instance for mocking. </returns>
@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation
             return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionStopped. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStopped"/>. </summary>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
@@ -139,7 +139,7 @@ namespace Azure.Communication.CallAutomation
             return new TranscriptionStopped(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionResumed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionResumed"/>. </summary>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
@@ -152,7 +152,7 @@ namespace Azure.Communication.CallAutomation
             return new TranscriptionResumed(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
         }
 
-        /// <summary> Initializes a new instance of TranscriptionFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>

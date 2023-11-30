@@ -10,21 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The result payload for muting participants from the call. </summary>
     public partial class MuteParticipantResult
     {
-<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/MuteParticipantResult.cs
-        /// <summary> Initializes a new instance of MuteParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MuteParticipantResult"/>. </summary>
         internal MuteParticipantResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MuteParticipantResult. </summary>
-=======
-        /// <summary> Initializes a new instance of <see cref="MuteParticipantsResult"/>. </summary>
-        internal MuteParticipantsResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MuteParticipantsResult"/>. </summary>
->>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/MuteParticipantsResult.cs
+        /// <summary> Initializes a new instance of <see cref="MuteParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         internal MuteParticipantResult(string operationContext)
         {

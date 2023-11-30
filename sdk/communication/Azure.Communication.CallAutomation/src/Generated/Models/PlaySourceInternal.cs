@@ -10,15 +10,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The PlaySource. </summary>
     internal partial class PlaySourceInternal
     {
-<<<<<<< HEAD
-        /// <summary> Initializes a new instance of PlaySourceInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
         /// <param name="kind"> Defines the type of the play source. </param>
         public PlaySourceInternal(PlaySourceTypeInternal kind)
-=======
-        /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
-        /// <param name="sourceType"> Defines the type of the play source. </param>
-        public PlaySourceInternal(PlaySourceTypeInternal sourceType)
->>>>>>> main
         {
             Kind = kind;
         }

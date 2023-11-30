@@ -16,11 +16,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SendDtmfTonesRequest. </summary>
     internal partial class SendDtmfTonesRequestInternal
     {
-<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/SendDtmfTonesRequestInternal.cs
-        /// <summary> Initializes a new instance of SendDtmfTonesRequestInternal. </summary>
-=======
-        /// <summary> Initializes a new instance of <see cref="SendDtmfRequestInternal"/>. </summary>
->>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/SendDtmfRequestInternal.cs
+        /// <summary> Initializes a new instance of <see cref="SendDtmfTonesRequestInternal"/>. </summary>
         /// <param name="tones"> List of tones to be sent to target participant. </param>
         /// <param name="targetParticipant"> Target participant of send Dtmf tones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tones"/> or <paramref name="targetParticipant"/> is null. </exception>

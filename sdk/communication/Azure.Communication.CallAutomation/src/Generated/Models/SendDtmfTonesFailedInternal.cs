@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SendDtmfTonesFailed. </summary>
     internal partial class SendDtmfTonesFailedInternal
     {
-        /// <summary> Initializes a new instance of SendDtmfTonesFailedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendDtmfTonesFailedInternal"/>. </summary>
         internal SendDtmfTonesFailedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of SendDtmfTonesFailedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendDtmfTonesFailedInternal"/>. </summary>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>

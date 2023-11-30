@@ -15,14 +15,7 @@ namespace Azure.Communication.CallAutomation
         {
         }
 
-<<<<<<< HEAD
-        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
-=======
         /// <summary> Initializes a new instance of <see cref="RecognizeCompletedInternal"/>. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
->>>>>>> main
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
         /// <param name="recognitionType">

@@ -16,17 +16,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The PlayRequest. </summary>
     internal partial class PlayRequestInternal
     {
-<<<<<<< HEAD
-        /// <summary> Initializes a new instance of PlayRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
         /// <param name="playSources"> The source of the audio to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playSources"/> is null. </exception>
         public PlayRequestInternal(IEnumerable<PlaySourceInternal> playSources)
-=======
-        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
-        /// <param name="playSourceInfo"> The source of the audio to be played. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> is null. </exception>
-        public PlayRequestInternal(PlaySourceInternal playSourceInfo)
->>>>>>> main
         {
             Argument.AssertNotNull(playSources, nameof(playSources));
 

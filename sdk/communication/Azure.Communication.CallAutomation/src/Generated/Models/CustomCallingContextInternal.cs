@@ -13,13 +13,8 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The CustomCallingContext. </summary>
     internal partial class CustomCallingContextInternal
     {
-<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/CustomCallingContextInternal.cs
-        /// <summary> Initializes a new instance of CustomCallingContextInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomCallingContextInternal"/>. </summary>
         public CustomCallingContextInternal()
-=======
-        /// <summary> Initializes a new instance of <see cref="CustomContextInternal"/>. </summary>
-        public CustomContextInternal()
->>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/CustomContextInternal.cs
         {
             VoipHeaders = new ChangeTrackingDictionary<string, string>();
             SipHeaders = new ChangeTrackingDictionary<string, string>();
