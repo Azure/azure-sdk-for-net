@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -116,11 +117,50 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
+            // Suffix the backwards slash when searching if there's a prefix specified,
+            // to only list blobs in the specified virtual directory.
+            string fullPrefix = string.IsNullOrEmpty(DirectoryPrefix) ?
+                "" :
+                string.Concat(DirectoryPrefix, Constants.PathBackSlashDelimiter);
+
             AsyncPageable<BlobItem> pages = BlobContainerClient.GetBlobsAsync(
-                prefix: DirectoryPrefix,
+                prefix: fullPrefix,
                 cancellationToken: cancellationToken);
+
+            HashSet<string> subDirectories = new HashSet<string>();
             await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
             {
+                // List blob / GetBlobs will always return blob names with the source prefix with them
+                // Trim the blob name of the source prefix
+                string relativePath = blobItem.Name.Substring(fullPrefix.Length);
+
+                // Remove known prefix from blob name
+                // Parse subdirectories
+                string[] paths = relativePath.Split(DataMovementConstants.PathForwardSlashDelimiterChar);
+                string currentPath = "";
+
+                // Since the last path will always be the blob name, leave out the last one.
+                for (int i = 0; i < paths.Length - 1; i++)
+                {
+                    // Combine the parent path with the next child path
+                    if (string.IsNullOrEmpty(currentPath))
+                    {
+                        currentPath = paths[i];
+                    }
+                    else
+                    {
+                        currentPath = string.Join(Constants.PathBackSlashDelimiter, currentPath, paths[i]);
+                    }
+
+                    if (!subDirectories.Contains(currentPath))
+                    {
+                        subDirectories.Add(currentPath);
+                        // Return the blob virtual directory as a StorageResourceContainer
+                        yield return GetChildStorageResourceContainer(currentPath);
+                    }
+                }
+
+                // Return the blob as a StorageResourceItem
                 yield return GetBlobAsStorageResource(
                     blobItem.Name,
                     blobItem.Properties.ContentLength,
