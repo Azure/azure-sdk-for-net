@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDevicePatch"/>. </summary>
+        /// <param name="tags"> The tags attached to the Data Box Edge/Gateway resource. </param>
+        /// <param name="identity"> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="edgeProfile"> Edge Profile property of the Data Box Edge/Gateway device. </param>
+        internal DataBoxEdgeDevicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, EdgeProfilePatch edgeProfile)
+        {
+            Tags = tags;
+            Identity = identity;
+            EdgeProfile = edgeProfile;
+        }
+
         /// <summary> The tags attached to the Data Box Edge/Gateway resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>

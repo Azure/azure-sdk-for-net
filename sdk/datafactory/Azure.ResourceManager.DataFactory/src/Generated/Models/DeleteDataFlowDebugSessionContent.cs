@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionContent"/>. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        internal DeleteDataFlowDebugSessionContent(Guid? sessionId)
+        {
+            SessionId = sessionId;
+        }
+
         /// <summary> The ID of data flow debug session. </summary>
         public Guid? SessionId { get; set; }
     }

@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             FailoverPolicies = failoverPolicies.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFailoverPolicies"/>. </summary>
+        /// <param name="failoverPolicies"> List of failover policies. </param>
+        internal CosmosDBFailoverPolicies(IList<CosmosDBFailoverPolicy> failoverPolicies)
+        {
+            FailoverPolicies = failoverPolicies;
+        }
+
         /// <summary> List of failover policies. </summary>
         public IList<CosmosDBFailoverPolicy> FailoverPolicies { get; }
     }
