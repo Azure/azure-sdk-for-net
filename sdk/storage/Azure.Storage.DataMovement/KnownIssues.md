@@ -12,6 +12,10 @@ This limitation also exists for share files and directories.
 
 **There is no support for copying client-side encrypted blobs.** Since client-side encryption is built on blob metadata, the necessary information to decrypt the blob will not be transferred in a service-to-service copy. Azure.Storage.Blobs will not be able to decrypt the copied blob. If that metadata is lost, your blob contents will be lost forever.
 
+### BlobFuse support
+
+BlobFuse uses custom blob metadata to manage it's directory structure. That metadata will currently be lost on a service to service copy.
+
 ## Blob HNS Support
 
 There is currently no explicit support for Azure Blob Storage accounts with hierarchichal namespace enabled. This can manifest in unexpected errors with some transfers of multi-level directories. Single blob transfers and transfers of directories with no subdirectories should be unaffected by this lack of support.
