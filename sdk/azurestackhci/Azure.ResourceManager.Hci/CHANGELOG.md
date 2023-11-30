@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.0.3 (2023-11-30)
+
+### Breaking Changes
+
+- Track 2 initial commit for ArcVm resources under the Microsoft.AzureStackHci namespace.
+
 ## 1.0.2 (2023-05-31)
 
 ### Feature Added
