@@ -37,7 +37,7 @@ namespace Azure.Core.Pipeline
                 }
 
                 string clientRequestId = httpMessage.Request.ClientRequestId;
-                httpMessage.Response = new ResponseAdapter(clientRequestId, message.Response);
+                httpMessage.Response = new HttpClientTransportResponse(clientRequestId, message.Response);
             }
         }
     }
