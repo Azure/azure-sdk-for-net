@@ -622,7 +622,6 @@ namespace Azure.Storage.DataMovement.Tests
             await CreateDirectoryInSourceAsync(client, subDirPath);
             string itemName3 = string.Join("/", subDirPath, "item3");
             await CreateObjectInSourceAsync(client, size, itemName3);
-            await CreateObjectInSourceAsync(client, size, $"{subDirPath}");
 
             string subDirPath2 = string.Join("/", sourcePrefix, "pik");
             await CreateDirectoryInSourceAsync(client, subDirPath2);
