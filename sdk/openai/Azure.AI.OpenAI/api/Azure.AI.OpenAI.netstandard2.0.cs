@@ -34,6 +34,7 @@ namespace Azure.AI.OpenAI
         public AudioTranscriptionOptions(string deploymentName, System.BinaryData audioData) { }
         public System.BinaryData AudioData { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
+        public string Filename { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
         public string Prompt { get { throw null; } set { } }
         public Azure.AI.OpenAI.AudioTranscriptionFormat? ResponseFormat { get { throw null; } set { } }
@@ -87,6 +88,7 @@ namespace Azure.AI.OpenAI
         public AudioTranslationOptions(string deploymentName, System.BinaryData audioData) { }
         public System.BinaryData AudioData { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
+        public string Filename { get { throw null; } set { } }
         public string Prompt { get { throw null; } set { } }
         public Azure.AI.OpenAI.AudioTranslationFormat? ResponseFormat { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
@@ -306,13 +308,18 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatCompletionsFunctionToolCall : Azure.AI.OpenAI.ChatCompletionsToolCall
     {
-        public ChatCompletionsFunctionToolCall(string id, Azure.AI.OpenAI.FunctionCall function) : base (default(string)) { }
-        public Azure.AI.OpenAI.FunctionCall Function { get { throw null; } set { } }
+        internal ChatCompletionsFunctionToolCall() : base (default(string)) { }
+        public string Arguments { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
     }
     public partial class ChatCompletionsFunctionToolDefinition : Azure.AI.OpenAI.ChatCompletionsToolDefinition
     {
+        public ChatCompletionsFunctionToolDefinition() { }
         public ChatCompletionsFunctionToolDefinition(Azure.AI.OpenAI.FunctionDefinition function) { }
+        public string Description { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionDefinition Function { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public System.BinaryData Parameters { get { throw null; } set { } }
     }
     public partial class ChatCompletionsOptions
     {

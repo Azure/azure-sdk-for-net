@@ -21,7 +21,7 @@ public partial class ChatTools
         var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
         #region Snippet:ChatTools:DefineTool
-        var getWeatherFunctionDefinition = new FunctionDefinition()
+        var getWeatherTool = new ChatCompletionsFunctionToolDefinition()
         {
             Name = "get_current_weather",
             Description = "Get the current weather in a given location",
@@ -46,7 +46,6 @@ public partial class ChatTools
             },
             new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
         };
-        var getWeatherTool = new ChatCompletionsFunctionToolDefinition(getWeatherFunctionDefinition);
         #endregion
 
         #region Snippet:ChatTools:RequestWithFunctions
@@ -65,10 +64,10 @@ public partial class ChatTools
         ChatRequestToolMessage GetToolCallResponseMessage(ChatCompletionsToolCall toolCall)
         {
             var functionToolCall = toolCall as ChatCompletionsFunctionToolCall;
-            if (functionToolCall?.Function?.Name == getWeatherFunctionDefinition.Name)
+            if (functionToolCall?.Name == getWeatherTool.Name)
             {
                 // Validate and process the JSON arguments for the function call
-                string unvalidatedArguments = functionToolCall.Function.Arguments;
+                string unvalidatedArguments = functionToolCall.Arguments;
                 var functionResultData = (object)null; // GetYourFunctionResultData(unvalidatedArguments);
                 // Here, replacing with an example as if returned from "GetYourFunctionResultData"
                 functionResultData = "31 celsius";

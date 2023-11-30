@@ -54,8 +54,8 @@ public class ChatToolsTests : OpenAITestBase
         Assert.That(message.ToolCalls.Count, Is.EqualTo(1));
         ChatCompletionsFunctionToolCall functionToolCall = message.ToolCalls[0] as ChatCompletionsFunctionToolCall;
         Assert.That(functionToolCall, Is.Not.Null);
-        Assert.That(functionToolCall.Function.Name, Is.EqualTo(s_futureTemperatureFunction.Name));
-        Assert.That(functionToolCall.Function.Arguments, Is.Not.Null.Or.Empty);
+        Assert.That(functionToolCall.Name, Is.EqualTo(s_futureTemperatureFunction.Name));
+        Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
 
         ChatCompletionsOptions followupOptions = new()
         {
@@ -142,19 +142,18 @@ public class ChatToolsTests : OpenAITestBase
                     Assert.That(toolCallIdsByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value), Is.False);
                     toolCallIdsByChoiceIndex[chatUpdate.ChoiceIndex.Value] = functionToolCall.Id;
                 }
-                Assert.That(functionToolCall.Function, Is.Not.Null);
-                if (functionToolCall.Function.Name != null)
+                if (functionToolCall.Name != null)
                 {
                     Assert.That(toolCallFunctionNamesByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value), Is.False);
-                    toolCallFunctionNamesByChoiceIndex[chatUpdate.ChoiceIndex.Value] = functionToolCall.Function.Name;
+                    toolCallFunctionNamesByChoiceIndex[chatUpdate.ChoiceIndex.Value] = functionToolCall.Name;
                 }
-                if (functionToolCall.Function.Arguments != null)
+                if (functionToolCall.Arguments != null)
                 {
                     if (!toolCallFunctionArgumentsByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value))
                     {
                         toolCallFunctionArgumentsByChoiceIndex[chatUpdate.ChoiceIndex.Value] = new();
                     }
-                    toolCallFunctionArgumentsByChoiceIndex[chatUpdate.ChoiceIndex.Value].Append(functionToolCall.Function.Arguments);
+                    toolCallFunctionArgumentsByChoiceIndex[chatUpdate.ChoiceIndex.Value].Append(functionToolCall.Arguments);
                 }
             }
         }

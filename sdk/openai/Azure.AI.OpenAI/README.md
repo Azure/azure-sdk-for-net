@@ -200,7 +200,7 @@ await foreach (StreamingChatCompletionsUpdate chatUpdate
 process of fulfilling a chat completions request. To use chat tools, start by defining a function tool:
 
 ```C# Snippet:ChatTools:DefineTool
-var getWeatherFunctionDefinition = new FunctionDefinition()
+var getWeatherTool = new ChatCompletionsFunctionToolDefinition()
 {
     Name = "get_current_weather",
     Description = "Get the current weather in a given location",
@@ -225,7 +225,6 @@ var getWeatherFunctionDefinition = new FunctionDefinition()
     },
     new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
 };
-var getWeatherTool = new ChatCompletionsFunctionToolDefinition(getWeatherFunctionDefinition);
 ```
 
 With the tool defined, include that new definition in the options for a chat completions request:
@@ -250,10 +249,10 @@ new request messages can be thought of as a sort of "callback" for chat completi
 ChatRequestToolMessage GetToolCallResponseMessage(ChatCompletionsToolCall toolCall)
 {
     var functionToolCall = toolCall as ChatCompletionsFunctionToolCall;
-    if (functionToolCall?.Function?.Name == getWeatherFunctionDefinition.Name)
+    if (functionToolCall?.Name == getWeatherTool.Name)
     {
         // Validate and process the JSON arguments for the function call
-        string unvalidatedArguments = functionToolCall.Function.Arguments;
+        string unvalidatedArguments = functionToolCall.Arguments;
         var functionResultData = (object)null; // GetYourFunctionResultData(unvalidatedArguments);
         // Here, replacing with an example as if returned from "GetYourFunctionResultData"
         functionResultData = "31 celsius";
