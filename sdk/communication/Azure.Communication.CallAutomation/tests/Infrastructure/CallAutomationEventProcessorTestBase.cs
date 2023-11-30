@@ -46,7 +46,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                     "\"operationContext\": \"someOperationContext\"," +
                                     "\"invitationId\": \"invitationId\"" +
                                     "}";
-                                    
+
         protected const string DialogPayload = "{\"dialogId\":\"dialogId\",\"dialogInputType\":\"powerVirtualAgent\"}";
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
