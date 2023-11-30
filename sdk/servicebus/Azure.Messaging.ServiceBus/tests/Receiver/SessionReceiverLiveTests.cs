@@ -1154,7 +1154,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, "session");
                 var sender = client.CreateSender(scope.QueueName);
 
-                long lastSequenceNumber = 0;
                 CancellationTokenSource cts = new CancellationTokenSource();
                 cts.CancelAfter(TimeSpan.FromSeconds(60));
 
@@ -1175,6 +1174,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 async Task ReceiveMessagesAsync()
                 {
+                    long lastSequenceNumber = 0;
                     while (!cts.IsCancellationRequested)
                     {
                         var messages = await receiver.ReceiveMessagesAsync(10);
@@ -1186,7 +1186,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                                     $"Last sequence number: {lastSequenceNumber}, current sequence number: {message.SequenceNumber}");
                             }
 
-                            Interlocked.Exchange(ref lastSequenceNumber, message.SequenceNumber);
+                            lastSequenceNumber = message.SequenceNumber;
 
                             await receiver.CompleteMessageAsync(message);
                         }
