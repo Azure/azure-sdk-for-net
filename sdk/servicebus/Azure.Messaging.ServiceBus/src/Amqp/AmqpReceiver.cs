@@ -364,11 +364,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         .ConfigureAwait(false);
                 }
 
-                var messagesReceived = await link.ReceiveMessagesAsync(
+                // Rely on the fact that the underlying IEnumerable is actually a collection. If this changes, our
+                // tests will fail.
+                var messagesReceived = (IReadOnlyCollection<AmqpMessage>) await link.ReceiveMessagesAsync(
                     maxMessages,
                     TimeSpan.FromMilliseconds(20),
                     maxWaitTime ?? timeout,
                     cancellationToken).ConfigureAwait(false);
+
+                // If this is a session receiver and we didn't receive all requested messages, we need to drain the credits
+                // to ensure FIFO ordering within each session.
+                if (_isSessionReceiver && messagesReceived.Count < maxMessages)
+                {
+                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                }
 
                 List<ServiceBusReceivedMessage> receivedMessages = null;
                 // If event messages were received, then package them for consumption and
@@ -376,9 +385,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 foreach (AmqpMessage message in messagesReceived)
                 {
                     // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
-                    receivedMessages ??= messagesReceived is IReadOnlyCollection<AmqpMessage> readOnlyList
-                        ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
-                        : new List<ServiceBusReceivedMessage>();
+                    receivedMessages ??= new List<ServiceBusReceivedMessage>(messagesReceived.Count);
 
                     if (_receiveMode == ServiceBusReceiveMode.ReceiveAndDelete)
                     {
