@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReestablishReplicationContent"/>. </summary>
+        /// <param name="sourceVolumeId"> Resource id of the source volume for the replication. </param>
+        internal NetAppVolumeReestablishReplicationContent(ResourceIdentifier sourceVolumeId)
+        {
+            SourceVolumeId = sourceVolumeId;
+        }
+
         /// <summary> Resource id of the source volume for the replication. </summary>
         public ResourceIdentifier SourceVolumeId { get; set; }
     }

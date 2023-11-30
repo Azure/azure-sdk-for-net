@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SkipValidationsForMachines = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ClusterDeployContent"/>. </summary>
+        /// <param name="skipValidationsForMachines"> The names of bare metal machines in the cluster that should be skipped during environment validation. </param>
+        internal ClusterDeployContent(IList<string> skipValidationsForMachines)
+        {
+            SkipValidationsForMachines = skipValidationsForMachines;
+        }
+
         /// <summary> The names of bare metal machines in the cluster that should be skipped during environment validation. </summary>
         public IList<string> SkipValidationsForMachines { get; }
     }

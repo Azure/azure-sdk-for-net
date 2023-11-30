@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal LogAnalyticsQueryPackPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

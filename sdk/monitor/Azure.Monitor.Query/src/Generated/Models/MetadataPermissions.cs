@@ -27,6 +27,17 @@ namespace Azure.Monitor.Query.Models
             Applications = new ChangeTrackingList<MetadataPermissionsApplicationsItem>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissions"/>. </summary>
+        /// <param name="workspaces"> The permission indication for the workspaces on the metadata request. </param>
+        /// <param name="resources"> The permission indication for the Azure resources on the metadata request. </param>
+        /// <param name="applications"> The permission indication for the Application Insights apps on the metadata request. </param>
+        internal MetadataPermissions(IReadOnlyList<MetadataPermissionsWorkspacesItem> workspaces, IReadOnlyList<MetadataPermissionsResourcesItem> resources, IReadOnlyList<MetadataPermissionsApplicationsItem> applications)
+        {
+            Workspaces = workspaces;
+            Resources = resources;
+            Applications = applications;
+        }
+
         /// <summary> The permission indication for the workspaces on the metadata request. </summary>
         public IReadOnlyList<MetadataPermissionsWorkspacesItem> Workspaces { get; }
         /// <summary> The permission indication for the Azure resources on the metadata request. </summary>

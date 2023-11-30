@@ -26,6 +26,21 @@ namespace Azure.ResourceManager.Network.Models
             Destination = destination;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConnectivityContent"/>. </summary>
+        /// <param name="source"> The source of the connection. </param>
+        /// <param name="destination"> The destination of connection. </param>
+        /// <param name="protocol"> Network protocol. </param>
+        /// <param name="protocolConfiguration"> Configuration of the protocol. </param>
+        /// <param name="preferredIPVersion"> Preferred IP version of the connection. </param>
+        internal ConnectivityContent(ConnectivitySource source, ConnectivityDestination destination, NetworkWatcherProtocol? protocol, ProtocolConfiguration protocolConfiguration, NetworkIPVersion? preferredIPVersion)
+        {
+            Source = source;
+            Destination = destination;
+            Protocol = protocol;
+            ProtocolConfiguration = protocolConfiguration;
+            PreferredIPVersion = preferredIPVersion;
+        }
+
         /// <summary> The source of the connection. </summary>
         public ConnectivitySource Source { get; }
         /// <summary> The destination of connection. </summary>

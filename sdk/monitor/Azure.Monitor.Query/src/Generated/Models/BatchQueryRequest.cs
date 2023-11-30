@@ -33,6 +33,23 @@ namespace Azure.Monitor.Query.Models
             Workspace = workspace;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/>. </summary>
+        /// <param name="id"> The error details. </param>
+        /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
+        /// <param name="path"></param>
+        /// <param name="method"></param>
+        /// <param name="workspace"> Workspace Id to be included in the query. </param>
+        internal BatchQueryRequest(string id, IDictionary<string, string> headers, QueryBody body, string path, string method, string workspace)
+        {
+            Id = id;
+            Headers = headers;
+            Body = body;
+            Path = path;
+            Method = method;
+            Workspace = workspace;
+        }
+
         /// <summary> The error details. </summary>
         public string Id { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>

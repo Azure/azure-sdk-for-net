@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> Exception type document. </summary>
@@ -13,6 +15,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <summary> Initializes a new instance of <see cref="ExceptionDocumentIngress"/>. </summary>
         public ExceptionDocumentIngress()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExceptionDocumentIngress"/>. </summary>
+        /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
+        /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="exceptionType"> Exception type name. </param>
+        /// <param name="exceptionMessage"> Exception message. </param>
+        internal ExceptionDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string exceptionType, string exceptionMessage) : base(documentType, documentStreamIds, properties)
+        {
+            ExceptionType = exceptionType;
+            ExceptionMessage = exceptionMessage;
         }
 
         /// <summary> Exception type name. </summary>
