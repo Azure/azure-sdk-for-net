@@ -65,7 +65,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     StorageResource container = blobs.FromContainer(
                         "http://myaccount.blob.core.windows.net/container");
 
-                    // block blobs are the default if no options are specified
+                    // Block blobs are the default if no options are specified
                     StorageResource blockBlob = blobs.FromBlob(
                         "http://myaccount.blob.core.windows.net/container/sample-blob-block",
                         new BlockBlobStorageResourceOptions());
@@ -83,7 +83,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     #region Snippet:MakeProvider_SasFactory_Blobs
                     AzureSasCredential GenerateSas(Uri uri, bool readOnly)
                     {
-                        // Quick sample demonstrating minimal steps
                         // Construct your SAS according to your needs
                         BlobUriBuilder blobUri = new(uri);
                         BlobSasBuilder sas = new(BlobSasPermissions.All, DateTimeOffset.Now.AddHours(1))
@@ -154,19 +153,18 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     virtualDirectoryOptions);
                 #endregion
 
-                // Construct a blob resource that uses a given lease ID
-                string leaseId = "mylease";
+                // Construct a blob resource with given metadata
                 #region Snippet:ResourceConstruction_Blobs_WithOptions_BlockBlob
-                BlockBlobStorageResourceOptions leasedResourceOptions = new()
+                BlockBlobStorageResourceOptions resourceOptions = new()
                 {
-                    SourceConditions = new()
+                    Metadata = new Dictionary<string, string>
                     {
-                        LeaseId = leaseId
+                        { "key", "value" }
                     }
                 };
                 StorageResource leasedBlockBlobResource = blobs.FromClient(
                     blockBlobClient,
-                    leasedResourceOptions);
+                    resourceOptions);
                 #endregion
             }
             finally
@@ -628,6 +626,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient blobContainerClient = service.GetBlobContainerClient(containerName);
+            string blobContainerUri = blobContainerClient.Uri.ToString();
 
             // Make a service request to verify we've successfully authenticated
             await blobContainerClient.CreateIfNotExistsAsync();
@@ -672,8 +671,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 string optionalSourcePrefix = "sample-blob-directory2";
                 #region Snippet:SimpleDirectoryDownload_Blob
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: blobs.FromClient(
-                        blobContainerClient,
+                    sourceResource: blobs.FromContainer(
+                        blobContainerUri,
                         new BlobStorageResourceContainerOptions()
                         {
                             BlobDirectoryPrefix = optionalSourcePrefix

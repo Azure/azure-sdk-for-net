@@ -157,12 +157,11 @@ Azure.Storage.DataMovement.Blobs exposes `BlobsStorageResourceProvider` to creat
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 ```
 
-For workflows that require specific credentials for specific Blob Storage resources, the resource provider can be initialized with a delegate to construct the appropriate credential from the resource's URI. The following demonstrates a provider that produces a sas scoped to the resource from a `StorageSharedKeyCredential`.
+For workflows that require specific credentials for specific Blob Storage resources, the resource provider can be initialized with a delegate to construct the appropriate credential from the resource's URI. The following demonstrates a provider that produces a SAS scoped to the resource from a `StorageSharedKeyCredential`.
 
 ```C# Snippet:MakeProvider_SasFactory_Blobs
 AzureSasCredential GenerateSas(Uri uri, bool readOnly)
 {
-    // Quick sample demonstrating minimal steps
     // Construct your SAS according to your needs
     BlobUriBuilder blobUri = new(uri);
     BlobSasBuilder sas = new(BlobSasPermissions.All, DateTimeOffset.Now.AddHours(1))
@@ -181,7 +180,7 @@ To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer
 StorageResource container = blobs.FromContainer(
     "http://myaccount.blob.core.windows.net/container");
 
-// block blobs are the default if no options are specified
+// Block blobs are the default if no options are specified
 StorageResource blockBlob = blobs.FromBlob(
     "http://myaccount.blob.core.windows.net/container/sample-blob-block",
     new BlockBlobStorageResourceOptions());
@@ -217,16 +216,16 @@ StorageResource virtualDirectoryResource = blobs.FromClient(
 ```
 
 ```C# Snippet:ResourceConstruction_Blobs_WithOptions_BlockBlob
-BlockBlobStorageResourceOptions leasedResourceOptions = new()
+BlockBlobStorageResourceOptions resourceOptions = new()
 {
-    SourceConditions = new()
+    Metadata = new Dictionary<string, string>
     {
-        LeaseId = leaseId
+        { "key", "value" }
     }
 };
 StorageResource leasedBlockBlobResource = blobs.FromClient(
     blockBlobClient,
-    leasedResourceOptions);
+    resourceOptions);
 ```
 
 ### Upload
@@ -274,8 +273,8 @@ Download a container which may contain a mix of blob types.
 
 ```C# Snippet:SimpleDirectoryDownload_Blob
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromClient(
-        blobContainerClient,
+    sourceResource: blobs.FromContainer(
+        blobContainerUri,
         new BlobStorageResourceContainerOptions()
         {
             BlobDirectoryPrefix = optionalSourcePrefix
