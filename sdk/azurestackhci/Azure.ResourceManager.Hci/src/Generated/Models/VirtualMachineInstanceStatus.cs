@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The observed state of virtual machine instances. </summary>
     public partial class VirtualMachineInstanceStatus
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstanceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceStatus"/>. </summary>
         internal VirtualMachineInstanceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstanceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceStatus"/>. </summary>
         /// <param name="errorCode"> VirtualMachine provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="powerState"> The power state of the virtual machine instance. </param>

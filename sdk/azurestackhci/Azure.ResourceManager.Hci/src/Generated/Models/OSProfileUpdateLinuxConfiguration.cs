@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The OSProfileUpdateLinuxConfiguration. </summary>
     public partial class OSProfileUpdateLinuxConfiguration
     {
-        /// <summary> Initializes a new instance of OSProfileUpdateLinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileUpdateLinuxConfiguration"/>. </summary>
         public OSProfileUpdateLinuxConfiguration()
         {
         }

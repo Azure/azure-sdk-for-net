@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>
     public partial class VirtualMachineInstancePropertiesHardwareProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesHardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesHardwareProfile"/>. </summary>
         public VirtualMachineInstancePropertiesHardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesHardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesHardwareProfile"/>. </summary>
         /// <param name="vmSize"></param>
         /// <param name="processors"> number of processors for the virtual machine instance. </param>
         /// <param name="memoryMB"> RAM in MB for the virtual machine instance. </param>

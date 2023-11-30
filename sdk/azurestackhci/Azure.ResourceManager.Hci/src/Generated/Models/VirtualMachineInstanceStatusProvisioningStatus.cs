@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The VirtualMachineInstanceStatusProvisioningStatus. </summary>
     public partial class VirtualMachineInstanceStatusProvisioningStatus
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstanceStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceStatusProvisioningStatus"/>. </summary>
         internal VirtualMachineInstanceStatusProvisioningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstanceStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceStatusProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the virtual machine instance. </param>
         /// <param name="status"> The status of the operation performed on the virtual machine instance [Succeeded, Failed, InProgress]. </param>
         internal VirtualMachineInstanceStatusProvisioningStatus(string operationId, HciClusterStatus? status)

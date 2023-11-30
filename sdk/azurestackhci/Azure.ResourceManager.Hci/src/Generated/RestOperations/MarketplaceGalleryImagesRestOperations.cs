@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
-        /// <param name="data"> The MarketplaceGalleryImage to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceGalleryImageData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="marketplaceGalleryImageName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
-        /// <param name="data"> The MarketplaceGalleryImage to use. </param>
+        /// <param name="data"> The <see cref="MarketplaceGalleryImageData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="marketplaceGalleryImageName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
-        /// <param name="patch"> The MarketplaceGalleryImagePatch to use. </param>
+        /// <param name="patch"> The <see cref="MarketplaceGalleryImagePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="marketplaceGalleryImageName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
-        /// <param name="patch"> The MarketplaceGalleryImagePatch to use. </param>
+        /// <param name="patch"> The <see cref="MarketplaceGalleryImagePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="marketplaceGalleryImageName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>

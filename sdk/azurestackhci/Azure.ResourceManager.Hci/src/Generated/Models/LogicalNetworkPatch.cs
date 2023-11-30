@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The logical network resource patch definition. </summary>
     public partial class LogicalNetworkPatch
     {
-        /// <summary> Initializes a new instance of LogicalNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworkPatch"/>. </summary>
         public LogicalNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

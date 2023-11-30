@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The Subnet. </summary>
     public partial class Subnet
     {
-        /// <summary> Initializes a new instance of Subnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Subnet"/>. </summary>
         public Subnet()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             IPPools = new ChangeTrackingList<IPPool>();
         }
 
-        /// <summary> Initializes a new instance of Subnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Subnet"/>. </summary>
         /// <param name="name"> Name - The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="addressPrefix"> The address prefix for the subnet: Cidr for this subnet - IPv4, IPv6. </param>
         /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>

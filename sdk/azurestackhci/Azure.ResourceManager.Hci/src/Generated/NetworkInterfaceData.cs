@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class NetworkInterfaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkInterfaceData(AzureLocation location) : base(location)
         {
             IPConfigurations = new ChangeTrackingList<IPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

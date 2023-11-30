@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The MarketplaceGalleryImagesListResult. </summary>
     internal partial class MarketplaceGalleryImagesListResult
     {
-        /// <summary> Initializes a new instance of MarketplaceGalleryImagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceGalleryImagesListResult"/>. </summary>
         internal MarketplaceGalleryImagesListResult()
         {
             Value = new ChangeTrackingList<MarketplaceGalleryImageData>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceGalleryImagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceGalleryImagesListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal MarketplaceGalleryImagesListResult(IReadOnlyList<MarketplaceGalleryImageData> value, string nextLink)

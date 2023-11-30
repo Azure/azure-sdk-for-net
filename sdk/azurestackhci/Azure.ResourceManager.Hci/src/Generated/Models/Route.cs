@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Route - Route resource. </summary>
     public partial class Route
     {
-        /// <summary> Initializes a new instance of Route. </summary>
+        /// <summary> Initializes a new instance of <see cref="Route"/>. </summary>
         public Route()
         {
         }
 
-        /// <summary> Initializes a new instance of Route. </summary>
+        /// <summary> Initializes a new instance of <see cref="Route"/>. </summary>
         /// <param name="name"> Name - name of the subnet. </param>
         /// <param name="addressPrefix"> The destination CIDR to which the route applies. </param>
         /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>

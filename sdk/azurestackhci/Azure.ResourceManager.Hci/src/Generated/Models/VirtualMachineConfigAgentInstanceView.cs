@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The instance view of the VM Config Agent running on the virtual machine. </summary>
     public partial class VirtualMachineConfigAgentInstanceView
     {
-        /// <summary> Initializes a new instance of VirtualMachineConfigAgentInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineConfigAgentInstanceView"/>. </summary>
         internal VirtualMachineConfigAgentInstanceView()
         {
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineConfigAgentInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineConfigAgentInstanceView"/>. </summary>
         /// <param name="vmConfigAgentVersion"> The VM Config Agent full version. </param>
         /// <param name="statuses"> The resource status information. </param>
         internal VirtualMachineConfigAgentInstanceView(string vmConfigAgentVersion, IReadOnlyList<InstanceViewStatus> statuses)

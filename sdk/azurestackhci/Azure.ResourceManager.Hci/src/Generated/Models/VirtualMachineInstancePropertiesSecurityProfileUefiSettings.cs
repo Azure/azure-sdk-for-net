@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The VirtualMachineInstancePropertiesSecurityProfileUefiSettings. </summary>
     internal partial class VirtualMachineInstancePropertiesSecurityProfileUefiSettings
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesSecurityProfileUefiSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesSecurityProfileUefiSettings"/>. </summary>
         public VirtualMachineInstancePropertiesSecurityProfileUefiSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesSecurityProfileUefiSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesSecurityProfileUefiSettings"/>. </summary>
         /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine instance. </param>
         internal VirtualMachineInstancePropertiesSecurityProfileUefiSettings(bool? secureBootEnabled)
         {

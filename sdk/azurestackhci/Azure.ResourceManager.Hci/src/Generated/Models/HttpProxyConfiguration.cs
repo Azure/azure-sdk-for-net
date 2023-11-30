@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> HTTP Proxy configuration for the VM. </summary>
     public partial class HttpProxyConfiguration
     {
-        /// <summary> Initializes a new instance of HttpProxyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpProxyConfiguration"/>. </summary>
         public HttpProxyConfiguration()
         {
             NoProxy = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HttpProxyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpProxyConfiguration"/>. </summary>
         /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
         /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>

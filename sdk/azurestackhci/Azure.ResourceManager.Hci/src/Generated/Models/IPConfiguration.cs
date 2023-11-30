@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> InterfaceIPConfiguration iPConfiguration in a network interface. </summary>
     public partial class IPConfiguration
     {
-        /// <summary> Initializes a new instance of IPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPConfiguration"/>. </summary>
         public IPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of IPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPConfiguration"/>. </summary>
         /// <param name="name"> Name - The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="properties"> InterfaceIPConfigurationPropertiesFormat properties of IP configuration. </param>
         internal IPConfiguration(string name, IPConfigurationProperties properties)

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> OsProfile - describes the update configuration of the operating system. </summary>
     public partial class OSProfileUpdate
     {
-        /// <summary> Initializes a new instance of OSProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileUpdate"/>. </summary>
         public OSProfileUpdate()
         {
         }

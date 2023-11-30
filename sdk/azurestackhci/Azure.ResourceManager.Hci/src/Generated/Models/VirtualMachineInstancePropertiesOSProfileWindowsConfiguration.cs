@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Windows Configuration for the virtual machine instance. </summary>
     public partial class VirtualMachineInstancePropertiesOSProfileWindowsConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesOSProfileWindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesOSProfileWindowsConfiguration"/>. </summary>
         public VirtualMachineInstancePropertiesOSProfileWindowsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesOSProfileWindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesOSProfileWindowsConfiguration"/>. </summary>
         /// <param name="enableAutomaticUpdates"> Whether to EnableAutomaticUpdates on the machine. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for Windows OS. </param>
         /// <param name="timeZone"> TimeZone for the virtual machine instance. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> NetworkProfile - describes the network configuration the virtual machine instance. </summary>
     internal partial class VirtualMachineInstancePropertiesNetworkProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesNetworkProfile"/>. </summary>
         public VirtualMachineInstancePropertiesNetworkProfile()
         {
             NetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesNetworkProfile"/>. </summary>
         /// <param name="networkInterfaces"> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </param>
         internal VirtualMachineInstancePropertiesNetworkProfile(IList<WritableSubResource> networkInterfaces)
         {

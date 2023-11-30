@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The IPPool. </summary>
     public partial class IPPool
     {
-        /// <summary> Initializes a new instance of IPPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPPool"/>. </summary>
         public IPPool()
         {
         }
 
-        /// <summary> Initializes a new instance of IPPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPPool"/>. </summary>
         /// <param name="name"> Name of the IP-Pool. </param>
         /// <param name="ipPoolType"> Type of the IP Pool [vm, vippool]. </param>
         /// <param name="start"> Start of the IP address pool. </param>

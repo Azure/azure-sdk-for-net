@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> SecurityProfile - Specifies the security settings for the virtual machine instance. </summary>
     public partial class VirtualMachineInstancePropertiesSecurityProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesSecurityProfile"/>. </summary>
         public VirtualMachineInstancePropertiesSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesSecurityProfile"/>. </summary>
         /// <param name="enableTPM"></param>
         /// <param name="uefiSettings"></param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. EnableTPM and SecureBootEnabled must be set to true for SecurityType to function. </param>

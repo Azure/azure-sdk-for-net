@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of HybridIdentityMetadata. </summary>
     internal partial class HybridIdentityMetadataList
     {
-        /// <summary> Initializes a new instance of HybridIdentityMetadataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataList"/>. </summary>
         /// <param name="value"> Array of HybridIdentityMetadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HybridIdentityMetadataList(IEnumerable<HybridIdentityMetadataData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of HybridIdentityMetadata. </param>
         /// <param name="value"> Array of HybridIdentityMetadata. </param>
         internal HybridIdentityMetadataList(string nextLink, IReadOnlyList<HybridIdentityMetadataData> value)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The StorageProfileUpdate. </summary>
     internal partial class StorageProfileUpdate
     {
-        /// <summary> Initializes a new instance of StorageProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfileUpdate"/>. </summary>
         public StorageProfileUpdate()
         {
             DataDisks = new ChangeTrackingList<WritableSubResource>();

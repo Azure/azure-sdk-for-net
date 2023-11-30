@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The InterfaceDnsSettings. </summary>
     internal partial class InterfaceDnsSettings
     {
-        /// <summary> Initializes a new instance of InterfaceDnsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="InterfaceDnsSettings"/>. </summary>
         public InterfaceDnsSettings()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of InterfaceDnsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="InterfaceDnsSettings"/>. </summary>
         /// <param name="dnsServers"> List of DNS server IP Addresses for the interface. </param>
         internal InterfaceDnsSettings(IList<string> dnsServers)
         {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> DhcpOptions contains an array of DNS servers available to VMs deployed in the logical network. Standard DHCP option for a subnet overrides logical network DHCP options. </summary>
     internal partial class LogicalNetworkPropertiesDhcpOptions
     {
-        /// <summary> Initializes a new instance of LogicalNetworkPropertiesDhcpOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworkPropertiesDhcpOptions"/>. </summary>
         public LogicalNetworkPropertiesDhcpOptions()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LogicalNetworkPropertiesDhcpOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworkPropertiesDhcpOptions"/>. </summary>
         /// <param name="dnsServers"> The list of DNS servers IP addresses. </param>
         internal LogicalNetworkPropertiesDhcpOptions(IList<string> dnsServers)
         {

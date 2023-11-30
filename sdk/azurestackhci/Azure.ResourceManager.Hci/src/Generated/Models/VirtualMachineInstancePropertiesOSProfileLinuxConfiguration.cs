@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> LinuxConfiguration - linux specific configuration values for the virtual machine instance. </summary>
     public partial class VirtualMachineInstancePropertiesOSProfileLinuxConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesOSProfileLinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesOSProfileLinuxConfiguration"/>. </summary>
         public VirtualMachineInstancePropertiesOSProfileLinuxConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesOSProfileLinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesOSProfileLinuxConfiguration"/>. </summary>
         /// <param name="disablePasswordAuthentication"> DisablePasswordAuthentication - whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. </param>
         /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>

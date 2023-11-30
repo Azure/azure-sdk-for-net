@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> NetworkProfile - describes the network update configuration the virtual machine instance. </summary>
     internal partial class NetworkProfileUpdate
     {
-        /// <summary> Initializes a new instance of NetworkProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileUpdate"/>. </summary>
         public NetworkProfileUpdate()
         {
             NetworkInterfaces = new ChangeTrackingList<WritableSubResource>();

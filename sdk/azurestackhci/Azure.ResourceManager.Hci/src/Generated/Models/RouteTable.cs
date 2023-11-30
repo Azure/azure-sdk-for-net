@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Route table resource. </summary>
     public partial class RouteTable
     {
-        /// <summary> Initializes a new instance of RouteTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTable"/>. </summary>
         public RouteTable()
         {
             Routes = new ChangeTrackingList<Route>();
         }
 
-        /// <summary> Initializes a new instance of RouteTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTable"/>. </summary>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="routeTableType"> Resource type. </param>

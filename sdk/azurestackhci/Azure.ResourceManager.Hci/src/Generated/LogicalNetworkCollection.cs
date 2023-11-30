@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicalNetworkResource" /> and their operations.
-    /// Each <see cref="LogicalNetworkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="LogicalNetworkCollection" /> instance call the GetLogicalNetworks method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="LogicalNetworkResource"/> and their operations.
+    /// Each <see cref="LogicalNetworkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="LogicalNetworkCollection"/> instance call the GetLogicalNetworks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class LogicalNetworkCollection : ArmCollection, IEnumerable<LogicalNetworkResource>, IAsyncEnumerable<LogicalNetworkResource>
     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
-        /// <param name="data"> The LogicalNetwork to use. </param>
+        /// <param name="data"> The <see cref="LogicalNetworkData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> or <paramref name="data"/> is null. </exception>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
-        /// <param name="data"> The LogicalNetwork to use. </param>
+        /// <param name="data"> The <see cref="LogicalNetworkData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> or <paramref name="data"/> is null. </exception>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicalNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicalNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicalNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicalNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The observed state of network interfaces. </summary>
     public partial class NetworkInterfaceStatus
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceStatus"/>. </summary>
         internal NetworkInterfaceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceStatus"/>. </summary>
         /// <param name="errorCode"> NetworkInterface provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"></param>

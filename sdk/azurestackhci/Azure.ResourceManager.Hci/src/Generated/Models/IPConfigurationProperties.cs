@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> InterfaceIPConfigurationPropertiesFormat properties of IP configuration. </summary>
     public partial class IPConfigurationProperties
     {
-        /// <summary> Initializes a new instance of IPConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPConfigurationProperties"/>. </summary>
         public IPConfigurationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IPConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPConfigurationProperties"/>. </summary>
         /// <param name="gateway"> Gateway for network interface. </param>
         /// <param name="prefixLength"> prefixLength for network interface. </param>
         /// <param name="privateIPAddress"> PrivateIPAddress - Private IP address of the IP configuration. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The StorageContainerStatusProvisioningStatus. </summary>
     public partial class StorageContainerStatusProvisioningStatus
     {
-        /// <summary> Initializes a new instance of StorageContainerStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainerStatusProvisioningStatus"/>. </summary>
         internal StorageContainerStatusProvisioningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageContainerStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainerStatusProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the storage container. </param>
         /// <param name="status"> The status of the operation performed on the storage container [Succeeded, Failed, InProgress]. </param>
         internal StorageContainerStatusProvisioningStatus(string operationId, HciClusterStatus? status)

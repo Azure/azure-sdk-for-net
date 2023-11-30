@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The VirtualMachineInstanceListResult. </summary>
     internal partial class VirtualMachineInstanceListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceListResult"/>. </summary>
         internal VirtualMachineInstanceListResult()
         {
             Value = new ChangeTrackingList<VirtualMachineInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal VirtualMachineInstanceListResult(IReadOnlyList<VirtualMachineInstanceData> value, string nextLink)

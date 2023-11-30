@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The MarketplaceGalleryImageStatusProvisioningStatus. </summary>
     public partial class MarketplaceGalleryImageStatusProvisioningStatus
     {
-        /// <summary> Initializes a new instance of MarketplaceGalleryImageStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceGalleryImageStatusProvisioningStatus"/>. </summary>
         internal MarketplaceGalleryImageStatusProvisioningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MarketplaceGalleryImageStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceGalleryImageStatusProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the gallery image. </param>
         /// <param name="status"> The status of the operation performed on the gallery image [Succeeded, Failed, InProgress]. </param>
         internal MarketplaceGalleryImageStatusProvisioningStatus(string operationId, HciClusterStatus? status)

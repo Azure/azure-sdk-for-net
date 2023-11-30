@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class MarketplaceGalleryImageData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MarketplaceGalleryImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceGalleryImageData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MarketplaceGalleryImageData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MarketplaceGalleryImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceGalleryImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

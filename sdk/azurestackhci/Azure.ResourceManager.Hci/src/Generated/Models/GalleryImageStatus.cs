@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The observed state of gallery images. </summary>
     public partial class GalleryImageStatus
     {
-        /// <summary> Initializes a new instance of GalleryImageStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageStatus"/>. </summary>
         internal GalleryImageStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageStatus"/>. </summary>
         /// <param name="errorCode"> GalleryImage provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"></param>

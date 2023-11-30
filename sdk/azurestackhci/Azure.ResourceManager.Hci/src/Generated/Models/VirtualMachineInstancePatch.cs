@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The virtual machine instance resource patch definition. </summary>
     public partial class VirtualMachineInstancePatch
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePatch"/>. </summary>
         public VirtualMachineInstancePatch()
         {
         }

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> The operation to create or update a virtual machine instance. Please note some properties can be set only during virtual machine instance creation. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
-        /// <param name="data"> The VirtualMachineInstance to use. </param>
+        /// <param name="data"> The <see cref="VirtualMachineInstanceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceUri, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> The operation to create or update a virtual machine instance. Please note some properties can be set only during virtual machine instance creation. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
-        /// <param name="data"> The VirtualMachineInstance to use. </param>
+        /// <param name="data"> The <see cref="VirtualMachineInstanceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="data"/> is null. </exception>
         public Response CreateOrUpdate(string resourceUri, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> The operation to update a virtual machine instance. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
-        /// <param name="patch"> The VirtualMachineInstancePatch to use. </param>
+        /// <param name="patch"> The <see cref="VirtualMachineInstancePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="patch"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceUri, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> The operation to update a virtual machine instance. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
-        /// <param name="patch"> The VirtualMachineInstancePatch to use. </param>
+        /// <param name="patch"> The <see cref="VirtualMachineInstancePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="patch"/> is null. </exception>
         public Response Update(string resourceUri, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> This is the disk image base class. </summary>
     internal partial class GalleryDiskImage
     {
-        /// <summary> Initializes a new instance of GalleryDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryDiskImage"/>. </summary>
         public GalleryDiskImage()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryDiskImage"/>. </summary>
         /// <param name="sizeInMB"> This property indicates the size of the VHD to be created. </param>
         internal GalleryDiskImage(long? sizeInMB)
         {

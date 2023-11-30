@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The observed state of logical networks. </summary>
     public partial class LogicalNetworkStatus
     {
-        /// <summary> Initializes a new instance of LogicalNetworkStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworkStatus"/>. </summary>
         internal LogicalNetworkStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicalNetworkStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworkStatus"/>. </summary>
         /// <param name="errorCode"> LogicalNetwork provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"></param>

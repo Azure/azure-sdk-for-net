@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> SSH configuration for Linux based VMs running on Azure. </summary>
     internal partial class SshConfiguration
     {
-        /// <summary> Initializes a new instance of SshConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshConfiguration"/>. </summary>
         public SshConfiguration()
         {
             PublicKeys = new ChangeTrackingList<SshPublicKey>();
         }
 
-        /// <summary> Initializes a new instance of SshConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshConfiguration"/>. </summary>
         /// <param name="publicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
         internal SshConfiguration(IList<SshPublicKey> publicKeys)
         {

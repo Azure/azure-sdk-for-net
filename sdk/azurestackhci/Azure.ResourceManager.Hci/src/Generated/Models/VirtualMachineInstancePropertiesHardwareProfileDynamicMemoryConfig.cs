@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig. </summary>
     public partial class VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig"/>. </summary>
         public VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig"/>. </summary>
         /// <param name="maximumMemoryMB"></param>
         /// <param name="minimumMemoryMB"></param>
         /// <param name="targetMemoryBuffer"> Defines the amount of extra memory that should be reserved for a virtual machine instance at runtime, as a percentage of the total memory that the virtual machine instance is thought to need. This only applies to virtual systems with dynamic memory enabled. This property can be in the range of 5 to 2000. </param>

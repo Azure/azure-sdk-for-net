@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The NetworkInterfaceStatusProvisioningStatus. </summary>
     public partial class NetworkInterfaceStatusProvisioningStatus
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceStatusProvisioningStatus"/>. </summary>
         internal NetworkInterfaceStatusProvisioningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceStatusProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the network interface. </param>
         /// <param name="status"> The status of the operation performed on the network interface [Succeeded, Failed, InProgress]. </param>
         internal NetworkInterfaceStatusProvisioningStatus(string operationId, HciClusterStatus? status)

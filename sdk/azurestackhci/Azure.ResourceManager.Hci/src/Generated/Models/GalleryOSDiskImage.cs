@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> This is the OS disk image. </summary>
     internal partial class GalleryOSDiskImage : GalleryDiskImage
     {
-        /// <summary> Initializes a new instance of GalleryOSDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
         public GalleryOSDiskImage()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryOSDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
         /// <param name="sizeInMB"> This property indicates the size of the VHD to be created. </param>
         internal GalleryOSDiskImage(long? sizeInMB) : base(sizeInMB)
         {

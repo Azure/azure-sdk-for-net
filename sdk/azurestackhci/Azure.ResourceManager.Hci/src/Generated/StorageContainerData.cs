@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class StorageContainerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageContainerData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of StorageContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

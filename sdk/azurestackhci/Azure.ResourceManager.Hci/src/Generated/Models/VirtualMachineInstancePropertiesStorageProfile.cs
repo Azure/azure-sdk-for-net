@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> StorageProfile - contains information about the disks and storage information for the virtual machine instance. </summary>
     public partial class VirtualMachineInstancePropertiesStorageProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesStorageProfile"/>. </summary>
         public VirtualMachineInstancePropertiesStorageProfile()
         {
             DataDisks = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesStorageProfile"/>. </summary>
         /// <param name="dataDisks"> adds data disks to the virtual machine instance. </param>
         /// <param name="imageReference"> Which Image to use for the virtual machine instance. </param>
         /// <param name="osDisk"> VHD to attach as OS disk. </param>

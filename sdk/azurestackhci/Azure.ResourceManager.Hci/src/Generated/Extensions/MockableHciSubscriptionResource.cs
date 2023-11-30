@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GalleryImageResource> GetGalleryImagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GalleryImageResource> GetGalleryImages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicalNetworkResource> GetLogicalNetworksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LogicalNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicalNetworkResource> GetLogicalNetworks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LogicalNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MarketplaceGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceGalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceGalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkInterfaceResource> GetNetworkInterfaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageContainerResource> GetStorageContainersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageContainerRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageContainerResource> GetStorageContainers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageContainerRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualHardDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualHardDiskResource> GetVirtualHardDisksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHardDiskRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualHardDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualHardDiskResource> GetVirtualHardDisks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHardDiskRestClient.CreateListAllRequest(Id.SubscriptionId);

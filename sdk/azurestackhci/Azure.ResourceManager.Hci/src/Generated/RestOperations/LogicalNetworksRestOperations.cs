@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
-        /// <param name="data"> The LogicalNetwork to use. </param>
+        /// <param name="data"> The <see cref="LogicalNetworkData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="logicalNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
-        /// <param name="data"> The LogicalNetwork to use. </param>
+        /// <param name="data"> The <see cref="LogicalNetworkData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="logicalNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
-        /// <param name="patch"> The LogicalNetworkPatch to use. </param>
+        /// <param name="patch"> The <see cref="LogicalNetworkPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="logicalNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
-        /// <param name="patch"> The LogicalNetworkPatch to use. </param>
+        /// <param name="patch"> The <see cref="LogicalNetworkPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="logicalNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>

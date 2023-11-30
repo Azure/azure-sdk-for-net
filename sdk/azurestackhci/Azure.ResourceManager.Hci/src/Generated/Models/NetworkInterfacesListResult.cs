@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The NetworkInterfacesListResult. </summary>
     internal partial class NetworkInterfacesListResult
     {
-        /// <summary> Initializes a new instance of NetworkInterfacesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfacesListResult"/>. </summary>
         internal NetworkInterfacesListResult()
         {
             Value = new ChangeTrackingList<NetworkInterfaceData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfacesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfacesListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal NetworkInterfacesListResult(IReadOnlyList<NetworkInterfaceData> value, string nextLink)

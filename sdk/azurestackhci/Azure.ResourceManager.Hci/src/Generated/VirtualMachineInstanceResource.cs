@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing a VirtualMachineInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualMachineInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualMachineInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetVirtualMachineInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualMachineInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetVirtualMachineInstance method.
     /// </summary>
     public partial class VirtualMachineInstanceResource : ArmResource
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualMachineInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualMachineInstanceResource(ArmClient client, VirtualMachineInstanceData data) : this(client, data.Id)
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Gets an object representing a HybridIdentityMetadataResource along with the instance operations that can be performed on it in the VirtualMachineInstance. </summary>
-        /// <returns> Returns a <see cref="HybridIdentityMetadataResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
         public virtual HybridIdentityMetadataResource GetHybridIdentityMetadata()
         {
             return new HybridIdentityMetadataResource(Client, Id.AppendChildResource("hybridIdentityMetadata", "default"));
         }
 
         /// <summary> Gets an object representing a GuestAgentResource along with the instance operations that can be performed on it in the VirtualMachineInstance. </summary>
-        /// <returns> Returns a <see cref="GuestAgentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GuestAgentResource"/> object. </returns>
         public virtual GuestAgentResource GetGuestAgent()
         {
             return new GuestAgentResource(Client, Id.AppendChildResource("guestAgents", "default"));
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The VirtualMachineInstancePatch to use. </param>
+        /// <param name="patch"> The <see cref="VirtualMachineInstancePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualMachineInstanceResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The VirtualMachineInstancePatch to use. </param>
+        /// <param name="patch"> The <see cref="VirtualMachineInstancePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<VirtualMachineInstanceResource> Update(WaitUntil waitUntil, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The VirtualMachineInstance to use. </param>
+        /// <param name="data"> The <see cref="VirtualMachineInstanceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualMachineInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The VirtualMachineInstance to use. </param>
+        /// <param name="data"> The <see cref="VirtualMachineInstanceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualMachineInstanceResource> CreateOrUpdate(WaitUntil waitUntil, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class VirtualMachineInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceData"/>. </summary>
         public VirtualMachineInstanceData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

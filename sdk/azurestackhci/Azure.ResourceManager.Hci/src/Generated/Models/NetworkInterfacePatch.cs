@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The network interface resource patch definition. </summary>
     public partial class NetworkInterfacePatch
     {
-        /// <summary> Initializes a new instance of NetworkInterfacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfacePatch"/>. </summary>
         public NetworkInterfacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

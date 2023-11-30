@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The VirtualHardDiskStatusProvisioningStatus. </summary>
     public partial class VirtualHardDiskStatusProvisioningStatus
     {
-        /// <summary> Initializes a new instance of VirtualHardDiskStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHardDiskStatusProvisioningStatus"/>. </summary>
         internal VirtualHardDiskStatusProvisioningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualHardDiskStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHardDiskStatusProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the virtual hard disk. </param>
         /// <param name="status"> The status of the operation performed on the virtual hard disk [Succeeded, Failed, InProgress]. </param>
         internal VirtualHardDiskStatusProvisioningStatus(string operationId, HciClusterStatus? status)

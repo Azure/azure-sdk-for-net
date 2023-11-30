@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The virtual hard disk resource patch definition. </summary>
     public partial class VirtualHardDiskPatch
     {
-        /// <summary> Initializes a new instance of VirtualHardDiskPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHardDiskPatch"/>. </summary>
         public VirtualHardDiskPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Defines the resource properties for the update. </summary>
     public partial class VirtualMachineInstanceUpdateProperties
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstanceUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceUpdateProperties"/>. </summary>
         public VirtualMachineInstanceUpdateProperties()
         {
         }

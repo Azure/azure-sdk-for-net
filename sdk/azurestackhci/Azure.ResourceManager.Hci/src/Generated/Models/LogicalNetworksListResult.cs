@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The LogicalNetworksListResult. </summary>
     internal partial class LogicalNetworksListResult
     {
-        /// <summary> Initializes a new instance of LogicalNetworksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworksListResult"/>. </summary>
         internal LogicalNetworksListResult()
         {
             Value = new ChangeTrackingList<LogicalNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of LogicalNetworksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworksListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal LogicalNetworksListResult(IReadOnlyList<LogicalNetworkData> value, string nextLink)

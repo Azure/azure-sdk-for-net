@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The instance view of a virtual machine. </summary>
     internal partial class VirtualMachineInstanceView
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceView"/>. </summary>
         internal VirtualMachineInstanceView()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceView"/>. </summary>
         /// <param name="vmAgent"> The VM Config Agent running on the virtual machine. </param>
         internal VirtualMachineInstanceView(VirtualMachineConfigAgentInstanceView vmAgent)
         {

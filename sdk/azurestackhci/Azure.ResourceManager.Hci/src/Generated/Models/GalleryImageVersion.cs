@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
     public partial class GalleryImageVersion
     {
-        /// <summary> Initializes a new instance of GalleryImageVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersion"/>. </summary>
         public GalleryImageVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersion"/>. </summary>
         /// <param name="name"> This is the version of the gallery image. </param>
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         internal GalleryImageVersion(string name, GalleryImageVersionStorageProfile storageProfile)

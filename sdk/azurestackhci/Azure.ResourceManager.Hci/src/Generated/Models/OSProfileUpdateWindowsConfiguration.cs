@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The OSProfileUpdateWindowsConfiguration. </summary>
     public partial class OSProfileUpdateWindowsConfiguration
     {
-        /// <summary> Initializes a new instance of OSProfileUpdateWindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileUpdateWindowsConfiguration"/>. </summary>
         public OSProfileUpdateWindowsConfiguration()
         {
         }

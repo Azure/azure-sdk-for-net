@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The GalleryImageStatusProvisioningStatus. </summary>
     public partial class GalleryImageStatusProvisioningStatus
     {
-        /// <summary> Initializes a new instance of GalleryImageStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageStatusProvisioningStatus"/>. </summary>
         internal GalleryImageStatusProvisioningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageStatusProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the gallery image. </param>
         /// <param name="status"> The status of the operation performed on the gallery image [Succeeded, Failed, InProgress]. </param>
         internal GalleryImageStatusProvisioningStatus(string operationId, HciClusterStatus? status)

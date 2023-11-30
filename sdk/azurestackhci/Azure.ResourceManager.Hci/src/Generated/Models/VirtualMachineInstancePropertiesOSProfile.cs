@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> OsProfile - describes the configuration of the operating system and sets login data. </summary>
     public partial class VirtualMachineInstancePropertiesOSProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesOSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesOSProfile"/>. </summary>
         public VirtualMachineInstancePropertiesOSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesOSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesOSProfile"/>. </summary>
         /// <param name="adminPassword"> AdminPassword - admin password. </param>
         /// <param name="adminUsername"> AdminUsername - admin username. </param>
         /// <param name="computerName"> ComputerName - name of the compute. </param>

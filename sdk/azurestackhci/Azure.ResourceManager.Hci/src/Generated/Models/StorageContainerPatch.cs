@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The storage container resource patch definition. </summary>
     public partial class StorageContainerPatch
     {
-        /// <summary> Initializes a new instance of StorageContainerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainerPatch"/>. </summary>
         public StorageContainerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

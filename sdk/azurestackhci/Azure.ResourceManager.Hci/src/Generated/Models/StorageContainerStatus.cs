@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The observed state of storage containers. </summary>
     public partial class StorageContainerStatus
     {
-        /// <summary> Initializes a new instance of StorageContainerStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainerStatus"/>. </summary>
         internal StorageContainerStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageContainerStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainerStatus"/>. </summary>
         /// <param name="errorCode"> StorageContainer provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="availableSizeMB"> Amount of space available on the disk in MB. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> VHD to attach as OS disk. </summary>
     public partial class VirtualMachineInstancePropertiesStorageProfileOSDisk
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesStorageProfileOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesStorageProfileOSDisk"/>. </summary>
         public VirtualMachineInstancePropertiesStorageProfileOSDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstancePropertiesStorageProfileOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesStorageProfileOSDisk"/>. </summary>
         /// <param name="id"> Resource ID of the OS disk. </param>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: **Windows,** **Linux.**. </param>
         internal VirtualMachineInstancePropertiesStorageProfileOSDisk(string id, OperatingSystemType? osType)

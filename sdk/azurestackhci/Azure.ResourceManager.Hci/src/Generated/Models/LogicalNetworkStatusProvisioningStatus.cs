@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The LogicalNetworkStatusProvisioningStatus. </summary>
     public partial class LogicalNetworkStatusProvisioningStatus
     {
-        /// <summary> Initializes a new instance of LogicalNetworkStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworkStatusProvisioningStatus"/>. </summary>
         internal LogicalNetworkStatusProvisioningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicalNetworkStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworkStatusProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the logical network. </param>
         /// <param name="status"> The status of the operation performed on the logical network [Succeeded, Failed, InProgress]. </param>
         internal LogicalNetworkStatusProvisioningStatus(string operationId, HciClusterStatus? status)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The StorageContainersListResult. </summary>
     internal partial class StorageContainersListResult
     {
-        /// <summary> Initializes a new instance of StorageContainersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainersListResult"/>. </summary>
         internal StorageContainersListResult()
         {
             Value = new ChangeTrackingList<StorageContainerData>();
         }
 
-        /// <summary> Initializes a new instance of StorageContainersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainersListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal StorageContainersListResult(IReadOnlyList<StorageContainerData> value, string nextLink)

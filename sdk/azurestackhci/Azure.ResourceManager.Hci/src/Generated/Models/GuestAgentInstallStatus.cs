@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Defines the status of a guest agent installation. </summary>
     public partial class GuestAgentInstallStatus
     {
-        /// <summary> Initializes a new instance of GuestAgentInstallStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentInstallStatus"/>. </summary>
         public GuestAgentInstallStatus()
         {
             ErrorDetails = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of GuestAgentInstallStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentInstallStatus"/>. </summary>
         /// <param name="vmUuid"> Specifies the VM's unique SMBIOS ID. </param>
         /// <param name="status"> The installation status of the hybrid machine agent installation. </param>
         /// <param name="lastStatusChange"> The time of the last status change. </param>

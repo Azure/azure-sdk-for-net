@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The marketplace gallery image resource patch definition. </summary>
     public partial class MarketplaceGalleryImagePatch
     {
-        /// <summary> Initializes a new instance of MarketplaceGalleryImagePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceGalleryImagePatch"/>. </summary>
         public MarketplaceGalleryImagePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

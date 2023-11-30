@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The observed state of virtual hard disks. </summary>
     public partial class VirtualHardDiskStatus
     {
-        /// <summary> Initializes a new instance of VirtualHardDiskStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHardDiskStatus"/>. </summary>
         internal VirtualHardDiskStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualHardDiskStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHardDiskStatus"/>. </summary>
         /// <param name="errorCode"> VirtualHardDisk provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"></param>

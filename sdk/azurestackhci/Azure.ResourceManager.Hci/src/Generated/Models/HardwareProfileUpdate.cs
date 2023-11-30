@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>
     public partial class HardwareProfileUpdate
     {
-        /// <summary> Initializes a new instance of HardwareProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareProfileUpdate"/>. </summary>
         public HardwareProfileUpdate()
         {
         }

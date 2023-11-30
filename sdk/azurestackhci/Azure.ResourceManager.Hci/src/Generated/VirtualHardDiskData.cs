@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class VirtualHardDiskData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualHardDiskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHardDiskData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualHardDiskData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualHardDiskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHardDiskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

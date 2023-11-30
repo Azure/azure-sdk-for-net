@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
     internal partial class GalleryImageVersionStorageProfile
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionStorageProfile"/>. </summary>
         public GalleryImageVersionStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionStorageProfile"/>. </summary>
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         internal GalleryImageVersionStorageProfile(GalleryOSDiskImage osDiskImage)
         {

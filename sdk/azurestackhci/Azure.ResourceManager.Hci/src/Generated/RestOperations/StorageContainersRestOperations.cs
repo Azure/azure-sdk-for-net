@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageContainerName"> Name of the storage container. </param>
-        /// <param name="data"> The StorageContainer to use. </param>
+        /// <param name="data"> The <see cref="StorageContainerData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageContainerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageContainerName"> Name of the storage container. </param>
-        /// <param name="data"> The StorageContainer to use. </param>
+        /// <param name="data"> The <see cref="StorageContainerData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageContainerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageContainerName"> Name of the storage container. </param>
-        /// <param name="patch"> The StorageContainerPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageContainerPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageContainerName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageContainerName"> Name of the storage container. </param>
-        /// <param name="patch"> The StorageContainerPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageContainerPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageContainerName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>

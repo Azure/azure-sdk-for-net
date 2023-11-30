@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class GalleryImageData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GalleryImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryImageData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The IPPoolInfo. </summary>
     public partial class IPPoolInfo
     {
-        /// <summary> Initializes a new instance of IPPoolInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPPoolInfo"/>. </summary>
         public IPPoolInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IPPoolInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPPoolInfo"/>. </summary>
         /// <param name="used"> Number of IP addresses allocated from the IP Pool. </param>
         /// <param name="available"> Number of IP addresses available in the IP Pool. </param>
         internal IPPoolInfo(string used, string available)

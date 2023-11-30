@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of gallery images. </summary>
     internal partial class GalleryImagesListResult
     {
-        /// <summary> Initializes a new instance of GalleryImagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImagesListResult"/>. </summary>
         internal GalleryImagesListResult()
         {
             Value = new ChangeTrackingList<GalleryImageData>();
         }
 
-        /// <summary> Initializes a new instance of GalleryImagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImagesListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal GalleryImagesListResult(IReadOnlyList<GalleryImageData> value, string nextLink)

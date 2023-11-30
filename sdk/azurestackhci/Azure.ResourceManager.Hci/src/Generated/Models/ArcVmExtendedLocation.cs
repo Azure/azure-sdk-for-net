@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The complex type of the extended location. </summary>
     public partial class ArcVmExtendedLocation
     {
-        /// <summary> Initializes a new instance of ArcVmExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcVmExtendedLocation"/>. </summary>
         public ArcVmExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcVmExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcVmExtendedLocation"/>. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
         internal ArcVmExtendedLocation(string name, ArcVmExtendedLocationType? extendedLocationType)

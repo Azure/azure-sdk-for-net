@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The VirtualHardDisksListResult. </summary>
     internal partial class VirtualHardDisksListResult
     {
-        /// <summary> Initializes a new instance of VirtualHardDisksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHardDisksListResult"/>. </summary>
         internal VirtualHardDisksListResult()
         {
             Value = new ChangeTrackingList<VirtualHardDiskData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHardDisksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHardDisksListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal VirtualHardDisksListResult(IReadOnlyList<VirtualHardDiskData> value, string nextLink)

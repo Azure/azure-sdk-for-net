@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class LogicalNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LogicalNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LogicalNetworkData(AzureLocation location) : base(location)
         {
             Subnets = new ChangeTrackingList<Subnet>();
         }
 
-        /// <summary> Initializes a new instance of LogicalNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
