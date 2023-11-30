@@ -6,14 +6,15 @@
 #nullable disable
 
 using System;
+using Azure.Communication.Sms;
 using Azure.Core;
 
-namespace Azure.Communication.Sms
+namespace Azure.Communication.Sms.Models
 {
     /// <summary> Represents the properties of a send request attachment. </summary>
     public partial class MmsSendRequestAttachment
     {
-        /// <summary> Initializes a new instance of MmsSendRequestAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="MmsSendRequestAttachment"/>. </summary>
         /// <param name="contentType"> MIME type of attachment. </param>
         /// <param name="contentInBase64"> Content of the attachment encoded in base 64. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentInBase64"/> is null. </exception>

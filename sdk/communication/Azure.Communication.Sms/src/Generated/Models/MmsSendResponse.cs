@@ -8,31 +8,32 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.Sms;
 using Azure.Core;
 
-namespace Azure.Communication.Sms
+namespace Azure.Communication.Sms.Models
 {
     /// <summary> Response for a successful or multi status MMS send request. </summary>
-    public partial class MmsSendResponse
+    internal partial class MmsSendResponse
     {
-        /// <summary> Initializes a new instance of MmsSendResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MmsSendResponse"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MmsSendResponse(IEnumerable<MmsSendResponseItem> value)
+        internal MmsSendResponse(IEnumerable<MmsSendResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MmsSendResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MmsSendResponse"/>. </summary>
         /// <param name="value"></param>
-        internal MmsSendResponse(IReadOnlyList<MmsSendResponseItem> value)
+        internal MmsSendResponse(IReadOnlyList<MmsSendResult> value)
         {
             Value = value;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<MmsSendResponseItem> Value { get; }
+        public IReadOnlyList<MmsSendResult> Value { get; }
     }
 }

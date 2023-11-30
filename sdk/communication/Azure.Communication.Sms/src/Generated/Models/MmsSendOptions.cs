@@ -10,7 +10,7 @@ namespace Azure.Communication.Sms
     /// <summary> Optional configuration for sending MMS messages. </summary>
     public partial class MmsSendOptions
     {
-        /// <summary> Initializes a new instance of MmsSendOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MmsSendOptions"/>. </summary>
         /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
         public MmsSendOptions(bool enableDeliveryReport)
         {

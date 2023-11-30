@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Communication.Sms.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -64,7 +65,7 @@ namespace Azure.Communication.Sms
         }
 
         /// <summary> Sends MMS message from a phone number that belongs to the authenticated account. </summary>
-        /// <param name="from"> The sender&apos;s identifier (typically phone number in E.164 format) that is owned by the authenticated account. </param>
+        /// <param name="from"> The sender's identifier (typically phone number in E.164 format) that is owned by the authenticated account. </param>
         /// <param name="recipients"> The recipient phone numbers in E.164 format. </param>
         /// <param name="attachments"> A list of media attachments to include as part of the MMS. You can have maximum 10 attachments. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. </param>
@@ -103,7 +104,7 @@ namespace Azure.Communication.Sms
         }
 
         /// <summary> Sends MMS message from a phone number that belongs to the authenticated account. </summary>
-        /// <param name="from"> The sender&apos;s identifier (typically phone number in E.164 format) that is owned by the authenticated account. </param>
+        /// <param name="from"> The sender's identifier (typically phone number in E.164 format) that is owned by the authenticated account. </param>
         /// <param name="recipients"> The recipient phone numbers in E.164 format. </param>
         /// <param name="attachments"> A list of media attachments to include as part of the MMS. You can have maximum 10 attachments. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. </param>

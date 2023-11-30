@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    public partial class MmsSendResponseItem
+    public partial class MmsSendResult
     {
-        internal static MmsSendResponseItem DeserializeMmsSendResponseItem(JsonElement element)
+        internal static MmsSendResult DeserializeMmsSendResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -61,7 +61,7 @@ namespace Azure.Communication.Sms
                     continue;
                 }
             }
-            return new MmsSendResponseItem(to, messageId.Value, httpStatusCode, errorMessage.Value, Optional.ToNullable(repeatabilityResult), successful);
+            return new MmsSendResult(to, messageId.Value, httpStatusCode, errorMessage.Value, Optional.ToNullable(repeatabilityResult), successful);
         }
     }
 }

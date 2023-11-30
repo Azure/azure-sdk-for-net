@@ -27,8 +27,8 @@ namespace Azure.Communication.Sms
             Successful = successful;
         }
 
-        /// <summary> Initializes a new instance of SmsSendResult. </summary>
-        /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
+        /// <summary> Initializes a new instance of <see cref="SmsSendResult"/>. </summary>
+        /// <param name="to"> The recipient's phone number in E.164 format. </param>
         /// <param name="messageId"> The identifier of the outgoing message. Only present if message processed. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
         /// <param name="errorMessage"> Optional error message in case of 4xx/5xx/repeatable errors. </param>

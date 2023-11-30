@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Sms
+namespace Azure.Communication.Sms.Models
 {
     public partial class MmsSendRequestAttachment : IUtf8JsonSerializable
     {

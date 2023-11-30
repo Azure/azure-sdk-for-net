@@ -7,11 +7,11 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Communication.Sms;
 
-namespace Azure.Communication.Sms
+namespace Azure.Communication.Sms.Models
 {
-    public partial class MmsSendResponse
+    internal partial class MmsSendResponse
     {
         internal static MmsSendResponse DeserializeMmsSendResponse(JsonElement element)
         {
@@ -19,15 +19,15 @@ namespace Azure.Communication.Sms
             {
                 return null;
             }
-            IReadOnlyList<MmsSendResponseItem> value = default;
+            IReadOnlyList<MmsSendResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MmsSendResponseItem> array = new List<MmsSendResponseItem>();
+                    List<MmsSendResult> array = new List<MmsSendResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MmsSendResponseItem.DeserializeMmsSendResponseItem(item));
+                        array.Add(MmsSendResult.DeserializeMmsSendResult(item));
                     }
                     value = array;
                     continue;

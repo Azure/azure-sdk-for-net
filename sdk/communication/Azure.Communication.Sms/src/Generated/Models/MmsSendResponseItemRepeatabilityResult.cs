@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Sms
 {
     /// <summary> The result of a repeatable request with one of the case-insensitive values accepted or rejected. </summary>
-    public readonly partial struct MmsSendResponseItemRepeatabilityResult : IEquatable<MmsSendResponseItemRepeatabilityResult>
+    internal readonly partial struct MmsSendResponseItemRepeatabilityResult : IEquatable<MmsSendResponseItemRepeatabilityResult>
     {
         private readonly string _value;
 

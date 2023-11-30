@@ -8,15 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.Sms;
 using Azure.Core;
 
-namespace Azure.Communication.Sms
+namespace Azure.Communication.Sms.Models
 {
     /// <summary> Represents the properties of a send MMS message request. </summary>
     internal partial class MmsSendMessageRequest
     {
-        /// <summary> Initializes a new instance of MmsSendMessageRequest. </summary>
-        /// <param name="from"> The sender&apos;s identifier (typically phone number in E.164 format) that is owned by the authenticated account. </param>
+        /// <summary> Initializes a new instance of <see cref="MmsSendMessageRequest"/>. </summary>
+        /// <param name="from"> The sender's identifier (typically phone number in E.164 format) that is owned by the authenticated account. </param>
         /// <param name="recipients"> The recipient phone numbers in E.164 format. </param>
         /// <param name="attachments"> A list of media attachments to include as part of the MMS. You can have maximum 10 attachments. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="recipients"/> or <paramref name="attachments"/> is null. </exception>
@@ -31,7 +32,7 @@ namespace Azure.Communication.Sms
             Attachments = attachments.ToList();
         }
 
-        /// <summary> The sender&apos;s identifier (typically phone number in E.164 format) that is owned by the authenticated account. </summary>
+        /// <summary> The sender's identifier (typically phone number in E.164 format) that is owned by the authenticated account. </summary>
         public string From { get; }
         /// <summary> The recipient phone numbers in E.164 format. </summary>
         public IList<MmsRecipient> Recipients { get; }
