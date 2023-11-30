@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             PersistOnSuccess = persistOnSuccess;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionContent"/>. </summary>
+        /// <param name="scriptActions"> The list of run time script actions. </param>
+        /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
+        internal ExecuteScriptActionContent(IList<RuntimeScriptAction> scriptActions, bool persistOnSuccess)
+        {
+            ScriptActions = scriptActions;
+            PersistOnSuccess = persistOnSuccess;
+        }
+
         /// <summary> The list of run time script actions. </summary>
         public IList<RuntimeScriptAction> ScriptActions { get; }
         /// <summary> Gets or sets if the scripts needs to be persisted. </summary>

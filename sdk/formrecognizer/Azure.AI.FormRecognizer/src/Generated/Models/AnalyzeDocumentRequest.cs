@@ -17,6 +17,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentRequest"/>. </summary>
+        /// <param name="urlSource"> Document URL to analyze.  Either urlSource or base64Source must be specified. </param>
+        /// <param name="base64Source"> Base64 encoding of the document to analyze.  Either urlSource or base64Source must be specified. </param>
+        internal AnalyzeDocumentRequest(Uri urlSource, byte[] base64Source)
+        {
+            UrlSource = urlSource;
+            Base64Source = base64Source;
+        }
+
         /// <summary> Document URL to analyze.  Either urlSource or base64Source must be specified. </summary>
         public Uri UrlSource { get; set; }
         /// <summary> Base64 encoding of the document to analyze.  Either urlSource or base64Source must be specified. </summary>

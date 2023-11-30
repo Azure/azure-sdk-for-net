@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             ResourceType = DigitalTwinsResourceType.MicrosoftDigitalTwinsDigitalTwinsInstances;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsNameContent"/>. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </param>
+        internal DigitalTwinsNameContent(string name, DigitalTwinsResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Resource name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </summary>

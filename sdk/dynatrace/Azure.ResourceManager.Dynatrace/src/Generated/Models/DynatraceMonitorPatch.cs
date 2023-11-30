@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="monitoringStatus"> Status of the monitor. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="dynatraceEnvironmentProperties"> Properties of the Dynatrace environment. </param>
+        /// <param name="userInfo"> User info. </param>
+        /// <param name="planData"> Billing plan information. </param>
+        internal DynatraceMonitorPatch(IDictionary<string, string> tags, DynatraceMonitoringStatus? monitoringStatus, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, DynatraceMonitorUserInfo userInfo, DynatraceBillingPlanInfo planData)
+        {
+            Tags = tags;
+            MonitoringStatus = monitoringStatus;
+            MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
+            DynatraceEnvironmentProperties = dynatraceEnvironmentProperties;
+            UserInfo = userInfo;
+            PlanData = planData;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Status of the monitor. </summary>

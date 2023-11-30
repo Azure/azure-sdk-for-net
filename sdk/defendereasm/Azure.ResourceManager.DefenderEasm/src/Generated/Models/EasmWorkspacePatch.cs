@@ -20,6 +20,15 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspacePatch"/>. </summary>
+        /// <param name="tags"> resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        internal EasmWorkspacePatch(IDictionary<string, string> tags, SystemData systemData)
+        {
+            Tags = tags;
+            SystemData = systemData;
+        }
+
         /// <summary> resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>

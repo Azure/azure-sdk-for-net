@@ -27,6 +27,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DocTypes = docTypes;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierRequest"/>. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="description"> Document classifier description. </param>
+        /// <param name="docTypes"> List of document types to classify against. </param>
+        internal BuildDocumentClassifierRequest(string classifierId, string description, IDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        {
+            ClassifierId = classifierId;
+            Description = description;
+            DocTypes = docTypes;
+        }
+
         /// <summary> Unique document classifier name. </summary>
         public string ClassifierId { get; }
         /// <summary> Document classifier description. </summary>
