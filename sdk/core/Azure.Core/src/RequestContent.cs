@@ -91,8 +91,8 @@ namespace Azure.Core
         /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IPersistableModel{T}"/>.</returns>
-        public static new RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T: IPersistableModel<T>
-            => new AzureRequestBodyContent(InputContent.Create(model, options ?? ModelWriteWireOptions));
+        public static new RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+            => new AzureInputContent(InputContent.Create(model, options ?? ModelWriteWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -152,33 +152,26 @@ namespace Azure.Core
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
 
-        private sealed class AzureRequestBodyContent : RequestContent
+        private sealed class AzureInputContent : RequestContent
         {
             private readonly InputContent _content;
 
-            public AzureRequestBodyContent(InputContent content)
+            public AzureInputContent(InputContent content)
             {
                 _content = content;
             }
 
             public override void Dispose()
-            {
-                _content?.Dispose();
-            }
+                => _content?.Dispose();
 
             public override bool TryComputeLength(out long length)
-            {
-                return _content.TryComputeLength(out length);
-            }
+                => _content.TryComputeLength(out length);
 
             public override void WriteTo(Stream stream, CancellationToken cancellationToken)
-            {
-                _content.WriteTo(stream, cancellationToken);
-            }
+                => _content.WriteTo(stream, cancellationToken);
+
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
-            {
-                await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-            }
+                => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
         }
 
         private sealed class StreamContent : RequestContent
@@ -244,6 +237,7 @@ namespace Azure.Core
                 _stream.Dispose();
             }
         }
+
         private sealed class ArrayContent : RequestContent
         {
             private readonly byte[] _bytes;
