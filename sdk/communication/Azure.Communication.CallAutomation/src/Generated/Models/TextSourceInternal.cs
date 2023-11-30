@@ -23,6 +23,27 @@ namespace Azure.Communication.CallAutomation
             Text = text;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TextSourceInternal"/>. </summary>
+        /// <param name="text"> Text for the cognitive service to be played. </param>
+        /// <param name="sourceLocale">
+        /// Source language locale to be played
+        /// Refer to available locales here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
+        /// </param>
+        /// <param name="voiceGender"> Voice gender type. </param>
+        /// <param name="voiceName">
+        /// Voice name to be played
+        /// Refer to available Text-to-speech voices here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
+        /// </param>
+        /// <param name="customVoiceEndpointId"> Endpoint where the custom voice was deployed. </param>
+        internal TextSourceInternal(string text, string sourceLocale, GenderType? voiceGender, string voiceName, string customVoiceEndpointId)
+        {
+            Text = text;
+            SourceLocale = sourceLocale;
+            VoiceGender = voiceGender;
+            VoiceName = voiceName;
+            CustomVoiceEndpointId = customVoiceEndpointId;
+        }
+
         /// <summary> Text for the cognitive service to be played. </summary>
         public string Text { get; }
         /// <summary>

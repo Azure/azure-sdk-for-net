@@ -17,6 +17,15 @@ namespace Azure.AI.Language.QuestionAnswering
             PreviousQnaId = previousQnaId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerContext"/>. </summary>
+        /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
+        /// <param name="previousQuestion"> Previous user query. </param>
+        internal KnowledgeBaseAnswerContext(int previousQnaId, string previousQuestion)
+        {
+            PreviousQnaId = previousQnaId;
+            PreviousQuestion = previousQuestion;
+        }
+
         /// <summary> Previous turn top answer result QnA ID. </summary>
         public int PreviousQnaId { get; }
         /// <summary> Previous user query. </summary>

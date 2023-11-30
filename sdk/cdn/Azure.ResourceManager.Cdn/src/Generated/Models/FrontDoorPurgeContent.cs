@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.Cdn.Models
             Domains = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorPurgeContent"/>. </summary>
+        /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
+        /// <param name="domains"> List of domains. </param>
+        internal FrontDoorPurgeContent(IList<string> contentPaths, IList<string> domains)
+        {
+            ContentPaths = contentPaths;
+            Domains = domains;
+        }
+
         /// <summary> The path to the content to be purged. Can describe a file path or a wild card directory. </summary>
         public IList<string> ContentPaths { get; }
         /// <summary> List of domains. </summary>

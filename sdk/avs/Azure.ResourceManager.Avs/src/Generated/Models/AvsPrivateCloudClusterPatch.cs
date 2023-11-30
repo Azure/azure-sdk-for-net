@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Avs.Models
             Hosts = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterPatch"/>. </summary>
+        /// <param name="clusterSize"> The cluster size. </param>
+        /// <param name="hosts"> The hosts. </param>
+        internal AvsPrivateCloudClusterPatch(int? clusterSize, IList<string> hosts)
+        {
+            ClusterSize = clusterSize;
+            Hosts = hosts;
+        }
+
         /// <summary> The cluster size. </summary>
         public int? ClusterSize { get; set; }
         /// <summary> The hosts. </summary>

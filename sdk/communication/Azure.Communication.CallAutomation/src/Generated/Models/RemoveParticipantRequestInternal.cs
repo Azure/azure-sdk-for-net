@@ -24,6 +24,17 @@ namespace Azure.Communication.CallAutomation
             ParticipantToRemove = participantToRemove;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantRequestInternal"/>. </summary>
+        /// <param name="participantToRemove"> The participants to be removed from the call. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        internal RemoveParticipantRequestInternal(CommunicationIdentifierModel participantToRemove, string operationContext, string callbackUri)
+        {
+            ParticipantToRemove = participantToRemove;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+        }
+
         /// <summary> The participants to be removed from the call. </summary>
         public CommunicationIdentifierModel ParticipantToRemove { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>

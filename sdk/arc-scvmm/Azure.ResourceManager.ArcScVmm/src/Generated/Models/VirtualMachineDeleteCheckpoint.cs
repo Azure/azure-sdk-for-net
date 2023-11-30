@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineDeleteCheckpoint"/>. </summary>
+        /// <param name="id"> ID of the checkpoint to be deleted. </param>
+        internal VirtualMachineDeleteCheckpoint(string id)
+        {
+            Id = id;
+        }
+
         /// <summary> ID of the checkpoint to be deleted. </summary>
         public string Id { get; set; }
     }
