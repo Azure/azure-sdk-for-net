@@ -15,6 +15,13 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobDescriptor"/>. </summary>
+        /// <param name="displayName"> Optional display name for the analysis job. </param>
+        internal JobDescriptor(string displayName)
+        {
+            DisplayName = displayName;
+        }
+
         /// <summary> Optional display name for the analysis job. </summary>
         public string DisplayName { get; set; }
     }
