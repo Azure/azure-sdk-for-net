@@ -26,9 +26,9 @@ namespace System.ClientModel.Primitives
             }
         }
 
-        public override bool IsError(PipelineMessage message)
+        public override bool IsErrorResponse(PipelineMessage message)
         {
-            return base.IsError(message);
+            return base.IsErrorResponse(message);
         }
 
         private void AddClassifier(int statusCode, bool isError)

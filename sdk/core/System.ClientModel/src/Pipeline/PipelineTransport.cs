@@ -21,7 +21,7 @@ public abstract class PipelineTransport : PipelinePolicy
             throw new InvalidOperationException("Response was not set by transport.");
         }
 
-        response.IsError = message.MessageClassifier?.IsError(message) ?? default;
+        response.IsError = message.MessageClassifier?.IsErrorResponse(message) ?? default;
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public abstract class PipelineTransport : PipelinePolicy
 
         if (message.MessageClassifier != null)
         {
-            message.Response.IsError = message.MessageClassifier.IsError(message);
+            message.Response.IsError = message.MessageClassifier.IsErrorResponse(message);
         }
     }
 

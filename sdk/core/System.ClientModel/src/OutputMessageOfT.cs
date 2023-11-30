@@ -6,11 +6,11 @@ using System.ComponentModel;
 
 namespace System.ClientModel;
 
-public class OutputMessage<T> : NullableOutputMessage<T>
+public class OutputMessage<T> : OptionalOutputMessage<T>
 {
     internal OutputMessage(T value, PipelineResponse response) : base(value, response)
     {
-        // Null values must use NullableOutputMessage<T>
+        // Null values must use OptionalOutputMessage<T>
         if (value is null) throw new ArgumentNullException(nameof(value));
         if (response is null) throw new ArgumentNullException(nameof(response));
     }

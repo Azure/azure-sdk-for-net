@@ -62,7 +62,6 @@ namespace Azure.Core.Pipeline
 
                 if (!bufferResponse && invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
                 {
-                    // TODO: tidy this up - there is a bug here if customer overrides default transport
                     Stream? responseContentStream = message.Response.ContentStream;
                     if (responseContentStream == null || responseContentStream.CanSeek)
                     {
@@ -74,7 +73,6 @@ namespace Azure.Core.Pipeline
             }
             catch (TaskCanceledException e)
             {
-                // TODO: come back and clean this up.
                 if (e.Message.Contains("The operation was cancelled because it exceeded the configured timeout"))
                 {
                     string exceptionMessage = e.Message +

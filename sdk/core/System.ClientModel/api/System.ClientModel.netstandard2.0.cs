@@ -39,9 +39,9 @@ namespace System.ClientModel
         public static System.ClientModel.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.ModelReaderWriterOptions Xml { get { throw null; } }
     }
-    public partial class NullableOutputMessage<T> : System.ClientModel.OutputMessage
+    public partial class OptionalOutputMessage<T> : System.ClientModel.OutputMessage
     {
-        internal NullableOutputMessage() { }
+        internal OptionalOutputMessage() { }
         public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
         public override System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
@@ -49,12 +49,12 @@ namespace System.ClientModel
     public abstract partial class OutputMessage
     {
         protected OutputMessage() { }
-        public static System.ClientModel.NullableOutputMessage<T> FromNullableValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.OptionalOutputMessage<T> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.OutputMessage FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.OutputMessage<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public abstract System.ClientModel.Primitives.PipelineResponse GetRawResponse();
     }
-    public partial class OutputMessage<T> : System.ClientModel.NullableOutputMessage<T>
+    public partial class OutputMessage<T> : System.ClientModel.OptionalOutputMessage<T>
     {
         internal OutputMessage() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -128,7 +128,7 @@ namespace System.ClientModel.Primitives
     public partial class MessageClassifier
     {
         protected internal MessageClassifier() { }
-        public virtual bool IsError(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
     public abstract partial class MessageHeaders
     {
@@ -234,6 +234,6 @@ namespace System.ClientModel.Primitives
     public partial class ResponseStatusClassifier : System.ClientModel.Primitives.MessageClassifier
     {
         public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
-        public override bool IsError(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public override bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
 }
