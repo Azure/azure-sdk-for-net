@@ -119,11 +119,17 @@ public class ClientPipelineTests
         {
             public TransportRequest() { }
 
-            public override string Method { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public override Uri Uri { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public override InputContent? Content { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public override Uri Uri
+            {
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
+            }
 
-            public override MessageHeaders Headers => throw new NotImplementedException();
+            public override InputContent? Content
+            {
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
+            }
 
             public override void Dispose()
             {

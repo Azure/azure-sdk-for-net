@@ -1,17 +1,60 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Net.Http;
+
 namespace System.ClientModel.Primitives;
 
 public abstract class PipelineRequest : IDisposable
 {
-    public abstract string Method { get; set; }
+    private string _method;
+    private Uri? _uri;
+    private InputContent? _content;
+    private readonly PipelineRequestHeaders _headers;
 
-    public abstract Uri Uri { get; set; }
+    protected PipelineRequest()
+    {
+        _method = HttpMethod.Get.Method;
+        _headers = new PipelineRequestHeaders();
+    }
 
-    public abstract InputContent? Content { get; set; }
+    /// <summary>
+    /// Gets or sets the request HTTP method.
+    /// </summary>
+    public string Method
+    {
+        get => _method;
+        set => _method = value;
+    }
 
-    public abstract MessageHeaders Headers { get; }
+    public virtual Uri Uri
+    {
+        get
+        {
+            if (_uri is null)
+            {
+                throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
+            }
 
-    public abstract void Dispose();
+            return _uri;
+        }
+
+        set => _uri = value;
+    }
+
+    public virtual InputContent? Content { get; set; }
+
+    public MessageHeaders Headers => _headers;
+
+    public virtual void Dispose()
+    {
+        var content = _content;
+        if (content != null)
+        {
+            _content = null;
+            content.Dispose();
+        }
+
+        GC.SuppressFinalize(this);
+    }
 }

@@ -19,45 +19,9 @@ internal class HttpPipelineRequest : PipelineRequest
 {
     private const string AuthorizationHeaderName = "Authorization";
 
-    private Uri? _uri;
-    private InputContent? _content;
-
-    private readonly PipelineRequestHeaders _headers;
-
     protected internal HttpPipelineRequest()
     {
-        Method = HttpMethod.Get.Method;
-        _headers = new PipelineRequestHeaders();
     }
-
-    public override Uri Uri
-    {
-        get
-        {
-            if (_uri is null)
-            {
-                throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
-            }
-
-            return _uri;
-        }
-
-        set => _uri = value;
-    }
-
-    public override InputContent? Content
-    {
-        get => _content;
-        set => _content = value;
-    }
-
-    public override string Method
-    {
-        get;
-        set;
-    }
-
-    public override MessageHeaders Headers => _headers;
 
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
@@ -78,9 +42,6 @@ internal class HttpPipelineRequest : PipelineRequest
 
     internal static HttpRequestMessage BuildHttpRequestMessage(PipelineRequest request, CancellationToken cancellationToken)
     {
-        // TODO: this is confusing where we are passing in message and also
-        // using private members on the request.
-
         HttpMethod method = ToHttpMethod(request.Method);
         Uri uri = request.Uri;
         HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);
@@ -156,18 +117,6 @@ internal class HttpPipelineRequest : PipelineRequest
         protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
             => _content.WriteTo(stream, cancellationToken);
 #endif
-    }
-
-    public override void Dispose()
-    {
-        var content = _content;
-        if (content != null)
-        {
-            _content = null;
-            content.Dispose();
-        }
-
-        GC.SuppressFinalize(this);
     }
 
     public override string ToString() => BuildHttpRequestMessage(this, default).ToString();

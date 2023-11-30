@@ -14,6 +14,8 @@ public class PipelineMessage : IDisposable
 
     protected internal PipelineMessage(PipelineRequest request)
     {
+        ClientUtilities.AssertNotNull(request, nameof(request));
+
         Request = request;
         _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
     }

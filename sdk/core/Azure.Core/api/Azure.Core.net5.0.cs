@@ -507,17 +507,16 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class Request : System.IDisposable
+    public abstract partial class Request : System.ClientModel.Primitives.PipelineRequest
     {
         protected Request() { }
         public virtual string ClientRequestId { get { throw null; } set { } }
-        public virtual Azure.Core.RequestContent? Content { get { throw null; } set { } }
-        public Azure.Core.RequestHeaders Headers { get { throw null; } }
-        public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }
-        public virtual Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
+        public virtual new Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        public new Azure.Core.RequestHeaders Headers { get { throw null; } }
+        public virtual new Azure.Core.RequestMethod Method { get { throw null; } set { } }
+        public virtual new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
-        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         protected internal abstract bool RemoveHeader(string name);
         protected internal virtual void SetHeader(string name, string value) { }

@@ -20,18 +20,17 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
-            : base(ToPipelineRequest(request))
+            : base(request)
         {
             Argument.AssertNotNull(request, nameof(request));
 
-            Request = request;
             ResponseClassifier = responseClassifier;
         }
 
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public new Request Request { get; }
+        public new Request Request { get => (Request)base.Request; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
@@ -245,19 +244,6 @@ namespace Azure.Core
                 get => throw CreateException();
                 set => throw CreateException();
             }
-        }
-
-        private static PipelineRequest ToPipelineRequest(Request request)
-        {
-            Argument.AssertNotNull(request, nameof(request));
-
-            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
-            {
-                return pipelineRequest!;
-            }
-
-            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
-            return new PipelineRequestAdapter(request);
         }
     }
 }

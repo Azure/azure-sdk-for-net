@@ -16,18 +16,6 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        internal static bool TryGetPipelineRequest(Request request, out PipelineRequest? pipelineRequest)
-        {
-            if (request is RequestAdapter requestAdapter)
-            {
-                pipelineRequest = requestAdapter.PipelineRequest;
-                return true;
-            }
-
-            pipelineRequest = null;
-            return false;
-        }
-
         // Adapts an internal ClientModel HttpPipelineRequest.  Doing this instead
         // of inheriting from HttpPipelineRequest allows us to keep HttpPipelineRequest
         // internal in ClientModel.
@@ -73,20 +61,11 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override string Method
-            {
-                get => _httpPipelineRequest.Method;
-                set => _httpPipelineRequest.Method = value;
-            }
-
             public override InputContent? Content
             {
                 get => _httpPipelineRequest.Content;
                 set => _httpPipelineRequest.Content = value;
             }
-
-            public override MessageHeaders Headers
-                => _httpPipelineRequest.Headers;
 
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 

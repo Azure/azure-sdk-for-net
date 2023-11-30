@@ -192,11 +192,11 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public abstract System.ClientModel.InputContent? Content { get; set; }
-        public abstract System.ClientModel.Primitives.MessageHeaders Headers { get; }
-        public abstract string Method { get; set; }
-        public abstract System.Uri Uri { get; set; }
-        public abstract void Dispose();
+        public virtual System.ClientModel.InputContent? Content { get { throw null; } set { } }
+        public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
+        public virtual string Method { get { throw null; } set { } }
+        public virtual System.Uri Uri { get { throw null; } set { } }
+        public virtual void Dispose() { }
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
