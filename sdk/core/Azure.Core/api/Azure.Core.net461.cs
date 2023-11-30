@@ -674,8 +674,6 @@ namespace Azure.Core
     public partial class ResponseClassifier : System.ClientModel.Primitives.MessageClassifier
     {
         public ResponseClassifier() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool IsError(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }

@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
-using System.IO;
 using System.ClientModel.Primitives;
+using System.IO;
 
 namespace Azure.Core
 {
@@ -57,15 +56,7 @@ namespace Azure.Core
         /// <summary>
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
-        public virtual bool IsErrorResponse(HttpMessage message) => base.IsError(message);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool IsError(PipelineMessage message)
-            => base.IsError(message);
+        public virtual bool IsErrorResponse(HttpMessage message)
+            => base.IsErrorResponse(message);
     }
 }

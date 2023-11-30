@@ -128,7 +128,7 @@ namespace System.ClientModel.Primitives
     public partial class MessageClassifier
     {
         protected internal MessageClassifier() { }
-        public virtual bool IsError(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
     public abstract partial class MessageHeaders
     {
@@ -234,6 +234,6 @@ namespace System.ClientModel.Primitives
     public partial class ResponseStatusClassifier : System.ClientModel.Primitives.MessageClassifier
     {
         public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
-        public override bool IsError(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public override bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
 }
