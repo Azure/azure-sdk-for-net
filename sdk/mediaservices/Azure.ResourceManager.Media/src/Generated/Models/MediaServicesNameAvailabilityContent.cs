@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.Media.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MediaServicesNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The account name. </param>
+        /// <param name="resourceType"> The account type. For a Media Services account, this should be 'MediaServices'. </param>
+        internal MediaServicesNameAvailabilityContent(string name, string resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The account name. </summary>
         public string Name { get; set; }
         /// <summary> The account type. For a Media Services account, this should be 'MediaServices'. </summary>

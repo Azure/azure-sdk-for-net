@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Media.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StreamingEntityScaleUnit"/>. </summary>
+        /// <param name="scaleUnit"> The scale unit number of the streaming endpoint. </param>
+        internal StreamingEntityScaleUnit(int? scaleUnit)
+        {
+            ScaleUnit = scaleUnit;
+        }
+
         /// <summary> The scale unit number of the streaming endpoint. </summary>
         public int? ScaleUnit { get; set; }
     }

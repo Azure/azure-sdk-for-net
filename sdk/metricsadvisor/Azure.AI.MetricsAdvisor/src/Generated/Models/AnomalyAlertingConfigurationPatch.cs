@@ -22,6 +22,23 @@ namespace Azure.AI.MetricsAdvisor.Models
             MetricAlertingConfigurations = new ChangeTrackingList<MetricAlertConfiguration>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlertingConfigurationPatch"/>. </summary>
+        /// <param name="name"> Anomaly alerting configuration name. </param>
+        /// <param name="description"> anomaly alerting configuration description. </param>
+        /// <param name="crossMetricsOperator"> cross metrics operator. </param>
+        /// <param name="splitAlertByDimensions"> dimensions used to split alert. </param>
+        /// <param name="hookIds"> hook unique ids. </param>
+        /// <param name="metricAlertingConfigurations"> Anomaly alerting configurations. </param>
+        internal AnomalyAlertingConfigurationPatch(string name, string description, MetricAlertConfigurationsOperator? crossMetricsOperator, IList<string> splitAlertByDimensions, IList<Guid> hookIds, IList<MetricAlertConfiguration> metricAlertingConfigurations)
+        {
+            Name = name;
+            Description = description;
+            CrossMetricsOperator = crossMetricsOperator;
+            SplitAlertByDimensions = splitAlertByDimensions;
+            HookIds = hookIds;
+            MetricAlertingConfigurations = metricAlertingConfigurations;
+        }
+
         /// <summary> Anomaly alerting configuration name. </summary>
         public string Name { get; set; }
         /// <summary> anomaly alerting configuration description. </summary>

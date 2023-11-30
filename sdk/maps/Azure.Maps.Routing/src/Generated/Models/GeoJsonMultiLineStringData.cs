@@ -25,6 +25,13 @@ namespace Azure.Maps.Routing.Models
             Coordinates = coordinates.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="GeoJsonMultiLineStringData"/>. </summary>
+        /// <param name="coordinates"> Coordinates for the `GeoJson MultiLineString` geometry. </param>
+        internal GeoJsonMultiLineStringData(IList<IList<IList<double>>> coordinates)
+        {
+            Coordinates = coordinates;
+        }
+
         /// <summary> Coordinates for the `GeoJson MultiLineString` geometry. </summary>
         public IList<IList<IList<double>>> Coordinates { get; }
     }

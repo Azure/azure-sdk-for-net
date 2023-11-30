@@ -22,6 +22,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
             KbNumbersToExclude = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="WindowsParameters"/>. </summary>
+        /// <param name="classificationsToInclude"> The update classifications to select when installing patches for Windows. </param>
+        /// <param name="kbNumbersToInclude"> Kbs to include in the patch operation. </param>
+        /// <param name="kbNumbersToExclude"> Kbs to exclude in the patch operation. </param>
+        /// <param name="excludeKbsRequiringReboot"> Filters out Kbs that don't have an InstallationRebootBehavior of 'NeverReboots' when this is set to true. </param>
+        /// <param name="maxPatchPublishOn"> This is used to install patches that were published on or before this given max published date. </param>
+        internal WindowsParameters(IList<VmGuestPatchClassificationWindow> classificationsToInclude, IList<string> kbNumbersToInclude, IList<string> kbNumbersToExclude, bool? excludeKbsRequiringReboot, DateTimeOffset? maxPatchPublishOn)
+        {
+            ClassificationsToInclude = classificationsToInclude;
+            KbNumbersToInclude = kbNumbersToInclude;
+            KbNumbersToExclude = kbNumbersToExclude;
+            ExcludeKbsRequiringReboot = excludeKbsRequiringReboot;
+            MaxPatchPublishOn = maxPatchPublishOn;
+        }
+
         /// <summary> The update classifications to select when installing patches for Windows. </summary>
         public IList<VmGuestPatchClassificationWindow> ClassificationsToInclude { get; }
         /// <summary> Kbs to include in the patch operation. </summary>

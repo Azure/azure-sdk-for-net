@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.Kusto.Models
             InviteeEmail = inviteeEmail;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatabaseInviteFollowerContent"/>. </summary>
+        /// <param name="inviteeEmail"> The email of the invited user for which the follower invitation is generated. </param>
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        internal DatabaseInviteFollowerContent(string inviteeEmail, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties)
+        {
+            InviteeEmail = inviteeEmail;
+            TableLevelSharingProperties = tableLevelSharingProperties;
+        }
+
         /// <summary> The email of the invited user for which the follower invitation is generated. </summary>
         public string InviteeEmail { get; }
         /// <summary> Table level sharing specifications. </summary>

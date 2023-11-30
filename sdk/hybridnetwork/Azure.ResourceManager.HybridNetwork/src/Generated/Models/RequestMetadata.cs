@@ -28,6 +28,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             SerializedBody = serializedBody;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RequestMetadata"/>. </summary>
+        /// <param name="relativePath"> The relative path of the request. </param>
+        /// <param name="httpMethod"> The http method of the request. </param>
+        /// <param name="serializedBody"> The serialized body of the request. </param>
+        /// <param name="apiVersion"> The api version of the request. </param>
+        internal RequestMetadata(string relativePath, HttpMethod httpMethod, string serializedBody, string apiVersion)
+        {
+            RelativePath = relativePath;
+            HttpMethod = httpMethod;
+            SerializedBody = serializedBody;
+            ApiVersion = apiVersion;
+        }
+
         /// <summary> The relative path of the request. </summary>
         public string RelativePath { get; }
         /// <summary> The http method of the request. </summary>
