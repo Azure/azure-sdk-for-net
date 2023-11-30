@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -478,7 +477,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="PipelineResponse.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
         public virtual Response<TableItem> CreateIfNotExists(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateIfNotExists)}");
@@ -517,7 +516,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="PipelineResponse.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
         public virtual async Task<Response<TableItem>> CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateIfNotExists)}");
