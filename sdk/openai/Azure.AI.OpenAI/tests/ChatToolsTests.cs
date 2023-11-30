@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests;
@@ -57,6 +58,11 @@ public class ChatToolsTests : OpenAITestBase
         Assert.That(functionToolCall.Name, Is.EqualTo(s_futureTemperatureFunction.Name));
         Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
 
+        Dictionary<string, string> arguments
+            = JsonConvert.DeserializeObject<Dictionary<string, string>>(functionToolCall.Arguments);
+        Assert.That(arguments.ContainsKey("locationName"));
+        Assert.That(arguments.ContainsKey("date"));
+
         ChatCompletionsOptions followupOptions = new()
         {
             DeploymentName = deploymentOrModelName,
@@ -73,16 +79,11 @@ public class ChatToolsTests : OpenAITestBase
         {
             ToolCalls = { functionToolCall },
         });
+
         // And also the tool message that resolves the tool call
         followupOptions.Messages.Add(new ChatRequestToolMessage(
             toolCallId: functionToolCall.Id,
-            content: JsonSerializer.Serialize(
-                new
-                {
-                    Temperature = "31",
-                    Unit = "celsius",
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })));
+            content: "31 celsius"));
 
         Response<ChatCompletions> followupResponse = await client.GetChatCompletionsAsync(followupOptions);
         Assert.That(followupResponse, Is.Not.Null);
@@ -187,25 +188,6 @@ public class ChatToolsTests : OpenAITestBase
                     Type = "string",
                     Description = "the day, month, and year for which to retrieve weather information"
                 }
-            }
-        },
-            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
-    };
-
-    private static readonly FunctionDefinition s_wordOfTheDayFunction = new()
-    {
-        Name = "get_word_of_the_day",
-        Description = "requests a featured word for a given day of the week",
-        Parameters = BinaryData.FromObjectAsJson(new
-        {
-            Type = "object",
-            Properties = new
-            {
-                DayOfWeek = new
-                {
-                    Type = "string",
-                    Description = "the name of a day of the week, like Wednesday",
-                },
             }
         },
             new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })

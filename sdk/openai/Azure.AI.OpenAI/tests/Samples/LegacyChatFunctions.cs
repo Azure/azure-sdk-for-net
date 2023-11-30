@@ -83,11 +83,7 @@ public partial class StreamingChat
                 string unvalidatedArguments = responseChoice.Message.FunctionCall.Arguments;
                 var functionResultData = (object)null; // GetYourFunctionResultData(unvalidatedArguments);
                 // Here, replacing with an example as if returned from GetYourFunctionResultData
-                functionResultData = new
-                {
-                    Temperature = 31,
-                    Unit = "celsius",
-                };
+                functionResultData = "31 degrees celsius";
                 // Serialize the result data from the function into a new chat message with the 'Function' role,
                 // then add it to the messages after the first User message and initial response FunctionCall
                 var functionResponseMessage = new ChatRequestFunctionMessage(
