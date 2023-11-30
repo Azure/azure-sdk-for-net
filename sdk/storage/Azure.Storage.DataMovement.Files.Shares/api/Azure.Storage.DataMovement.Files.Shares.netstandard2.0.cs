@@ -29,14 +29,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
     public partial class ShareFileStorageResourceOptions
     {
         public ShareFileStorageResourceOptions() { }
-        public bool? Archive { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationConditions { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> DirectoryMetadata { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> FileMetadata { get { throw null; } set { } }
         public string FilePermissions { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.ShareProtocols? Protocols { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
