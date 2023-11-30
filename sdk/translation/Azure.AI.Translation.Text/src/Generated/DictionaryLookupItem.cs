@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Dictionary Lookup Element. </summary>
     public partial class DictionaryLookupItem
     {
-        /// <summary> Initializes a new instance of DictionaryLookupItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryLookupItem"/>. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term.
         /// For example, if the request is "JOHN", the normalized form will be "john".
@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Text
             Translations = translations.ToList();
         }
 
-        /// <summary> Initializes a new instance of DictionaryLookupItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryLookupItem"/>. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term.
         /// For example, if the request is "JOHN", the normalized form will be "john".

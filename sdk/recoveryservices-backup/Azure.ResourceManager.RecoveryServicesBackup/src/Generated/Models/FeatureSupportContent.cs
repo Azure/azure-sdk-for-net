@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class FeatureSupportContent
     {
-        /// <summary> Initializes a new instance of FeatureSupportContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureSupportContent"/>. </summary>
         protected FeatureSupportContent()
         {
         }

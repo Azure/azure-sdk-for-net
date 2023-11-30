@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of LabelingJob entities. </summary>
     internal partial class LabelingJobResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of LabelingJobResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelingJobResourceArmPaginatedResult"/>. </summary>
         internal LabelingJobResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningLabelingJobData>();
         }
 
-        /// <summary> Initializes a new instance of LabelingJobResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelingJobResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of LabelingJob objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type LabelingJob. </param>
         internal LabelingJobResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningLabelingJobData> value)

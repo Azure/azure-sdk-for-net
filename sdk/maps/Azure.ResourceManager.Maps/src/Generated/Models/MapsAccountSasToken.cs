@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> A new Sas token which can be used to access the Maps REST APIs and is controlled by the specified Managed identity permissions on Azure (IAM) Role Based Access Control. </summary>
     public partial class MapsAccountSasToken
     {
-        /// <summary> Initializes a new instance of MapsAccountSasToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountSasToken"/>. </summary>
         internal MapsAccountSasToken()
         {
         }
 
-        /// <summary> Initializes a new instance of MapsAccountSasToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountSasToken"/>. </summary>
         /// <param name="accountSasToken"> The shared access signature access token. </param>
         internal MapsAccountSasToken(string accountSasToken)
         {

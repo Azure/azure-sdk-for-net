@@ -13,7 +13,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A geographic area, expressed as a `Circle` geometry represented using a `GeoJSON Feature` (see [GeoJSON spec](https://tools.ietf.org/html/rfc7946)). </summary>
     public partial class GeographicArea
     {
-        /// <summary> Initializes a new instance of GeographicArea. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeographicArea"/>. </summary>
         /// <param name="type"> `GeoJSON` type. </param>
         /// <param name="geometry"> `GeoJSON` geometry, representing the area circle's center. </param>
         /// <param name="properties"> `GeoJSON` object properties. </param>

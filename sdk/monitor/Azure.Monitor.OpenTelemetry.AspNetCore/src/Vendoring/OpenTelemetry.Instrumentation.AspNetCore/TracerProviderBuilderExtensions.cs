@@ -17,120 +17,119 @@
 #if NET7_0_OR_GREATER
 using System.Diagnostics;
 #endif
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Instrumentation.AspNetCore.Implementation;
 using OpenTelemetry.Internal;
 
-namespace OpenTelemetry.Trace
+namespace OpenTelemetry.Trace;
+
+/// <summary>
+/// Extension methods to simplify registering of ASP.NET Core request instrumentation.
+/// </summary>
+internal static class TracerProviderBuilderExtensions
 {
     /// <summary>
-    /// Extension methods to simplify registering of ASP.NET Core request instrumentation.
+    /// Enables the incoming requests automatic data collection for ASP.NET Core.
     /// </summary>
-    internal static class TracerProviderBuilderExtensions
+    /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
+    /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
+    public static TracerProviderBuilder AddAspNetCoreInstrumentation(this TracerProviderBuilder builder)
+        => AddAspNetCoreInstrumentation(builder, name: null, configureAspNetCoreInstrumentationOptions: null);
+
+    /// <summary>
+    /// Enables the incoming requests automatic data collection for ASP.NET Core.
+    /// </summary>
+    /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
+    /// <param name="configureAspNetCoreInstrumentationOptions">Callback action for configuring <see cref="AspNetCoreInstrumentationOptions"/>.</param>
+    /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
+    public static TracerProviderBuilder AddAspNetCoreInstrumentation(
+        this TracerProviderBuilder builder,
+        Action<AspNetCoreInstrumentationOptions> configureAspNetCoreInstrumentationOptions)
+        => AddAspNetCoreInstrumentation(builder, name: null, configureAspNetCoreInstrumentationOptions);
+
+    /// <summary>
+    /// Enables the incoming requests automatic data collection for ASP.NET Core.
+    /// </summary>
+    /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
+    /// <param name="name">Name which is used when retrieving options.</param>
+    /// <param name="configureAspNetCoreInstrumentationOptions">Callback action for configuring <see cref="AspNetCoreInstrumentationOptions"/>.</param>
+    /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
+    public static TracerProviderBuilder AddAspNetCoreInstrumentation(
+        this TracerProviderBuilder builder,
+        string name,
+        Action<AspNetCoreInstrumentationOptions> configureAspNetCoreInstrumentationOptions)
     {
-        /// <summary>
-        /// Enables the incoming requests automatic data collection for ASP.NET Core.
-        /// </summary>
-        /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
-        /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-        public static TracerProviderBuilder AddAspNetCoreInstrumentation(this TracerProviderBuilder builder)
-            => AddAspNetCoreInstrumentation(builder, name: null, configureAspNetCoreInstrumentationOptions: null);
+        Guard.ThrowIfNull(builder);
 
-        /// <summary>
-        /// Enables the incoming requests automatic data collection for ASP.NET Core.
-        /// </summary>
-        /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
-        /// <param name="configureAspNetCoreInstrumentationOptions">Callback action for configuring <see cref="AspNetCoreInstrumentationOptions"/>.</param>
-        /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-        public static TracerProviderBuilder AddAspNetCoreInstrumentation(
-            this TracerProviderBuilder builder,
-            Action<AspNetCoreInstrumentationOptions> configureAspNetCoreInstrumentationOptions)
-            => AddAspNetCoreInstrumentation(builder, name: null, configureAspNetCoreInstrumentationOptions);
+        // Note: Warm-up the status code and method mapping.
+        _ = TelemetryHelper.BoxedStatusCodes;
+        _ = RequestMethodHelper.KnownMethods;
 
-        /// <summary>
-        /// Enables the incoming requests automatic data collection for ASP.NET Core.
-        /// </summary>
-        /// <param name="builder"><see cref="TracerProviderBuilder"/> being configured.</param>
-        /// <param name="name">Name which is used when retrieving options.</param>
-        /// <param name="configureAspNetCoreInstrumentationOptions">Callback action for configuring <see cref="AspNetCoreInstrumentationOptions"/>.</param>
-        /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-        public static TracerProviderBuilder AddAspNetCoreInstrumentation(
-            this TracerProviderBuilder builder,
-            string name,
-            Action<AspNetCoreInstrumentationOptions> configureAspNetCoreInstrumentationOptions)
+        name ??= Options.DefaultName;
+
+        builder.ConfigureServices(services =>
         {
-            Guard.ThrowIfNull(builder);
-
-            // Note: Warm-up the status code mapping.
-            _ = TelemetryHelper.BoxedStatusCodes;
-
-            name ??= Options.DefaultName;
-
-            builder.ConfigureServices(services =>
+            if (configureAspNetCoreInstrumentationOptions != null)
             {
-                if (configureAspNetCoreInstrumentationOptions != null)
-                {
-                    services.Configure(name, configureAspNetCoreInstrumentationOptions);
-                }
-
-                services.RegisterOptionsFactory(configuration => new AspNetCoreInstrumentationOptions(configuration));
-            });
-
-            if (builder is IDeferredTracerProviderBuilder deferredTracerProviderBuilder)
-            {
-                deferredTracerProviderBuilder.Configure((sp, builder) =>
-                {
-                    AddAspNetCoreInstrumentationSources(builder, sp);
-                });
+                services.Configure(name, configureAspNetCoreInstrumentationOptions);
             }
 
-            return builder.AddInstrumentation(sp =>
-            {
-                var options = sp.GetRequiredService<IOptionsMonitor<AspNetCoreInstrumentationOptions>>().Get(name);
+            services.RegisterOptionsFactory(configuration => new AspNetCoreInstrumentationOptions(configuration));
+        });
 
-                return new AspNetCoreInstrumentation(
-                    new HttpInListener(options));
+        if (builder is IDeferredTracerProviderBuilder deferredTracerProviderBuilder)
+        {
+            deferredTracerProviderBuilder.Configure((sp, builder) =>
+            {
+                AddAspNetCoreInstrumentationSources(builder, sp);
             });
         }
 
-        // Note: This is used by unit tests.
-        internal static TracerProviderBuilder AddAspNetCoreInstrumentation(
-            this TracerProviderBuilder builder,
-            HttpInListener listener)
+        return builder.AddInstrumentation(sp =>
         {
-            builder.AddAspNetCoreInstrumentationSources();
+            var options = sp.GetRequiredService<IOptionsMonitor<AspNetCoreInstrumentationOptions>>().Get(name);
 
-            return builder.AddInstrumentation(
-                new AspNetCoreInstrumentation(listener));
-        }
+            return new AspNetCoreInstrumentation(
+                new HttpInListener(options));
+        });
+    }
 
-        private static void AddAspNetCoreInstrumentationSources(
-            this TracerProviderBuilder builder,
-            IServiceProvider serviceProvider = null)
-        {
-            // For .NET7.0 onwards activity will be created using activitySource.
-            // https://github.com/dotnet/aspnetcore/blob/bf3352f2422bf16fa3ca49021f0e31961ce525eb/src/Hosting/Hosting/src/Internal/HostingApplicationDiagnostics.cs#L327
-            // For .NET6.0 and below, we will continue to use legacy way.
+    // Note: This is used by unit tests.
+    internal static TracerProviderBuilder AddAspNetCoreInstrumentation(
+        this TracerProviderBuilder builder,
+        HttpInListener listener)
+    {
+        builder.AddAspNetCoreInstrumentationSources();
+
+        return builder.AddInstrumentation(
+            new AspNetCoreInstrumentation(listener));
+    }
+
+    private static void AddAspNetCoreInstrumentationSources(
+        this TracerProviderBuilder builder,
+        IServiceProvider serviceProvider = null)
+    {
+        // For .NET7.0 onwards activity will be created using activitySource.
+        // https://github.com/dotnet/aspnetcore/blob/bf3352f2422bf16fa3ca49021f0e31961ce525eb/src/Hosting/Hosting/src/Internal/HostingApplicationDiagnostics.cs#L327
+        // For .NET6.0 and below, we will continue to use legacy way.
 #if NET7_0_OR_GREATER
-            // TODO: Check with .NET team to see if this can be prevented
-            // as this allows user to override the ActivitySource.
-            var activitySourceService = serviceProvider?.GetService<ActivitySource>();
-            if (activitySourceService != null)
-            {
-                builder.AddSource(activitySourceService.Name);
-            }
-            else
-            {
-                // For users not using hosting package?
-                builder.AddSource(HttpInListener.AspNetCoreActivitySourceName);
-            }
-#else
-            builder.AddSource(HttpInListener.ActivitySourceName);
-            builder.AddLegacySource(HttpInListener.ActivityOperationName); // for the activities created by AspNetCore
-#endif
+        // TODO: Check with .NET team to see if this can be prevented
+        // as this allows user to override the ActivitySource.
+        var activitySourceService = serviceProvider?.GetService<ActivitySource>();
+        if (activitySourceService != null)
+        {
+            builder.AddSource(activitySourceService.Name);
         }
+        else
+        {
+            // For users not using hosting package?
+            builder.AddSource(HttpInListener.AspNetCoreActivitySourceName);
+        }
+#else
+        builder.AddSource(HttpInListener.ActivitySourceName);
+        builder.AddLegacySource(HttpInListener.ActivityOperationName); // for the activities created by AspNetCore
+#endif
     }
 }

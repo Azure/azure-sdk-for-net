@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MixedReality.Models
     /// <summary> Result of the request to get resource collection. It contains a list of resources and a URL link to get the next set of results. </summary>
     internal partial class RemoteRenderingAccountListResult
     {
-        /// <summary> Initializes a new instance of RemoteRenderingAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteRenderingAccountListResult"/>. </summary>
         internal RemoteRenderingAccountListResult()
         {
             Value = new ChangeTrackingList<RemoteRenderingAccountData>();
         }
 
-        /// <summary> Initializes a new instance of RemoteRenderingAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteRenderingAccountListResult"/>. </summary>
         /// <param name="value"> List of resources supported by the Resource Provider. </param>
         /// <param name="nextLink"> URL to get the next set of resource list results if there are any. </param>
         internal RemoteRenderingAccountListResult(IReadOnlyList<RemoteRenderingAccountData> value, string nextLink)

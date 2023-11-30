@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class EnableMigrationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of EnableMigrationProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnableMigrationProviderSpecificContent"/>. </summary>
         protected EnableMigrationProviderSpecificContent()
         {
         }

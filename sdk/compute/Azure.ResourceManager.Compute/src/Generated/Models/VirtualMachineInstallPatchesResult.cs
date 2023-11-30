@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The result summary of an installation operation. </summary>
     public partial class VirtualMachineInstallPatchesResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstallPatchesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstallPatchesResult"/>. </summary>
         internal VirtualMachineInstallPatchesResult()
         {
             Patches = new ChangeTrackingList<PatchInstallationDetail>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstallPatchesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstallPatchesResult"/>. </summary>
         /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </param>
         /// <param name="installationActivityId"> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </param>
         /// <param name="rebootStatus"> The reboot state of the VM following completion of the operation. </param>

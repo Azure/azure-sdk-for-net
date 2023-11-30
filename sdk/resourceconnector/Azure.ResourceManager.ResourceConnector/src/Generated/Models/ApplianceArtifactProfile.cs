@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> Appliance ArtifactProfile definition. </summary>
     public partial class ApplianceArtifactProfile
     {
-        /// <summary> Initializes a new instance of ApplianceArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceArtifactProfile"/>. </summary>
         internal ApplianceArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceArtifactProfile"/>. </summary>
         /// <param name="endpoint"> Endpoint is the URL to upload artifacts to. </param>
         internal ApplianceArtifactProfile(string endpoint)
         {

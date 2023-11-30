@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DnsResolverInboundEndpointResource" /> and their operations.
-    /// Each <see cref="DnsResolverInboundEndpointResource" /> in the collection will belong to the same instance of <see cref="DnsResolverResource" />.
-    /// To get a <see cref="DnsResolverInboundEndpointCollection" /> instance call the GetDnsResolverInboundEndpoints method from an instance of <see cref="DnsResolverResource" />.
+    /// A class representing a collection of <see cref="DnsResolverInboundEndpointResource"/> and their operations.
+    /// Each <see cref="DnsResolverInboundEndpointResource"/> in the collection will belong to the same instance of <see cref="DnsResolverResource"/>.
+    /// To get a <see cref="DnsResolverInboundEndpointCollection"/> instance call the GetDnsResolverInboundEndpoints method from an instance of <see cref="DnsResolverResource"/>.
     /// </summary>
     public partial class DnsResolverInboundEndpointCollection : ArmCollection, IEnumerable<DnsResolverInboundEndpointResource>, IAsyncEnumerable<DnsResolverInboundEndpointResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsResolverInboundEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsResolverInboundEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsResolverInboundEndpointResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsResolverInboundEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsResolverInboundEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsResolverInboundEndpointResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);

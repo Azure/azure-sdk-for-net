@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Connection string for the mongo cluster. </summary>
     public partial class CosmosDBConnectionString
     {
-        /// <summary> Initializes a new instance of CosmosDBConnectionString. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBConnectionString"/>. </summary>
         internal CosmosDBConnectionString()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBConnectionString. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBConnectionString"/>. </summary>
         /// <param name="connectionString"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
         internal CosmosDBConnectionString(string connectionString, string description)

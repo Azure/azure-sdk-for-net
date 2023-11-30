@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of cloud links. </summary>
     internal partial class CloudLinkList
     {
-        /// <summary> Initializes a new instance of CloudLinkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudLinkList"/>. </summary>
         internal CloudLinkList()
         {
             Value = new ChangeTrackingList<AvsCloudLinkData>();
         }
 
-        /// <summary> Initializes a new instance of CloudLinkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudLinkList"/>. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal CloudLinkList(IReadOnlyList<AvsCloudLinkData> value, string nextLink)

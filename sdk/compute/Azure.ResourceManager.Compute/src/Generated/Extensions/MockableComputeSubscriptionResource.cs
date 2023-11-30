@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         /// <summary> Gets a collection of VirtualMachineExtensionImageResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> The String to use. </param>
+        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of VirtualMachineExtensionImageResources and their operations over a VirtualMachineExtensionImageResource. </returns>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> The String to use. </param>
-        /// <param name="type"> The String to use. </param>
-        /// <param name="version"> The String to use. </param>
+        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
+        /// <param name="type"> The <see cref="string"/> to use. </param>
+        /// <param name="version"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> The String to use. </param>
-        /// <param name="type"> The String to use. </param>
-        /// <param name="version"> The String to use. </param>
+        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
+        /// <param name="type"> The <see cref="string"/> to use. </param>
+        /// <param name="version"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ComputeUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputeUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ComputeUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputeUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'. </param>
         /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(string statusOnly = null, string filter = null, ExpandTypesForListVm? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListAllRequest(Id.SubscriptionId, statusOnly, filter, expand);
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'. </param>
         /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineResource> GetVirtualMachines(string statusOnly = null, string filter = null, ExpandTypesForListVm? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListAllRequest(Id.SubscriptionId, statusOnly, filter, expand);
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
@@ -1256,7 +1256,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
@@ -1316,7 +1316,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
@@ -1342,7 +1342,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailabilitySetResource> GetAvailabilitySetsAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilitySetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
@@ -1365,7 +1365,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailabilitySetResource> GetAvailabilitySets(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilitySetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProximityPlacementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProximityPlacementGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProximityPlacementGroupResource> GetProximityPlacementGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProximityPlacementGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1409,7 +1409,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProximityPlacementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProximityPlacementGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProximityPlacementGroupResource> GetProximityPlacementGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProximityPlacementGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1431,7 +1431,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedHostGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DedicatedHostGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DedicatedHostGroupResource> GetDedicatedHostGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHostGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedHostGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DedicatedHostGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DedicatedHostGroupResource> GetDedicatedHostGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHostGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SshPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SshPublicKeyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SshPublicKeyResource> GetSshPublicKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SshPublicKeyRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1497,7 +1497,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SshPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SshPublicKeyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SshPublicKeyResource> GetSshPublicKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SshPublicKeyRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskImageResource> GetDiskImagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskImageImagesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1541,7 +1541,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskImageResource> GetDiskImages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskImageImagesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorePointGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RestorePointGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RestorePointGroupResource> GetRestorePointGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestorePointGroupRestorePointCollectionsRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1585,7 +1585,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorePointGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RestorePointGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RestorePointGroupResource> GetRestorePointGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestorePointGroupRestorePointCollectionsRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CapacityReservationGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
@@ -1631,7 +1631,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CapacityReservationGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
@@ -1810,7 +1810,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RunCommandDocumentBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RunCommandDocumentBase> GetVirtualMachineRunCommandsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -1833,7 +1833,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RunCommandDocumentBase"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RunCommandDocumentBase> GetVirtualMachineRunCommands(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -1927,7 +1927,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDiskResource> GetManagedDisksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedDiskDisksRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1949,7 +1949,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDiskResource> GetManagedDisks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedDiskDisksRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1971,7 +1971,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskAccessResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskAccessResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskAccessResource> GetDiskAccessesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskAccessRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1993,7 +1993,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskAccessResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskAccessResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskAccessResource> GetDiskAccesses(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskAccessRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2015,7 +2015,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskEncryptionSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskEncryptionSetResource> GetDiskEncryptionSetsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskEncryptionSetRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskEncryptionSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskEncryptionSetResource> GetDiskEncryptionSets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskEncryptionSetRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2059,7 +2059,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SnapshotResource> GetSnapshotsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SnapshotRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2081,7 +2081,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SnapshotResource> GetSnapshots(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SnapshotRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2105,7 +2105,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputeResourceSku> GetComputeResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
@@ -2129,7 +2129,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputeResourceSku> GetComputeResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
@@ -2151,7 +2151,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GalleryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GalleryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GalleryResource> GetGalleriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2173,7 +2173,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GalleryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GalleryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GalleryResource> GetGalleries(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryRestClient.CreateListRequest(Id.SubscriptionId);
@@ -2195,7 +2195,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudServiceResource> GetCloudServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServiceRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -2217,7 +2217,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudServiceResource> GetCloudServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServiceRestClient.CreateListAllRequest(Id.SubscriptionId);

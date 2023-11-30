@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> API route config of the Spring Cloud Gateway. </summary>
     public partial class AppPlatformGatewayApiRoute
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayApiRoute"/>. </summary>
         public AppPlatformGatewayApiRoute()
         {
             Predicates = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayApiRoute"/>. </summary>
         /// <param name="title"> A title, will be applied to methods in the generated OpenAPI documentation. </param>
         /// <param name="description"> A description, will be applied to methods in the generated OpenAPI documentation. </param>
         /// <param name="uri"> Full uri, will override `appName`. </param>

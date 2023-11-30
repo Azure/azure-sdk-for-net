@@ -13,7 +13,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A filter defining a subset of clinical trials from a given clinical trial registry (e.g. clinicaltrials.gov). </summary>
     public partial class ClinicalTrialRegistryFilter
     {
-        /// <summary> Initializes a new instance of ClinicalTrialRegistryFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialRegistryFilter"/>. </summary>
         public ClinicalTrialRegistryFilter()
         {
             Conditions = new ChangeTrackingList<string>();
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             FacilityAreas = new ChangeTrackingList<GeographicArea>();
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrialRegistryFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialRegistryFilter"/>. </summary>
         /// <param name="conditions">
         /// Trials with any of the given medical conditions will be included in the selection (provided that other limitations are satisfied).
         /// Leaving this list empty will not limit the medical conditions.

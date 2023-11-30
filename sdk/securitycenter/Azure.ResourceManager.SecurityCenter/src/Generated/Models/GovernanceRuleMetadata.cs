@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The governance rule metadata. </summary>
     public partial class GovernanceRuleMetadata
     {
-        /// <summary> Initializes a new instance of GovernanceRuleMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleMetadata"/>. </summary>
         public GovernanceRuleMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleMetadata"/>. </summary>
         /// <param name="createdBy"> Governance rule Created by object id (GUID). </param>
         /// <param name="createdOn"> Governance rule creation date. </param>
         /// <param name="updatedBy"> Governance rule last updated by object id (GUID). </param>

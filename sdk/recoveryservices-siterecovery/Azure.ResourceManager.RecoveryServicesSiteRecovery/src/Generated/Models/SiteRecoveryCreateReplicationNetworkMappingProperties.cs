@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Common input details for network mapping operation. </summary>
     public partial class SiteRecoveryCreateReplicationNetworkMappingProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreateReplicationNetworkMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateReplicationNetworkMappingProperties"/>. </summary>
         /// <param name="recoveryNetworkId"> Recovery network Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryNetworkId"/> is null. </exception>
         public SiteRecoveryCreateReplicationNetworkMappingProperties(ResourceIdentifier recoveryNetworkId)

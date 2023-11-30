@@ -16,10 +16,11 @@ namespace Azure.Communication.CallAutomation
         private string _callConnectionId;
         private string _operationContext;
 
-        internal AddParticipantResult(CallParticipant participant, string operationContext)
+        internal AddParticipantResult(CallParticipant participant, string operationContext, string invitationId)
         {
             Participant = participant;
             OperationContext = operationContext;
+            InvitationId = invitationId;
         }
 
         internal AddParticipantResult(AddParticipantResponseInternal internalObj)

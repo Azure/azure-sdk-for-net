@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> package carrier info. </summary>
     public partial class PackageCarrierInfo
     {
-        /// <summary> Initializes a new instance of PackageCarrierInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageCarrierInfo"/>. </summary>
         public PackageCarrierInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PackageCarrierInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageCarrierInfo"/>. </summary>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="trackingId"> Tracking Id of shipment. </param>
         internal PackageCarrierInfo(string carrierName, string trackingId)

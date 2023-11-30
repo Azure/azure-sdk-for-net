@@ -13,7 +13,7 @@ namespace Azure.Maps.Search.Models
     /// <summary> This type represents the request body for the Batch service. </summary>
     internal partial class BatchRequestInternal
     {
-        /// <summary> Initializes a new instance of BatchRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchRequestInternal"/>. </summary>
         public BatchRequestInternal()
         {
             BatchItems = new ChangeTrackingList<BatchRequestItemInternal>();

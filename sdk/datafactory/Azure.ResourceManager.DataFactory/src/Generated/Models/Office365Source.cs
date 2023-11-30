@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity source for an Office 365 service. </summary>
     public partial class Office365Source : CopyActivitySource
     {
-        /// <summary> Initializes a new instance of Office365Source. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365Source"/>. </summary>
         public Office365Source()
         {
             CopySourceType = "Office365Source";
         }
 
-        /// <summary> Initializes a new instance of Office365Source. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365Source"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

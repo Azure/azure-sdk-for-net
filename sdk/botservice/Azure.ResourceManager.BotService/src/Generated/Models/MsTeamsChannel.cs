@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Microsoft Teams channel definition. </summary>
     public partial class MsTeamsChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of MsTeamsChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannel"/>. </summary>
         public MsTeamsChannel()
         {
             ChannelName = "MsTeamsChannel";
         }
 
-        /// <summary> Initializes a new instance of MsTeamsChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

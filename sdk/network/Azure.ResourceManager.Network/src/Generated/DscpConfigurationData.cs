@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class DscpConfigurationData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of DscpConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscpConfigurationData"/>. </summary>
         public DscpConfigurationData()
         {
             Markings = new ChangeTrackingList<int>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
             AssociatedNetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
         }
 
-        /// <summary> Initializes a new instance of DscpConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscpConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

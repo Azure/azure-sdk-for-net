@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessPolicyInitiatePort. </summary>
     public partial class JitNetworkAccessPolicyInitiatePort
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyInitiatePort. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
         /// <param name="number"></param>
         /// <param name="endOn"> The time to close the request in UTC. </param>
         public JitNetworkAccessPolicyInitiatePort(int number, DateTimeOffset endOn)

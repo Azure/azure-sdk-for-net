@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Job finished event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobFinished event. </summary>
     public partial class MediaJobFinishedEventData : MediaJobStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobFinishedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobFinishedEventData"/>. </summary>
         internal MediaJobFinishedEventData()
         {
             Outputs = new ChangeTrackingList<MediaJobOutput>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobFinishedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobFinishedEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>

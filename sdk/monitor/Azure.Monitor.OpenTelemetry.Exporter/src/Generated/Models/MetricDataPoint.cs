@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Metric data single measurement. </summary>
     internal partial class MetricDataPoint
     {
-        /// <summary> Initializes a new instance of MetricDataPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/>. </summary>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="value"> Single value for measurement. Sum of individual measurements for the aggregation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

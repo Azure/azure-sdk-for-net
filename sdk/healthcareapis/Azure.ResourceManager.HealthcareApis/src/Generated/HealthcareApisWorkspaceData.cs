@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.HealthcareApis
     /// </summary>
     public partial class HealthcareApisWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HealthcareApisWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HealthcareApisWorkspaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

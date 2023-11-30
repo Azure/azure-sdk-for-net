@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> SIM name and encrypted properties. </summary>
     public partial class SimNameAndEncryptedProperties
     {
-        /// <summary> Initializes a new instance of SimNameAndEncryptedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimNameAndEncryptedProperties"/>. </summary>
         /// <param name="name"> The name of the SIM. </param>
         /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="internationalMobileSubscriberIdentity"/> is null. </exception>

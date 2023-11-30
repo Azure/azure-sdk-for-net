@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for adding participant to the call. </summary>
     internal partial class AddParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/>. </summary>
         /// <param name="participantToAdd"> The participant to invite. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
         public AddParticipantRequestInternal(CommunicationIdentifierModel participantToAdd)
@@ -43,9 +43,12 @@ namespace Azure.Communication.CallAutomation
         public int? InvitationTimeoutInSeconds { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContextInternal CustomContext { get; set; }
-        /// <summary> The callback URI to override the main callback URI. </summary>
-        public string CallbackUri { get; set; }
+        /// <summary> Used by customer to send custom calling context to targets. </summary>
+        public CustomCallingContextInternal CustomCallingContext { get; set; }
+        /// <summary>
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public string OperationCallbackUri { get; set; }
     }
 }

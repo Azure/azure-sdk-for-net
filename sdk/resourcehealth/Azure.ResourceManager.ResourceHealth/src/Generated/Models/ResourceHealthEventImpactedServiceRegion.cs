@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Azure region impacted by the service health event. </summary>
     public partial class ResourceHealthEventImpactedServiceRegion
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedServiceRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedServiceRegion"/>. </summary>
         internal ResourceHealthEventImpactedServiceRegion()
         {
             ImpactedSubscriptions = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Updates = new ChangeTrackingList<ResourceHealthEventUpdate>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedServiceRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedServiceRegion"/>. </summary>
         /// <param name="impactedRegion"> Impacted region name. </param>
         /// <param name="status"> Current status of event in the region. </param>
         /// <param name="impactedSubscriptions"> List subscription impacted by the service health event. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Options for retrieving the list of top level domain legal agreements. </summary>
     public partial class TopLevelDomainAgreementOption
     {
-        /// <summary> Initializes a new instance of TopLevelDomainAgreementOption. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainAgreementOption"/>. </summary>
         public TopLevelDomainAgreementOption()
         {
         }

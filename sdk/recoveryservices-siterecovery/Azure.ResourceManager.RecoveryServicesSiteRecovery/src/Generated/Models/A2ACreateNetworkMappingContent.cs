@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create network mappings input properties/behavior specific to Azure to Azure Network mapping. </summary>
     public partial class A2ACreateNetworkMappingContent : FabricSpecificCreateNetworkMappingContent
     {
-        /// <summary> Initializes a new instance of A2ACreateNetworkMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ACreateNetworkMappingContent"/>. </summary>
         /// <param name="primaryNetworkId"> The primary azure vnet Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryNetworkId"/> is null. </exception>
         public A2ACreateNetworkMappingContent(ResourceIdentifier primaryNetworkId)

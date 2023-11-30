@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> CVSS details. </summary>
     public partial class SecurityCvss
     {
-        /// <summary> Initializes a new instance of SecurityCvss. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCvss"/>. </summary>
         internal SecurityCvss()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCvss. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCvss"/>. </summary>
         /// <param name="base"> CVSS base. </param>
         internal SecurityCvss(float? @base)
         {

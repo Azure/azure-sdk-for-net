@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The AzureDevOpsConnectorProperties. </summary>
     public partial class AzureDevOpsConnectorProperties
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorProperties"/>. </summary>
         public AzureDevOpsConnectorProperties()
         {
             Orgs = new ChangeTrackingList<AzureDevOpsOrgMetadata>();
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="authorization"></param>
         /// <param name="orgs"> Gets or sets org onboarding information. </param>

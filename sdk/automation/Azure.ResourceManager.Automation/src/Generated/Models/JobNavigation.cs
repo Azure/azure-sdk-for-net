@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration machine run job navigation properties. </summary>
     internal partial class JobNavigation
     {
-        /// <summary> Initializes a new instance of JobNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobNavigation"/>. </summary>
         internal JobNavigation()
         {
         }
 
-        /// <summary> Initializes a new instance of JobNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobNavigation"/>. </summary>
         /// <param name="id"> Id of the job associated with the software update configuration run. </param>
         internal JobNavigation(Guid? id)
         {

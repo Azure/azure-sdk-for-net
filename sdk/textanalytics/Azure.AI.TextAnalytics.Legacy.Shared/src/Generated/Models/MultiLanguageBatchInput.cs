@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> Contains a set of input documents to be analyzed by the service. </summary>
     internal partial class MultiLanguageBatchInput
     {
-        /// <summary> Initializes a new instance of MultiLanguageBatchInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageBatchInput"/>. </summary>
         /// <param name="documents"> The set of documents to process as part of this batch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
         public MultiLanguageBatchInput(IEnumerable<MultiLanguageInput> documents)

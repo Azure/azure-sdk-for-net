@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> N-Cross validations are specified by user. </summary>
     public partial class CustomNCrossValidations : NCrossValidations
     {
-        /// <summary> Initializes a new instance of CustomNCrossValidations. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomNCrossValidations"/>. </summary>
         /// <param name="value"> [Required] N-Cross validations value. </param>
         public CustomNCrossValidations(int value)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Mode = NCrossValidationsMode.Custom;
         }
 
-        /// <summary> Initializes a new instance of CustomNCrossValidations. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomNCrossValidations"/>. </summary>
         /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
         /// <param name="value"> [Required] N-Cross validations value. </param>
         internal CustomNCrossValidations(NCrossValidationsMode mode, int value) : base(mode)

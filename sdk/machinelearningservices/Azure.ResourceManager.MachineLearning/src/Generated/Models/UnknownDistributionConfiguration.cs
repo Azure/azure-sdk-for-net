@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownDistributionConfiguration. </summary>
     internal partial class UnknownDistributionConfiguration : MachineLearningDistributionConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         internal UnknownDistributionConfiguration(DistributionType distributionType) : base(distributionType)
         {

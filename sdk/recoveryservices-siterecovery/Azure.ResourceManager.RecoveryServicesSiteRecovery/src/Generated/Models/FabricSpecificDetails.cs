@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of FabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificDetails"/>. </summary>
         protected FabricSpecificDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of FabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal FabricSpecificDetails(string instanceType)
         {

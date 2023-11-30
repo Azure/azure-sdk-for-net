@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> The SASTokenParameter. </summary>
     internal partial class SASTokenParameter
     {
-        /// <summary> Initializes a new instance of SASTokenParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SASTokenParameter"/>. </summary>
         /// <param name="storageResourceUri"> Azure Blob storage container Uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageResourceUri"/> is null. </exception>
         public SASTokenParameter(string storageResourceUri)

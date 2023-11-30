@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
-        /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
-        /// <param name="column"> The ArrayOfGet5ItemsItem to use. </param>
-        /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
+        /// <param name="schema"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="table"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="column"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="orderBy"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
-        /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
-        /// <param name="column"> The ArrayOfGet5ItemsItem to use. </param>
-        /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
+        /// <param name="schema"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="table"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="column"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="orderBy"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -394,10 +394,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
-        /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
-        /// <param name="column"> The ArrayOfGet5ItemsItem to use. </param>
-        /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
+        /// <param name="schema"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="table"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="column"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="orderBy"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -432,10 +432,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
-        /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
-        /// <param name="column"> The ArrayOfGet5ItemsItem to use. </param>
-        /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
+        /// <param name="schema"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="table"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="column"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
+        /// <param name="orderBy"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>

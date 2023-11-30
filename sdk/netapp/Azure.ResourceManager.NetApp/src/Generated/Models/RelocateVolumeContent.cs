@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Relocate volume request. </summary>
     public partial class RelocateVolumeContent
     {
-        /// <summary> Initializes a new instance of RelocateVolumeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelocateVolumeContent"/>. </summary>
         public RelocateVolumeContent()
         {
         }

@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public abstract partial class VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of VectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected VectorSearchAlgorithmConfiguration(string name)
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of VectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. </param>
         internal VectorSearchAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind)

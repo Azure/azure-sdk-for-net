@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the public IP address resource settings. </summary>
     public partial class PublicIPAddressResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of PublicIPAddressResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressResourceSettings"/>. </summary>
         public PublicIPAddressResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ResourceType = "Microsoft.Network/publicIPAddresses";
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>

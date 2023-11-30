@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing an ArmApplication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArmApplicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArmApplicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetArmApplication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArmApplicationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArmApplicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetArmApplication method.
     /// </summary>
     public partial class ArmApplicationResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArmApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArmApplicationResource(ArmClient client, ArmApplicationData data) : this(client, data.Id)

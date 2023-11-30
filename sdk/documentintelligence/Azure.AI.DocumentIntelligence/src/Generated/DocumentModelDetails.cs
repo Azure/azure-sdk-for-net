@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Document model info. </summary>
     public partial class DocumentModelDetails
     {
-        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the document model was created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence
             DocTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();
         }
 
-        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the document model was created. </param>

@@ -13,14 +13,14 @@ namespace Azure.Maps.Search.Models
     /// <summary> POI category result. </summary>
     public partial class PointOfInterestCategory
     {
-        /// <summary> Initializes a new instance of PointOfInterestCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategory"/>. </summary>
         internal PointOfInterestCategory()
         {
             ChildIds = new ChangeTrackingList<int>();
             Synonyms = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PointOfInterestCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategory"/>. </summary>
         /// <param name="id"> Unique ID for the category. ID can be used to restrict search results to specific categories through other Search Service APIs, like [Get Search POI](https://docs.microsoft.com/rest/api/maps/search/getsearchpoi). </param>
         /// <param name="name"> Name of the category. </param>
         /// <param name="childIds"> Array of child category ids. </param>

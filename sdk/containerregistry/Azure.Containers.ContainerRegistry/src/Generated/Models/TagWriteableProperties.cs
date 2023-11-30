@@ -10,7 +10,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Changeable attributes. </summary>
     internal partial class TagWriteableProperties
     {
-        /// <summary> Initializes a new instance of TagWriteableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagWriteableProperties"/>. </summary>
         public TagWriteableProperties()
         {
         }

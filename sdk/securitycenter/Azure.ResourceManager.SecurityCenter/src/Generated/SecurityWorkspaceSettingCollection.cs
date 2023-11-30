@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityWorkspaceSettingResource" /> and their operations.
-    /// Each <see cref="SecurityWorkspaceSettingResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SecurityWorkspaceSettingCollection" /> instance call the GetSecurityWorkspaceSettings method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityWorkspaceSettingResource"/> and their operations.
+    /// Each <see cref="SecurityWorkspaceSettingResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityWorkspaceSettingCollection"/> instance call the GetSecurityWorkspaceSettings method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityWorkspaceSettingCollection : ArmCollection, IEnumerable<SecurityWorkspaceSettingResource>, IAsyncEnumerable<SecurityWorkspaceSettingResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityWorkspaceSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityWorkspaceSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityWorkspaceSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityWorkspaceSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);

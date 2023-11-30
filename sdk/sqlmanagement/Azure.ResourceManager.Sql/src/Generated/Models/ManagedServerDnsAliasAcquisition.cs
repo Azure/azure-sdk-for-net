@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A managed server DNS alias acquisition request. </summary>
     public partial class ManagedServerDnsAliasAcquisition
     {
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasAcquisition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasAcquisition"/>. </summary>
         /// <param name="oldManagedServerDnsAliasResourceId"> The resource ID of the managed server DNS alias that will be acquired to point to this managed server instead. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oldManagedServerDnsAliasResourceId"/> is null. </exception>
         public ManagedServerDnsAliasAcquisition(ResourceIdentifier oldManagedServerDnsAliasResourceId)

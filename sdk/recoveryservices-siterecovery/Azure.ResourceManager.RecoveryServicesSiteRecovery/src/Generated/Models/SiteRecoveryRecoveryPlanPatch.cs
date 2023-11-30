@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update recovery plan input class. </summary>
     public partial class SiteRecoveryRecoveryPlanPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanPatch"/>. </summary>
         public SiteRecoveryRecoveryPlanPatch()
         {
         }

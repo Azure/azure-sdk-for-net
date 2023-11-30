@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The forecasted cost which is being tracked for a budget. </summary>
     public partial class BudgetForecastSpend
     {
-        /// <summary> Initializes a new instance of BudgetForecastSpend. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetForecastSpend"/>. </summary>
         internal BudgetForecastSpend()
         {
         }
 
-        /// <summary> Initializes a new instance of BudgetForecastSpend. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetForecastSpend"/>. </summary>
         /// <param name="amount"> The forecasted cost for the total time period which is being tracked by the budget. This value is only provided if the budget contains a forecast alert type. </param>
         /// <param name="unit"> The unit of measure for the budget amount. </param>
         internal BudgetForecastSpend(decimal? amount, string unit)

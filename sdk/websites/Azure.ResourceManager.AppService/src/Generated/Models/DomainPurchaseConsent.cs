@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Domain purchase consent object, representing acceptance of applicable legal agreements. </summary>
     public partial class DomainPurchaseConsent
     {
-        /// <summary> Initializes a new instance of DomainPurchaseConsent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainPurchaseConsent"/>. </summary>
         public DomainPurchaseConsent()
         {
             AgreementKeys = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DomainPurchaseConsent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainPurchaseConsent"/>. </summary>
         /// <param name="agreementKeys"> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </param>
         /// <param name="agreedBy"> Client IP address. </param>
         /// <param name="agreedOn"> Timestamp when the agreements were accepted. </param>

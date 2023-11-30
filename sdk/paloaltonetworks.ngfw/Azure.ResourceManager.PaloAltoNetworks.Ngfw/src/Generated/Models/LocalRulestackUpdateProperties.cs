@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The updatable properties of the LocalRulestackResource. </summary>
     public partial class LocalRulestackUpdateProperties
     {
-        /// <summary> Initializes a new instance of LocalRulestackUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackUpdateProperties"/>. </summary>
         public LocalRulestackUpdateProperties()
         {
             AssociatedSubscriptions = new ChangeTrackingList<string>();

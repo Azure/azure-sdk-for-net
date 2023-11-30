@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class StoragePrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of StoragePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateEndpointConnectionListResult"/>. </summary>
         internal StoragePrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of StoragePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal StoragePrivateEndpointConnectionListResult(IReadOnlyList<StoragePrivateEndpointConnectionData> value)
         {

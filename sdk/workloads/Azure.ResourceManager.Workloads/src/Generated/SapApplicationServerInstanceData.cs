@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapApplicationServerInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SapApplicationServerInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SapApplicationServerInstanceData(AzureLocation location) : base(location)
         {
             VmDetails = new ChangeTrackingList<ApplicationServerVmDetails>();
         }
 
-        /// <summary> Initializes a new instance of SapApplicationServerInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

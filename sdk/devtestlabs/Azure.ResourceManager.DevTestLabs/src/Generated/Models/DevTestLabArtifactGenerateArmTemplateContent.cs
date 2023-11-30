@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Parameters for generating an ARM template for deploying artifacts. </summary>
     public partial class DevTestLabArtifactGenerateArmTemplateContent
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactGenerateArmTemplateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactGenerateArmTemplateContent"/>. </summary>
         public DevTestLabArtifactGenerateArmTemplateContent()
         {
             Parameters = new ChangeTrackingList<DevTestLabParameter>();

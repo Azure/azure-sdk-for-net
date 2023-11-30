@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Copy Log Details for a disk. </summary>
     public partial class DataBoxDiskCopyLogDetails : CopyLogDetails
     {
-        /// <summary> Initializes a new instance of DataBoxDiskCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyLogDetails"/>. </summary>
         internal DataBoxDiskCopyLogDetails()
         {
             CopyLogDetailsType = DataBoxOrderType.DataBoxDisk;
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         /// <param name="diskSerialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The CSPM monitoring for github offering. </summary>
     public partial class CspmMonitorGithubOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of CspmMonitorGithubOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorGithubOffering"/>. </summary>
         public CspmMonitorGithubOffering()
         {
             OfferingType = OfferingType.CspmMonitorGithub;
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorGithubOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorGithubOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         internal CspmMonitorGithubOffering(OfferingType offeringType, string description) : base(offeringType, description)

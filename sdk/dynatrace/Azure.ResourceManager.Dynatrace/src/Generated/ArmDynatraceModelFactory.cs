@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDynatraceModelFactory
     {
-        /// <summary> Initializes a new instance of DynatraceAccountCredentialsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DynatraceAccountCredentialsInfo"/>. </summary>
         /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
         /// <param name="apiKey"> API Key of the user account. </param>
         /// <param name="regionId"> Region in which the account is created. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceAccountCredentialsInfo(accountId, apiKey, regionId);
         }
 
-        /// <summary> Initializes a new instance of DynatraceMonitoredResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DynatraceMonitoredResourceDetails"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetricsStatus"> Flag indicating if resource is sending metrics to Dynatrace. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitoredResourceDetails(id, sendingMetricsStatus, reasonForMetricsStatus, sendingLogsStatus, reasonForLogsStatus);
         }
 
-        /// <summary> Initializes a new instance of DynatraceVmExtensionPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DynatraceVmExtensionPayload"/>. </summary>
         /// <param name="ingestionKey"> Ingestion key of the environment. </param>
         /// <param name="environmentId"> Id of the environment created. </param>
         /// <returns> A new <see cref="Models.DynatraceVmExtensionPayload"/> instance for mocking. </returns>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceVmExtensionPayload(ingestionKey, environmentId);
         }
 
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DynatraceSingleSignOnProperties"/>. </summary>
         /// <param name="singleSignOnState"> State of Single Sign On. </param>
         /// <param name="enterpriseAppId"> Version of the Dynatrace agent installed on the VM. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceSingleSignOnProperties(singleSignOnState, enterpriseAppId, singleSignOnUri, aadDomains?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DynatraceTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dynatrace.DynatraceTagRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceTagRuleData(id, name, resourceType, systemData, logRules, metricRulesFilteringTags != null ? new DynatraceMonitorResourceMetricRules(metricRulesFilteringTags?.ToList()) : null, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dynatrace.DynatraceSingleSignOnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceSingleSignOnData(id, name, resourceType, systemData, singleSignOnState, enterpriseAppId, singleSignOnUri, aadDomains?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DynatraceMonitorVmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DynatraceMonitorVmInfo"/>. </summary>
         /// <param name="resourceId"> Azure VM resource ID. </param>
         /// <param name="version"> Version of the Dynatrace agent installed on the VM. </param>
         /// <param name="monitoringType"> The monitoring mode of OneAgent. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitorVmInfo(resourceId, version, monitoringType, autoUpdateSetting, updateStatus, availabilityState, logModule, hostGroup, hostName);
         }
 
-        /// <summary> Initializes a new instance of DynatraceOneAgentEnabledAppServiceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DynatraceOneAgentEnabledAppServiceInfo"/>. </summary>
         /// <param name="resourceId"> App service resource ID. </param>
         /// <param name="version"> Version of the Dynatrace agent installed on the App Service. </param>
         /// <param name="monitoringType"> The monitoring mode of OneAgent. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceOneAgentEnabledAppServiceInfo(resourceId, version, monitoringType, autoUpdateSetting, updateStatus, availabilityState, logModule, hostGroup, hostName);
         }
 
-        /// <summary> Initializes a new instance of DynatraceSsoDetailsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DynatraceSsoDetailsResult"/>. </summary>
         /// <param name="isSsoEnabled"> Whether the SSO is enabled for this resource or not. </param>
         /// <param name="metadataUri"> URL for Azure AD metadata. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceSsoDetailsResult(isSsoEnabled, metadataUri, singleSignOnUri, aadDomains?.ToList(), adminUsers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LinkableEnvironmentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LinkableEnvironmentResult"/>. </summary>
         /// <param name="environmentId"> environment id for which user is an admin. </param>
         /// <param name="environmentName"> Name of the environment. </param>
         /// <param name="planData"> Billing plan information. </param>

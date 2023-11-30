@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A consumer side list of source dataSets. </summary>
     internal partial class ConsumerSourceDataSetList
     {
-        /// <summary> Initializes a new instance of ConsumerSourceDataSetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerSourceDataSetList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ConsumerSourceDataSetList(IEnumerable<ConsumerSourceDataSet> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConsumerSourceDataSetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerSourceDataSetList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         internal ConsumerSourceDataSetList(string nextLink, IReadOnlyList<ConsumerSourceDataSet> value)

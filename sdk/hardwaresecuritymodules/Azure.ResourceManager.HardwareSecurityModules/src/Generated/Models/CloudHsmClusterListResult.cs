@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> List of Cloud HSM Clusters. </summary>
     internal partial class CloudHsmClusterListResult
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterListResult"/>. </summary>
         internal CloudHsmClusterListResult()
         {
             Value = new ChangeTrackingList<CloudHsmClusterData>();
         }
 
-        /// <summary> Initializes a new instance of CloudHsmClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterListResult"/>. </summary>
         /// <param name="value"> The list of Cloud HSM Clusters. </param>
         /// <param name="nextLink"> The URL to get the next set of Cloud HSM Clusters. </param>
         internal CloudHsmClusterListResult(IReadOnlyList<CloudHsmClusterData> value, string nextLink)

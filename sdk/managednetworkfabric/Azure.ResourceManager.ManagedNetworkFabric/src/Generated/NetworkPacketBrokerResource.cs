@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkPacketBroker along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkPacketBrokerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkPacketBrokerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkPacketBroker method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkPacketBrokerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkPacketBrokerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkPacketBroker method.
     /// </summary>
     public partial class NetworkPacketBrokerResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkPacketBrokerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkPacketBrokerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkPacketBrokerResource(ArmClient client, NetworkPacketBrokerData data) : this(client, data.Id)

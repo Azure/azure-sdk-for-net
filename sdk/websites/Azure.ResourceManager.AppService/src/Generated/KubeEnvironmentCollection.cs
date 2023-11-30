@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KubeEnvironmentResource" /> and their operations.
-    /// Each <see cref="KubeEnvironmentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="KubeEnvironmentCollection" /> instance call the GetKubeEnvironments method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="KubeEnvironmentResource"/> and their operations.
+    /// Each <see cref="KubeEnvironmentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="KubeEnvironmentCollection"/> instance call the GetKubeEnvironments method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class KubeEnvironmentCollection : ArmCollection, IEnumerable<KubeEnvironmentResource>, IAsyncEnumerable<KubeEnvironmentResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KubeEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KubeEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubeEnvironmentRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KubeEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KubeEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubeEnvironmentRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

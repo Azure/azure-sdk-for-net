@@ -21,9 +21,9 @@ using Azure.ResourceManager.OperationalInsights.Models;
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OperationalInsightsLinkedStorageAccountsResource" /> and their operations.
-    /// Each <see cref="OperationalInsightsLinkedStorageAccountsResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource" />.
-    /// To get an <see cref="OperationalInsightsLinkedStorageAccountsCollection" /> instance call the GetOperationalInsightsLinkedStorageAccounts method from an instance of <see cref="OperationalInsightsWorkspaceResource" />.
+    /// A class representing a collection of <see cref="OperationalInsightsLinkedStorageAccountsResource"/> and their operations.
+    /// Each <see cref="OperationalInsightsLinkedStorageAccountsResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource"/>.
+    /// To get an <see cref="OperationalInsightsLinkedStorageAccountsCollection"/> instance call the GetOperationalInsightsLinkedStorageAccounts method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
     /// </summary>
     public partial class OperationalInsightsLinkedStorageAccountsCollection : ArmCollection, IEnumerable<OperationalInsightsLinkedStorageAccountsResource>, IAsyncEnumerable<OperationalInsightsLinkedStorageAccountsResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsLinkedStorageAccountsResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsLinkedStorageAccountsResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsLinkedStorageAccountsResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsLinkedStorageAccountsResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsLinkedStorageAccountsResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsLinkedStorageAccountsResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

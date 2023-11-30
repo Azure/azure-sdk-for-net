@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an AvsPrivateCloudCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvsPrivateCloudClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvsPrivateCloudClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetAvsPrivateCloudCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPrivateCloudCluster method.
     /// </summary>
     public partial class AvsPrivateCloudClusterResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvsPrivateCloudClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsPrivateCloudClusterResource(ArmClient client, AvsPrivateCloudClusterData data) : this(client, data.Id)
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvsClusterZone" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvsClusterZone"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsClusterZone> GetZonesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateListZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvsClusterZone" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvsClusterZone"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsClusterZone> GetZones(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateListZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

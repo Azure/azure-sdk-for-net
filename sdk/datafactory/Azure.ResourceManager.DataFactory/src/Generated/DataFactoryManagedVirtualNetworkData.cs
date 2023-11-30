@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryManagedVirtualNetworkData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkData"/>. </summary>
         /// <param name="properties"> Managed Virtual Network properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFactoryManagedVirtualNetworkData(DataFactoryManagedVirtualNetworkProperties properties)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

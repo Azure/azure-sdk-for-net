@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> result of listing all software update configuration. </summary>
     internal partial class SoftwareUpdateConfigurationListResult
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationListResult"/>. </summary>
         internal SoftwareUpdateConfigurationListResult()
         {
             Value = new ChangeTrackingList<SoftwareUpdateConfigurationCollectionItem>();
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationListResult"/>. </summary>
         /// <param name="value"> outer object returned when listing all software update configurations. </param>
         internal SoftwareUpdateConfigurationListResult(IReadOnlyList<SoftwareUpdateConfigurationCollectionItem> value)
         {

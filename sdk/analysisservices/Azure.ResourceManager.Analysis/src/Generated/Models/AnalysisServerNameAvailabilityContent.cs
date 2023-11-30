@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> Details of server name request body. </summary>
     public partial class AnalysisServerNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerNameAvailabilityContent"/>. </summary>
         public AnalysisServerNameAvailabilityContent()
         {
         }

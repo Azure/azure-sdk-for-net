@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Strictly used in update requests. </summary>
     public partial class MachineLearningRegistryPatch
     {
-        /// <summary> Initializes a new instance of MachineLearningRegistryPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryPatch"/>. </summary>
         public MachineLearningRegistryPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

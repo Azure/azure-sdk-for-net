@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Describes a Batch supported SKU. </summary>
     public partial class BatchSupportedSku
     {
-        /// <summary> Initializes a new instance of BatchSupportedSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchSupportedSku"/>. </summary>
         internal BatchSupportedSku()
         {
             Capabilities = new ChangeTrackingList<BatchSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of BatchSupportedSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchSupportedSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="familyName"> The family name of the SKU. </param>
         /// <param name="capabilities"> A collection of capabilities which this SKU supports. </param>

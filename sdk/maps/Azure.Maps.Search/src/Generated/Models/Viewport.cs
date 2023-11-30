@@ -10,7 +10,7 @@ namespace Azure.Maps.Search.Models
     /// <summary> The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport. </summary>
     internal partial class Viewport
     {
-        /// <summary> Initializes a new instance of Viewport. </summary>
+        /// <summary> Initializes a new instance of <see cref="Viewport"/>. </summary>
         internal Viewport()
         {
         }

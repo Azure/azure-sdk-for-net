@@ -12,6 +12,7 @@ using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.WebJobs.EventHubs;
@@ -871,23 +872,23 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             internal static async Task InitializeCheckpoints(EventHubClientFactory factory)
             {
-                    var producer = factory.GetEventHubProducerClient(TestHubName, TestHubName);
-                    var blobClient = factory.GetCheckpointStoreClient();
-                    var checkpointStore = new BlobCheckpointStoreInternal(blobClient);
+                var producer = factory.GetEventHubProducerClient(TestHubName, TestHubName);
+                var blobClient = factory.GetCheckpointStoreClient();
+                var checkpointStore = new BlobCheckpointStoreInternal(blobClient);
 
-                    await blobClient.CreateIfNotExistsAsync();
+                await blobClient.CreateIfNotExistsAsync();
 
-                    foreach (var partition in await producer.GetPartitionIdsAsync())
-                    {
-                        await checkpointStore.UpdateCheckpointAsync(
-                            producer.FullyQualifiedNamespace,
-                            producer.EventHubName,
-                            EventHubConsumerClient.DefaultConsumerGroupName,
-                            partition,
-                            -1,
-                            -1,
-                            CancellationToken.None);
-                    }
+                foreach (var partition in await producer.GetPartitionIdsAsync())
+                {
+                    await checkpointStore.UpdateCheckpointAsync(
+                        producer.FullyQualifiedNamespace,
+                        producer.EventHubName,
+                        EventHubConsumerClient.DefaultConsumerGroupName,
+                        partition,
+                        producer.Identifier,
+                        new CheckpointPosition(-1, -1),
+                        CancellationToken.None);
+                }
             }
 
             public static async Task SendEvents_TestHub(int numEvents, string input, [EventHub(TestHubName, Connection = TestHubName)] EventHubProducerClient client)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An update request for virtual cluster. </summary>
     public partial class VirtualClusterPatch
     {
-        /// <summary> Initializes a new instance of VirtualClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualClusterPatch"/>. </summary>
         public VirtualClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

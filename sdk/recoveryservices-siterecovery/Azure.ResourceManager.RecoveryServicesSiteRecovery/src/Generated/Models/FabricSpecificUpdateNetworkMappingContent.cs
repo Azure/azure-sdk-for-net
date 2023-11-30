@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class FabricSpecificUpdateNetworkMappingContent
     {
-        /// <summary> Initializes a new instance of FabricSpecificUpdateNetworkMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificUpdateNetworkMappingContent"/>. </summary>
         protected FabricSpecificUpdateNetworkMappingContent()
         {
         }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Resource for a regional service location. </summary>
     public partial class CosmosDBRegionalService
     {
-        /// <summary> Initializes a new instance of CosmosDBRegionalService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBRegionalService"/>. </summary>
         internal CosmosDBRegionalService()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBRegionalService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBRegionalService"/>. </summary>
         /// <param name="name"> The regional service name. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="status"> Describes the status of a service. </param>

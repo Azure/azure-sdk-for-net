@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Container pairing update input. </summary>
     internal partial class UpdateProtectionContainerMappingContentProperties
     {
-        /// <summary> Initializes a new instance of UpdateProtectionContainerMappingContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateProtectionContainerMappingContentProperties"/>. </summary>
         public UpdateProtectionContainerMappingContentProperties()
         {
         }

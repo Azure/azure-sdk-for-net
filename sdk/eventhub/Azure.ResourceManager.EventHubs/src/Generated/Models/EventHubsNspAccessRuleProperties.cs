@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Properties of Access Rule. </summary>
     public partial class EventHubsNspAccessRuleProperties
     {
-        /// <summary> Initializes a new instance of EventHubsNspAccessRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRuleProperties"/>. </summary>
         internal EventHubsNspAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsNspAccessRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRuleProperties"/>. </summary>
         /// <param name="direction"> Direction of Access Rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>

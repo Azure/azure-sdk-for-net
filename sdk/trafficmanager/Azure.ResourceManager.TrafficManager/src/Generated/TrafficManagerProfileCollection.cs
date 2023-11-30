@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TrafficManagerProfileResource" /> and their operations.
-    /// Each <see cref="TrafficManagerProfileResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="TrafficManagerProfileCollection" /> instance call the GetTrafficManagerProfiles method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="TrafficManagerProfileResource"/> and their operations.
+    /// Each <see cref="TrafficManagerProfileResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="TrafficManagerProfileCollection"/> instance call the GetTrafficManagerProfiles method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class TrafficManagerProfileCollection : ArmCollection, IEnumerable<TrafficManagerProfileResource>, IAsyncEnumerable<TrafficManagerProfileResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrafficManagerProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrafficManagerProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The localizable string class. </summary>
     public partial class QueryBatchLocalizableString
     {
-        /// <summary> Initializes a new instance of QueryBatchLocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchLocalizableString"/>. </summary>
         /// <param name="value"> The invariant value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal QueryBatchLocalizableString(string value)
@@ -23,7 +23,7 @@ namespace Azure.Monitor.Query.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of QueryBatchLocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchLocalizableString"/>. </summary>
         /// <param name="value"> The invariant value. </param>
         /// <param name="localizedValue"> The display name. </param>
         internal QueryBatchLocalizableString(string value, string localizedValue)

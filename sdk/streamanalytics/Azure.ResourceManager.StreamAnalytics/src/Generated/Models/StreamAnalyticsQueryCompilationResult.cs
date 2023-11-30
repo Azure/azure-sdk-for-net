@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The result of the query compilation request. </summary>
     public partial class StreamAnalyticsQueryCompilationResult
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryCompilationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryCompilationResult"/>. </summary>
         internal StreamAnalyticsQueryCompilationResult()
         {
             Errors = new ChangeTrackingList<StreamAnalyticsQueryCompilationError>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Functions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryCompilationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryCompilationResult"/>. </summary>
         /// <param name="errors"> Error messages produced by the compiler. </param>
         /// <param name="warnings"> Warning messages produced by the compiler. </param>
         /// <param name="inputs"> All input names used by the query. </param>

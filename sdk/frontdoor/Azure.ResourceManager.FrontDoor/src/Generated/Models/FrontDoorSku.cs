@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> The pricing tier of the web application firewall policy. </summary>
     internal partial class FrontDoorSku
     {
-        /// <summary> Initializes a new instance of FrontDoorSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSku"/>. </summary>
         public FrontDoorSku()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSku"/>. </summary>
         /// <param name="name"> Name of the pricing tier. </param>
         internal FrontDoorSku(FrontDoorSkuName? name)
         {

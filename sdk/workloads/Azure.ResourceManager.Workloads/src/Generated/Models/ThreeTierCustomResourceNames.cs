@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class ThreeTierCustomResourceNames
     {
-        /// <summary> Initializes a new instance of ThreeTierCustomResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreeTierCustomResourceNames"/>. </summary>
         protected ThreeTierCustomResourceNames()
         {
         }
 
-        /// <summary> Initializes a new instance of ThreeTierCustomResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreeTierCustomResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
         internal ThreeTierCustomResourceNames(SapNamingPatternType namingPatternType)
         {

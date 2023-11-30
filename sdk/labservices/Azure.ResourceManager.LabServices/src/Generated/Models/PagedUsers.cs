@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Paged list of users. </summary>
     internal partial class PagedUsers
     {
-        /// <summary> Initializes a new instance of PagedUsers. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedUsers"/>. </summary>
         internal PagedUsers()
         {
             Value = new ChangeTrackingList<LabUserData>();
         }
 
-        /// <summary> Initializes a new instance of PagedUsers. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedUsers"/>. </summary>
         /// <param name="value"> The array page of user results. </param>
         /// <param name="nextLink"> The link to get the next page of image results. </param>
         internal PagedUsers(IReadOnlyList<LabUserData> value, string nextLink)

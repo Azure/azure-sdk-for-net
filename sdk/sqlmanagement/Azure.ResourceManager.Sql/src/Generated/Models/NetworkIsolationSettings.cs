@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the ARM resources for which to create private endpoint connection. </summary>
     public partial class NetworkIsolationSettings
     {
-        /// <summary> Initializes a new instance of NetworkIsolationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIsolationSettings"/>. </summary>
         public NetworkIsolationSettings()
         {
         }

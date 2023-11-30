@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The result of the Service Fabric runtime versions. </summary>
     public partial class ServiceFabricManagedClusterVersion : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedClusterVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterVersion"/>. </summary>
         internal ServiceFabricManagedClusterVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedClusterVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterVersion"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

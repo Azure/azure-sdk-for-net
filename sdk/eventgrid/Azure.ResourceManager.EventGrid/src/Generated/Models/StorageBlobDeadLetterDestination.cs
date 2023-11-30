@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the storage blob based dead letter destination. </summary>
     public partial class StorageBlobDeadLetterDestination : DeadLetterDestination
     {
-        /// <summary> Initializes a new instance of StorageBlobDeadLetterDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBlobDeadLetterDestination"/>. </summary>
         public StorageBlobDeadLetterDestination()
         {
             EndpointType = DeadLetterEndPointType.StorageBlob;
         }
 
-        /// <summary> Initializes a new instance of StorageBlobDeadLetterDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBlobDeadLetterDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
         /// <param name="resourceId"> The Azure Resource ID of the storage account that is the destination of the deadletter events. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the destination of the deadletter events. </param>

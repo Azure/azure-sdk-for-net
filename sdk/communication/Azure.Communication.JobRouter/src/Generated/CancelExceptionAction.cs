@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> An action that marks a job as cancelled. </summary>
     public partial class CancelExceptionAction : ExceptionAction
     {
-        /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelExceptionAction"/>. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <param name="note"> A note that will be appended to a job's notes collection with the current timestamp. </param>

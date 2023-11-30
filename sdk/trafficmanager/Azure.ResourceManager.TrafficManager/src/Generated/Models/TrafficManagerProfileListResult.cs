@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> The list Traffic Manager profiles operation response. </summary>
     internal partial class TrafficManagerProfileListResult
     {
-        /// <summary> Initializes a new instance of TrafficManagerProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileListResult"/>. </summary>
         internal TrafficManagerProfileListResult()
         {
             Value = new ChangeTrackingList<TrafficManagerProfileData>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileListResult"/>. </summary>
         /// <param name="value"> Gets the list of Traffic manager profiles. </param>
         internal TrafficManagerProfileListResult(IReadOnlyList<TrafficManagerProfileData> value)
         {

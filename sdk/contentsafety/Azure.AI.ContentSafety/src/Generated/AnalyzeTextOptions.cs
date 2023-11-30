@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> The analysis request of the text. </summary>
+    /// <summary> The text analysis request. </summary>
     public partial class AnalyzeTextOptions
     {
-        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
-        /// <param name="text"> The text needs to be scanned. We support at most 1000 characters (unicode code points) in text of one request. </param>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/>. </summary>
+        /// <param name="text"> The text needs to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AnalyzeTextOptions(string text)
         {
@@ -26,26 +26,30 @@ namespace Azure.AI.ContentSafety
             BlocklistNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
-        /// <param name="text"> The text needs to be scanned. We support at most 1000 characters (unicode code points) in text of one request. </param>
-        /// <param name="categories"> The categories will be analyzed. If not assigned, a default set of the categories' analysis results will be returned. </param>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOptions"/>. </summary>
+        /// <param name="text"> The text needs to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
+        /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
         /// <param name="blocklistNames"> The names of blocklists. </param>
-        /// <param name="breakByBlocklists"> When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit. </param>
-        internal AnalyzeTextOptions(string text, IList<TextCategory> categories, IList<string> blocklistNames, bool? breakByBlocklists)
+        /// <param name="haltOnBlocklistHit"> When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit. </param>
+        /// <param name="outputType"> This refers to the type of text analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>
+        internal AnalyzeTextOptions(string text, IList<TextCategory> categories, IList<string> blocklistNames, bool? haltOnBlocklistHit, AnalyzeTextOutputType? outputType)
         {
             Text = text;
             Categories = categories;
             BlocklistNames = blocklistNames;
-            BreakByBlocklists = breakByBlocklists;
+            HaltOnBlocklistHit = haltOnBlocklistHit;
+            OutputType = outputType;
         }
 
-        /// <summary> The text needs to be scanned. We support at most 1000 characters (unicode code points) in text of one request. </summary>
+        /// <summary> The text needs to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </summary>
         public string Text { get; }
-        /// <summary> The categories will be analyzed. If not assigned, a default set of the categories' analysis results will be returned. </summary>
+        /// <summary> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </summary>
         public IList<TextCategory> Categories { get; }
         /// <summary> The names of blocklists. </summary>
         public IList<string> BlocklistNames { get; }
         /// <summary> When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit. </summary>
-        public bool? BreakByBlocklists { get; set; }
+        public bool? HaltOnBlocklistHit { get; set; }
+        /// <summary> This refers to the type of text analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </summary>
+        public AnalyzeTextOutputType? OutputType { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents a field in an index definition, which describes the name, data type, and search behavior of a field. </summary>
     public partial class SearchField
     {
-        /// <summary> Initializes a new instance of SearchField. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchField"/>. </summary>
         /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>
         /// <param name="type"> The data type of the field. </param>
         /// <param name="isKey"> A value indicating whether the field uniquely identifies documents in the index. Exactly one top-level field in each index must be chosen as the key field and it must be of type Edm.String. Key fields can be used to look up documents directly and update or delete specific documents. Default is false for simple fields and null for complex fields. </param>

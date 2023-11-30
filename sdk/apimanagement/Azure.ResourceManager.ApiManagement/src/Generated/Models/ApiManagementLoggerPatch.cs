@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Logger update contract. </summary>
     public partial class ApiManagementLoggerPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementLoggerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerPatch"/>. </summary>
         public ApiManagementLoggerPatch()
         {
             Credentials = new ChangeTrackingDictionary<string, string>();

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the Experiment action target details properties model. </summary>
     public partial class ExperimentExecutionActionTargetDetailsProperties
     {
-        /// <summary> Initializes a new instance of ExperimentExecutionActionTargetDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
         internal ExperimentExecutionActionTargetDetailsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionActionTargetDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
         /// <param name="status"> The status of the execution. </param>
         /// <param name="target"> The target for the action. </param>
         /// <param name="targetFailedOn"> String that represents the failed date time. </param>

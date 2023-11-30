@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A Class representing a BillingAccountPaymentMethod along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingAccountPaymentMethodResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingAccountPaymentMethodResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingAccountPaymentMethod method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingAccountPaymentMethodResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingAccountPaymentMethodResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingAccountPaymentMethod method.
     /// </summary>
     public partial class BillingAccountPaymentMethodResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Billing
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingAccountPaymentMethodResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingAccountPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingAccountPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)

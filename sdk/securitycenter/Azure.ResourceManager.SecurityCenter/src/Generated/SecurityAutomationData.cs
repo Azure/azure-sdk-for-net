@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAutomationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAutomationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SecurityAutomationData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Actions = new ChangeTrackingList<SecurityAutomationAction>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A Media Services account update. </summary>
     public partial class MediaServicesAccountPatch
     {
-        /// <summary> Initializes a new instance of MediaServicesAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesAccountPatch"/>. </summary>
         public MediaServicesAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

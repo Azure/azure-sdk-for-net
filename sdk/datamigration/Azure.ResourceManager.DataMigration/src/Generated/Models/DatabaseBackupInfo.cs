@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information about backup files when existing backup mode is used. </summary>
     public partial class DatabaseBackupInfo
     {
-        /// <summary> Initializes a new instance of DatabaseBackupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseBackupInfo"/>. </summary>
         internal DatabaseBackupInfo()
         {
             BackupFiles = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseBackupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseBackupInfo"/>. </summary>
         /// <param name="databaseName"> Database name. </param>
         /// <param name="backupType"> Backup Type. </param>
         /// <param name="backupFiles"> The list of backup files for the current database. </param>

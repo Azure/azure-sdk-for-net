@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update variable operation. </summary>
     public partial class AutomationVariablePatch
     {
-        /// <summary> Initializes a new instance of AutomationVariablePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationVariablePatch"/>. </summary>
         public AutomationVariablePatch()
         {
         }

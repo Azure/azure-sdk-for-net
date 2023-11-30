@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> One and only one of the schedule types should be specified. Choose either 'daily', 'weekly', 'absoluteMonthly' or 'relativeMonthly' for your maintenance schedule. </summary>
     public partial class ContainerServiceMaintenanceSchedule
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceSchedule"/>. </summary>
         public ContainerServiceMaintenanceSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceSchedule"/>. </summary>
         /// <param name="daily"> For schedules like: 'recur every day' or 'recur every 3 days'. </param>
         /// <param name="weekly"> For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'. </param>
         /// <param name="absoluteMonthly"> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </param>

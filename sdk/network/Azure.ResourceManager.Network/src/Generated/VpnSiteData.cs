@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VpnSiteData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VpnSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteData"/>. </summary>
         public VpnSiteData()
         {
             VpnSiteLinks = new ChangeTrackingList<VpnSiteLinkData>();
         }
 
-        /// <summary> Initializes a new instance of VpnSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating base image dependency trigger. </summary>
     public partial class ContainerRegistryBaseImageTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryBaseImageTriggerUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerRegistryBaseImageTriggerUpdateContent(string name)

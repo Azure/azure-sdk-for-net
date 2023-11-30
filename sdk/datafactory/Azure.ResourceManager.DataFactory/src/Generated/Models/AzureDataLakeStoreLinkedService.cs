@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Data Lake Store linked service. </summary>
     public partial class AzureDataLakeStoreLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStoreLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/>. </summary>
         /// <param name="dataLakeStoreUri"> Data Lake Store service URI. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreUri"/> is null. </exception>
         public AzureDataLakeStoreLinkedService(DataFactoryElement<string> dataLakeStoreUri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AzureDataLakeStore";
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeStoreLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

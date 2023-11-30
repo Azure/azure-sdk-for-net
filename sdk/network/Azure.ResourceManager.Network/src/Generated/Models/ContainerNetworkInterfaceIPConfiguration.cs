@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The ip configuration for a container network interface. </summary>
     public partial class ContainerNetworkInterfaceIPConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerNetworkInterfaceIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIPConfiguration"/>. </summary>
         internal ContainerNetworkInterfaceIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerNetworkInterfaceIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIPConfiguration"/>. </summary>
         /// <param name="name"> The name of the resource. This name can be used to access the resource. </param>
         /// <param name="containerNetworkInterfaceIPConfigurationType"> Sub Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

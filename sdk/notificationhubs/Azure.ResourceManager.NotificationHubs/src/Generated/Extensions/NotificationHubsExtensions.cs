@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NotificationHubNamespaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NotificationHubNamespaceResource"/> object. </returns>
         public static NotificationHubNamespaceResource GetNotificationHubNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NotificationHubNamespaceAuthorizationRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> object. </returns>
         public static NotificationHubNamespaceAuthorizationRuleResource GetNotificationHubNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NotificationHubAuthorizationRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NotificationHubAuthorizationRuleResource"/> object. </returns>
         public static NotificationHubAuthorizationRuleResource GetNotificationHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NotificationHubResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NotificationHubResource"/> object. </returns>
         public static NotificationHubResource GetNotificationHubResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

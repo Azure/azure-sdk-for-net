@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> List of provisioning service descriptions. </summary>
     internal partial class ProvisioningServiceDescriptionListResult
     {
-        /// <summary> Initializes a new instance of ProvisioningServiceDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisioningServiceDescriptionListResult"/>. </summary>
         internal ProvisioningServiceDescriptionListResult()
         {
             Value = new ChangeTrackingList<DeviceProvisioningServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ProvisioningServiceDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisioningServiceDescriptionListResult"/>. </summary>
         /// <param name="value"> List of provisioning service descriptions. </param>
         /// <param name="nextLink"> the next link. </param>
         internal ProvisioningServiceDescriptionListResult(IReadOnlyList<DeviceProvisioningServiceData> value, string nextLink)

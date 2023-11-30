@@ -1,20 +1,21 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.1 (2023-11-29)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
 ## 1.1.0 (2023-09-28)
 
-### Breaking Changes
-    - New optional parameter default action added in Access Control List and Route Policy resources. 
-    - IP V4 address parameter type changed from IPAddress to String in internet gateway resource.
+### Features Added
+
+- New optional parameter default action added in Access Control List and Route Policy resources. 
+- IP V4 address parameter type changed from IPAddress to String in internet gateway resource.
 
 ## 1.0.0 (2023-07-28)
 

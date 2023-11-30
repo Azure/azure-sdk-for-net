@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Parquet read settings. </summary>
     public partial class ParquetReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of ParquetReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParquetReadSettings"/>. </summary>
         public ParquetReadSettings()
         {
             FormatReadSettingsType = "ParquetReadSettings";
         }
 
-        /// <summary> Initializes a new instance of ParquetReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParquetReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties">

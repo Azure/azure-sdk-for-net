@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> Request from client to check cluster name availability. </summary>
     public partial class CosmosDBForPostgreSqlClusterNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Cluster name to verify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CosmosDBForPostgreSqlClusterNameAvailabilityContent(string name)

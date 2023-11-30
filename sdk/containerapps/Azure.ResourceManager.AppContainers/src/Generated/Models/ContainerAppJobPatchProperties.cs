@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The ContainerAppJobPatchProperties. </summary>
     public partial class ContainerAppJobPatchProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppJobPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobPatchProperties"/>. </summary>
         public ContainerAppJobPatchProperties()
         {
             OutboundIPAddresses = new ChangeTrackingList<string>();

@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A model definition and metadata for that model. </summary>
     public partial class DigitalTwinsModelData
     {
-        /// <summary> Initializes a new instance of DigitalTwinsModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsModelData"/>. </summary>
         /// <param name="languageDisplayNames"> A language map that contains the localized display names as specified in the model definition. </param>
         /// <param name="languageDescriptions"> A language map that contains the localized descriptions as specified in the model definition. </param>
         /// <param name="id"> The id of the model as specified in the model definition. </param>

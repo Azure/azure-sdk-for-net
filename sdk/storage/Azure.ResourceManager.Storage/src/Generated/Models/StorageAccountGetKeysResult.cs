@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The response from the ListKeys operation. </summary>
     internal partial class StorageAccountGetKeysResult
     {
-        /// <summary> Initializes a new instance of StorageAccountGetKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountGetKeysResult"/>. </summary>
         internal StorageAccountGetKeysResult()
         {
             Keys = new ChangeTrackingList<StorageAccountKey>();
         }
 
-        /// <summary> Initializes a new instance of StorageAccountGetKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountGetKeysResult"/>. </summary>
         /// <param name="keys"> Gets the list of storage account keys and their properties for the specified storage account. </param>
         internal StorageAccountGetKeysResult(IReadOnlyList<StorageAccountKey> keys)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The login password for the container registry. </summary>
     public partial class ContainerRegistryPassword
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPassword. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPassword"/>. </summary>
         internal ContainerRegistryPassword()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPassword. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPassword"/>. </summary>
         /// <param name="name"> The password name. </param>
         /// <param name="value"> The password value. </param>
         internal ContainerRegistryPassword(ContainerRegistryPasswordName? name, string value)

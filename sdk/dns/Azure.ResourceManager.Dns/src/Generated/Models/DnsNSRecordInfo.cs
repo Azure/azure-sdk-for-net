@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> An NS record. </summary>
     public partial class DnsNSRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsNSRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsNSRecordInfo"/>. </summary>
         public DnsNSRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsNSRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsNSRecordInfo"/>. </summary>
         /// <param name="dnsNSDomainName"> The name server name for this NS record. </param>
         internal DnsNSRecordInfo(string dnsNSDomainName)
         {

@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The RecognizeRequest. </summary>
     internal partial class RecognizeRequestInternal
     {
-        /// <summary> Initializes a new instance of RecognizeRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
         /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
         /// <param name="recognizeOptions"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>
@@ -35,7 +35,10 @@ namespace Azure.Communication.CallAutomation
         public RecognizeOptionsInternal RecognizeOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
-        /// <summary> The callback URI to override the main callback URI. </summary>
-        public string CallbackUri { get; set; }
+        /// <summary>
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public string OperationCallbackUri { get; set; }
     }
 }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Identity Provider details. </summary>
     public partial class ApiManagementIdentityProviderCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementIdentityProviderCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderCreateOrUpdateContent"/>. </summary>
         public ApiManagementIdentityProviderCreateOrUpdateContent()
         {
             AllowedTenants = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementIdentityProviderCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

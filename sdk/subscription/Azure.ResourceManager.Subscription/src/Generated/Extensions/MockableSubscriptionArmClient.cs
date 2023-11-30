@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Subscription.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionAliasResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionAliasResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SubscriptionAliasResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionAliasResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionAliasResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionAliasResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SubscriptionAliasResource"/> object. </returns>
         public virtual SubscriptionAliasResource GetSubscriptionAliasResource(ResourceIdentifier id)
         {
             SubscriptionAliasResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Subscription.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantPolicyResource.CreateResourceIdentifier" /> to create a <see cref="TenantPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPolicyResource.CreateResourceIdentifier" /> to create a <see cref="TenantPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public virtual TenantPolicyResource GetTenantPolicyResource(ResourceIdentifier id)
         {
             TenantPolicyResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Subscription.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingAccountPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingAccountPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingAccountPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingAccountPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
         public virtual BillingAccountPolicyResource GetBillingAccountPolicyResource(ResourceIdentifier id)
         {
             BillingAccountPolicyResource.ValidateResourceId(id);

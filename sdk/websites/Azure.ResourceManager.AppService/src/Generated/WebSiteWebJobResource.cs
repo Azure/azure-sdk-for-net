@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteWebJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteWebJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteWebJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteWebJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteWebJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteWebJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteWebJob method.
     /// </summary>
     public partial class WebSiteWebJobResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteWebJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteWebJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteWebJobResource(ArmClient client, WebJobData data) : this(client, data.Id)

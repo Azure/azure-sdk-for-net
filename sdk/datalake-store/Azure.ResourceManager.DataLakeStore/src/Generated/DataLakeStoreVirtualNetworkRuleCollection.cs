@@ -21,9 +21,9 @@ using Azure.ResourceManager.DataLakeStore.Models;
 namespace Azure.ResourceManager.DataLakeStore
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataLakeStoreVirtualNetworkRuleResource" /> and their operations.
-    /// Each <see cref="DataLakeStoreVirtualNetworkRuleResource" /> in the collection will belong to the same instance of <see cref="DataLakeStoreAccountResource" />.
-    /// To get a <see cref="DataLakeStoreVirtualNetworkRuleCollection" /> instance call the GetDataLakeStoreVirtualNetworkRules method from an instance of <see cref="DataLakeStoreAccountResource" />.
+    /// A class representing a collection of <see cref="DataLakeStoreVirtualNetworkRuleResource"/> and their operations.
+    /// Each <see cref="DataLakeStoreVirtualNetworkRuleResource"/> in the collection will belong to the same instance of <see cref="DataLakeStoreAccountResource"/>.
+    /// To get a <see cref="DataLakeStoreVirtualNetworkRuleCollection"/> instance call the GetDataLakeStoreVirtualNetworkRules method from an instance of <see cref="DataLakeStoreAccountResource"/>.
     /// </summary>
     public partial class DataLakeStoreVirtualNetworkRuleCollection : ArmCollection, IEnumerable<DataLakeStoreVirtualNetworkRuleResource>, IAsyncEnumerable<DataLakeStoreVirtualNetworkRuleResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeStoreVirtualNetworkRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeStoreVirtualNetworkRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreVirtualNetworkRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeStoreVirtualNetworkRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeStoreVirtualNetworkRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreVirtualNetworkRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

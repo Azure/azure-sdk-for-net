@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> the constraints of the bot meta data. </summary>
     internal partial class ServiceProviderParameterMetadataConstraints
     {
-        /// <summary> Initializes a new instance of ServiceProviderParameterMetadataConstraints. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProviderParameterMetadataConstraints"/>. </summary>
         internal ServiceProviderParameterMetadataConstraints()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceProviderParameterMetadataConstraints. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProviderParameterMetadataConstraints"/>. </summary>
         /// <param name="isRequired"> Whether required the constraints of the bot meta data. </param>
         internal ServiceProviderParameterMetadataConstraints(bool? isRequired)
         {

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Describes the schema of the common properties across all ARN system topic events. </summary>
     public partial class ResourceNotificationsResourceUpdatedEventData
     {
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedEventData"/>. </summary>
         internal ResourceNotificationsResourceUpdatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>

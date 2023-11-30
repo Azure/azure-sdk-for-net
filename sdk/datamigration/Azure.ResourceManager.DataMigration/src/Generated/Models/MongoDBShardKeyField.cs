@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a field reference within a MongoDB shard key. </summary>
     public partial class MongoDBShardKeyField
     {
-        /// <summary> Initializes a new instance of MongoDBShardKeyField. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeyField"/>. </summary>
         /// <param name="name"> The name of the field. </param>
         /// <param name="order"> The field ordering. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

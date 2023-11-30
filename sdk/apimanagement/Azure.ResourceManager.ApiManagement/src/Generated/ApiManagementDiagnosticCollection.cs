@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementDiagnosticResource" /> and their operations.
-    /// Each <see cref="ApiManagementDiagnosticResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get an <see cref="ApiManagementDiagnosticCollection" /> instance call the GetApiManagementDiagnostics method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// A class representing a collection of <see cref="ApiManagementDiagnosticResource"/> and their operations.
+    /// Each <see cref="ApiManagementDiagnosticResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementDiagnosticCollection"/> instance call the GetApiManagementDiagnostics method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementDiagnosticCollection : ArmCollection, IEnumerable<ApiManagementDiagnosticResource>, IAsyncEnumerable<ApiManagementDiagnosticResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementDiagnosticResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementDiagnosticResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);

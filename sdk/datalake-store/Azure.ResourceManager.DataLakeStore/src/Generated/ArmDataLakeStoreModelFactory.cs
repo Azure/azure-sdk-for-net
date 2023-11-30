@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDataLakeStoreModelFactory
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountBasicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreAccountBasicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreAccountBasicData(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, location, tags);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStore.DataLakeStoreAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreAccountData(id, name, resourceType, systemData, identity, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, defaultGroup, encryptionConfig, encryptionState, encryptionProvisioningState, firewallRules?.ToList(), virtualNetworkRules?.ToList(), firewallState, firewallAllowAzureIPs, trustedIdProviders?.ToList(), trustedIdProviderState, newTier, currentTier, location, tags);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStore.DataLakeStoreFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStore.DataLakeStoreVirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreVirtualNetworkRuleData(id, name, resourceType, systemData, subnetId);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStore.DataLakeStoreTrustedIdProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreTrustedIdProviderData(id, name, resourceType, systemData, idProvider);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreCapabilityInformation"/>. </summary>
         /// <param name="subscriptionId"> The subscription credentials that uniquely identifies the subscription. </param>
         /// <param name="state"> The subscription state. </param>
         /// <param name="maxAccountCount"> The maximum supported number of accounts under this subscription. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreCapabilityInformation(subscriptionId, state, maxAccountCount, accountCount, isUnderMigrationState);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreUsage"/>. </summary>
         /// <param name="unit"> Gets the unit of measurement. </param>
         /// <param name="id"> Resource identifier. </param>
         /// <param name="currentValue"> Gets the current count of the allocated resources in the subscription. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreUsage(unit, id, currentValue, limit, name);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreUsageName"/>. </summary>
         /// <param name="value"> Gets a string describing the resource name. </param>
         /// <param name="localizedValue"> Gets a localized string describing the resource name. </param>
         /// <returns> A new <see cref="Models.DataLakeStoreUsageName"/> instance for mocking. </returns>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreUsageName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreAccountNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> The Boolean value of true or false to indicate whether the Data Lake Store account name is available or not. </param>
         /// <param name="reason"> The reason why the Data Lake Store account name is not available, if nameAvailable is false. </param>
         /// <param name="message"> The message describing why the Data Lake Store account name is not available, if nameAvailable is false. </param>

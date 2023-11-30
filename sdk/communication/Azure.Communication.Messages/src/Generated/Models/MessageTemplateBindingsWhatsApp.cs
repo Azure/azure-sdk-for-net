@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
     /// <summary> The template bindings for WhatsApp. </summary>
     internal partial class MessageTemplateBindingsWhatsApp
     {
-        /// <summary> Initializes a new instance of MessageTemplateBindingsWhatsApp. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsApp"/>. </summary>
         public MessageTemplateBindingsWhatsApp()
         {
             Header = new ChangeTrackingList<MessageTemplateBindingsWhatsAppComponent>();

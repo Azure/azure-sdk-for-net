@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The partner authorization details. </summary>
     public partial class PartnerAuthorization
     {
-        /// <summary> Initializes a new instance of PartnerAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerAuthorization"/>. </summary>
         public PartnerAuthorization()
         {
             AuthorizedPartnersList = new ChangeTrackingList<EventGridPartnerContent>();
         }
 
-        /// <summary> Initializes a new instance of PartnerAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerAuthorization"/>. </summary>
         /// <param name="defaultMaximumExpirationTimeInDays">
         /// Time used to validate the authorization expiration time for each authorized partner. If DefaultMaximumExpirationTimeInDays is
         /// not specified, the default is 7 days. Otherwise, allowed values are between 1 and 365 days.

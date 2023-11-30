@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     /// <summary>
     /// A Class representing a SystemAssignedIdentity along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SystemAssignedIdentityResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSystemAssignedIdentityResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetSystemAssignedIdentity method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SystemAssignedIdentityResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSystemAssignedIdentityResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetSystemAssignedIdentity method.
     /// </summary>
     public partial class SystemAssignedIdentityResource : ArmResource
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SystemAssignedIdentityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SystemAssignedIdentityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SystemAssignedIdentityResource(ArmClient client, SystemAssignedIdentityData data) : this(client, data.Id)

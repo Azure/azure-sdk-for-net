@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of publishers. </summary>
     internal partial class PublisherListResult
     {
-        /// <summary> Initializes a new instance of PublisherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherListResult"/>. </summary>
         internal PublisherListResult()
         {
             Value = new ChangeTrackingList<PublisherData>();
         }
 
-        /// <summary> Initializes a new instance of PublisherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherListResult"/>. </summary>
         /// <param name="value"> A list of publishers. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal PublisherListResult(IReadOnlyList<PublisherData> value, string nextLink)

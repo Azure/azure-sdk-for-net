@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for answering the call. </summary>
     internal partial class AnswerCallRequestInternal
     {
-        /// <summary> Initializes a new instance of AnswerCallRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>
@@ -37,9 +37,9 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
         /// <summary> Live Transcription Configuration. </summary>
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
-        /// <summary> The endpoint URL of the Azure Cognitive Services resource attached. </summary>
-        public string AzureCognitiveServicesEndpointUrl { get; set; }
+        /// <summary> AI options for the call. </summary>
+        public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
-        public CommunicationUserIdentifierModel AnsweredByIdentifier { get; set; }
+        public CommunicationUserIdentifierModel AnsweredBy { get; set; }
     }
 }

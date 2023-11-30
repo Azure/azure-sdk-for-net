@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery image definition that you want to update. </summary>
     public partial class GalleryImagePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of GalleryImagePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImagePatch"/>. </summary>
         public GalleryImagePatch()
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();

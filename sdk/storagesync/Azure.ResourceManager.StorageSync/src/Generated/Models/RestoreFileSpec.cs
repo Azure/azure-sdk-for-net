@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Restore file spec. </summary>
     public partial class RestoreFileSpec
     {
-        /// <summary> Initializes a new instance of RestoreFileSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpec"/>. </summary>
         public RestoreFileSpec()
         {
         }

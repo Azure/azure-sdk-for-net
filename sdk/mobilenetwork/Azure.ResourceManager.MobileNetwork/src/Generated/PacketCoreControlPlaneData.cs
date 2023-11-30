@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class PacketCoreControlPlaneData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sites"> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </param>
         /// <param name="platform"> The platform where the packet core is deployed. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork
             LocalDiagnosticsAccess = localDiagnosticsAccess;
         }
 
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

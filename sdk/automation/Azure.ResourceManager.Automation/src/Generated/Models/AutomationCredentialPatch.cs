@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the Update credential operation. </summary>
     public partial class AutomationCredentialPatch
     {
-        /// <summary> Initializes a new instance of AutomationCredentialPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialPatch"/>. </summary>
         public AutomationCredentialPatch()
         {
         }

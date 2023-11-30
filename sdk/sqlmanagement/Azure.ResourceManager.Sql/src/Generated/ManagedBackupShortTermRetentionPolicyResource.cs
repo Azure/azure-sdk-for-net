@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedBackupShortTermRetentionPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedBackupShortTermRetentionPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedBackupShortTermRetentionPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedBackupShortTermRetentionPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedBackupShortTermRetentionPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedBackupShortTermRetentionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedBackupShortTermRetentionPolicy method.
     /// </summary>
     public partial class ManagedBackupShortTermRetentionPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedBackupShortTermRetentionPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedBackupShortTermRetentionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedBackupShortTermRetentionPolicyResource(ArmClient client, ManagedBackupShortTermRetentionPolicyData data) : this(client, data.Id)

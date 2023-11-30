@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class for CommonEncryptionCbcs encryption scheme. </summary>
     public partial class CommonEncryptionCbcs
     {
-        /// <summary> Initializes a new instance of CommonEncryptionCbcs. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonEncryptionCbcs"/>. </summary>
         public CommonEncryptionCbcs()
         {
             ClearTracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
-        /// <summary> Initializes a new instance of CommonEncryptionCbcs. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonEncryptionCbcs"/>. </summary>
         /// <param name="enabledProtocols"> Representing supported protocols. </param>
         /// <param name="clearTracks"> Representing which tracks should not be encrypted. </param>
         /// <param name="contentKeys"> Representing default content key for each encryption scheme and separate content keys for specific tracks. </param>

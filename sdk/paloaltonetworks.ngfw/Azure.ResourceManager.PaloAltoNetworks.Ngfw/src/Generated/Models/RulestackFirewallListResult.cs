@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> List firewalls response. </summary>
     internal partial class RulestackFirewallListResult
     {
-        /// <summary> Initializes a new instance of RulestackFirewallListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackFirewallListResult"/>. </summary>
         /// <param name="value"> firewalls list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RulestackFirewallListResult(IEnumerable<string> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RulestackFirewallListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackFirewallListResult"/>. </summary>
         /// <param name="value"> firewalls list. </param>
         /// <param name="nextLink"> next link. </param>
         internal RulestackFirewallListResult(IReadOnlyList<string> value, string nextLink)

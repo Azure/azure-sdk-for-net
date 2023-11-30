@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class MongoDBUserDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionData"/>. </summary>
         public MongoDBUserDefinitionData()
         {
             Roles = new ChangeTrackingList<MongoDBRole>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

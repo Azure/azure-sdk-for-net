@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Cluster Compute Data. </summary>
     public partial class EdgeClusterCapacityViewInfo
     {
-        /// <summary> Initializes a new instance of EdgeClusterCapacityViewInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterCapacityViewInfo"/>. </summary>
         public EdgeClusterCapacityViewInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeClusterCapacityViewInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterCapacityViewInfo"/>. </summary>
         /// <param name="fqdn"> The FQDN of the cluster. </param>
         /// <param name="gpuCapacity"> The cluster's GPU capacity. </param>
         /// <param name="memoryCapacity"> The cluster's memory capacity. </param>

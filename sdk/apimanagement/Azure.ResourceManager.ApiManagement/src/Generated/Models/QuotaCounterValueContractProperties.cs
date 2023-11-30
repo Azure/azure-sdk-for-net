@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Quota counter value details. </summary>
     public partial class QuotaCounterValueContractProperties
     {
-        /// <summary> Initializes a new instance of QuotaCounterValueContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueContractProperties"/>. </summary>
         internal QuotaCounterValueContractProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaCounterValueContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueContractProperties"/>. </summary>
         /// <param name="callsCount"> Number of times Counter was called. </param>
         /// <param name="kbTransferred"> Data Transferred in KiloBytes. </param>
         internal QuotaCounterValueContractProperties(int? callsCount, double? kbTransferred)

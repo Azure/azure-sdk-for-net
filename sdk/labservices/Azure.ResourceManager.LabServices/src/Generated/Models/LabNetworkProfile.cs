@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Profile for how to handle networking for Labs. </summary>
     public partial class LabNetworkProfile
     {
-        /// <summary> Initializes a new instance of LabNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabNetworkProfile"/>. </summary>
         public LabNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LabNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabNetworkProfile"/>. </summary>
         /// <param name="subnetId"> The external subnet resource id. </param>
         /// <param name="loadBalancerId"> The external load balancer resource id. </param>
         /// <param name="publicIPId"> The external public IP resource id. </param>

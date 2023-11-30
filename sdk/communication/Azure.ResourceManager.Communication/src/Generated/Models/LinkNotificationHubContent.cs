@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Description of an Azure Notification Hub to link to the communication service. </summary>
     public partial class LinkNotificationHubContent
     {
-        /// <summary> Initializes a new instance of LinkNotificationHubContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkNotificationHubContent"/>. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         /// <param name="connectionString"> Connection string for the notification hub. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="connectionString"/> is null. </exception>

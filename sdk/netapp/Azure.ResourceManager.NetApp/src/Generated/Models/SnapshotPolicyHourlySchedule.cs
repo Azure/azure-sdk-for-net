@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Hourly Schedule properties. </summary>
     public partial class SnapshotPolicyHourlySchedule
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyHourlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyHourlySchedule"/>. </summary>
         public SnapshotPolicyHourlySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyHourlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyHourlySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Hourly snapshot count to keep. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
         /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>

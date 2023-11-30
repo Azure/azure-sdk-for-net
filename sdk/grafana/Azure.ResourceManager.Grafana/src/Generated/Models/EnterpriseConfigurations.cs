@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Enterprise settings of a Grafana instance. </summary>
     public partial class EnterpriseConfigurations
     {
-        /// <summary> Initializes a new instance of EnterpriseConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnterpriseConfigurations"/>. </summary>
         public EnterpriseConfigurations()
         {
         }
 
-        /// <summary> Initializes a new instance of EnterpriseConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnterpriseConfigurations"/>. </summary>
         /// <param name="marketplacePlanId"> The Plan Id of the Azure Marketplace subscription for the Enterprise plugins. </param>
         /// <param name="marketplaceAutoRenew"> The AutoRenew setting of the Enterprise subscription. </param>
         internal EnterpriseConfigurations(string marketplacePlanId, MarketplaceAutoRenew? marketplaceAutoRenew)

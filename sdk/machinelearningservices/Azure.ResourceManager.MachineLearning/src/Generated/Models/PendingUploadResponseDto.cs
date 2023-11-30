@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The PendingUploadResponseDto. </summary>
     public partial class PendingUploadResponseDto
     {
-        /// <summary> Initializes a new instance of PendingUploadResponseDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="PendingUploadResponseDto"/>. </summary>
         internal PendingUploadResponseDto()
         {
         }
 
-        /// <summary> Initializes a new instance of PendingUploadResponseDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="PendingUploadResponseDto"/>. </summary>
         /// <param name="blobReferenceForConsumption"> Container level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="pendingUploadType"> TemporaryBlobReference is the only supported type. </param>

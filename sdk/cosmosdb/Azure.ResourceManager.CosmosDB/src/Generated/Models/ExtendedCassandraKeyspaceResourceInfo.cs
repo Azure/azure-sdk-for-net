@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedCassandraKeyspaceResourceInfo. </summary>
     public partial class ExtendedCassandraKeyspaceResourceInfo : CassandraKeyspaceResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedCassandraKeyspaceResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCassandraKeyspaceResourceInfo"/>. </summary>
         /// <param name="keyspaceName"> Name of the Cosmos DB Cassandra keyspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public ExtendedCassandraKeyspaceResourceInfo(string keyspaceName) : base(keyspaceName)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(keyspaceName, nameof(keyspaceName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedCassandraKeyspaceResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCassandraKeyspaceResourceInfo"/>. </summary>
         /// <param name="keyspaceName"> Name of the Cosmos DB Cassandra keyspace. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>

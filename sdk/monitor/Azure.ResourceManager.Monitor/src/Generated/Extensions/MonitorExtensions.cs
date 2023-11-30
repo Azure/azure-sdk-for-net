@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
         public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutoscaleSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutoscaleSettingResource"/> object. </returns>
         public static AutoscaleSettingResource GetAutoscaleSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AlertRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AlertRuleResource"/> object. </returns>
         public static AlertRuleResource GetAlertRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LogProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogProfileResource"/> object. </returns>
         public static LogProfileResource GetLogProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticSettingResource"/> object. </returns>
         public static DiagnosticSettingResource GetDiagnosticSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>
         public static DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ActionGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ActionGroupResource"/> object. </returns>
         public static ActionGroupResource GetActionGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MetricAlertResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MetricAlertResource"/> object. </returns>
         public static MetricAlertResource GetMetricAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ScheduledQueryRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScheduledQueryRuleResource"/> object. </returns>
         public static ScheduledQueryRuleResource GetScheduledQueryRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
         public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource"/> object. </returns>
         public static MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkResource"/> object. </returns>
         public static MonitorPrivateLinkResource GetMonitorPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MonitorPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorPrivateEndpointConnectionResource"/> object. </returns>
         public static MonitorPrivateEndpointConnectionResource GetMonitorPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource"/> object. </returns>
         public static MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ActivityLogAlertResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ActivityLogAlertResource"/> object. </returns>
         public static ActivityLogAlertResource GetActivityLogAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataCollectionEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataCollectionEndpointResource"/> object. </returns>
         public static DataCollectionEndpointResource GetDataCollectionEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataCollectionRuleAssociationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataCollectionRuleAssociationResource"/> object. </returns>
         public static DataCollectionRuleAssociationResource GetDataCollectionRuleAssociationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataCollectionRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataCollectionRuleResource"/> object. </returns>
         public static DataCollectionRuleResource GetDataCollectionRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MonitorWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorWorkspaceResource"/> object. </returns>
         public static MonitorWorkspaceResource GetMonitorWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -1797,7 +1797,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1825,7 +1825,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoscaleSettingResource> GetAutoscaleSettings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1853,7 +1853,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AlertRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AlertRuleResource> GetAlertRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1881,7 +1881,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AlertRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AlertRuleResource> GetAlertRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1909,7 +1909,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ActionGroupResource> GetActionGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1937,7 +1937,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ActionGroupResource> GetActionGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1967,7 +1967,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventDataInfo> GetActivityLogsAsync(this SubscriptionResource subscriptionResource, string filter, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1997,7 +1997,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventDataInfo> GetActivityLogs(this SubscriptionResource subscriptionResource, string filter, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2026,7 +2026,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2055,7 +2055,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2084,7 +2084,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2113,7 +2113,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2141,7 +2141,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2169,7 +2169,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MetricAlertResource> GetMetricAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2197,7 +2197,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2225,7 +2225,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2253,7 +2253,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2281,7 +2281,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2309,7 +2309,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2337,7 +2337,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ActivityLogAlertResource> GetActivityLogAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2365,7 +2365,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2393,7 +2393,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataCollectionEndpointResource> GetDataCollectionEndpoints(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2421,7 +2421,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataCollectionRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataCollectionRuleResource> GetDataCollectionRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2449,7 +2449,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataCollectionRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataCollectionRuleResource> GetDataCollectionRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2477,7 +2477,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2505,7 +2505,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -2533,7 +2533,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -2561,7 +2561,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorLocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -2591,7 +2591,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventDataInfo> GetTenantActivityLogsAsync(this TenantResource tenantResource, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -2621,7 +2621,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventDataInfo> GetTenantActivityLogs(this TenantResource tenantResource, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));

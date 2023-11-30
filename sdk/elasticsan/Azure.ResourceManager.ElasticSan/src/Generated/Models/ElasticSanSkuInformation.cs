@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> ElasticSAN SKU and its properties. </summary>
     public partial class ElasticSanSkuInformation
     {
-        /// <summary> Initializes a new instance of ElasticSanSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformation"/>. </summary>
         /// <param name="name"> Sku Name. </param>
         internal ElasticSanSkuInformation(ElasticSanSkuName name)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Capabilities = new ChangeTrackingList<ElasticSanSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformation"/>. </summary>
         /// <param name="name"> Sku Name. </param>
         /// <param name="tier"> Sku Tier. </param>
         /// <param name="resourceType"> The type of the resource. </param>

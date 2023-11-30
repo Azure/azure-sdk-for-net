@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArcSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ArcSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArcSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ArcSettingResource"/> object. </returns>
         public virtual ArcSettingResource GetArcSettingResource(ResourceIdentifier id)
         {
             ArcSettingResource.ValidateResourceId(id);
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciClusterResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HciClusterResource"/> object. </returns>
         public virtual HciClusterResource GetHciClusterResource(ResourceIdentifier id)
         {
             HciClusterResource.ValidateResourceId(id);
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArcExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArcExtensionResource.CreateResourceIdentifier" /> to create an <see cref="ArcExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ArcExtensionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcExtensionResource.CreateResourceIdentifier" /> to create an <see cref="ArcExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArcExtensionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ArcExtensionResource"/> object. </returns>
         public virtual ArcExtensionResource GetArcExtensionResource(ResourceIdentifier id)
         {
             ArcExtensionResource.ValidateResourceId(id);
@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OfferResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OfferResource.CreateResourceIdentifier" /> to create an <see cref="OfferResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OfferResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OfferResource.CreateResourceIdentifier" /> to create an <see cref="OfferResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OfferResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OfferResource"/> object. </returns>
         public virtual OfferResource GetOfferResource(ResourceIdentifier id)
         {
             OfferResource.ValidateResourceId(id);
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PublisherResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PublisherResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublisherResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
         public virtual PublisherResource GetPublisherResource(ResourceIdentifier id)
         {
             PublisherResource.ValidateResourceId(id);
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciSkuResource.CreateResourceIdentifier" /> to create a <see cref="HciSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciSkuResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciSkuResource.CreateResourceIdentifier" /> to create a <see cref="HciSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HciSkuResource"/> object. </returns>
         public virtual HciSkuResource GetHciSkuResource(ResourceIdentifier id)
         {
             HciSkuResource.ValidateResourceId(id);
@@ -225,11 +225,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="UpdateRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UpdateRunResource.CreateResourceIdentifier" /> to create an <see cref="UpdateRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="UpdateRunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UpdateRunResource.CreateResourceIdentifier" /> to create an <see cref="UpdateRunResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UpdateRunResource" /> object. </returns>
+        /// <returns> Returns a <see cref="UpdateRunResource"/> object. </returns>
         public virtual UpdateRunResource GetUpdateRunResource(ResourceIdentifier id)
         {
             UpdateRunResource.ValidateResourceId(id);
@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="UpdateSummaryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UpdateSummaryResource.CreateResourceIdentifier" /> to create an <see cref="UpdateSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="UpdateSummaryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UpdateSummaryResource.CreateResourceIdentifier" /> to create an <see cref="UpdateSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UpdateSummaryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="UpdateSummaryResource"/> object. </returns>
         public virtual UpdateSummaryResource GetUpdateSummaryResource(ResourceIdentifier id)
         {
             UpdateSummaryResource.ValidateResourceId(id);
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="UpdateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UpdateResource.CreateResourceIdentifier" /> to create an <see cref="UpdateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="UpdateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UpdateResource.CreateResourceIdentifier" /> to create an <see cref="UpdateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UpdateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="UpdateResource"/> object. </returns>
         public virtual UpdateResource GetUpdateResource(ResourceIdentifier id)
         {
             UpdateResource.ValidateResourceId(id);

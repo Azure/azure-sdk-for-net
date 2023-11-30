@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Alert details. </summary>
     public partial class AlertPropertiesDetails
     {
-        /// <summary> Initializes a new instance of AlertPropertiesDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertPropertiesDetails"/>. </summary>
         public AlertPropertiesDetails()
         {
             ResourceGroupFilter = new ChangeTrackingList<BinaryData>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             ContactRoles = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AlertPropertiesDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertPropertiesDetails"/>. </summary>
         /// <param name="timeGrainType"> Type of timegrain cadence. </param>
         /// <param name="periodStartDate"> datetime of periodStartDate. </param>
         /// <param name="triggeredBy"> notificationId that triggered this alert. </param>

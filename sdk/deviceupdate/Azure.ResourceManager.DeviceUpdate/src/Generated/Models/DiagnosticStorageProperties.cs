@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Customer-initiated diagnostic log collection storage properties. </summary>
     public partial class DiagnosticStorageProperties
     {
-        /// <summary> Initializes a new instance of DiagnosticStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticStorageProperties"/>. </summary>
         /// <param name="authenticationType"> Authentication Type. </param>
         /// <param name="resourceId"> ResourceId of the diagnostic storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public DiagnosticStorageProperties(AuthenticationType authenticationType, string resourceId)
+        public DiagnosticStorageProperties(DiagnosticStorageAuthenticationType authenticationType, ResourceIdentifier resourceId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of DiagnosticStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticStorageProperties"/>. </summary>
         /// <param name="authenticationType"> Authentication Type. </param>
         /// <param name="connectionString"> ConnectionString of the diagnostic storage account. </param>
         /// <param name="resourceId"> ResourceId of the diagnostic storage account. </param>
-        internal DiagnosticStorageProperties(AuthenticationType authenticationType, string connectionString, string resourceId)
+        internal DiagnosticStorageProperties(DiagnosticStorageAuthenticationType authenticationType, string connectionString, ResourceIdentifier resourceId)
         {
             AuthenticationType = authenticationType;
             ConnectionString = connectionString;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         }
 
         /// <summary> Authentication Type. </summary>
-        public AuthenticationType AuthenticationType { get; set; }
+        public DiagnosticStorageAuthenticationType AuthenticationType { get; set; }
         /// <summary> ConnectionString of the diagnostic storage account. </summary>
         public string ConnectionString { get; set; }
         /// <summary> ResourceId of the diagnostic storage account. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

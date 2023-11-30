@@ -13,13 +13,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Manifest attributes. </summary>
     internal partial class AcrManifests
     {
-        /// <summary> Initializes a new instance of AcrManifests. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrManifests"/>. </summary>
         internal AcrManifests()
         {
             Manifests = new ChangeTrackingList<ManifestAttributesBase>();
         }
 
-        /// <summary> Initializes a new instance of AcrManifests. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrManifests"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="manifests"> List of manifests. </param>

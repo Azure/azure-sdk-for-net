@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Element containing the translated text. </summary>
     public partial class TranslatedTextItem
     {
-        /// <summary> Initializes a new instance of TranslatedTextItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslatedTextItem"/>. </summary>
         /// <param name="translations">
         /// An array of translation results. The size of the array matches the number of target
         /// languages specified through the to query parameter.
@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Text
             Translations = translations.ToList();
         }
 
-        /// <summary> Initializes a new instance of TranslatedTextItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslatedTextItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="translations">
         /// An array of translation results. The size of the array matches the number of target

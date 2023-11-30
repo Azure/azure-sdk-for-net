@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a set of worker selectors that will be attached if the given condition resolves to true. </summary>
     public partial class ConditionalWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of ConditionalWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/>. </summary>
         /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="workerSelectors"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
             WorkerSelectors = workerSelectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConditionalWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>

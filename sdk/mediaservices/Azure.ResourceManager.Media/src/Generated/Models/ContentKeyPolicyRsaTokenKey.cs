@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Specifies a RSA key for token validation. </summary>
     public partial class ContentKeyPolicyRsaTokenKey : ContentKeyPolicyRestrictionTokenKey
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyRsaTokenKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyRsaTokenKey"/>. </summary>
         /// <param name="exponent"> The RSA Parameter exponent. </param>
         /// <param name="modulus"> The RSA Parameter modulus. </param>
         public ContentKeyPolicyRsaTokenKey(byte[] exponent, byte[] modulus)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.ContentKeyPolicyRsaTokenKey";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyRsaTokenKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyRsaTokenKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="exponent"> The RSA Parameter exponent. </param>
         /// <param name="modulus"> The RSA Parameter modulus. </param>

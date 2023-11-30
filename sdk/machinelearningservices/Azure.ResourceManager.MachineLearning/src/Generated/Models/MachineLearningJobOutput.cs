@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobOutput"/>. </summary>
         protected MachineLearningJobOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         internal MachineLearningJobOutput(string description, JobOutputType jobOutputType)

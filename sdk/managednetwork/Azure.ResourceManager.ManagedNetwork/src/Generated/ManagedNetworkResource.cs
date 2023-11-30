@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ManagedNetwork
 {
     /// <summary>
     /// A Class representing a ManagedNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetManagedNetwork method.
     /// </summary>
     public partial class ManagedNetworkResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedNetworkResource(ArmClient client, ManagedNetworkData data) : this(client, data.Id)

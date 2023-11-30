@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Properties specific to the grafana resource. </summary>
     public partial class ManagedGrafanaProperties
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaProperties"/>. </summary>
         public ManagedGrafanaProperties()
         {
             OutboundIPs = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Grafana.Models
             GrafanaPlugins = new ChangeTrackingDictionary<string, GrafanaPlugin>();
         }
 
-        /// <summary> Initializes a new instance of ManagedGrafanaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="grafanaVersion"> The Grafana software version. </param>
         /// <param name="endpoint"> The endpoint of the Grafana instance. </param>

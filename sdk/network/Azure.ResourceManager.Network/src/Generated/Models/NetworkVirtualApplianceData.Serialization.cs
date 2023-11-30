@@ -103,6 +103,16 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(InternetIngressPublicIPs))
+            {
+                writer.WritePropertyName("internetIngressPublicIps"u8);
+                writer.WriteStartArray();
+                foreach (var item in InternetIngressPublicIPs)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Delegation))
             {
                 writer.WritePropertyName("delegation"u8);
@@ -140,6 +150,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> sshPublicKey = default;
             Optional<IReadOnlyList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
             Optional<IList<VirtualApplianceAdditionalNicProperties>> additionalNics = default;
+            Optional<IList<WritableSubResource>> internetIngressPublicIPs = default;
             Optional<IReadOnlyList<WritableSubResource>> virtualApplianceSites = default;
             Optional<IReadOnlyList<WritableSubResource>> virtualApplianceConnections = default;
             Optional<IReadOnlyList<WritableSubResource>> inboundSecurityRules = default;
@@ -320,6 +331,20 @@ namespace Azure.ResourceManager.Network
                             additionalNics = array;
                             continue;
                         }
+                        if (property0.NameEquals("internetIngressPublicIps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            internetIngressPublicIPs = array;
+                            continue;
+                        }
                         if (property0.NameEquals("virtualApplianceSites"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -398,7 +423,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, Optional.ToList(virtualApplianceNics), Optional.ToList(additionalNics), Optional.ToList(virtualApplianceSites), Optional.ToList(virtualApplianceConnections), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
+            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, Optional.ToList(virtualApplianceNics), Optional.ToList(additionalNics), Optional.ToList(internetIngressPublicIPs), Optional.ToList(virtualApplianceSites), Optional.ToList(virtualApplianceConnections), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
         }
     }
 }

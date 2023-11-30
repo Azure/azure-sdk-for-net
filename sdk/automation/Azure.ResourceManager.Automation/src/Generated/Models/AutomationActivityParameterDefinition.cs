@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the activity parameter. </summary>
     public partial class AutomationActivityParameterDefinition
     {
-        /// <summary> Initializes a new instance of AutomationActivityParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterDefinition"/>. </summary>
         internal AutomationActivityParameterDefinition()
         {
             ValidationSet = new ChangeTrackingList<AutomationActivityParameterValidationSet>();
         }
 
-        /// <summary> Initializes a new instance of AutomationActivityParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterDefinition"/>. </summary>
         /// <param name="name"> Gets or sets the name of the activity parameter. </param>
         /// <param name="activityParameterType"> Gets or sets the type of the activity parameter. </param>
         /// <param name="isMandatory"> Gets or sets a Boolean value that indicates true if the parameter is required. If the value is false, the parameter is optional. </param>

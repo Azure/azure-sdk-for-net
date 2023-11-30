@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of ingestion settings. </summary>
     internal partial class IngestionSettingList
     {
-        /// <summary> Initializes a new instance of IngestionSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingList"/>. </summary>
         internal IngestionSettingList()
         {
             Value = new ChangeTrackingList<IngestionSettingData>();
         }
 
-        /// <summary> Initializes a new instance of IngestionSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingList"/>. </summary>
         /// <param name="value"> List of ingestion settings. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal IngestionSettingList(IReadOnlyList<IngestionSettingData> value, string nextLink)

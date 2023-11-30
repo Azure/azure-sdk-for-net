@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> List the alerts. </summary>
     internal partial class SmartGroupsList
     {
-        /// <summary> Initializes a new instance of SmartGroupsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupsList"/>. </summary>
         internal SmartGroupsList()
         {
             Value = new ChangeTrackingList<SmartGroupData>();
         }
 
-        /// <summary> Initializes a new instance of SmartGroupsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupsList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of alerts. </param>
         /// <param name="value"> List of alerts. </param>
         internal SmartGroupsList(string nextLink, IReadOnlyList<SmartGroupData> value)

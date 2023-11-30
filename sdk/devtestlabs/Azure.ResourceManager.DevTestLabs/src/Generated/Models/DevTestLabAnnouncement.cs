@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a lab's announcement banner. </summary>
     public partial class DevTestLabAnnouncement
     {
-        /// <summary> Initializes a new instance of DevTestLabAnnouncement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabAnnouncement"/>. </summary>
         public DevTestLabAnnouncement()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabAnnouncement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabAnnouncement"/>. </summary>
         /// <param name="title"> The plain text title for the lab announcement. </param>
         /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
         /// <param name="enabled"> Is the lab announcement active/enabled at this time?. </param>

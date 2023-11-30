@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> User-defined filters to return data which will be purged from the table. </summary>
     public partial class ComponentPurgeBodyFilters
     {
-        /// <summary> Initializes a new instance of ComponentPurgeBodyFilters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeBodyFilters"/>. </summary>
         public ComponentPurgeBodyFilters()
         {
         }

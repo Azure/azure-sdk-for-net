@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm specific provider input. </summary>
     public partial class InMageRcmReprotectContent : ReverseReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmReprotectContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmReprotectContent"/>. </summary>
         /// <param name="reprotectAgentId"> The reprotect agent Id. </param>
         /// <param name="datastoreName"> The target datastore name. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>

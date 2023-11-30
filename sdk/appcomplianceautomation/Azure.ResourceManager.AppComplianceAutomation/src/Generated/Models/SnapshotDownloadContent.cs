@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Snapshot's download request. </summary>
     public partial class SnapshotDownloadContent
     {
-        /// <summary> Initializes a new instance of SnapshotDownloadContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotDownloadContent"/>. </summary>
         /// <param name="downloadType"> Indicates the download type. </param>
         public SnapshotDownloadContent(DownloadType downloadType)
         {

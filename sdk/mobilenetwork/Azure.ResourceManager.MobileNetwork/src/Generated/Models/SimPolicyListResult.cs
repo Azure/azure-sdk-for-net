@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for SIM policies API service call. </summary>
     internal partial class SimPolicyListResult
     {
-        /// <summary> Initializes a new instance of SimPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimPolicyListResult"/>. </summary>
         internal SimPolicyListResult()
         {
             Value = new ChangeTrackingList<MobileNetworkSimPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of SimPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimPolicyListResult"/>. </summary>
         /// <param name="value"> A list of SIM policies. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal SimPolicyListResult(IReadOnlyList<MobileNetworkSimPolicyData> value, string nextLink)

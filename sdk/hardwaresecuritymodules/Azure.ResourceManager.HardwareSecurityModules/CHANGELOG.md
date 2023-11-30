@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.2 (2023-12-30)
+
+### Features Added
+
+- Upgraded API version to `2023-12-10-preview`.
+    - Added support for User Assigned Identity in Azure Cloud HSM
+    - Added Backup and Restore Properties in Azure Cloud HSM
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+    
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.0.0-beta.1 (2023-10-30)
 

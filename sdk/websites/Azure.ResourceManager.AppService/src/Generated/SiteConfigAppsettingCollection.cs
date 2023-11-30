@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteConfigAppsettingResource" /> and their operations.
-    /// Each <see cref="SiteConfigAppsettingResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SiteConfigAppsettingCollection" /> instance call the GetSiteConfigAppsettings method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="SiteConfigAppsettingResource"/> and their operations.
+    /// Each <see cref="SiteConfigAppsettingResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="SiteConfigAppsettingCollection"/> instance call the GetSiteConfigAppsettings method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class SiteConfigAppsettingCollection : ArmCollection, IEnumerable<SiteConfigAppsettingResource>, IAsyncEnumerable<SiteConfigAppsettingResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteConfigAppsettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteConfigAppsettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteConfigAppsettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteConfigAppsettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteConfigAppsettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteConfigAppsettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteConfigAppsettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteConfigAppsettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

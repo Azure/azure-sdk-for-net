@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The TopologySingleResource. </summary>
     public partial class TopologySingleResource
     {
-        /// <summary> Initializes a new instance of TopologySingleResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResource"/>. </summary>
         internal TopologySingleResource()
         {
             Parents = new ChangeTrackingList<TopologySingleResourceParent>();
             Children = new ChangeTrackingList<TopologySingleResourceChild>();
         }
 
-        /// <summary> Initializes a new instance of TopologySingleResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResource"/>. </summary>
         /// <param name="resourceId"> Azure resource id. </param>
         /// <param name="severity"> The security severity of the resource. </param>
         /// <param name="recommendationsExist"> Indicates if the resource has security recommendations. </param>

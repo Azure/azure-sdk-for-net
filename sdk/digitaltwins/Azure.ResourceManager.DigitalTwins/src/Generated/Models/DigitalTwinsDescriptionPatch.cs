@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The description of the DigitalTwins service. </summary>
     public partial class DigitalTwinsDescriptionPatch
     {
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionPatch"/>. </summary>
         public DigitalTwinsDescriptionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

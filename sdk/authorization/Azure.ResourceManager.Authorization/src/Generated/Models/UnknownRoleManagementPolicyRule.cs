@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The UnknownRoleManagementPolicyRule. </summary>
     internal partial class UnknownRoleManagementPolicyRule : RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of UnknownRoleManagementPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRoleManagementPolicyRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An Activity Log Alert rule object for the body of patch operations. </summary>
     public partial class ActivityLogAlertPatch
     {
-        /// <summary> Initializes a new instance of ActivityLogAlertPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertPatch"/>. </summary>
         public ActivityLogAlertPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

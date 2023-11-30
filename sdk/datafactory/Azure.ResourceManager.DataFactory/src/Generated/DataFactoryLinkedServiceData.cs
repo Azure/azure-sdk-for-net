@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryLinkedServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryLinkedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceData"/>. </summary>
         /// <param name="properties">
         /// Properties of linked service.
         /// Please note <see cref="DataFactoryLinkedServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryLinkedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

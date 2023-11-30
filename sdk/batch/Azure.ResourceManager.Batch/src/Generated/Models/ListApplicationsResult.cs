@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The result of performing list applications. </summary>
     internal partial class ListApplicationsResult
     {
-        /// <summary> Initializes a new instance of ListApplicationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListApplicationsResult"/>. </summary>
         internal ListApplicationsResult()
         {
             Value = new ChangeTrackingList<BatchApplicationData>();
         }
 
-        /// <summary> Initializes a new instance of ListApplicationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListApplicationsResult"/>. </summary>
         /// <param name="value"> The list of applications. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ListApplicationsResult(IReadOnlyList<BatchApplicationData> value, string nextLink)

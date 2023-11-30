@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The base resource set for visibility and auto-approval. </summary>
     internal partial class ResourceSet
     {
-        /// <summary> Initializes a new instance of ResourceSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSet"/>. </summary>
         public ResourceSet()
         {
             Subscriptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSet"/>. </summary>
         /// <param name="subscriptions"> The list of subscriptions. </param>
         internal ResourceSet(IList<string> subscriptions)
         {

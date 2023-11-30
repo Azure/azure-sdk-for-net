@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkGroupStaticMemberData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkGroupStaticMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkGroupStaticMemberData"/>. </summary>
         public NetworkGroupStaticMemberData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkGroupStaticMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkGroupStaticMemberData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

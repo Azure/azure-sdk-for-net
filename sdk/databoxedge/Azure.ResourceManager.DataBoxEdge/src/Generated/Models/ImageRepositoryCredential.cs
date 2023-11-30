@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Image repository credential. </summary>
     public partial class ImageRepositoryCredential
     {
-        /// <summary> Initializes a new instance of ImageRepositoryCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageRepositoryCredential"/>. </summary>
         /// <param name="imageRepositoryUri"> Image repository url (e.g.: mcr.microsoft.com). </param>
         /// <param name="userName"> Repository user name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageRepositoryUri"/> or <paramref name="userName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             UserName = userName;
         }
 
-        /// <summary> Initializes a new instance of ImageRepositoryCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageRepositoryCredential"/>. </summary>
         /// <param name="imageRepositoryUri"> Image repository url (e.g.: mcr.microsoft.com). </param>
         /// <param name="userName"> Repository user name. </param>
         /// <param name="password"> Repository user password. </param>

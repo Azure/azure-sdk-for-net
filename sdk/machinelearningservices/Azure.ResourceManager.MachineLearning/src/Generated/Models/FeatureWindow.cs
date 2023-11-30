@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Specifies the feature window. </summary>
     public partial class FeatureWindow
     {
-        /// <summary> Initializes a new instance of FeatureWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureWindow"/>. </summary>
         public FeatureWindow()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureWindow"/>. </summary>
         /// <param name="featureWindowEnd"> Specifies the feature window end time. </param>
         /// <param name="featureWindowStart"> Specifies the feature window start time. </param>
         internal FeatureWindow(DateTimeOffset? featureWindowEnd, DateTimeOffset? featureWindowStart)

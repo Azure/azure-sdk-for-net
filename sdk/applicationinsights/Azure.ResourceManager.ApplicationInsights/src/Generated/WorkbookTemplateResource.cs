@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A Class representing a WorkbookTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkbookTemplateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkbookTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetWorkbookTemplate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkbookTemplateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkbookTemplateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetWorkbookTemplate method.
     /// </summary>
     public partial class WorkbookTemplateResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkbookTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkbookTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkbookTemplateResource(ArmClient client, WorkbookTemplateData data) : this(client, data.Id)

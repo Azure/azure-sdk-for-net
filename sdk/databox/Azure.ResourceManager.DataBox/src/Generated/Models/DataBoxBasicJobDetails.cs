@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class DataBoxBasicJobDetails
     {
-        /// <summary> Initializes a new instance of DataBoxBasicJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxBasicJobDetails"/>. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         protected DataBoxBasicJobDetails(DataBoxContactDetails contactDetails)
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Actions = new ChangeTrackingList<CustomerResolutionCode>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxBasicJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxBasicJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>

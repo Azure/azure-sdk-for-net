@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> A list of firewall rules. </summary>
     internal partial class CosmosDBForPostgreSqlFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlFirewallRuleListResult"/>. </summary>
         internal CosmosDBForPostgreSqlFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlFirewallRuleListResult"/>. </summary>
         /// <param name="value"> The list of firewall rules in a cluster. </param>
         internal CosmosDBForPostgreSqlFirewallRuleListResult(IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData> value)
         {

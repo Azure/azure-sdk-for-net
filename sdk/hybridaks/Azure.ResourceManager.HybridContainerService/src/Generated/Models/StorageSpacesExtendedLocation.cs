@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The StorageSpacesExtendedLocation. </summary>
     public partial class StorageSpacesExtendedLocation
     {
-        /// <summary> Initializes a new instance of StorageSpacesExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesExtendedLocation"/>. </summary>
         public StorageSpacesExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesExtendedLocation"/>. </summary>
         /// <param name="storageSpacesExtendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         internal StorageSpacesExtendedLocation(string storageSpacesExtendedLocationType, string name)

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExperimentResource" /> and their operations.
-    /// Each <see cref="ExperimentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="ExperimentCollection" /> instance call the GetExperiments method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ExperimentResource"/> and their operations.
+    /// Each <see cref="ExperimentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ExperimentCollection"/> instance call the GetExperiments method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ExperimentCollection : ArmCollection, IEnumerable<ExperimentResource>, IAsyncEnumerable<ExperimentResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExperimentResource> GetAllAsync(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExperimentResource> GetAll(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);

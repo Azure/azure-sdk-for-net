@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing a SystemTopic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SystemTopicResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSystemTopicResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSystemTopic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SystemTopicResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSystemTopicResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSystemTopic method.
     /// </summary>
     public partial class SystemTopicResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SystemTopicResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SystemTopicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SystemTopicResource(ArmClient client, SystemTopicData data) : this(client, data.Id)

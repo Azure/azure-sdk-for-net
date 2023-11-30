@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudClusterMetricsConfigurationResource" /> and their operations.
-    /// Each <see cref="NetworkCloudClusterMetricsConfigurationResource" /> in the collection will belong to the same instance of <see cref="NetworkCloudClusterResource" />.
-    /// To get a <see cref="NetworkCloudClusterMetricsConfigurationCollection" /> instance call the GetNetworkCloudClusterMetricsConfigurations method from an instance of <see cref="NetworkCloudClusterResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudClusterMetricsConfigurationResource"/> and their operations.
+    /// Each <see cref="NetworkCloudClusterMetricsConfigurationResource"/> in the collection will belong to the same instance of <see cref="NetworkCloudClusterResource"/>.
+    /// To get a <see cref="NetworkCloudClusterMetricsConfigurationCollection"/> instance call the GetNetworkCloudClusterMetricsConfigurations method from an instance of <see cref="NetworkCloudClusterResource"/>.
     /// </summary>
     public partial class NetworkCloudClusterMetricsConfigurationCollection : ArmCollection, IEnumerable<NetworkCloudClusterMetricsConfigurationResource>, IAsyncEnumerable<NetworkCloudClusterMetricsConfigurationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudClusterMetricsConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudClusterMetricsConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudClusterMetricsConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudClusterMetricsConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudClusterMetricsConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudClusterMetricsConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

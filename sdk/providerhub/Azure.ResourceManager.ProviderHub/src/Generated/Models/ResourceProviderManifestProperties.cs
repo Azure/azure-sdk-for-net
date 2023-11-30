@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderManifestProperties. </summary>
     public partial class ResourceProviderManifestProperties
     {
-        /// <summary> Initializes a new instance of ResourceProviderManifestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManifestProperties"/>. </summary>
         public ResourceProviderManifestProperties()
         {
             ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Capabilities = new ChangeTrackingList<ResourceProviderCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderManifestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManifestProperties"/>. </summary>
         /// <param name="providerAuthentication"></param>
         /// <param name="providerAuthorizations"></param>
         /// <param name="namespace"></param>

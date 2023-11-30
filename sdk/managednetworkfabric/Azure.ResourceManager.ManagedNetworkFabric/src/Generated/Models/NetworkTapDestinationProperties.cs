@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The network tap destination properties. </summary>
     public partial class NetworkTapDestinationProperties
     {
-        /// <summary> Initializes a new instance of NetworkTapDestinationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapDestinationProperties"/>. </summary>
         public NetworkTapDestinationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkTapDestinationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapDestinationProperties"/>. </summary>
         /// <param name="name"> Destination name. </param>
         /// <param name="destinationType"> Type of destination. Input can be IsolationDomain or Direct. </param>
         /// <param name="destinationId"> The destination Id. ARM Resource ID of either NNI or Internal Networks. </param>

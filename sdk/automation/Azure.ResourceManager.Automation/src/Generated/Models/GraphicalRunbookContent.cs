@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Graphical Runbook Content. </summary>
     public partial class GraphicalRunbookContent
     {
-        /// <summary> Initializes a new instance of GraphicalRunbookContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphicalRunbookContent"/>. </summary>
         public GraphicalRunbookContent()
         {
         }
 
-        /// <summary> Initializes a new instance of GraphicalRunbookContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphicalRunbookContent"/>. </summary>
         /// <param name="rawContent"> Raw graphical Runbook content. </param>
         /// <param name="graphRunbookJson"> Graphical Runbook content as JSON. </param>
         internal GraphicalRunbookContent(RawGraphicalRunbookContent rawContent, string graphRunbookJson)

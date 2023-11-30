@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> List of restorable backups for a Cassandra cluster. </summary>
     internal partial class ListBackups
     {
-        /// <summary> Initializes a new instance of ListBackups. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBackups"/>. </summary>
         internal ListBackups()
         {
             Value = new ChangeTrackingList<CassandraClusterBackupResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of ListBackups. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBackups"/>. </summary>
         /// <param name="value"> Container for array of backups. </param>
         internal ListBackups(IReadOnlyList<CassandraClusterBackupResourceInfo> value)
         {

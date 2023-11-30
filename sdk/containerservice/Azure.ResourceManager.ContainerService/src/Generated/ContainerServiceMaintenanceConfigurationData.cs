@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceMaintenanceConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationData"/>. </summary>
         public ContainerServiceMaintenanceConfigurationData()
         {
             TimesInWeek = new ChangeTrackingList<ContainerServiceTimeInWeek>();
             NotAllowedTimes = new ChangeTrackingList<ContainerServiceTimeSpan>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

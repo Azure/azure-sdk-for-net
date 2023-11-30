@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// </summary>
     public abstract partial class MigrateSsisTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutput"/>. </summary>
         protected MigrateSsisTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal MigrateSsisTaskOutput(string id, string resultType)

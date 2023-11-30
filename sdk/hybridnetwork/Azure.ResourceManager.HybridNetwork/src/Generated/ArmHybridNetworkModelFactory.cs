@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridNetworkModelFactory
     {
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ConfigurationGroupSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ConfigurationGroupSchemaData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
         /// <param name="versionState"> The configuration group schema version state. </param>
         /// <param name="description"> Description of what schema can contain. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ConfigurationGroupSchemaPropertiesFormat(provisioningState, versionState, description, schemaDefinition);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationGroupValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ConfigurationGroupValueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ConfigurationGroupValueData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationGroupValuePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationGroupValuePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownConfigurationGroupValuePropertiesFormat(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType);
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkFunctionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionData(id, name, resourceType, systemData, tags, location, properties, etag, identity);
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownNetworkFunctionPropertiesFormat(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType, roleOverrideValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ComponentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ComponentData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ComponentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the component resource. </param>
         /// <param name="deploymentProfile"> The JSON-serialized deployment profile of the component resource. </param>
         /// <param name="deploymentStatus"> The deployment status of the component resource. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ComponentProperties(provisioningState, deploymentProfile, deploymentStatus);
         }
 
-        /// <summary> Initializes a new instance of DeploymentStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentStatusProperties"/>. </summary>
         /// <param name="status"> The status of the component resource. </param>
         /// <param name="resources"> The resource related to the component resource. </param>
         /// <param name="nextExpectedUpdateOn"> The next expected update of deployment status. </param>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new DeploymentStatusProperties(status, resources, nextExpectedUpdateOn);
         }
 
-        /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentKubernetesResources"/>. </summary>
         /// <param name="deployments"> Deployments that are related to component resource. </param>
         /// <param name="pods"> Pods related to component resource. </param>
         /// <param name="replicaSets"> Replica sets related to component resource. </param>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ComponentKubernetesResources(deployments?.ToList(), pods?.ToList(), replicaSets?.ToList(), statefulSets?.ToList(), daemonSets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of KubernetesDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesDeployment"/>. </summary>
         /// <param name="name"> The name of the deployment. </param>
         /// <param name="namespace"> The namespace of the deployment. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new KubernetesDeployment(name, @namespace, desiredNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn);
         }
 
-        /// <summary> Initializes a new instance of KubernetesPod. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesPod"/>. </summary>
         /// <param name="name"> The name of the Pod. </param>
         /// <param name="namespace"> The namespace of the Pod. </param>
         /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new KubernetesPod(name, @namespace, desiredNumberOfContainers, readyNumberOfContainers, status, createdOn, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PodEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PodEvent"/>. </summary>
         /// <param name="eventType"> The type of pod event. </param>
         /// <param name="reason"> Event reason. </param>
         /// <param name="message"> Event message. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new PodEvent(eventType, reason, message, lastSeenOn);
         }
 
-        /// <summary> Initializes a new instance of KubernetesReplicaSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesReplicaSet"/>. </summary>
         /// <param name="name"> The name of the replicaSet. </param>
         /// <param name="namespace"> The namespace of the replicaSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new KubernetesReplicaSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, currentNumberOfPods, createdOn);
         }
 
-        /// <summary> Initializes a new instance of KubernetesStatefulSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesStatefulSet"/>. </summary>
         /// <param name="name"> The name of the statefulset. </param>
         /// <param name="namespace"> The namespace of the statefulset. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new KubernetesStatefulSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, createdOn);
         }
 
-        /// <summary> Initializes a new instance of KubernetesDaemonSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesDaemonSet"/>. </summary>
         /// <param name="name"> The name of the daemonSet. </param>
         /// <param name="namespace"> The namespace of the daemonSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new KubernetesDaemonSet(name, @namespace, desiredNumberOfPods, currentNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn);
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkFunctionDefinitionGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionDefinitionGroupData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionDefinitionGroupPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition groups resource. </param>
         /// <param name="description"> The network function definition group description. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionGroupPropertiesFormat"/> instance for mocking. </returns>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description);
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkFunctionDefinitionVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionDefinitionVersionData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(provisioningState, versionState, description, deployParameters, networkFunctionType);
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkServiceDesignGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkServiceDesignGroupData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignGroupPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkServiceDesignGroupPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design groups resource. </param>
         /// <param name="description"> The network service design group description. </param>
         /// <returns> A new <see cref="Models.NetworkServiceDesignGroupPropertiesFormat"/> instance for mocking. </returns>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkServiceDesignGroupPropertiesFormat(provisioningState, description);
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkServiceDesignVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkServiceDesignVersionData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design version resource. </param>
         /// <param name="versionState"> The network service design version state. </param>
         /// <param name="description"> The network service design version description. </param>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkServiceDesignVersionPropertiesFormat(provisioningState, versionState, description, configurationGroupSchemaReferences, nfvisFromSite, resourceElementTemplates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.PublisherData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new PublisherData(id, name, resourceType, systemData, tags, location, properties, identity);
         }
 
-        /// <summary> Initializes a new instance of PublisherPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PublisherPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
         /// <param name="scope"> The publisher scope. </param>
         /// <returns> A new <see cref="Models.PublisherPropertiesFormat"/> instance for mocking. </returns>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new PublisherPropertiesFormat(provisioningState, scope);
         }
 
-        /// <summary> Initializes a new instance of ArtifactStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ArtifactStoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactStoreData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ArtifactStorePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArtifactStorePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
         /// <param name="storeType"> The artifact store type. </param>
         /// <param name="replicationStrategy"> The replication strategy. </param>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactStorePropertiesFormat(provisioningState, storeType, replicationStrategy, managedResourceGroupConfiguration, storageResourceId);
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ArtifactManifestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactManifestData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArtifactManifestPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
         /// <param name="artifactManifestState"> The artifact manifest state. </param>
         /// <param name="artifacts"> The artifacts list. </param>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, artifacts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProxyArtifactListOverview. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactListOverview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ProxyArtifactListOverview(id, name, resourceType, systemData);
         }
 
-        /// <summary> Initializes a new instance of ProxyArtifactVersionsListOverview. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactVersionsListOverview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ProxyArtifactVersionsListOverview(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ProxyArtifactOverviewPropertiesValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactOverviewPropertiesValue"/>. </summary>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactVersion"> The artifact version. </param>
         /// <param name="artifactState"> The artifact state. </param>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ProxyArtifactOverviewPropertiesValue(artifactType, artifactVersion, artifactState);
         }
 
-        /// <summary> Initializes a new instance of SiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.SiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new SiteData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of SitePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SitePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </param>
         /// <param name="nfvis">
         /// List of NFVIs
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new SitePropertiesFormat(provisioningState, nfvis?.ToList(), siteNetworkServiceReferences?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteNetworkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.SiteNetworkServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new SiteNetworkServiceData(id, name, resourceType, systemData, tags, location, properties, identity, sku);
         }
 
-        /// <summary> Initializes a new instance of SiteNetworkServicePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteNetworkServicePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site network service resource. </param>
         /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
         /// <param name="siteReferenceId"> The site details. </param>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new SiteNetworkServicePropertiesFormat(provisioningState, managedResourceGroupConfiguration, siteReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(siteReferenceId) : null, publisherName, publisherScope, networkServiceDesignGroupName, networkServiceDesignVersionName, networkServiceDesignVersionOfferingLocation, networkServiceDesignVersionResourceReference, desiredStateConfigurationGroupValueReferences, lastStateNetworkServiceDesignVersionName, lastStateConfigurationGroupValueReferences);
         }
 
-        /// <summary> Initializes a new instance of HybridNetworkSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridNetworkSku"/>. </summary>
         /// <param name="name"> Name of this Sku. </param>
         /// <param name="tier"> The SKU tier based on the SKU name. </param>
         /// <returns> A new <see cref="Models.HybridNetworkSku"/> instance for mocking. </returns>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new HybridNetworkSku(name, tier);
         }
 
-        /// <summary> Initializes a new instance of AzureContainerRegistryScopedTokenCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureContainerRegistryScopedTokenCredential"/>. </summary>
         /// <param name="username"> The username of the credential. </param>
         /// <param name="acrToken"> The credential value. </param>
         /// <param name="acrServerUri"> The Acr server url. </param>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureContainerRegistryScopedTokenCredential(CredentialType.AzureContainerRegistryScopedToken, username, acrToken, acrServerUri, repositories?.ToList(), expiry);
         }
 
-        /// <summary> Initializes a new instance of AzureStorageAccountCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountCredential"/>. </summary>
         /// <param name="storageAccountId"> The storage account Id. </param>
         /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
         /// <param name="expiry"> The UTC time when credential will expire. </param>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureStorageAccountCredential(CredentialType.AzureStorageAccountToken, storageAccountId, containerCredentials?.ToList(), expiry);
         }
 
-        /// <summary> Initializes a new instance of AzureStorageAccountContainerCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountContainerCredential"/>. </summary>
         /// <param name="containerName"> The storage account container name. </param>
         /// <param name="containerSasUri"> The storage account container sas uri. </param>
         /// <returns> A new <see cref="Models.AzureStorageAccountContainerCredential"/> instance for mocking. </returns>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureStorageAccountContainerCredential(containerName, containerSasUri);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationValueWithSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationValueWithSecrets"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ConfigurationValueWithSecrets(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType.Secret, secretConfigurationValue);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationValueWithoutSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationValueWithoutSecrets"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ConfigurationValueWithoutSecrets(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType.Open, configurationValue);
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionValueWithSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionValueWithSecrets"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionValueWithSecrets(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, NetworkFunctionConfigurationType.Secret, roleOverrideValues?.ToList(), secretDeploymentValues);
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionValueWithoutSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionValueWithoutSecrets"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionValueWithoutSecrets(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, NetworkFunctionConfigurationType.Open, roleOverrideValues?.ToList(), deploymentValues);
         }
 
-        /// <summary> Initializes a new instance of ContainerizedNetworkFunctionDefinitionVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ContainerizedNetworkFunctionDefinitionVersion(provisioningState, versionState, description, deployParameters, NetworkFunctionType.ContainerizedNetworkFunction, networkFunctionTemplate);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkFunctionDefinitionVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>

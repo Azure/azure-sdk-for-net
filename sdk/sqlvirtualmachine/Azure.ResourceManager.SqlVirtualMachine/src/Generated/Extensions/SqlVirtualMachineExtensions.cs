@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AvailabilityGroupListenerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AvailabilityGroupListenerResource"/> object. </returns>
         public static AvailabilityGroupListenerResource GetAvailabilityGroupListenerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlVmGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SqlVmGroupResource"/> object. </returns>
         public static SqlVmGroupResource GetSqlVmGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlVmResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SqlVmResource"/> object. </returns>
         public static SqlVmResource GetSqlVmResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlVmGroupResource> GetSqlVmGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlVmGroupResource> GetSqlVmGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlVmResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlVmResource> GetSqlVmsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlVmResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlVmResource> GetSqlVms(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

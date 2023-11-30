@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A Policy creation input. </summary>
     public partial class A2APolicyCreationContent : PolicyProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2APolicyCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2APolicyCreationContent"/>. </summary>
         /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
         public A2APolicyCreationContent(SetMultiVmSyncStatus multiVmSyncStatus)
         {
