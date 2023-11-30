@@ -5,12 +5,12 @@ using System.ClientModel.Primitives;
 
 namespace System.ClientModel;
 
-public class NullableOutputMessage<T> : OutputMessage
+public class OptionalOutputMessage<T> : OutputMessage
 {
     private readonly T? _value;
     private readonly PipelineResponse _response;
 
-    internal NullableOutputMessage(T? value, PipelineResponse response)
+    internal OptionalOutputMessage(T? value, PipelineResponse response)
     {
         if (response is null) throw new ArgumentNullException(nameof(response));
 

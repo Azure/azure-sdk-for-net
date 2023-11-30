@@ -15,7 +15,7 @@ public abstract class OutputMessage
 
     public static OutputMessage<T> FromValue<T>(T value, PipelineResponse response)
     {
-        // Null values are required to use NullableOutputMessage<T>
+        // Null values are required to use OptionalOutputMessage<T>
         if (value is null)
         {
             throw new ArgumentException("OutputMessage<T> contract guarantees that OutputMessage<T>.Value is non-null.", nameof(value));
@@ -26,11 +26,11 @@ public abstract class OutputMessage
         return new OutputMessage<T>(value, response);
     }
 
-    public static NullableOutputMessage<T> FromNullableValue<T>(T? value, PipelineResponse response)
+    public static OptionalOutputMessage<T> FromOptionalValue<T>(T? value, PipelineResponse response)
     {
         ClientUtilities.AssertNotNull(response, nameof(response));
 
-        return new NullableOutputMessage<T>(value, response);
+        return new OptionalOutputMessage<T>(value, response);
     }
 
     private class NoModelOutputMessage : OutputMessage
