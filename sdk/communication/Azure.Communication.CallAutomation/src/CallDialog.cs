@@ -47,7 +47,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="startDialogOptions">Configuration attributes for starting dialog.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
-        public virtual async Task<Response<DialogResult>> StartDialogAsync(StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DialogResult>> StartDialogAsync(StartDialog startDialogOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StartDialog)}");
             scope.Start();
@@ -76,24 +76,24 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Start Dialog.
         /// </summary>
-        /// <param name="startDialogOptions">Configuration attributes for starting dialog.</param>
+        /// <param name="startDialog">Configuration attributes for starting dialog.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
-        public virtual Response<DialogResult> StartDialog(StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StartDialog(StartDialog startDialog, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StartDialog)}");
             scope.Start();
             try
             {
-                StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
+                StartDialogRequestInternal request = CreateStartDialogRequest(startDialog);
 
                 var response = CallDialogRestClient.StartDialog
                     (CallConnectionId,
-                    startDialogOptions.DialogId,
+                    startDialog.DialogId,
                     request,
                     cancellationToken);
 
-                var result = new DialogResult(startDialogOptions.DialogId);
+                var result = new DialogResult(startDialog.DialogId);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -105,14 +105,11 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        private static StartDialogRequestInternal CreateStartDialogRequest(StartDialogOptions startDialogOptions)
+        private static StartDialogRequestInternal CreateStartDialogRequest(StartDialog startDialog)
         {
-            DialogOptionsInternal dialogOptionsInternal = new DialogOptionsInternal(
-                startDialogOptions.BotAppId,
-                startDialogOptions.DialogContext);
-            StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(dialogOptionsInternal, startDialogOptions.DialogInputType)
+            StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(startDialog.Dialog)
             {
-                OperationContext = startDialogOptions.OperationContext == default ? Guid.NewGuid().ToString() : startDialogOptions.OperationContext
+                OperationContext = startDialog.OperationContext == default ? Guid.NewGuid().ToString() : startDialog.OperationContext
             };
             return startDialogRequestInternal;
         }
@@ -121,8 +118,9 @@ namespace Azure.Communication.CallAutomation
         /// Stop Dialog.
         /// </summary>
         /// <param name="dialogId"></param>
+        /// <param name="operationCallbackUri"></param>
         /// <param name="cancellationToken"></param>
-        public virtual async Task<Response<DialogResult>> StopDialogAsync(string dialogId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DialogResult>> StopDialogAsync(string dialogId, Uri operationCallbackUri = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StopDialog)}");
             scope.Start();
@@ -131,6 +129,7 @@ namespace Azure.Communication.CallAutomation
                 var response = await CallDialogRestClient.StopDialogAsync
                     (CallConnectionId,
                     dialogId,
+                    operationCallbackUri?.AbsoluteUri,
                     cancellationToken).ConfigureAwait(false);
 
                 var result = new DialogResult(dialogId);
@@ -149,8 +148,9 @@ namespace Azure.Communication.CallAutomation
         /// Stop Dialog.
         /// </summary>
         /// <param name="dialogId"></param>
+        /// <param name="operationCallbackUri"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<DialogResult> StopDialog(string dialogId, CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StopDialog(string dialogId, Uri operationCallbackUri = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StopDialog)}");
             scope.Start();
@@ -159,6 +159,7 @@ namespace Azure.Communication.CallAutomation
                 var response = CallDialogRestClient.StopDialog
                     (CallConnectionId,
                     dialogId,
+                    operationCallbackUri?.AbsoluteUri,
                     cancellationToken);
 
                 var result = new DialogResult(dialogId);
