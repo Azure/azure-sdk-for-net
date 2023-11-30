@@ -11,27 +11,8 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Parameters to use when configuring Azure OpenAI CosmosDB chat extensions. </summary>
-    public partial class AzureCosmosDBChatExtensionParameters
+    internal partial class AzureCosmosDBChatExtensionParameters
     {
-        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatExtensionParameters"/>. </summary>
-        /// <param name="databaseName"> The database name of Azure Cosmos DB. </param>
-        /// <param name="containerName"> The container name name of Azure Cosmos DB. </param>
-        /// <param name="indexName"> The index name of Azure Cosmos DB. </param>
-        /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="indexName"/> or <paramref name="fieldMappingOptions"/> is null. </exception>
-        public AzureCosmosDBChatExtensionParameters(string databaseName, string containerName, string indexName, AzureCosmosDBFieldMappingOptions fieldMappingOptions)
-        {
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(indexName, nameof(indexName));
-            Argument.AssertNotNull(fieldMappingOptions, nameof(fieldMappingOptions));
-
-            DatabaseName = databaseName;
-            ContainerName = containerName;
-            IndexName = indexName;
-            FieldMappingOptions = fieldMappingOptions;
-        }
-
         /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatExtensionParameters"/>. </summary>
         /// <param name="authentication"> The authentication option to access the data. </param>
         /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
@@ -71,19 +52,5 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
-        /// <summary> The database name of Azure Cosmos DB. </summary>
-        public string DatabaseName { get; }
-        /// <summary> The container name name of Azure Cosmos DB. </summary>
-        public string ContainerName { get; }
-        /// <summary> The index name of Azure Cosmos DB. </summary>
-        public string IndexName { get; }
-        /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
-        public AzureCosmosDBFieldMappingOptions FieldMappingOptions { get; }
-        /// <summary>
-        /// The embedding dependency for vector search.
-        /// Please note <see cref="OnYourDataEmbeddingDependency"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataEmbeddingEndpointDependency"/>, <see cref="OnYourDataEmbeddingDeploymentNameDependency"/> and <see cref="OnYourDataEmbeddingModelIdDependency"/>.
-        /// </summary>
-        public OnYourDataEmbeddingDependency EmbeddingDependency { get; set; }
     }
 }

@@ -11,21 +11,8 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Parameters to use when configuring Elasticsearch as an Azure OpenAI chat extension. </summary>
-    public partial class ElasticsearchChatExtensionParameters
+    internal partial class ElasticsearchChatExtensionParameters
     {
-        /// <summary> Initializes a new instance of <see cref="ElasticsearchChatExtensionParameters"/>. </summary>
-        /// <param name="endpoint"> The endpoint of Elasticsearch. </param>
-        /// <param name="indexName"> The index name of Elasticsearch. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="indexName"/> is null. </exception>
-        public ElasticsearchChatExtensionParameters(Uri endpoint, string indexName)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(indexName, nameof(indexName));
-
-            Endpoint = endpoint;
-            IndexName = indexName;
-        }
-
         /// <summary> Initializes a new instance of <see cref="ElasticsearchChatExtensionParameters"/>. </summary>
         /// <param name="authentication"> The authentication option to access the data. </param>
         /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
@@ -65,10 +52,6 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
-        /// <summary> The endpoint of Elasticsearch. </summary>
-        public Uri Endpoint { get; }
-        /// <summary> The index name of Elasticsearch. </summary>
-        public string IndexName { get; }
         /// <summary> The index field mapping options of Elasticsearch. </summary>
         public ElasticsearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
         /// <summary> The query type of Elasticsearch. </summary>

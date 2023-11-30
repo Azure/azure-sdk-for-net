@@ -213,20 +213,20 @@ namespace Azure.AI.OpenAI.Tests
                             }
                         }
 
-                        if (Recording.Mode == RecordedTestMode.Record)
-                        {
-                            foreach (KeyValuePair<Scenario, ModelDeploymentEntry> pair in s_deploymentEntriesByScenario)
-                            {
-                                Uri azureResourceUri = pair.Value.AzureResourceUri;
-                                if (azureResourceUri != null)
-                                {
-                                    string variableName = GetAzureEndpointVariableNameForScenario(pair.Key);
-                                    Recording.SetVariable(variableName, azureResourceUri.ToString());
-                                }
-                            }
-                        }
-
                         s_deploymentComplete = true;
+                    }
+                }
+            }
+
+            if (Recording.Mode == RecordedTestMode.Record)
+            {
+                foreach (KeyValuePair<Scenario, ModelDeploymentEntry> pair in s_deploymentEntriesByScenario)
+                {
+                    Uri azureResourceUri = pair.Value.AzureResourceUri;
+                    if (azureResourceUri != null)
+                    {
+                        string variableName = GetAzureEndpointVariableNameForScenario(pair.Key);
+                        Recording.SetVariable(variableName, azureResourceUri.ToString());
                     }
                 }
             }

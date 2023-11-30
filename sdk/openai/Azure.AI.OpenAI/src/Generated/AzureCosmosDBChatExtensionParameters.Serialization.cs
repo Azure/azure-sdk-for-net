@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class AzureCosmosDBChatExtensionParameters : IUtf8JsonSerializable
+    internal partial class AzureCosmosDBChatExtensionParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

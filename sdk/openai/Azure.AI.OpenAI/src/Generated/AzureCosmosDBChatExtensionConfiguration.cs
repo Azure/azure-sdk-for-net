@@ -17,17 +17,6 @@ namespace Azure.AI.OpenAI
     public partial class AzureCosmosDBChatExtensionConfiguration : AzureChatExtensionConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatExtensionConfiguration"/>. </summary>
-        /// <param name="parameters"> The parameters to use when configuring Azure OpenAI CosmosDB chat extensions. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public AzureCosmosDBChatExtensionConfiguration(AzureCosmosDBChatExtensionParameters parameters)
-        {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            Type = AzureChatExtensionType.AzureCosmosDB;
-            Parameters = parameters;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
@@ -37,8 +26,5 @@ namespace Azure.AI.OpenAI
         {
             Parameters = parameters;
         }
-
-        /// <summary> The parameters to use when configuring Azure OpenAI CosmosDB chat extensions. </summary>
-        public AzureCosmosDBChatExtensionParameters Parameters { get; }
     }
 }

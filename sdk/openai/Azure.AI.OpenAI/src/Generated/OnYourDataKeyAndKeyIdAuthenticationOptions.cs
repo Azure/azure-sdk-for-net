@@ -14,6 +14,20 @@ namespace Azure.AI.OpenAI
     public partial class OnYourDataKeyAndKeyIdAuthenticationOptions : OnYourDataAuthenticationOptions
     {
         /// <summary> Initializes a new instance of <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>. </summary>
+        /// <param name="key"> The key to use for authentication. </param>
+        /// <param name="keyId"> The key ID to use for authentication. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="keyId"/> is null. </exception>
+        public OnYourDataKeyAndKeyIdAuthenticationOptions(string key, string keyId)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(keyId, nameof(keyId));
+
+            Type = OnYourDataAuthenticationType.KeyAndKeyId;
+            Key = key;
+            KeyId = keyId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>. </summary>
         /// <param name="type"> The authentication type. </param>
         /// <param name="key"> The key to use for authentication. </param>
         /// <param name="keyId"> The key ID to use for authentication. </param>
@@ -22,5 +36,10 @@ namespace Azure.AI.OpenAI
             Key = key;
             KeyId = keyId;
         }
+
+        /// <summary> The key to use for authentication. </summary>
+        public string Key { get; }
+        /// <summary> The key ID to use for authentication. </summary>
+        public string KeyId { get; }
     }
 }

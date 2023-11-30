@@ -14,11 +14,25 @@ namespace Azure.AI.OpenAI
     public partial class OnYourDataApiKeyAuthenticationOptions : OnYourDataAuthenticationOptions
     {
         /// <summary> Initializes a new instance of <see cref="OnYourDataApiKeyAuthenticationOptions"/>. </summary>
+        /// <param name="key"> The API key to use for authentication. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public OnYourDataApiKeyAuthenticationOptions(string key)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            Type = OnYourDataAuthenticationType.ApiKey;
+            Key = key;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OnYourDataApiKeyAuthenticationOptions"/>. </summary>
         /// <param name="type"> The authentication type. </param>
         /// <param name="key"> The API key to use for authentication. </param>
         internal OnYourDataApiKeyAuthenticationOptions(OnYourDataAuthenticationType type, string key) : base(type)
         {
             Key = key;
         }
+
+        /// <summary> The API key to use for authentication. </summary>
+        public string Key { get; }
     }
 }

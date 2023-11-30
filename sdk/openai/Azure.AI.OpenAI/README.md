@@ -461,15 +461,11 @@ See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.co
 **NOTE:** The concurrent use of [Chat Functions](#use-chat-functions) and Azure Chat Extensions on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
 
 ```C# Snippet:ChatUsingYourOwnData
-OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
-apiKeyAuthentication.SetKey("<your Cognitive Search resource API key>");
-AzureCognitiveSearchChatExtensionParameters parameters = new(
-    searchEndpoint: new Uri("https://your-contoso-search-resource.search.windows.net"),
-    indexName: "contoso-products-index")
+AzureCognitiveSearchChatExtensionConfiguration contosoExtensionConfig = new()
 {
-    Authentication = apiKeyAuthentication,
+    SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
+    Authentication = new OnYourDataApiKeyAuthenticationOptions("<your Cognitive Search resource API key>"),
 };
-AzureCognitiveSearchChatExtensionConfiguration contosoExtensionConfig = new(parameters);
 
 ChatCompletionsOptions chatCompletionsOptions = new()
 {

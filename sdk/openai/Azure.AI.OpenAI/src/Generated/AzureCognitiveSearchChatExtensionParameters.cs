@@ -11,21 +11,8 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Parameters for Azure Cognitive Search when used as an Azure OpenAI chat extension. </summary>
-    public partial class AzureCognitiveSearchChatExtensionParameters
+    internal partial class AzureCognitiveSearchChatExtensionParameters
     {
-        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionParameters"/>. </summary>
-        /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
-        /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchEndpoint"/> or <paramref name="indexName"/> is null. </exception>
-        public AzureCognitiveSearchChatExtensionParameters(Uri searchEndpoint, string indexName)
-        {
-            Argument.AssertNotNull(searchEndpoint, nameof(searchEndpoint));
-            Argument.AssertNotNull(indexName, nameof(indexName));
-
-            SearchEndpoint = searchEndpoint;
-            IndexName = indexName;
-        }
-
         /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionParameters"/>. </summary>
         /// <param name="authentication"> The authentication option to access the data. </param>
         /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
@@ -75,10 +62,6 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
-        /// <summary> The absolute endpoint path for the Azure Cognitive Search resource to use. </summary>
-        public Uri SearchEndpoint { get; }
-        /// <summary> The name of the index to use as available in the referenced Azure Cognitive Search resource. </summary>
-        public string IndexName { get; }
         /// <summary> The API key to use when interacting with the Azure Cognitive Search resource. </summary>
         public string Key { get; set; }
         /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>

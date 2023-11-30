@@ -41,7 +41,7 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <summary>
     /// Creates a new instance of ChatRequestUserMessage using a collection of structured content.
     /// </summary>
-    /// <param name="content"> The collection fo structured content associated with the message. </param>
+    /// <param name="content"> The collection of structured content associated with the message. </param>
     /// <exception cref="ArgumentException">
     /// <paramref name="content"/> is null or empty.
     /// </exception>
@@ -55,7 +55,7 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <summary>
     /// Creates a new instance of ChatRequestUserMessage using a collection of structured content.
     /// </summary>
-    /// <param name="content"> The collection fo structured content associated with the message. </param>
+    /// <param name="content"> The collection of structured content associated with the message. </param>
     /// <exception cref="ArgumentException">
     /// <paramref name="content"/> is null or empty.
     /// </exception>

@@ -11,24 +11,8 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Parameters for the Azure Machine Learning index chat extension. </summary>
-    public partial class AzureMachineLearningIndexChatExtensionParameters
+    internal partial class AzureMachineLearningIndexChatExtensionParameters
     {
-        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatExtensionParameters"/>. </summary>
-        /// <param name="projectResourceId"> The resource ID of the Azure Machine Learning project. </param>
-        /// <param name="name"> The Azure Machine Learning index name. </param>
-        /// <param name="version"> The version of the Azure Machine Learning index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectResourceId"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        public AzureMachineLearningIndexChatExtensionParameters(string projectResourceId, string name, string version)
-        {
-            Argument.AssertNotNull(projectResourceId, nameof(projectResourceId));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
-
-            ProjectResourceId = projectResourceId;
-            Name = name;
-            Version = version;
-        }
-
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatExtensionParameters"/>. </summary>
         /// <param name="authentication"> The authentication option to access the data. </param>
         /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
@@ -66,12 +50,6 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
-        /// <summary> The resource ID of the Azure Machine Learning project. </summary>
-        public string ProjectResourceId { get; }
-        /// <summary> The Azure Machine Learning index name. </summary>
-        public string Name { get; }
-        /// <summary> The version of the Azure Machine Learning index. </summary>
-        public string Version { get; }
         /// <summary> Search filter. Only supported if the MLIndex is of type AzureSearch. </summary>
         public string Filter { get; set; }
     }

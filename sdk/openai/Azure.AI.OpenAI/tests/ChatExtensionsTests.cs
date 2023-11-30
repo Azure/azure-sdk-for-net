@@ -29,18 +29,14 @@ public class ChatExtensionsTests : OpenAITestBase
     public async Task BasicSearchExtensionWorks(Service serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
-        string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
-            serviceTarget,
-            Scenario.ChatCompletions);
+        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
-        OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
-        apiKeyAuthentication.SetKey(GetCognitiveSearchApiKey().Key);
-        AzureCognitiveSearchChatExtensionConfiguration searchExtension = new(new(
-            searchEndpoint: new Uri("https://openaisdktestsearch.search.windows.net"),
-            indexName: "openai-test-index-carbon-wiki")
+        AzureCognitiveSearchChatExtensionConfiguration searchExtension = new()
         {
-            Authentication = apiKeyAuthentication,
-        });
+            SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
+            IndexName = "openai-test-index-carbon-wiki",
+            Authentication = new OnYourDataApiKeyAuthenticationOptions(GetCognitiveSearchApiKey().Key),
+        };
         AzureChatExtensionsOptions extensionsOptions = new()
         {
             Extensions = { searchExtension },
@@ -80,18 +76,14 @@ public class ChatExtensionsTests : OpenAITestBase
     public async Task StreamingSearchExtensionWorks(Service serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
-        string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
-            serviceTarget,
-            Scenario.ChatCompletions);
+        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
-        OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
-        apiKeyAuthentication.SetKey(GetCognitiveSearchApiKey().Key);
-        AzureCognitiveSearchChatExtensionConfiguration searchConfig = new(new(
-            searchEndpoint: new Uri("https://openaisdktestsearch.search.windows.net"),
-            indexName: "openai-test-index-carbon-wiki")
+        AzureCognitiveSearchChatExtensionConfiguration searchConfig = new()
         {
-            Authentication = apiKeyAuthentication,
-        });
+            SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
+            IndexName = "openai-test-index-carbon-wiki",
+            Authentication = new OnYourDataApiKeyAuthenticationOptions(GetCognitiveSearchApiKey().Key),
+        };
 
         var requestOptions = new ChatCompletionsOptions()
         {

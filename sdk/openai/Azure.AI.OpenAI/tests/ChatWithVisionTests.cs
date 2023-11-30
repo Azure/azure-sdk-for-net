@@ -33,7 +33,7 @@ public class ChatWithVisionTests : OpenAITestBase
                 new ChatRequestUserMessage(
                     new ChatMessageTextContentItem("describe this image"),
                     new ChatMessageImageContentItem(
-                        new Uri("https://pixabay.com/get/geda00efcc8ef894b12c436613df5a3dd9baa2e733227c533d39fbb3474f33f0e90ffb27b80837c636a074d19aa882bcf4ff8f5bf18645eef88188e73927c383a33ecbe1a8cc4b40139c0132f4ee418d9_640.jpg"))),
+                        new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg"))),
             },
             MaxTokens = 2048,
         };
