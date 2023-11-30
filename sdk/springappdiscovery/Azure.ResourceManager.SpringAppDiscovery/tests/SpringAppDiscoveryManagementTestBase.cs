@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
     public class SpringAppDiscoveryManagementTestBase : ManagementRecordedTestBase<SpringAppDiscoveryManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected SubscriptionResource Subscription { get; private set; }
 
         protected SpringAppDiscoveryManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -29,15 +29,24 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         public async Task CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            Subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            return await Subscription.GetResourceGroups().GetAsync(name);
+        }
+
+        protected async Task<SpringbootsitesModelCollection> GetSpringbootsitesModelCollectionAsync(string resourceGroupName)
+        {
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetSpringbootsitesModels();
+        }
+
+        protected async Task<SpringbootsitesModelResource> GetSpringsiteModelResource(string resourceGroupName, string siteName)
+        {
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+            return await GetSpringbootsitesModelCollectionAsync(resourceGroupName).Result.GetAsync(siteName);
         }
     }
 }
