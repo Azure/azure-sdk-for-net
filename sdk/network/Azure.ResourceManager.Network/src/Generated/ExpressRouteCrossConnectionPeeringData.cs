@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteCrossConnectionPeeringData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringData"/>. </summary>
         public ExpressRouteCrossConnectionPeeringData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

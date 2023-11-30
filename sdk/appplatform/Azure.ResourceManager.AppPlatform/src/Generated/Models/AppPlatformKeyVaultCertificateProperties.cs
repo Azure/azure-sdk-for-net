@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Properties of certificate imported from key vault. </summary>
     public partial class AppPlatformKeyVaultCertificateProperties : AppPlatformCertificateProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformKeyVaultCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformKeyVaultCertificateProperties"/>. </summary>
         /// <param name="vaultUri"> The vault uri of user key vault. </param>
         /// <param name="keyVaultCertName"> The certificate name of key vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultUri"/> or <paramref name="keyVaultCertName"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             CertificatePropertiesType = "KeyVaultCertificate";
         }
 
-        /// <summary> Initializes a new instance of AppPlatformKeyVaultCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformKeyVaultCertificateProperties"/>. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>

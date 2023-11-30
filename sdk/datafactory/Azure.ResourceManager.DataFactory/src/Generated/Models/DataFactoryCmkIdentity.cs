@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Managed Identity used for CMK. </summary>
     internal partial class DataFactoryCmkIdentity
     {
-        /// <summary> Initializes a new instance of DataFactoryCmkIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCmkIdentity"/>. </summary>
         public DataFactoryCmkIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryCmkIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCmkIdentity"/>. </summary>
         /// <param name="userAssignedIdentity"> The resource id of the user assigned identity to authenticate to customer's key vault. </param>
         internal DataFactoryCmkIdentity(string userAssignedIdentity)
         {

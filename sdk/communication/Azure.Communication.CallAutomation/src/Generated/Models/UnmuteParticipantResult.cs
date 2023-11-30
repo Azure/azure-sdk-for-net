@@ -10,12 +10,21 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The response payload for unmuting participants from the call. </summary>
     public partial class UnmuteParticipantResult
     {
+<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/UnmuteParticipantResult.cs
         /// <summary> Initializes a new instance of UnmuteParticipantResult. </summary>
         internal UnmuteParticipantResult()
         {
         }
 
         /// <summary> Initializes a new instance of UnmuteParticipantResult. </summary>
+=======
+        /// <summary> Initializes a new instance of <see cref="UnmuteParticipantsResult"/>. </summary>
+        internal UnmuteParticipantsResult()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnmuteParticipantsResult"/>. </summary>
+>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/UnmuteParticipantsResult.cs
         /// <param name="operationContext"> The operation context provided by client. </param>
         internal UnmuteParticipantResult(string operationContext)
         {

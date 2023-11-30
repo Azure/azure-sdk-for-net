@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// </summary>
     public abstract partial class BotChannelProperties
     {
-        /// <summary> Initializes a new instance of BotChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelProperties"/>. </summary>
         protected BotChannelProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BotChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelProperties"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

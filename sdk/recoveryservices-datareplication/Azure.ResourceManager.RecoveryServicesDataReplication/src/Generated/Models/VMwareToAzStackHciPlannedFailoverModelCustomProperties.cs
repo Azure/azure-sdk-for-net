@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMware to AzStackHCI planned failover model custom properties. </summary>
     public partial class VMwareToAzStackHciPlannedFailoverModelCustomProperties : PlannedFailoverModelCustomProperties
     {
-        /// <summary> Initializes a new instance of VMwareToAzStackHciPlannedFailoverModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/>. </summary>
         /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
         public VMwareToAzStackHciPlannedFailoverModelCustomProperties(bool shutdownSourceVm)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "VMwareToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of VMwareToAzStackHciPlannedFailoverModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPlannedFailoverModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
         internal VMwareToAzStackHciPlannedFailoverModelCustomProperties(string instanceType, bool shutdownSourceVm) : base(instanceType)

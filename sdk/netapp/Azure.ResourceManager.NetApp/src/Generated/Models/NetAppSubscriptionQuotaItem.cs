@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Information regarding Subscription Quota Item. </summary>
     public partial class NetAppSubscriptionQuotaItem : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppSubscriptionQuotaItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItem"/>. </summary>
         public NetAppSubscriptionQuotaItem()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppSubscriptionQuotaItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItem"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

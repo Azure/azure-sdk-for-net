@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines an Aml Instance DataMount. </summary>
     public partial class MachineLearningComputeInstanceDataMount
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataMount. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataMount"/>. </summary>
         internal MachineLearningComputeInstanceDataMount()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataMount. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataMount"/>. </summary>
         /// <param name="source"> Source of the ComputeInstance data mount. </param>
         /// <param name="sourceType"> Data source type. </param>
         /// <param name="mountName"> name of the ComputeInstance data mount. </param>

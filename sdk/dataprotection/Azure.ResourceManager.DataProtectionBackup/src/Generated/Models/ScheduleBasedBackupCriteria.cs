@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Schedule based backup criteria. </summary>
     public partial class ScheduleBasedBackupCriteria : DataProtectionBackupCriteria
     {
-        /// <summary> Initializes a new instance of ScheduleBasedBackupCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupCriteria"/>. </summary>
         public ScheduleBasedBackupCriteria()
         {
             AbsoluteCriteria = new ChangeTrackingList<BackupAbsoluteMarker>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "ScheduleBasedBackupCriteria";
         }
 
-        /// <summary> Initializes a new instance of ScheduleBasedBackupCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="absoluteCriteria">
         /// it contains absolute values like "AllBackup" / "FirstOfDay" / "FirstOfWeek" / "FirstOfMonth"

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Arc Addon. </summary>
     public partial class EdgeArcAddon : DataBoxEdgeRoleAddonData
     {
-        /// <summary> Initializes a new instance of EdgeArcAddon. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeArcAddon"/>. </summary>
         /// <param name="subscriptionId"> Arc resource subscription Id. </param>
         /// <param name="resourceGroupName"> Arc resource group name. </param>
         /// <param name="resourceName"> Arc resource Name. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Kind = AddonType.ArcForKubernetes;
         }
 
-        /// <summary> Initializes a new instance of EdgeArcAddon. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeArcAddon"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

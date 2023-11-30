@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Kubernetes cluster specific properties. </summary>
     internal partial class KubernetesClusterProperties
     {
-        /// <summary> Initializes a new instance of KubernetesClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterProperties"/>. </summary>
         public KubernetesClusterProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterProperties"/>. </summary>
         /// <param name="servicePrincipal"> The Azure Service Principal used by Kubernetes. </param>
         internal KubernetesClusterProperties(ServicePrincipalProperties servicePrincipal)
         {

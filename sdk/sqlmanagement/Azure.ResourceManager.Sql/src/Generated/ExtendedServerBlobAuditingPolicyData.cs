@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ExtendedServerBlobAuditingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ExtendedServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedServerBlobAuditingPolicyData"/>. </summary>
         public ExtendedServerBlobAuditingPolicyData()
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ExtendedServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedServerBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

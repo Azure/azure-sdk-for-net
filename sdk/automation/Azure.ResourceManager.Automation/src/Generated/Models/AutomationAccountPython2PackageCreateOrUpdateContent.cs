@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update module operation. </summary>
     public partial class AutomationAccountPython2PackageCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationAccountPython2PackageCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
         public AutomationAccountPython2PackageCreateOrUpdateContent(AutomationContentLink contentLink)

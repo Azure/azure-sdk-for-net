@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> This is used to represent the various nodes of the distributed container. </summary>
     public partial class DistributedNodesInfo
     {
-        /// <summary> Initializes a new instance of DistributedNodesInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributedNodesInfo"/>. </summary>
         public DistributedNodesInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DistributedNodesInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributedNodesInfo"/>. </summary>
         /// <param name="nodeName"> Name of the node under a distributed container. </param>
         /// <param name="status">
         /// Status of this Node.

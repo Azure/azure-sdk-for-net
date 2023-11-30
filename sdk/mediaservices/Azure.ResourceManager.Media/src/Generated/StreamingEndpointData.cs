@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class StreamingEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StreamingEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StreamingEndpointData(AzureLocation location) : base(location)
         {
             CustomHostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The ContinuousDtmfRecognitionRequest. </summary>
     internal partial class ContinuousDtmfRecognitionRequestInternal
     {
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public ContinuousDtmfRecognitionRequestInternal(CommunicationIdentifierModel targetParticipant)

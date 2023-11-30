@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The RolloutStatusBase. </summary>
     public partial class RolloutStatusBase
     {
-        /// <summary> Initializes a new instance of RolloutStatusBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutStatusBase"/>. </summary>
         public RolloutStatusBase()
         {
             CompletedRegions = new ChangeTrackingList<AzureLocation>();
             FailedOrSkippedRegions = new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of RolloutStatusBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutStatusBase"/>. </summary>
         /// <param name="completedRegions"></param>
         /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
         internal RolloutStatusBase(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions)

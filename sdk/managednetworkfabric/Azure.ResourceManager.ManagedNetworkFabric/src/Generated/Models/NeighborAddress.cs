@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Neighbor Address properties. </summary>
     public partial class NeighborAddress
     {
-        /// <summary> Initializes a new instance of NeighborAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeighborAddress"/>. </summary>
         public NeighborAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of NeighborAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeighborAddress"/>. </summary>
         /// <param name="address"> IP Address. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         internal NeighborAddress(string address, NetworkFabricConfigurationState? configurationState)

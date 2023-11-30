@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The IP access control. </summary>
     internal partial class IPAccessControl
     {
-        /// <summary> Initializes a new instance of IPAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAccessControl"/>. </summary>
         public IPAccessControl()
         {
             AllowedIPs = new ChangeTrackingList<IPRange>();
         }
 
-        /// <summary> Initializes a new instance of IPAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAccessControl"/>. </summary>
         /// <param name="allowedIPs"> The IP allow list. </param>
         internal IPAccessControl(IList<IPRange> allowedIPs)
         {

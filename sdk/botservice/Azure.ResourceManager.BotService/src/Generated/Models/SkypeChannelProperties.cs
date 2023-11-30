@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
     public partial class SkypeChannelProperties
     {
-        /// <summary> Initializes a new instance of SkypeChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkypeChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         public SkypeChannelProperties(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of SkypeChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkypeChannelProperties"/>. </summary>
         /// <param name="isMessagingEnabled"> Enable messaging for Skype channel. </param>
         /// <param name="isMediaCardsEnabled"> Enable media cards for Skype channel. </param>
         /// <param name="isVideoEnabled"> Enable video for Skype channel. </param>

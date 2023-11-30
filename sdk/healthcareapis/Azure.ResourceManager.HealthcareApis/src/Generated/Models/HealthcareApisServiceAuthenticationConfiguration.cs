@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Authentication configuration information. </summary>
     public partial class HealthcareApisServiceAuthenticationConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceAuthenticationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceAuthenticationConfiguration"/>. </summary>
         public HealthcareApisServiceAuthenticationConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceAuthenticationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceAuthenticationConfiguration"/>. </summary>
         /// <param name="authority"> The authority url for the service. </param>
         /// <param name="audience"> The audience url for the service. </param>
         /// <param name="isSmartProxyEnabled"> If the SMART on FHIR proxy is enabled. </param>

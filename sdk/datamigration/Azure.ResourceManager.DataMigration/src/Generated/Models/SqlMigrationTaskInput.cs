@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Base class for migration task input. </summary>
     public partial class SqlMigrationTaskInput
     {
-        /// <summary> Initializes a new instance of SqlMigrationTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>

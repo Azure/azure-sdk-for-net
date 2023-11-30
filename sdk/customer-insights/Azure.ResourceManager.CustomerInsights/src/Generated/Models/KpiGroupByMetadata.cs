@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The KPI GroupBy field metadata. </summary>
     public partial class KpiGroupByMetadata
     {
-        /// <summary> Initializes a new instance of KpiGroupByMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiGroupByMetadata"/>. </summary>
         internal KpiGroupByMetadata()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KpiGroupByMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiGroupByMetadata"/>. </summary>
         /// <param name="displayName"> The display name. </param>
         /// <param name="fieldName"> The name of the field. </param>
         /// <param name="fieldType"> The type of the field. </param>

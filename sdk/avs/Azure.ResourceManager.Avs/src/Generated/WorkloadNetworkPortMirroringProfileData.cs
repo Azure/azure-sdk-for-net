@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkPortMirroringProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringProfileData"/>. </summary>
         public WorkloadNetworkPortMirroringProfileData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

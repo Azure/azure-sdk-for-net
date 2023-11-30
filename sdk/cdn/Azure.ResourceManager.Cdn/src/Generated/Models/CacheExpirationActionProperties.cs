@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the cache expiration action. </summary>
     public partial class CacheExpirationActionProperties
     {
-        /// <summary> Initializes a new instance of CacheExpirationActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CacheType = cacheType;
         }
 
-        /// <summary> Initializes a new instance of CacheExpirationActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> InitialAgentPoolConfiguration specifies the configuration of a pool of virtual machines that are initially defined with a Kubernetes cluster. </summary>
     public partial class InitialAgentPoolConfiguration
     {
-        /// <summary> Initializes a new instance of InitialAgentPoolConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitialAgentPoolConfiguration"/>. </summary>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="mode"> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </param>
         /// <param name="name"> The name that will be used for the agent pool resource representing this agent pool. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             VmSkuName = vmSkuName;
         }
 
-        /// <summary> Initializes a new instance of InitialAgentPoolConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitialAgentPoolConfiguration"/>. </summary>
         /// <param name="administratorConfiguration"> The administrator credentials to be used for the nodes in this agent pool. </param>
         /// <param name="agentOptions"> The configurations that will be applied to each agent in this agent pool. </param>
         /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </param>

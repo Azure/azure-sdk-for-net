@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRecoveryServicesSiteRecoveryModelFactory
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryAlertData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAlertProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryAlertProperties"/>. </summary>
         /// <param name="sendToOwners"> A value indicating whether to send email to subscription administrator. </param>
         /// <param name="customEmailAddresses"> The custom email address for sending emails. </param>
         /// <param name="locale"> The locale for the email notification. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryAlertProperties(sendToOwners, customEmailAddresses?.ToList(), locale);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryReplicationAppliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryReplicationAppliance"/>. </summary>
         /// <param name="siteRecoveryReplicationApplianceProviderSpecificDetails"> Appliance related data. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryReplicationAppliance"/> instance for mocking. </returns>
         public static SiteRecoveryReplicationAppliance SiteRecoveryReplicationAppliance(SiteRecoveryApplianceSpecificDetails siteRecoveryReplicationApplianceProviderSpecificDetails = null)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryReplicationAppliance(siteRecoveryReplicationApplianceProviderSpecificDetails != null ? new SiteRecoveryReplicationApplianceProperties(siteRecoveryReplicationApplianceProviderSpecificDetails) : null);
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ReplicationEligibilityResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationEligibilityResultData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationEligibilityResultProperties"/>. </summary>
         /// <param name="clientRequestId"> The client request Id. </param>
         /// <param name="errors"> The error details. </param>
         /// <returns> A new <see cref="Models.ReplicationEligibilityResultProperties"/> instance for mocking. </returns>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationEligibilityResultProperties(clientRequestId, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationEligibilityResultErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationEligibilityResultErrorInfo(code, message, possibleCauses, recommendedAction, status);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryEventData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryEventData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryEventProperties"/>. </summary>
         /// <param name="eventCode"> The Id of the monitoring event. </param>
         /// <param name="description"> The event name. </param>
         /// <param name="eventType"> The type of the event. for example: VM Health, Server Health, Job Failure etc. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryEventProperties(eventCode, description, eventType, affectedObjectFriendlyName, affectedObjectCorrelationId, severity, occurredOn, fabricId, providerSpecificDetails, eventSpecificDetails, healthErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryHealthError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryHealthError"/>. </summary>
         /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryHealthError(innerHealthErrors?.ToList(), errorSource, errorType, errorLevel, errorCategory, errorCode, summaryMessage, errorMessage, possibleCauses, recommendedAction, creationTimeUtc, recoveryProviderErrorMessage, entityId, errorId, customerResolvability);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryInnerHealthError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryInnerHealthError"/>. </summary>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
         /// <param name="errorLevel"> Level of error. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryInnerHealthError(errorSource, errorType, errorLevel, errorCategory, errorCode, summaryMessage, errorMessage, possibleCauses, recommendedAction, createdOn, recoveryProviderErrorMessage, entityId, errorId, customerResolvability);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryFabricData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryFabricData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryFabricProperties"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the fabric. </param>
         /// <param name="encryptionDetails"> Encryption details for the fabric. </param>
         /// <param name="rolloverEncryptionDetails"> Rollover encryption details for the fabric. </param>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryFabricProperties(friendlyName, encryptionDetails, rolloverEncryptionDetails, internalIdentifier, bcdrState, customDetails, healthErrorDetails?.ToList(), health);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryEncryptionDetails"/>. </summary>
         /// <param name="kekState"> The key encryption key state for the Vmm. </param>
         /// <param name="kekCertThumbprint"> The key encryption key certificate thumbprint. </param>
         /// <param name="kekCertExpireOn"> The key encryption key certificate expiry date. </param>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryEncryptionDetails(kekState, kekCertThumbprint, kekCertExpireOn);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryLogicalNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryLogicalNetworkData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryLogicalNetworkProperties"/>. </summary>
         /// <param name="friendlyName"> The Friendly Name. </param>
         /// <param name="networkVirtualizationStatus"> A value indicating whether Network Virtualization is enabled for the logical network. </param>
         /// <param name="logicalNetworkUsage"> A value indicating whether logical network is used as private test network by test failover. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryLogicalNetworkProperties(friendlyName, networkVirtualizationStatus, logicalNetworkUsage, logicalNetworkDefinitionsStatus);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryNetworkData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryNetworkProperties"/>. </summary>
         /// <param name="fabricType"> The Fabric Type. </param>
         /// <param name="subnets"> The List of subnets. </param>
         /// <param name="friendlyName"> The Friendly Name. </param>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryNetworkProperties(fabricType, subnets?.ToList(), friendlyName, networkType);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoverySubnet"/>. </summary>
         /// <param name="name"> The subnet name. </param>
         /// <param name="friendlyName"> The subnet friendly name. </param>
         /// <param name="addressList"> The list of addresses for the subnet. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoverySubnet(name, friendlyName, addressList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryNetworkMappingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryNetworkMappingData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryNetworkMappingProperties"/>. </summary>
         /// <param name="state"> The pairing state for network mapping. </param>
         /// <param name="primaryNetworkFriendlyName"> The primary network friendly name. </param>
         /// <param name="primaryNetworkId"> The primary network id for network mapping. </param>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryNetworkMappingProperties(state, primaryNetworkFriendlyName, primaryNetworkId, primaryFabricFriendlyName, recoveryNetworkFriendlyName, recoveryNetworkId, recoveryFabricArmId, recoveryFabricFriendlyName, fabricSpecificSettings);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectionContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryProtectionContainerData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryProtectionContainerProperties"/>. </summary>
         /// <param name="fabricFriendlyName"> Fabric friendly name. </param>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="fabricType"> The fabric type. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryProtectionContainerProperties(fabricFriendlyName, friendlyName, fabricType, protectedItemCount, pairingStatus, role, fabricSpecificDetailsInstanceType != null ? new ProtectionContainerFabricSpecificDetails(fabricSpecificDetailsInstanceType) : null);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryMigrationItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryMigrationItemData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryMigrationItemProperties"/>. </summary>
         /// <param name="machineName"> The on-premise virtual machine name. </param>
         /// <param name="policyId"> The ARM Id of policy governing this item. </param>
         /// <param name="policyFriendlyName"> The name of policy governing this item. </param>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryMigrationItemProperties(machineName, policyId, policyFriendlyName, recoveryServicesProviderId, replicationStatus, migrationState, migrationStateDescription, lastTestMigrationOn, lastTestMigrationStatus, lastMigrationOn, lastMigrationStatus, testMigrateState, testMigrateStateDescription, health, healthErrors?.ToList(), allowedOperations?.ToList(), currentJob, criticalJobHistory?.ToList(), eventCorrelationId, providerSpecificDetails);
         }
 
-        /// <summary> Initializes a new instance of CurrentJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CurrentJobDetails"/>. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="jobId"> The ARM Id of the job being executed. </param>
         /// <param name="startOn"> The start time of the job. </param>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new CurrentJobDetails(jobName, jobId, startOn);
         }
 
-        /// <summary> Initializes a new instance of CriticalJobHistoryDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CriticalJobHistoryDetails"/>. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="jobId"> The ARM Id of the job being executed. </param>
         /// <param name="startOn"> The start time of the job. </param>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new CriticalJobHistoryDetails(jobName, jobId, startOn, jobStatus);
         }
 
-        /// <summary> Initializes a new instance of MigrationRecoveryPointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.MigrationRecoveryPointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MigrationRecoveryPointData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of MigrationRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
         /// <param name="recoveryPointType"> The recovery point type. </param>
         /// <returns> A new <see cref="Models.MigrationRecoveryPointProperties"/> instance for mocking. </returns>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MigrationRecoveryPointProperties(recoveryPointOn, recoveryPointType);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectableItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryProtectableItemData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryProtectableItemProperties"/>. </summary>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="protectionStatus"> The protection status. </param>
         /// <param name="replicationProtectedItemId"> The ARM resource of protected items. </param>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryProtectableItemProperties(friendlyName, protectionStatus, replicationProtectedItemId, recoveryServicesProviderId, protectionReadinessErrors?.ToList(), supportedReplicationProviders?.ToList(), customDetails);
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectedItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ReplicationProtectedItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationProtectedItemData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectedItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationProtectedItemProperties"/>. </summary>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="protectedItemType"> The type of protected item type. </param>
         /// <param name="protectableItemId"> The protected item ARM Id. </param>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationProtectedItemProperties(friendlyName, protectedItemType, protectableItemId, recoveryServicesProviderId, primaryFabricFriendlyName, primaryFabricProvider, recoveryFabricFriendlyName, recoveryFabricId, primaryProtectionContainerFriendlyName, recoveryProtectionContainerFriendlyName, protectionState, protectionStateDescription, activeLocation, testFailoverState, testFailoverStateDescription, switchProviderState, switchProviderStateDescription, allowedOperations?.ToList(), replicationHealth, failoverHealth, healthErrors?.ToList(), policyId, policyFriendlyName, lastSuccessfulFailoverOn, lastSuccessfulTestFailoverOn, currentScenario, failoverRecoveryPointId, providerSpecificDetails, recoveryContainerId, eventCorrelationId);
         }
 
-        /// <summary> Initializes a new instance of CurrentScenarioDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CurrentScenarioDetails"/>. </summary>
         /// <param name="scenarioName"> Scenario name. </param>
         /// <param name="jobId"> ARM Id of the job being executed. </param>
         /// <param name="startOn"> Start time of the workflow. </param>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new CurrentScenarioDetails(scenarioName, jobId, startOn);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryPointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryPointData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
         /// <param name="recoveryPointType"> The recovery point type: ApplicationConsistent, CrashConsistent. </param>
         /// <param name="providerSpecificDetails">
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails);
         }
 
-        /// <summary> Initializes a new instance of TargetComputeSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TargetComputeSize"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new TargetComputeSize(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TargetComputeSizeProperties"/>. </summary>
         /// <param name="name"> Target compute size name. </param>
         /// <param name="friendlyName"> Target compute size display name. </param>
         /// <param name="cpuCoresCount"> The maximum cpu cores count supported by target compute size. </param>
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new TargetComputeSizeProperties(name, friendlyName, cpuCoresCount, vCpusAvailable, memoryInGB, maxDataDiskCount, maxNicsCount, errors?.ToList(), highIopsSupported, hyperVGenerations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryComputeSizeErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryComputeSizeErrorDetails"/>. </summary>
         /// <param name="message"> The error message. </param>
         /// <param name="severity"> The severity of the error. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryComputeSizeErrorDetails"/> instance for mocking. </returns>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryComputeSizeErrorDetails(message, severity);
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerMappingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ProtectionContainerMappingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ProtectionContainerMappingData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProtectionContainerMappingProperties"/>. </summary>
         /// <param name="targetProtectionContainerId"> Paired protection container ARM ID. </param>
         /// <param name="targetProtectionContainerFriendlyName"> Friendly name of paired container. </param>
         /// <param name="providerSpecificDetails">
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ProtectionContainerMappingProperties(targetProtectionContainerId, targetProtectionContainerFriendlyName, providerSpecificDetails, health, healthErrorDetails?.ToList(), policyId, state, sourceProtectionContainerFriendlyName, sourceFabricFriendlyName, targetFabricFriendlyName, policyFriendlyName);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryServicesProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryServicesProviderData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryServicesProviderProperties"/>. </summary>
         /// <param name="fabricType"> Type of the site. </param>
         /// <param name="friendlyName"> Friendly name of the DRA. </param>
         /// <param name="providerVersion"> The provider version. </param>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryServicesProviderProperties(fabricType, friendlyName, providerVersion, serverVersion, providerVersionState, providerVersionExpireOn, fabricFriendlyName, lastHeartbeatReceivedOn, connectionStatus, protectedItemCount, allowedScenarios?.ToList(), healthErrorDetails?.ToList(), draIdentifier, machineId, machineName, biosId, authenticationIdentityDetails, resourceAccessIdentityDetails, dataPlaneAuthenticationIdentityDetails, providerVersionDetails);
         }
 
-        /// <summary> Initializes a new instance of IdentityProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IdentityProviderDetails"/>. </summary>
         /// <param name="tenantId"> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="applicationId"> The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="objectId"> The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new IdentityProviderDetails(tenantId, applicationId, objectId, audience, aadAuthority);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVersionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryVersionDetails"/>. </summary>
         /// <param name="version"> The agent version. </param>
         /// <param name="expireOn"> Version expiry date. </param>
         /// <param name="status"> A value indicating whether security update required. </param>
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryVersionDetails(version, expireOn, status);
         }
 
-        /// <summary> Initializes a new instance of StorageClassificationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.StorageClassificationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new StorageClassificationData(id, name, resourceType, systemData, storageClassificationFriendlyName != null ? new StorageClassificationProperties(storageClassificationFriendlyName) : null, location);
         }
 
-        /// <summary> Initializes a new instance of StorageClassificationMappingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.StorageClassificationMappingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new StorageClassificationMappingData(id, name, resourceType, systemData, targetStorageClassificationId != null ? new StorageClassificationMappingProperties(targetStorageClassificationId) : null, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryVCenterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryVCenterData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryVCenterProperties"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the vCenter. </param>
         /// <param name="internalId"> VCenter internal ID. </param>
         /// <param name="lastHeartbeatReceivedOn"> The time when the last heartbeat was received by vCenter. </param>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryVCenterProperties(friendlyName, internalId, lastHeartbeatReceivedOn, discoveryStatus, processServerId, ipAddress, infrastructureId, port, runAsAccountId, fabricArmResourceName, healthErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryJobProperties"/>. </summary>
         /// <param name="activityId"> The activity id. </param>
         /// <param name="scenarioName"> The ScenarioName. </param>
         /// <param name="friendlyName"> The DisplayName. </param>
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobProperties(activityId, scenarioName, friendlyName, state, stateDescription, tasks?.ToList(), errors?.ToList(), startOn, endOn, allowedActions?.ToList(), targetObjectId, targetObjectName, targetInstanceType, customDetails);
         }
 
-        /// <summary> Initializes a new instance of AsrTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AsrTask"/>. </summary>
         /// <param name="taskId"> The Id. </param>
         /// <param name="name"> The unique Task name. </param>
         /// <param name="startOn"> The start time. </param>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new AsrTask(taskId, name, startOn, endOn, allowedActions?.ToList(), friendlyName, state, stateDescription, taskType, customDetails, groupTaskCustomDetails, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryGroupTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryGroupTaskDetails"/> instance for mocking. </returns>
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new UnknownGroupTaskDetails(instanceType, childTasks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryJobErrorDetails"/>. </summary>
         /// <param name="serviceErrorDetails"> The Service error details. </param>
         /// <param name="providerErrorDetails"> The Provider error details. </param>
         /// <param name="errorLevel"> Error level of error. </param>
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobErrorDetails(serviceErrorDetails, providerErrorDetails, errorLevel, createdOn, taskId);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryServiceError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="possibleCauses"> Possible causes of error. </param>
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryServiceError(code, message, possibleCauses, recommendedAction, activityId);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobProviderError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryJobProviderError"/>. </summary>
         /// <param name="errorCode"> The Error code. </param>
         /// <param name="errorMessage"> The Error message. </param>
         /// <param name="errorId"> The Provider error Id. </param>
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobProviderError(errorCode, errorMessage, errorId, possibleCauses, recommendedAction);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryJobDetails"/> instance for mocking. </returns>
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new UnknownJobDetails(instanceType, affectedObjectDetails);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryPolicyData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryPolicyProperties"/>. </summary>
         /// <param name="friendlyName"> The FriendlyName. </param>
         /// <param name="providerSpecificDetails">
         /// The ReplicationChannelSetting.
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryPolicyProperties(friendlyName, providerSpecificDetails);
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ReplicationProtectionIntentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationProtectionIntentData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationProtectionIntentProperties"/>. </summary>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="jobId"> The job Id. </param>
         /// <param name="jobState"> The job state. </param>
@@ -945,7 +945,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationProtectionIntentProperties(friendlyName, jobId, jobState, isActive, createdOn, providerSpecificDetails);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryRecoveryPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryRecoveryPlanData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryRecoveryPlanProperties"/>. </summary>
         /// <param name="friendlyName"> The friendly name. </param>
         /// <param name="primaryFabricId"> The primary fabric Id. </param>
         /// <param name="primaryFabricFriendlyName"> The primary fabric friendly name. </param>
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryRecoveryPlanProperties(friendlyName, primaryFabricId, primaryFabricFriendlyName, recoveryFabricId, recoveryFabricFriendlyName, failoverDeploymentModel, replicationProviders?.ToList(), allowedOperations?.ToList(), lastPlannedFailoverOn, lastUnplannedFailoverOn, lastTestFailoverOn, currentScenario, currentScenarioStatus, currentScenarioStatusDescription, groups?.ToList(), providerSpecificDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOperatingSystems. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoverySupportedOperatingSystems"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoverySupportedOperatingSystems(id, name, resourceType, systemData, supportedOSList != null ? new SiteRecoverySupportedOSProperties(supportedOSList?.ToList()) : null, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOSProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoverySupportedOSProperty"/>. </summary>
         /// <param name="instanceType"> The replication provider type. </param>
         /// <param name="supportedOS"> The list of supported operating systems. </param>
         /// <returns> A new <see cref="Models.SiteRecoverySupportedOSProperty"/> instance for mocking. </returns>
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoverySupportedOSProperty(instanceType, supportedOS?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOSDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoverySupportedOSDetails"/>. </summary>
         /// <param name="osName"> The name. </param>
         /// <param name="osType"> The type. </param>
         /// <param name="osVersions"> The list of version for operating system. </param>
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoverySupportedOSDetails(osName, osType, osVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryOSVersionWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryOSVersionWrapper"/>. </summary>
         /// <param name="version"> The version. </param>
         /// <param name="servicePack"> The service pack. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryOSVersionWrapper"/> instance for mocking. </returns>
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryOSVersionWrapper(version, servicePack);
         }
 
-        /// <summary> Initializes a new instance of VaultHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultHealthDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VaultHealthDetails(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultHealthProperties"/>. </summary>
         /// <param name="vaultErrors"> The list of errors on the vault. </param>
         /// <param name="protectedItemsHealth"> The list of the health detail of the protected items in the vault. </param>
         /// <param name="fabricsHealth"> The list of the health detail of the fabrics in the vault. </param>
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VaultHealthProperties(vaultErrors?.ToList(), protectedItemsHealth, fabricsHealth, containersHealth);
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthSummary"/>. </summary>
         /// <param name="resourceCount"> The count of total resources under the container. </param>
         /// <param name="issues"> The list of summary of health errors across the resources under the container. </param>
         /// <param name="categorizedResourceCounts"> The categorized resource counts. </param>
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ResourceHealthSummary(resourceCount, issues?.ToList(), categorizedResourceCounts);
         }
 
-        /// <summary> Initializes a new instance of HealthErrorSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthErrorSummary"/>. </summary>
         /// <param name="summaryCode"> The code of the health error. </param>
         /// <param name="category"> The category of the health error. </param>
         /// <param name="severity"> Severity of error. </param>
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HealthErrorSummary(summaryCode, category, severity, summaryMessage, affectedResourceType, affectedResourceSubtype, affectedResourceCorrelationIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryVaultSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryVaultSettingData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryVaultSettingProperties"/>. </summary>
         /// <param name="migrationSolutionId"> The migration solution ARM Id. </param>
         /// <param name="vmwareToAzureProviderType"> VMware to Azure provider type. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryVaultSettingProperties"/> instance for mocking. </returns>
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryVaultSettingProperties(migrationSolutionId, vmwareToAzureProviderType);
         }
 
-        /// <summary> Initializes a new instance of A2ACrossClusterMigrationReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2ACrossClusterMigrationReplicationDetails"/>. </summary>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryFabricLocation"> Primary fabric location. </param>
         /// <param name="osType"> The type of operating system. </param>
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2ACrossClusterMigrationReplicationDetails("A2ACrossClusterMigration", fabricObjectId, primaryFabricLocation, osType, vmProtectionState, vmProtectionStateDescription, lifecycleId);
         }
 
-        /// <summary> Initializes a new instance of A2AEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AEventDetails"/>. </summary>
         /// <param name="protectedItemName"> The protected item arm name. </param>
         /// <param name="fabricObjectId"> The azure vm arm id. </param>
         /// <param name="fabricName"> Fabric arm name. </param>
@@ -1140,7 +1140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AEventDetails("A2A", protectedItemName, fabricObjectId, fabricName, fabricLocation, remoteFabricName, remoteFabricLocation);
         }
 
-        /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AExtendedLocationDetails"/>. </summary>
         /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
         /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
         /// <returns> A new <see cref="Models.A2AExtendedLocationDetails"/> instance for mocking. </returns>
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AExtendedLocationDetails(primaryExtendedLocation, recoveryExtendedLocation);
         }
 
-        /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AFabricSpecificLocationDetails"/>. </summary>
         /// <param name="initialPrimaryZone"> The initial source zone info. </param>
         /// <param name="initialRecoveryZone"> The initial target zone info. </param>
         /// <param name="initialPrimaryExtendedLocation"> The initial primary ExtendedLocation. </param>
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AFabricSpecificLocationDetails(initialPrimaryZone, initialRecoveryZone, initialPrimaryExtendedLocation, initialRecoveryExtendedLocation, initialPrimaryFabricLocation, initialRecoveryFabricLocation, primaryZone, recoveryZone, primaryExtendedLocation, recoveryExtendedLocation, primaryFabricLocation, recoveryFabricLocation);
         }
 
-        /// <summary> Initializes a new instance of A2APolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2APolicyDetails"/>. </summary>
         /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2APolicyDetails("A2A", recoveryPointThresholdInMinutes, recoveryPointHistory, appConsistentFrequencyInMinutes, multiVmSyncStatus, crashConsistentFrequencyInMinutes);
         }
 
-        /// <summary> Initializes a new instance of A2AProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AProtectedDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk uri. </param>
         /// <param name="recoveryAzureStorageAccountId"> The recovery disk storage account. </param>
         /// <param name="primaryDiskAzureStorageAccountId"> The primary disk storage account. </param>
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AProtectedDiskDetails(diskUri, recoveryAzureStorageAccountId, primaryDiskAzureStorageAccountId, recoveryDiskUri, diskName, diskCapacityInBytes, primaryStagingAzureStorageAccountId, diskType, isResyncRequired, monitoringPercentageCompletion, monitoringJobType, dataPendingInStagingStorageAccountInMB, dataPendingAtSourceAgentInMB, diskState, allowedDiskLevelOperation?.ToList(), isDiskEncrypted, secretIdentifier, dekKeyVaultArmId, isDiskKeyEncrypted, keyIdentifier, kekKeyVaultArmId, failoverDiskName, tfoDiskName);
         }
 
-        /// <summary> Initializes a new instance of A2AProtectedManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AProtectedManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The managed disk Arm id. </param>
         /// <param name="recoveryResourceGroupId"> The recovery disk resource group Arm Id. </param>
         /// <param name="recoveryTargetDiskId"> Recovery target disk Arm Id. </param>
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AProtectedManagedDiskDetails(diskId, recoveryResourceGroupId, recoveryTargetDiskId, recoveryReplicaDiskId, recoveryOrignalTargetDiskId, recoveryReplicaDiskAccountType, recoveryTargetDiskAccountType, recoveryDiskEncryptionSetId, primaryDiskEncryptionSetId, diskName, diskCapacityInBytes, primaryStagingAzureStorageAccountId, diskType, isResyncRequired, monitoringPercentageCompletion, monitoringJobType, dataPendingInStagingStorageAccountInMB, dataPendingAtSourceAgentInMB, diskState, allowedDiskLevelOperation?.ToList(), isDiskEncrypted, secretIdentifier, dekKeyVaultArmId, isDiskKeyEncrypted, keyIdentifier, kekKeyVaultArmId, failoverDiskName, tfoDiskName);
         }
 
-        /// <summary> Initializes a new instance of A2AProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AProtectionContainerMappingDetails"/>. </summary>
         /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
         /// <param name="automationAccountArmId"> The automation account arm id. </param>
         /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AProtectionContainerMappingDetails("A2A", agentAutoUpdateStatus, automationAccountArmId, automationAccountAuthenticationType, scheduleName, jobScheduleName);
         }
 
-        /// <summary> Initializes a new instance of A2ARecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2ARecoveryPointDetails"/>. </summary>
         /// <param name="recoveryPointSyncType"> A value indicating whether the recovery point is multi VM consistent. </param>
         /// <param name="disks"> List of disk ids representing a recovery point. </param>
         /// <returns> A new <see cref="Models.A2ARecoveryPointDetails"/> instance for mocking. </returns>
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2ARecoveryPointDetails("A2A", recoveryPointSyncType, disks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AReplicationDetails"/>. </summary>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="initialPrimaryZone"> The initial primary availability zone. </param>
         /// <param name="initialPrimaryFabricLocation"> The initial primary fabric location. </param>
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AReplicationDetails("A2A", fabricObjectId, initialPrimaryZone, initialPrimaryFabricLocation, initialRecoveryZone, initialPrimaryExtendedLocation, initialRecoveryExtendedLocation, initialRecoveryFabricLocation, multiVmGroupId, multiVmGroupName, multiVmGroupCreateOption, managementId, protectedDisks?.ToList(), unprotectedDisks?.ToList(), protectedManagedDisks?.ToList(), recoveryBootDiagStorageAccountId, primaryFabricLocation, recoveryFabricLocation, osType, recoveryAzureVmSize, recoveryAzureVmName, recoveryAzureResourceGroupId, recoveryCloudService, recoveryAvailabilitySet, selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId, vmNics?.ToList(), vmSyncedConfigDetails, monitoringPercentageCompletion, monitoringJobType, lastHeartbeat, agentVersion, agentExpireOn, isReplicationAgentUpdateRequired, agentCertificateExpireOn, isReplicationAgentCertificateUpdateRequired, recoveryFabricObjectId, vmProtectionState, vmProtectionStateDescription, lifecycleId, testFailoverRecoveryFabricObjectId, rpoInSeconds, lastRpoCalculatedOn, primaryAvailabilityZone, recoveryAvailabilityZone, primaryExtendedLocation, recoveryExtendedLocation, vmEncryptionType, tfoAzureVmName, recoveryAzureGeneration, recoveryProximityPlacementGroupId, autoProtectionOfDataDisk, recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId, churnOptionSelected);
         }
 
-        /// <summary> Initializes a new instance of A2AUnprotectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AUnprotectedDiskDetails"/>. </summary>
         /// <param name="diskLunId"> The source lun Id for the data disk. </param>
         /// <param name="diskAutoProtectionStatus"> A value indicating whether the disk auto protection is enabled. </param>
         /// <returns> A new <see cref="Models.A2AUnprotectedDiskDetails"/> instance for mocking. </returns>
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AUnprotectedDiskDetails(diskLunId, diskAutoProtectionStatus);
         }
 
-        /// <summary> Initializes a new instance of VmNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmNicDetails"/>. </summary>
         /// <param name="nicId"> The nic Id. </param>
         /// <param name="replicaNicId"> The replica nic Id. </param>
         /// <param name="sourceNicArmId"> The source nic ARM Id. </param>
@@ -1375,7 +1375,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VmNicDetails(nicId, replicaNicId, sourceNicArmId, vmNetworkName, recoveryVmNetworkId, ipConfigs?.ToList(), selectionType, recoveryNetworkSecurityGroupId, isAcceleratedNetworkingOnRecoveryEnabled, tfoVmNetworkId, tfoNetworkSecurityGroupId, isAcceleratedNetworkingOnTfoEnabled, recoveryNicName, recoveryNicResourceGroupName, isReuseExistingNicAllowed, tfoRecoveryNicName, tfoRecoveryNicResourceGroupName, isTfoReuseExistingNicAllowed, targetNicName);
         }
 
-        /// <summary> Initializes a new instance of HyperVIPConfigDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVIPConfigDetails"/>. </summary>
         /// <param name="name"></param>
         /// <param name="isPrimary"></param>
         /// <param name="subnetName"></param>
@@ -1400,7 +1400,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVIPConfigDetails(name, isPrimary, subnetName, staticIPAddress, ipAddressType, isSeletedForFailover, recoverySubnetName, recoveryStaticIPAddress, recoveryIPAddressType, recoveryPublicIPAddressId, recoveryLBBackendAddressPoolIds?.ToList(), tfoSubnetName, tfoStaticIPAddress, tfoPublicIPAddressId, tfoLBBackendAddressPoolIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AVmSyncedConfigDetails"/>. </summary>
         /// <param name="tags"> The Azure VM tags. </param>
         /// <param name="vmEndpoints"> The Azure VM input endpoints. </param>
         /// <returns> A new <see cref="Models.A2AVmSyncedConfigDetails"/> instance for mocking. </returns>
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AVmSyncedConfigDetails(tags, vmEndpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVmEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryVmEndpoint"/>. </summary>
         /// <param name="endpointName"></param>
         /// <param name="privatePort"></param>
         /// <param name="publicPort"></param>
@@ -1423,7 +1423,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryVmEndpoint(endpointName, privatePort, publicPort, protocol);
         }
 
-        /// <summary> Initializes a new instance of A2AReplicationIntentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AReplicationIntentDetails"/>. </summary>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
         /// <param name="recoveryLocation"> The recovery location for the virtual machine. </param>
@@ -1479,7 +1479,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AReplicationIntentDetails("A2A", fabricObjectId, primaryLocation, recoveryLocation, recoverySubscriptionId, vmDisks?.ToList(), vmManagedDisks?.ToList(), recoveryResourceGroupId, protectionProfile, primaryStagingStorageAccount, recoveryAvailabilitySet, recoveryVirtualNetwork, recoveryProximityPlacementGroup, autoProtectionOfDataDisk, multiVmGroupName, multiVmGroupId, recoveryBootDiagStorageAccount, diskEncryptionInfo, recoveryAvailabilityZone, recoveryAvailabilityType, agentAutoUpdateStatus, automationAccountArmId, automationAccountAuthenticationType);
         }
 
-        /// <summary> Initializes a new instance of A2AZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2AZoneDetails"/>. </summary>
         /// <param name="source"> Source zone info. </param>
         /// <param name="target"> The target zone info. </param>
         /// <returns> A new <see cref="Models.A2AZoneDetails"/> instance for mocking. </returns>
@@ -1488,7 +1488,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AZoneDetails(source, target);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryAgentDetails"/>. </summary>
         /// <param name="agentId"> The Id of the agent running on the server. </param>
         /// <param name="machineId"> The Id of the machine to which the agent is registered. </param>
         /// <param name="biosId"> The machine BIOS Id. </param>
@@ -1502,7 +1502,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryAgentDetails(agentId, machineId, biosId, fqdn, disks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryAgentDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
@@ -1514,7 +1514,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryAgentDiskDetails(diskId, diskName, isOSDisk, capacityInBytes, lunId);
         }
 
-        /// <summary> Initializes a new instance of ApplianceMonitoringDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceMonitoringDetails"/>. </summary>
         /// <param name="cpuDetails"> The appliance CPU details. </param>
         /// <param name="ramDetails"> The appliance RAM details. </param>
         /// <param name="datastoreSnapshot"> The appliance datastore snapshot details. </param>
@@ -1529,7 +1529,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ApplianceMonitoringDetails(cpuDetails, ramDetails, datastoreSnapshot?.ToList(), disksReplicationDetails, esxiNfcBuffer, networkBandwidth);
         }
 
-        /// <summary> Initializes a new instance of ApplianceResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceResourceDetails"/>. </summary>
         /// <param name="capacity"> A value indicating the total capacity of appliance resource. </param>
         /// <param name="processUtilization"> A value indicating the utilization percentage by gateway agent on appliance. </param>
         /// <param name="totalUtilization"> A value indicating the total utilization percentage for all processes on the appliance. </param>
@@ -1540,7 +1540,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ApplianceResourceDetails(capacity, processUtilization, totalUtilization, status);
         }
 
-        /// <summary> Initializes a new instance of DataStoreUtilizationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataStoreUtilizationDetails"/>. </summary>
         /// <param name="totalSnapshotsSupported"> The total count of snapshots supported by the datastore. </param>
         /// <param name="totalSnapshotsCreated"> The total snapshots created for server migration in the datastore. </param>
         /// <param name="dataStoreName"> The datastore name. </param>
@@ -1550,7 +1550,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new DataStoreUtilizationDetails(totalSnapshotsSupported, totalSnapshotsCreated, dataStoreName);
         }
 
-        /// <summary> Initializes a new instance of AsrJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AsrJobDetails"/>. </summary>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <returns> A new <see cref="Models.AsrJobDetails"/> instance for mocking. </returns>
         public static AsrJobDetails AsrJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null)
@@ -1560,7 +1560,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new AsrJobDetails("AsrJobDetails", affectedObjectDetails);
         }
 
-        /// <summary> Initializes a new instance of AutomationRunbookTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutomationRunbookTaskDetails"/>. </summary>
         /// <param name="name"> The recovery plan task name. </param>
         /// <param name="cloudServiceName"> The cloud service of the automation runbook account. </param>
         /// <param name="subscriptionId"> The subscription Id of the automation runbook account. </param>
@@ -1576,7 +1576,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new AutomationRunbookTaskDetails("AutomationRunbookTaskDetails", name, cloudServiceName, subscriptionId, accountName, runbookId, runbookName, jobId, jobOutput, isPrimarySideScript);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryFabricProviderSpecificDetails"/>. </summary>
         /// <param name="location"> The Location for the Azure fabric. </param>
         /// <param name="containerIds"> The container Ids for the Azure fabric. </param>
         /// <param name="zones"> The zones. </param>
@@ -1593,7 +1593,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryFabricProviderSpecificDetails("Azure", location, containerIds?.ToList(), zones?.ToList(), extendedLocations?.ToList(), locationDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of A2ANetworkMappingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.A2ANetworkMappingSettings"/>. </summary>
         /// <param name="primaryFabricLocation"> The primary fabric location. </param>
         /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>
         /// <returns> A new <see cref="Models.A2ANetworkMappingSettings"/> instance for mocking. </returns>
@@ -1602,7 +1602,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2ANetworkMappingSettings("AzureToAzure", primaryFabricLocation, recoveryFabricLocation);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVmDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryVmDiskDetails"/>. </summary>
         /// <param name="vhdType"> VHD type. </param>
         /// <param name="vhdId"> The VHD id. </param>
         /// <param name="diskId"> The disk resource id. </param>
@@ -1619,7 +1619,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryVmDiskDetails(vhdType, vhdId, diskId, vhdName, maxSizeMB, targetDiskLocation, targetDiskName, lunId, diskEncryptionSetId, customTargetDiskName);
         }
 
-        /// <summary> Initializes a new instance of ConsistencyCheckTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsistencyCheckTaskDetails"/>. </summary>
         /// <param name="vmDetails"> The list of inconsistent Vm details. </param>
         /// <returns> A new <see cref="Models.ConsistencyCheckTaskDetails"/> instance for mocking. </returns>
         public static ConsistencyCheckTaskDetails ConsistencyCheckTaskDetails(IEnumerable<InconsistentVmDetails> vmDetails = null)
@@ -1629,7 +1629,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ConsistencyCheckTaskDetails("ConsistencyCheckTaskDetails", vmDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InconsistentVmDetails"/>. </summary>
         /// <param name="vmName"> The Vm name. </param>
         /// <param name="cloudName"> The Cloud name. </param>
         /// <param name="details"> The list of details regarding state of the Protected Entity in SRS and On prem. </param>
@@ -1643,7 +1643,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InconsistentVmDetails(vmName, cloudName, details?.ToList(), errorIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDataStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryDataStore"/>. </summary>
         /// <param name="symbolicName"> The symbolic name of data store. </param>
         /// <param name="uuid"> The uuid of data store. </param>
         /// <param name="capacity"> The capacity of data store in GBs. </param>
@@ -1655,7 +1655,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryDataStore(symbolicName, uuid, capacity, freeSpace, dataStoreType);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryDiskDetails"/>. </summary>
         /// <param name="maxSizeMB"> The hard disk max size in MB. </param>
         /// <param name="vhdType"> The type of the volume. </param>
         /// <param name="vhdId"> The VHD Id. </param>
@@ -1666,7 +1666,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryDiskDetails(maxSizeMB, vhdType, vhdId, vhdName);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDiskVolumeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryDiskVolumeDetails"/>. </summary>
         /// <param name="label"> The volume label. </param>
         /// <param name="name"> The volume name. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryDiskVolumeDetails"/> instance for mocking. </returns>
@@ -1675,7 +1675,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryDiskVolumeDetails(label, name);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryDraDetails"/>. </summary>
         /// <param name="id"> The DRA Id. </param>
         /// <param name="name"> The DRA name. </param>
         /// <param name="biosId"> The DRA Bios Id. </param>
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryDraDetails(id, name, biosId, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList(), forwardProtectedItemCount, reverseProtectedItemCount);
         }
 
-        /// <summary> Initializes a new instance of ExportJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportJobDetails"/>. </summary>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <param name="blobUri"> BlobUri of the exported jobs. </param>
         /// <param name="sasToken"> The sas token to access blob. </param>
@@ -1705,7 +1705,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ExportJobDetails("ExportJobDetails", affectedObjectDetails, blobUri, sasToken);
         }
 
-        /// <summary> Initializes a new instance of FabricReplicationGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FabricReplicationGroupTaskDetails"/>. </summary>
         /// <param name="jobTask"> The job entity. </param>
         /// <param name="skippedReason"> The skipped reason. </param>
         /// <param name="skippedReasonString"> The skipped reason string. </param>
@@ -1715,7 +1715,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new FabricReplicationGroupTaskDetails("FabricReplicationGroupTaskDetails", jobTask, skippedReason, skippedReasonString);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryJobTaskDetails"/>. </summary>
         /// <param name="jobTask"> The job entity. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryJobTaskDetails"/> instance for mocking. </returns>
         public static SiteRecoveryJobTaskDetails SiteRecoveryJobTaskDetails(SiteRecoveryJobEntity jobTask = null)
@@ -1723,7 +1723,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobTaskDetails("JobTaskDetails", jobTask);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryJobEntity"/>. </summary>
         /// <param name="jobId"> The job id. </param>
         /// <param name="jobFriendlyName"> The job display name. </param>
         /// <param name="targetObjectId"> The object id. </param>
@@ -1736,7 +1736,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobEntity(jobId, jobFriendlyName, targetObjectId, targetObjectName, targetInstanceType, jobScenarioName);
         }
 
-        /// <summary> Initializes a new instance of FailoverJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FailoverJobDetails"/>. </summary>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <param name="protectedItemDetails"> The test VM details. </param>
         /// <returns> A new <see cref="Models.FailoverJobDetails"/> instance for mocking. </returns>
@@ -1748,7 +1748,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new FailoverJobDetails("FailoverJobDetails", affectedObjectDetails, protectedItemDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FailoverReplicationProtectedItemDetails"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="friendlyName"> The friendly name. </param>
         /// <param name="testVmName"> The test Vm name. </param>
@@ -1764,7 +1764,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new FailoverReplicationProtectedItemDetails(name, friendlyName, testVmName, testVmFriendlyName, networkConnectionStatus, networkFriendlyName, subnet, recoveryPointId, recoveryPointOn);
         }
 
-        /// <summary> Initializes a new instance of GatewayOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayOperationDetails"/>. </summary>
         /// <param name="state"> A value indicating the state of gateway operation. </param>
         /// <param name="progressPercentage"> A value indicating the progress percentage of gateway operation. </param>
         /// <param name="timeElapsed"> A value indicating the time elapsed for the operation in milliseconds. </param>
@@ -1781,7 +1781,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new GatewayOperationDetails(state, progressPercentage, timeElapsed, timeRemaining, uploadSpeed, hostName, dataStores?.ToList(), vmwareReadThroughput);
         }
 
-        /// <summary> Initializes a new instance of HyperVHostDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVHostDetails"/>. </summary>
         /// <param name="id"> The Hyper-V host Id. </param>
         /// <param name="name"> The Hyper-V host name. </param>
         /// <param name="marsAgentVersion"> The Mars agent version. </param>
@@ -1791,7 +1791,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVHostDetails(id, name, marsAgentVersion);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplica2012EventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplica2012EventDetails"/>. </summary>
         /// <param name="containerName"> The container friendly name. </param>
         /// <param name="fabricName"> The fabric friendly name. </param>
         /// <param name="remoteContainerName"> The remote container name. </param>
@@ -1802,7 +1802,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplica2012EventDetails("HyperVReplica2012", containerName, fabricName, remoteContainerName, remoteFabricName);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplica2012R2EventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplica2012R2EventDetails"/>. </summary>
         /// <param name="containerName"> The container friendly name. </param>
         /// <param name="fabricName"> The fabric friendly name. </param>
         /// <param name="remoteContainerName"> The remote container name. </param>
@@ -1813,7 +1813,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplica2012R2EventDetails("HyperVReplica2012R2", containerName, fabricName, remoteContainerName, remoteFabricName);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzureEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaAzureEventDetails"/>. </summary>
         /// <param name="containerName"> The container friendly name. </param>
         /// <param name="fabricName"> The fabric friendly name. </param>
         /// <param name="remoteContainerName"> The remote container name. </param>
@@ -1823,7 +1823,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaAzureEventDetails("HyperVReplicaAzure", containerName, fabricName, remoteContainerName);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzureManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaAzureManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
         /// <param name="replicaDiskType"> The replica disk type. </param>
@@ -1834,7 +1834,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaAzureManagedDiskDetails(diskId, seedManagedDiskId, replicaDiskType, diskEncryptionSetId);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzurePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaAzurePolicyDetails"/>. </summary>
         /// <param name="recoveryPointHistoryDurationInHours"> The duration (in hours) to which point the recovery history needs to be maintained. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM. </param>
         /// <param name="replicationInterval"> The replication interval. </param>
@@ -1847,7 +1847,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaAzurePolicyDetails("HyperVReplicaAzure", recoveryPointHistoryDurationInHours, applicationConsistentSnapshotFrequencyInHours, replicationInterval, onlineReplicationStartTime, encryption, activeStorageAccountId);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaAzureReplicationDetails"/>. </summary>
         /// <param name="azureVmDiskDetails"> Azure VM Disk details. </param>
         /// <param name="recoveryAzureVmName"> Recovery Azure given name. </param>
         /// <param name="recoveryAzureVmSize"> The Recovery Azure VM size. </param>
@@ -1897,7 +1897,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaAzureReplicationDetails("HyperVReplicaAzure", azureVmDiskDetails?.ToList(), recoveryAzureVmName, recoveryAzureVmSize, recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId, lastReplicatedOn, rpoInSeconds, lastRpoCalculatedOn, vmId, vmProtectionState, vmProtectionStateDescription, initialReplicationDetails, vmNics?.ToList(), selectedRecoveryAzureNetworkId, selectedSourceNicId, encryption, osDetails, sourceVmRamSizeInMB, sourceVmCpuCount, enableRdpOnTargetOption, recoveryAzureResourceGroupId, recoveryAvailabilitySetId, targetAvailabilityZone, targetProximityPlacementGroupId, useManagedDisks, licenseType, sqlServerLicenseType, lastRecoveryPointReceived, targetVmTags, seedManagedDiskTags, targetManagedDiskTags, targetNicTags, protectedManagedDisks?.ToList(), allAvailableOSUpgradeConfigurations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InitialReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InitialReplicationDetails"/>. </summary>
         /// <param name="initialReplicationType"> Initial replication type. </param>
         /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. </param>
         /// <returns> A new <see cref="Models.InitialReplicationDetails"/> instance for mocking. </returns>
@@ -1906,7 +1906,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InitialReplicationDetails(initialReplicationType, initialReplicationProgressPercentage);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryOSDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryOSDetails"/>. </summary>
         /// <param name="osType"> VM Disk details. </param>
         /// <param name="productType"> Product type. </param>
         /// <param name="osEdition"> The OSEdition. </param>
@@ -1919,7 +1919,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryOSDetails(osType, productType, osEdition, osVersion, osMajorVersion, osMinorVersion);
         }
 
-        /// <summary> Initializes a new instance of OSUpgradeSupportedVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OSUpgradeSupportedVersions"/>. </summary>
         /// <param name="supportedSourceOSVersion"> The source OS version name. </param>
         /// <param name="supportedTargetOSVersions"> The target OS version names. </param>
         /// <returns> A new <see cref="Models.OSUpgradeSupportedVersions"/> instance for mocking. </returns>
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new OSUpgradeSupportedVersions(supportedSourceOSVersion, supportedTargetOSVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaBaseEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaBaseEventDetails"/>. </summary>
         /// <param name="containerName"> The container friendly name. </param>
         /// <param name="fabricName"> The fabric friendly name. </param>
         /// <param name="remoteContainerName"> The remote container name. </param>
@@ -1941,7 +1941,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaBaseEventDetails("HyperVReplicaBaseEventDetails", containerName, fabricName, remoteContainerName, remoteFabricName);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaBasePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaBasePolicyDetails"/>. </summary>
         /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
         /// <param name="compression"> A value indicating whether compression has to be enabled. </param>
@@ -1958,7 +1958,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaBasePolicyDetails("HyperVReplicaBasePolicyDetails", recoveryPoints, applicationConsistentSnapshotFrequencyInHours, compression, initialReplicationMethod, onlineReplicationStartTime, offlineReplicationImportPath, offlineReplicationExportPath, replicationPort, allowedAuthenticationType, replicaDeletionOption);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaBaseReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaBaseReplicationDetails"/>. </summary>
         /// <param name="lastReplicatedOn"> The Last replication time. </param>
         /// <param name="vmNics"> The PE Network details. </param>
         /// <param name="vmId"> The virtual machine Id. </param>
@@ -1975,7 +1975,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaBaseReplicationDetails("HyperVReplicaBaseReplicationDetails", lastReplicatedOn, vmNics?.ToList(), vmId, vmProtectionState, vmProtectionStateDescription, initialReplicationDetails, vmDiskDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaBluePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaBluePolicyDetails"/>. </summary>
         /// <param name="replicationFrequencyInSeconds"> A value indicating the replication interval. </param>
         /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
@@ -1993,7 +1993,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaBluePolicyDetails("HyperVReplica2012R2", replicationFrequencyInSeconds, recoveryPoints, applicationConsistentSnapshotFrequencyInHours, compression, initialReplicationMethod, onlineReplicationStartTime, offlineReplicationImportPath, offlineReplicationExportPath, replicationPort, allowedAuthenticationType, replicaDeletionOption);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaBlueReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaBlueReplicationDetails"/>. </summary>
         /// <param name="lastReplicatedOn"> The Last replication time. </param>
         /// <param name="vmNics"> The PE Network details. </param>
         /// <param name="vmId"> The virtual machine Id. </param>
@@ -2010,7 +2010,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaBlueReplicationDetails("HyperVReplica2012R2", lastReplicatedOn, vmNics?.ToList(), vmId, vmProtectionState, vmProtectionStateDescription, initialReplicationDetails, vmDiskDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaPolicyDetails"/>. </summary>
         /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
         /// <param name="compression"> A value indicating whether compression has to be enabled. </param>
@@ -2027,7 +2027,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaPolicyDetails("HyperVReplica2012", recoveryPoints, applicationConsistentSnapshotFrequencyInHours, compression, initialReplicationMethod, onlineReplicationStartTime, offlineReplicationImportPath, offlineReplicationExportPath, replicationPort, allowedAuthenticationType, replicaDeletionOption);
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaReplicationDetails"/>. </summary>
         /// <param name="lastReplicatedOn"> The Last replication time. </param>
         /// <param name="vmNics"> The PE Network details. </param>
         /// <param name="vmId"> The virtual machine Id. </param>
@@ -2044,7 +2044,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaReplicationDetails("HyperVReplica2012", lastReplicatedOn, vmNics?.ToList(), vmId, vmProtectionState, vmProtectionStateDescription, initialReplicationDetails, vmDiskDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HyperVSiteDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVSiteDetails"/>. </summary>
         /// <param name="hyperVHosts"> The list of Hyper-V hosts associated with the fabric. </param>
         /// <returns> A new <see cref="Models.HyperVSiteDetails"/> instance for mocking. </returns>
         public static HyperVSiteDetails HyperVSiteDetails(IEnumerable<HyperVHostDetails> hyperVHosts = null)
@@ -2054,7 +2054,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVSiteDetails("HyperVSite", hyperVHosts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HyperVVmDetails"/>. </summary>
         /// <param name="sourceItemId"> The source id of the object. </param>
         /// <param name="generation"> The id of the object in fabric. </param>
         /// <param name="osDetails"> The Last replication time. </param>
@@ -2071,7 +2071,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVVmDetails("HyperVVirtualMachine", sourceItemId, generation, osDetails, diskDetails?.ToList(), hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId);
         }
 
-        /// <summary> Initializes a new instance of InlineWorkflowTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InlineWorkflowTaskDetails"/>. </summary>
         /// <param name="childTasks"> The child tasks. </param>
         /// <param name="workflowIds"> The list of child workflow ids. </param>
         /// <returns> A new <see cref="Models.InlineWorkflowTaskDetails"/> instance for mocking. </returns>
@@ -2083,7 +2083,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InlineWorkflowTaskDetails("InlineWorkflowTaskDetails", childTasks?.ToList(), workflowIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InMageAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageAgentDetails"/>. </summary>
         /// <param name="agentVersion"> The agent version. </param>
         /// <param name="agentUpdateStatus"> A value indicating whether installed agent needs to be updated. </param>
         /// <param name="postUpdateRebootStatus"> A value indicating whether reboot is required after update is applied. </param>
@@ -2094,7 +2094,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAgentDetails(agentVersion, agentUpdateStatus, postUpdateRebootStatus, agentExpireOn);
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2EventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageAzureV2EventDetails"/>. </summary>
         /// <param name="eventType"> InMage Event type. Takes one of the values of InMageDataContract.InMageMonitoringEventType. </param>
         /// <param name="category"> InMage Event Category. </param>
         /// <param name="component"> InMage Event Component. </param>
@@ -2108,7 +2108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2EventDetails("InMageAzureV2", eventType, category, component, correctiveAction, details, summary, siteName);
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2ManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageAzureV2ManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
         /// <param name="replicaDiskType"> The replica disk type. </param>
@@ -2120,7 +2120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2ManagedDiskDetails(diskId, seedManagedDiskId, replicaDiskType, diskEncryptionSetId, targetDiskName);
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2PolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageAzureV2PolicyDetails"/>. </summary>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
         /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
@@ -2132,7 +2132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2PolicyDetails("InMageAzureV2", crashConsistentFrequencyInMinutes, recoveryPointThresholdInMinutes, recoveryPointHistory, appConsistentFrequencyInMinutes, multiVmSyncStatus);
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2ProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageAzureV2ProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="protectionStage"> The protection stage. </param>
@@ -2162,7 +2162,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2ProtectedDiskDetails(diskId, diskName, protectionStage, healthErrorCode, rpoInSeconds, resyncRequired, resyncProgressPercentage, resyncDurationInSeconds, diskCapacityInBytes, fileSystemCapacityInBytes, sourceDataInMegaBytes, psDataInMegaBytes, targetDataInMegaBytes, diskResized, lastRpoCalculatedOn, resyncProcessedBytes, resyncTotalTransferredBytes, resyncLast15MinutesTransferredBytes, resyncLastDataTransferOn, resyncStartOn, progressHealth, progressStatus, secondsToTakeSwitchProvider);
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2RecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageAzureV2RecoveryPointDetails"/>. </summary>
         /// <param name="isMultiVmSyncPoint"> A value indicating whether the recovery point is multi VM consistent. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2RecoveryPointDetails"/> instance for mocking. </returns>
         public static InMageAzureV2RecoveryPointDetails InMageAzureV2RecoveryPointDetails(string isMultiVmSyncPoint = null)
@@ -2170,7 +2170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2RecoveryPointDetails("InMageAzureV2", isMultiVmSyncPoint);
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2ReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageAzureV2ReplicationDetails"/>. </summary>
         /// <param name="infrastructureVmId"> The infrastructure VM Id. </param>
         /// <param name="vCenterInfrastructureId"> The vCenter infrastructure Id. </param>
         /// <param name="protectionStage"> The protection stage. </param>
@@ -2261,7 +2261,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2ReplicationDetails("InMageAzureV2", infrastructureVmId, vCenterInfrastructureId, protectionStage, vmId, vmProtectionState, vmProtectionStateDescription, resyncProgressPercentage, rpoInSeconds, compressedDataRateInMB, uncompressedDataRateInMB, ipAddress, agentVersion, agentExpireOn, isAgentUpdateRequired, isRebootAfterUpdateRequired, lastHeartbeat, processServerId, processServerName, multiVmGroupId, multiVmGroupName, multiVmSyncStatus, protectedDisks?.ToList(), diskResized, masterTargetId, sourceVmCpuCount, sourceVmRamSizeInMB, osType, vhdName, osDiskId, azureVmDiskDetails?.ToList(), recoveryAzureVmName, recoveryAzureVmSize, recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId, vmNics?.ToList(), selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId, selectedSourceNicId, discoveryType, enableRdpOnTargetOption, datastores?.ToList(), targetVmId, recoveryAzureResourceGroupId, recoveryAvailabilitySetId, targetAvailabilityZone, targetProximityPlacementGroupId, useManagedDisks, licenseType, sqlServerLicenseType, validationErrors?.ToList(), lastRpoCalculatedOn, lastUpdateReceivedOn, replicaId, osVersion, protectedManagedDisks?.ToList(), lastRecoveryPointReceived, firmwareType, azureVmGeneration, isAdditionalStatsAvailable, totalDataTransferred, totalProgressHealth, targetVmTags, seedManagedDiskTags, targetManagedDiskTags, targetNicTags, switchProviderBlockingErrorDetails?.ToList(), switchProviderDetails, supportedOSVersions?.ToList(), allAvailableOSUpgradeConfigurations?.ToList(), osName);
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderBlockingErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageAzureV2SwitchProviderBlockingErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>
@@ -2277,7 +2277,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2SwitchProviderBlockingErrorDetails(errorCode, errorMessage, possibleCauses, recommendedAction, errorMessageParameters, errorTags);
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageAzureV2SwitchProviderDetails"/>. </summary>
         /// <param name="targetVaultId"> The target vault Id. </param>
         /// <param name="targetResourceId"> The target resource Id. </param>
         /// <param name="targetFabricId"> The target fabric Id. </param>
@@ -2288,7 +2288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2SwitchProviderDetails(targetVaultId, targetResourceId, targetFabricId, targetApplianceId);
         }
 
-        /// <summary> Initializes a new instance of InMageBasePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageBasePolicyDetails"/>. </summary>
         /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
@@ -2299,7 +2299,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageBasePolicyDetails("InMageBasePolicyDetails", recoveryPointThresholdInMinutes, recoveryPointHistory, appConsistentFrequencyInMinutes, multiVmSyncStatus);
         }
 
-        /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="diskSizeInMB"> The disk size in MB. </param>
@@ -2314,7 +2314,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageDiskDetails(diskId, diskName, diskSizeInMB, diskType, diskConfiguration, volumeList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InMageFabricSwitchProviderBlockingErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageFabricSwitchProviderBlockingErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>
@@ -2330,7 +2330,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageFabricSwitchProviderBlockingErrorDetails(errorCode, errorMessage, possibleCauses, recommendedAction, errorMessageParameters, errorTags);
         }
 
-        /// <summary> Initializes a new instance of InMagePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMagePolicyDetails"/>. </summary>
         /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
@@ -2341,7 +2341,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMagePolicyDetails("InMage", recoveryPointThresholdInMinutes, recoveryPointHistory, appConsistentFrequencyInMinutes, multiVmSyncStatus);
         }
 
-        /// <summary> Initializes a new instance of InMageProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="protectionStage"> The protection stage. </param>
@@ -2370,7 +2370,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageProtectedDiskDetails(diskId, diskName, protectionStage, healthErrorCode, rpoInSeconds, resyncRequired, resyncProgressPercentage, resyncDurationInSeconds, diskCapacityInBytes, fileSystemCapacityInBytes, sourceDataInMB, psDataInMB, targetDataInMB, diskResized, lastRpoCalculatedOn, resyncProcessedBytes, resyncTotalTransferredBytes, resyncLast15MinutesTransferredBytes, resyncLastDataTransferTimeUTC, resyncStartOn, progressHealth, progressStatus);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmAgentUpgradeBlockingErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmAgentUpgradeBlockingErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>
@@ -2386,7 +2386,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmAgentUpgradeBlockingErrorDetails(errorCode, errorMessage, possibleCauses, recommendedAction, errorMessageParameters, errorTags);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmApplianceDetails"/>. </summary>
         /// <param name="id"> The appliance Id. </param>
         /// <param name="name"> The appliance name. </param>
         /// <param name="fabricArmId"> The fabric ARM Id. </param>
@@ -2406,7 +2406,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmApplianceDetails(id, name, fabricArmId, processServer, rcmProxy, pushInstaller, replicationAgent, reprotectAgent, marsAgent, dra, switchProviderBlockingErrorDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServerDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryProcessServerDetails"/>. </summary>
         /// <param name="id"> The process server Id. </param>
         /// <param name="name"> The process server name. </param>
         /// <param name="biosId"> The process server Bios Id. </param>
@@ -2445,7 +2445,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryProcessServerDetails(id, name, biosId, fabricObjectId, fqdn, ipAddresses?.ToList(), version, lastHeartbeatReceivedOn, totalMemoryInBytes, availableMemoryInBytes, usedMemoryInBytes, memoryUsagePercentage, totalSpaceInBytes, availableSpaceInBytes, usedSpaceInBytes, freeSpacePercentage, throughputUploadPendingDataInBytes, throughputInBytes, processorUsagePercentage, throughputStatus, systemLoad, systemLoadStatus, diskUsageStatus, memoryUsageStatus, processorUsageStatus, health, healthErrors?.ToList(), protectedItemCount, historicHealth);
         }
 
-        /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RcmProxyDetails"/>. </summary>
         /// <param name="id"> The RCM proxy Id. </param>
         /// <param name="name"> The RCM proxy name. </param>
         /// <param name="biosId"> The RCM proxy Bios Id. </param>
@@ -2464,7 +2464,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RcmProxyDetails(id, name, biosId, fabricObjectId, fqdn, clientAuthenticationType, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PushInstallerDetails"/>. </summary>
         /// <param name="id"> The push installer Id. </param>
         /// <param name="name"> The push installer name. </param>
         /// <param name="biosId"> The push installer Bios Id. </param>
@@ -2482,7 +2482,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new PushInstallerDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationAgentDetails"/>. </summary>
         /// <param name="id"> The replication agent Id. </param>
         /// <param name="name"> The replication agent name. </param>
         /// <param name="biosId"> The replication agent Bios Id. </param>
@@ -2500,7 +2500,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatUtc, health, healthErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReprotectAgentDetails"/>. </summary>
         /// <param name="id"> The reprotect agent Id. </param>
         /// <param name="name"> The reprotect agent name. </param>
         /// <param name="biosId"> The reprotect agent Bios Id. </param>
@@ -2523,7 +2523,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReprotectAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList(), protectedItemCount, accessibleDatastores?.ToList(), vCenterId, last);
         }
 
-        /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MarsAgentDetails"/>. </summary>
         /// <param name="id"> The Mars agent Id. </param>
         /// <param name="name"> The Mars agent name. </param>
         /// <param name="biosId"> The Mars agent Bios Id. </param>
@@ -2541,7 +2541,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MarsAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFabricSwitchProviderBlockingErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFabricSwitchProviderBlockingErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>
@@ -2557,7 +2557,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFabricSwitchProviderBlockingErrorDetails(errorCode, errorMessage, possibleCauses, recommendedAction, errorMessageParameters, errorTags);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmApplianceSpecificDetails"/>. </summary>
         /// <param name="appliances"> The list of appliances. </param>
         /// <returns> A new <see cref="Models.InMageRcmApplianceSpecificDetails"/> instance for mocking. </returns>
         public static InMageRcmApplianceSpecificDetails InMageRcmApplianceSpecificDetails(IEnumerable<InMageRcmApplianceDetails> appliances = null)
@@ -2567,7 +2567,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmApplianceSpecificDetails("InMageRcm", appliances?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InMageRcmDiscoveredProtectedVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDiscoveredProtectedVmDetails"/>. </summary>
         /// <param name="vCenterId"> The VCenter Id. </param>
         /// <param name="vCenterFqdn"> The VCenter fqdn. </param>
         /// <param name="datastores"> The list of datastores. </param>
@@ -2589,7 +2589,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmDiscoveredProtectedVmDetails(vCenterId, vCenterFqdn, datastores?.ToList(), ipAddresses?.ToList(), vmwareToolsStatus, powerStatus, vmFqdn, osName, createdOn, updatedOn, isDeleted, lastDiscoveryTimeInUtc);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmEventDetails"/>. </summary>
         /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="vmName"> The protected item name. </param>
         /// <param name="latestAgentVersion"> The latest agent version. </param>
@@ -2604,7 +2604,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmEventDetails("InMageRcm", protectedItemName, vmName, latestAgentVersion, jobId, fabricName, applianceName, serverType, componentDisplayName);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFabricSpecificDetails"/>. </summary>
         /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
@@ -2636,7 +2636,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFabricSpecificDetails("InMageRcm", vmwareSiteId, physicalSiteId, serviceEndpoint, serviceResourceId, serviceContainerId, dataPlaneUri, controlPlaneUri, sourceAgentIdentityDetails, processServers?.ToList(), rcmProxies?.ToList(), pushInstallers?.ToList(), replicationAgents?.ToList(), reprotectAgents?.ToList(), marsAgents?.ToList(), dras?.ToList(), agentDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackDiscoveredProtectedVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFailbackDiscoveredProtectedVmDetails"/>. </summary>
         /// <param name="vCenterId"> The VCenter Id. </param>
         /// <param name="vCenterFqdn"> The VCenter fqdn. </param>
         /// <param name="datastores"> The list of datastores. </param>
@@ -2658,7 +2658,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackDiscoveredProtectedVmDetails(vCenterId, vCenterFqdn, datastores?.ToList(), ipAddresses?.ToList(), vmwareToolsStatus, powerStatus, vmFqdn, osName, createdOn, updatedOn, isDeleted, lastDiscoveredOn);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFailbackEventDetails"/>. </summary>
         /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="vmName"> The protected item name. </param>
         /// <param name="applianceName"> The appliance name. </param>
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackEventDetails("InMageRcmFailback", protectedItemName, vmName, applianceName, serverType, componentDisplayName);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackMobilityAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFailbackMobilityAgentDetails"/>. </summary>
         /// <param name="version"> The agent version. </param>
         /// <param name="latestVersion"> The latest agent version available. </param>
         /// <param name="driverVersion"> The driver version. </param>
@@ -2688,7 +2688,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackMobilityAgentDetails(version, latestVersion, driverVersion, latestUpgradableVersionWithoutReboot, agentVersionExpireOn, driverVersionExpireOn, lastHeartbeatReceivedOn, reasonsBlockingUpgrade?.ToList(), isUpgradeable);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFailbackNicDetails"/>. </summary>
         /// <param name="macAddress"> The mac address. </param>
         /// <param name="networkName"> The network name. </param>
         /// <param name="adapterType"> The adapter type. </param>
@@ -2699,7 +2699,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackNicDetails(macAddress, networkName, adapterType, sourceIPAddress);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFailbackPolicyDetails"/>. </summary>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackPolicyDetails"/> instance for mocking. </returns>
@@ -2708,7 +2708,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackPolicyDetails("InMageRcmFailback", appConsistentFrequencyInMinutes, crashConsistentFrequencyInMinutes);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFailbackProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id (reported by source agent). </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
@@ -2726,7 +2726,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackProtectedDiskDetails(diskId, diskName, isOSDisk, capacityInBytes, diskUuid, dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB, isInitialReplicationComplete, irDetails, resyncDetails, lastSyncedOn);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackSyncDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFailbackSyncDetails"/>. </summary>
         /// <param name="progressHealth"> The progress health. </param>
         /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
         /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to target. </param>
@@ -2741,7 +2741,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackSyncDetails(progressHealth, transferredBytes, last15MinutesTransferredBytes, lastDataTransferOn, processedBytes, startOn, lastRefreshedOn, progressPercentage);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmFailbackReplicationDetails"/>. </summary>
         /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
         /// <param name="azureVirtualMachineId"> The ARM Id of the azure VM. </param>
         /// <param name="multiVmGroupName"> The multi VM group name. </param>
@@ -2780,7 +2780,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackReplicationDetails("InMageRcmFailback", internalIdentifier, azureVirtualMachineId, multiVmGroupName, reprotectAgentId, reprotectAgentName, osType, logStorageAccountId, targetVCenterId, targetDataStoreName, targetVmName, initialReplicationProgressPercentage, initialReplicationProcessedBytes, initialReplicationTransferredBytes, initialReplicationProgressHealth, resyncProgressPercentage, resyncProcessedBytes, resyncTransferredBytes, resyncProgressHealth, resyncRequired, resyncState, protectedDisks?.ToList(), mobilityAgentDetails, vmNics?.ToList(), lastPlannedFailoverStartOn, lastPlannedFailoverStatus, discoveredVmDetails, lastUsedPolicyId, lastUsedPolicyFriendlyName, isAgentRegistrationSuccessfulAfterFailover);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmLastAgentUpgradeErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmLastAgentUpgradeErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>
@@ -2796,7 +2796,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmLastAgentUpgradeErrorDetails(errorCode, errorMessage, possibleCauses, recommendedAction, errorMessageParameters, errorTags);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmMobilityAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmMobilityAgentDetails"/>. </summary>
         /// <param name="version"> The agent version. </param>
         /// <param name="latestVersion"> The latest agent version available. </param>
         /// <param name="latestAgentReleaseDate"> The latest agent version release date. </param>
@@ -2815,7 +2815,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmMobilityAgentDetails(version, latestVersion, latestAgentReleaseDate, driverVersion, latestUpgradableVersionWithoutReboot, agentVersionExpireOn, driverVersionExpireOn, lastHeartbeatReceivedOn, reasonsBlockingUpgrade?.ToList(), isUpgradeable);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmNicDetails"/>. </summary>
         /// <param name="nicId"> The NIC Id. </param>
         /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
         /// <param name="isSelectedForFailover"> A value indicating whether this NIC is selected for failover. </param>
@@ -2835,7 +2835,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmNicDetails(nicId, isPrimaryNic, isSelectedForFailover, sourceIPAddress, sourceIPAddressType, sourceNetworkId, sourceSubnetName, targetIPAddress, targetIPAddressType, targetSubnetName, testSubnetName, testIPAddress, testIPAddressType);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmPolicyDetails"/>. </summary>
         /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
@@ -2846,7 +2846,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmPolicyDetails("InMageRcm", recoveryPointHistoryInMinutes, appConsistentFrequencyInMinutes, crashConsistentFrequencyInMinutes, enableMultiVmSync);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
@@ -2868,7 +2868,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmProtectedDiskDetails(diskId, diskName, isOSDisk, capacityInBytes, logStorageAccountId, diskEncryptionSetId, seedManagedDiskId, seedBlobUri, targetManagedDiskId, diskType, dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB, isInitialReplicationComplete, irDetails, resyncDetails);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmSyncDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmSyncDetails"/>. </summary>
         /// <param name="progressHealth"> The progress health. </param>
         /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
         /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to azure. </param>
@@ -2883,7 +2883,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmSyncDetails(progressHealth, transferredBytes, last15MinutesTransferredBytes, lastDataTransferTimeUtc, processedBytes, staStartOn, lastRefreshedOn, progressPercentage);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmProtectionContainerMappingDetails"/>. </summary>
         /// <param name="enableAgentAutoUpgrade"> A value indicating whether the flag for enable agent auto upgrade. </param>
         /// <returns> A new <see cref="Models.InMageRcmProtectionContainerMappingDetails"/> instance for mocking. </returns>
         public static InMageRcmProtectionContainerMappingDetails InMageRcmProtectionContainerMappingDetails(string enableAgentAutoUpgrade = null)
@@ -2891,7 +2891,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmProtectionContainerMappingDetails("InMageRcm", enableAgentAutoUpgrade);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmRecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmRecoveryPointDetails"/>. </summary>
         /// <param name="isMultiVmSyncPoint"> A value indicating whether the recovery point is multi VM consistent. </param>
         /// <returns> A new <see cref="Models.InMageRcmRecoveryPointDetails"/> instance for mocking. </returns>
         public static InMageRcmRecoveryPointDetails InMageRcmRecoveryPointDetails(string isMultiVmSyncPoint = null)
@@ -2899,7 +2899,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmRecoveryPointDetails("InMageRcm", isMultiVmSyncPoint);
         }
 
-        /// <summary> Initializes a new instance of InMageRcmReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmReplicationDetails"/>. </summary>
         /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
         /// <param name="fabricDiscoveryMachineId"> The ARM Id of the discovered VM. </param>
         /// <param name="multiVmGroupName"> The multi VM group name. </param>
@@ -2963,7 +2963,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmReplicationDetails("InMageRcm", internalIdentifier, fabricDiscoveryMachineId, multiVmGroupName, discoveryType, processServerId, processorCoreCount, allocatedMemoryInMB, processServerName, runAsAccountId, osType, firmwareType, primaryNicIPAddress, targetGeneration, licenseType, storageAccountId, targetVmName, targetVmSize, targetResourceGroupId, targetLocation, targetAvailabilitySetId, targetAvailabilityZone, targetProximityPlacementGroupId, targetBootDiagnosticsStorageAccountId, targetNetworkId, testNetworkId, failoverRecoveryPointId, lastRecoveryPointReceived, lastRpoInSeconds, lastRpoCalculatedOn, lastRecoveryPointId, initialReplicationProgressPercentage, initialReplicationProcessedBytes, initialReplicationTransferredBytes, initialReplicationProgressHealth, resyncProgressPercentage, resyncProcessedBytes, resyncTransferredBytes, resyncProgressHealth, resyncRequired, resyncState, agentUpgradeState, lastAgentUpgradeType, agentUpgradeJobId, agentUpgradeAttemptToVersion, protectedDisks?.ToList(), isLastUpgradeSuccessful, isAgentRegistrationSuccessfulAfterFailover, mobilityAgentDetails, lastAgentUpgradeErrorDetails?.ToList(), agentUpgradeBlockingErrorDetails?.ToList(), vmNics?.ToList(), discoveredVmDetails);
         }
 
-        /// <summary> Initializes a new instance of InMageReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InMageReplicationDetails"/>. </summary>
         /// <param name="activeSiteType"> The active location of the VM. If the VM is being protected from Azure, this field will take values from { Azure, OnPrem }. If the VM is being protected between two data-centers, this field will be OnPrem always. </param>
         /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>
         /// <param name="sourceVmRamSizeInMB"> The RAM size of the VM on the primary side. </param>
@@ -3016,7 +3016,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageReplicationDetails("InMage", activeSiteType, sourceVmCpuCount, sourceVmRamSizeInMB, osDetails, protectionStage, vmId, vmProtectionState, vmProtectionStateDescription, resyncDetails, retentionWindowStartOn, retentionWindowEndOn, compressedDataRateInMB, uncompressedDataRateInMB, rpoInSeconds, protectedDisks?.ToList(), ipAddress, lastHeartbeatReceivedOn, processServerId, masterTargetId, consistencyPoints, diskResized, rebootAfterUpdateStatus, multiVmGroupId, multiVmGroupName, multiVmSyncStatus, agentDetails, vCenterInfrastructureId, infrastructureVmId, vmNics?.ToList(), discoveryType, azureStorageAccountId, datastores?.ToList(), validationErrors?.ToList(), lastRpoCalculatedOn, lastUpdateReceivedOn, replicaId, osVersion, isAdditionalStatsAvailable, totalDataTransferred, totalProgressHealth);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryOSDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryOSDiskDetails"/>. </summary>
         /// <param name="osVhdId"> The id of the disk containing the OS. </param>
         /// <param name="osType"> The type of the OS on the VM. </param>
         /// <param name="vhdName"> The OS disk VHD name. </param>
@@ -3026,7 +3026,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryOSDiskDetails(osVhdId, osType, vhdName);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobStatusEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryJobStatusEventDetails"/>. </summary>
         /// <param name="jobId"> Job arm id for the event. </param>
         /// <param name="jobFriendlyName"> JobName for the Event. </param>
         /// <param name="jobStatus"> JobStatus for the Event. </param>
@@ -3037,7 +3037,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobStatusEventDetails("JobStatus", jobId, jobFriendlyName, jobStatus, affectedObjectType);
         }
 
-        /// <summary> Initializes a new instance of ManualActionTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManualActionTaskDetails"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="instructions"> The instructions. </param>
         /// <param name="observation"> The observation. </param>
@@ -3047,7 +3047,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ManualActionTaskDetails("ManualActionTaskDetails", name, instructions, observation);
         }
 
-        /// <summary> Initializes a new instance of MasterTargetServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MasterTargetServer"/>. </summary>
         /// <param name="id"> The server Id. </param>
         /// <param name="ipAddress"> The IP address of the server. </param>
         /// <param name="name"> The server name. </param>
@@ -3077,7 +3077,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MasterTargetServer(id, ipAddress, name, osType, agentVersion, lastHeartbeatReceivedOn, versionStatus, retentionVolumes?.ToList(), dataStores?.ToList(), validationErrors?.ToList(), healthErrors?.ToList(), diskCount, osVersion, agentExpireOn, marsAgentVersion, marsAgentExpireOn, agentVersionDetails, marsAgentVersionDetails);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryRetentionVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryRetentionVolume"/>. </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="capacityInBytes"> The volume capacity. </param>
         /// <param name="freeSpaceInBytes"> The free space available in this volume. </param>
@@ -3088,7 +3088,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryRetentionVolume(volumeName, capacityInBytes, freeSpaceInBytes, thresholdPercentage);
         }
 
-        /// <summary> Initializes a new instance of MobilityServiceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MobilityServiceUpdate"/>. </summary>
         /// <param name="version"> The version of the latest update. </param>
         /// <param name="rebootStatus"> The reboot status of the update - whether it is required or not. </param>
         /// <param name="osType"> The OS type. </param>
@@ -3098,7 +3098,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MobilityServiceUpdate(version, rebootStatus, osType);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryProcessServer"/>. </summary>
         /// <param name="friendlyName"> The Process Server's friendly name. </param>
         /// <param name="id"> The Process Server Id. </param>
         /// <param name="ipAddress"> The IP address of the server. </param>
@@ -3144,7 +3144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryProcessServer(friendlyName, id, ipAddress, osType, agentVersion, lastHeartbeatReceivedOn, versionStatus, mobilityServiceUpdates?.ToList(), hostId, machineCount, replicationPairCount, systemLoad, systemLoadStatus, cpuLoad, cpuLoadStatus, totalMemoryInBytes, availableMemoryInBytes, memoryUsageStatus, totalSpaceInBytes, availableSpaceInBytes, spaceUsageStatus, psServiceStatus, sslCertExpireOn, sslCertExpiryRemainingDays, osVersion, healthErrors?.ToList(), agentExpireOn, agentVersionDetails, health, psStatsRefreshOn, throughputUploadPendingDataInBytes, throughputInMBps, throughputInBytes, throughputStatus, marsCommunicationStatus, marsRegistrationStatus);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryPlanA2ADetails"/>. </summary>
         /// <param name="primaryZone"> The primary zone. </param>
         /// <param name="recoveryZone"> The recovery zone. </param>
         /// <param name="primaryExtendedLocation"> The primary extended location. </param>
@@ -3155,7 +3155,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RecoveryPlanA2ADetails("A2A", primaryZone, recoveryZone, primaryExtendedLocation, recoveryExtendedLocation);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryPlanGroupTaskDetails"/>. </summary>
         /// <param name="childTasks"> The child tasks. </param>
         /// <param name="name"> The name. </param>
         /// <param name="groupId"> The group identifier. </param>
@@ -3168,7 +3168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RecoveryPlanGroupTaskDetails("RecoveryPlanGroupTaskDetails", childTasks?.ToList(), name, groupId, rpGroupType);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanShutdownGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryPlanShutdownGroupTaskDetails"/>. </summary>
         /// <param name="childTasks"> The child tasks. </param>
         /// <param name="name"> The name. </param>
         /// <param name="groupId"> The group identifier. </param>
@@ -3181,7 +3181,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RecoveryPlanShutdownGroupTaskDetails("RecoveryPlanShutdownGroupTaskDetails", childTasks?.ToList(), name, groupId, rpGroupType);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryRunAsAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryRunAsAccount"/>. </summary>
         /// <param name="accountId"> The CS RunAs account Id. </param>
         /// <param name="accountName"> The CS RunAs account name. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryRunAsAccount"/> instance for mocking. </returns>
@@ -3190,7 +3190,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryRunAsAccount(accountId, accountName);
         }
 
-        /// <summary> Initializes a new instance of ScriptActionTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScriptActionTaskDetails"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="path"> The path. </param>
         /// <param name="output"> The output. </param>
@@ -3201,7 +3201,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ScriptActionTaskDetails("ScriptActionTaskDetails", name, path, output, isPrimarySideScript);
         }
 
-        /// <summary> Initializes a new instance of SwitchProtectionJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SwitchProtectionJobDetails"/>. </summary>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <param name="newReplicationProtectedItemId"> ARM Id of the new replication protected item. </param>
         /// <returns> A new <see cref="Models.SwitchProtectionJobDetails"/> instance for mocking. </returns>
@@ -3212,7 +3212,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SwitchProtectionJobDetails("SwitchProtectionJobDetails", affectedObjectDetails, newReplicationProtectedItemId);
         }
 
-        /// <summary> Initializes a new instance of TestFailoverJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TestFailoverJobDetails"/>. </summary>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <param name="testFailoverStatus"> The test failover status. </param>
         /// <param name="comments"> The test failover comments. </param>
@@ -3229,7 +3229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new TestFailoverJobDetails("TestFailoverJobDetails", affectedObjectDetails, testFailoverStatus, comments, networkName, networkFriendlyName, networkType, protectedItemDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVmTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryVmTaskDetails"/>. </summary>
         /// <param name="jobTask"> The job entity. </param>
         /// <param name="skippedReason"> The skipped reason. </param>
         /// <param name="skippedReasonString"> The skipped reason string. </param>
@@ -3239,7 +3239,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryVmTaskDetails("VirtualMachineTaskDetails", jobTask, skippedReason, skippedReasonString);
         }
 
-        /// <summary> Initializes a new instance of VmmVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmmVmDetails"/>. </summary>
         /// <param name="sourceItemId"> The source id of the object. </param>
         /// <param name="generation"> The id of the object in fabric. </param>
         /// <param name="osDetails"> The Last replication time. </param>
@@ -3256,7 +3256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VmmVmDetails("VmmVirtualMachine", sourceItemId, generation, osDetails, diskDetails?.ToList(), hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId);
         }
 
-        /// <summary> Initializes a new instance of VmNicUpdatesTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmNicUpdatesTaskDetails"/>. </summary>
         /// <param name="vmId"> Virtual machine Id. </param>
         /// <param name="nicId"> Nic Id. </param>
         /// <param name="name"> Name of the Nic. </param>
@@ -3266,7 +3266,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VmNicUpdatesTaskDetails("VmNicUpdatesTaskDetails", vmId, nicId, name);
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtEventDetails"/>. </summary>
         /// <param name="migrationItemName"> The migration item name. </param>
         /// <returns> A new <see cref="Models.VMwareCbtEventDetails"/> instance for mocking. </returns>
         public static VMwareCbtEventDetails VMwareCbtEventDetails(string migrationItemName = null)
@@ -3274,7 +3274,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtEventDetails("VMwareCbt", migrationItemName);
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtMigrationDetails"/>. </summary>
         /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
         /// <param name="osType"> The type of the OS on the VM. </param>
         /// <param name="osName"> The name of the OS on the VM. </param>
@@ -3337,7 +3337,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtMigrationDetails("VMwareCbt", vmwareMachineId, osType, osName, firmwareType, targetGeneration, licenseType, sqlServerLicenseType, dataMoverRunAsAccountId, snapshotRunAsAccountId, storageAccountId, targetVmName, targetVmSize, targetLocation, targetResourceGroupId, targetAvailabilitySetId, targetAvailabilityZone, targetProximityPlacementGroupId, confidentialVmKeyVaultId, targetVmSecurityProfile, targetBootDiagnosticsStorageAccountId, targetVmTags, protectedDisks?.ToList(), targetNetworkId, testNetworkId, vmNics?.ToList(), targetNicTags, migrationRecoveryPointId, lastRecoveryPointReceived, lastRecoveryPointId, initialSeedingProgressPercentage, migrationProgressPercentage, resyncProgressPercentage, resumeProgressPercentage, deltaSyncProgressPercentage, isCheckSumResyncCycle, initialSeedingRetryCount, resyncRetryCount, resumeRetryCount, deltaSyncRetryCount, resyncRequired, resyncState, performAutoResync, seedDiskTags, targetDiskTags, supportedOSVersions?.ToList(), applianceMonitoringDetails, gatewayOperationDetails, operationName);
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="diskType"> The disk type. </param>
@@ -3359,7 +3359,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtProtectedDiskDetails(diskId, diskName, diskType, diskPath, isOSDisk, capacityInBytes, logStorageAccountId, logStorageAccountSasSecretName, diskEncryptionSetId, seedManagedDiskId, seedBlobUri, targetManagedDiskId, targetBlobUri, targetDiskName, gatewayOperationDetails);
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtNicDetails"/>. </summary>
         /// <param name="nicId"> The NIC Id. </param>
         /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
         /// <param name="sourceIPAddress"> The source IP address. </param>
@@ -3380,7 +3380,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtNicDetails(nicId, isPrimaryNic, sourceIPAddress, sourceIPAddressType, sourceNetworkId, targetIPAddress, targetIPAddressType, targetSubnetName, testNetworkId, testSubnetName, testIPAddress, testIPAddressType, targetNicName, isSelectedForMigration);
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtPolicyDetails"/>. </summary>
         /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
@@ -3390,7 +3390,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtPolicyDetails("VMwareCbt", recoveryPointHistoryInMinutes, appConsistentFrequencyInMinutes, crashConsistentFrequencyInMinutes);
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtProtectionContainerMappingDetails"/>. </summary>
         /// <param name="keyVaultId"> The target key vault ARM Id. </param>
         /// <param name="keyVaultUri"> The target key vault URI. </param>
         /// <param name="storageAccountId"> The storage account ARM Id. </param>
@@ -3408,7 +3408,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtProtectionContainerMappingDetails("VMwareCbt", keyVaultId, keyVaultUri, storageAccountId, storageAccountSasSecretName, serviceBusConnectionStringSecretName, targetLocation, roleSizeToNicCountMap, excludedSkus?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VMwareDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareDetails"/>. </summary>
         /// <param name="processServers"> The list of Process Servers associated with the fabric. </param>
         /// <param name="masterTargetServers"> The list of Master Target servers associated with the fabric. </param>
         /// <param name="runAsAccounts"> The list of run as accounts created on the server. </param>
@@ -3453,7 +3453,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareDetails("VMware", processServers?.ToList(), masterTargetServers?.ToList(), runAsAccounts?.ToList(), replicationPairCount, processServerCount, agentCount, protectedServers, systemLoad, systemLoadStatus, cpuLoad, cpuLoadStatus, totalMemoryInBytes, availableMemoryInBytes, memoryUsageStatus, totalSpaceInBytes, availableSpaceInBytes, spaceUsageStatus, webLoad, webLoadStatus, databaseServerLoad, databaseServerLoadStatus, csServiceStatus, ipAddress, agentVersion, hostName, lastHeartbeat, versionStatus, sslCertExpireOn, sslCertExpiryRemainingDays, psTemplateVersion, agentExpireOn, agentVersionDetails, switchProviderBlockingErrorDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareV2FabricSpecificDetails"/>. </summary>
         /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
         /// <param name="migrationSolutionId"> The Migration solution ARM Id. </param>
@@ -3469,7 +3469,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareV2FabricSpecificDetails("VMwareV2", vmwareSiteId, physicalSiteId, migrationSolutionId, serviceEndpoint, serviceResourceId, serviceContainerId, processServers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VMwareVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareVmDetails"/>. </summary>
         /// <param name="agentGeneratedId"> The ID generated by the InMage agent after it gets installed on guest. This is the ID to be used during InMage CreateProtection. </param>
         /// <param name="agentInstalled"> The value indicating if InMage scout agent is installed on guest. </param>
         /// <param name="osType"> The OsType installed on VM. </param>

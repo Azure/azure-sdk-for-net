@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Cluster Storage Data. </summary>
     public partial class EdgeClusterStorageViewInfo
     {
-        /// <summary> Initializes a new instance of EdgeClusterStorageViewInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterStorageViewInfo"/>. </summary>
         public EdgeClusterStorageViewInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeClusterStorageViewInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterStorageViewInfo"/>. </summary>
         /// <param name="clusterTotalStorageInMB"> Total storage on the cluster in MB. </param>
         /// <param name="clusterFreeStorageInMB"> The available or free storage on the cluster in MB. </param>
         internal EdgeClusterStorageViewInfo(double? clusterTotalStorageInMB, double? clusterFreeStorageInMB)

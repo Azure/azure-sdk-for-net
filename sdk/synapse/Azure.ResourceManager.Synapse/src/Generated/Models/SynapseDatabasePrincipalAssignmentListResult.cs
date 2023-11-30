@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list Kusto database principal assignments operation response. </summary>
     internal partial class SynapseDatabasePrincipalAssignmentListResult
     {
-        /// <summary> Initializes a new instance of SynapseDatabasePrincipalAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDatabasePrincipalAssignmentListResult"/>. </summary>
         internal SynapseDatabasePrincipalAssignmentListResult()
         {
             Value = new ChangeTrackingList<SynapseDatabasePrincipalAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseDatabasePrincipalAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDatabasePrincipalAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of Kusto database principal assignments. </param>
         internal SynapseDatabasePrincipalAssignmentListResult(IReadOnlyList<SynapseDatabasePrincipalAssignmentData> value)
         {

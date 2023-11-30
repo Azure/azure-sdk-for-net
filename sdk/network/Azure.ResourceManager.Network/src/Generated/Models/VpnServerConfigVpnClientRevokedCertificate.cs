@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the revoked VPN client certificate of VpnServerConfiguration. </summary>
     public partial class VpnServerConfigVpnClientRevokedCertificate
     {
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRevokedCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigVpnClientRevokedCertificate"/>. </summary>
         public VpnServerConfigVpnClientRevokedCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRevokedCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigVpnClientRevokedCertificate"/>. </summary>
         /// <param name="name"> The certificate name. </param>
         /// <param name="thumbprint"> The revoked VPN client certificate thumbprint. </param>
         internal VpnServerConfigVpnClientRevokedCertificate(string name, string thumbprint)

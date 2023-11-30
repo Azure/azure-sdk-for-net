@@ -10,13 +10,20 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogConsent. </summary>
     internal partial class DialogConsentInternal
     {
-        /// <summary> Initializes a new instance of DialogConsentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogConsentInternal"/>. </summary>
         internal DialogConsentInternal()
         {
         }
 
+<<<<<<< HEAD
         /// <summary> Initializes a new instance of DialogConsentInternal. </summary>
         /// <param name="userConsent"> UserConsent data from the Conversation Conductor. </param>
+=======
+        /// <summary> Initializes a new instance of <see cref="DialogConsentInternal"/>. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+>>>>>>> main
         /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>

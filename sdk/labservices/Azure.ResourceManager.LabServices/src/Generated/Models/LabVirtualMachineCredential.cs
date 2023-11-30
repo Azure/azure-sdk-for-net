@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Credentials for a user on a lab VM. </summary>
     public partial class LabVirtualMachineCredential
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineCredential"/>. </summary>
         /// <param name="username"> The username to use when signing in to lab VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public LabVirtualMachineCredential(string username)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Username = username;
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineCredential"/>. </summary>
         /// <param name="username"> The username to use when signing in to lab VMs. </param>
         /// <param name="password"> The password for the user. This is required for the TemplateVM createOption. </param>
         internal LabVirtualMachineCredential(string username, string password)

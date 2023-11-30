@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The parameters needed to retrieve the default function definition for a JavaScript function. </summary>
     public partial class JavaScriptFunctionRetrieveDefaultDefinitionContent : FunctionRetrieveDefaultDefinitionContent
     {
-        /// <summary> Initializes a new instance of JavaScriptFunctionRetrieveDefaultDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="JavaScriptFunctionRetrieveDefaultDefinitionContent"/>. </summary>
         public JavaScriptFunctionRetrieveDefaultDefinitionContent()
         {
             BindingType = "Microsoft.StreamAnalytics/JavascriptUdf";

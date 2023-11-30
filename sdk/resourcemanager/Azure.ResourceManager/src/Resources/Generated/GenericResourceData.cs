@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class GenericResourceData : TrackedResourceExtendedData
     {
-        /// <summary> Initializes a new instance of GenericResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GenericResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GenericResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

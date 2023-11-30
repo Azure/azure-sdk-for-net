@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SuppressConditionPatch. </summary>
     internal partial class SuppressConditionPatch
     {
-        /// <summary> Initializes a new instance of SuppressConditionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressConditionPatch"/>. </summary>
         public SuppressConditionPatch()
         {
         }

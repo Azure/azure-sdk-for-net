@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Cni configuration. </summary>
     public partial class CniConfig
     {
-        /// <summary> Initializes a new instance of CniConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="CniConfig"/>. </summary>
         internal CniConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of CniConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="CniConfig"/>. </summary>
         /// <param name="cniConfigType"> Cni type. </param>
         /// <param name="version"> Cni version. </param>
         /// <param name="podSubnet"> Pod Subnet. </param>

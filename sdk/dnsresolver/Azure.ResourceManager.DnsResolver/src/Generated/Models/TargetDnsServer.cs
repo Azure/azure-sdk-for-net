@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a server to forward the DNS queries to. </summary>
     public partial class TargetDnsServer
     {
-        /// <summary> Initializes a new instance of TargetDnsServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetDnsServer"/>. </summary>
         /// <param name="ipAddress"> DNS server IP address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
         public TargetDnsServer(IPAddress ipAddress)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             IPAddress = ipAddress;
         }
 
-        /// <summary> Initializes a new instance of TargetDnsServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetDnsServer"/>. </summary>
         /// <param name="ipAddress"> DNS server IP address. </param>
         /// <param name="port"> DNS server port. </param>
         internal TargetDnsServer(IPAddress ipAddress, int? port)

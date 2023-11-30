@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Legal agreement for a top level domain. </summary>
     public partial class TldLegalAgreement
     {
-        /// <summary> Initializes a new instance of TldLegalAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of TldLegalAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>

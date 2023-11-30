@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a webhook. </summary>
     public partial class ContainerRegistryWebhookPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookPatch"/>. </summary>
         public ContainerRegistryWebhookPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

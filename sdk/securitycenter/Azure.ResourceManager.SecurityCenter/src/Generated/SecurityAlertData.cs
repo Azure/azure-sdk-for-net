@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAlertData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertData"/>. </summary>
         public SecurityAlertData()
         {
             ResourceIdentifiers = new ChangeTrackingList<SecurityAlertResourceIdentifier>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
             SubTechniques = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

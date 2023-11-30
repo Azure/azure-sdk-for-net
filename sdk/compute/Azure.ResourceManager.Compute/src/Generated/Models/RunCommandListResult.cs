@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Virtual Machine operation response. </summary>
     internal partial class RunCommandListResult
     {
-        /// <summary> Initializes a new instance of RunCommandListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine run commands. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RunCommandListResult(IEnumerable<RunCommandDocumentBase> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RunCommandListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine run commands. </param>
         /// <param name="nextLink"> The uri to fetch the next page of run commands. Call ListNext() with this to fetch the next page of run commands. </param>
         internal RunCommandListResult(IReadOnlyList<RunCommandDocumentBase> value, string nextLink)

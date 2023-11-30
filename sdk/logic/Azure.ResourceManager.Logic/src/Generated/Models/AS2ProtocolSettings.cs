@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The AS2 agreement protocol settings. </summary>
     public partial class AS2ProtocolSettings
     {
-        /// <summary> Initializes a new instance of AS2ProtocolSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2ProtocolSettings"/>. </summary>
         /// <param name="messageConnectionSettings"> The message connection settings. </param>
         /// <param name="acknowledgementConnectionSettings"> The acknowledgement connection settings. </param>
         /// <param name="mdnSettings"> The MDN settings. </param>

@@ -10,14 +10,21 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogTransfer. </summary>
     internal partial class DialogTransferInternal
     {
-        /// <summary> Initializes a new instance of DialogTransferInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogTransferInternal"/>. </summary>
         internal DialogTransferInternal()
         {
         }
 
+<<<<<<< HEAD
         /// <summary> Initializes a new instance of DialogTransferInternal. </summary>
         /// <param name="transferType"> Transfer type. </param>
         /// <param name="transferDestination"> Transfer destination. </param>
+=======
+        /// <summary> Initializes a new instance of <see cref="DialogTransferInternal"/>. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+>>>>>>> main
         /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>

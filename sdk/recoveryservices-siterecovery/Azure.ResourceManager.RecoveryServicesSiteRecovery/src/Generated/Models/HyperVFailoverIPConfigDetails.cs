@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The HyperVFailoverIPConfigDetails. </summary>
     public partial class HyperVFailoverIPConfigDetails
     {
-        /// <summary> Initializes a new instance of HyperVFailoverIPConfigDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVFailoverIPConfigDetails"/>. </summary>
         public HyperVFailoverIPConfigDetails()
         {
             RecoveryLBBackendAddressPoolIds = new ChangeTrackingList<string>();

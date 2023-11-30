@@ -14,6 +14,7 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// The client to use for interacting with the Azure Configuration Store.
     /// </summary>
+    [CodeGenSuppress("ConfigurationClient", typeof(Uri), typeof(AzureKeyCredential), typeof(ConfigurationClientOptions))]
     public partial class ConfigurationClient
     {
         private const string OTelAttributeKey = "az.appconfiguration.key";

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ManagementLockData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagementLockData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementLockData"/>. </summary>
         /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
         public ManagementLockData(ManagementLockLevel level)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
             Owners = new ChangeTrackingList<ManagementLockOwner>();
         }
 
-        /// <summary> Initializes a new instance of ManagementLockData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementLockData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

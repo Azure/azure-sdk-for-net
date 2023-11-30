@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Item Level kubernetes persistent volume target info for restore operation. </summary>
     public partial class KubernetesPVRestoreCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of KubernetesPVRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesPVRestoreCriteria"/>. </summary>
         public KubernetesPVRestoreCriteria()
         {
             ObjectType = "KubernetesPVRestoreCriteria";

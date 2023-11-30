@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for creating the call. </summary>
     internal partial class CreateCallRequestInternal
     {
-        /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateCallRequestInternal"/>. </summary>
         /// <param name="targets"> The targets of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/> or <paramref name="callbackUri"/> is null. </exception>

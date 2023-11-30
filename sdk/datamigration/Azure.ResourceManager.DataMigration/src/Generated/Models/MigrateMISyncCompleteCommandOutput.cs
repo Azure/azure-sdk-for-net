@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for command that completes online migration for an Azure SQL Database Managed Instance. </summary>
     internal partial class MigrateMISyncCompleteCommandOutput
     {
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandOutput"/>. </summary>
         internal MigrateMISyncCompleteCommandOutput()
         {
             Errors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandOutput"/>. </summary>
         /// <param name="errors"> List of errors that happened during the command execution. </param>
         internal MigrateMISyncCompleteCommandOutput(IReadOnlyList<ReportableException> errors)
         {

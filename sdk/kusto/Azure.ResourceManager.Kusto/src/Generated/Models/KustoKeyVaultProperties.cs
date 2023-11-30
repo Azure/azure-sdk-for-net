@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Properties of the key vault. </summary>
     public partial class KustoKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of KustoKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoKeyVaultProperties"/>. </summary>
         public KustoKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> The name of the key vault key. </param>
         /// <param name="keyVersion"> The version of the key vault key. </param>
         /// <param name="keyVaultUri"> The Uri of the key vault. </param>

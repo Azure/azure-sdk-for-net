@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class PagedDeviceInsight
     {
-        /// <summary> Initializes a new instance of PagedDeviceInsight. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedDeviceInsight"/>. </summary>
         /// <param name="value">
         /// The DeviceInsight items on this page
         /// Serialized Name: PagedDeviceInsight.value
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PagedDeviceInsight. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedDeviceInsight"/>. </summary>
         /// <param name="value">
         /// The DeviceInsight items on this page
         /// Serialized Name: PagedDeviceInsight.value

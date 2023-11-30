@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan unplanned failover input properties. </summary>
     public partial class RecoveryPlanUnplannedFailoverProperties
     {
-        /// <summary> Initializes a new instance of RecoveryPlanUnplannedFailoverProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanUnplannedFailoverProperties"/>. </summary>
         /// <param name="failoverDirection"> The failover direction. </param>
         /// <param name="sourceSiteOperation"> A value indicating whether source site operations are required. </param>
         public RecoveryPlanUnplannedFailoverProperties(PossibleOperationsDirection failoverDirection, SourceSiteOperation sourceSiteOperation)

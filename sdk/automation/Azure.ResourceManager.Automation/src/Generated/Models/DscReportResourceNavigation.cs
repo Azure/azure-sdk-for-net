@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Navigation for DSC Report Resource. </summary>
     public partial class DscReportResourceNavigation
     {
-        /// <summary> Initializes a new instance of DscReportResourceNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscReportResourceNavigation"/>. </summary>
         internal DscReportResourceNavigation()
         {
         }
 
-        /// <summary> Initializes a new instance of DscReportResourceNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscReportResourceNavigation"/>. </summary>
         /// <param name="resourceId"> Gets or sets the ID of the resource to navigate to. </param>
         internal DscReportResourceNavigation(string resourceId)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class KustoPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of KustoPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkResourceListResult"/>. </summary>
         internal KustoPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<KustoPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of KustoPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal KustoPrivateLinkResourceListResult(IReadOnlyList<KustoPrivateLinkResourceData> value)
         {

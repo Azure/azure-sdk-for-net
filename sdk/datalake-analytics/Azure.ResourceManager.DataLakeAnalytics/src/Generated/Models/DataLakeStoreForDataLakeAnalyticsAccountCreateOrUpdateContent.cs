@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="name">
         /// The unique name of the Data Lake Store account to add.
         /// Serialized Name: AddDataLakeStoreWithAccountParameters.name

@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Model factory for models. </summary>
     public static partial class AIAnomalyDetectorModelFactory
     {
-        /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -54,7 +54,7 @@ namespace Azure.AI.AnomalyDetector
             return new UnivariateLastDetectionResult(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, severity);
         }
 
-        /// <summary> Initializes a new instance of UnivariateChangePointDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateChangePointDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -74,7 +74,7 @@ namespace Azure.AI.AnomalyDetector
             return new UnivariateChangePointDetectionResult(period, isChangePoint?.ToList(), confidenceScores?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.MultivariateDetectionResult"/>. </summary>
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>
@@ -86,7 +86,7 @@ namespace Azure.AI.AnomalyDetector
             return new MultivariateDetectionResult(resultId, summary, results?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MultivariateBatchDetectionResultSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.MultivariateBatchDetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. </param>
         /// <param name="errors"> Error message when detection fails. </param>
         /// <param name="variableStates"> Variable status. </param>
@@ -103,7 +103,7 @@ namespace Azure.AI.AnomalyDetector
             return new MultivariateBatchDetectionResultSummary(status, errors?.ToList(), variableStates?.ToList(), setupInfo);
         }
 
-        /// <summary> Initializes a new instance of AnomalyState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyState"/>. </summary>
         /// <param name="timestamp"> Time stamp for this anomaly. </param>
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
         /// <param name="errors"> Error message for the current time stamp. </param>
@@ -115,7 +115,7 @@ namespace Azure.AI.AnomalyDetector
             return new AnomalyState(timestamp, value, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AnomalyValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyValue"/>. </summary>
         /// <param name="isAnomaly"> True if an anomaly is detected at the current time stamp. </param>
         /// <param name="severity">
         /// Indicates the significance of the anomaly. The higher the severity, the more
@@ -131,7 +131,7 @@ namespace Azure.AI.AnomalyDetector
             return new AnomalyValue(isAnomaly, severity, score, interpretation?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AnomalyInterpretation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyInterpretation"/>. </summary>
         /// <param name="variable"> Variable. </param>
         /// <param name="contributionScore">
         /// This score shows the percentage that contributes to the anomalous time stamp. It's a
@@ -144,7 +144,7 @@ namespace Azure.AI.AnomalyDetector
             return new AnomalyInterpretation(variable, contributionScore, correlationChanges);
         }
 
-        /// <summary> Initializes a new instance of CorrelationChanges. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.CorrelationChanges"/>. </summary>
         /// <param name="changedVariables"> Correlated variables that have correlation changes under an anomaly. </param>
         /// <returns> A new <see cref="AnomalyDetector.CorrelationChanges"/> instance for mocking. </returns>
         public static CorrelationChanges CorrelationChanges(IEnumerable<string> changedVariables = null)
@@ -154,7 +154,7 @@ namespace Azure.AI.AnomalyDetector
             return new CorrelationChanges(changedVariables?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ModelInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.ModelInfo"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
@@ -192,7 +192,7 @@ namespace Azure.AI.AnomalyDetector
             return new ModelInfo(dataSource, dataSchema, startTime, endTime, displayName, slidingWindow, alignPolicy, status, errors?.ToList(), diagnosticsInfo);
         }
 
-        /// <summary> Initializes a new instance of AnomalyDetectionModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyDetectionModel"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
@@ -206,7 +206,7 @@ namespace Azure.AI.AnomalyDetector
             return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo);
         }
 
-        /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.MultivariateLastDetectionResult"/>. </summary>
         /// <param name="variableStates"> Variable status. </param>
         /// <param name="results"> Anomaly status and information. </param>
         /// <returns> A new <see cref="AnomalyDetector.MultivariateLastDetectionResult"/> instance for mocking. </returns>

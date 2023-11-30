@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Predefined URL category object. </summary>
     public partial class PredefinedUrlCategory
     {
-        /// <summary> Initializes a new instance of PredefinedUrlCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/>. </summary>
         /// <param name="action"></param>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="name"/> is null. </exception>

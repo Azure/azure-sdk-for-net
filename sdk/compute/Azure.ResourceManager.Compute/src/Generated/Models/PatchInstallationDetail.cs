@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Information about a specific patch that was encountered during an installation action. </summary>
     public partial class PatchInstallationDetail
     {
-        /// <summary> Initializes a new instance of PatchInstallationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchInstallationDetail"/>. </summary>
         internal PatchInstallationDetail()
         {
             Classifications = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PatchInstallationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchInstallationDetail"/>. </summary>
         /// <param name="patchId"> A unique identifier for the patch. </param>
         /// <param name="name"> The friendly name of the patch. </param>
         /// <param name="version"> The version string of the package. It may conform to Semantic Versioning. Only applies to Linux. </param>

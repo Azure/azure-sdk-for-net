@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Representation of a log probabilities model for a completions generation. </summary>
     public partial class CompletionsLogProbabilityModel
     {
-        /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompletionsLogProbabilityModel"/>. </summary>
         /// <param name="tokens"> The textual forms of tokens evaluated in this probability model. </param>
         /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
         /// <param name="topLogProbabilities"> A mapping of tokens to maximum log probability values in this completions data. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.OpenAI
             TextOffsets = textOffsets.ToList();
         }
 
-        /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompletionsLogProbabilityModel"/>. </summary>
         /// <param name="tokens"> The textual forms of tokens evaluated in this probability model. </param>
         /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
         /// <param name="topLogProbabilities"> A mapping of tokens to maximum log probability values in this completions data. </param>

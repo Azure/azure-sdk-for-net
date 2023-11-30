@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Parameters for patching an attestation provider. </summary>
     public partial class AttestationProviderPatch
     {
-        /// <summary> Initializes a new instance of AttestationProviderPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderPatch"/>. </summary>
         public AttestationProviderPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

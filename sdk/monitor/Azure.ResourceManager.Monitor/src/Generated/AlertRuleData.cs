@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class AlertRuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AlertRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="alertRuleName"> the name of the alert rule. </param>
         /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
             Actions = new ChangeTrackingList<AlertRuleAction>();
         }
 
-        /// <summary> Initializes a new instance of AlertRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

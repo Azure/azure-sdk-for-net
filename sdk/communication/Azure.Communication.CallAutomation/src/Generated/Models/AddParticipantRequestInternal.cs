@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for adding participant to the call. </summary>
     internal partial class AddParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/>. </summary>
         /// <param name="participantToAdd"> The participant to invite. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
         public AddParticipantRequestInternal(CommunicationIdentifierModel participantToAdd)

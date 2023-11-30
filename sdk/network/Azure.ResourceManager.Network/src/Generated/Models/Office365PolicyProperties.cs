@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Virtual Appliance Sku Properties. </summary>
     internal partial class Office365PolicyProperties
     {
-        /// <summary> Initializes a new instance of Office365PolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365PolicyProperties"/>. </summary>
         public Office365PolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of Office365PolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365PolicyProperties"/>. </summary>
         /// <param name="breakOutCategories"> Office 365 breakout categories. </param>
         internal Office365PolicyProperties(BreakOutCategoryPolicies breakOutCategories)
         {

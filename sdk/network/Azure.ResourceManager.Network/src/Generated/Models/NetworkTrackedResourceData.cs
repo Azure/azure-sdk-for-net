@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Common resource representation. </summary>
     public partial class NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkTrackedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTrackedResourceData"/>. </summary>
         public NetworkTrackedResourceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkTrackedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTrackedResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

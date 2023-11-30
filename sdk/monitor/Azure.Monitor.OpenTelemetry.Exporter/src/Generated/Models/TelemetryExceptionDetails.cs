@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Exception details of the exception in a chain. </summary>
     internal partial class TelemetryExceptionDetails
     {
-        /// <summary> Initializes a new instance of TelemetryExceptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionDetails"/>. </summary>
         /// <param name="message"> Exception message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public TelemetryExceptionDetails(string message)

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Neighbor Group Patch definition. </summary>
     public partial class NetworkFabricNeighborGroupPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricNeighborGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatch"/>. </summary>
         public NetworkFabricNeighborGroupPatch()
         {
         }

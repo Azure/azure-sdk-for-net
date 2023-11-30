@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CreateCallRequest. </summary>
     internal partial class CreateCallRequestInternal
     {
-        /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateCallRequestInternal"/>. </summary>
         /// <param name="targets"> The targets of the call. </param>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>

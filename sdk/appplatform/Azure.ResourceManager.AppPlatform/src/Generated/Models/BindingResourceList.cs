@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Binding resources and a possible link for next set. </summary>
     internal partial class BindingResourceList
     {
-        /// <summary> Initializes a new instance of BindingResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BindingResourceList"/>. </summary>
         internal BindingResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformBindingData>();
         }
 
-        /// <summary> Initializes a new instance of BindingResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BindingResourceList"/>. </summary>
         /// <param name="value"> Collection of Binding resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

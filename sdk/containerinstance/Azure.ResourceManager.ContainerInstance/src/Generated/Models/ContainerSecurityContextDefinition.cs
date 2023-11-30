@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The security context for the container. </summary>
     public partial class ContainerSecurityContextDefinition
     {
-        /// <summary> Initializes a new instance of ContainerSecurityContextDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSecurityContextDefinition"/>. </summary>
         public ContainerSecurityContextDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerSecurityContextDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSecurityContextDefinition"/>. </summary>
         /// <param name="isPrivileged"> The flag to determine if the container permissions is elevated to Privileged. </param>
         /// <param name="allowPrivilegeEscalation"> A boolean value indicating whether the init process can elevate its privileges. </param>
         /// <param name="capabilities"> The capabilities to add or drop from a container. </param>

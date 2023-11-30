@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of integration runtime resources. </summary>
     internal partial class DataFactoryIntegrationRuntimeListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeListResult"/>. </summary>
         /// <param name="value"> List of integration runtimes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryIntegrationRuntimeListResult(IEnumerable<DataFactoryIntegrationRuntimeData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeListResult"/>. </summary>
         /// <param name="value"> List of integration runtimes. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal DataFactoryIntegrationRuntimeListResult(IReadOnlyList<DataFactoryIntegrationRuntimeData> value, string nextLink)

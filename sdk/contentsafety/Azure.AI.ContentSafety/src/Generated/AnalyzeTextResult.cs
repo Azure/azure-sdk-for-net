@@ -5,44 +5,39 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> The analysis response of the text. </summary>
+    /// <summary> The text analysis response. </summary>
     public partial class AnalyzeTextResult
     {
-        /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
-        internal AnalyzeTextResult()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
+        /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoriesAnalysis"/> is null. </exception>
+        internal AnalyzeTextResult(IEnumerable<TextCategoriesAnalysis> categoriesAnalysis)
         {
-            BlocklistsMatchResults = new ChangeTrackingList<TextBlocklistMatchResult>();
+            Argument.AssertNotNull(categoriesAnalysis, nameof(categoriesAnalysis));
+
+            BlocklistsMatch = new ChangeTrackingList<TextBlocklistMatch>();
+            CategoriesAnalysis = categoriesAnalysis.ToList();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
-        /// <param name="blocklistsMatchResults"> The details of blocklist match. </param>
-        /// <param name="hateResult"> Analysis result for Hate category. </param>
-        /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
-        /// <param name="sexualResult"> Analysis result for Sexual category. </param>
-        /// <param name="violenceResult"> Analysis result for Violence category. </param>
-        internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatchResult> blocklistsMatchResults, TextAnalyzeSeverityResult hateResult, TextAnalyzeSeverityResult selfHarmResult, TextAnalyzeSeverityResult sexualResult, TextAnalyzeSeverityResult violenceResult)
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
+        /// <param name="blocklistsMatch"> The blocklist match details. </param>
+        /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
+        internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatch> blocklistsMatch, IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis)
         {
-            BlocklistsMatchResults = blocklistsMatchResults;
-            HateResult = hateResult;
-            SelfHarmResult = selfHarmResult;
-            SexualResult = sexualResult;
-            ViolenceResult = violenceResult;
+            BlocklistsMatch = blocklistsMatch;
+            CategoriesAnalysis = categoriesAnalysis;
         }
 
-        /// <summary> The details of blocklist match. </summary>
-        public IReadOnlyList<TextBlocklistMatchResult> BlocklistsMatchResults { get; }
-        /// <summary> Analysis result for Hate category. </summary>
-        public TextAnalyzeSeverityResult HateResult { get; }
-        /// <summary> Analysis result for SelfHarm category. </summary>
-        public TextAnalyzeSeverityResult SelfHarmResult { get; }
-        /// <summary> Analysis result for Sexual category. </summary>
-        public TextAnalyzeSeverityResult SexualResult { get; }
-        /// <summary> Analysis result for Violence category. </summary>
-        public TextAnalyzeSeverityResult ViolenceResult { get; }
+        /// <summary> The blocklist match details. </summary>
+        public IReadOnlyList<TextBlocklistMatch> BlocklistsMatch { get; }
+        /// <summary> Analysis result for categories. </summary>
+        public IReadOnlyList<TextCategoriesAnalysis> CategoriesAnalysis { get; }
     }
 }

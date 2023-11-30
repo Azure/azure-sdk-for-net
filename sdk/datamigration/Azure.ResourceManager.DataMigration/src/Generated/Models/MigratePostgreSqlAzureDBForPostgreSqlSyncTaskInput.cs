@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that migrates PostgreSQL databases to Azure Database for PostgreSQL for online migrations. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL. </param>

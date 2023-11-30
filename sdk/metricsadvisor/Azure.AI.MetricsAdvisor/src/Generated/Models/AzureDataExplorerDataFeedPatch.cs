@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureDataExplorerDataFeedPatch. </summary>
     internal partial class AzureDataExplorerDataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of AzureDataExplorerDataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataFeedPatch"/>. </summary>
         public AzureDataExplorerDataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.AzureDataExplorer;

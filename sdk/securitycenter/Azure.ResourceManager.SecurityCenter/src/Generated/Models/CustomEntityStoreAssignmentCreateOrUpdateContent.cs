@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> describes the custom entity store assignment request. </summary>
     public partial class CustomEntityStoreAssignmentCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of CustomEntityStoreAssignmentCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntityStoreAssignmentCreateOrUpdateContent"/>. </summary>
         public CustomEntityStoreAssignmentCreateOrUpdateContent()
         {
         }

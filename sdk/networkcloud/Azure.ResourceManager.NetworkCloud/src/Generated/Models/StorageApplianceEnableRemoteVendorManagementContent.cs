@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> StorageApplianceEnableRemoteVendorManagementParameters represents the body of the request to enable remote vendor management of a storage appliance. </summary>
     public partial class StorageApplianceEnableRemoteVendorManagementContent
     {
-        /// <summary> Initializes a new instance of StorageApplianceEnableRemoteVendorManagementContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceEnableRemoteVendorManagementContent"/>. </summary>
         public StorageApplianceEnableRemoteVendorManagementContent()
         {
             SupportEndpoints = new ChangeTrackingList<string>();

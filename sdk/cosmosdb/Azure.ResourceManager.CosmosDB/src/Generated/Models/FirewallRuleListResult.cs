@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A list of firewall rules. </summary>
     internal partial class FirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of FirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleListResult"/>. </summary>
         internal FirewallRuleListResult()
         {
             Value = new ChangeTrackingList<CosmosDBFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleListResult"/>. </summary>
         /// <param name="value"> The list of firewall rules in a mongo cluster. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
         internal FirewallRuleListResult(IReadOnlyList<CosmosDBFirewallRuleData> value, string nextLink)

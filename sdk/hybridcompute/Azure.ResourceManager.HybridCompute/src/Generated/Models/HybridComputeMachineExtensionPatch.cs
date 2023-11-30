@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes a Machine Extension Update. </summary>
     public partial class HybridComputeMachineExtensionPatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of HybridComputeMachineExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineExtensionPatch"/>. </summary>
         public HybridComputeMachineExtensionPatch()
         {
             Settings = new ChangeTrackingDictionary<string, BinaryData>();

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The policy definition reference. </summary>
     public partial class PolicyDefinitionReference
     {
-        /// <summary> Initializes a new instance of PolicyDefinitionReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionReference"/>. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> is null. </exception>
         public PolicyDefinitionReference(string policyDefinitionId)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             GroupNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PolicyDefinitionReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionReference"/>. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
         /// <param name="parameters"> The parameter values for the referenced policy rule. The keys are the parameter names. </param>
         /// <param name="policyDefinitionReferenceId"> A unique id (within the policy set definition) for this policy definition reference. </param>

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class PrivateStoreCollectionInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionInfoData"/>. </summary>
         public PrivateStoreCollectionInfoData()
         {
             SubscriptionsList = new ChangeTrackingList<string>();
             AppliedRules = new ChangeTrackingList<MarketplaceRule>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

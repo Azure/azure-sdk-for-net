@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties to update namespace. </summary>
     public partial class EventGridNamespacePatch
     {
-        /// <summary> Initializes a new instance of EventGridNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespacePatch"/>. </summary>
         public EventGridNamespacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

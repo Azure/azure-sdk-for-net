@@ -9,6 +9,8 @@
 ### Bugs Fixed
 
 - Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
+- Updated the `ServiceBusMessage` constructor that takes a `ServiceBusReceivedMessage` to no longer copy over the 
+  `x-opt-partition-id` key as this is meant to apply only to the original message.
 
 ### Other Changes
 

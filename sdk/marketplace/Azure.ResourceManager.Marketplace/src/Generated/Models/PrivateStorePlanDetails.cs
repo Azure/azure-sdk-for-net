@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Return plan with request details. </summary>
     public partial class PrivateStorePlanDetails
     {
-        /// <summary> Initializes a new instance of PrivateStorePlanDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStorePlanDetails"/>. </summary>
         public PrivateStorePlanDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateStorePlanDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStorePlanDetails"/>. </summary>
         /// <param name="planId"> Gets or sets Plan Id. </param>
         /// <param name="status"> Gets the plan status. </param>
         /// <param name="requestDate"> Gets request date. </param>

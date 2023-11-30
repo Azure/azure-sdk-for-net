@@ -14,13 +14,13 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Properties of a call connection. </summary>
     internal partial class CallConnectionPropertiesInternal
     {
-        /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnectionPropertiesInternal"/>. </summary>
         internal CallConnectionPropertiesInternal()
         {
             Targets = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnectionPropertiesInternal"/>. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="targets"> The targets of the call. </param>

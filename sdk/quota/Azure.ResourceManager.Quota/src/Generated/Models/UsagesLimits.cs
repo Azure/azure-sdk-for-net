@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Quota limits. </summary>
     internal partial class UsagesLimits
     {
-        /// <summary> Initializes a new instance of UsagesLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsagesLimits"/>. </summary>
         internal UsagesLimits()
         {
             Value = new ChangeTrackingList<CurrentUsagesBaseData>();
         }
 
-        /// <summary> Initializes a new instance of UsagesLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsagesLimits"/>. </summary>
         /// <param name="value"> List of quota limits. </param>
         /// <param name="nextLink"> The URI used to fetch the next page of quota limits. When there are no more pages, this is null. </param>
         internal UsagesLimits(IReadOnlyList<CurrentUsagesBaseData> value, string nextLink)

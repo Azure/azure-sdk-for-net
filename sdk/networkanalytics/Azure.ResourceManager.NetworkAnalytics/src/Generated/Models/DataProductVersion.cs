@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Data Product Version. </summary>
     public partial class DataProductVersion
     {
-        /// <summary> Initializes a new instance of DataProductVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductVersion"/>. </summary>
         /// <param name="version"> Version of data product. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public DataProductVersion(string version)

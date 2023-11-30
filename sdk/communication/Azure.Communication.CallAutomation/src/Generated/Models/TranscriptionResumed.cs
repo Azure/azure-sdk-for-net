@@ -10,15 +10,19 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The TranscriptionResumed. </summary>
     public partial class TranscriptionResumed
     {
-        /// <summary> Initializes a new instance of TranscriptionResumed. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionResumed"/>. </summary>
         internal TranscriptionResumed()
         {
         }
 
+<<<<<<< HEAD
         /// <summary> Initializes a new instance of TranscriptionResumed. </summary>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+=======
+        /// <summary> Initializes a new instance of <see cref="TranscriptionResumed"/>. </summary>
+>>>>>>> main
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

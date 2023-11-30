@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Client supplied parameters used to create a new attestation provider. </summary>
     public partial class AttestationServiceCreationSpecificParams
     {
-        /// <summary> Initializes a new instance of AttestationServiceCreationSpecificParams. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationServiceCreationSpecificParams"/>. </summary>
         public AttestationServiceCreationSpecificParams()
         {
         }

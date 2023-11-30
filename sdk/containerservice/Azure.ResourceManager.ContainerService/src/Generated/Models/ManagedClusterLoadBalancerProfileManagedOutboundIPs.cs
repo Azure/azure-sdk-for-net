@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Desired managed outbound IPs for the cluster load balancer. </summary>
     public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs
     {
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileManagedOutboundIPs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileManagedOutboundIPs"/>. </summary>
         public ManagedClusterLoadBalancerProfileManagedOutboundIPs()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileManagedOutboundIPs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileManagedOutboundIPs"/>. </summary>
         /// <param name="count"> The desired number of IPv4 outbound IPs created/managed by Azure for the cluster load balancer. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
         /// <param name="countIPv6"> The desired number of IPv6 outbound IPs created/managed by Azure for the cluster load balancer. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 0 for single-stack and 1 for dual-stack. </param>
         internal ManagedClusterLoadBalancerProfileManagedOutboundIPs(int? count, int? countIPv6)

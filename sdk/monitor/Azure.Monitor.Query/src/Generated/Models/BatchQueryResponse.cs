@@ -13,13 +13,13 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The BatchQueryResponse. </summary>
     internal partial class BatchQueryResponse
     {
-        /// <summary> Initializes a new instance of BatchQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchQueryResponse"/>. </summary>
         internal BatchQueryResponse()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of BatchQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchQueryResponse"/>. </summary>
         /// <param name="id"></param>
         /// <param name="status"></param>
         /// <param name="body"> Contains the tables, columns &amp; rows resulting from a query. </param>

@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyDimensionQuery. </summary>
     internal partial class AnomalyDimensionQuery
     {
-        /// <summary> Initializes a new instance of AnomalyDimensionQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDimensionQuery"/>. </summary>
         /// <param name="startTime"> start time. </param>
         /// <param name="endTime"> end time. </param>
         /// <param name="dimensionName"> dimension to query. </param>

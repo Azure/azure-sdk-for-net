@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A virtual network. </summary>
     public partial class DevTestLabVirtualNetworkPatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabVirtualNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVirtualNetworkPatch"/>. </summary>
         public DevTestLabVirtualNetworkPatch()
         {
         }

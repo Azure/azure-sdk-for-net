@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Selected tables for the migration. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput"/>. </summary>
         public MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput"/>. </summary>
         /// <param name="name"> Name of the table to migrate. </param>
         internal MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(string name)
         {

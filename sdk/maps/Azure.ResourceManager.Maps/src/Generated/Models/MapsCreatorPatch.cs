@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> Parameters used to update an existing Creator resource. </summary>
     public partial class MapsCreatorPatch
     {
-        /// <summary> Initializes a new instance of MapsCreatorPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorPatch"/>. </summary>
         public MapsCreatorPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

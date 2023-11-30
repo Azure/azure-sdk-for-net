@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformGatewayCustomDomainData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayCustomDomainData"/>. </summary>
         public AppPlatformGatewayCustomDomainData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

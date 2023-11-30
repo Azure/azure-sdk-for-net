@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Properties of a configure alert request. </summary>
     public partial class SiteRecoveryConfigureAlertProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryConfigureAlertProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryConfigureAlertProperties"/>. </summary>
         public SiteRecoveryConfigureAlertProperties()
         {
             CustomEmailAddresses = new ChangeTrackingList<string>();

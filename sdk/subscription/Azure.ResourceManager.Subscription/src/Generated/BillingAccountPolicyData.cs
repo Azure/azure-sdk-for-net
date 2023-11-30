@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Subscription
     /// </summary>
     public partial class BillingAccountPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingAccountPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyData"/>. </summary>
         internal BillingAccountPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingAccountPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

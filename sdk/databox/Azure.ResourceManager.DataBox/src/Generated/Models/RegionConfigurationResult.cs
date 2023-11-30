@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Configuration response specific to a region. </summary>
     public partial class RegionConfigurationResult
     {
-        /// <summary> Initializes a new instance of RegionConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionConfigurationResult"/>. </summary>
         internal RegionConfigurationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RegionConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionConfigurationResult"/>. </summary>
         /// <param name="scheduleAvailabilityResponse"> Schedule availability for given sku in a region. </param>
         /// <param name="transportAvailabilityResponse"> Transport options available for given sku in a region. </param>
         /// <param name="dataCenterAddressResponse">

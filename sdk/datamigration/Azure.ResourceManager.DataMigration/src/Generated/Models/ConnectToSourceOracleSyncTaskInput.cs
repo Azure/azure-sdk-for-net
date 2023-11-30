@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates Oracle database connection. </summary>
     internal partial class ConnectToSourceOracleSyncTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to Oracle source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourceOracleSyncTaskInput(OracleConnectionInfo sourceConnectionInfo)

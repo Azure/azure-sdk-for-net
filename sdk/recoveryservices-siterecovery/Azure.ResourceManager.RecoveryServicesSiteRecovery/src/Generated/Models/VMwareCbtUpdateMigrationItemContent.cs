@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt specific update migration item input. </summary>
     public partial class VMwareCbtUpdateMigrationItemContent : UpdateMigrationItemProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtUpdateMigrationItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateMigrationItemContent"/>. </summary>
         public VMwareCbtUpdateMigrationItemContent()
         {
             VmNics = new ChangeTrackingList<VMwareCbtNicContent>();

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The managed database's restore details unrestorable file properties. </summary>
     public partial class ManagedDatabaseRestoreDetailUnrestorableFileProperties
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailUnrestorableFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailUnrestorableFileProperties"/>. </summary>
         internal ManagedDatabaseRestoreDetailUnrestorableFileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailUnrestorableFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailUnrestorableFileProperties"/>. </summary>
         /// <param name="name"> File name. </param>
         internal ManagedDatabaseRestoreDetailUnrestorableFileProperties(string name)
         {

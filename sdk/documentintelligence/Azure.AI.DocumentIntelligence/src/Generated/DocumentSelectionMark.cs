@@ -17,7 +17,7 @@ namespace Azure.AI.DocumentIntelligence
     /// </summary>
     public partial class DocumentSelectionMark
     {
-        /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSelectionMark"/>. </summary>
         /// <param name="state"> State of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSelectionMark"/>. </summary>
         /// <param name="state"> State of the selection mark. </param>
         /// <param name="polygon">
         /// Bounding polygon of the selection mark, with coordinates specified relative

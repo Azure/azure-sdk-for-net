@@ -10,7 +10,7 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Parameters to query a knowledge base. </summary>
     public partial class AnswersOptions
     {
-        /// <summary> Initializes a new instance of AnswersOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnswersOptions"/>. </summary>
         public AnswersOptions()
         {
         }

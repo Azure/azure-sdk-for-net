@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapCentralServerInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SapCentralServerInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCentralServerInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SapCentralServerInstanceData(AzureLocation location) : base(location)
         {
             VmDetails = new ChangeTrackingList<CentralServerVmDetails>();
         }
 
-        /// <summary> Initializes a new instance of SapCentralServerInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCentralServerInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

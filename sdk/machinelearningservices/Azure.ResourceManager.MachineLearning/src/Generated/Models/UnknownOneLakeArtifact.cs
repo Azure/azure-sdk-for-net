@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownOneLakeArtifact. </summary>
     internal partial class UnknownOneLakeArtifact : OneLakeArtifact
     {
-        /// <summary> Initializes a new instance of UnknownOneLakeArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOneLakeArtifact"/>. </summary>
         /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <param name="artifactType"> [Required] OneLake artifact type. </param>
         internal UnknownOneLakeArtifact(string artifactName, OneLakeArtifactType artifactType) : base(artifactName, artifactType)

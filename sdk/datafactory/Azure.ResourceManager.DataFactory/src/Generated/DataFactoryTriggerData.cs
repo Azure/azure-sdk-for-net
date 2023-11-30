@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryTriggerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerData"/>. </summary>
         /// <param name="properties">
         /// Properties of the trigger.
         /// Please note <see cref="DataFactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

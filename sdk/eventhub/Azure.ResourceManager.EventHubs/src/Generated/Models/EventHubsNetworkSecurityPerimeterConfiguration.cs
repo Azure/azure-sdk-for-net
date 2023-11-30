@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Network Security Perimeter related configurations of a given namespace. </summary>
     public partial class EventHubsNetworkSecurityPerimeterConfiguration : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfiguration"/>. </summary>
         /// <param name="location"> The location. </param>
         public EventHubsNetworkSecurityPerimeterConfiguration(AzureLocation location) : base(location)
         {
             ProvisioningIssues = new ChangeTrackingList<EventHubsProvisioningIssue>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfiguration"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

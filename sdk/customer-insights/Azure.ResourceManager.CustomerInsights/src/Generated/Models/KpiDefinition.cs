@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Defines the KPI Threshold limits. </summary>
     public partial class KpiDefinition
     {
-        /// <summary> Initializes a new instance of KpiDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiDefinition"/>. </summary>
         /// <param name="entityType"> The mapping entity type. </param>
         /// <param name="entityTypeName"> The mapping entity name. </param>
         /// <param name="calculationWindow"> The calculation window. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Extracts = new ChangeTrackingList<KpiExtract>();
         }
 
-        /// <summary> Initializes a new instance of KpiDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiDefinition"/>. </summary>
         /// <param name="entityType"> The mapping entity type. </param>
         /// <param name="entityTypeName"> The mapping entity name. </param>
         /// <param name="tenantId"> The hub name. </param>

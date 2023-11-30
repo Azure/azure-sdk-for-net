@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a DNS forwarding ruleset PATCH operation. </summary>
     public partial class DnsForwardingRulesetPatch
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetPatch"/>. </summary>
         public DnsForwardingRulesetPatch()
         {
             DnsResolverOutboundEndpoints = new ChangeTrackingList<WritableSubResource>();

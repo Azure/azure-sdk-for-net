@@ -10,16 +10,21 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The ContinuousDtmfRecognitionToneReceived. </summary>
     public partial class ContinuousDtmfRecognitionToneReceived
     {
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneReceived"/>. </summary>
         internal ContinuousDtmfRecognitionToneReceived()
         {
         }
 
+<<<<<<< HEAD
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
         /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
         /// <param name="operationContext"></param>
+=======
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneReceived"/>. </summary>
+        /// <param name="toneInfo"> Information about Tone. </param>
+>>>>>>> main
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

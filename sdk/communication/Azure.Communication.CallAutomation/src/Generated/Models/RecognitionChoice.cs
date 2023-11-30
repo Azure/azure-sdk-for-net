@@ -15,7 +15,11 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The Choice. </summary>
     public partial class RecognitionChoice
     {
+<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/RecognitionChoice.cs
         /// <summary> Initializes a new instance of RecognitionChoice. </summary>
+=======
+        /// <summary> Initializes a new instance of <see cref="RecognizeChoice"/>. </summary>
+>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/RecognizeChoice.cs
         /// <param name="label"> Identifier for a given choice. </param>
         /// <param name="phrases"> List of phrases to recognize. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> or <paramref name="phrases"/> is null. </exception>
@@ -28,7 +32,11 @@ namespace Azure.Communication.CallAutomation
             Phrases = phrases.ToList();
         }
 
+<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/RecognitionChoice.cs
         /// <summary> Initializes a new instance of RecognitionChoice. </summary>
+=======
+        /// <summary> Initializes a new instance of <see cref="RecognizeChoice"/>. </summary>
+>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/RecognizeChoice.cs
         /// <param name="label"> Identifier for a given choice. </param>
         /// <param name="phrases"> List of phrases to recognize. </param>
         /// <param name="tone"></param>

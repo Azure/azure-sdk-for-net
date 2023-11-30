@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Operation request/response representation details. </summary>
     public partial class RepresentationContract
     {
-        /// <summary> Initializes a new instance of RepresentationContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RepresentationContract"/>. </summary>
         /// <param name="contentType"> Specifies a registered or custom content type for this representation, e.g. application/xml. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentType"/> is null. </exception>
         public RepresentationContract(string contentType)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Examples = new ChangeTrackingDictionary<string, ParameterExampleContract>();
         }
 
-        /// <summary> Initializes a new instance of RepresentationContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RepresentationContract"/>. </summary>
         /// <param name="contentType"> Specifies a registered or custom content type for this representation, e.g. application/xml. </param>
         /// <param name="schemaId"> Schema identifier. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'. </param>
         /// <param name="typeName"> Type name defined by the schema. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'. </param>

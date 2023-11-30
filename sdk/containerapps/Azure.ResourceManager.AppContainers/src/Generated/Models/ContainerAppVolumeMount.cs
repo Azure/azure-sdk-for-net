@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Volume mount for the Container App. </summary>
     public partial class ContainerAppVolumeMount
     {
-        /// <summary> Initializes a new instance of ContainerAppVolumeMount. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVolumeMount"/>. </summary>
         public ContainerAppVolumeMount()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppVolumeMount. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVolumeMount"/>. </summary>
         /// <param name="volumeName"> This must match the Name of a Volume. </param>
         /// <param name="mountPath"> Path within the container at which the volume should be mounted.Must not contain ':'. </param>
         /// <param name="subPath"> Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root). </param>

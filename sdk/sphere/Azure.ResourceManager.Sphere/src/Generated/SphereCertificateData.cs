@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateData"/>. </summary>
         public SphereCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

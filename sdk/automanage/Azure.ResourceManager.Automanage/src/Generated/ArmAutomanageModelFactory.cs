@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAutomanageModelFactory
     {
-        /// <summary> Initializes a new instance of AutomanageBestPracticeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Automanage.AutomanageBestPracticeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automanage.Models
             return new AutomanageBestPracticeData(id, name, resourceType, systemData, configuration);
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Automanage.AutomanageConfigurationProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automanage.Models
             return new AutomanageConfigurationProfileData(id, name, resourceType, systemData, tags, location, configuration != null ? new ConfigurationProfileProperties(configuration) : null);
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Automanage.AutomanageConfigurationProfileAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automanage.Models
             return new AutomanageConfigurationProfileAssignmentData(id, name, resourceType, systemData, properties, managedBy);
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutomanageConfigurationProfileAssignmentProperties"/>. </summary>
         /// <param name="configurationProfile"> The Automanage configurationProfile ARM Resource URI. </param>
         /// <param name="targetId"> The target VM resource URI. </param>
         /// <param name="status"> The status of onboarding, which only appears in the response. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automanage.Models
             return new AutomanageConfigurationProfileAssignmentProperties(configurationProfile, targetId, status);
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentReportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Automanage.AutomanageConfigurationProfileAssignmentReportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automanage.Models
             return new AutomanageConfigurationProfileAssignmentReportData(id, name, resourceType, systemData, startOn, endOn, lastModifiedOn, duration, configurationProfileAssignmentProcessingType, status, configurationProfile, resources?.ToList(), error, reportFormatVersion);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentReportResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationProfileAssignmentReportResourceDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automanage.Models
             return new ConfigurationProfileAssignmentReportResourceDetails(id, name, resourceType, systemData, status, error);
         }
 
-        /// <summary> Initializes a new instance of AutomanageServicePrincipalData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutomanageServicePrincipalData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

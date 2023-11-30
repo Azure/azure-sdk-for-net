@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The parameters to generate upgraded definition. </summary>
     public partial class GenerateUpgradedDefinitionContent
     {
-        /// <summary> Initializes a new instance of GenerateUpgradedDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateUpgradedDefinitionContent"/>. </summary>
         public GenerateUpgradedDefinitionContent()
         {
         }

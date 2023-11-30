@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> The FrontDoorExperimentResourceGetTimeSeriesReportOptions. </summary>
     public partial class FrontDoorExperimentResourceGetTimeSeriesReportOptions
     {
-        /// <summary> Initializes a new instance of FrontDoorExperimentResourceGetTimeSeriesReportOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentResourceGetTimeSeriesReportOptions"/>. </summary>
         /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
         /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
         /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>

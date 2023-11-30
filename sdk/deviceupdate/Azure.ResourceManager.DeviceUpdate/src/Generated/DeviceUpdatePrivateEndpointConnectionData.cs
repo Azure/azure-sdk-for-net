@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// </summary>
     public partial class DeviceUpdatePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateEndpointConnectionData"/>. </summary>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public DeviceUpdatePrivateEndpointConnectionData(DeviceUpdatePrivateLinkServiceConnectionState connectionState)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

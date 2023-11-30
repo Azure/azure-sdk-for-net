@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> The metadata supported value detail. </summary>
     public partial class MetadataSupportedValueDetail
     {
-        /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
         internal MetadataSupportedValueDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="displayName"> The display name. </param>
         internal MetadataSupportedValueDetail(string id, string displayName)

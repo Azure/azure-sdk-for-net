@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Represents an accepted audience trusted by the cluster. </summary>
     public partial class AcceptedAudience
     {
-        /// <summary> Initializes a new instance of AcceptedAudience. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptedAudience"/>. </summary>
         public AcceptedAudience()
         {
         }
 
-        /// <summary> Initializes a new instance of AcceptedAudience. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptedAudience"/>. </summary>
         /// <param name="value"> GUID or valid URL representing an accepted audience. </param>
         internal AcceptedAudience(string value)
         {

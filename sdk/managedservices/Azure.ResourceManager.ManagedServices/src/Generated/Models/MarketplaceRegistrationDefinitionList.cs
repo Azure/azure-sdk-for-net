@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The list of marketplace registration definitions. </summary>
     internal partial class MarketplaceRegistrationDefinitionList
     {
-        /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceRegistrationDefinitionList"/>. </summary>
         internal MarketplaceRegistrationDefinitionList()
         {
             Value = new ChangeTrackingList<ManagedServicesMarketplaceRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceRegistrationDefinitionList"/>. </summary>
         /// <param name="value"> The list of marketplace registration definitions. </param>
         /// <param name="nextLink"> The link to the next page of marketplace registration definitions. </param>
         internal MarketplaceRegistrationDefinitionList(IReadOnlyList<ManagedServicesMarketplaceRegistrationData> value, string nextLink)

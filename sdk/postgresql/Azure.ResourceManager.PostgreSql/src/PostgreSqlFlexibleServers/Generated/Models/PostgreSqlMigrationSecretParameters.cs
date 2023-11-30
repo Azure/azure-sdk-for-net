@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Migration secret parameters. </summary>
     public partial class PostgreSqlMigrationSecretParameters
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationSecretParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSecretParameters"/>. </summary>
         /// <param name="adminCredentials"> Admin credentials for source and target servers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminCredentials"/> is null. </exception>
         public PostgreSqlMigrationSecretParameters(PostgreSqlMigrationAdminCredentials adminCredentials)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             AdminCredentials = adminCredentials;
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationSecretParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSecretParameters"/>. </summary>
         /// <param name="adminCredentials"> Admin credentials for source and target servers. </param>
         /// <param name="sourceServerUsername"> Gets or sets the username for the source server. This user need not be an admin. </param>
         /// <param name="targetServerUsername"> Gets or sets the username for the target server. This user need not be an admin. </param>

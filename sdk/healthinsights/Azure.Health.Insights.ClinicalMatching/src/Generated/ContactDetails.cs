@@ -10,12 +10,12 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A person's contact details. </summary>
     public partial class ContactDetails
     {
-        /// <summary> Initializes a new instance of ContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactDetails"/>. </summary>
         public ContactDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactDetails"/>. </summary>
         /// <param name="name"> The person's name. </param>
         /// <param name="email"> The person's email. </param>
         /// <param name="phone"> A person's phone number. </param>

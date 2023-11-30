@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> MachineSkuSlot represents a single SKU and rack slot associated with the machine. </summary>
     public partial class MachineSkuSlot
     {
-        /// <summary> Initializes a new instance of MachineSkuSlot. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineSkuSlot"/>. </summary>
         internal MachineSkuSlot()
         {
             Disks = new ChangeTrackingList<MachineDisk>();
             NetworkInterfaces = new ChangeTrackingList<NetworkCloudNetworkInterface>();
         }
 
-        /// <summary> Initializes a new instance of MachineSkuSlot. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineSkuSlot"/>. </summary>
         /// <param name="rackSlot"> The position in the rack for the machine. </param>
         /// <param name="bootstrapProtocol"> The type of bootstrap protocol used. </param>
         /// <param name="cpuCores"> The count of CPU cores for this machine. </param>

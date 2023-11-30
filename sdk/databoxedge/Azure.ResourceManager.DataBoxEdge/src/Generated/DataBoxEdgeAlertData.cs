@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeAlertData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertData"/>. </summary>
         public DataBoxEdgeAlertData()
         {
             DetailedInformation = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -15,18 +15,28 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The response payload for getting participants of the call. </summary>
     internal partial class GetParticipantsResponseInternal
     {
+<<<<<<< HEAD
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
         /// <param name="value"> List of the current participants in the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GetParticipantsResponseInternal(IEnumerable<CallParticipantInternal> value)
+=======
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
+        internal GetParticipantsResponseInternal()
+>>>>>>> main
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
+<<<<<<< HEAD
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
         /// <param name="value"> List of the current participants in the call. </param>
+=======
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
+        /// <param name="values"> List of the current participants in the call. </param>
+>>>>>>> main
         /// <param name="nextLink"> Continue of the list of participants. </param>
         internal GetParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> value, string nextLink)
         {

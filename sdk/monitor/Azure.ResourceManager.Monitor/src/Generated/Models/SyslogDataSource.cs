@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class SyslogDataSource
     {
-        /// <summary> Initializes a new instance of SyslogDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyslogDataSource"/>. </summary>
         public SyslogDataSource()
         {
             Streams = new ChangeTrackingList<SyslogDataSourceStream>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
             LogLevels = new ChangeTrackingList<SyslogDataSourceLogLevel>();
         }
 
-        /// <summary> Initializes a new instance of SyslogDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyslogDataSource"/>. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of all trigger on the data box edge device. </summary>
     internal partial class TriggerList
     {
-        /// <summary> Initializes a new instance of TriggerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerList"/>. </summary>
         internal TriggerList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeTriggerData>();
         }
 
-        /// <summary> Initializes a new instance of TriggerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerList"/>. </summary>
         /// <param name="value">
         /// The list of triggers.
         /// Please note <see cref="DataBoxEdgeTriggerData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

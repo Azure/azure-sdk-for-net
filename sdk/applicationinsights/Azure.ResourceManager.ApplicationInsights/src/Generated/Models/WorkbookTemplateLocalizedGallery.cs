@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Localized template data and gallery information. </summary>
     public partial class WorkbookTemplateLocalizedGallery
     {
-        /// <summary> Initializes a new instance of WorkbookTemplateLocalizedGallery. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateLocalizedGallery"/>. </summary>
         public WorkbookTemplateLocalizedGallery()
         {
             Galleries = new ChangeTrackingList<WorkbookTemplateGallery>();
         }
 
-        /// <summary> Initializes a new instance of WorkbookTemplateLocalizedGallery. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateLocalizedGallery"/>. </summary>
         /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
         /// <param name="galleries"> Workbook galleries supported by the template. </param>
         internal WorkbookTemplateLocalizedGallery(BinaryData templateData, IList<WorkbookTemplateGallery> galleries)

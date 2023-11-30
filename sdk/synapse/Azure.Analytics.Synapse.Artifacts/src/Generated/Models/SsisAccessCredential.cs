@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SSIS access credential. </summary>
     public partial class SsisAccessCredential
     {
-        /// <summary> Initializes a new instance of SsisAccessCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/>. </summary>
         /// <param name="domain"> Domain for windows authentication. </param>
         /// <param name="userName"> UseName for windows authentication. </param>
         /// <param name="password">

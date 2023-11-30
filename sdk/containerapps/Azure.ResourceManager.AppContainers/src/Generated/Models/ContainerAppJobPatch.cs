@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container Apps Job resource specific properties. </summary>
     public partial class ContainerAppJobPatch
     {
-        /// <summary> Initializes a new instance of ContainerAppJobPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobPatch"/>. </summary>
         public ContainerAppJobPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

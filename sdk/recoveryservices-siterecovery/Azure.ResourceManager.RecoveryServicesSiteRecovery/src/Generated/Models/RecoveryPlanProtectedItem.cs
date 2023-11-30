@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan protected item. </summary>
     public partial class RecoveryPlanProtectedItem
     {
-        /// <summary> Initializes a new instance of RecoveryPlanProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanProtectedItem"/>. </summary>
         public RecoveryPlanProtectedItem()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanProtectedItem"/>. </summary>
         /// <param name="id"> The ARM Id of the recovery plan protected item. </param>
         /// <param name="virtualMachineId"> The virtual machine Id. </param>
         internal RecoveryPlanProtectedItem(ResourceIdentifier id, string virtualMachineId)

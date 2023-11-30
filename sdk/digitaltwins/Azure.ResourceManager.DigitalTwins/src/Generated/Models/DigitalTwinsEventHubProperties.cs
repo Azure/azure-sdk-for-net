@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> Properties related to EventHub. </summary>
     public partial class DigitalTwinsEventHubProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEventHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventHubProperties"/>. </summary>
         public DigitalTwinsEventHubProperties()
         {
             EndpointType = EndpointType.EventHub;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventHubProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>

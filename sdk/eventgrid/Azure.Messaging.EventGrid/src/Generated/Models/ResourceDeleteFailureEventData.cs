@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteFailure event. This is raised when a resource delete operation fails. </summary>
     public partial class ResourceDeleteFailureEventData
     {
-        /// <summary> Initializes a new instance of ResourceDeleteFailureEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceDeleteFailureEventData"/>. </summary>
         internal ResourceDeleteFailureEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceDeleteFailureEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceDeleteFailureEventData"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the resource. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>

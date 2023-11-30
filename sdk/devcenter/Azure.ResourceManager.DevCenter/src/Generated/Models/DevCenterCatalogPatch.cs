@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The catalog's properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterCatalogPatch
     {
-        /// <summary> Initializes a new instance of DevCenterCatalogPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogPatch"/>. </summary>
         public DevCenterCatalogPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

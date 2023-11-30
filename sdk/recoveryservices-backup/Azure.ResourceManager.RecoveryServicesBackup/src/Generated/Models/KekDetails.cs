@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> KEK is encryption key for BEK. </summary>
     public partial class KekDetails
     {
-        /// <summary> Initializes a new instance of KekDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KekDetails"/>. </summary>
         public KekDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of KekDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KekDetails"/>. </summary>
         /// <param name="keyUri"> Key is KEK. </param>
         /// <param name="keyVaultId"> Key Vault ID where this Key is stored. </param>
         /// <param name="keyBackupData"> KEK data. </param>

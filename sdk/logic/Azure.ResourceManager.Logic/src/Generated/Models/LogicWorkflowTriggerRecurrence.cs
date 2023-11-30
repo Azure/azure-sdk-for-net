@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The workflow trigger recurrence. </summary>
     public partial class LogicWorkflowTriggerRecurrence
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerRecurrence"/>. </summary>
         public LogicWorkflowTriggerRecurrence()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerRecurrence"/>. </summary>
         /// <param name="frequency"> The frequency. </param>
         /// <param name="interval"> The interval. </param>
         /// <param name="startOn"> The start time. </param>

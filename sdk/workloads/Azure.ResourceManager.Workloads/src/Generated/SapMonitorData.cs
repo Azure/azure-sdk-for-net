@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapMonitorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SapMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapMonitorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SapMonitorData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SapMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapMonitorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

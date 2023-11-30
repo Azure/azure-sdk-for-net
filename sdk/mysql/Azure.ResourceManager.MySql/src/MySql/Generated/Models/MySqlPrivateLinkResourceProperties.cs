@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Properties of a private link resource. </summary>
     public partial class MySqlPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of MySqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateLinkResourceProperties"/>. </summary>
         internal MySqlPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MySqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         internal MySqlPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers)

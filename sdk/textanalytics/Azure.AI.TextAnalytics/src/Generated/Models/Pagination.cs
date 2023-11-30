@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The Pagination. </summary>
     internal partial class Pagination
     {
-        /// <summary> Initializes a new instance of Pagination. </summary>
+        /// <summary> Initializes a new instance of <see cref="Pagination"/>. </summary>
         internal Pagination()
         {
         }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> An authentication key. </summary>
     public partial class AuthenticationKeys
     {
-        /// <summary> Initializes a new instance of AuthenticationKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationKeys"/>. </summary>
         internal AuthenticationKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthenticationKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationKeys"/>. </summary>
         /// <param name="authKey1"> The first authentication key. </param>
         /// <param name="authKey2"> The second authentication key. </param>
         internal AuthenticationKeys(string authKey1, string authKey2)

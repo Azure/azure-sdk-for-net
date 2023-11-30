@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> The encryption settings on the volume group. </summary>
     public partial class EncryptionProperties
     {
-        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         public EncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Properties provided by key vault. </param>
         /// <param name="encryptionIdentity"> The identity to be used with service-side encryption at rest. </param>
         internal EncryptionProperties(KeyVaultProperties keyVaultProperties, EncryptionIdentity encryptionIdentity)

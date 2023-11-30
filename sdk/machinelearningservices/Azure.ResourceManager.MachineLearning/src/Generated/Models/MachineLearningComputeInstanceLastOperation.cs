@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The last operation on ComputeInstance. </summary>
     public partial class MachineLearningComputeInstanceLastOperation
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceLastOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceLastOperation"/>. </summary>
         internal MachineLearningComputeInstanceLastOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceLastOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceLastOperation"/>. </summary>
         /// <param name="operationName"> Name of the last operation. </param>
         /// <param name="operationOn"> Time of the last operation. </param>
         /// <param name="operationStatus"> Operation status. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A provider specific input for test failover. </summary>
     public partial class A2ATestFailoverContent : TestFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2ATestFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ATestFailoverContent"/>. </summary>
         public A2ATestFailoverContent()
         {
             InstanceType = "A2A";

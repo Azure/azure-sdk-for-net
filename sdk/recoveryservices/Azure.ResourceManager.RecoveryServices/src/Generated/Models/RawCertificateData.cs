@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Raw certificate data. </summary>
     public partial class RawCertificateData
     {
-        /// <summary> Initializes a new instance of RawCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RawCertificateData"/>. </summary>
         public RawCertificateData()
         {
         }

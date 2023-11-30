@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxCertificateProperties. </summary>
     public partial class NginxCertificateProperties
     {
-        /// <summary> Initializes a new instance of NginxCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateProperties"/>. </summary>
         public NginxCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class ArcSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArcSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcSettingData"/>. </summary>
         public ArcSettingData()
         {
             PerNodeDetails = new ChangeTrackingList<PerNodeArcState>();
         }
 
-        /// <summary> Initializes a new instance of ArcSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

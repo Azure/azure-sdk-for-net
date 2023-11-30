@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight
     /// </summary>
     public partial class HDInsightPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionData"/>. </summary>
         /// <param name="connectionState"> The private link service connection state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public HDInsightPrivateEndpointConnectionData(HDInsightPrivateLinkServiceConnectionState connectionState)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight
             ConnectionState = connectionState;
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

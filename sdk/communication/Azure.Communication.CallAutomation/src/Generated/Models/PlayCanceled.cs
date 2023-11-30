@@ -10,13 +10,17 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The PlayCanceled. </summary>
     public partial class PlayCanceled
     {
-        /// <summary> Initializes a new instance of PlayCanceled. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayCanceled"/>. </summary>
         internal PlayCanceled()
         {
         }
 
+<<<<<<< HEAD
         /// <summary> Initializes a new instance of PlayCanceled. </summary>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+=======
+        /// <summary> Initializes a new instance of <see cref="PlayCanceled"/>. </summary>
+>>>>>>> main
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create job schedule operation. </summary>
     public partial class AutomationJobScheduleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationJobScheduleCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleCreateOrUpdateContent"/>. </summary>
         /// <param name="schedule"> Gets or sets the schedule. </param>
         /// <param name="runbook"> Gets or sets the runbook. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="runbook"/> is null. </exception>

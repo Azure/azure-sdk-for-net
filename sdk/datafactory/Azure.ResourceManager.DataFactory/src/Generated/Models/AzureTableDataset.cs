@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The Azure Table storage dataset. </summary>
     public partial class AzureTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AzureTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="tableName"> The table name of the Azure Table storage. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AzureTable";
         }
 
-        /// <summary> Initializes a new instance of AzureTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

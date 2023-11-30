@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The role management policy rule target. </summary>
     public partial class RoleManagementPolicyRuleTarget
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyRuleTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRuleTarget"/>. </summary>
         public RoleManagementPolicyRuleTarget()
         {
             Operations = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Models
             EnforcedSettings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyRuleTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRuleTarget"/>. </summary>
         /// <param name="caller"> The caller of the setting. </param>
         /// <param name="operations"> The type of operation. </param>
         /// <param name="level"> The assignment level to which rule is applied. </param>

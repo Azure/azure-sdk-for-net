@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The Appliances patchable resource definition. </summary>
     public partial class ResourceConnectorAppliancePatch
     {
-        /// <summary> Initializes a new instance of ResourceConnectorAppliancePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceConnectorAppliancePatch"/>. </summary>
         public ResourceConnectorAppliancePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

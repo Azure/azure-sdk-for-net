@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MongoDBParameterPatch. </summary>
     internal partial class MongoDBParameterPatch
     {
-        /// <summary> Initializes a new instance of MongoDBParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBParameterPatch"/>. </summary>
         public MongoDBParameterPatch()
         {
         }

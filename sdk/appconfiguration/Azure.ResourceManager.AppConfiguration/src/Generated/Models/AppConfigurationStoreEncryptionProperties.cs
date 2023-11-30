@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The encryption settings for a configuration store. </summary>
     internal partial class AppConfigurationStoreEncryptionProperties
     {
-        /// <summary> Initializes a new instance of AppConfigurationStoreEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreEncryptionProperties"/>. </summary>
         public AppConfigurationStoreEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationStoreEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreEncryptionProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Key vault properties. </param>
         internal AppConfigurationStoreEncryptionProperties(AppConfigurationKeyVaultProperties keyVaultProperties)
         {

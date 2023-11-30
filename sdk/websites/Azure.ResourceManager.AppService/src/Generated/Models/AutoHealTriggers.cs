@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Triggers for auto-heal. </summary>
     public partial class AutoHealTriggers
     {
-        /// <summary> Initializes a new instance of AutoHealTriggers. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoHealTriggers"/>. </summary>
         public AutoHealTriggers()
         {
             StatusCodes = new ChangeTrackingList<StatusCodesBasedTrigger>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
             StatusCodesRange = new ChangeTrackingList<StatusCodesRangeBasedTrigger>();
         }
 
-        /// <summary> Initializes a new instance of AutoHealTriggers. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoHealTriggers"/>. </summary>
         /// <param name="requests"> A rule based on total requests. </param>
         /// <param name="privateBytesInKB"> A rule based on private bytes. </param>
         /// <param name="statusCodes"> A rule based on status codes. </param>

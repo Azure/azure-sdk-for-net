@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Software Assurance properties of the cluster. </summary>
     public partial class SoftwareAssuranceProperties
     {
-        /// <summary> Initializes a new instance of SoftwareAssuranceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceProperties"/>. </summary>
         public SoftwareAssuranceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareAssuranceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceProperties"/>. </summary>
         /// <param name="softwareAssuranceStatus"> Status of the Software Assurance for the cluster. </param>
         /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
         /// <param name="lastUpdated"> TimeStamp denoting the latest SA benefit applicability is validated. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk input details. </summary>
     public partial class HyperVReplicaAzureDiskDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureDiskDetails"/>. </summary>
         public HyperVReplicaAzureDiskDetails()
         {
         }

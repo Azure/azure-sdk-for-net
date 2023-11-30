@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     internal partial class DataLakeAnalyticsFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRuleListResult"/>. </summary>
         internal DataLakeAnalyticsFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<DataLakeAnalyticsFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRuleListResult"/>. </summary>
         /// <param name="value">
         /// The results of the list operation.
         /// Serialized Name: FirewallRuleListResult.value

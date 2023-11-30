@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution replacement maps. </summary>
     public partial class ReplacementMaps
     {
-        /// <summary> Initializes a new instance of ReplacementMaps. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplacementMaps"/>. </summary>
         public ReplacementMaps()
         {
             WebResults = new ChangeTrackingList<WebResult>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             VideoGroups = new ChangeTrackingList<VideoGroup>();
         }
 
-        /// <summary> Initializes a new instance of ReplacementMaps. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplacementMaps"/>. </summary>
         /// <param name="webResults"> Solution AzureKB results. </param>
         /// <param name="diagnostics"> Solution diagnostics results. </param>
         /// <param name="troubleshooters"> Solutions Troubleshooters. </param>

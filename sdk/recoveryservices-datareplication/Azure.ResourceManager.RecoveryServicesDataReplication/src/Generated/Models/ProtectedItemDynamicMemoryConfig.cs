@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Protected item dynamic memory config. </summary>
     public partial class ProtectedItemDynamicMemoryConfig
     {
-        /// <summary> Initializes a new instance of ProtectedItemDynamicMemoryConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectedItemDynamicMemoryConfig"/>. </summary>
         /// <param name="maximumMemoryInMegaBytes"> Gets or sets maximum memory in MB. </param>
         /// <param name="minimumMemoryInMegaBytes"> Gets or sets minimum memory in MB. </param>
         /// <param name="targetMemoryBufferPercentage"> Gets or sets target memory buffer in %. </param>

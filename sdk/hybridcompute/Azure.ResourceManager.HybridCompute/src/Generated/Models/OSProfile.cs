@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
     public partial class OSProfile
     {
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         public OSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         /// <param name="computerName"> Specifies the host OS name of the hybrid machine. </param>
         /// <param name="windowsConfiguration"> Specifies the windows configuration for update management. </param>
         /// <param name="linuxConfiguration"> Specifies the linux configuration for update management. </param>

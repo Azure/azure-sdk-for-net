@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes an Event Hub input data source that contains stream data. </summary>
     public partial class EventHubV2StreamInputDataSource : StreamInputDataSource
     {
-        /// <summary> Initializes a new instance of EventHubV2StreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubV2StreamInputDataSource"/>. </summary>
         public EventHubV2StreamInputDataSource()
         {
             StreamInputDataSourceType = "Microsoft.EventHub/EventHub";
         }
 
-        /// <summary> Initializes a new instance of EventHubV2StreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubV2StreamInputDataSource"/>. </summary>
         /// <param name="streamInputDataSourceType"> Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serviceBusNamespace"> The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="sharedAccessPolicyName"> The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>

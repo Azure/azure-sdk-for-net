@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the app registration for providers that have client ids and client secrets. </summary>
     public partial class ContainerAppClientRegistration
     {
-        /// <summary> Initializes a new instance of ContainerAppClientRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppClientRegistration"/>. </summary>
         public ContainerAppClientRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppClientRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppClientRegistration"/>. </summary>
         /// <param name="clientId"> The Client ID of the app used for login. </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
         internal ContainerAppClientRegistration(string clientId, string clientSecretSettingName)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Base for resource properties. </summary>
     public partial class ResourceProperties
     {
-        /// <summary> Initializes a new instance of ResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProperties"/>. </summary>
         public ResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the ManagedNetwork resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         internal ResourceProperties(ProvisioningState? provisioningState, ETag? etag)

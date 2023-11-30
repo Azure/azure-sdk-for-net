@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An traffic selector policy for a virtual network gateway connection. </summary>
     public partial class TrafficSelectorPolicy
     {
-        /// <summary> Initializes a new instance of TrafficSelectorPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficSelectorPolicy"/>. </summary>
         /// <param name="localAddressRanges"> A collection of local address spaces in CIDR format. </param>
         /// <param name="remoteAddressRanges"> A collection of remote address spaces in CIDR format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localAddressRanges"/> or <paramref name="remoteAddressRanges"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             RemoteAddressRanges = remoteAddressRanges.ToList();
         }
 
-        /// <summary> Initializes a new instance of TrafficSelectorPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficSelectorPolicy"/>. </summary>
         /// <param name="localAddressRanges"> A collection of local address spaces in CIDR format. </param>
         /// <param name="remoteAddressRanges"> A collection of remote address spaces in CIDR format. </param>
         internal TrafficSelectorPolicy(IList<string> localAddressRanges, IList<string> remoteAddressRanges)

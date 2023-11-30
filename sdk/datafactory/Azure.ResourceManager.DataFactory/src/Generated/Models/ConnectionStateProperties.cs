@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The connection state of a managed private endpoint. </summary>
     public partial class ConnectionStateProperties
     {
-        /// <summary> Initializes a new instance of ConnectionStateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionStateProperties"/>. </summary>
         public ConnectionStateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionStateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionStateProperties"/>. </summary>
         /// <param name="actionsRequired"> The actions required on the managed private endpoint. </param>
         /// <param name="description"> The managed private endpoint description. </param>
         /// <param name="status"> The approval status. </param>
