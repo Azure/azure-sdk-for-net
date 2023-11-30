@@ -3,34 +3,49 @@
 
 #nullable disable
 
-using System.Net.Http;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
 public partial class AudioTranscriptionOptions
 {
+    /*
+     * CUSTOM CODE DESCRIPTION:
+     *
+     * Manual, custom multipart/form-data serialization needed.
+     *
+     */
     internal virtual RequestContent ToRequestContent()
     {
-        var content = new MultipartFormDataRequestContent();
-        content.Add(new StringContent(DeploymentName), "model");
-        content.Add(new ByteArrayContent(AudioData.ToArray()), "file", "@file.wav");
+        MultipartFormDataContent content = new();
+
+        content.Add(MultipartContent.Create(DeploymentName), "model", new Dictionary<string, string>());
+
         if (Optional.IsDefined(ResponseFormat))
         {
-            content.Add(new StringContent(ResponseFormat.ToString()), "response_format");
+            content.Add(MultipartContent.Create(ResponseFormat.ToString()), "response_format", new Dictionary<string, string>());
         }
         if (Optional.IsDefined(Prompt))
         {
-            content.Add(new StringContent(Prompt), "prompt");
+            content.Add(MultipartContent.Create(Prompt), "prompt", new Dictionary<string, string>());
         }
         if (Optional.IsDefined(Temperature))
         {
-            content.Add(new StringContent($"{Temperature}"), "temperature");
+            content.Add(MultipartContent.Create(Temperature.Value), "temperature", new Dictionary<string, string>());
         }
         if (Optional.IsDefined(Language))
         {
-            content.Add(new StringContent(Language), "language");
+            content.Add(MultipartContent.Create(Language), "language", new Dictionary<string, string>());
         }
+
+        string filename = Optional.IsDefined(Filename) ? Filename : "file";
+        content.Add(MultipartContent.Create(AudioData), new Dictionary<string, string>()
+        {
+            ["Content-Disposition"] = $"form-data; name=file; filename={filename}",
+            ["Content-Type"] = "text/plain",
+        });
+
         return content;
     }
 }

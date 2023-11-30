@@ -587,9 +587,9 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException">
         ///     <paramref name="imageGenerationOptions"/> is null.
         /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// An attempt was made to implicitly use a dall-e-2 model on Azure OpenAI (by not providing a model
-        /// deployment name) using a service API version outside of the supported range.
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="imageGenerationOptions.DeploymentName"/> is null or empty when using Azure OpenAI.
+        ///     Azure OpenAI image generation requires a valid dall-e-3 model deployment.
         /// </exception>
         /// <returns>
         ///     The response information for the image generations request.
@@ -599,38 +599,24 @@ namespace Azure.AI.OpenAI
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
+            if (_isConfiguredForAzureOpenAI)
+            {
+                Argument.AssertNotNullOrEmpty(imageGenerationOptions.DeploymentName, nameof(imageGenerationOptions.DeploymentName));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImageGenerations");
             scope.Start();
 
             try
             {
-                Response rawResponse = default;
-                ImageGenerations responseValue = default;
-
-                if (_isConfiguredForAzureOpenAI && string.IsNullOrEmpty(imageGenerationOptions.DeploymentName))
-                {
-                    ThrowIfNoAzureVersionSupportForDallE2();
-                    Operation<ImageGenerations> imagesOperation
-                        = BeginImageGenerations(
-                            WaitUntil.Completed,
-                            imageGenerationOptions,
-                            cancellationToken);
-                    rawResponse = imagesOperation.GetRawResponse();
-                    responseValue = imagesOperation.Value;
-                }
-                else
-                {
-                    RequestContext context = FromCancellationToken(cancellationToken);
-                    HttpMessage message = CreatePostRequestMessage(
-                        imageGenerationOptions.DeploymentName,
-                        "images/generations",
-                        content: imageGenerationOptions.ToRequestContent(),
-                        context);
-                    rawResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                    responseValue = ImageGenerations.FromResponse(rawResponse);
-                }
-                return Response.FromValue(responseValue, rawResponse);
+                RequestContext context = FromCancellationToken(cancellationToken);
+                HttpMessage message = CreatePostRequestMessage(
+                    imageGenerationOptions.DeploymentName,
+                    "images/generations",
+                    content: imageGenerationOptions.ToRequestContent(),
+                    context);
+                Response rawResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+                return Response.FromValue(ImageGenerations.FromResponse(rawResponse), rawResponse);
             }
             catch (Exception e)
             {
@@ -652,9 +638,9 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException">
         ///     <paramref name="imageGenerationOptions"/> is null.
         /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// An attempt was made to implicitly use a dall-e-2 model on Azure OpenAI (by not providing a model
-        /// deployment name) using a service API version outside of the supported range.
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="imageGenerationOptions.DeploymentName"/> is null or empty when using Azure OpenAI.
+        ///     Azure OpenAI image generation requires a valid dall-e-3 model deployment.
         /// </exception>
         /// <returns>
         ///     The response information for the image generations request.
@@ -664,40 +650,24 @@ namespace Azure.AI.OpenAI
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
-
+            if (_isConfiguredForAzureOpenAI)
+            {
+                Argument.AssertNotNullOrEmpty(imageGenerationOptions.DeploymentName, nameof(imageGenerationOptions.DeploymentName));
+            }
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImageGenerations");
             scope.Start();
 
             try
             {
-                Response rawResponse = default;
-                ImageGenerations responseValue = default;
-
-                if (_isConfiguredForAzureOpenAI && string.IsNullOrEmpty(imageGenerationOptions.DeploymentName))
-                {
-                    ThrowIfNoAzureVersionSupportForDallE2();
-                    Operation<ImageGenerations> imagesOperation
-                        = await BeginImageGenerationsAsync(
-                            WaitUntil.Completed,
-                            imageGenerationOptions,
-                            cancellationToken)
-                        .ConfigureAwait(false);
-                    rawResponse = imagesOperation.GetRawResponse();
-                    responseValue = imagesOperation.Value;
-                }
-                else
-                {
-                    RequestContext context = FromCancellationToken(cancellationToken);
-                    HttpMessage message = CreatePostRequestMessage(
-                        imageGenerationOptions.DeploymentName,
-                        "images/generations",
-                        content: imageGenerationOptions.ToRequestContent(),
-                        context);
-                    rawResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
-                        .ConfigureAwait(false);
-                    responseValue = ImageGenerations.FromResponse(rawResponse);
-                }
-                return Response.FromValue(responseValue, rawResponse);
+                RequestContext context = FromCancellationToken(cancellationToken);
+                HttpMessage message = CreatePostRequestMessage(
+                    imageGenerationOptions.DeploymentName,
+                    "images/generations",
+                    content: imageGenerationOptions.ToRequestContent(),
+                    context);
+                Response rawResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
+                    .ConfigureAwait(false);
+                return Response.FromValue(ImageGenerations.FromResponse(rawResponse), rawResponse);
             }
             catch (Exception e)
             {
@@ -944,8 +914,7 @@ namespace Azure.AI.OpenAI
             request.Method = RequestMethod.Post;
             request.Uri = GetUri(audioTranscriptionOptions.DeploymentName, "audio/transcriptions");
             request.Content = content;
-            string boundary = (content as MultipartFormDataRequestContent).Boundary;
-            request.Headers.Add("content-type", $"multipart/form-data; boundary={boundary}");
+            (content as MultipartFormDataContent).ApplyToRequest(request);
             return message;
         }
 
@@ -959,36 +928,8 @@ namespace Azure.AI.OpenAI
             request.Method = RequestMethod.Post;
             request.Uri = GetUri(audioTranslationOptions.DeploymentName, "audio/translations");
             request.Content = content;
-            string boundary = (content as MultipartFormDataRequestContent).Boundary;
-            request.Headers.Add("content-type", $"multipart/form-data; boundary={boundary}");
+            (content as MultipartFormDataContent).ApplyToRequest(request);
             return message;
-        }
-
-        private void ThrowIfNoAzureVersionSupportForDallE2()
-        {
-            OpenAIClientOptions.ServiceVersion[] supportedAzureServiceVersionsForDallE2
-                = new[]
-            {
-                OpenAIClientOptions.ServiceVersion.V2023_06_01_Preview,
-                OpenAIClientOptions.ServiceVersion.V2023_07_01_Preview,
-                OpenAIClientOptions.ServiceVersion.V2023_08_01_Preview,
-                OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview,
-            };
-
-            bool isThisVersion(OpenAIClientOptions.ServiceVersion version)
-            {
-                string versionAsString = version.ToString();
-                versionAsString = versionAsString.Substring(1);
-                versionAsString = versionAsString.ToLower();
-                versionAsString = versionAsString.Replace('_', '-');
-                return versionAsString == _apiVersion;
-            }
-
-            if (!supportedAzureServiceVersionsForDallE2.Any(version => isThisVersion(version)))
-            {
-                throw new NotSupportedException(
-                    "Azure OpenAI dall-e-2 support is only available using preview service API versions through 2023-09-01-preview. For later versions, please provide a valid dall-e-3 model deployment name to generate images.");
-            }
         }
     }
 }

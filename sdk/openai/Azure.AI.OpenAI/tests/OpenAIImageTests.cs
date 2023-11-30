@@ -54,8 +54,7 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_08_01_Preview)]
-        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview)]
+        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview, false)]
         [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_12_01_Preview, false)]
         [TestCase(Service.NonAzure)]
         public async Task DallE2LegacySupport(
@@ -83,11 +82,10 @@ namespace Azure.AI.OpenAI.Tests
             }
             else
             {
-                NotSupportedException exception = Assert.ThrowsAsync<NotSupportedException>(async () =>
+                ArgumentNullException exception = Assert.ThrowsAsync<ArgumentNullException>(async () =>
                 {
                     await client.GetImageGenerationsAsync(requestOptions);
                 });
-                Assert.That(exception.Message.Contains("dall-e-2"));
             }
         }
     }
