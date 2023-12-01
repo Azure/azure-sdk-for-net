@@ -605,17 +605,16 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.OperationDetails"/> instance for mocking. </returns>
-        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, string kind = "Unknown", Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
+        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new UnknownOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion, tags, error);
+            return new UnknownOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind: default, resourceLocation, apiVersion, tags, error);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>. </summary>
@@ -634,7 +633,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentClassifierBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentClassifierBuild, resourceLocation, apiVersion, tags, error, result);
+            return new DocumentClassifierBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind: default, resourceLocation, apiVersion, tags, error, result);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierDetails"/>. </summary>
@@ -668,7 +667,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelBuild, resourceLocation, apiVersion, tags, error, result);
+            return new DocumentModelBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind: default, resourceLocation, apiVersion, tags, error, result);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/>. </summary>
@@ -687,7 +686,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelComposeOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCompose, resourceLocation, apiVersion, tags, error, result);
+            return new DocumentModelComposeOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind: default, resourceLocation, apiVersion, tags, error, result);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/>. </summary>
@@ -706,7 +705,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCopyTo, resourceLocation, apiVersion, tags, error, result);
+            return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind: default, resourceLocation, apiVersion, tags, error, result);
         }
     }
 }

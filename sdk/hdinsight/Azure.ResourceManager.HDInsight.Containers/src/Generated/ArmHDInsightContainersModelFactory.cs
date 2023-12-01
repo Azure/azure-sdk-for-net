@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             flinkConfiguration ??= new Dictionary<string, string>();
 
-            return new FlinkJobProperties(ClusterJobType.FlinkJob, jobName, jobJarDirectory, jarName, entryClass, args, savePointName, action, flinkConfiguration, jobId, status, jobOutput, actionResult, lastSavePoint);
+            return new FlinkJobProperties(jobType: default, jobName, jobJarDirectory, jarName, entryClass, args, savePointName, action, flinkConfiguration, jobId, status, jobOutput, actionResult, lastSavePoint);
         }
     }
 }

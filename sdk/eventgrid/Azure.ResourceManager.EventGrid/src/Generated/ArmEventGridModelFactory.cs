@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             deliveryAttributeMappings ??= new List<DeliveryAttributeMapping>();
 
-            return new WebHookEventSubscriptionDestination(EndpointType.WebHook, endpoint, baseEndpoint, maxEventsPerBatch, preferredBatchSizeInKilobytes, azureActiveDirectoryTenantId, uriOrAzureActiveDirectoryApplicationId, deliveryAttributeMappings?.ToList(), minimumTlsVersionAllowed);
+            return new WebHookEventSubscriptionDestination(endpointType: default, endpoint, baseEndpoint, maxEventsPerBatch, preferredBatchSizeInKilobytes, azureActiveDirectoryTenantId, uriOrAzureActiveDirectoryApplicationId, deliveryAttributeMappings?.ToList(), minimumTlsVersionAllowed);
         }
     }
 }

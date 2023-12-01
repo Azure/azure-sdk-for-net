@@ -210,13 +210,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductMeterDetails"/>. </summary>
-        /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductMeterDetails"/> instance for mocking. </returns>
-        public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = "Unknown", double? multiplier = null, EdgeOrderProductChargingType? chargingType = null)
+        public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(double? multiplier = null, EdgeOrderProductChargingType? chargingType = null)
         {
-            return new UnknownMeterDetails(billingType, multiplier, chargingType);
+            return new UnknownMeterDetails(billingType: default, multiplier, chargingType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductAvailabilityInformation"/>. </summary>
@@ -404,7 +403,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.Pav2MeterDetails"/> instance for mocking. </returns>
         public static Pav2MeterDetails Pav2MeterDetails(double? multiplier = null, EdgeOrderProductChargingType? chargingType = null, Guid? meterGuid = null)
         {
-            return new Pav2MeterDetails(BillingType.Pav2, multiplier, chargingType, meterGuid);
+            return new Pav2MeterDetails(billingType: default, multiplier, chargingType, meterGuid);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PurchaseMeterDetails"/>. </summary>
@@ -416,7 +415,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.PurchaseMeterDetails"/> instance for mocking. </returns>
         public static PurchaseMeterDetails PurchaseMeterDetails(double? multiplier = null, EdgeOrderProductChargingType? chargingType = null, string productId = null, string skuId = null, string termId = null)
         {
-            return new PurchaseMeterDetails(BillingType.Purchase, multiplier, chargingType, productId, skuId, termId);
+            return new PurchaseMeterDetails(billingType: default, multiplier, chargingType, productId, skuId, termId);
         }
     }
 }

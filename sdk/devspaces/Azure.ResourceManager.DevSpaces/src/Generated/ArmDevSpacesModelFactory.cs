@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <returns> A new <see cref="Models.KubernetesConnectionDetails"/> instance for mocking. </returns>
         public static KubernetesConnectionDetails KubernetesConnectionDetails(string kubeConfig = null)
         {
-            return new KubernetesConnectionDetails("Kubernetes", kubeConfig);
+            return new KubernetesConnectionDetails(instanceType: null, kubeConfig);
         }
     }
 }

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsContent"/>. </summary>
+        /// <param name="userPrincipal"> user principal id of the user. </param>
+        internal DynatraceSsoDetailsContent(string userPrincipal)
+        {
+            UserPrincipal = userPrincipal;
+        }
+
         /// <summary> user principal id of the user. </summary>
         public string UserPrincipal { get; set; }
     }

@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountPatch"/>. </summary>
+        /// <param name="identity"> The type of identity used for the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="tags"> List of key value pairs that describe the resource. This will overwrite the existing tags. </param>
+        internal DeviceUpdateAccountPatch(ManagedServiceIdentity identity, AzureLocation? location, IDictionary<string, string> tags)
+        {
+            Identity = identity;
+            Location = location;
+            Tags = tags;
+        }
+
         /// <summary> The type of identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
