@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public class HttpClientPipelineTransport : PipelineTransport, IDisposable
+public partial class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.

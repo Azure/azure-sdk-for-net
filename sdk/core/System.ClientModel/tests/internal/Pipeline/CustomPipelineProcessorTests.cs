@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,7 +13,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void EmptyProcessorReturnsFalse()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         ClientPipeline.RequestOptionsProcessor processor = new(message,
@@ -30,7 +29,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void ConstructorThrowsForInvalidIndexValues()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         var perCallEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
@@ -73,7 +72,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerCallPoliciesToEmptyPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] policies = new PipelinePolicy[1];
@@ -98,7 +97,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerTryPoliciesToEmptyPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] policies = new PipelinePolicy[1];
@@ -123,7 +122,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerCallAndPerTryPoliciesToEmptyPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] perCall = new PipelinePolicy[1];
@@ -153,7 +152,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerCallPoliciesAtStartOfPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] original = new PipelinePolicy[2];
@@ -193,7 +192,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerCallPoliciesAtEndOfPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] original = new PipelinePolicy[2];
@@ -233,7 +232,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerCallPoliciesMidPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] original = new PipelinePolicy[3];
@@ -273,7 +272,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerTryPoliciesAtStartOfPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] original = new PipelinePolicy[2];
@@ -313,7 +312,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerTryPoliciesAtEndOfPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] original = new PipelinePolicy[2];
@@ -353,7 +352,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerTryPoliciesMidPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] original = new PipelinePolicy[3];
@@ -393,7 +392,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerCallAndPerTryPoliciesAtStartOfPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] original = new PipelinePolicy[2];
@@ -438,7 +437,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerCallAndPerTryPoliciesAtEndOfPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] original = new PipelinePolicy[2];
@@ -483,7 +482,7 @@ public class CustomPipelineProcessorTests
     [Test]
     public void AddsPerCallAndPerTryPoliciesMidPipeline()
     {
-        PipelineRequest request = new HttpPipelineRequest();
+        PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         PipelinePolicy[] original = new PipelinePolicy[4];
@@ -583,6 +582,10 @@ public class CustomPipelineProcessorTests
 
             return prop is List<string> list ? list : new List<string>();
         }
+    }
+
+    internal class MockRequest : PipelineRequest
+    {
     }
     #endregion
 }
