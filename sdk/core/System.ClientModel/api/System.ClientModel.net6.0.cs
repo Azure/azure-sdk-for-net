@@ -100,7 +100,7 @@ namespace System.ClientModel.Primitives
     {
         public HttpClientPipelineTransport() { }
         public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
-        protected sealed override System.ClientModel.Primitives.PipelineMessage CreateMessageCore() { throw null; }
+        protected override System.ClientModel.Primitives.PipelineMessage CreateMessageCore() { throw null; }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         protected virtual void OnReceivedResponse(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
@@ -196,9 +196,10 @@ namespace System.ClientModel.Primitives
         protected PipelineRequest() { }
         public virtual System.ClientModel.InputContent? Content { get { throw null; } set { } }
         public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
-        public virtual string Method { get { throw null; } set { } }
+        public string Method { get { throw null; } set { } }
         public virtual System.Uri Uri { get { throw null; } set { } }
         public virtual void Dispose() { }
+        protected virtual System.Uri GetUriCore() { throw null; }
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {

@@ -24,16 +24,20 @@ namespace Azure.Core
         /// </summary>
         public new virtual RequestUriBuilder Uri
         {
-            get
-            {
-                return _uriBuilder ??= new RequestUriBuilder();
-            }
+            get => _uriBuilder ??= new RequestUriBuilder();
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
                 _uriBuilder = value;
             }
         }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override Uri GetUriCore()
+            => Uri.ToUri();
 
         /// <summary>
         /// Gets or sets the request HTTP method.

@@ -518,6 +518,7 @@ namespace Azure.Core
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
+        protected override System.Uri GetUriCore() { throw null; }
         protected internal abstract bool RemoveHeader(string name);
         protected internal virtual void SetHeader(string name, string value) { }
         protected internal abstract bool TryGetHeader(string name, out string? value);

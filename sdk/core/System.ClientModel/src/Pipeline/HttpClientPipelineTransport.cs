@@ -57,7 +57,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         };
     }
 
-    protected override sealed PipelineMessage CreateMessageCore()
+    protected override PipelineMessage CreateMessageCore()
     {
         PipelineRequest request = new HttpPipelineRequest();
         PipelineMessage message = new PipelineMessage(request);
@@ -92,7 +92,12 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
     {
-        using HttpRequestMessage httpRequest = BuildRequestMessage(message);
+        if (message.Request is not PipelineRequest request)
+        {
+            throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
+        }
+
+        using HttpRequestMessage httpRequest = HttpPipelineRequest.BuildHttpRequestMessage(request, message.CancellationToken);
 
         OnSendingRequest(message, httpRequest);
 
@@ -183,16 +188,6 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
     /// <param name="message"></param>
     /// <param name="httpResponse"></param>
     protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse) { }
-
-    private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
-    {
-        if (message.Request is not PipelineRequest request)
-        {
-            throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
-        }
-
-        return HttpPipelineRequest.BuildHttpRequestMessage(request, message.CancellationToken);
-    }
 
     #region IDisposable
 

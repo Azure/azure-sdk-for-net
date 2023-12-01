@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.Http;
-
 namespace System.ClientModel.Primitives;
 
 public abstract class PipelineRequest : IDisposable
 {
     private string _method;
     private Uri? _uri;
+
     private InputContent? _content;
     private readonly PipelineRequestHeaders _headers;
 
     protected PipelineRequest()
     {
-        _method = HttpMethod.Get.Method;
+        _method = "GET";
         _headers = new PipelineRequestHeaders();
     }
 
@@ -29,17 +28,19 @@ public abstract class PipelineRequest : IDisposable
 
     public virtual Uri Uri
     {
-        get
-        {
-            if (_uri is null)
-            {
-                throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
-            }
-
-            return _uri;
-        }
+        get => GetUriCore();
 
         set => _uri = value;
+    }
+
+    protected virtual Uri GetUriCore()
+    {
+        if (_uri is null)
+        {
+            throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
+        }
+
+        return _uri;
     }
 
     public virtual InputContent? Content { get; set; }

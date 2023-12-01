@@ -40,6 +40,7 @@ internal class HttpPipelineRequest : PipelineRequest
         }; ;
     }
 
+    // TODO: Move this into transport subtype partial class file.
     internal static HttpRequestMessage BuildHttpRequestMessage(PipelineRequest request, CancellationToken cancellationToken)
     {
         HttpMethod method = ToHttpMethod(request.Method);
