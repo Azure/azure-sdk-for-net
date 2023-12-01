@@ -55,6 +55,8 @@ text](https://platform.openai.com/docs/guides/speech-to-text/speech-to-text)]
 ### Vision (preview)
 [For more see [OpenAI Capabilities: Vision](https://platform.openai.com/docs/guides/vision)]
 
+## Getting started
+
 ### Authenticate the client
 
 In order to interact with Azure OpenAI or OpenAI, you'll need to create an instance of the [OpenAIClient][openai_client_class]
