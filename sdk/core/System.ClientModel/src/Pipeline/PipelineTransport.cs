@@ -32,10 +32,12 @@ public abstract class PipelineTransport : PipelinePolicy
     {
         await ProcessCoreAsync(message).ConfigureAwait(false);
 
-        if (message.MessageClassifier != null)
+        if (!message.TryGetResponse(out PipelineResponse response))
         {
-            message.Response.IsError = message.MessageClassifier.IsErrorResponse(message);
+            throw new InvalidOperationException("Response was not set by transport.");
         }
+
+        response.IsError = message.MessageClassifier?.IsErrorResponse(message) ?? default;
     }
 
     protected abstract void ProcessCore(PipelineMessage message);

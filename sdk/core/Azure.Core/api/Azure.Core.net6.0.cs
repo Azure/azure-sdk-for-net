@@ -235,18 +235,12 @@ namespace Azure
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public new Azure.Response? GetRawResponse() { throw null; }
     }
-    public abstract partial class Response : System.IDisposable
+    public abstract partial class Response : System.ClientModel.Primitives.PipelineResponse
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
-        public virtual System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
-        public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
-        public virtual bool IsError { get { throw null; } }
-        public abstract string ReasonPhrase { get; }
-        public abstract int Status { get; }
+        public virtual new Azure.Core.ResponseHeaders Headers { get { throw null; } }
         protected internal abstract bool ContainsHeader(string name);
-        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
         public override string ToString() { throw null; }
@@ -489,7 +483,6 @@ namespace Azure.Core
         public new Azure.Core.Request Request { get { throw null; } }
         public new Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
-        public override void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }
@@ -513,18 +506,18 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class Request : System.IDisposable
+    public abstract partial class Request : System.ClientModel.Primitives.PipelineRequest
     {
         protected Request() { }
         public virtual string ClientRequestId { get { throw null; } set { } }
-        public virtual Azure.Core.RequestContent? Content { get { throw null; } set { } }
-        public Azure.Core.RequestHeaders Headers { get { throw null; } }
-        public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }
-        public virtual Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
+        public virtual new Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        public new Azure.Core.RequestHeaders Headers { get { throw null; } }
+        public virtual new Azure.Core.RequestMethod Method { get { throw null; } set { } }
+        public virtual new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
-        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
+        protected override System.Uri GetUriCore() { throw null; }
         protected internal abstract bool RemoveHeader(string name);
         protected internal virtual void SetHeader(string name, string value) { }
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);

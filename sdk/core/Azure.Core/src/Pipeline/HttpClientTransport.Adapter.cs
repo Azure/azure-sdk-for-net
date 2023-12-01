@@ -15,6 +15,12 @@ namespace Azure.Core.Pipeline
             {
             }
 
+            protected override PipelineMessage CreateMessageCore()
+            {
+                HttpClientTransportRequest request = new();
+                return new HttpMessage(request, ResponseClassifier.Shared);
+            }
+
             /// <inheritdoc />
             protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
             {
@@ -37,7 +43,7 @@ namespace Azure.Core.Pipeline
                 }
 
                 string clientRequestId = httpMessage.Request.ClientRequestId;
-                httpMessage.Response = new ResponseAdapter(clientRequestId, message.Response);
+                httpMessage.Response = new HttpClientTransportResponse(clientRequestId, message.Response);
             }
         }
     }

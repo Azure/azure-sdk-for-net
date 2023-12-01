@@ -14,30 +14,16 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport
     {
-        internal static bool TryGetPipelineResponse(Response response, out PipelineResponse? pipelineResponse)
-        {
-            if (response is ResponseAdapter responseAdapter)
-            {
-                pipelineResponse = responseAdapter.PipelineResponse;
-                return true;
-            }
-
-            pipelineResponse = null;
-            return false;
-        }
-
-        private sealed class ResponseAdapter : Response
+        private sealed class HttpClientTransportResponse : Response
         {
             private string _clientRequestId;
             private readonly PipelineResponse _pipelineResponse;
 
-            public ResponseAdapter(string clientRequestId, PipelineResponse pipelineResponse)
+            public HttpClientTransportResponse(string clientRequestId, PipelineResponse pipelineResponse)
             {
                 _clientRequestId = clientRequestId;
                 _pipelineResponse = pipelineResponse;
             }
-
-            internal PipelineResponse PipelineResponse => _pipelineResponse;
 
             public override int Status => _pipelineResponse.Status;
 
@@ -76,7 +62,7 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose()
             {
-                var response = _pipelineResponse;
+                PipelineResponse response = _pipelineResponse;
                 response?.Dispose();
             }
         }

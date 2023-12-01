@@ -98,7 +98,8 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
+        public HttpMessage CreateMessage(RequestContext? context)
+            => CreateMessage(context, default);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.

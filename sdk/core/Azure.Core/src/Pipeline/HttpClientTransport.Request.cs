@@ -16,77 +16,31 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        internal static bool TryGetPipelineRequest(Request request, out PipelineRequest? pipelineRequest)
+        private sealed class HttpClientTransportRequest : Request
         {
-            if (request is RequestAdapter requestAdapter)
+            protected internal override void AddHeader(string name, string value)
+                => PipelineMessageHeaders.Add(name, value);
+
+            protected internal override bool ContainsHeader(string name)
+                => PipelineMessageHeaders.TryGetValue(name, out _);
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                pipelineRequest = requestAdapter.PipelineRequest;
-                return true;
-            }
-
-            pipelineRequest = null;
-            return false;
-        }
-
-        // Adapts an internal ClientModel HttpPipelineRequest.  Doing this instead
-        // of inheriting from HttpPipelineRequest allows us to keep HttpPipelineRequest
-        // internal in ClientModel.
-        private sealed class HttpClientTransportRequest : PipelineRequest
-        {
-            private RequestUriBuilder? _uriBuilder;
-            private readonly PipelineRequest _httpPipelineRequest;
-
-            public HttpClientTransportRequest(PipelineRequest request)
-            {
-                _httpPipelineRequest = request;
-            }
-
-            public override Uri Uri
-            {
-                get
+                PipelineMessageHeaders.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+                foreach (KeyValuePair<string, string> header in headers)
                 {
-                    if (_uriBuilder is null)
-                    {
-                        throw new InvalidOperationException("RequestUriBuilder has not been initialized; please call SetUriBuilder()");
-                    }
-
-                    return _uriBuilder.ToUri();
-                }
-                set
-                {
-                    if (_uriBuilder is null)
-                    {
-                        throw new InvalidOperationException("RequestUriBuilder has not been initialized; please call SetUriBuilder()");
-                    }
-
-                    _uriBuilder.Reset(value);
+                    yield return new HttpHeader(header.Key, header.Value);
                 }
             }
 
-            public RequestUriBuilder UriBuilder
-            {
-                get => _uriBuilder ??= new RequestUriBuilder();
-                set
-                {
-                    Argument.AssertNotNull(value, nameof(value));
-                    _uriBuilder = value;
-                }
-            }
+            protected internal override bool RemoveHeader(string name)
+                => PipelineMessageHeaders.Remove(name);
 
-            public override string Method
-            {
-                get => _httpPipelineRequest.Method;
-                set => _httpPipelineRequest.Method = value;
-            }
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+                => PipelineMessageHeaders.TryGetValue(name, out value);
 
-            public override InputContent? Content
-            {
-                get => _httpPipelineRequest.Content;
-                set => _httpPipelineRequest.Content = value;
-            }
-
-            public override MessageHeaders Headers
-                => _httpPipelineRequest.Headers;
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+                => PipelineMessageHeaders.TryGetValues(name, out values);
 
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 
@@ -116,74 +70,6 @@ namespace Azure.Core.Pipeline
                 httpRequest.Properties[name] = value;
 #endif
             }
-
-            public override void Dispose()
-                => _httpPipelineRequest.Dispose();
-        }
-
-        private class RequestAdapter : Request
-        {
-            private readonly HttpClientTransportRequest _request;
-
-            public RequestAdapter(HttpClientTransportRequest request)
-            {
-                _request = request;
-            }
-
-            internal PipelineRequest PipelineRequest => _request;
-
-            public override RequestMethod Method
-            {
-                get => RequestMethod.Parse(_request.Method);
-                set => _request.Method = value.Method;
-            }
-
-            public override RequestUriBuilder Uri
-            {
-                get => _request.UriBuilder;
-                set => _request.UriBuilder = value;
-            }
-
-            public override RequestContent? Content
-            {
-                get
-                {
-                    if (_request.Content is not RequestContent &&
-                        _request.Content is not null)
-                    {
-                        throw new NotSupportedException($"Invalid type for request Content: '{_request.Content.GetType()}'.");
-                    }
-
-                    return (RequestContent?)_request.Content;
-                }
-
-                set => _request.Content = value;
-            }
-
-            public override void Dispose() => _request.Dispose();
-
-            protected internal override void AddHeader(string name, string value)
-                => _request.Headers.Add(name, value);
-
-            protected internal override bool ContainsHeader(string name)
-                => _request.Headers.TryGetValue(name, out _);
-
-            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                _request.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
-                foreach (KeyValuePair<string, string> header in headers)
-                {
-                    yield return new HttpHeader(header.Key, header.Value);
-                }
-            }
-            protected internal override bool RemoveHeader(string name)
-                => _request.Headers.Remove(name);
-
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-                => _request.Headers.TryGetValue(name, out value);
-
-            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-                => _request.Headers.TryGetValues(name, out values);
         }
     }
 }

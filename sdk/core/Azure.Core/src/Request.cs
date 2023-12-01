@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
@@ -12,7 +13,7 @@ namespace Azure.Core
     /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Request : IDisposable
+    public abstract class Request : PipelineRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private RequestUriBuilder? _uriBuilder;
@@ -21,12 +22,9 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
         /// </summary>
-        public virtual RequestUriBuilder Uri
+        public new virtual RequestUriBuilder Uri
         {
-            get
-            {
-                return _uriBuilder ??= new RequestUriBuilder();
-            }
+            get => _uriBuilder ??= new RequestUriBuilder();
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
@@ -35,14 +33,29 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override Uri GetUriCore()
+            => Uri.ToUri();
+
+        /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
-        public virtual RequestMethod Method { get; set; }
+        public new virtual RequestMethod Method
+        {
+            get => RequestMethod.Parse(base.Method);
+            set => base.Method = value.Method;
+        }
 
         /// <summary>
         /// Gets or sets the request content.
         /// </summary>
-        public virtual RequestContent? Content { get; set; }
+        public new virtual RequestContent? Content
+        {
+            get => (RequestContent?)base.Content;
+            set => base.Content = value;
+        }
 
         /// <summary>
         /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
@@ -56,6 +69,13 @@ namespace Azure.Core
                 _clientRequestId = value;
             }
         }
+
+        /// <summary>
+        /// Gets the request HTTP headers.
+        /// </summary>
+        public new RequestHeaders Headers => new(this);
+
+        internal MessageHeaders PipelineMessageHeaders => base.Headers;
 
         /// <summary>
         /// Adds a header value to the header collection.
@@ -109,15 +129,5 @@ namespace Azure.Core
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
-
-        /// <summary>
-        /// Gets the response HTTP headers.
-        /// </summary>
-        public RequestHeaders Headers => new(this);
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Response"/> instance.
-        /// </summary>
-        public abstract void Dispose();
     }
 }

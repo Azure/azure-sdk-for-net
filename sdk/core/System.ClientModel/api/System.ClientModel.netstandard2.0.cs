@@ -100,7 +100,7 @@ namespace System.ClientModel.Primitives
     {
         public HttpClientPipelineTransport() { }
         public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
-        protected sealed override System.ClientModel.Primitives.PipelineMessage CreateMessageCore() { throw null; }
+        protected override System.ClientModel.Primitives.PipelineMessage CreateMessageCore() { throw null; }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         protected virtual void OnReceivedResponse(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
@@ -192,19 +192,20 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public abstract System.ClientModel.InputContent? Content { get; set; }
-        public abstract System.ClientModel.Primitives.MessageHeaders Headers { get; }
-        public abstract string Method { get; set; }
-        public abstract System.Uri Uri { get; set; }
-        public abstract void Dispose();
+        public virtual System.ClientModel.InputContent? Content { get { throw null; } set { } }
+        public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
+        public string Method { get { throw null; } set { } }
+        public virtual System.Uri Uri { get { throw null; } set { } }
+        public virtual void Dispose() { }
+        protected virtual System.Uri GetUriCore() { throw null; }
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
         public System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
-        public abstract System.ClientModel.Primitives.MessageHeaders Headers { get; }
-        public bool IsError { get { throw null; } }
+        public virtual System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
+        public virtual bool IsError { get { throw null; } protected internal set { } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();

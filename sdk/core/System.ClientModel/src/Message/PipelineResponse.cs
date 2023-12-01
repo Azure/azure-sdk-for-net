@@ -10,12 +10,30 @@ public abstract class PipelineResponse : IDisposable
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
+    /// <summary>
+    /// Gets the HTTP status code.
+    /// </summary>
     public abstract int Status { get; }
 
+    /// <summary>
+    /// Gets the HTTP reason phrase.
+    /// </summary>
     public abstract string ReasonPhrase { get; }
 
-    public abstract MessageHeaders Headers { get; }
+    public virtual MessageHeaders Headers
+    {
+        // We must make this property virtual because the Headers property on
+        // Azure.Response that derives from it is virtual.  This property were
+        // abstract, the newslotted Headers property on Response would hide an
+        // abstract member, which is not valid in C#.  We throw from the getter
+        // rather than providing a default implementation so that we don't commit
+        // subtypes to a specific HTTP implementation.
+        get => throw new NotSupportedException("Type derived from 'PipelineResponse' must implement 'Headers' property getter.");
+    }
 
+    /// <summary>
+    /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
+    /// </summary>
     public abstract Stream? ContentStream { get; set; }
 
     #region Meta-data properties set by the pipeline.
@@ -49,7 +67,7 @@ public abstract class PipelineResponse : IDisposable
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
     /// </summary>
-    public bool IsError { get; internal set; }
+    public virtual bool IsError { get; protected internal set; }
 
     #endregion
 
