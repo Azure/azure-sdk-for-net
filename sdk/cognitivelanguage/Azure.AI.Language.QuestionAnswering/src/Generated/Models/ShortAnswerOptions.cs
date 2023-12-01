@@ -15,6 +15,17 @@ namespace Azure.AI.Language.QuestionAnswering
         {
             Enable = true;
         }
+
+        /// <summary> Initializes a new instance of <see cref="ShortAnswerOptions"/>. </summary>
+        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
+        /// <param name="confidenceThreshold"> Minimum threshold score required to include an answer span, value ranges from 0 to 1. </param>
+        /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
+        internal ShortAnswerOptions(bool enable, double? confidenceThreshold, int? size)
+        {
+            Enable = enable;
+            ConfidenceThreshold = confidenceThreshold;
+            Size = size;
+        }
         /// <summary> Minimum threshold score required to include an answer span, value ranges from 0 to 1. </summary>
         public double? ConfidenceThreshold { get; set; }
     }
