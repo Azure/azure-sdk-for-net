@@ -138,7 +138,7 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP2_1
             return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, sourceArgs, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
 #else
-            return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, sourceArgs, s_activitySource, ActivityKind.Client, false);
+            return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, sourceArgs, s_activitySource, System.Diagnostics.ActivityKind.Client, false);
 #endif
         }
 

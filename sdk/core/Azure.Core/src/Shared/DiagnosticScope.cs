@@ -39,7 +39,7 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP2_1
             _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
 #else
-            _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
+            _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == System.Diagnostics.ActivityKind.Internal) ? suppressNestedClientActivities : false;
 #endif
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
