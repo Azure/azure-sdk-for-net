@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportTicketData : ResourceData
     {
-        /// <summary> Initializes a new instance of SupportTicketData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketData"/>. </summary>
         public SupportTicketData()
         {
             SecondaryConsent = new ChangeTrackingList<SecondaryConsent>();
         }
 
-        /// <summary> Initializes a new instance of SupportTicketData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

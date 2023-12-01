@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CosmosDBForPostgreSqlClusterData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             PrivateEndpointConnections = new ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

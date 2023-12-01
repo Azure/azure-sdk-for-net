@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPrivateDnsModelFactory
     {
-        /// <summary> Initializes a new instance of PrivateDnsZoneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDns.PrivateDnsZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsZoneData(id, name, resourceType, systemData, tags, location, etag, maxNumberOfRecords, numberOfRecords, maxNumberOfVirtualNetworkLinks, numberOfVirtualNetworkLinks, maxNumberOfVirtualNetworkLinksWithRegistration, numberOfVirtualNetworkLinksWithRegistration, privateDnsProvisioningState, internalId);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDns.VirtualNetworkLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

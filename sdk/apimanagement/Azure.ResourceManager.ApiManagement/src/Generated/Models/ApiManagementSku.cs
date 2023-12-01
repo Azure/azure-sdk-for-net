@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Describes an available ApiManagement SKU. </summary>
     public partial class ApiManagementSku
     {
-        /// <summary> Initializes a new instance of ApiManagementSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSku"/>. </summary>
         internal ApiManagementSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Restrictions = new ChangeTrackingList<ApiManagementSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </param>

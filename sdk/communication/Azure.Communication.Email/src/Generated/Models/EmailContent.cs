@@ -13,7 +13,7 @@ namespace Azure.Communication.Email
     /// <summary> Content of the email. </summary>
     public partial class EmailContent
     {
-        /// <summary> Initializes a new instance of EmailContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailContent"/>. </summary>
         /// <param name="subject"> Subject of the email message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subject"/> is null. </exception>
         public EmailContent(string subject)

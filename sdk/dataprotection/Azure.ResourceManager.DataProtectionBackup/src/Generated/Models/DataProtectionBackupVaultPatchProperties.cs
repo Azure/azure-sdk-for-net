@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Backup Vault Contract for Patch Backup Vault API. </summary>
     public partial class DataProtectionBackupVaultPatchProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatchProperties"/>. </summary>
         public DataProtectionBackupVaultPatchProperties()
         {
         }

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryReplicationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryReplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerRegistryReplicationData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryReplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

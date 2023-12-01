@@ -151,8 +151,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     {
                         await UpdateCheckpointAsync(
                             partition.PartitionId,
-                            lastEvent.Offset,
-                            lastEvent.SequenceNumber,
+                            CheckpointPosition.FromEvent(lastEvent),
                             cancellationToken)
                         .ConfigureAwait(false);
                     }
@@ -444,7 +443,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             public override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, CancellationToken cancellationToken) => Task.FromResult(Enumerable.Empty<EventProcessorPartitionOwnership>());
 
-            public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, long offset, long? sequenceNumber, CancellationToken cancellationToken) => Task.CompletedTask;
+            public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, CheckpointPosition checkpointPosition, CancellationToken cancellationToken) => Task.CompletedTask;
         }
 
         /// <summary>

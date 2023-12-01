@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a VirtualMachineExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualMachineExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualMachineExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineResource" /> using the GetVirtualMachineExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualMachineExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineResource"/> using the GetVirtualMachineExtension method.
     /// </summary>
     public partial class VirtualMachineExtensionResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualMachineExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualMachineExtensionResource(ArmClient client, VirtualMachineExtensionData data) : this(client, data.Id)

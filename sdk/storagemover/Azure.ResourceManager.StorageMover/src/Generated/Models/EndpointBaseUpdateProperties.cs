@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// </summary>
     public abstract partial class EndpointBaseUpdateProperties
     {
-        /// <summary> Initializes a new instance of EndpointBaseUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointBaseUpdateProperties"/>. </summary>
         protected EndpointBaseUpdateProperties()
         {
         }

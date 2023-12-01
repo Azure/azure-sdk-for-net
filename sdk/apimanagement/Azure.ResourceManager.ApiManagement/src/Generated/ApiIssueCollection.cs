@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiIssueResource" /> and their operations.
-    /// Each <see cref="ApiIssueResource" /> in the collection will belong to the same instance of <see cref="ApiResource" />.
-    /// To get an <see cref="ApiIssueCollection" /> instance call the GetApiIssues method from an instance of <see cref="ApiResource" />.
+    /// A class representing a collection of <see cref="ApiIssueResource"/> and their operations.
+    /// Each <see cref="ApiIssueResource"/> in the collection will belong to the same instance of <see cref="ApiResource"/>.
+    /// To get an <see cref="ApiIssueCollection"/> instance call the GetApiIssues method from an instance of <see cref="ApiResource"/>.
     /// </summary>
     public partial class ApiIssueCollection : ArmCollection, IEnumerable<ApiIssueResource>, IAsyncEnumerable<ApiIssueResource>
     {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiIssueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiIssueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiIssueResource> GetAllAsync(string filter = null, bool? expandCommentsAttachments = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiIssueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiIssueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiIssueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiIssueResource> GetAll(string filter = null, bool? expandCommentsAttachments = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiIssueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);

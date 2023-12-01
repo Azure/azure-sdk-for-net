@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disable protection input properties. </summary>
     public partial class DisableProtectionProperties
     {
-        /// <summary> Initializes a new instance of DisableProtectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DisableProtectionProperties"/>. </summary>
         public DisableProtectionProperties()
         {
         }

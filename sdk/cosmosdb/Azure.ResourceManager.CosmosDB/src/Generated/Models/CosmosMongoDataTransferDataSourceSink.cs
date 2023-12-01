@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A CosmosDB Mongo API data source/sink. </summary>
     public partial class CosmosMongoDataTransferDataSourceSink : DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of CosmosMongoDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/>. </summary>
         /// <param name="databaseName"></param>
         /// <param name="collectionName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="collectionName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Component = DataTransferComponent.CosmosDBMongo;
         }
 
-        /// <summary> Initializes a new instance of CosmosMongoDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
         /// <param name="databaseName"></param>
         /// <param name="collectionName"></param>

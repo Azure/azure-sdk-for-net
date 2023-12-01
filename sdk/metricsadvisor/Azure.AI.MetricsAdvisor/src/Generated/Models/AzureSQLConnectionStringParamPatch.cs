@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureSQLConnectionStringParamPatch. </summary>
     internal partial class AzureSQLConnectionStringParamPatch
     {
-        /// <summary> Initializes a new instance of AzureSQLConnectionStringParamPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringParamPatch"/>. </summary>
         public AzureSQLConnectionStringParamPatch()
         {
         }

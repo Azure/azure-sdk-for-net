@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The Sql pool usages. </summary>
     public partial class SqlPoolUsage
     {
-        /// <summary> Initializes a new instance of SqlPoolUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolUsage"/>. </summary>
         internal SqlPoolUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlPoolUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolUsage"/>. </summary>
         /// <param name="name"> The name of the usage metric. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="displayName"> The usage metric display name. </param>

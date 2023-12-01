@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The UnknownHookInfo. </summary>
     internal partial class UnknownHookInfo : NotificationHook
     {
-        /// <summary> Initializes a new instance of UnknownHookInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownHookInfo"/>. </summary>
         /// <param name="hookKind"> hook type. </param>
         /// <param name="id"> Hook unique id. </param>
         /// <param name="name"> hook unique name. </param>

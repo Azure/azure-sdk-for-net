@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformCertificate method.
     /// </summary>
     public partial class AppPlatformCertificateResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformCertificateResource(ArmClient client, AppPlatformCertificateData data) : this(client, data.Id)

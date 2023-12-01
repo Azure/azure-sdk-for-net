@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Item Level target info for restore operation. </summary>
     public partial class RangeBasedItemLevelRestoreCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of RangeBasedItemLevelRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="RangeBasedItemLevelRestoreCriteria"/>. </summary>
         public RangeBasedItemLevelRestoreCriteria()
         {
             ObjectType = "RangeBasedItemLevelRestoreCriteria";

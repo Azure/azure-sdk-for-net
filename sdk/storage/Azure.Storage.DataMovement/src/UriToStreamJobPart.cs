@@ -338,6 +338,11 @@ namespace Azure.Storage.DataMovement
             _queueingTasks = true;
             foreach (HttpRange httpRange in ranges)
             {
+                if (_cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 // Add the next Task (which will start the download but
                 // return before it's completed downloading)
                 await QueueChunkToChannelAsync(
@@ -345,7 +350,9 @@ namespace Azure.Storage.DataMovement
                     await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
                     .ConfigureAwait(false);
             }
+
             _queueingTasks = false;
+            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
         }
 
         internal async Task CompleteFileDownload()
@@ -385,15 +392,20 @@ namespace Azure.Storage.DataMovement
                     range.Offset,
                     (long)range.Length,
                     _cancellationToken).ConfigureAwait(false);
-                await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
-                    transferId: _dataTransfer.Id,
-                    success: true,
-                    offset: range.Offset,
-                    bytesTransferred: (long)range.Length,
-                    result: result.Content,
-                    exception: default,
-                    false,
-                    _cancellationToken)).ConfigureAwait(false);
+
+                // The chunk handler may have been disposed in failure case
+                if (_downloadChunkHandler != null)
+                {
+                    await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+                        transferId: _dataTransfer.Id,
+                        success: true,
+                        offset: range.Offset,
+                        bytesTransferred: (long)range.Length,
+                        result: result.Content,
+                        exception: default,
+                        false,
+                        _cancellationToken)).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -523,6 +535,7 @@ namespace Azure.Storage.DataMovement
             if (_downloadChunkHandler != default)
             {
                 _downloadChunkHandler.Dispose();
+                _downloadChunkHandler = null;
             }
         }
 

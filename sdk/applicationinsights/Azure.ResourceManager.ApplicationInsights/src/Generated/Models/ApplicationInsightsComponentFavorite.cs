@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Properties that define a favorite that is associated to an Application Insights component. </summary>
     public partial class ApplicationInsightsComponentFavorite
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFavorite. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFavorite"/>. </summary>
         public ApplicationInsightsComponentFavorite()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFavorite. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFavorite"/>. </summary>
         /// <param name="name"> The user-defined name of the favorite. </param>
         /// <param name="config"> Configuration of this particular favorite, which are driven by the Azure portal UX. Configuration data is a string containing valid JSON. </param>
         /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </param>

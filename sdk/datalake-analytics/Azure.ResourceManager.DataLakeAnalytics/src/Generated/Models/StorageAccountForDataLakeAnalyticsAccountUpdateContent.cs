@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class StorageAccountForDataLakeAnalyticsAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of StorageAccountForDataLakeAnalyticsAccountUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
         /// <param name="name">
         /// The unique name of the Azure Storage account to update.
         /// Serialized Name: UpdateStorageAccountWithAccountParameters.name

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Nginx
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NginxConfigurationResource" /> and their operations.
-    /// Each <see cref="NginxConfigurationResource" /> in the collection will belong to the same instance of <see cref="NginxDeploymentResource" />.
-    /// To get a <see cref="NginxConfigurationCollection" /> instance call the GetNginxConfigurations method from an instance of <see cref="NginxDeploymentResource" />.
+    /// A class representing a collection of <see cref="NginxConfigurationResource"/> and their operations.
+    /// Each <see cref="NginxConfigurationResource"/> in the collection will belong to the same instance of <see cref="NginxDeploymentResource"/>.
+    /// To get a <see cref="NginxConfigurationCollection"/> instance call the GetNginxConfigurations method from an instance of <see cref="NginxDeploymentResource"/>.
     /// </summary>
     public partial class NginxConfigurationCollection : ArmCollection, IEnumerable<NginxConfigurationResource>, IAsyncEnumerable<NginxConfigurationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NginxConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NginxConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NginxConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxConfigurationConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NginxConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NginxConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NginxConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxConfigurationConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

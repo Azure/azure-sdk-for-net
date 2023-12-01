@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Task of the Job. </summary>
     public partial class AsrTask
     {
-        /// <summary> Initializes a new instance of AsrTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsrTask"/>. </summary>
         internal AsrTask()
         {
             AllowedActions = new ChangeTrackingList<string>();
             Errors = new ChangeTrackingList<SiteRecoveryJobErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of AsrTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsrTask"/>. </summary>
         /// <param name="taskId"> The Id. </param>
         /// <param name="name"> The unique Task name. </param>
         /// <param name="startOn"> The start time. </param>

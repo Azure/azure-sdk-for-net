@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Non versioned Container App configuration properties that define the mutable settings of a Container app. </summary>
     public partial class ContainerAppConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
         public ContainerAppConfiguration()
         {
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
             Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
         /// <param name="secrets"> Collection of secrets used by a Container app. </param>
         /// <param name="activeRevisionsMode">
         /// ActiveRevisionsMode controls how active revisions are handled for the Container app:

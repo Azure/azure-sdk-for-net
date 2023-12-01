@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsCapabilityInformation
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsCapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsCapabilityInformation"/>. </summary>
         internal DataLakeAnalyticsCapabilityInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsCapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsCapabilityInformation"/>. </summary>
         /// <param name="subscriptionId">
         /// The subscription credentials that uniquely identifies the subscription.
         /// Serialized Name: CapabilityInformation.subscriptionId

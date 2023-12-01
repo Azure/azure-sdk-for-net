@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class UpdateReplicationProtectedItemProviderContent
     {
-        /// <summary> Initializes a new instance of UpdateReplicationProtectedItemProviderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateReplicationProtectedItemProviderContent"/>. </summary>
         protected UpdateReplicationProtectedItemProviderContent()
         {
         }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The request payload to update an alert. </summary>
     public partial class CostManagementAlertPatch
     {
-        /// <summary> Initializes a new instance of CostManagementAlertPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertPatch"/>. </summary>
         public CostManagementAlertPatch()
         {
         }

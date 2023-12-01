@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkToNetworkInterconnectData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectData"/>. </summary>
         /// <param name="useOptionB"> Based on this option layer3 parameters are mandatory. Example: True/False. </param>
         public NetworkToNetworkInterconnectData(NetworkFabricBooleanValue useOptionB)
         {
             UseOptionB = useOptionB;
         }
 
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> Request to merge two billing subscriptions. </summary>
     public partial class BillingSubscriptionMergeContent
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionMergeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMergeContent"/>. </summary>
         public BillingSubscriptionMergeContent()
         {
         }

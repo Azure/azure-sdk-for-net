@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerGroupResource" /> and their operations.
-    /// Each <see cref="ContainerGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ContainerGroupCollection" /> instance call the GetContainerGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ContainerGroupResource"/> and their operations.
+    /// Each <see cref="ContainerGroupResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ContainerGroupCollection"/> instance call the GetContainerGroups method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ContainerGroupCollection : ArmCollection, IEnumerable<ContainerGroupResource>, IAsyncEnumerable<ContainerGroupResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

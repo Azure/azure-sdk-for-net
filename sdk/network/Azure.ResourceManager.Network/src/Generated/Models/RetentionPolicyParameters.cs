@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the retention policy for flow log. </summary>
     public partial class RetentionPolicyParameters
     {
-        /// <summary> Initializes a new instance of RetentionPolicyParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetentionPolicyParameters"/>. </summary>
         public RetentionPolicyParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of RetentionPolicyParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetentionPolicyParameters"/>. </summary>
         /// <param name="days"> Number of days to retain flow log records. </param>
         /// <param name="enabled"> Flag to enable/disable retention. </param>
         internal RetentionPolicyParameters(int? days, bool? enabled)

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Reconnect request parameters. </summary>
     public partial class BackendReconnectContract : ResourceData
     {
-        /// <summary> Initializes a new instance of BackendReconnectContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendReconnectContract"/>. </summary>
         public BackendReconnectContract()
         {
         }
 
-        /// <summary> Initializes a new instance of BackendReconnectContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendReconnectContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

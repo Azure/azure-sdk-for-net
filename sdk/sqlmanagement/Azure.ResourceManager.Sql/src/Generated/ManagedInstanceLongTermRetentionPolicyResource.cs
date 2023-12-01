@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedInstanceLongTermRetentionPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceLongTermRetentionPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceLongTermRetentionPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedInstanceLongTermRetentionPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceLongTermRetentionPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceLongTermRetentionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedInstanceLongTermRetentionPolicy method.
     /// </summary>
     public partial class ManagedInstanceLongTermRetentionPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceLongTermRetentionPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceLongTermRetentionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceLongTermRetentionPolicyResource(ArmClient client, ManagedInstanceLongTermRetentionPolicyData data) : this(client, data.Id)

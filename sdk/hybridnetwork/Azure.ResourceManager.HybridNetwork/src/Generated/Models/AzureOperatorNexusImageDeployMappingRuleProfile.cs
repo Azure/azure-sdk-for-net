@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure Operator Distributed Services image deploy mapping rule profile. </summary>
     public partial class AzureOperatorNexusImageDeployMappingRuleProfile : MappingRuleProfile
     {
-        /// <summary> Initializes a new instance of AzureOperatorNexusImageDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusImageDeployMappingRuleProfile"/>. </summary>
         public AzureOperatorNexusImageDeployMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureOperatorNexusImageDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusImageDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
         /// <param name="imageMappingRuleProfile"> The vhd mapping rule profile. </param>
         internal AzureOperatorNexusImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, ImageMappingRuleProfile imageMappingRuleProfile) : base(applicationEnablement)

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Consumption
     /// </summary>
     public partial class ConsumptionBudgetData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionBudgetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBudgetData"/>. </summary>
         public ConsumptionBudgetData()
         {
             Notifications = new ChangeTrackingDictionary<string, BudgetAssociatedNotification>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBudgetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBudgetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

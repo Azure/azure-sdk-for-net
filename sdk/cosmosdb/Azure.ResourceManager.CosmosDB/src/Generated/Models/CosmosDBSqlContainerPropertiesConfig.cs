@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CosmosDBSqlContainerPropertiesConfig. </summary>
     public partial class CosmosDBSqlContainerPropertiesConfig : CosmosDBBaseConfig
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlContainerPropertiesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlContainerPropertiesConfig"/>. </summary>
         public CosmosDBSqlContainerPropertiesConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlContainerPropertiesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlContainerPropertiesConfig"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal CosmosDBSqlContainerPropertiesConfig(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Connected Subnet Route Policy properties. </summary>
     public partial class ConnectedSubnetRoutePolicy
     {
-        /// <summary> Initializes a new instance of ConnectedSubnetRoutePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedSubnetRoutePolicy"/>. </summary>
         public ConnectedSubnetRoutePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectedSubnetRoutePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedSubnetRoutePolicy"/>. </summary>
         /// <param name="exportRoutePolicyId"> ARM Resource ID of the Route Policy. This is used for the backward compatibility. </param>
         /// <param name="exportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
         internal ConnectedSubnetRoutePolicy(ResourceIdentifier exportRoutePolicyId, L3ExportRoutePolicy exportRoutePolicy)

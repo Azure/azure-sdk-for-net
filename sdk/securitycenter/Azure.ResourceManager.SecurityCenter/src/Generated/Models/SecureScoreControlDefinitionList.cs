@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security controls definition. </summary>
     internal partial class SecureScoreControlDefinitionList
     {
-        /// <summary> Initializes a new instance of SecureScoreControlDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionList"/>. </summary>
         internal SecureScoreControlDefinitionList()
         {
             Value = new ChangeTrackingList<SecureScoreControlDefinitionItem>();
         }
 
-        /// <summary> Initializes a new instance of SecureScoreControlDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionList"/>. </summary>
         /// <param name="value"> Collection of security controls definition in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal SecureScoreControlDefinitionList(IReadOnlyList<SecureScoreControlDefinitionItem> value, string nextLink)

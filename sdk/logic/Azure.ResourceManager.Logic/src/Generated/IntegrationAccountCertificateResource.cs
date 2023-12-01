@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationAccountCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationAccountCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationAccountCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource" /> using the GetIntegrationAccountCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationAccountCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationAccountCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource"/> using the GetIntegrationAccountCertificate method.
     /// </summary>
     public partial class IntegrationAccountCertificateResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationAccountCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationAccountCertificateResource(ArmClient client, IntegrationAccountCertificateData data) : this(client, data.Id)

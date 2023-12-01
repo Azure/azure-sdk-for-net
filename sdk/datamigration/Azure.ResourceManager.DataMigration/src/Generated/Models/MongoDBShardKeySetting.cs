@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a MongoDB shard key. </summary>
     public partial class MongoDBShardKeySetting
     {
-        /// <summary> Initializes a new instance of MongoDBShardKeySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeySetting"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fields"/> is null. </exception>
         public MongoDBShardKeySetting(IEnumerable<MongoDBShardKeyField> fields)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Fields = fields.ToList();
         }
 
-        /// <summary> Initializes a new instance of MongoDBShardKeySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeySetting"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <param name="isUnique"> Whether the shard key is unique. </param>
         internal MongoDBShardKeySetting(IList<MongoDBShardKeyField> fields, bool? isUnique)

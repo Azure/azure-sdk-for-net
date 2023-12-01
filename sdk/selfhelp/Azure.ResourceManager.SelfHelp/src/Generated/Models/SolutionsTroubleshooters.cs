@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooters in Solutions. </summary>
     public partial class SolutionsTroubleshooters
     {
-        /// <summary> Initializes a new instance of SolutionsTroubleshooters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsTroubleshooters"/>. </summary>
         public SolutionsTroubleshooters()
         {
         }
 
-        /// <summary> Initializes a new instance of SolutionsTroubleshooters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsTroubleshooters"/>. </summary>
         /// <param name="solutionId"> Solution Id to identify single Solutions Troubleshooter. </param>
         /// <param name="title"> Troubleshooter title. </param>
         /// <param name="summary"> Troubleshooter summary. </param>

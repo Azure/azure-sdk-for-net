@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Progress metrics definition. </summary>
     public partial class ProgressMetrics
     {
-        /// <summary> Initializes a new instance of ProgressMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgressMetrics"/>. </summary>
         internal ProgressMetrics()
         {
         }
 
-        /// <summary> Initializes a new instance of ProgressMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgressMetrics"/>. </summary>
         /// <param name="completedDatapointCount"> The completed datapoint count. </param>
         /// <param name="incrementalDataLastRefreshOn"> The time of last successful incremental data refresh in UTC. </param>
         /// <param name="skippedDatapointCount"> The skipped datapoint count. </param>

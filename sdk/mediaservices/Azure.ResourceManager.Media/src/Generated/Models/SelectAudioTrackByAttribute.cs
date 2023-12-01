@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Select audio tracks from the input by specifying an attribute and an attribute filter. </summary>
     public partial class SelectAudioTrackByAttribute : AudioTrackDescriptor
     {
-        /// <summary> Initializes a new instance of SelectAudioTrackByAttribute. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectAudioTrackByAttribute"/>. </summary>
         /// <param name="attribute"> The TrackAttribute to filter the tracks by. </param>
         /// <param name="filter"> The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks. </param>
         public SelectAudioTrackByAttribute(TrackAttribute attribute, TrackAttributeFilter filter)
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.SelectAudioTrackByAttribute";
         }
 
-        /// <summary> Initializes a new instance of SelectAudioTrackByAttribute. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectAudioTrackByAttribute"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="channelMapping"> Optional designation for single channel audio tracks.  Can be used to combine the tracks into stereo or multi-channel audio tracks. </param>
         /// <param name="attribute"> The TrackAttribute to filter the tracks by. </param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The role resource format. </summary>
     public partial class RoleResourceFormat : ResourceData
     {
-        /// <summary> Initializes a new instance of RoleResourceFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleResourceFormat"/>. </summary>
         public RoleResourceFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleResourceFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleResourceFormat"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

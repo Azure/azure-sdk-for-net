@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The network configuration group resource. </summary>
     public partial class NetworkConfigurationGroup
     {
-        /// <summary> Initializes a new instance of NetworkConfigurationGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationGroup"/>. </summary>
         internal NetworkConfigurationGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkConfigurationGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationGroup"/>. </summary>
         /// <param name="id"> Network group ID. </param>
         /// <param name="description"> A description of the network group. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>

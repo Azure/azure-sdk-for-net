@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureTableDataFeedPatch. </summary>
     internal partial class AzureTableDataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of AzureTableDataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTableDataFeedPatch"/>. </summary>
         public AzureTableDataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.AzureTable;

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="InboundNatRuleResource" /> and their operations.
-    /// Each <see cref="InboundNatRuleResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
-    /// To get an <see cref="InboundNatRuleCollection" /> instance call the GetInboundNatRules method from an instance of <see cref="LoadBalancerResource" />.
+    /// A class representing a collection of <see cref="InboundNatRuleResource"/> and their operations.
+    /// Each <see cref="InboundNatRuleResource"/> in the collection will belong to the same instance of <see cref="LoadBalancerResource"/>.
+    /// To get an <see cref="InboundNatRuleCollection"/> instance call the GetInboundNatRules method from an instance of <see cref="LoadBalancerResource"/>.
     /// </summary>
     public partial class InboundNatRuleCollection : ArmCollection, IEnumerable<InboundNatRuleResource>, IAsyncEnumerable<InboundNatRuleResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InboundNatRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="InboundNatRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InboundNatRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _inboundNatRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InboundNatRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="InboundNatRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InboundNatRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _inboundNatRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

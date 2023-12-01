@@ -22,10 +22,10 @@ namespace Azure.AI.DocumentIntelligence
             {
                 switch (discriminator.GetString())
                 {
+                    case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element);
                     case "documentModelBuild": return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element);
                     case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element);
                     case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element);
-                    case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element);
                 }
             }
             return UnknownOperationDetails.DeserializeUnknownOperationDetails(element);

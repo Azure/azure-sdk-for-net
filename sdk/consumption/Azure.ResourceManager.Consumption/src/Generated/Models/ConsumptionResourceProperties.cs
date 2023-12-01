@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Details of the resource. </summary>
     public partial class ConsumptionResourceProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionResourceProperties"/>. </summary>
         internal ConsumptionResourceProperties()
         {
             AppliedScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionResourceProperties"/>. </summary>
         /// <param name="appliedScopes"> List of subscriptions for which the reservation is applied. </param>
         /// <param name="onDemandRate"> On demand rate of the resource. </param>
         /// <param name="product"> Azure product ex: Standard_E8s_v3 etc. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Base for all lists of V2 resources. </summary>
     internal partial class DppBaseResourceList
     {
-        /// <summary> Initializes a new instance of DppBaseResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DppBaseResourceList"/>. </summary>
         internal DppBaseResourceList()
         {
             Value = new ChangeTrackingList<ResourceGuardProtectedObjectData>();
         }
 
-        /// <summary> Initializes a new instance of DppBaseResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DppBaseResourceList"/>. </summary>
         /// <param name="value"> List of Dpp resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
         internal DppBaseResourceList(IReadOnlyList<ResourceGuardProtectedObjectData> value, string nextLink)

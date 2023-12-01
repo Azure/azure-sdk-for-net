@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Data Lake Analytics linked service. </summary>
     public partial class AzureDataLakeAnalyticsLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureDataLakeAnalyticsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeAnalyticsLinkedService"/>. </summary>
         /// <param name="accountName"> The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="tenant"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AzureDataLakeAnalytics";
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeAnalyticsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeAnalyticsLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

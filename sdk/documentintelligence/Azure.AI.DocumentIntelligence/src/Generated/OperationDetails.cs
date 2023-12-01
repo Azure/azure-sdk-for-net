@@ -14,11 +14,11 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary>
     /// Operation info.
     /// Please note <see cref="OperationDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/>, <see cref="DocumentModelCopyToOperationDetails"/> and <see cref="DocumentClassifierBuildOperationDetails"/>.
+    /// The available derived classes include <see cref="DocumentClassifierBuildOperationDetails"/>, <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/> and <see cref="DocumentModelCopyToOperationDetails"/>.
     /// </summary>
     public abstract partial class OperationDetails
     {
-        /// <summary> Initializes a new instance of OperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.DocumentIntelligence
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of OperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>

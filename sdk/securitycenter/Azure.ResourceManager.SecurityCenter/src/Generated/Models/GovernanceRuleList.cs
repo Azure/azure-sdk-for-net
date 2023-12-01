@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Page of a governance rules list. </summary>
     internal partial class GovernanceRuleList
     {
-        /// <summary> Initializes a new instance of GovernanceRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleList"/>. </summary>
         internal GovernanceRuleList()
         {
             Value = new ChangeTrackingList<GovernanceRuleData>();
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleList"/>. </summary>
         /// <param name="value"> Collection of governance rules in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal GovernanceRuleList(IReadOnlyList<GovernanceRuleData> value, string nextLink)

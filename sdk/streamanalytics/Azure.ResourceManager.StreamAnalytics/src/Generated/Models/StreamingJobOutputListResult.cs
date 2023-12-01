@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Object containing a list of outputs under a streaming job. </summary>
     internal partial class StreamingJobOutputListResult
     {
-        /// <summary> Initializes a new instance of StreamingJobOutputListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputListResult"/>. </summary>
         internal StreamingJobOutputListResult()
         {
             Value = new ChangeTrackingList<StreamingJobOutputData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingJobOutputListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputListResult"/>. </summary>
         /// <param name="value"> A list of outputs under a streaming job. Populated by a 'List' operation. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal StreamingJobOutputListResult(IReadOnlyList<StreamingJobOutputData> value, string nextLink)

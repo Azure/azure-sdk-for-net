@@ -11,6 +11,7 @@ using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Moq;
 using Moq.Protected;
@@ -93,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                         CancellationToken cancellationToken) =>
             (Task)
                 typeof(EventProcessorClient)
-                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { typeof(string), typeof(CheckpointPosition), typeof(CancellationToken) }, null)
+                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken });
     }
 }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the result of the request to list Managed VM Sizes for Service Fabric Managed Clusters. </summary>
     public partial class ManagedAzResiliencyStatus
     {
-        /// <summary> Initializes a new instance of ManagedAzResiliencyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedAzResiliencyStatus"/>. </summary>
         internal ManagedAzResiliencyStatus()
         {
             BaseResourceStatus = new ChangeTrackingList<ResourceAzStatus>();
         }
 
-        /// <summary> Initializes a new instance of ManagedAzResiliencyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedAzResiliencyStatus"/>. </summary>
         /// <param name="baseResourceStatus"> List of Managed VM Sizes for Service Fabric Managed Clusters. </param>
         /// <param name="isClusterZoneResilient"> URL to get the next set of Managed VM Sizes if there are any. </param>
         internal ManagedAzResiliencyStatus(IReadOnlyList<ResourceAzStatus> baseResourceStatus, bool? isClusterZoneResilient)

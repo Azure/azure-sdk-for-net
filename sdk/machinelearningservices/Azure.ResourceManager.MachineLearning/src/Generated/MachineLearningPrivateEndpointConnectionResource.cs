@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningPrivateEndpointConnection method.
     /// </summary>
     public partial class MachineLearningPrivateEndpointConnectionResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningPrivateEndpointConnectionResource(ArmClient client, MachineLearningPrivateEndpointConnectionData data) : this(client, data.Id)

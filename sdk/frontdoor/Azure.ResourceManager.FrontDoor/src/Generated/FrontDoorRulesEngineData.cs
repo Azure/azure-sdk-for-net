@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorRulesEngineData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorRulesEngineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineData"/>. </summary>
         public FrontDoorRulesEngineData()
         {
             Rules = new ChangeTrackingList<RulesEngineRule>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorRulesEngineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedServicesRegistrationAssignmentResource" /> and their operations.
-    /// Each <see cref="ManagedServicesRegistrationAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ManagedServicesRegistrationAssignmentCollection" /> instance call the GetManagedServicesRegistrationAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ManagedServicesRegistrationAssignmentResource"/> and their operations.
+    /// Each <see cref="ManagedServicesRegistrationAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ManagedServicesRegistrationAssignmentCollection"/> instance call the GetManagedServicesRegistrationAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ManagedServicesRegistrationAssignmentCollection : ArmCollection, IEnumerable<ManagedServicesRegistrationAssignmentResource>, IAsyncEnumerable<ManagedServicesRegistrationAssignmentResource>
     {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedServicesRegistrationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedServicesRegistrationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedServicesRegistrationAssignmentResource> GetAllAsync(bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListRequest(Id, expandRegistrationDefinition, filter);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedServicesRegistrationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedServicesRegistrationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedServicesRegistrationAssignmentResource> GetAll(bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListRequest(Id, expandRegistrationDefinition, filter);

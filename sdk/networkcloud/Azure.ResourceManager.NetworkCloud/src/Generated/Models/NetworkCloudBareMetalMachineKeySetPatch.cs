@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineKeySetPatchParameters represents the body of the request to patch the bare metal machine key set. </summary>
     public partial class NetworkCloudBareMetalMachineKeySetPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudBareMetalMachineKeySetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetPatch"/>. </summary>
         public NetworkCloudBareMetalMachineKeySetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

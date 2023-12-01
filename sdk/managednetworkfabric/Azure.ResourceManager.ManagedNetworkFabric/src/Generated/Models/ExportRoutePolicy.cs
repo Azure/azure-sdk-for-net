@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
     public partial class ExportRoutePolicy
     {
-        /// <summary> Initializes a new instance of ExportRoutePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRoutePolicy"/>. </summary>
         public ExportRoutePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportRoutePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRoutePolicy"/>. </summary>
         /// <param name="exportIPv4RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <param name="exportIPv6RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         internal ExportRoutePolicy(ResourceIdentifier exportIPv4RoutePolicyId, ResourceIdentifier exportIPv6RoutePolicyId)

@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagementLockResource" /> and their operations.
-    /// Each <see cref="ManagementLockResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ManagementLockCollection" /> instance call the GetManagementLocks method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ManagementLockResource"/> and their operations.
+    /// Each <see cref="ManagementLockResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ManagementLockCollection"/> instance call the GetManagementLocks method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ManagementLockCollection : ArmCollection, IEnumerable<ManagementLockResource>, IAsyncEnumerable<ManagementLockResource>
     {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementLockResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagementLockResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagementLockResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementLockResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagementLockResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagementLockResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);

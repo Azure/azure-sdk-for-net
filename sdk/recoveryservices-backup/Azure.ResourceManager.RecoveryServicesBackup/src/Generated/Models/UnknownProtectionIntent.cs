@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownProtectionIntent. </summary>
     internal partial class UnknownProtectionIntent : BackupGenericProtectionIntent
     {
-        /// <summary> Initializes a new instance of UnknownProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionIntent"/>. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>

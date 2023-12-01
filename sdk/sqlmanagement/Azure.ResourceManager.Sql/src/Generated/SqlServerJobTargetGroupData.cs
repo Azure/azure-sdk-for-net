@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerJobTargetGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerJobTargetGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobTargetGroupData"/>. </summary>
         public SqlServerJobTargetGroupData()
         {
             Members = new ChangeTrackingList<JobTarget>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobTargetGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobTargetGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

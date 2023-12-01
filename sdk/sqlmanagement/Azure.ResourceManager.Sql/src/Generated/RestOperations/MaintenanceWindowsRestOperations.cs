@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database to set maintenance windows for. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
-        /// <param name="data"> The MaintenanceWindows to use. </param>
+        /// <param name="data"> The <see cref="MaintenanceWindowsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database to set maintenance windows for. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
-        /// <param name="data"> The MaintenanceWindows to use. </param>
+        /// <param name="data"> The <see cref="MaintenanceWindowsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>

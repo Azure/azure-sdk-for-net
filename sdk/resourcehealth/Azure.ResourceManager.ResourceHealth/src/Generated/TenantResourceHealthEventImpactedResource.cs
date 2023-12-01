@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
     /// A Class representing a TenantResourceHealthEventImpactedResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResourceHealthEventImpactedResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantResourceHealthEventImpactedResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResourceHealthEventResource" /> using the GetTenantResourceHealthEventImpactedResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantResourceHealthEventImpactedResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantResourceHealthEventImpactedResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResourceHealthEventResource"/> using the GetTenantResourceHealthEventImpactedResource method.
     /// </summary>
     public partial class TenantResourceHealthEventImpactedResource : ArmResource
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantResourceHealthEventImpactedResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantResourceHealthEventImpactedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantResourceHealthEventImpactedResource(ArmClient client, ResourceHealthEventImpactedResourceData data) : this(client, data.Id)

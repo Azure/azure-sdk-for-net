@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListCustomIpPrefixes API service call. </summary>
     internal partial class CustomIPPrefixListResult
     {
-        /// <summary> Initializes a new instance of CustomIPPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixListResult"/>. </summary>
         internal CustomIPPrefixListResult()
         {
             Value = new ChangeTrackingList<CustomIPPrefixData>();
         }
 
-        /// <summary> Initializes a new instance of CustomIPPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixListResult"/>. </summary>
         /// <param name="value"> A list of Custom IP prefixes that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal CustomIPPrefixListResult(IReadOnlyList<CustomIPPrefixData> value, string nextLink)

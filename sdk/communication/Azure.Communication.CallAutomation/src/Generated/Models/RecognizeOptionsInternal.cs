@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The RecognizeOptions. </summary>
     internal partial class RecognizeOptionsInternal
     {
-        /// <summary> Initializes a new instance of RecognizeOptionsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
         /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public RecognizeOptionsInternal(CommunicationIdentifierModel targetParticipant)
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
-            Choices = new ChangeTrackingList<RecognizeChoice>();
+            Choices = new ChangeTrackingList<RecognitionChoice>();
         }
 
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Defines configurations for DTMF. </summary>
         public DtmfOptionsInternal DtmfOptions { get; set; }
         /// <summary> Defines Ivr choices for recognize. </summary>
-        public IList<RecognizeChoice> Choices { get; }
+        public IList<RecognitionChoice> Choices { get; }
         /// <summary> Defines continuous speech recognition option. </summary>
         public SpeechOptionsInternal SpeechOptions { get; set; }
     }

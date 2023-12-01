@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BackupProtectedItemResource" /> and their operations.
-    /// Each <see cref="BackupProtectedItemResource" /> in the collection will belong to the same instance of <see cref="BackupProtectionContainerResource" />.
-    /// To get a <see cref="BackupProtectedItemCollection" /> instance call the GetBackupProtectedItems method from an instance of <see cref="BackupProtectionContainerResource" />.
+    /// A class representing a collection of <see cref="BackupProtectedItemResource"/> and their operations.
+    /// Each <see cref="BackupProtectedItemResource"/> in the collection will belong to the same instance of <see cref="BackupProtectionContainerResource"/>.
+    /// To get a <see cref="BackupProtectedItemCollection"/> instance call the GetBackupProtectedItems method from an instance of <see cref="BackupProtectionContainerResource"/>.
     /// </summary>
     public partial class BackupProtectedItemCollection : ArmCollection
     {

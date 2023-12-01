@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteConfigSnapshotResource" /> and their operations.
-    /// Each <see cref="SiteConfigSnapshotResource" /> in the collection will belong to the same instance of <see cref="WebSiteConfigResource" />.
-    /// To get a <see cref="SiteConfigSnapshotCollection" /> instance call the GetSiteConfigSnapshots method from an instance of <see cref="WebSiteConfigResource" />.
+    /// A class representing a collection of <see cref="SiteConfigSnapshotResource"/> and their operations.
+    /// Each <see cref="SiteConfigSnapshotResource"/> in the collection will belong to the same instance of <see cref="WebSiteConfigResource"/>.
+    /// To get a <see cref="SiteConfigSnapshotCollection"/> instance call the GetSiteConfigSnapshots method from an instance of <see cref="WebSiteConfigResource"/>.
     /// </summary>
     public partial class SiteConfigSnapshotCollection : ArmCollection
     {

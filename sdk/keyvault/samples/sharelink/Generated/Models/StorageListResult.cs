@@ -13,13 +13,13 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The storage accounts list result. </summary>
     internal partial class StorageListResult
     {
-        /// <summary> Initializes a new instance of StorageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageListResult"/>. </summary>
         internal StorageListResult()
         {
             Value = new ChangeTrackingList<StorageAccountItem>();
         }
 
-        /// <summary> Initializes a new instance of StorageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageListResult"/>. </summary>
         /// <param name="value"> A response message containing a list of storage accounts in the key vault along with a link to the next page of storage accounts. </param>
         /// <param name="nextLink"> The URL to get the next set of storage accounts. </param>
         internal StorageListResult(IReadOnlyList<StorageAccountItem> value, string nextLink)

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Information required to execute the archive operation. </summary>
     public partial class AmlFileSystemArchiveContent
     {
-        /// <summary> Initializes a new instance of AmlFileSystemArchiveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemArchiveContent"/>. </summary>
         public AmlFileSystemArchiveContent()
         {
         }

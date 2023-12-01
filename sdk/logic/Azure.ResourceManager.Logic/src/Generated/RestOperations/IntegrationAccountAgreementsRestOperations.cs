@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
         /// <param name="agreementName"> The integration account agreement name. </param>
-        /// <param name="info"> The ListOperationCallbackUrlParameterInfo to use. </param>
+        /// <param name="info"> The <see cref="ListOperationCallbackUrlParameterInfo"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/>, <paramref name="agreementName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="agreementName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
         /// <param name="agreementName"> The integration account agreement name. </param>
-        /// <param name="info"> The ListOperationCallbackUrlParameterInfo to use. </param>
+        /// <param name="info"> The <see cref="ListOperationCallbackUrlParameterInfo"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/>, <paramref name="agreementName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="agreementName"/> is an empty string, and was expected to be non-empty. </exception>

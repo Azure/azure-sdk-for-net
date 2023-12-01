@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Redis
 {
     /// <summary>
     /// A Class representing a RedisPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RedisPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRedisPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RedisResource" /> using the GetRedisPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RedisPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRedisPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RedisResource"/> using the GetRedisPrivateEndpointConnection method.
     /// </summary>
     public partial class RedisPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Redis
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RedisPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RedisPrivateEndpointConnectionResource(ArmClient client, RedisPrivateEndpointConnectionData data) : this(client, data.Id)

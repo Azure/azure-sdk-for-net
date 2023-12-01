@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VirtualMachineScaleSetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualMachineScaleSetData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

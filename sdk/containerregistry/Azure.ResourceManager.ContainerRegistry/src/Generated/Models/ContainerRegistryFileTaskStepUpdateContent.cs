@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of updating a task step. </summary>
     public partial class ContainerRegistryFileTaskStepUpdateContent : ContainerRegistryTaskStepUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryFileTaskStepUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryFileTaskStepUpdateContent"/>. </summary>
         public ContainerRegistryFileTaskStepUpdateContent()
         {
             Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();

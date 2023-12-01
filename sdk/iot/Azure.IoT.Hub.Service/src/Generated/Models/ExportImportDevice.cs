@@ -13,7 +13,7 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The ExportImportDevice. </summary>
     public partial class ExportImportDevice
     {
-        /// <summary> Initializes a new instance of ExportImportDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportImportDevice"/>. </summary>
         public ExportImportDevice()
         {
             Tags = new ChangeTrackingDictionary<string, object>();

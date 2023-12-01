@@ -1,0 +1,9 @@
+﻿<Tag>
+  <Key>Color</Key>
+  <Value>Red</Value>
+  <ReadOnlyProperty>ReadOnly</ReadOnlyProperty>
+  <RenamedChildModelXml>
+    <ChildValue>ChildRed</ChildValue>
+    <ChildReadOnlyProperty>ChildReadOnly</ChildReadOnlyProperty>
+  </RenamedChildModelXml>
+</Tag>

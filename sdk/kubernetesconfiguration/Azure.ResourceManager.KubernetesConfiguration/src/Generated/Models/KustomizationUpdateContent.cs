@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> The Kustomization defining how to reconcile the artifact pulled by the source type on the cluster. </summary>
     public partial class KustomizationUpdateContent
     {
-        /// <summary> Initializes a new instance of KustomizationUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustomizationUpdateContent"/>. </summary>
         public KustomizationUpdateContent()
         {
             DependsOn = new ChangeTrackingList<string>();

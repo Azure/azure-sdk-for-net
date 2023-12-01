@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApplicationGatewayWafDynamicManifestResource" /> and their operations.
-    /// Each <see cref="ApplicationGatewayWafDynamicManifestResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="ApplicationGatewayWafDynamicManifestCollection" /> instance call the GetApplicationGatewayWafDynamicManifests method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> and their operations.
+    /// Each <see cref="ApplicationGatewayWafDynamicManifestResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="ApplicationGatewayWafDynamicManifestCollection"/> instance call the GetApplicationGatewayWafDynamicManifests method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ApplicationGatewayWafDynamicManifestCollection : ArmCollection, IEnumerable<ApplicationGatewayWafDynamicManifestResource>, IAsyncEnumerable<ApplicationGatewayWafDynamicManifestResource>
     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayWafDynamicManifestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayWafDynamicManifestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewayWafDynamicManifestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayWafDynamicManifestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));

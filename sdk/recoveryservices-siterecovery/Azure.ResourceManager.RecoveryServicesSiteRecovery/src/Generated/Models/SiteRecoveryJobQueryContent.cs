@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Query parameter to enumerate jobs. </summary>
     public partial class SiteRecoveryJobQueryContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobQueryContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobQueryContent"/>. </summary>
         public SiteRecoveryJobQueryContent()
         {
         }

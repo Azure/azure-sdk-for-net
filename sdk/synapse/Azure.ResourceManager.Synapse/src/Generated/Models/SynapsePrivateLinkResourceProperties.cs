@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Properties of a private link resource. </summary>
     public partial class SynapsePrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of SynapsePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkResourceProperties"/>. </summary>
         internal SynapsePrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>

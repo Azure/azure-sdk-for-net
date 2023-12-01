@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> Error type. </summary>
     public partial class JobRunError
     {
-        /// <summary> Initializes a new instance of JobRunError. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunError"/>. </summary>
         internal JobRunError()
         {
         }
 
-        /// <summary> Initializes a new instance of JobRunError. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunError"/>. </summary>
         /// <param name="code"> Error code of the given entry. </param>
         /// <param name="message"> Error message of the given entry. </param>
         /// <param name="target"> Target of the given error entry. </param>

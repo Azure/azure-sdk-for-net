@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VoiceServicesCommunicationsGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VoiceServicesCommunicationsGatewayResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesCommunicationsGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VoiceServicesCommunicationsGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VoiceServicesCommunicationsGatewayResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesCommunicationsGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VoiceServicesCommunicationsGatewayResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VoiceServicesCommunicationsGatewayResource"/> object. </returns>
         public virtual VoiceServicesCommunicationsGatewayResource GetVoiceServicesCommunicationsGatewayResource(ResourceIdentifier id)
         {
             VoiceServicesCommunicationsGatewayResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VoiceServicesTestLineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VoiceServicesTestLineResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesTestLineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VoiceServicesTestLineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VoiceServicesTestLineResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesTestLineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VoiceServicesTestLineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VoiceServicesTestLineResource"/> object. </returns>
         public virtual VoiceServicesTestLineResource GetVoiceServicesTestLineResource(ResourceIdentifier id)
         {
             VoiceServicesTestLineResource.ValidateResourceId(id);

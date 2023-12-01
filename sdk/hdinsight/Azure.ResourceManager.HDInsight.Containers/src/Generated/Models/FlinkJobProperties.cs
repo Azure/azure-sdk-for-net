@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Properties of flink job. </summary>
     public partial class FlinkJobProperties : ClusterJobProperties
     {
-        /// <summary> Initializes a new instance of FlinkJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkJobProperties"/>. </summary>
         /// <param name="jobName"> Name of job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public FlinkJobProperties(string jobName)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             JobType = ClusterJobType.FlinkJob;
         }
 
-        /// <summary> Initializes a new instance of FlinkJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkJobProperties"/>. </summary>
         /// <param name="jobType"> Type of cluster job. </param>
         /// <param name="jobName"> Name of job. </param>
         /// <param name="jobJarDirectory"> A string property that specifies the directory where the job JAR is located. </param>

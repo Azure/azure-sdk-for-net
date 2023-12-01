@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Gateway list representation. </summary>
     internal partial class GatewayListResult
     {
-        /// <summary> Initializes a new instance of GatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayListResult"/>. </summary>
         internal GatewayListResult()
         {
             Value = new ChangeTrackingList<ApiManagementGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of GatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

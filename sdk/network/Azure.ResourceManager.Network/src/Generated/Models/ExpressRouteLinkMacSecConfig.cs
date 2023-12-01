@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> ExpressRouteLink Mac Security Configuration. </summary>
     public partial class ExpressRouteLinkMacSecConfig
     {
-        /// <summary> Initializes a new instance of ExpressRouteLinkMacSecConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkMacSecConfig"/>. </summary>
         public ExpressRouteLinkMacSecConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteLinkMacSecConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkMacSecConfig"/>. </summary>
         /// <param name="cknSecretIdentifier"> Keyvault Secret Identifier URL containing Mac security CKN key. </param>
         /// <param name="cakSecretIdentifier"> Keyvault Secret Identifier URL containing Mac security CAK key. </param>
         /// <param name="cipher"> Mac security cipher. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a replication. </summary>
     public partial class ContainerRegistryReplicationPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryReplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationPatch"/>. </summary>
         public ContainerRegistryReplicationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

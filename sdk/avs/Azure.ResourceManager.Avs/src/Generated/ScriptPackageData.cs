@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class ScriptPackageData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScriptPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptPackageData"/>. </summary>
         public ScriptPackageData()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptPackageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

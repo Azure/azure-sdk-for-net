@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> StorageApplianceSkuSlot represents the single SKU and rack slot associated with the storage appliance. </summary>
     public partial class StorageApplianceSkuSlot
     {
-        /// <summary> Initializes a new instance of StorageApplianceSkuSlot. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceSkuSlot"/>. </summary>
         internal StorageApplianceSkuSlot()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageApplianceSkuSlot. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceSkuSlot"/>. </summary>
         /// <param name="rackSlot"> The position in the rack for the storage appliance. </param>
         /// <param name="capacityGB"> The maximum capacity of the storage appliance. </param>
         /// <param name="model"> The model of the storage appliance. </param>

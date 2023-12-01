@@ -16,13 +16,13 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The sequenceId
         /// </summary>
-        public ulong SequenceId { get; }
+        public long SequenceId { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SequenceAckMessage"/> class.
         /// </summary>
         /// <param name="sequenceId">The sequenceId</param>
-        public SequenceAckMessage(ulong sequenceId)
+        public SequenceAckMessage(long sequenceId)
         {
             SequenceId = sequenceId;
         }

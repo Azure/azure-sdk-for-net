@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The Metric. </summary>
     public partial class DataFeedMetric
     {
-        /// <summary> Initializes a new instance of DataFeedMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedMetric"/>. </summary>
         /// <param name="id"> metric id. </param>
         /// <param name="name"> metric name. </param>
         /// <param name="displayName"> metric display name. </param>

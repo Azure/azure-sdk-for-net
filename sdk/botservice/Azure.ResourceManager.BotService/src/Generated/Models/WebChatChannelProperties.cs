@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Web Chat channel. </summary>
     public partial class WebChatChannelProperties
     {
-        /// <summary> Initializes a new instance of WebChatChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebChatChannelProperties"/>. </summary>
         public WebChatChannelProperties()
         {
             Sites = new ChangeTrackingList<WebChatSite>();
         }
 
-        /// <summary> Initializes a new instance of WebChatChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebChatChannelProperties"/>. </summary>
         /// <param name="webChatEmbedCode"> Web chat control embed code. </param>
         /// <param name="sites"> The list of Web Chat sites. </param>
         internal WebChatChannelProperties(string webChatEmbedCode, IList<WebChatSite> sites)

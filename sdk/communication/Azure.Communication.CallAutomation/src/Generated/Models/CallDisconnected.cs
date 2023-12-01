@@ -10,22 +10,22 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The call disconnected event. </summary>
     public partial class CallDisconnected
     {
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallDisconnected"/>. </summary>
         internal CallDisconnected()
         {
         }
 
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallDisconnected"/>. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
-        internal CallDisconnected(string callConnectionId, string serverCallId, string correlationId, string operationContext)
+        internal CallDisconnected(string operationContext, string callConnectionId, string serverCallId, string correlationId)
         {
+            OperationContext = operationContext;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
-            OperationContext = operationContext;
         }
     }
 }

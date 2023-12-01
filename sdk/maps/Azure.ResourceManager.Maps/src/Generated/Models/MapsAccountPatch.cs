@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> Parameters used to update an existing Maps Account. </summary>
     public partial class MapsAccountPatch
     {
-        /// <summary> Initializes a new instance of MapsAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountPatch"/>. </summary>
         public MapsAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

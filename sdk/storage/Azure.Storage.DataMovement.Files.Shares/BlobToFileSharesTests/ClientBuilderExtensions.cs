@@ -19,8 +19,6 @@ using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Test;
-using DMBlob::Azure.Storage.DataMovement.Blobs;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class ComponentLinkedStorageAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of ComponentLinkedStorageAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentLinkedStorageAccountData"/>. </summary>
         public ComponentLinkedStorageAccountData()
         {
         }
 
-        /// <summary> Initializes a new instance of ComponentLinkedStorageAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentLinkedStorageAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

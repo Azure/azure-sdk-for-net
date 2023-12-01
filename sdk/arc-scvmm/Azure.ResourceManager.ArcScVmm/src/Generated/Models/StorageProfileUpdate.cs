@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     internal partial class StorageProfileUpdate
     {
-        /// <summary> Initializes a new instance of StorageProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfileUpdate"/>. </summary>
         public StorageProfileUpdate()
         {
             Disks = new ChangeTrackingList<VirtualDiskUpdate>();

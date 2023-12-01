@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App Ingress configuration. </summary>
     public partial class ContainerAppIngressConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIngressConfiguration"/>. </summary>
         public ContainerAppIngressConfiguration()
         {
             Traffic = new ChangeTrackingList<ContainerAppRevisionTrafficWeight>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IPSecurityRestrictions = new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIngressConfiguration"/>. </summary>
         /// <param name="fqdn"> Hostname. </param>
         /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
         /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>

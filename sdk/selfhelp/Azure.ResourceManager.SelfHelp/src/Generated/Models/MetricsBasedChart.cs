@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solutions metrics based chart. </summary>
     public partial class MetricsBasedChart
     {
-        /// <summary> Initializes a new instance of MetricsBasedChart. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsBasedChart"/>. </summary>
         public MetricsBasedChart()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricsBasedChart. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsBasedChart"/>. </summary>
         /// <param name="name"> Chart name. </param>
         /// <param name="aggregationType"> Allowed values are Sum, Avg, Count, Min, Max. Default is Sum. </param>
         /// <param name="timeSpanDuration"> Time span duration. </param>

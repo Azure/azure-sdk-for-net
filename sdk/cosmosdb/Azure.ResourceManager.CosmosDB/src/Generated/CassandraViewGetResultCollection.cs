@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CassandraViewGetResultResource" /> and their operations.
-    /// Each <see cref="CassandraViewGetResultResource" /> in the collection will belong to the same instance of <see cref="CassandraKeyspaceResource" />.
-    /// To get a <see cref="CassandraViewGetResultCollection" /> instance call the GetCassandraViewGetResults method from an instance of <see cref="CassandraKeyspaceResource" />.
+    /// A class representing a collection of <see cref="CassandraViewGetResultResource"/> and their operations.
+    /// Each <see cref="CassandraViewGetResultResource"/> in the collection will belong to the same instance of <see cref="CassandraKeyspaceResource"/>.
+    /// To get a <see cref="CassandraViewGetResultCollection"/> instance call the GetCassandraViewGetResults method from an instance of <see cref="CassandraKeyspaceResource"/>.
     /// </summary>
     public partial class CassandraViewGetResultCollection : ArmCollection, IEnumerable<CassandraViewGetResultResource>, IAsyncEnumerable<CassandraViewGetResultResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraViewGetResultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CassandraViewGetResultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CassandraViewGetResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraViewGetResultCassandraResourcesRestClient.CreateListCassandraViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CassandraViewGetResultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CassandraViewGetResultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CassandraViewGetResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraViewGetResultCassandraResourcesRestClient.CreateListCassandraViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

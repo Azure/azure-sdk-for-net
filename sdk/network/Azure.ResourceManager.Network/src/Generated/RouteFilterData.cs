@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class RouteFilterData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of RouteFilterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteFilterData"/>. </summary>
         public RouteFilterData()
         {
             Rules = new ChangeTrackingList<RouteFilterRuleData>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
             IPv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of RouteFilterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteFilterData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

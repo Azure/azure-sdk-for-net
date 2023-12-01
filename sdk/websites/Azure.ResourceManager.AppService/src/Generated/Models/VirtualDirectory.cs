@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Directory for virtual application. </summary>
     public partial class VirtualDirectory
     {
-        /// <summary> Initializes a new instance of VirtualDirectory. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDirectory"/>. </summary>
         public VirtualDirectory()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualDirectory. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDirectory"/>. </summary>
         /// <param name="virtualPath"> Path to virtual application. </param>
         /// <param name="physicalPath"> Physical path. </param>
         internal VirtualDirectory(string virtualPath, string physicalPath)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster pool networking configuration. </summary>
     internal partial class ClusterPoolNetworkProfile
     {
-        /// <summary> Initializes a new instance of ClusterPoolNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolNetworkProfile"/>. </summary>
         /// <param name="subnetId"> Cluster pool subnet resource id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         public ClusterPoolNetworkProfile(ResourceIdentifier subnetId)

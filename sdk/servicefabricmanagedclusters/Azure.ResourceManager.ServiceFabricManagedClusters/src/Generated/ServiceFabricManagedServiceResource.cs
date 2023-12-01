@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
     /// A Class representing a ServiceFabricManagedService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceFabricManagedServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceFabricManagedServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedApplicationResource" /> using the GetServiceFabricManagedService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricManagedServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceFabricManagedServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedApplicationResource"/> using the GetServiceFabricManagedService method.
     /// </summary>
     public partial class ServiceFabricManagedServiceResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceFabricManagedServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceFabricManagedServiceResource(ArmClient client, ServiceFabricManagedServiceData data) : this(client, data.Id)

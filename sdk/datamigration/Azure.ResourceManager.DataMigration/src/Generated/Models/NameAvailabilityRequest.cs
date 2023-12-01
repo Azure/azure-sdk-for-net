@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> A resource type and proposed name. </summary>
     public partial class NameAvailabilityRequest
     {
-        /// <summary> Initializes a new instance of NameAvailabilityRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameAvailabilityRequest"/>. </summary>
         public NameAvailabilityRequest()
         {
         }

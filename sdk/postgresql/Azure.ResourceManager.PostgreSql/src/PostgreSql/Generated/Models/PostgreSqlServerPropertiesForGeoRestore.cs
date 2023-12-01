@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> The properties used to create a new server by restoring to a different region from a geo replicated backup. </summary>
     public partial class PostgreSqlServerPropertiesForGeoRestore : PostgreSqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForGeoRestore. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForGeoRestore"/>. </summary>
         /// <param name="sourceServerId"> The source server id to restore from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public PostgreSqlServerPropertiesForGeoRestore(ResourceIdentifier sourceServerId)

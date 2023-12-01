@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Request body for applying artifacts to a virtual machine. </summary>
     public partial class DevTestLabVmApplyArtifactsContent
     {
-        /// <summary> Initializes a new instance of DevTestLabVmApplyArtifactsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmApplyArtifactsContent"/>. </summary>
         public DevTestLabVmApplyArtifactsContent()
         {
             Artifacts = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();

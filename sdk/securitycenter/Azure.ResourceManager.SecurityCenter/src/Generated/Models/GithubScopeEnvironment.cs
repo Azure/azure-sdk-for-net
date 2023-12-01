@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The github scope connector's environment data. </summary>
     public partial class GithubScopeEnvironment : SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of GithubScopeEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="GithubScopeEnvironment"/>. </summary>
         public GithubScopeEnvironment()
         {
             EnvironmentType = EnvironmentType.GithubScope;
         }
 
-        /// <summary> Initializes a new instance of GithubScopeEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="GithubScopeEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         internal GithubScopeEnvironment(EnvironmentType environmentType) : base(environmentType)
         {

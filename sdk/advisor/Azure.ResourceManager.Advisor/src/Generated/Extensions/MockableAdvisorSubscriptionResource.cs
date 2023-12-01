@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SuppressionContractResource> GetSuppressionContractsAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SuppressionContractResource> GetSuppressionContracts(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);

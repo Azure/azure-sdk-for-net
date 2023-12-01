@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition of data present in the report. </summary>
     public partial class ReportConfigDataset
     {
-        /// <summary> Initializes a new instance of ReportConfigDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportConfigDataset"/>. </summary>
         public ReportConfigDataset()
         {
             Aggregation = new ChangeTrackingDictionary<string, ReportConfigAggregation>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Sorting = new ChangeTrackingList<ReportConfigSorting>();
         }
 
-        /// <summary> Initializes a new instance of ReportConfigDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportConfigDataset"/>. </summary>
         /// <param name="granularity"> The granularity of rows in the report. </param>
         /// <param name="configuration"> Has configuration information for the data in the report. The configuration will be ignored if aggregation and grouping are provided. </param>
         /// <param name="aggregation"> Dictionary of aggregation expression to use in the report. The key of each item in the dictionary is the alias for the aggregated column. Report can have up to 2 aggregation clauses. </param>

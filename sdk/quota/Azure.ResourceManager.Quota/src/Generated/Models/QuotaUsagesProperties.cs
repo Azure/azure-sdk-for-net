@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Usage properties for the specified resource. </summary>
     public partial class QuotaUsagesProperties
     {
-        /// <summary> Initializes a new instance of QuotaUsagesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsagesProperties"/>. </summary>
         internal QuotaUsagesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaUsagesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsagesProperties"/>. </summary>
         /// <param name="usages"> The quota limit properties for this resource. </param>
         /// <param name="unit"> The units for the quota usage, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The account update properties. </summary>
     public partial class PurviewAccountPatch
     {
-        /// <summary> Initializes a new instance of PurviewAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountPatch"/>. </summary>
         public PurviewAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

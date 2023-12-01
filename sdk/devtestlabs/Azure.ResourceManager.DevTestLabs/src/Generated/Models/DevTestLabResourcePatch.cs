@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Represents an update resource. </summary>
     public partial class DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabResourcePatch"/>. </summary>
         public DevTestLabResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> The object attributes managed by the KeyVault service. </summary>
     public partial class SecretBaseAttributes
     {
-        /// <summary> Initializes a new instance of SecretBaseAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBaseAttributes"/>. </summary>
         public SecretBaseAttributes()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretBaseAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBaseAttributes"/>. </summary>
         /// <param name="enabled"> Determines whether the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>

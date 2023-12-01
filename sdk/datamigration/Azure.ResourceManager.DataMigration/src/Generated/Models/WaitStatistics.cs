@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Wait statistics gathered during query batch execution. </summary>
     public partial class WaitStatistics
     {
-        /// <summary> Initializes a new instance of WaitStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitStatistics"/>. </summary>
         internal WaitStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of WaitStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitStatistics"/>. </summary>
         /// <param name="waitType"> Type of the Wait. </param>
         /// <param name="waitTimeMs"> Total wait time in millisecond(s). </param>
         /// <param name="waitCount"> Total no. of waits. </param>

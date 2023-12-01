@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Response of a list VM Host Operation. </summary>
     internal partial class VmHostsListResponse
     {
-        /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostsListResponse"/>. </summary>
         internal VmHostsListResponse()
         {
             Value = new ChangeTrackingList<DynatraceMonitorVmInfo>();
         }
 
-        /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostsListResponse"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal VmHostsListResponse(IReadOnlyList<DynatraceMonitorVmInfo> value, string nextLink)

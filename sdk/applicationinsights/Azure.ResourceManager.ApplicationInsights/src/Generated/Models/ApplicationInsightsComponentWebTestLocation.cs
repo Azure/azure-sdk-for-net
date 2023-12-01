@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Properties that define a web test location available to an Application Insights Component. </summary>
     public partial class ApplicationInsightsComponentWebTestLocation
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentWebTestLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentWebTestLocation"/>. </summary>
         internal ApplicationInsightsComponentWebTestLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentWebTestLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentWebTestLocation"/>. </summary>
         /// <param name="displayName"> The display name of the web test location. </param>
         /// <param name="tag"> Internally defined geographic location tag. </param>
         internal ApplicationInsightsComponentWebTestLocation(string displayName, string tag)

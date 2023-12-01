@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Microsoft Azure Cosmos Database (CosmosDB) linked service. </summary>
     public partial class CosmosDbLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of CosmosDbLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbLinkedService"/>. </summary>
         public CosmosDbLinkedService()
         {
             Type = "CosmosDb";
         }
 
-        /// <summary> Initializes a new instance of CosmosDbLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

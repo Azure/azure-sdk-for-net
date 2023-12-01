@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Definition for App Seen. </summary>
     public partial class AppSeenInfo
     {
-        /// <summary> Initializes a new instance of AppSeenInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSeenInfo"/>. </summary>
         /// <param name="title"> title. </param>
         /// <param name="category"> category. </param>
         /// <param name="subCategory"> subCategory. </param>

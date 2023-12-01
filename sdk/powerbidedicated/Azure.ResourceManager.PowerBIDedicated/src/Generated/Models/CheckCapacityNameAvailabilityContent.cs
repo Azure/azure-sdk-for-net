@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Details of capacity name request body. </summary>
     public partial class CheckCapacityNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckCapacityNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckCapacityNameAvailabilityContent"/>. </summary>
         public CheckCapacityNameAvailabilityContent()
         {
         }

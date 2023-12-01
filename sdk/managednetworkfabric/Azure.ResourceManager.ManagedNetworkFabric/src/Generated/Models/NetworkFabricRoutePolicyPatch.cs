@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Route Policy patch resource definition. </summary>
     public partial class NetworkFabricRoutePolicyPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricRoutePolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
         public NetworkFabricRoutePolicyPatch()
         {
             Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();

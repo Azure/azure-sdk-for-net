@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
     /// A Class representing a NotificationHubNamespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NotificationHubNamespaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNotificationHubNamespaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNotificationHubNamespace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NotificationHubNamespaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNotificationHubNamespaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNotificationHubNamespace method.
     /// </summary>
     public partial class NotificationHubNamespaceResource : ArmResource
     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NotificationHubNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NotificationHubNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NotificationHubNamespaceResource(ArmClient client, NotificationHubNamespaceData data) : this(client, data.Id)

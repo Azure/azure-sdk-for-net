@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The VirtualNetworksPropertiesInfraVnetProfile. </summary>
     public partial class VirtualNetworksPropertiesInfraVnetProfile
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfile"/>. </summary>
         public VirtualNetworksPropertiesInfraVnetProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfile"/>. </summary>
         /// <param name="hci"> Infra network profile for HCI platform. </param>
         /// <param name="networkCloud"> Infra network profile for the NetworkCloud platform. </param>
         /// <param name="vmware"> Infra network profile for VMware platform. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes a network interface. </summary>
     public partial class NetworkInterface
     {
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
         internal NetworkInterface()
         {
             IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         internal NetworkInterface(IReadOnlyList<IPAddress> ipAddresses)
         {

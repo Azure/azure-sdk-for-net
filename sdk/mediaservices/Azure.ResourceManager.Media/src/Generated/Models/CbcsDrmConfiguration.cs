@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class to specify DRM configurations of CommonEncryptionCbcs scheme in Streaming Policy. </summary>
     public partial class CbcsDrmConfiguration
     {
-        /// <summary> Initializes a new instance of CbcsDrmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CbcsDrmConfiguration"/>. </summary>
         public CbcsDrmConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of CbcsDrmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CbcsDrmConfiguration"/>. </summary>
         /// <param name="fairPlay"> FairPlay configurations. </param>
         /// <param name="playReady"> PlayReady configurations. </param>
         /// <param name="widevine"> Widevine configurations. </param>

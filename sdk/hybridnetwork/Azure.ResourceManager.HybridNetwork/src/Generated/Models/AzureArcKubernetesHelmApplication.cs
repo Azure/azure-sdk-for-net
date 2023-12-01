@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure arc kubernetes helm application configurations. </summary>
     public partial class AzureArcKubernetesHelmApplication : AzureArcKubernetesNetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of AzureArcKubernetesHelmApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesHelmApplication"/>. </summary>
         public AzureArcKubernetesHelmApplication()
         {
             ArtifactType = AzureArcKubernetesArtifactType.HelmPackage;
         }
 
-        /// <summary> Initializes a new instance of AzureArcKubernetesHelmApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesHelmApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>

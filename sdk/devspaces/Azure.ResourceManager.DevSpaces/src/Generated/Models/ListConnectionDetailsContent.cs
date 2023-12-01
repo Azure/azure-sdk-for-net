@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// <summary> Parameters for listing connection details of an Azure Dev Spaces Controller. </summary>
     public partial class ListConnectionDetailsContent
     {
-        /// <summary> Initializes a new instance of ListConnectionDetailsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListConnectionDetailsContent"/>. </summary>
         /// <param name="targetContainerHostResourceId"> Resource ID of the target container host mapped to the Azure Dev Spaces Controller. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetContainerHostResourceId"/> is null. </exception>
         public ListConnectionDetailsContent(string targetContainerHostResourceId)

@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using Azure.Core.Pipeline;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
@@ -22,6 +23,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         private string _etag = string.Empty;
         private Action<object> _callbackAction = obj => { };
 
+        internal static bool? s_isAzureWebApp = null;
+
+        internal readonly State _state = new();
+        internal readonly MetricsContainer _metricsContainer; // TODO: WE COULD REMOVE THE READONLY AND DISPOSE THIS WHENEVER LIVEMETRICS IS OFF.
+
         public Manager(LiveMetricsExporterOptions options, IPlatform platform)
         {
             options.Retry.MaxRetries = 0; // prevent Azure.Core from automatically retrying.
@@ -31,13 +37,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             _timer = new Timer(callback: OnCallback, state: null, dueTime: Timeout.Infinite, period: Timeout.Infinite);
 
+            _metricsContainer = new MetricsContainer();
+
             if (options.EnableLiveMetrics)
             {
                 SetPingTimer();
             }
-
-            InitializeMetrics();
         }
+
+        public LiveMetricsResource? liveMetricsResource { get; set; }
 
         internal static ConnectionVars InitializeConnectionVars(LiveMetricsExporterOptions options, IPlatform platform)
         {
@@ -85,12 +93,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         private void SetPingTimer()
         {
+            _state.Update(LiveMetricsState.Ping);
             _callbackAction = OnPing;
             _timer.Change(dueTime: 0, period: 5000);
         }
 
         private void SetPostTimer()
         {
+            _state.Update(LiveMetricsState.Post);
             _callbackAction = OnPost;
             _timer.Change(dueTime: 0, period: 1000);
         }
@@ -159,19 +169,32 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 var dataPoint = new MonitoringDataPoint
                 {
-                    Version = "DotNetLiveMetricsPOC", // sdk version
-                    MachineName = "Desktop-Name",
-                    Instance = "Desktop-Name",
+                    Version = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
                     InvariantVersion = 5,
-                    Timestamp = DateTime.UtcNow,
-                    PerformanceCollectionSupported = false,
-                    IsWebApp = false,
-                    RoleName = null,
+                    Instance = liveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
+                    RoleName = liveMetricsResource?.RoleName,
+                    MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
+                    // TODO: Is the Stream ID expected to be unique per post? Testing suggests this is not necessary.
                     StreamId = _streamId,
+                    Timestamp = DateTime.UtcNow,
+                    //TODO: Provide feedback to service team to get this removed, it not a part of AI SDK.
                     TransmissionTime = DateTime.UtcNow,
+                    IsWebApp = IsWebAppRunningInAzure(),
+                    PerformanceCollectionSupported = true,
+                    // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
+                    // Follow up with service team to get this removed for OTEL based live metrics.
+                    // TopCpuProcesses = null,
+                    // TODO: Configuration errors are thrown when filter is applied.
+                    // CollectionConfigurationErrors = null,
                 };
 
-                var metricPoints = CollectMetrics();
+                DocumentBuffer filledBuffer = _metricsContainer._doubleBuffer.FlipDocumentBuffers();
+                foreach (var item in filledBuffer.ReadAllAndClear())
+                {
+                    dataPoint.Documents.Add(item);
+                }
+
+                var metricPoints = _metricsContainer.Collect();
                 foreach (var metricPoint in metricPoints)
                 {
                     dataPoint.Metrics.Add(metricPoint);
@@ -202,6 +225,38 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 Debug.WriteLine(ex);
             }
+        }
+
+        /// <summary>
+        /// Searches for the environment variable specific to Azure Web App.
+        /// </summary>
+        /// <returns>Boolean, which is true if the current application is an Azure Web App.</returns>
+        internal static bool? IsWebAppRunningInAzure()
+        {
+            const string WebSiteEnvironmentVariable = "WEBSITE_SITE_NAME";
+            const string WebSiteIsolationEnvironmentVariable = "WEBSITE_ISOLATION";
+            const string WebSiteIsolationHyperV = "hyperv";
+
+            if (!s_isAzureWebApp.HasValue)
+            {
+                try
+                {
+                    // Presence of "WEBSITE_SITE_NAME" indicate web apps.
+                    // "WEBSITE_ISOLATION"!="hyperv" indicate premium containers. In this case, perf counters
+                    // can be read using regular mechanism and hence this method retuns false for
+                    // premium containers.
+                    // TODO: switch to platform. Not necessary for POC.
+                    s_isAzureWebApp = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(WebSiteEnvironmentVariable)) &&
+                                    Environment.GetEnvironmentVariable(WebSiteIsolationEnvironmentVariable) != WebSiteIsolationHyperV;
+                }
+                catch (Exception ex)
+                {
+                    LiveMetricsExporterEventSource.Log.AccessingEnvironmentVariableFailedWarning(WebSiteEnvironmentVariable, ex);
+                    return false;
+                }
+            }
+
+            return s_isAzureWebApp;
         }
     }
 }

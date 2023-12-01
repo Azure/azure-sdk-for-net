@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List all the actions. </summary>
     internal partial class ActionsList
     {
-        /// <summary> Initializes a new instance of ActionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionsList"/>. </summary>
         /// <param name="value"> Array of actions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ActionsList(IEnumerable<SecurityInsightsAlertRuleActionData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ActionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionsList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of actions. </param>
         /// <param name="value"> Array of actions. </param>
         internal ActionsList(string nextLink, IReadOnlyList<SecurityInsightsAlertRuleActionData> value)

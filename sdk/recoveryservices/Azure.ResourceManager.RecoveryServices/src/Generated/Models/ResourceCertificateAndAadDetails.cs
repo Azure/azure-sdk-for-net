@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Certificate details representing the Vault credentials for AAD. </summary>
     public partial class ResourceCertificateAndAadDetails : ResourceCertificateDetails
     {
-        /// <summary> Initializes a new instance of ResourceCertificateAndAadDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAadDetails"/>. </summary>
         /// <param name="aadAuthority"> AAD tenant authority. </param>
         /// <param name="aadTenantId"> AAD tenant Id. </param>
         /// <param name="servicePrincipalClientId"> AAD service principal clientId. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             AuthType = "AzureActiveDirectory";
         }
 
-        /// <summary> Initializes a new instance of ResourceCertificateAndAadDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAadDetails"/>. </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>

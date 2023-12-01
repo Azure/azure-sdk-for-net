@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Managed Network settings for a machine learning workspace. </summary>
     public partial class ManagedNetworkSettings
     {
-        /// <summary> Initializes a new instance of ManagedNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
         public ManagedNetworkSettings()
         {
             OutboundRules = new ChangeTrackingDictionary<string, MachineLearningOutboundRule>();
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
         /// <param name="isolationMode"> Isolation mode for the managed network of a machine learning workspace. </param>
         /// <param name="networkId"></param>
         /// <param name="outboundRules">

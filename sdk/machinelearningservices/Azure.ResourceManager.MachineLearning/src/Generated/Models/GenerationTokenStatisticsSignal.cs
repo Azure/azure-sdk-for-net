@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Generation token statistics signal definition. </summary>
     public partial class GenerationTokenStatisticsSignal : MonitoringSignalBase
     {
-        /// <summary> Initializes a new instance of GenerationTokenStatisticsSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerationTokenStatisticsSignal"/>. </summary>
         /// <param name="metricThresholds"> [Required] Gets or sets the metrics to calculate and the corresponding thresholds. </param>
         /// <param name="samplingRate"> [Required] The sample rate of the target data, should be greater than 0 and at most 1. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricThresholds"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SignalType = MonitoringSignalType.GenerationTokenStatistics;
         }
 
-        /// <summary> Initializes a new instance of GenerationTokenStatisticsSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerationTokenStatisticsSignal"/>. </summary>
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>

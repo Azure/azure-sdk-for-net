@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Request payload for create or update Disk Pool request. </summary>
     public partial class DiskPoolCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of DiskPoolCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolCreateOrUpdateContent"/>. </summary>
         /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>

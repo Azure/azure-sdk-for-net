@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Search
     /// </summary>
     public partial class SearchPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SearchPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnectionData"/>. </summary>
         public SearchPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

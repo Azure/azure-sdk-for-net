@@ -1,22 +1,15 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2023-11-29)
 
 ### Features Added
 
-### Breaking Changes
+* Added NET6 target framework to support Trimming.
+  ([#38459](https://github.com/Azure/azure-sdk-for-net/pull/38459))
+* Added support for Trimming and AOT.
+  ([#38459](https://github.com/Azure/azure-sdk-for-net/pull/38459))
 
 ### Bugs Fixed
-
-### Other Changes
-
-## 1.0.0 (2023-09-20)
-
-### Bugs Fixed
-
-* Fixed an issue during network failures which prevented the exporter to store
-  the telemetry offline for retrying at a later time.
-  ([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
 
 * Fixed an issue where `OriginalFormat` persisted in TraceTelemetry properties
   with IncludeFormattedMessage set to true on [
@@ -49,6 +42,14 @@
   settings. The fix ensures uniform and culture-independent formatting of
   activity tag values, aligning with consistent data representation.
   ([#39470](https://github.com/Azure/azure-sdk-for-net/issues/39470))
+
+## 1.0.0 (2023-09-20)
+
+### Bugs Fixed
+
+* Fixed an issue during network failures which prevented the exporter to store
+  the telemetry offline for retrying at a later time.
+  ([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
 
 ### Other Changes
 

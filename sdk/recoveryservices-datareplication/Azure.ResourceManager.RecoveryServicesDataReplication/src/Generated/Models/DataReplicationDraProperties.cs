@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Dra model properties. </summary>
     public partial class DataReplicationDraProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationDraProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraProperties"/>. </summary>
         /// <param name="machineId"> Gets or sets the machine Id where Dra is running. </param>
         /// <param name="machineName"> Gets or sets the machine name where Dra is running. </param>
         /// <param name="authenticationIdentity"> Identity model. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomProperties = customProperties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationDraProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraProperties"/>. </summary>
         /// <param name="correlationId"> Gets or sets the Dra correlation Id. </param>
         /// <param name="machineId"> Gets or sets the machine Id where Dra is running. </param>
         /// <param name="machineName"> Gets or sets the machine name where Dra is running. </param>

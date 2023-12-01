@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Namespace/NotificationHub Regenerate Keys. </summary>
     public partial class NotificationHubPolicyKey
     {
-        /// <summary> Initializes a new instance of NotificationHubPolicyKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/>. </summary>
         public NotificationHubPolicyKey()
         {
         }

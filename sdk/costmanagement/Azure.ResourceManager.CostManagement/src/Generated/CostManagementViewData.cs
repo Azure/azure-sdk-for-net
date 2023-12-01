@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CostManagement
     /// </summary>
     public partial class CostManagementViewData : ResourceData
     {
-        /// <summary> Initializes a new instance of CostManagementViewData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementViewData"/>. </summary>
         public CostManagementViewData()
         {
             Kpis = new ChangeTrackingList<ViewKpiProperties>();
             Pivots = new ChangeTrackingList<ViewPivotProperties>();
         }
 
-        /// <summary> Initializes a new instance of CostManagementViewData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementViewData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

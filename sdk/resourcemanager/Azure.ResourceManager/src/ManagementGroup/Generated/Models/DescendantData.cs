@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The descendant. </summary>
     public partial class DescendantData : ResourceData
     {
-        /// <summary> Initializes a new instance of DescendantData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DescendantData"/>. </summary>
         internal DescendantData()
         {
         }
 
-        /// <summary> Initializes a new instance of DescendantData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DescendantData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

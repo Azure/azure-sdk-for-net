@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the file share configuration where the transport directory fileshare is created and mounted as a part of the create infra flow. Please pre-create the resource group you intend to place the transport directory in. The storage account and fileshare will be auto-created by the ACSS and doesn’t need to pre-created. </summary>
     public partial class CreateAndMountFileShareConfiguration : FileShareConfiguration
     {
-        /// <summary> Initializes a new instance of CreateAndMountFileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateAndMountFileShareConfiguration"/>. </summary>
         public CreateAndMountFileShareConfiguration()
         {
             ConfigurationType = ConfigurationType.CreateAndMount;
         }
 
-        /// <summary> Initializes a new instance of CreateAndMountFileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateAndMountFileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config. </param>
         /// <param name="resourceGroup"> The name of transport file share resource group. This should be pre created by the customer. The app rg is used in case of missing input. </param>
         /// <param name="storageAccountName"> The name of file share storage account name . A custom name is used in case of missing input. </param>

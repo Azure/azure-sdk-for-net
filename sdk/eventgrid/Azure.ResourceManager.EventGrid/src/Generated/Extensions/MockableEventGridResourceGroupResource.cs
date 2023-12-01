@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         }
 
         /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
-        /// <returns> Returns a <see cref="PartnerConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerConfigurationResource"/> object. </returns>
         public virtual PartnerConfigurationResource GetPartnerConfiguration()
         {
             return new PartnerConfigurationResource(Client, Id.AppendProviderResource("Microsoft.EventGrid", "partnerConfigurations", "default"));

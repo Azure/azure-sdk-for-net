@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The response of a DataType list operation. </summary>
     internal partial class DataTypeListResult
     {
-        /// <summary> Initializes a new instance of DataTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTypeListResult"/>. </summary>
         /// <param name="value"> The DataType items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataTypeListResult(IEnumerable<DataProductDataType> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTypeListResult"/>. </summary>
         /// <param name="value"> The DataType items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal DataTypeListResult(IReadOnlyList<DataProductDataType> value, Uri nextLink)

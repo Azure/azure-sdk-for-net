@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A class representing update parameters for CommunicationService resource. </summary>
     public partial class CommunicationServiceResourcePatch : CommunicationAcceptTags
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourcePatch"/>. </summary>
         public CommunicationServiceResourcePatch()
         {
             LinkedDomains = new ChangeTrackingList<string>();

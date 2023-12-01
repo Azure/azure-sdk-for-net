@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class BackupFeatureValidationResultBase
     {
-        /// <summary> Initializes a new instance of BackupFeatureValidationResultBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResultBase"/>. </summary>
         protected BackupFeatureValidationResultBase()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupFeatureValidationResultBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResultBase"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal BackupFeatureValidationResultBase(string objectType)
         {

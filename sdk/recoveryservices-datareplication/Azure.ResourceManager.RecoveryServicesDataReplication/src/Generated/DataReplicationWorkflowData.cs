@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationWorkflowData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationWorkflowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationWorkflowData"/>. </summary>
         /// <param name="properties"> Workflow model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal DataReplicationWorkflowData(DataReplicationWorkflowProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationWorkflowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationWorkflowData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

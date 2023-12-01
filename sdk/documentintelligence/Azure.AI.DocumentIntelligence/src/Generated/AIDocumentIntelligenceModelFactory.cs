@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Model factory for models. </summary>
     public static partial class AIDocumentIntelligenceModelFactory
     {
-        /// <summary> Initializes a new instance of DocumentIntelligenceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentIntelligenceError(code, message, target, details?.ToList(), innererror);
         }
 
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.InnerError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="innerErrorObject"> Inner error. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.DocumentIntelligence
             return new InnerError(code, message, innerErrorObject);
         }
 
-        /// <summary> Initializes a new instance of AnalyzeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzeResult"/>. </summary>
         /// <param name="apiVersion"> API version used to produce this result. </param>
         /// <param name="modelId"> Document model ID used to produce this result. </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
@@ -74,7 +74,7 @@ namespace Azure.AI.DocumentIntelligence
             return new AnalyzeResult(apiVersion, modelId, stringIndexType, contentFormat, content, pages?.ToList(), paragraphs?.ToList(), tables?.ToList(), figures?.ToList(), lists?.ToList(), sections?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentPage"/>. </summary>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle">
         /// The general orientation of the content in clockwise direction, measured in
@@ -108,7 +108,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentPage(pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList(), barcodes?.ToList(), formulas?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentSpan"/>. </summary>
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>
         /// <param name="length"> Number of characters in the content represented by the span. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentSpan"/> instance for mocking. </returns>
@@ -117,7 +117,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentSpan(offset, length);
         }
 
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentWord"/>. </summary>
         /// <param name="content"> Text content of the word. </param>
         /// <param name="polygon">
         /// Bounding polygon of the word, with coordinates specified relative to the
@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentWord(content, polygon?.ToList(), span, confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentSelectionMark"/>. </summary>
         /// <param name="state"> State of the selection mark. </param>
         /// <param name="polygon">
         /// Bounding polygon of the selection mark, with coordinates specified relative
@@ -153,7 +153,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentSelectionMark(state, polygon?.ToList(), span, confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentLine"/>. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="polygon">
         /// Bounding polygon of the line, with coordinates specified relative to the
@@ -171,7 +171,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentLine(content, polygon?.ToList(), spans?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentBarcode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentBarcode"/>. </summary>
         /// <param name="kind"> Barcode kind. </param>
         /// <param name="value"> Barcode value. </param>
         /// <param name="polygon">
@@ -190,7 +190,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentBarcode(kind, value, polygon?.ToList(), span, confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentFormula. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFormula"/>. </summary>
         /// <param name="kind"> Formula kind. </param>
         /// <param name="value"> LaTex expression describing the formula. </param>
         /// <param name="polygon">
@@ -209,7 +209,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentFormula(kind, value, polygon?.ToList(), span, confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentParagraph. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentParagraph"/>. </summary>
         /// <param name="role"> Semantic role of the paragraph. </param>
         /// <param name="content"> Concatenated content of the paragraph in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the paragraph. </param>
@@ -223,7 +223,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentParagraph(role, content, boundingRegions?.ToList(), spans?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BoundingRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BoundingRegion"/>. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
         /// <param name="polygon">
         /// Bounding polygon on the page, or the entire page if not specified.
@@ -239,7 +239,7 @@ namespace Azure.AI.DocumentIntelligence
             return new BoundingRegion(pageNumber, polygon?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
@@ -258,7 +258,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList(), caption, footnotes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentTableCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentTableCell"/>. </summary>
         /// <param name="kind"> Table cell kind. </param>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
@@ -278,7 +278,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentTableCell(kind, rowIndex, columnIndex, rowSpan, columnSpan, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentCaption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentCaption"/>. </summary>
         /// <param name="content"> Content of the caption. </param>
         /// <param name="boundingRegions"> Bounding regions covering the caption. </param>
         /// <param name="spans"> Location of the caption in the reading order concatenated content. </param>
@@ -293,7 +293,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentCaption(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentFootnote. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFootnote"/>. </summary>
         /// <param name="content"> Content of the footnote. </param>
         /// <param name="boundingRegions"> Bounding regions covering the footnote. </param>
         /// <param name="spans"> Location of the footnote in the reading order concatenated content. </param>
@@ -308,7 +308,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentFootnote(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentFigure. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFigure"/>. </summary>
         /// <param name="boundingRegions"> Bounding regions covering the figure. </param>
         /// <param name="spans"> Location of the figure in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the figure, excluding any caption or footnotes. </param>
@@ -325,7 +325,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentFigure(boundingRegions?.ToList(), spans?.ToList(), elements?.ToList(), caption, footnotes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentList"/>. </summary>
         /// <param name="spans"> Location of the list in the reading order concatenated content. </param>
         /// <param name="items"> Items in the list. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentList"/> instance for mocking. </returns>
@@ -337,7 +337,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentList(spans?.ToList(), items?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentListItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentListItem"/>. </summary>
         /// <param name="level"> Level of the list item (1-indexed). </param>
         /// <param name="content"> Content of the list item. </param>
         /// <param name="boundingRegions"> Bounding regions covering the list item. </param>
@@ -353,7 +353,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentListItem(level, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentSection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentSection"/>. </summary>
         /// <param name="spans"> Location of the section in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the section. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentSection"/> instance for mocking. </returns>
@@ -365,7 +365,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentSection(spans?.ToList(), elements?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentKeyValuePair"/>. </summary>
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="value"> Field value of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
@@ -375,7 +375,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentKeyValuePair(key, value, confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentKeyValueElement"/>. </summary>
         /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the key-value element. </param>
         /// <param name="spans"> Location of the key-value element in the reading order concatenated content. </param>
@@ -388,7 +388,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentKeyValueElement(content, boundingRegions?.ToList(), spans?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentStyle"/>. </summary>
         /// <param name="isHandwritten"> Is content handwritten?. </param>
         /// <param name="similarFontFamily">
         /// Visually most similar font from among the set of supported font families, with
@@ -408,7 +408,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentStyle(isHandwritten, similarFontFamily, fontStyle, fontWeight, color, backgroundColor, spans?.ToList(), confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentLanguage"/>. </summary>
         /// <param name="locale">
         /// Detected language.  Value may an ISO 639-1 language code (ex. "en", "fr")
         /// or BCP 47 language tag (ex. "zh-Hans").
@@ -426,7 +426,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentLanguage(locale, spans?.ToList(), confidence);
         }
 
-        /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzedDocument"/>. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="boundingRegions"> Bounding regions covering the document. </param>
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
@@ -442,7 +442,7 @@ namespace Azure.AI.DocumentIntelligence
             return new AnalyzedDocument(docType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentField. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentField"/>. </summary>
         /// <param name="type"> Data type of the field value. </param>
         /// <param name="valueString"> String value. </param>
         /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>
@@ -473,7 +473,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentField(type, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMark, valueSignature, valueCountryRegion, valueArray?.ToList(), valueObject, valueCurrency, valueAddress, valueBoolean, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
-        /// <summary> Initializes a new instance of CurrencyValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CurrencyValue"/>. </summary>
         /// <param name="amount"> Currency amount. </param>
         /// <param name="currencySymbol"> Currency symbol label, if any. </param>
         /// <param name="currencyCode"> Resolved currency code (ISO 4217), if any. </param>
@@ -483,7 +483,7 @@ namespace Azure.AI.DocumentIntelligence
             return new CurrencyValue(amount, currencySymbol, currencyCode);
         }
 
-        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AddressValue"/>. </summary>
         /// <param name="houseNumber"> House or building number. </param>
         /// <param name="poBox"> Post office box number. </param>
         /// <param name="road"> Street name. </param>
@@ -507,7 +507,7 @@ namespace Azure.AI.DocumentIntelligence
             return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit, cityDistrict, stateDistrict, suburb, house, level);
         }
 
-        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the document model was created. </param>
@@ -533,7 +533,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentModelDetails(modelId, description, createdDateTime, expirationDateTime, apiVersion, tags, buildMode, azureBlobSource, azureBlobFileListSource, docTypes);
         }
 
-        /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentTypeDetails"/>. </summary>
         /// <param name="description"> Document model description. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
@@ -547,7 +547,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFieldSchema"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="description"> Field description. </param>
         /// <param name="example"> Example field content. </param>
@@ -561,7 +561,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentFieldSchema(type, description, example, items, properties);
         }
 
-        /// <summary> Initializes a new instance of ResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.ResourceDetails"/>. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
         /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> or <paramref name="customNeuralDocumentModelBuilds"/> is null. </exception>
@@ -580,7 +580,7 @@ namespace Azure.AI.DocumentIntelligence
             return new ResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds);
         }
 
-        /// <summary> Initializes a new instance of CustomDocumentModelsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/>. </summary>
         /// <param name="count"> Number of custom document models in the current resource. </param>
         /// <param name="limit"> Maximum number of custom document models supported in the current resource. </param>
         /// <returns> A new <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/> instance for mocking. </returns>
@@ -589,7 +589,7 @@ namespace Azure.AI.DocumentIntelligence
             return new CustomDocumentModelsDetails(count, limit);
         }
 
-        /// <summary> Initializes a new instance of QuotaDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.QuotaDetails"/>. </summary>
         /// <param name="used"> Amount of the resource quota used. </param>
         /// <param name="quota"> Resource quota limit. </param>
         /// <param name="quotaResetDateTime"> Date/time when the resource quota usage will be reset. </param>
@@ -599,7 +599,7 @@ namespace Azure.AI.DocumentIntelligence
             return new QuotaDetails(used, quota, quotaResetDateTime);
         }
 
-        /// <summary> Initializes a new instance of OperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.OperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -618,64 +618,7 @@ namespace Azure.AI.DocumentIntelligence
             return new UnknownOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion, tags, error);
         }
 
-        /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="error"> Encountered error. </param>
-        /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DocumentModelBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelBuild, resourceLocation, apiVersion, tags, error, result);
-        }
-
-        /// <summary> Initializes a new instance of DocumentModelComposeOperationDetails. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="error"> Encountered error. </param>
-        /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DocumentModelComposeOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCompose, resourceLocation, apiVersion, tags, error, result);
-        }
-
-        /// <summary> Initializes a new instance of DocumentModelCopyToOperationDetails. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="error"> Encountered error. </param>
-        /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCopyTo, resourceLocation, apiVersion, tags, error, result);
-        }
-
-        /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -694,7 +637,7 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentClassifierBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentClassifierBuild, resourceLocation, apiVersion, tags, error, result);
         }
 
-        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the document classifier was created. </param>
@@ -707,6 +650,63 @@ namespace Azure.AI.DocumentIntelligence
             docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
 
             return new DocumentClassifierDetails(classifierId, description, createdDateTime, expirationDateTime, apiVersion, docTypes);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/>. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelBuild, resourceLocation, apiVersion, tags, error, result);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/>. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelComposeOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCompose, resourceLocation, apiVersion, tags, error, result);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/>. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCopyTo, resourceLocation, apiVersion, tags, error, result);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> The UnknownReplicationExtensionModelCustomProperties. </summary>
     internal partial class UnknownReplicationExtensionModelCustomProperties : ReplicationExtensionModelCustomProperties
     {
-        /// <summary> Initializes a new instance of UnknownReplicationExtensionModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownReplicationExtensionModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal UnknownReplicationExtensionModelCustomProperties(string instanceType) : base(instanceType)
         {

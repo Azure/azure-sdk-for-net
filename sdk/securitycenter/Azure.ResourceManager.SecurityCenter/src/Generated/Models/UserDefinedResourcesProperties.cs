@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Properties of the IoT Security solution's user defined resources. </summary>
     public partial class UserDefinedResourcesProperties
     {
-        /// <summary> Initializes a new instance of UserDefinedResourcesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserDefinedResourcesProperties"/>. </summary>
         /// <param name="query"> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </param>
         /// <param name="querySubscriptions"> List of Azure subscription ids on which the user defined resources query should be executed. </param>
         public UserDefinedResourcesProperties(string query, IEnumerable<string> querySubscriptions)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             QuerySubscriptions = querySubscriptions?.ToList();
         }
 
-        /// <summary> Initializes a new instance of UserDefinedResourcesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserDefinedResourcesProperties"/>. </summary>
         /// <param name="query"> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </param>
         /// <param name="querySubscriptions"> List of Azure subscription ids on which the user defined resources query should be executed. </param>
         internal UserDefinedResourcesProperties(string query, IList<string> querySubscriptions)

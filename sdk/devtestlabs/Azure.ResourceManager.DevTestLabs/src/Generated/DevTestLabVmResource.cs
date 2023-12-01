@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabVm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabVmResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabVmResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource" /> using the GetDevTestLabVm method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabVmResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabVmResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabVm method.
     /// </summary>
     public partial class DevTestLabVmResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabVmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabVmResource(ArmClient client, DevTestLabVmData data) : this(client, data.Id)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A file containing a set of parameter values for an ARM template. </summary>
     public partial class DevTestLabParametersValueFileInfo
     {
-        /// <summary> Initializes a new instance of DevTestLabParametersValueFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabParametersValueFileInfo"/>. </summary>
         internal DevTestLabParametersValueFileInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabParametersValueFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabParametersValueFileInfo"/>. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="parametersValueInfo"> Contents of the file. </param>
         internal DevTestLabParametersValueFileInfo(string fileName, BinaryData parametersValueInfo)

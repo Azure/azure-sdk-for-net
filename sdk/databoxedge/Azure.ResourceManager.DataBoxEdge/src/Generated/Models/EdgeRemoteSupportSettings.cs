@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> RemoteApplicationType for which remote support settings is being modified. </summary>
     public partial class EdgeRemoteSupportSettings
     {
-        /// <summary> Initializes a new instance of EdgeRemoteSupportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeRemoteSupportSettings"/>. </summary>
         public EdgeRemoteSupportSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeRemoteSupportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeRemoteSupportSettings"/>. </summary>
         /// <param name="remoteApplicationType"> Remote application type. </param>
         /// <param name="accessLevel"> Access level allowed for this remote application type. </param>
         /// <param name="expireOn"> Expiration time stamp. </param>

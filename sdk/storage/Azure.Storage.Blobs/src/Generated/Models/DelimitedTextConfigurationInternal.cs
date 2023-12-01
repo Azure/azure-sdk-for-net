@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </summary>
     internal partial class DelimitedTextConfigurationInternal
     {
-        /// <summary> Initializes a new instance of DelimitedTextConfigurationInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextConfigurationInternal"/>. </summary>
         public DelimitedTextConfigurationInternal()
         {
         }

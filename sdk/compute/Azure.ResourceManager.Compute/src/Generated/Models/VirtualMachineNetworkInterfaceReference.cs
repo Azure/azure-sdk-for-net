@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a network interface reference. </summary>
     public partial class VirtualMachineNetworkInterfaceReference : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceReference"/>. </summary>
         public VirtualMachineNetworkInterfaceReference()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceReference"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Page of a governance assignments list. </summary>
     internal partial class GovernanceAssignmentsList
     {
-        /// <summary> Initializes a new instance of GovernanceAssignmentsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentsList"/>. </summary>
         internal GovernanceAssignmentsList()
         {
             Value = new ChangeTrackingList<GovernanceAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of GovernanceAssignmentsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentsList"/>. </summary>
         /// <param name="value"> Collection of governance assignments in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal GovernanceAssignmentsList(IReadOnlyList<GovernanceAssignmentData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Indicates the error details if the background copy of a resource created via the CopyStart operation fails. </summary>
     public partial class CopyCompletionError
     {
-        /// <summary> Initializes a new instance of CopyCompletionError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyCompletionError"/>. </summary>
         /// <param name="errorCode"> Indicates the error code if the background copy of a resource created via the CopyStart operation fails. </param>
         /// <param name="errorMessage"> Indicates the error message if the background copy of a resource created via the CopyStart operation fails. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errorMessage"/> is null. </exception>

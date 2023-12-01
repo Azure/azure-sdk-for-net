@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The presentation time range, this is asset related and not recommended for Account Filter. </summary>
     public partial class PresentationTimeRange
     {
-        /// <summary> Initializes a new instance of PresentationTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresentationTimeRange"/>. </summary>
         public PresentationTimeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of PresentationTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresentationTimeRange"/>. </summary>
         /// <param name="startTimestamp"> The absolute start time boundary. </param>
         /// <param name="endTimestamp"> The absolute end time boundary. </param>
         /// <param name="presentationWindowDuration"> The relative to end sliding window. </param>

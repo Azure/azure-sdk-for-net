@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents MDATP (Microsoft Defender Advanced Threat Protection) data connector. </summary>
     public partial class MdatpDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of MdatpDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdatpDataConnector"/>. </summary>
         public MdatpDataConnector()
         {
             Kind = DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection;
         }
 
-        /// <summary> Initializes a new instance of MdatpDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdatpDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

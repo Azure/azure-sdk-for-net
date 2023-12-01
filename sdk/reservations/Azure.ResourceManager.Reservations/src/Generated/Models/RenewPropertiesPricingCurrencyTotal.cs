@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </summary>
     public partial class RenewPropertiesPricingCurrencyTotal
     {
-        /// <summary> Initializes a new instance of RenewPropertiesPricingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewPropertiesPricingCurrencyTotal"/>. </summary>
         internal RenewPropertiesPricingCurrencyTotal()
         {
         }
 
-        /// <summary> Initializes a new instance of RenewPropertiesPricingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewPropertiesPricingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         internal RenewPropertiesPricingCurrencyTotal(string currencyCode, float? amount)

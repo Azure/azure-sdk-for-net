@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Request body to authorize document model copy. </summary>
     public partial class AuthorizeCopyContent
     {
-        /// <summary> Initializes a new instance of AuthorizeCopyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizeCopyContent"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public AuthorizeCopyContent(string modelId)
@@ -25,7 +25,7 @@ namespace Azure.AI.DocumentIntelligence
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizeCopyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizeCopyContent"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>

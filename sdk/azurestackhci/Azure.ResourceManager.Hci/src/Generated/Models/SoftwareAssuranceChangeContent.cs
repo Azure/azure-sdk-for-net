@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The SoftwareAssuranceChangeContent. </summary>
     public partial class SoftwareAssuranceChangeContent
     {
-        /// <summary> Initializes a new instance of SoftwareAssuranceChangeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceChangeContent"/>. </summary>
         public SoftwareAssuranceChangeContent()
         {
         }

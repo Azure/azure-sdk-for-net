@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of ContentKeyPolicy items. </summary>
     internal partial class ContentKeyPolicyListResult
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyListResult"/>. </summary>
         internal ContentKeyPolicyListResult()
         {
             Value = new ChangeTrackingList<ContentKeyPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyListResult"/>. </summary>
         /// <param name="value"> A collection of ContentKeyPolicy items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
         internal ContentKeyPolicyListResult(IReadOnlyList<ContentKeyPolicyData> value, string odataNextLink)

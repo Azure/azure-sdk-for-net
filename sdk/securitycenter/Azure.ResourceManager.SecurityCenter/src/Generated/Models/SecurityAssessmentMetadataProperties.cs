@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes properties of an assessment metadata. </summary>
     public partial class SecurityAssessmentMetadataProperties
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataProperties"/>. </summary>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="severity"> The severity level of the assessment. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AssessmentType = assessmentType;
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataProperties"/>. </summary>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="policyDefinitionId"> Azure resource ID of the policy definition that turns this assessment calculation on. </param>
         /// <param name="description"> Human readable description of the assessment. </param>

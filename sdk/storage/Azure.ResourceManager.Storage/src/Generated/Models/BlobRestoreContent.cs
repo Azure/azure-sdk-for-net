@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Blob restore parameters. </summary>
     public partial class BlobRestoreContent
     {
-        /// <summary> Initializes a new instance of BlobRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobRestoreContent"/>. </summary>
         /// <param name="timeToRestore"> Restore blob to the specified time. </param>
         /// <param name="blobRanges"> Blob ranges to restore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobRanges"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             BlobRanges = blobRanges.ToList();
         }
 
-        /// <summary> Initializes a new instance of BlobRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobRestoreContent"/>. </summary>
         /// <param name="timeToRestore"> Restore blob to the specified time. </param>
         /// <param name="blobRanges"> Blob ranges to restore. </param>
         internal BlobRestoreContent(DateTimeOffset timeToRestore, IList<BlobRestoreRange> blobRanges)

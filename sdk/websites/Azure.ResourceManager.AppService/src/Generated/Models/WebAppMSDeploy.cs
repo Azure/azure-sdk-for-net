@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MSDeploy ARM PUT information. </summary>
     public partial class WebAppMSDeploy : ResourceData
     {
-        /// <summary> Initializes a new instance of WebAppMSDeploy. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMSDeploy"/>. </summary>
         public WebAppMSDeploy()
         {
             SetParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WebAppMSDeploy. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMSDeploy"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

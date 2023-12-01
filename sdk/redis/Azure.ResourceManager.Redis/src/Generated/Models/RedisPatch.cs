@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Parameters supplied to the Update Redis operation. </summary>
     public partial class RedisPatch
     {
-        /// <summary> Initializes a new instance of RedisPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPatch"/>. </summary>
         public RedisPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

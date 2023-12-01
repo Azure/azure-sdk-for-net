@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Configure pairing input. </summary>
     public partial class ProtectionContainerMappingCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ProtectionContainerMappingCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingCreateOrUpdateContent"/>. </summary>
         public ProtectionContainerMappingCreateOrUpdateContent()
         {
         }

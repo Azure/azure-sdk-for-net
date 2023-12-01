@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Delimited text write settings. </summary>
     public partial class DelimitedTextWriteSettings : FormatWriteSettings
     {
-        /// <summary> Initializes a new instance of DelimitedTextWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextWriteSettings"/>. </summary>
         /// <param name="fileExtension"> The file extension used to create the files. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileExtension"/> is null. </exception>
         public DelimitedTextWriteSettings(DataFactoryElement<string> fileExtension)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             FormatWriteSettingsType = "DelimitedTextWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of DelimitedTextWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextWriteSettings"/>. </summary>
         /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="quoteAllText"> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </param>

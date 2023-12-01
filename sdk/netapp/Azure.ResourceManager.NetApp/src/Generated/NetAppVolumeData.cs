@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume or 2400Tib for LargeVolume on exceptional basis. Specified in bytes. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp
             PlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

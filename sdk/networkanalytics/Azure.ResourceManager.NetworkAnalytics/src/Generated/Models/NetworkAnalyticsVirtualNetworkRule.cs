@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Virtual Network Rule. </summary>
     public partial class NetworkAnalyticsVirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of NetworkAnalyticsVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Resource ID of a subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public NetworkAnalyticsVirtualNetworkRule(string id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of NetworkAnalyticsVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Resource ID of a subnet. </param>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>

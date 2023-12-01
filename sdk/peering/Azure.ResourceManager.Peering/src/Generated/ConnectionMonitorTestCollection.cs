@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Peering
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConnectionMonitorTestResource" /> and their operations.
-    /// Each <see cref="ConnectionMonitorTestResource" /> in the collection will belong to the same instance of <see cref="PeeringServiceResource" />.
-    /// To get a <see cref="ConnectionMonitorTestCollection" /> instance call the GetConnectionMonitorTests method from an instance of <see cref="PeeringServiceResource" />.
+    /// A class representing a collection of <see cref="ConnectionMonitorTestResource"/> and their operations.
+    /// Each <see cref="ConnectionMonitorTestResource"/> in the collection will belong to the same instance of <see cref="PeeringServiceResource"/>.
+    /// To get a <see cref="ConnectionMonitorTestCollection"/> instance call the GetConnectionMonitorTests method from an instance of <see cref="PeeringServiceResource"/>.
     /// </summary>
     public partial class ConnectionMonitorTestCollection : ArmCollection, IEnumerable<ConnectionMonitorTestResource>, IAsyncEnumerable<ConnectionMonitorTestResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectionMonitorTestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConnectionMonitorTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectionMonitorTestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorTestRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectionMonitorTestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConnectionMonitorTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectionMonitorTestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorTestRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

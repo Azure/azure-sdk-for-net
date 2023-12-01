@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> The assignment for a worker to a job. </summary>
     public partial class RouterWorkerAssignment
     {
-        /// <summary> Initializes a new instance of RouterWorkerAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerAssignment"/>. </summary>
         /// <param name="assignmentId"> Id of the assignment. </param>
         /// <param name="jobId"> Id of the job assigned. </param>
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>

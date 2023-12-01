@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class GalleryImageList
     {
-        /// <summary> Initializes a new instance of GalleryImageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageList"/>. </summary>
         internal GalleryImageList()
         {
             Value = new ChangeTrackingList<DevTestLabGalleryImage>();
         }
 
-        /// <summary> Initializes a new instance of GalleryImageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal GalleryImageList(IReadOnlyList<DevTestLabGalleryImage> value, string nextLink)

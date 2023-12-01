@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a network interface. </summary>
     public partial class DevTestLabNetworkInterface
     {
-        /// <summary> Initializes a new instance of DevTestLabNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNetworkInterface"/>. </summary>
         public DevTestLabNetworkInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNetworkInterface"/>. </summary>
         /// <param name="virtualNetworkId"> The resource ID of the virtual network. </param>
         /// <param name="subnetId"> The resource ID of the sub net. </param>
         /// <param name="publicIPAddressId"> The resource ID of the public IP address. </param>

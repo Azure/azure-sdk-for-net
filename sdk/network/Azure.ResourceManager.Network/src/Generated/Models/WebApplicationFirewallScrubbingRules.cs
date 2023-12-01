@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Allow certain variables to be scrubbed on WAF logs. </summary>
     public partial class WebApplicationFirewallScrubbingRules
     {
-        /// <summary> Initializes a new instance of WebApplicationFirewallScrubbingRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallScrubbingRules"/>. </summary>
         /// <param name="matchVariable"> The variable to be scrubbed from the logs. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </param>
         public WebApplicationFirewallScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable, ScrubbingRuleEntryMatchOperator selectorMatchOperator)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             SelectorMatchOperator = selectorMatchOperator;
         }
 
-        /// <summary> Initializes a new instance of WebApplicationFirewallScrubbingRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallScrubbingRules"/>. </summary>
         /// <param name="matchVariable"> The variable to be scrubbed from the logs. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to. </param>

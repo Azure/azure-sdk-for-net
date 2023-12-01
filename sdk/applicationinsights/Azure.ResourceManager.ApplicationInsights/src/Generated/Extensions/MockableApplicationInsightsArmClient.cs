@@ -61,10 +61,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual async Task<Response<LiveTokenResponse>> GetLiveTokenAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
             scope0.Start();
             try
@@ -92,10 +95,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Response<LiveTokenResponse> GetLiveToken(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
             scope0.Start();
             try
@@ -110,11 +116,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             }
         }
         /// <summary>
-        /// Gets an object representing an <see cref="ApplicationInsightsComponentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationInsightsComponentResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApplicationInsightsComponentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationInsightsComponentResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationInsightsComponentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApplicationInsightsComponentResource"/> object. </returns>
         public virtual ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(ResourceIdentifier id)
         {
             ApplicationInsightsComponentResource.ValidateResourceId(id);
@@ -122,11 +128,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebTestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebTestResource.CreateResourceIdentifier" /> to create a <see cref="WebTestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebTestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebTestResource.CreateResourceIdentifier" /> to create a <see cref="WebTestResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebTestResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WebTestResource"/> object. </returns>
         public virtual WebTestResource GetWebTestResource(ResourceIdentifier id)
         {
             WebTestResource.ValidateResourceId(id);
@@ -134,11 +140,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkbookTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkbookTemplateResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkbookTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkbookTemplateResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkbookTemplateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkbookTemplateResource"/> object. </returns>
         public virtual WorkbookTemplateResource GetWorkbookTemplateResource(ResourceIdentifier id)
         {
             WorkbookTemplateResource.ValidateResourceId(id);
@@ -146,11 +152,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MyWorkbookResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MyWorkbookResource.CreateResourceIdentifier" /> to create a <see cref="MyWorkbookResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MyWorkbookResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MyWorkbookResource.CreateResourceIdentifier" /> to create a <see cref="MyWorkbookResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MyWorkbookResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MyWorkbookResource"/> object. </returns>
         public virtual MyWorkbookResource GetMyWorkbookResource(ResourceIdentifier id)
         {
             MyWorkbookResource.ValidateResourceId(id);
@@ -158,11 +164,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkbookResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkbookResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkbookResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkbookResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkbookResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkbookResource"/> object. </returns>
         public virtual WorkbookResource GetWorkbookResource(ResourceIdentifier id)
         {
             WorkbookResource.ValidateResourceId(id);
@@ -170,11 +176,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkbookRevisionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkbookRevisionResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkbookRevisionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkbookRevisionResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookRevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkbookRevisionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkbookRevisionResource"/> object. </returns>
         public virtual WorkbookRevisionResource GetWorkbookRevisionResource(ResourceIdentifier id)
         {
             WorkbookRevisionResource.ValidateResourceId(id);
@@ -182,11 +188,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ComponentLinkedStorageAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComponentLinkedStorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="ComponentLinkedStorageAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ComponentLinkedStorageAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComponentLinkedStorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="ComponentLinkedStorageAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComponentLinkedStorageAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ComponentLinkedStorageAccountResource"/> object. </returns>
         public virtual ComponentLinkedStorageAccountResource GetComponentLinkedStorageAccountResource(ResourceIdentifier id)
         {
             ComponentLinkedStorageAccountResource.ValidateResourceId(id);

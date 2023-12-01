@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Default source properties. </summary>
     public partial class DefaultResourceProperties : BaseResourceProperties
     {
-        /// <summary> Initializes a new instance of DefaultResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultResourceProperties"/>. </summary>
         public DefaultResourceProperties()
         {
             ObjectType = ResourcePropertiesObjectType.DefaultResourceProperties;
         }
 
-        /// <summary> Initializes a new instance of DefaultResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultResourceProperties"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal DefaultResourceProperties(ResourcePropertiesObjectType objectType) : base(objectType)
         {

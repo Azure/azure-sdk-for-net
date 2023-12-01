@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Environment information. </summary>
     public partial class MachineLearningComputeInstanceEnvironmentInfo
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceEnvironmentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceEnvironmentInfo"/>. </summary>
         internal MachineLearningComputeInstanceEnvironmentInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceEnvironmentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceEnvironmentInfo"/>. </summary>
         /// <param name="name"> name of environment. </param>
         /// <param name="version"> version of environment. </param>
         internal MachineLearningComputeInstanceEnvironmentInfo(string name, string version)
