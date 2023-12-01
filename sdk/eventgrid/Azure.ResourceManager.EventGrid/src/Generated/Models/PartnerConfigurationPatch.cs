@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationPatch"/>. </summary>
+        /// <param name="tags"> Tags of the partner configuration resource. </param>
+        /// <param name="defaultMaximumExpirationTimeInDays"> The default time used to validate the maximum expiration time for each authorized partners in days. Allowed values ar between 1 and 365 days. </param>
+        internal PartnerConfigurationPatch(IDictionary<string, string> tags, int? defaultMaximumExpirationTimeInDays)
+        {
+            Tags = tags;
+            DefaultMaximumExpirationTimeInDays = defaultMaximumExpirationTimeInDays;
+        }
+
         /// <summary> Tags of the partner configuration resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The default time used to validate the maximum expiration time for each authorized partners in days. Allowed values ar between 1 and 365 days. </summary>

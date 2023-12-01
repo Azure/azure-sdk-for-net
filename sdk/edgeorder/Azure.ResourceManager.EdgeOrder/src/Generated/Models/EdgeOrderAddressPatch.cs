@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressPatch"/>. </summary>
+        /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
+        /// <param name="shippingAddress"> Shipping details for the address. </param>
+        /// <param name="contactDetails"> Contact details for the address. </param>
+        internal EdgeOrderAddressPatch(IDictionary<string, string> tags, EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails)
+        {
+            Tags = tags;
+            ShippingAddress = shippingAddress;
+            ContactDetails = contactDetails;
+        }
+
         /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Shipping details for the address. </summary>

@@ -20,6 +20,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SystemTopicPatch"/>. </summary>
+        /// <param name="tags"> Tags of the system topic. </param>
+        /// <param name="identity"> Resource identity information. </param>
+        internal SystemTopicPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity)
+        {
+            Tags = tags;
+            Identity = identity;
+        }
+
         /// <summary> Tags of the system topic. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Resource identity information. </summary>

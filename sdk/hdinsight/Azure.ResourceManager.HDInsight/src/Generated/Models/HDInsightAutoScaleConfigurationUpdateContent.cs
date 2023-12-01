@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleConfigurationUpdateContent"/>. </summary>
+        /// <param name="autoScale"> The autoscale configuration. </param>
+        internal HDInsightAutoScaleConfigurationUpdateContent(HDInsightAutoScaleConfiguration autoScale)
+        {
+            AutoScale = autoScale;
+        }
+
         /// <summary> The autoscale configuration. </summary>
         public HDInsightAutoScaleConfiguration AutoScale { get; set; }
     }
