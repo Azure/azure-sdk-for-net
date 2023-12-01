@@ -1,20 +1,11 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2023-12-01)
 
 ### Features Added
 
-### Breaking Changes
+- Track 2 initial commit for ArcVm resources.
 
-### Bugs Fixed
-
-### Other Changes
-
-## 1.0.3 (2023-11-30)
-
-### Breaking Changes
-
-- Track 2 initial commit for ArcVm resources under the Microsoft.AzureStackHci namespace.
 ## 1.1.0 (2023-11-27)
 
 ### Features Added
