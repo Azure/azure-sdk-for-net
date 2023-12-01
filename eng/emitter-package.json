@@ -1,14 +1,17 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-tools/typespec-csharp": "0.2.0-beta.20231130.1"
+    "@azure-tools/typespec-csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/@azure-tools/typespec-csharp/-/typespec-csharp-0.2.0-alpha.20231130.7.tgz"
   },
   "devDependencies": {
-    "@azure-tools/typespec-azure-core": "0.36.0",
+    "@typespec/http": "0.50.0",
     "@typespec/versioning": "0.50.0",
     "@typespec/rest": "0.50.0",
-    "@azure-tools/typespec-client-generator-core": "0.36.1",
-    "@typespec/http": "0.50.0",
-    "@typespec/compiler": "0.50.0"
+    "@azure-tools/typespec-client-generator-core": "https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzMwOTE0NC9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%2Fazure-tools-typespec-client-generator-core-0.37.0-pr-3809.20231130.16.tgz",
+    "@typespec/compiler": "0.50.0",
+    "@azure-tools/typespec-azure-core": "0.36.0"
+  },
+  "overrides": {
+    "@autorest/csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/@autorest/csharp/-/csharp-3.0.0-alpha.20231130.7.tgz"
   }
 }
