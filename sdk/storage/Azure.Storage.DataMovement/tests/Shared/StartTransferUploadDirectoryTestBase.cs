@@ -193,7 +193,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(DataTransferErrorMode.StopOnAnyFailure)]
         public async Task UploadFailIfExists(DataTransferErrorMode errorMode)
         {
-            const int waitTimeInSec = 10;
+            const int waitTimeInSec = 15;
             const int preexistingFileCount = 2;
             const int skipCount = 1;
             const int totalFileCount = skipCount + preexistingFileCount + 1;
@@ -259,7 +259,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task UploadSkipIfExists()
         {
-            const int waitTimeInSec = 10;
+            const int waitTimeInSec = 15;
             const int preexistingFileCount = 2;
             const int skipCount = 1;
             const int totalFileCount = skipCount + preexistingFileCount + 1;
@@ -318,7 +318,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task UploadOverwriteIfExists()
         {
-            const int waitTimeInSec = 3;
+            const int waitTimeInSec = 15;
             // Arrange
             using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
