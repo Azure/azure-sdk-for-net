@@ -23,15 +23,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Specifies the kind of usage details. </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConsumptionUsageDetail"/> instance for mocking. </returns>
-        public static ConsumptionUsageDetail ConsumptionUsageDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static ConsumptionUsageDetail ConsumptionUsageDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionUsageDetail(id, name, resourceType, systemData, kind, etag, tags);
+            return new ConsumptionUsageDetail(id, name, resourceType, systemData, kind: default, etag, tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMarketplace"/>. </summary>
@@ -137,12 +136,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionChargeSummary"/> instance for mocking. </returns>
-        public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null)
         {
-            return new ConsumptionChargeSummary(id, name, resourceType, systemData, kind, etag);
+            return new ConsumptionChargeSummary(id, name, resourceType, systemData, kind: default, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceResult"/>. </summary>
@@ -256,17 +254,16 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
         /// <returns> A new <see cref="Models.ConsumptionReservationRecommendation"/> instance for mocking. </returns>
-        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null)
+        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionReservationRecommendation(id, name, resourceType, systemData, kind, etag, tags, location, sku);
+            return new ConsumptionReservationRecommendation(id, name, resourceType, systemData, kind: default, etag, tags, location, sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendationDetails"/>. </summary>
@@ -675,7 +672,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionLegacyUsageDetail(id, name, resourceType, systemData, UsageDetailsKind.Legacy, etag, tags, billingAccountId, billingAccountName, billingPeriodStartOn, billingPeriodEndOn, billingProfileId, billingProfileName, accountOwnerId, accountName, subscriptionId, subscriptionName, @on, product, partNumber, meterId, meterDetails, quantity, effectivePrice, cost, unitPrice, billingCurrency, resourceLocation, consumedService, resourceId, resourceName, serviceInfo1, serviceInfo2, additionalInfo, invoiceSection, costCenter, resourceGroup, reservationId, reservationName, productOrderId, productOrderName, offerId, isAzureCreditEligible, term, publisherName, publisherType, planName, chargeType, frequency, payGPrice, benefitId, benefitName, pricingModel);
+            return new ConsumptionLegacyUsageDetail(id, name, resourceType, systemData, kind: default, etag, tags, billingAccountId, billingAccountName, billingPeriodStartOn, billingPeriodEndOn, billingProfileId, billingProfileName, accountOwnerId, accountName, subscriptionId, subscriptionName, @on, product, partNumber, meterId, meterDetails, quantity, effectivePrice, cost, unitPrice, billingCurrency, resourceLocation, consumedService, resourceId, resourceName, serviceInfo1, serviceInfo2, additionalInfo, invoiceSection, costCenter, resourceGroup, reservationId, reservationName, productOrderId, productOrderName, offerId, isAzureCreditEligible, term, publisherName, publisherType, planName, chargeType, frequency, payGPrice, benefitId, benefitName, pricingModel);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMeterDetailsInfo"/>. </summary>
@@ -774,7 +771,38 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionModernUsageDetail(id, name, resourceType, systemData, UsageDetailsKind.Modern, etag, tags, billingAccountId, effectivePrice, pricingModel, billingAccountName, billingPeriodStartOn, billingPeriodEndOn, billingProfileId, billingProfileName, subscriptionGuid, subscriptionName, @on, product, meterId, meterName, meterRegion, meterCategory, meterSubCategory, serviceFamily, quantity, unitOfMeasure, instanceName, costInUSD, unitPrice, billingCurrencyCode, resourceLocation, consumedService, serviceInfo1, serviceInfo2, additionalInfo, invoiceSectionId, invoiceSectionName, costCenter, resourceGroup, reservationId, reservationName, productOrderId, productOrderName, isAzureCreditEligible, term, publisherName, publisherType, chargeType, frequency, costInBillingCurrency, costInPricingCurrency, exchangeRate, exchangeRateOn, invoiceId, previousInvoiceId, pricingCurrencyCode, productIdentifier, resourceLocationNormalized, servicePeriodStartOn, servicePeriodEndOn, customerTenantId, customerName, partnerTenantId, partnerName, resellerMpnId, resellerName, publisherId, marketPrice, exchangeRatePricingToBilling, paygCostInBillingCurrency, paygCostInUSD, partnerEarnedCreditRate, partnerEarnedCreditApplied, payGPrice, benefitId, benefitName, provider, costAllocationRuleName);
+            return new ConsumptionModernUsageDetail(id, name, resourceType, systemData, kind: default, etag, tags, billingAccountId, effectivePrice, pricingModel, billingAccountName, billingPeriodStartOn, billingPeriodEndOn, billingProfileId, billingProfileName, subscriptionGuid, subscriptionName, @on, product, meterId, meterName, meterRegion, meterCategory, meterSubCategory, serviceFamily, quantity, unitOfMeasure, instanceName, costInUSD, unitPrice, billingCurrencyCode, resourceLocation, consumedService, serviceInfo1, serviceInfo2, additionalInfo, invoiceSectionId, invoiceSectionName, costCenter, resourceGroup, reservationId, reservationName, productOrderId, productOrderName, isAzureCreditEligible, term, publisherName, publisherType, chargeType, frequency, costInBillingCurrency, costInPricingCurrency, exchangeRate, exchangeRateOn, invoiceId, previousInvoiceId, pricingCurrencyCode, productIdentifier, resourceLocationNormalized, servicePeriodStartOn, servicePeriodEndOn, customerTenantId, customerName, partnerTenantId, partnerName, resellerMpnId, resellerName, publisherId, marketPrice, exchangeRatePricingToBilling, paygCostInBillingCurrency, paygCostInUSD, partnerEarnedCreditRate, partnerEarnedCreditApplied, payGPrice, benefitId, benefitName, provider, costAllocationRuleName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyReservationRecommendation"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="sku"> Resource sku. </param>
+        /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
+        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
+        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
+        /// <param name="normalizedSize"> The normalized Size. </param>
+        /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
+        /// <param name="meterId"> The meter id (GUID). </param>
+        /// <param name="term"> RI recommendations in one or three year terms. </param>
+        /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
+        /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
+        /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
+        /// <param name="netSavings"> Total estimated savings with reserved instances. </param>
+        /// <param name="firstUsageOn"> The usage date for looking back. </param>
+        /// <param name="skuProperties"> List of sku properties. </param>
+        /// <returns> A new <see cref="Models.ConsumptionLegacyReservationRecommendation"/> instance for mocking. </returns>
+        public static ConsumptionLegacyReservationRecommendation ConsumptionLegacyReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null, string lookBackPeriod = null, float? instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = null, Guid? meterId = null, string term = null, decimal? costWithNoReservedInstances = null, decimal? recommendedQuantity = null, decimal? totalCostWithReservedInstances = null, decimal? netSavings = null, DateTimeOffset? firstUsageOn = null, IEnumerable<ConsumptionSkuProperty> skuProperties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            skuProperties ??= new List<ConsumptionSkuProperty>();
+
+            return new ConsumptionLegacyReservationRecommendation(id, name, resourceType, systemData, kind: default, etag, tags, location, sku, lookBackPeriod, instanceFlexibilityRatio, instanceFlexibilityGroup, normalizedSize, recommendedQuantityNormalized, meterId, term, costWithNoReservedInstances, recommendedQuantity, totalCostWithReservedInstances, netSavings, firstUsageOn, scope: null, skuProperties?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSkuProperty"/>. </summary>
@@ -817,7 +845,7 @@ namespace Azure.ResourceManager.Consumption.Models
             tags ??= new Dictionary<string, string>();
             skuProperties ??= new List<ConsumptionSkuProperty>();
 
-            return new ConsumptionModernReservationRecommendation(id, name, resourceType, systemData, ReservationRecommendationKind.Modern, etag, tags, location, sku, locationPropertiesLocation, lookBackPeriod, instanceFlexibilityRatio, instanceFlexibilityGroup, normalizedSize, recommendedQuantityNormalized, meterId, term, costWithNoReservedInstances, recommendedQuantity, totalCostWithReservedInstances, netSavings, firstUsageOn, scope, skuProperties?.ToList(), skuName);
+            return new ConsumptionModernReservationRecommendation(id, name, resourceType, systemData, kind: default, etag, tags, location, sku, locationPropertiesLocation, lookBackPeriod, instanceFlexibilityRatio, instanceFlexibilityGroup, normalizedSize, recommendedQuantityNormalized, meterId, term, costWithNoReservedInstances, recommendedQuantity, totalCostWithReservedInstances, netSavings, firstUsageOn, scope, skuProperties?.ToList(), skuName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyChargeSummary"/>. </summary>
@@ -836,7 +864,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionLegacyChargeSummary"/> instance for mocking. </returns>
         public static ConsumptionLegacyChargeSummary ConsumptionLegacyChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string billingPeriodId = null, string usageStart = null, string usageEnd = null, decimal? azureCharges = null, decimal? chargesBilledSeparately = null, decimal? marketplaceCharges = null, string currency = null)
         {
-            return new ConsumptionLegacyChargeSummary(id, name, resourceType, systemData, ChargeSummaryKind.Legacy, etag, billingPeriodId, usageStart, usageEnd, azureCharges, chargesBilledSeparately, marketplaceCharges, currency);
+            return new ConsumptionLegacyChargeSummary(id, name, resourceType, systemData, kind: default, etag, billingPeriodId, usageStart, usageEnd, azureCharges, chargesBilledSeparately, marketplaceCharges, currency);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernChargeSummary"/>. </summary>
@@ -859,7 +887,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionModernChargeSummary"/> instance for mocking. </returns>
         public static ConsumptionModernChargeSummary ConsumptionModernChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string billingPeriodId = null, string usageStart = null, string usageEnd = null, ConsumptionAmount azureCharges = null, ConsumptionAmount chargesBilledSeparately = null, ConsumptionAmount marketplaceCharges = null, string billingAccountId = null, string billingProfileId = null, string invoiceSectionId = null, string customerId = null, bool? isInvoiced = null)
         {
-            return new ConsumptionModernChargeSummary(id, name, resourceType, systemData, ChargeSummaryKind.Modern, etag, billingPeriodId, usageStart, usageEnd, azureCharges, chargesBilledSeparately, marketplaceCharges, billingAccountId, billingProfileId, invoiceSectionId, customerId, isInvoiced);
+            return new ConsumptionModernChargeSummary(id, name, resourceType, systemData, kind: default, etag, billingPeriodId, usageStart, usageEnd, azureCharges, chargesBilledSeparately, marketplaceCharges, billingAccountId, billingProfileId, invoiceSectionId, customerId, isInvoiced);
         }
     }
 }

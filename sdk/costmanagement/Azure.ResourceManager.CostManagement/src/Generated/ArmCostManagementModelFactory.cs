@@ -48,11 +48,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to 'totalHours' in the look-back period. </param>
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
-        /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationProperties"/> instance for mocking. </returns>
-        public static BenefitRecommendationProperties BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null, string scope = "Unknown")
+        public static BenefitRecommendationProperties BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null)
         {
-            return new UnknownBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope);
+            return new UnknownBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecommendationUsageDetails"/>. </summary>
@@ -107,11 +106,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Supported values: 'SavingsPlan'. </param>
         /// <returns> A new <see cref="Models.BenefitUtilizationSummary"/> instance for mocking. </returns>
-        public static BenefitUtilizationSummary BenefitUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static BenefitUtilizationSummary BenefitUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
-            return new BenefitUtilizationSummary(id, name, resourceType, systemData, kind);
+            return new BenefitUtilizationSummary(id, name, resourceType, systemData, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BenefitUtilizationSummariesOperationStatus"/>. </summary>
@@ -405,7 +403,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.SingleScopeBenefitRecommendationProperties"/> instance for mocking. </returns>
         public static SingleScopeBenefitRecommendationProperties SingleScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new SingleScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, BenefitRecommendationScope.Single, subscriptionId, resourceGroup);
+            return new SingleScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope: default, subscriptionId, resourceGroup);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SharedScopeBenefitRecommendationProperties"/>. </summary>
@@ -424,7 +422,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.SharedScopeBenefitRecommendationProperties"/> instance for mocking. </returns>
         public static SharedScopeBenefitRecommendationProperties SharedScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null)
         {
-            return new SharedScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, BenefitRecommendationScope.Shared);
+            return new SharedScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IncludedQuantityUtilizationSummary"/>. </summary>
@@ -441,7 +439,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.IncludedQuantityUtilizationSummary"/> instance for mocking. </returns>
         public static IncludedQuantityUtilizationSummary IncludedQuantityUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string armSkuName = null, string benefitId = null, string benefitOrderId = null, BillingAccountBenefitKind? benefitType = null, DateTimeOffset? usageOn = null, decimal? utilizationPercentage = null)
         {
-            return new IncludedQuantityUtilizationSummary(id, name, resourceType, systemData, BillingAccountBenefitKind.IncludedQuantity, armSkuName, benefitId, benefitOrderId, benefitType, usageOn, utilizationPercentage);
+            return new IncludedQuantityUtilizationSummary(id, name, resourceType, systemData, kind: default, armSkuName, benefitId, benefitOrderId, benefitType, usageOn, utilizationPercentage);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanUtilizationSummary"/>. </summary>
@@ -460,7 +458,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.SavingsPlanUtilizationSummary"/> instance for mocking. </returns>
         public static SavingsPlanUtilizationSummary SavingsPlanUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string armSkuName = null, string benefitId = null, string benefitOrderId = null, BillingAccountBenefitKind? benefitType = null, DateTimeOffset? usageOn = null, decimal? avgUtilizationPercentage = null, decimal? minUtilizationPercentage = null, decimal? maxUtilizationPercentage = null)
         {
-            return new SavingsPlanUtilizationSummary(id, name, resourceType, systemData, BillingAccountBenefitKind.SavingsPlan, armSkuName, benefitId, benefitOrderId, benefitType, usageOn, avgUtilizationPercentage, minUtilizationPercentage, maxUtilizationPercentage);
+            return new SavingsPlanUtilizationSummary(id, name, resourceType, systemData, kind: default, armSkuName, benefitId, benefitOrderId, benefitType, usageOn, avgUtilizationPercentage, minUtilizationPercentage, maxUtilizationPercentage);
         }
     }
 }

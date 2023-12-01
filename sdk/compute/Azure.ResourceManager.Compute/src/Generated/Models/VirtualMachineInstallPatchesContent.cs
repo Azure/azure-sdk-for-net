@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.Compute.Models
             RebootSetting = rebootSetting;
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstallPatchesContent"/>. </summary>
+        /// <param name="maximumDuration"> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </param>
+        /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
+        /// <param name="windowsParameters"> Input for InstallPatches on a Windows VM, as directly received by the API. </param>
+        /// <param name="linuxParameters"> Input for InstallPatches on a Linux VM, as directly received by the API. </param>
+        internal VirtualMachineInstallPatchesContent(TimeSpan? maximumDuration, VmGuestPatchRebootSetting rebootSetting, WindowsParameters windowsParameters, LinuxParameters linuxParameters)
+        {
+            MaximumDuration = maximumDuration;
+            RebootSetting = rebootSetting;
+            WindowsParameters = windowsParameters;
+            LinuxParameters = linuxParameters;
+        }
+
         /// <summary> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </summary>
         public TimeSpan? MaximumDuration { get; set; }
         /// <summary> Defines when it is acceptable to reboot a VM during a software update operation. </summary>

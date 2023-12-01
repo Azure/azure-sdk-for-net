@@ -519,11 +519,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Role type. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeRoleData"/> instance for mocking. </returns>
-        public static DataBoxEdgeRoleData DataBoxEdgeRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static DataBoxEdgeRoleData DataBoxEdgeRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
-            return new DataBoxEdgeRoleData(id, name, resourceType, systemData, kind);
+            return new DataBoxEdgeRoleData(id, name, resourceType, systemData, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeRoleAddonData"/>. </summary>
@@ -531,11 +530,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Addon type. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeRoleAddonData"/> instance for mocking. </returns>
-        public static DataBoxEdgeRoleAddonData DataBoxEdgeRoleAddonData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static DataBoxEdgeRoleAddonData DataBoxEdgeRoleAddonData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
-            return new DataBoxEdgeRoleAddonData(id, name, resourceType, systemData, kind);
+            return new DataBoxEdgeRoleAddonData(id, name, resourceType, systemData, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.MonitoringMetricConfigurationData"/>. </summary>
@@ -657,11 +655,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Trigger Kind. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeTriggerData"/> instance for mocking. </returns>
-        public static DataBoxEdgeTriggerData DataBoxEdgeTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static DataBoxEdgeTriggerData DataBoxEdgeTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
-            return new DataBoxEdgeTriggerData(id, name, resourceType, systemData, kind);
+            return new DataBoxEdgeTriggerData(id, name, resourceType, systemData, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerSupportPackageContent"/>. </summary>
@@ -799,7 +796,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.EdgeArcAddon"/> instance for mocking. </returns>
         public static EdgeArcAddon EdgeArcAddon(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string subscriptionId = null, string resourceGroupName = null, string resourceName = null, AzureLocation resourceLocation = default, string version = null, DataBoxEdgeOSPlatformType? hostPlatform = null, HostPlatformType? hostPlatformType = null, DataBoxEdgeRoleAddonProvisioningState? provisioningState = null)
         {
-            return new EdgeArcAddon(id, name, resourceType, systemData, AddonType.ArcForKubernetes, subscriptionId, resourceGroupName, resourceName, resourceLocation, version, hostPlatform, hostPlatformType, provisioningState);
+            return new EdgeArcAddon(id, name, resourceType, systemData, kind: default, subscriptionId, resourceGroupName, resourceName, resourceLocation, version, hostPlatform, hostPlatformType, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudEdgeManagementRole"/>. </summary>
@@ -813,7 +810,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.CloudEdgeManagementRole"/> instance for mocking. </returns>
         public static CloudEdgeManagementRole CloudEdgeManagementRole(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataBoxEdgeRoleStatus? localManagementStatus = null, EdgeProfileSubscription edgeSubscription = null, DataBoxEdgeRoleStatus? roleStatus = null)
         {
-            return new CloudEdgeManagementRole(id, name, resourceType, systemData, DataBoxEdgeRoleType.CloudEdgeManagement, localManagementStatus, edgeSubscription != null ? new EdgeProfile(edgeSubscription) : null, roleStatus);
+            return new CloudEdgeManagementRole(id, name, resourceType, systemData, kind: default, localManagementStatus, edgeSubscription != null ? new EdgeProfile(edgeSubscription) : null, roleStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CniConfig"/>. </summary>
@@ -847,7 +844,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.EdgeFileEventTrigger"/> instance for mocking. </returns>
         public static EdgeFileEventTrigger EdgeFileEventTrigger(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier sourceInfoShareId = null, ResourceIdentifier sinkInfoRoleId = null, string customContextTag = null)
         {
-            return new EdgeFileEventTrigger(id, name, resourceType, systemData, TriggerEventType.FileEvent, sourceInfoShareId != null ? new EdgeFileSourceInfo(sourceInfoShareId) : null, sinkInfoRoleId != null ? new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId) : null, customContextTag);
+            return new EdgeFileEventTrigger(id, name, resourceType, systemData, kind: default, sourceInfoShareId != null ? new EdgeFileSourceInfo(sourceInfoShareId) : null, sinkInfoRoleId != null ? new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId) : null, customContextTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeIotAddon"/>. </summary>
@@ -864,7 +861,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.EdgeIotAddon"/> instance for mocking. </returns>
         public static EdgeIotAddon EdgeIotAddon(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeIotDeviceInfo iotDeviceDetails = null, EdgeIotDeviceInfo iotEdgeDeviceDetails = null, string version = null, DataBoxEdgeOSPlatformType? hostPlatform = null, HostPlatformType? hostPlatformType = null, DataBoxEdgeRoleAddonProvisioningState? provisioningState = null)
         {
-            return new EdgeIotAddon(id, name, resourceType, systemData, AddonType.IotEdge, iotDeviceDetails, iotEdgeDeviceDetails, version, hostPlatform, hostPlatformType, provisioningState);
+            return new EdgeIotAddon(id, name, resourceType, systemData, kind: default, iotDeviceDetails, iotEdgeDeviceDetails, version, hostPlatform, hostPlatformType, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeIotRole"/>. </summary>
@@ -885,7 +882,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             shareMappings ??= new List<DataBoxEdgeMountPointMap>();
 
-            return new EdgeIotRole(id, name, resourceType, systemData, DataBoxEdgeRoleType.IoT, hostPlatform, iotDeviceDetails, iotEdgeDeviceDetails, shareMappings?.ToList(), iotEdgeAgentInfo, hostPlatformType, computeResource, roleStatus);
+            return new EdgeIotRole(id, name, resourceType, systemData, kind: default, hostPlatform, iotDeviceDetails, iotEdgeDeviceDetails, shareMappings?.ToList(), iotEdgeAgentInfo, hostPlatformType, computeResource, roleStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeKubernetesClusterInfo"/>. </summary>
@@ -935,7 +932,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.EdgeKubernetesRole"/> instance for mocking. </returns>
         public static EdgeKubernetesRole EdgeKubernetesRole(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataBoxEdgeOSPlatformType? hostPlatform = null, EdgeKubernetesState? provisioningState = null, HostPlatformType? hostPlatformType = null, EdgeKubernetesClusterInfo kubernetesClusterInfo = null, EdgeKubernetesRoleResources kubernetesRoleResources = null, DataBoxEdgeRoleStatus? roleStatus = null)
         {
-            return new EdgeKubernetesRole(id, name, resourceType, systemData, DataBoxEdgeRoleType.Kubernetes, hostPlatform, provisioningState, hostPlatformType, kubernetesClusterInfo, kubernetesRoleResources, roleStatus);
+            return new EdgeKubernetesRole(id, name, resourceType, systemData, kind: default, hostPlatform, provisioningState, hostPlatformType, kubernetesClusterInfo, kubernetesRoleResources, roleStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeKubernetesRoleResources"/>. </summary>
@@ -1010,7 +1007,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.MecRole"/> instance for mocking. </returns>
         public static MecRole MecRole(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AsymmetricEncryptedSecret connectionString = null, string controllerEndpoint = null, string resourceUniqueId = null, DataBoxEdgeRoleStatus? roleStatus = null)
         {
-            return new MecRole(id, name, resourceType, systemData, DataBoxEdgeRoleType.Mec, connectionString, controllerEndpoint, resourceUniqueId, roleStatus);
+            return new MecRole(id, name, resourceType, systemData, kind: default, connectionString, controllerEndpoint, resourceUniqueId, roleStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeriodicTimerEventTrigger"/>. </summary>
@@ -1024,7 +1021,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.PeriodicTimerEventTrigger"/> instance for mocking. </returns>
         public static PeriodicTimerEventTrigger PeriodicTimerEventTrigger(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PeriodicTimerSourceInfo sourceInfo = null, ResourceIdentifier sinkInfoRoleId = null, string customContextTag = null)
         {
-            return new PeriodicTimerEventTrigger(id, name, resourceType, systemData, TriggerEventType.PeriodicTimerEvent, sourceInfo, sinkInfoRoleId != null ? new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId) : null, customContextTag);
+            return new PeriodicTimerEventTrigger(id, name, resourceType, systemData, kind: default, sourceInfo, sinkInfoRoleId != null ? new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId) : null, customContextTag);
         }
     }
 }

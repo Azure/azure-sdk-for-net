@@ -27,6 +27,19 @@ namespace Azure.ResourceManager.CostManagement.Models
             Dataset = dataset;
         }
 
+        /// <summary> Initializes a new instance of <see cref="QueryDefinition"/>. </summary>
+        /// <param name="exportType"> The type of the query. </param>
+        /// <param name="timeframe"> The time frame for pulling data for the query. If custom, then a specific time period must be provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the query. </param>
+        /// <param name="dataset"> Has definition for data in this query. </param>
+        internal QueryDefinition(ExportType exportType, TimeframeType timeframe, QueryTimePeriod timePeriod, QueryDataset dataset)
+        {
+            ExportType = exportType;
+            Timeframe = timeframe;
+            TimePeriod = timePeriod;
+            Dataset = dataset;
+        }
+
         /// <summary> The type of the query. </summary>
         public ExportType ExportType { get; }
         /// <summary> The time frame for pulling data for the query. If custom, then a specific time period must be provided. </summary>

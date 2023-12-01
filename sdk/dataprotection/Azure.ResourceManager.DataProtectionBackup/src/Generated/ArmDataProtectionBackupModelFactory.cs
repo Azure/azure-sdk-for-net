@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.DataProtectionOperationJobExtendedInfo"/> instance for mocking. </returns>
         public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(ResourceIdentifier jobResourceId = null)
         {
-            return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", jobResourceId);
+            return new DataProtectionOperationJobExtendedInfo(objectType: null, jobResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackup.DataProtectionBackupRecoveryPointData"/>. </summary>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             recoveryPointDataStoresDetails ??= new List<RecoveryPointDataStoreDetail>();
 
-            return new DataProtectionBackupDiscreteRecoveryPointProperties("AzureBackupDiscreteRecoveryPoint", friendlyName, recoveryPointDataStoresDetails?.ToList(), recoverOn, policyName, policyVersion, recoveryPointId, recoveryPointType, retentionTagName, retentionTagVersion, expireOn);
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType: null, friendlyName, recoveryPointDataStoresDetails?.ToList(), recoverOn, policyName, policyVersion, recoveryPointId, recoveryPointType, retentionTagName, retentionTagVersion, expireOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryPointDataStoreDetail"/>. </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             features ??= new List<BackupSupportedFeature>();
 
-            return new BackupFeatureValidationResult("FeatureValidationResponse", featureType, features?.ToList());
+            return new BackupFeatureValidationResult(objectType: null, featureType, features?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupSupportedFeature"/>. </summary>

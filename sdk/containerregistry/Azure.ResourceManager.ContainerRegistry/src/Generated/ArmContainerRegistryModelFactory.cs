@@ -506,16 +506,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTaskStepProperties"/>. </summary>
-        /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTaskStepProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(string containerRegistryTaskStepType = "Unknown", IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null)
+        public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null)
         {
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
 
-            return new UnknownTaskStepProperties(containerRegistryTaskStepType, baseImageDependencies?.ToList(), contextPath, contextAccessToken);
+            return new UnknownTaskStepProperties(containerRegistryTaskStepType: default, baseImageDependencies?.ToList(), contextPath, contextAccessToken);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryBaseImageDependency"/>. </summary>
@@ -547,7 +546,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             imageNames ??= new List<string>();
             arguments ??= new List<ContainerRegistryRunArgument>();
 
-            return new ContainerRegistryDockerBuildStep(ContainerRegistryTaskStepType.Docker, baseImageDependencies?.ToList(), contextPath, contextAccessToken, imageNames?.ToList(), isPushEnabled, noCache, dockerFilePath, target, arguments?.ToList());
+            return new ContainerRegistryDockerBuildStep(containerRegistryTaskStepType: default, baseImageDependencies?.ToList(), contextPath, contextAccessToken, imageNames?.ToList(), isPushEnabled, noCache, dockerFilePath, target, arguments?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryFileTaskStep"/>. </summary>
@@ -563,7 +562,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
             values ??= new List<ContainerRegistryTaskOverridableValue>();
 
-            return new ContainerRegistryFileTaskStep(ContainerRegistryTaskStepType.FileTask, baseImageDependencies?.ToList(), contextPath, contextAccessToken, taskFilePath, valuesFilePath, values?.ToList());
+            return new ContainerRegistryFileTaskStep(containerRegistryTaskStepType: default, baseImageDependencies?.ToList(), contextPath, contextAccessToken, taskFilePath, valuesFilePath, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryEncodedTaskStep"/>. </summary>
@@ -579,7 +578,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
             values ??= new List<ContainerRegistryTaskOverridableValue>();
 
-            return new ContainerRegistryEncodedTaskStep(ContainerRegistryTaskStepType.EncodedTask, baseImageDependencies?.ToList(), contextPath, contextAccessToken, encodedTaskContent, encodedValuesContent, values?.ToList());
+            return new ContainerRegistryEncodedTaskStep(containerRegistryTaskStepType: default, baseImageDependencies?.ToList(), contextPath, contextAccessToken, encodedTaskContent, encodedValuesContent, values?.ToList());
         }
     }
 }

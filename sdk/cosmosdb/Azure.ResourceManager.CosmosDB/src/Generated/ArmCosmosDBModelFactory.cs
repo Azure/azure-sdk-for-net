@@ -2057,15 +2057,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
-        /// <param name="serviceType"> ServiceType for the service. </param>
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.CosmosDBServiceProperties"/> instance for mocking. </returns>
-        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = "Unknown", CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new CosmosDBServiceProperties(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties);
+            return new CosmosDBServiceProperties(createdOn, instanceSize, instanceCount, serviceType: default, status, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataTransferServiceProperties"/>. </summary>
@@ -2081,7 +2080,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<DataTransferRegionalService>();
 
-            return new DataTransferServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.DataTransfer, status, additionalProperties, locations?.ToList());
+            return new DataTransferServiceProperties(createdOn, instanceSize, instanceCount, serviceType: default, status, additionalProperties, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataTransferRegionalService"/>. </summary>
@@ -2118,7 +2117,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<SqlDedicatedGatewayRegionalService>();
 
-            return new SqlDedicatedGatewayServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.SqlDedicatedGateway, status, additionalProperties, sqlDedicatedGatewayEndpoint, locations?.ToList());
+            return new SqlDedicatedGatewayServiceProperties(createdOn, instanceSize, instanceCount, serviceType: default, status, additionalProperties, sqlDedicatedGatewayEndpoint, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlDedicatedGatewayRegionalService"/>. </summary>
@@ -2146,7 +2145,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<GraphApiComputeRegionalService>();
 
-            return new GraphApiComputeServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.GraphApiCompute, status, additionalProperties, graphApiComputeEndpoint, locations?.ToList());
+            return new GraphApiComputeServiceProperties(createdOn, instanceSize, instanceCount, serviceType: default, status, additionalProperties, graphApiComputeEndpoint, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GraphApiComputeRegionalService"/>. </summary>
@@ -2173,7 +2172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<MaterializedViewsBuilderRegionalService>();
 
-            return new MaterializedViewsBuilderServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.MaterializedViewsBuilder, status, additionalProperties, locations?.ToList());
+            return new MaterializedViewsBuilderServiceProperties(createdOn, instanceSize, instanceCount, serviceType: default, status, additionalProperties, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MaterializedViewsBuilderRegionalService"/>. </summary>
