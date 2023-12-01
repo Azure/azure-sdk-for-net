@@ -82,13 +82,12 @@ namespace Azure.ResourceManager.StorageMover.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EndpointBaseProperties"/>. </summary>
-        /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <returns> A new <see cref="Models.EndpointBaseProperties"/> instance for mocking. </returns>
-        public static EndpointBaseProperties EndpointBaseProperties(string endpointType = "Unknown", string description = null, StorageMoverProvisioningState? provisioningState = null)
+        public static EndpointBaseProperties EndpointBaseProperties(string description = null, StorageMoverProvisioningState? provisioningState = null)
         {
-            return new UnknownEndpointBaseProperties(endpointType, description, provisioningState);
+            return new UnknownEndpointBaseProperties(endpointType: default, description, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverProjectData"/>. </summary>
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.AzureStorageBlobContainerEndpointProperties"/> instance for mocking. </returns>
         public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string storageAccountResourceId = null, string blobContainerName = null)
         {
-            return new AzureStorageBlobContainerEndpointProperties(EndpointType.AzureStorageBlobContainer, description, provisioningState, storageAccountResourceId, blobContainerName);
+            return new AzureStorageBlobContainerEndpointProperties(endpointType: default, description, provisioningState, storageAccountResourceId, blobContainerName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NfsMountEndpointProperties"/>. </summary>
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.NfsMountEndpointProperties"/> instance for mocking. </returns>
         public static NfsMountEndpointProperties NfsMountEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string host = null, NfsVersion? nfsVersion = null, string export = null)
         {
-            return new NfsMountEndpointProperties(EndpointType.NfsMount, description, provisioningState, host, nfsVersion, export);
+            return new NfsMountEndpointProperties(endpointType: default, description, provisioningState, host, nfsVersion, export);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>. </summary>
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/> instance for mocking. </returns>
         public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, ResourceIdentifier storageAccountResourceId = null, string fileShareName = null)
         {
-            return new AzureStorageSmbFileShareEndpointProperties(EndpointType.AzureStorageSmbFileShare, description, provisioningState, storageAccountResourceId, fileShareName);
+            return new AzureStorageSmbFileShareEndpointProperties(endpointType: default, description, provisioningState, storageAccountResourceId, fileShareName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SmbMountEndpointProperties"/>. </summary>
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.SmbMountEndpointProperties"/> instance for mocking. </returns>
         public static SmbMountEndpointProperties SmbMountEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string host = null, string shareName = null, AzureKeyVaultSmbCredentials credentials = null)
         {
-            return new SmbMountEndpointProperties(EndpointType.SmbMount, description, provisioningState, host, shareName, credentials);
+            return new SmbMountEndpointProperties(endpointType: default, description, provisioningState, host, shareName, credentials);
         }
     }
 }

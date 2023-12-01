@@ -842,18 +842,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Trigger"/>. </summary>
-        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.Trigger"/> instance for mocking. </returns>
-        public static Trigger Trigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null)
+        public static Trigger Trigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new Trigger(type, description, runtimeState, annotations?.ToList(), additionalProperties);
+            return new Trigger(type: null, description, runtimeState, annotations?.ToList(), additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerSubscriptionOperationStatus"/>. </summary>
@@ -1056,7 +1055,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new RerunTumblingWindowTrigger("RerunTumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
+            return new RerunTumblingWindowTrigger(type: null, description, runtimeState, annotations?.ToList(), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MultiplePipelineTrigger"/>. </summary>
@@ -1072,7 +1071,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new MultiplePipelineTrigger("MultiplePipelineTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList());
+            return new MultiplePipelineTrigger(type: null, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScheduleTrigger"/>. </summary>
@@ -1089,7 +1088,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new ScheduleTrigger("ScheduleTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), recurrence);
+            return new ScheduleTrigger(type: null, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), recurrence);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobTrigger"/>. </summary>
@@ -1108,7 +1107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new BlobTrigger("BlobTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), folderPath, maxConcurrency, linkedService);
+            return new BlobTrigger(type: null, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), folderPath, maxConcurrency, linkedService);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobEventsTrigger"/>. </summary>
@@ -1130,7 +1129,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             pipelines ??= new List<TriggerPipelineReference>();
             events ??= new List<BlobEventType>();
 
-            return new BlobEventsTrigger("BlobEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), blobPathBeginsWith, blobPathEndsWith, ignoreEmptyBlobs, events?.ToList(), scope);
+            return new BlobEventsTrigger(type: null, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), blobPathBeginsWith, blobPathEndsWith, ignoreEmptyBlobs, events?.ToList(), scope);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomEventsTrigger"/>. </summary>
@@ -1151,7 +1150,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             pipelines ??= new List<TriggerPipelineReference>();
             events ??= new List<object>();
 
-            return new CustomEventsTrigger("CustomEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), subjectBeginsWith, subjectEndsWith, events?.ToList(), scope);
+            return new CustomEventsTrigger(type: null, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), subjectBeginsWith, subjectEndsWith, events?.ToList(), scope);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TumblingWindowTrigger"/>. </summary>
@@ -1179,7 +1178,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             dependsOn ??= new List<DependencyReference>();
 
-            return new TumblingWindowTrigger("TumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, frequency, interval, startTime, endTime, delay, maxConcurrency, retryPolicy, dependsOn?.ToList());
+            return new TumblingWindowTrigger(type: null, description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, frequency, interval, startTime, endTime, delay, maxConcurrency, retryPolicy, dependsOn?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChainingTrigger"/>. </summary>
@@ -1197,11 +1196,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             dependsOn ??= new List<PipelineReference>();
 
-            return new ChainingTrigger("ChainingTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, dependsOn?.ToList(), runDimension);
+            return new ChainingTrigger(type: null, description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, dependsOn?.ToList(), runDimension);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedIntegrationRuntime"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
@@ -1209,11 +1207,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(IntegrationRuntimeType type = default, string description = null, IDictionary<string, object> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null)
+        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(string description = null, IDictionary<string, object> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new ManagedIntegrationRuntime(type, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
+            return new ManagedIntegrationRuntime(type: default, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedVirtualNetworkReference"/>. </summary>

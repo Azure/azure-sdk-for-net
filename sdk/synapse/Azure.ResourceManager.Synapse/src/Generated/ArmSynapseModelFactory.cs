@@ -1377,14 +1377,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisObjectMetadata"/>. </summary>
-        /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
         /// <returns> A new <see cref="Models.SynapseSsisObjectMetadata"/> instance for mocking. </returns>
-        public static SynapseSsisObjectMetadata SynapseSsisObjectMetadata(string metadataType = "Unknown", long? id = null, string name = null, string description = null)
+        public static SynapseSsisObjectMetadata SynapseSsisObjectMetadata(long? id = null, string name = null, string description = null)
         {
-            return new UnknownSsisObjectMetadata(metadataType, id, name, description);
+            return new UnknownSsisObjectMetadata(metadataType: default, id, name, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseSelfHostedIntegrationRuntimeNode"/>. </summary>
@@ -1446,16 +1445,15 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeStatus"/>. </summary>
-        /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeStatus SynapseIntegrationRuntimeStatus(string runtimeType = "Unknown", string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseIntegrationRuntimeStatus SynapseIntegrationRuntimeStatus(string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SynapseIntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
+            return new SynapseIntegrationRuntimeStatus(runtimeType: default, dataFactoryName, state, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeAuthKeys"/>. </summary>
@@ -1710,11 +1708,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="kind"> Kind of the database. </param>
         /// <returns> A new <see cref="Synapse.SynapseDatabaseData"/> instance for mocking. </returns>
-        public static SynapseDatabaseData SynapseDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
+        public static SynapseDatabaseData SynapseDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null)
         {
-            return new SynapseDatabaseData(id, name, resourceType, systemData, location, kind);
+            return new SynapseDatabaseData(id, name, resourceType, systemData, location, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Synapse.SynapseDataConnectionData"/>. </summary>
@@ -1723,11 +1720,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="kind"> Kind of the endpoint for the data connection. </param>
         /// <returns> A new <see cref="Synapse.SynapseDataConnectionData"/> instance for mocking. </returns>
-        public static SynapseDataConnectionData SynapseDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
+        public static SynapseDataConnectionData SynapseDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null)
         {
-            return new SynapseDataConnectionData(id, name, resourceType, systemData, location, kind);
+            return new SynapseDataConnectionData(id, name, resourceType, systemData, location, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseDataConnectionValidationListResult"/>. </summary>
@@ -1818,7 +1814,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SynapseManagedIntegrationRuntime(IntegrationRuntimeType.Managed, description, additionalProperties, state, referenceName, typeManagedVirtualNetworkType, id, computeProperties, ssisProperties);
+            return new SynapseManagedIntegrationRuntime(integrationRuntimeType: default, description, additionalProperties, state, referenceName, typeManagedVirtualNetworkType, id, computeProperties, ssisProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseManagedIntegrationRuntimeStatus"/>. </summary>
@@ -1836,7 +1832,7 @@ namespace Azure.ResourceManager.Synapse.Models
             nodes ??= new List<SynapseManagedIntegrationRuntimeNode>();
             otherErrors ??= new List<SynapseManagedIntegrationRuntimeError>();
 
-            return new SynapseManagedIntegrationRuntimeStatus(IntegrationRuntimeType.Managed, dataFactoryName, state, additionalProperties, createOn, nodes?.ToList(), otherErrors?.ToList(), lastOperation);
+            return new SynapseManagedIntegrationRuntimeStatus(runtimeType: default, dataFactoryName, state, additionalProperties, createOn, nodes?.ToList(), otherErrors?.ToList(), lastOperation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseManagedIntegrationRuntimeNode"/>. </summary>
@@ -1918,7 +1914,7 @@ namespace Azure.ResourceManager.Synapse.Models
             links ??= new List<SynapseLinkedIntegrationRuntime>();
             newerVersions ??= new List<string>();
 
-            return new SynapseSelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType.SelfHosted, dataFactoryName, state, additionalProperties, createOn, taskQueueId, nodeCommunicationChannelEncryptionMode, internalChannelEncryption, version, nodes?.ToList(), scheduledUpdateOn, updateDelayOffset, localTimeZoneOffset, capabilities, serviceUrls?.ToList(), autoUpdate, versionStatus, links?.ToList(), pushedVersion, latestVersion, autoUpdateEta, serviceRegion, newerVersions?.ToList());
+            return new SynapseSelfHostedIntegrationRuntimeStatus(runtimeType: default, dataFactoryName, state, additionalProperties, createOn, taskQueueId, nodeCommunicationChannelEncryptionMode, internalChannelEncryption, version, nodes?.ToList(), scheduledUpdateOn, updateDelayOffset, localTimeZoneOffset, capabilities, serviceUrls?.ToList(), autoUpdate, versionStatus, links?.ToList(), pushedVersion, latestVersion, autoUpdateEta, serviceRegion, newerVersions?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseLinkedIntegrationRuntime"/>. </summary>
@@ -1940,7 +1936,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseSsisFolder"/> instance for mocking. </returns>
         public static SynapseSsisFolder SynapseSsisFolder(long? id = null, string name = null, string description = null)
         {
-            return new SynapseSsisFolder(SynapseSsisObjectMetadataType.Folder, id, name, description);
+            return new SynapseSsisFolder(metadataType: default, id, name, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisProject"/>. </summary>
@@ -1957,7 +1953,7 @@ namespace Azure.ResourceManager.Synapse.Models
             environmentRefs ??= new List<SynapseSsisEnvironmentReference>();
             parameters ??= new List<SynapseSsisParameter>();
 
-            return new SynapseSsisProject(SynapseSsisObjectMetadataType.Project, id, name, description, folderId, version, environmentRefs?.ToList(), parameters?.ToList());
+            return new SynapseSsisProject(metadataType: default, id, name, description, folderId, version, environmentRefs?.ToList(), parameters?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisEnvironmentReference"/>. </summary>
@@ -2003,7 +1999,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             parameters ??= new List<SynapseSsisParameter>();
 
-            return new SynapseSsisPackage(SynapseSsisObjectMetadataType.Package, id, name, description, folderId, projectVersion, projectId, parameters?.ToList());
+            return new SynapseSsisPackage(metadataType: default, id, name, description, folderId, projectVersion, projectId, parameters?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisEnvironment"/>. </summary>
@@ -2017,7 +2013,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             variables ??= new List<SynapseSsisVariable>();
 
-            return new SynapseSsisEnvironment(SynapseSsisObjectMetadataType.Environment, id, name, description, folderId, variables?.ToList());
+            return new SynapseSsisEnvironment(metadataType: default, id, name, description, folderId, variables?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisVariable"/>. </summary>
@@ -2048,7 +2044,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseReadWriteDatabase"/> instance for mocking. </returns>
         public static SynapseReadWriteDatabase SynapseReadWriteDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, bool? isFollowed = null)
         {
-            return new SynapseReadWriteDatabase(id, name, resourceType, systemData, location, SynapseKind.ReadWrite, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, isFollowed);
+            return new SynapseReadWriteDatabase(id, name, resourceType, systemData, location, kind: default, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, isFollowed);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseReadOnlyFollowingDatabase"/>. </summary>
@@ -2067,7 +2063,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseReadOnlyFollowingDatabase"/> instance for mocking. </returns>
         public static SynapseReadOnlyFollowingDatabase SynapseReadOnlyFollowingDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, string leaderClusterResourceId = null, string attachedDatabaseConfigurationName = null, SynapsePrincipalsModificationKind? principalsModificationKind = null)
         {
-            return new SynapseReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, SynapseKind.ReadOnlyFollowing, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind);
+            return new SynapseReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, kind: default, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseEventHubDataConnection"/>. </summary>
@@ -2090,7 +2086,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             eventSystemProperties ??= new List<string>();
 
-            return new SynapseEventHubDataConnection(id, name, resourceType, systemData, location, SynapseDataConnectionKind.EventHub, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), compression, provisioningState, managedIdentityResourceId);
+            return new SynapseEventHubDataConnection(id, name, resourceType, systemData, location, kind: default, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), compression, provisioningState, managedIdentityResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseIotHubDataConnection"/>. </summary>
@@ -2112,7 +2108,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             eventSystemProperties ??= new List<string>();
 
-            return new SynapseIotHubDataConnection(id, name, resourceType, systemData, location, SynapseDataConnectionKind.IotHub, iotHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), sharedAccessPolicyName, provisioningState);
+            return new SynapseIotHubDataConnection(id, name, resourceType, systemData, location, kind: default, iotHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), sharedAccessPolicyName, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseEventGridDataConnection"/>. </summary>
@@ -2133,7 +2129,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseEventGridDataConnection"/> instance for mocking. </returns>
         public static SynapseEventGridDataConnection SynapseEventGridDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier storageAccountResourceId = null, ResourceIdentifier eventHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, SynapseEventGridDataFormat? dataFormat = null, bool? ignoreFirstRecord = null, SynapseBlobStorageEventType? blobStorageEventType = null, ResourceProvisioningState? provisioningState = null)
         {
-            return new SynapseEventGridDataConnection(id, name, resourceType, systemData, location, SynapseDataConnectionKind.EventGrid, storageAccountResourceId, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, ignoreFirstRecord, blobStorageEventType, provisioningState);
+            return new SynapseEventGridDataConnection(id, name, resourceType, systemData, location, kind: default, storageAccountResourceId, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, ignoreFirstRecord, blobStorageEventType, provisioningState);
         }
     }
 }

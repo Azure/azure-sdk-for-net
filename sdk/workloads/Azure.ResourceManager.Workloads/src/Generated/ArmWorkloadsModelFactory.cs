@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.SingleServerRecommendationResult"/> instance for mocking. </returns>
         public static SingleServerRecommendationResult SingleServerRecommendationResult(string vmSku = null)
         {
-            return new SingleServerRecommendationResult(SapDeploymentType.SingleServer, vmSku);
+            return new SingleServerRecommendationResult(deploymentType: default, vmSku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ThreeTierRecommendationResult"/>. </summary>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.ThreeTierRecommendationResult"/> instance for mocking. </returns>
         public static ThreeTierRecommendationResult ThreeTierRecommendationResult(string dbVmSku = null, long? databaseInstanceCount = null, string centralServerVmSku = null, long? centralServerInstanceCount = null, string applicationServerVmSku = null, long? applicationServerInstanceCount = null)
         {
-            return new ThreeTierRecommendationResult(SapDeploymentType.ThreeTier, dbVmSku, databaseInstanceCount, centralServerVmSku, centralServerInstanceCount, applicationServerVmSku, applicationServerInstanceCount);
+            return new ThreeTierRecommendationResult(deploymentType: default, dbVmSku, databaseInstanceCount, centralServerVmSku, centralServerInstanceCount, applicationServerVmSku, applicationServerInstanceCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiscoveryConfiguration"/>. </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.DiscoveryConfiguration"/> instance for mocking. </returns>
         public static DiscoveryConfiguration DiscoveryConfiguration(ResourceIdentifier centralServerVmId = null, string managedRgStorageAccountName = null, AzureLocation? appLocation = null)
         {
-            return new DiscoveryConfiguration(SapConfigurationType.Discovery, centralServerVmId, managedRgStorageAccountName, appLocation);
+            return new DiscoveryConfiguration(configurationType: default, centralServerVmId, managedRgStorageAccountName, appLocation);
         }
     }
 }
