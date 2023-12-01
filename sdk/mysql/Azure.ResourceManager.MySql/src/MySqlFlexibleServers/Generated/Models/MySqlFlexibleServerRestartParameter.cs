@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerRestartParameter"/>. </summary>
+        /// <param name="restartWithFailover"> Whether or not failover to standby server when restarting a server with high availability enabled. </param>
+        /// <param name="maxFailoverSeconds"> The maximum allowed failover time in seconds. </param>
+        internal MySqlFlexibleServerRestartParameter(MySqlFlexibleServerEnableStatusEnum? restartWithFailover, int? maxFailoverSeconds)
+        {
+            RestartWithFailover = restartWithFailover;
+            MaxFailoverSeconds = maxFailoverSeconds;
+        }
+
         /// <summary> Whether or not failover to standby server when restarting a server with high availability enabled. </summary>
         public MySqlFlexibleServerEnableStatusEnum? RestartWithFailover { get; set; }
         /// <summary> The maximum allowed failover time in seconds. </summary>

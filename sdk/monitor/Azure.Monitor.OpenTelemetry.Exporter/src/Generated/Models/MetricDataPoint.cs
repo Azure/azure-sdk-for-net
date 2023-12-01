@@ -25,6 +25,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Value = value;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/>. </summary>
+        /// <param name="namespace"> Namespace of the metric. </param>
+        /// <param name="name"> Name of the metric. </param>
+        /// <param name="dataPointType"> Metric type. Single measurement or the aggregated value. </param>
+        /// <param name="value"> Single value for measurement. Sum of individual measurements for the aggregation. </param>
+        /// <param name="count"> Metric weight of the aggregated metric. Should not be set for a measurement. </param>
+        /// <param name="min"> Minimum value of the aggregated metric. Should not be set for a measurement. </param>
+        /// <param name="max"> Maximum value of the aggregated metric. Should not be set for a measurement. </param>
+        /// <param name="stdDev"> Standard deviation of the aggregated metric. Should not be set for a measurement. </param>
+        internal MetricDataPoint(string @namespace, string name, DataPointType? dataPointType, double value, int? count, double? min, double? max, double? stdDev)
+        {
+            Namespace = @namespace;
+            Name = name;
+            DataPointType = dataPointType;
+            Value = value;
+            Count = count;
+            Min = min;
+            Max = max;
+            StdDev = stdDev;
+        }
+
         /// <summary> Namespace of the metric. </summary>
         public string Namespace { get; set; }
         /// <summary> Name of the metric. </summary>

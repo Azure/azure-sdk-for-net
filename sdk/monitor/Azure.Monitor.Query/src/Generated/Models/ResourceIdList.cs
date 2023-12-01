@@ -19,6 +19,13 @@ namespace Azure.Monitor.Query.Models
             Resourceids = new ChangeTrackingList<ResourceIdentifier>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceIdList"/>. </summary>
+        /// <param name="resourceids"> The list of resource IDs to query metrics for. </param>
+        internal ResourceIdList(IList<ResourceIdentifier> resourceids)
+        {
+            Resourceids = resourceids;
+        }
+
         /// <summary> The list of resource IDs to query metrics for. </summary>
         public IList<ResourceIdentifier> Resourceids { get; }
     }

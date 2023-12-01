@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespacePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The sku of the created namespace. </param>
+        internal NotificationHubNamespacePatch(IDictionary<string, string> tags, NotificationHubSku sku)
+        {
+            Tags = tags;
+            Sku = sku;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the created namespace. </summary>

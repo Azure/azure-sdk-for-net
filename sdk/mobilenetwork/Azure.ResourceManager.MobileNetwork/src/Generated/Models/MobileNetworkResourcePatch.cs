@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkResourcePatch"/>. </summary>
+        /// <param name="userAssignedIdentity"> The managed service identity associated with this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal MobileNetworkResourcePatch(MobileNetworkManagedServiceIdentity userAssignedIdentity, IDictionary<string, string> tags)
+        {
+            UserAssignedIdentity = userAssignedIdentity;
+            Tags = tags;
+        }
+
         /// <summary> The managed service identity associated with this resource. </summary>
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary> Resource tags. </summary>

@@ -15,6 +15,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MonitorBase"/>. </summary>
+        /// <param name="baseType"> Name of item (B section) if any. If telemetry data is derived straight from this, this should be null. </param>
+        /// <param name="baseData"> The data payload for the telemetry request. </param>
+        internal MonitorBase(string baseType, MonitorDomain baseData)
+        {
+            BaseType = baseType;
+            BaseData = baseData;
+        }
+
         /// <summary> Name of item (B section) if any. If telemetry data is derived straight from this, this should be null. </summary>
         public string BaseType { get; set; }
         /// <summary> The data payload for the telemetry request. </summary>
