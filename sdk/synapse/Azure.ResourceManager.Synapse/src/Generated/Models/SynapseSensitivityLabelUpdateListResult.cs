@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Synapse.Models
             Operations = new ChangeTrackingList<SynapseSensitivityLabelUpdate>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SynapseSensitivityLabelUpdateListResult"/>. </summary>
+        /// <param name="operations"></param>
+        internal SynapseSensitivityLabelUpdateListResult(IList<SynapseSensitivityLabelUpdate> operations)
+        {
+            Operations = operations;
+        }
+
         /// <summary> Gets the operations. </summary>
         public IList<SynapseSensitivityLabelUpdate> Operations { get; }
     }
