@@ -14,10 +14,11 @@ namespace Azure.Communication.Sms
     }
     public partial class SmsClientOptions : Azure.Core.ClientOptions
     {
-        public SmsClientOptions(Azure.Communication.Sms.SmsClientOptions.ServiceVersion version = Azure.Communication.Sms.SmsClientOptions.ServiceVersion.V2021_03_07) { }
+        public SmsClientOptions(Azure.Communication.Sms.SmsClientOptions.ServiceVersion version = Azure.Communication.Sms.SmsClientOptions.ServiceVersion.V2024_01_14_Preview) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
+            V2024_01_14_Preview = 2,
         }
     }
     public partial class SmsSendOptions
