@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Policies = new ChangeTrackingList<DevTestLabEvaluatePolicy>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePoliciesContent"/>. </summary>
+        /// <param name="policies"> Policies to evaluate. </param>
+        internal DevTestLabEvaluatePoliciesContent(IList<DevTestLabEvaluatePolicy> policies)
+        {
+            Policies = policies;
+        }
+
         /// <summary> Policies to evaluate. </summary>
         public IList<DevTestLabEvaluatePolicy> Policies { get; }
     }
