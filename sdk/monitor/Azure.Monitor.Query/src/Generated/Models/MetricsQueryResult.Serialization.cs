@@ -48,7 +48,7 @@ namespace Azure.Monitor.Query.Models
                     {
                         continue;
                     }
-                    interval = property.Value.GetTimeSpan(null);
+                    interval = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("namespace"u8))

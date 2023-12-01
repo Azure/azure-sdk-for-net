@@ -112,3 +112,11 @@ directive:
   transform: >
     $["format"] = "duration";
 ```
+
+```yaml
+directive:
+- from: swagger-document
+  where: $.definitions.Response.properties.interval
+  transform: >
+    $["format"] = "duration";
+```
