@@ -27,12 +27,6 @@ namespace Azure
         // TODO: is is possible to not new-slot this?
         public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
-        /// <inheritdoc/>
-        protected override MessageHeaders GetHeadersCore()
-        {
-            throw new System.NotImplementedException();
-        }
-
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }

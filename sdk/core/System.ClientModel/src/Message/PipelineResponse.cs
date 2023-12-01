@@ -20,14 +20,16 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public abstract string ReasonPhrase { get; }
 
-    public MessageHeaders Headers { get => GetHeadersCore(); }
-
-    // TODO: When we rework headers, are we able to remove this?
-    /// <summary>
-    /// Get header collection returned by response.Headers.
-    /// </summary>
-    /// <returns></returns>
-    protected abstract MessageHeaders GetHeadersCore();
+    public virtual MessageHeaders Headers
+    {
+        // We must make this property virtual because the Headers property on
+        // Azure.Response that derives from it is virtual.  This property were
+        // abstract, the newslotted Headers property on Response would hide an
+        // abstract member, which is not valid in C#.  We throw from the getter
+        // rather than providing a default implementation so that we don't commit
+        // subtypes to a specific HTTP implementation.
+        get => throw new NotSupportedException("Type derived from 'PipelineResponse' must implement 'Headers' property getter.");
+    }
 
     /// <summary>
     /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.

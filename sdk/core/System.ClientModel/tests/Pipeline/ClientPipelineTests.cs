@@ -147,11 +147,6 @@ public class ClientPipelineTests
             {
                 throw new NotImplementedException();
             }
-
-            protected override MessageHeaders GetHeadersCore()
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 
