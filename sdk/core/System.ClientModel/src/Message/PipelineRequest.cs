@@ -8,7 +8,6 @@ public abstract class PipelineRequest : IDisposable
     private string _method;
     private Uri? _uri;
 
-    private InputContent? _content;
     private readonly PipelineRequestHeaders _headers;
 
     protected PipelineRequest()
@@ -49,10 +48,10 @@ public abstract class PipelineRequest : IDisposable
 
     public virtual void Dispose()
     {
-        var content = _content;
+        var content = Content;
         if (content != null)
         {
-            _content = null;
+            Content = null;
             content.Dispose();
         }
 
