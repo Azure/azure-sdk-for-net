@@ -19,6 +19,8 @@ namespace Azure.Storage.DataMovement
         internal const long DefaultInitialTransferSize = 32 * Constants.MB;
         internal const long DefaultChunkSize = 4 * Constants.MB;
 
+        public const char PathForwardSlashDelimiterChar = '/';
+
         internal static class ConcurrencyTuner
         {
             internal const int StandardMultiplier = 2;
