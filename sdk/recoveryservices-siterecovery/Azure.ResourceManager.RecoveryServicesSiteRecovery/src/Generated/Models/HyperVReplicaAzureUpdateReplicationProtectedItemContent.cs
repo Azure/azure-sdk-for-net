@@ -24,6 +24,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureUpdateReplicationProtectedItemContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryAzureV1ResourceGroupId"> The recovery Azure resource group Id for classic deployment. </param>
+        /// <param name="recoveryAzureV2ResourceGroupId"> The recovery Azure resource group Id for resource manager deployment. </param>
+        /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
+        /// <param name="diskIdToDiskEncryptionMap"> The dictionary of disk resource Id to disk encryption set ARM Id. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="vmDisks"> The list of disk update properties. </param>
+        internal HyperVReplicaAzureUpdateReplicationProtectedItemContent(string instanceType, ResourceIdentifier recoveryAzureV1ResourceGroupId, ResourceIdentifier recoveryAzureV2ResourceGroupId, string useManagedDisks, IDictionary<string, string> diskIdToDiskEncryptionMap, ResourceIdentifier targetProximityPlacementGroupId, string targetAvailabilityZone, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, IList<UpdateDiskContent> vmDisks) : base(instanceType)
+        {
+            RecoveryAzureV1ResourceGroupId = recoveryAzureV1ResourceGroupId;
+            RecoveryAzureV2ResourceGroupId = recoveryAzureV2ResourceGroupId;
+            UseManagedDisks = useManagedDisks;
+            DiskIdToDiskEncryptionMap = diskIdToDiskEncryptionMap;
+            TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
+            TargetAvailabilityZone = targetAvailabilityZone;
+            TargetVmTags = targetVmTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
+            SqlServerLicenseType = sqlServerLicenseType;
+            VmDisks = vmDisks;
+            InstanceType = instanceType ?? "HyperVReplicaAzure";
+        }
+
         /// <summary> The recovery Azure resource group Id for classic deployment. </summary>
         public ResourceIdentifier RecoveryAzureV1ResourceGroupId { get; set; }
         /// <summary> The recovery Azure resource group Id for resource manager deployment. </summary>

@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
             KeyType = keyType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServiceBusRegenerateAccessKeyContent"/>. </summary>
+        /// <param name="keyType"> The access key to regenerate. </param>
+        /// <param name="key"> Optional, if the key value provided, is reset for KeyType value or autogenerate Key value set for keyType. </param>
+        internal ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType keyType, string key)
+        {
+            KeyType = keyType;
+            Key = key;
+        }
+
         /// <summary> The access key to regenerate. </summary>
         public ServiceBusAccessKeyType KeyType { get; }
         /// <summary> Optional, if the key value provided, is reset for KeyType value or autogenerate Key value set for keyType. </summary>
