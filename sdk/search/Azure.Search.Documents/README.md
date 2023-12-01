@@ -183,7 +183,7 @@ exposes operations on these resources through three main client types.
     your indexed documents using [vector queries](https://learn.microsoft.com/azure/search/vector-search-how-to-query),
     [keyword queries](https://learn.microsoft.com/azure/search/search-query-create)
     and [hybrid queries](https://learn.microsoft.com/azure/search/hybrid-search-how-to-query)
-  * [Vector query filters](https://learn.microsoft.com/en-us/azure/search/vector-search-filters) and [Text query filters](https://learn.microsoft.com/azure/search/search-filters)
+  * [Vector query filters](https://learn.microsoft.com/azure/search/vector-search-filters) and [Text query filters](https://learn.microsoft.com/azure/search/search-filters)
   * [Semantic ranking](https://learn.microsoft.com/azure/search/semantic-how-to-query-request) and [scoring profiles](https://learn.microsoft.com/azure/search/index-add-scoring-profiles) for boosting relevance
   * [Autocompleting](https://docs.microsoft.com/rest/api/searchservice/autocomplete)
     partially typed search terms based on documents in the index
