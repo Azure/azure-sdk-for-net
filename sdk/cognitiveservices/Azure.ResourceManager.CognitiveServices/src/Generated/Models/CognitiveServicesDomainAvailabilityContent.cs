@@ -25,6 +25,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ResourceType = resourceType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesDomainAvailabilityContent"/>. </summary>
+        /// <param name="subdomainName"> The subdomain name to use. </param>
+        /// <param name="resourceType"> The Type of the resource. </param>
+        /// <param name="kind"> The Kind of the resource. </param>
+        internal CognitiveServicesDomainAvailabilityContent(string subdomainName, ResourceType resourceType, string kind)
+        {
+            SubdomainName = subdomainName;
+            ResourceType = resourceType;
+            Kind = kind;
+        }
+
         /// <summary> The subdomain name to use. </summary>
         public string SubdomainName { get; }
         /// <summary> The Type of the resource. </summary>

@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="OSProfileUpdateWindowsConfiguration"/>. </summary>
+        /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        internal OSProfileUpdateWindowsConfiguration(bool? provisionVmAgent, bool? provisionVmConfigAgent)
+        {
+            ProvisionVmAgent = provisionVmAgent;
+            ProvisionVmConfigAgent = provisionVmConfigAgent;
+        }
+
         /// <summary> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </summary>
         public bool? ProvisionVmAgent { get; set; }
         /// <summary> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </summary>

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ReportResourcePatch"/>. </summary>
+        /// <param name="properties"> Report property. </param>
+        internal ReportResourcePatch(ReportProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Report property. </summary>
         public ReportProperties Properties { get; set; }
     }

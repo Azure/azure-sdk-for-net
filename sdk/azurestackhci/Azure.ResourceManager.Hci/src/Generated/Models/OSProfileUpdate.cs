@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="OSProfileUpdate"/>. </summary>
+        /// <param name="computerName"> ComputerName - name of the computer. </param>
+        /// <param name="linuxConfiguration"></param>
+        /// <param name="windowsConfiguration"></param>
+        internal OSProfileUpdate(string computerName, OSProfileUpdateLinuxConfiguration linuxConfiguration, OSProfileUpdateWindowsConfiguration windowsConfiguration)
+        {
+            ComputerName = computerName;
+            LinuxConfiguration = linuxConfiguration;
+            WindowsConfiguration = windowsConfiguration;
+        }
+
         /// <summary> ComputerName - name of the computer. </summary>
         public string ComputerName { get; set; }
         /// <summary> Gets or sets the linux configuration. </summary>

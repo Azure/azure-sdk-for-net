@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HardwareProfileUpdate"/>. </summary>
+        /// <param name="vmSize"></param>
+        /// <param name="processors"> number of processors for the virtual machine instance. </param>
+        /// <param name="memoryMB"> RAM in MB for the virtual machine instance. </param>
+        internal HardwareProfileUpdate(VmSizeEnum? vmSize, int? processors, long? memoryMB)
+        {
+            VmSize = vmSize;
+            Processors = processors;
+            MemoryMB = memoryMB;
+        }
+
         /// <summary> Gets or sets the vm size. </summary>
         public VmSizeEnum? VmSize { get; set; }
         /// <summary> number of processors for the virtual machine instance. </summary>
