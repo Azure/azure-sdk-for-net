@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupPatch"/>. </summary>
+        /// <param name="displayName"> The friendly name of the management group. </param>
+        /// <param name="parentGroupId"> (Optional) The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        internal ManagementGroupPatch(string displayName, string parentGroupId)
+        {
+            DisplayName = displayName;
+            ParentGroupId = parentGroupId;
+        }
+
         /// <summary> The friendly name of the management group. </summary>
         public string DisplayName { get; set; }
         /// <summary> (Optional) The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>

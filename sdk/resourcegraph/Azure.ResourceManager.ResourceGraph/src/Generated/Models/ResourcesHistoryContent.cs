@@ -20,6 +20,19 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             ManagementGroups = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourcesHistoryContent"/>. </summary>
+        /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
+        /// <param name="query"> The resources query. </param>
+        /// <param name="options"> The history request evaluation options. </param>
+        /// <param name="managementGroups"> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </param>
+        internal ResourcesHistoryContent(IList<string> subscriptions, string query, ResourcesHistoryRequestOptions options, IList<string> managementGroups)
+        {
+            Subscriptions = subscriptions;
+            Query = query;
+            Options = options;
+            ManagementGroups = managementGroups;
+        }
+
         /// <summary> Azure subscriptions against which to execute the query. </summary>
         public IList<string> Subscriptions { get; }
         /// <summary> The resources query. </summary>

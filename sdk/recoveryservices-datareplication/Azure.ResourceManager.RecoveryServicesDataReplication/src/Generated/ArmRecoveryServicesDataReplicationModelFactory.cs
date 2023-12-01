@@ -442,14 +442,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkflowModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <returns> A new <see cref="Models.WorkflowModelCustomProperties"/> instance for mocking. </returns>
-        public static WorkflowModelCustomProperties WorkflowModelCustomProperties(string instanceType = null, IReadOnlyDictionary<string, string> affectedObjectDetails = null)
+        public static WorkflowModelCustomProperties WorkflowModelCustomProperties(IReadOnlyDictionary<string, string> affectedObjectDetails = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
 
-            return new UnknownWorkflowModelCustomProperties(instanceType, affectedObjectDetails);
+            return new UnknownWorkflowModelCustomProperties(instanceType: null, affectedObjectDetails);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzStackHciFabricModelCustomProperties"/>. </summary>
@@ -465,7 +464,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             applianceName ??= new List<string>();
 
-            return new AzStackHciFabricModelCustomProperties("AzStackHCI", azStackHciSiteId, applianceName?.ToList(), cluster, fabricResourceId, fabricContainerId, migrationSolutionId, migrationHubUri);
+            return new AzStackHciFabricModelCustomProperties(instanceType: null, azStackHciSiteId, applianceName?.ToList(), cluster, fabricResourceId, fabricContainerId, migrationSolutionId, migrationHubUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FailoverProtectedItemProperties"/>. </summary>
@@ -491,7 +490,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             affectedObjectDetails ??= new Dictionary<string, string>();
             protectedItemDetails ??= new List<FailoverProtectedItemProperties>();
 
-            return new FailoverWorkflowModelCustomProperties("FailoverWorkflowDetails", affectedObjectDetails, protectedItemDetails?.ToList());
+            return new FailoverWorkflowModelCustomProperties(instanceType: null, affectedObjectDetails, protectedItemDetails?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVMigrateFabricModelCustomProperties"/>. </summary>
@@ -503,7 +502,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.HyperVMigrateFabricModelCustomProperties"/> instance for mocking. </returns>
         public static HyperVMigrateFabricModelCustomProperties HyperVMigrateFabricModelCustomProperties(ResourceIdentifier hyperVSiteId = null, ResourceIdentifier fabricResourceId = null, string fabricContainerId = null, ResourceIdentifier migrationSolutionId = null, Uri migrationHubUri = null)
         {
-            return new HyperVMigrateFabricModelCustomProperties("HyperVMigrate", hyperVSiteId, fabricResourceId, fabricContainerId, migrationSolutionId, migrationHubUri);
+            return new HyperVMigrateFabricModelCustomProperties(instanceType: null, hyperVSiteId, fabricResourceId, fabricContainerId, migrationSolutionId, migrationHubUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVToAzStackHciEventModelCustomProperties"/>. </summary>
@@ -515,7 +514,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.HyperVToAzStackHciEventModelCustomProperties"/> instance for mocking. </returns>
         public static HyperVToAzStackHciEventModelCustomProperties HyperVToAzStackHciEventModelCustomProperties(string eventSourceFriendlyName = null, string protectedItemFriendlyName = null, string sourceApplianceName = null, string targetApplianceName = null, string serverType = null)
         {
-            return new HyperVToAzStackHciEventModelCustomProperties("HyperVToAzStackHCI", eventSourceFriendlyName, protectedItemFriendlyName, sourceApplianceName, targetApplianceName, serverType);
+            return new HyperVToAzStackHciEventModelCustomProperties(instanceType: null, eventSourceFriendlyName, protectedItemFriendlyName, sourceApplianceName, targetApplianceName, serverType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVToAzStackHciNicInput"/>. </summary>
@@ -605,7 +604,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             protectedDisks ??= new List<HyperVToAzStackHciProtectedDiskProperties>();
             protectedNics ??= new List<HyperVToAzStackHciProtectedNicProperties>();
 
-            return new HyperVToAzStackHciProtectedItemModelCustomProperties("HyperVToAzStackHCI", activeLocation, targetHciClusterId, targetArcClusterCustomLocationId, targetAzStackHciClusterName, fabricDiscoveryMachineId, disksToInclude?.ToList(), nicsToInclude?.ToList(), sourceVmName, sourceCpuCores, sourceMemoryInMegaBytes, targetVmName, targetResourceGroupId, storageContainerId, hyperVGeneration, targetNetworkId, testNetworkId, targetCpuCores, isDynamicRam, dynamicMemoryConfig, targetMemoryInMegaBytes, runAsAccountId, sourceDraName, targetDraName, sourceApplianceName, targetApplianceName, osType, osName, firmwareType, targetLocation, customLocationRegion, failoverRecoveryPointId, lastRecoveryPointReceived, lastRecoveryPointId, initialReplicationProgressPercentage, resyncProgressPercentage, protectedDisks?.ToList(), protectedNics?.ToList(), targetVmBiosId, lastReplicationUpdateOn);
+            return new HyperVToAzStackHciProtectedItemModelCustomProperties(instanceType: null, activeLocation, targetHciClusterId, targetArcClusterCustomLocationId, targetAzStackHciClusterName, fabricDiscoveryMachineId, disksToInclude?.ToList(), nicsToInclude?.ToList(), sourceVmName, sourceCpuCores, sourceMemoryInMegaBytes, targetVmName, targetResourceGroupId, storageContainerId, hyperVGeneration, targetNetworkId, testNetworkId, targetCpuCores, isDynamicRam, dynamicMemoryConfig, targetMemoryInMegaBytes, runAsAccountId, sourceDraName, targetDraName, sourceApplianceName, targetApplianceName, osType, osName, firmwareType, targetLocation, customLocationRegion, failoverRecoveryPointId, lastRecoveryPointReceived, lastRecoveryPointId, initialReplicationProgressPercentage, resyncProgressPercentage, protectedDisks?.ToList(), protectedNics?.ToList(), targetVmBiosId, lastReplicationUpdateOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVToAzStackHciProtectedNicProperties"/>. </summary>
@@ -628,7 +627,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             diskIds ??= new List<string>();
 
-            return new HyperVToAzStackHciRecoveryPointModelCustomProperties("HyperVToAzStackHCI", diskIds?.ToList());
+            return new HyperVToAzStackHciRecoveryPointModelCustomProperties(instanceType: null, diskIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
@@ -651,7 +650,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.HyperVToAzStackHciReplicationExtensionModelCustomProperties"/> instance for mocking. </returns>
         public static HyperVToAzStackHciReplicationExtensionModelCustomProperties HyperVToAzStackHciReplicationExtensionModelCustomProperties(ResourceIdentifier hyperVFabricArmId = null, ResourceIdentifier hyperVSiteId = null, ResourceIdentifier azStackHciFabricArmId = null, ResourceIdentifier azStackHciSiteId = null, string storageAccountId = null, string storageAccountSasSecretName = null, Uri asrServiceUri = null, Uri rcmServiceUri = null, Uri gatewayServiceUri = null, string sourceGatewayServiceId = null, string targetGatewayServiceId = null, string sourceStorageContainerName = null, string targetStorageContainerName = null, string resourceLocation = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new HyperVToAzStackHciReplicationExtensionModelCustomProperties("HyperVToAzStackHCI", hyperVFabricArmId, hyperVSiteId, azStackHciFabricArmId, azStackHciSiteId, storageAccountId, storageAccountSasSecretName, asrServiceUri, rcmServiceUri, gatewayServiceUri, sourceGatewayServiceId, targetGatewayServiceId, sourceStorageContainerName, targetStorageContainerName, resourceLocation, subscriptionId, resourceGroup);
+            return new HyperVToAzStackHciReplicationExtensionModelCustomProperties(instanceType: null, hyperVFabricArmId, hyperVSiteId, azStackHciFabricArmId, azStackHciSiteId, storageAccountId, storageAccountSasSecretName, asrServiceUri, rcmServiceUri, gatewayServiceUri, sourceGatewayServiceId, targetGatewayServiceId, sourceStorageContainerName, targetStorageContainerName, resourceLocation, subscriptionId, resourceGroup);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TestFailoverCleanupWorkflowModelCustomProperties"/>. </summary>
@@ -662,7 +661,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
 
-            return new TestFailoverCleanupWorkflowModelCustomProperties("TestFailoverCleanupWorkflowDetails", affectedObjectDetails, comments);
+            return new TestFailoverCleanupWorkflowModelCustomProperties(instanceType: null, affectedObjectDetails, comments);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TestFailoverWorkflowModelCustomProperties"/>. </summary>
@@ -674,7 +673,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             affectedObjectDetails ??= new Dictionary<string, string>();
             protectedItemDetails ??= new List<FailoverProtectedItemProperties>();
 
-            return new TestFailoverWorkflowModelCustomProperties("TestFailoverWorkflowDetails", affectedObjectDetails, protectedItemDetails?.ToList());
+            return new TestFailoverWorkflowModelCustomProperties(instanceType: null, affectedObjectDetails, protectedItemDetails?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciNicInput"/>. </summary>
@@ -772,7 +771,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             protectedDisks ??= new List<VMwareToAzStackHciProtectedDiskProperties>();
             protectedNics ??= new List<VMwareToAzStackHciProtectedNicProperties>();
 
-            return new VMwareToAzStackHciProtectedItemModelCustomProperties("VMwareToAzStackHCI", activeLocation, targetHciClusterId, targetArcClusterCustomLocationId, targetAzStackHciClusterName, storageContainerId, targetResourceGroupId, targetLocation, customLocationRegion, disksToInclude?.ToList(), nicsToInclude?.ToList(), protectedDisks?.ToList(), protectedNics?.ToList(), targetVmBiosId, targetVmName, hyperVGeneration, targetNetworkId, testNetworkId, targetCpuCores, isDynamicRam, dynamicMemoryConfig, targetMemoryInMegaBytes, osType, osName, firmwareType, fabricDiscoveryMachineId, sourceVmName, sourceCpuCores, sourceMemoryInMegaBytes, runAsAccountId, sourceDraName, targetDraName, sourceApplianceName, targetApplianceName, failoverRecoveryPointId, lastRecoveryPointReceived, lastRecoveryPointId, initialReplicationProgressPercentage, migrationProgressPercentage, resumeProgressPercentage, resyncProgressPercentage, resyncRetryCount, resyncRequired, resyncState, performAutoResync, resumeRetryCount, lastReplicationUpdateOn);
+            return new VMwareToAzStackHciProtectedItemModelCustomProperties(instanceType: null, activeLocation, targetHciClusterId, targetArcClusterCustomLocationId, targetAzStackHciClusterName, storageContainerId, targetResourceGroupId, targetLocation, customLocationRegion, disksToInclude?.ToList(), nicsToInclude?.ToList(), protectedDisks?.ToList(), protectedNics?.ToList(), targetVmBiosId, targetVmName, hyperVGeneration, targetNetworkId, testNetworkId, targetCpuCores, isDynamicRam, dynamicMemoryConfig, targetMemoryInMegaBytes, osType, osName, firmwareType, fabricDiscoveryMachineId, sourceVmName, sourceCpuCores, sourceMemoryInMegaBytes, runAsAccountId, sourceDraName, targetDraName, sourceApplianceName, targetApplianceName, failoverRecoveryPointId, lastRecoveryPointReceived, lastRecoveryPointId, initialReplicationProgressPercentage, migrationProgressPercentage, resumeProgressPercentage, resyncProgressPercentage, resyncRetryCount, resyncRequired, resyncState, performAutoResync, resumeRetryCount, lastReplicationUpdateOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareToAzStackHciProtectedNicProperties"/>. </summary>
@@ -810,7 +809,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <returns> A new <see cref="Models.VMwareToAzStackHciReplicationExtensionModelCustomProperties"/> instance for mocking. </returns>
         public static VMwareToAzStackHciReplicationExtensionModelCustomProperties VMwareToAzStackHciReplicationExtensionModelCustomProperties(ResourceIdentifier vmwareFabricArmId = null, ResourceIdentifier vmwareSiteId = null, ResourceIdentifier azStackHciFabricArmId = null, ResourceIdentifier azStackHciSiteId = null, ResourceIdentifier storageAccountId = null, string storageAccountSasSecretName = null, Uri asrServiceUri = null, Uri rcmServiceUri = null, Uri gatewayServiceUri = null, string sourceGatewayServiceId = null, string targetGatewayServiceId = null, string sourceStorageContainerName = null, string targetStorageContainerName = null, string resourceLocation = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new VMwareToAzStackHciReplicationExtensionModelCustomProperties("VMwareToAzStackHCI", vmwareFabricArmId, vmwareSiteId, azStackHciFabricArmId, azStackHciSiteId, storageAccountId, storageAccountSasSecretName, asrServiceUri, rcmServiceUri, gatewayServiceUri, sourceGatewayServiceId, targetGatewayServiceId, sourceStorageContainerName, targetStorageContainerName, resourceLocation, subscriptionId, resourceGroup);
+            return new VMwareToAzStackHciReplicationExtensionModelCustomProperties(instanceType: null, vmwareFabricArmId, vmwareSiteId, azStackHciFabricArmId, azStackHciSiteId, storageAccountId, storageAccountSasSecretName, asrServiceUri, rcmServiceUri, gatewayServiceUri, sourceGatewayServiceId, targetGatewayServiceId, sourceStorageContainerName, targetStorageContainerName, resourceLocation, subscriptionId, resourceGroup);
         }
     }
 }

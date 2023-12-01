@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderContainerUnmappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal ReplicationProviderContainerUnmappingContent(string instanceType)
+        {
+            InstanceType = instanceType;
+        }
+
         /// <summary> The class type. </summary>
         public string InstanceType { get; set; }
     }

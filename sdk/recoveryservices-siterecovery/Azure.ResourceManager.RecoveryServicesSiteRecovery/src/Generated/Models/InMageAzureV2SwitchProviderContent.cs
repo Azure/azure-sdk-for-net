@@ -30,6 +30,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="targetVaultId"> The target vault Id. </param>
+        /// <param name="targetFabricId"> The target fabric Id. </param>
+        /// <param name="targetApplianceId"> The target appliance Id. </param>
+        internal InMageAzureV2SwitchProviderContent(string instanceType, ResourceIdentifier targetVaultId, ResourceIdentifier targetFabricId, string targetApplianceId) : base(instanceType)
+        {
+            TargetVaultId = targetVaultId;
+            TargetFabricId = targetFabricId;
+            TargetApplianceId = targetApplianceId;
+            InstanceType = instanceType ?? "InMageAzureV2";
+        }
+
         /// <summary> The target vault Id. </summary>
         public ResourceIdentifier TargetVaultId { get; }
         /// <summary> The target fabric Id. </summary>

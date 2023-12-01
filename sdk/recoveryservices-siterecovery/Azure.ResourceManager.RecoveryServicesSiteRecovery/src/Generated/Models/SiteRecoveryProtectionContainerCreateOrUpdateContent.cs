@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionContainerCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Create protection container input properties. </param>
+        internal SiteRecoveryProtectionContainerCreateOrUpdateContent(SiteRecoveryCreateProtectionContainerProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Create protection container input properties. </summary>
         internal SiteRecoveryCreateProtectionContainerProperties Properties { get; set; }
         /// <summary>

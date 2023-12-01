@@ -35,11 +35,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.Facet"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
-        /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.Facet"/> instance for mocking. </returns>
-        public static Facet Facet(string expression = null, string resultType = null)
+        public static Facet Facet(string expression = null)
         {
-            return new UnknownFacet(expression, resultType);
+            return new UnknownFacet(expression, resultType: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FacetErrorDetails"/>. </summary>
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
         public static FacetResult FacetResult(string expression = null, long totalRecords = default, int count = default, BinaryData data = null)
         {
-            return new FacetResult(expression, "FacetResult", totalRecords, count, data);
+            return new FacetResult(expression, resultType: null, totalRecords, count, data);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FacetError"/>. </summary>
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             errors ??= new List<FacetErrorDetails>();
 
-            return new FacetError(expression, "FacetError", errors?.ToList());
+            return new FacetError(expression, resultType: null, errors?.ToList());
         }
     }
 }

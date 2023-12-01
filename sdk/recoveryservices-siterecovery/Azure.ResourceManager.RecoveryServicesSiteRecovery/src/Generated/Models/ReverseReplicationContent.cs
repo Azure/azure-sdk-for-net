@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ReverseReplicationContent"/>. </summary>
+        /// <param name="properties"> Reverse replication properties. </param>
+        internal ReverseReplicationContent(ReverseReplicationProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Reverse replication properties. </summary>
         public ReverseReplicationProperties Properties { get; set; }
     }

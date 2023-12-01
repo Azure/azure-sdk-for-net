@@ -223,5 +223,62 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
             return new ServiceFabricApplicationPatch(id, name, resourceType, systemData, tags, location, typeVersion, parameters, upgradePolicy, minimumNodes, maximumNodes, removeApplicationCapacity, metrics?.ToList(), managedIdentities?.ToList(), etag);
         }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabric.ServiceFabricServiceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
+        /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
+        /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetricDescription objects. </param>
+        /// <param name="servicePlacementPolicies"> A list that describes the correlation of the service with other services. </param>
+        /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
+        /// <param name="serviceTypeName"> The name of the service type. </param>
+        /// <param name="partitionDescription">
+        /// Describes how the service is partitioned.
+        /// Please note <see cref="PartitionSchemeDescription"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedPartitionSchemeDescription"/>, <see cref="SingletonPartitionSchemeDescription"/> and <see cref="UniformInt64RangePartitionSchemeDescription"/>.
+        /// </param>
+        /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>
+        /// <param name="serviceDnsName"> Dns name used for the service. If this is specified, then the service can be accessed via its DNS name instead of service name. </param>
+        /// <param name="etag"> Azure resource etag. </param>
+        /// <returns> A new <see cref="ServiceFabric.ServiceFabricServiceData"/> instance for mocking. </returns>
+        public static ServiceFabricServiceData ServiceFabricServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string placementConstraints = null, IEnumerable<ServiceCorrelationDescription> correlationScheme = null, IEnumerable<ServiceLoadMetricDescription> serviceLoadMetrics = null, IEnumerable<ServicePlacementPolicyDescription> servicePlacementPolicies = null, ApplicationMoveCost? defaultMoveCost = null, string provisioningState = null, string serviceTypeName = null, PartitionSchemeDescription partitionDescription = null, ArmServicePackageActivationMode? servicePackageActivationMode = null, string serviceDnsName = null, ETag? etag = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            correlationScheme ??= new List<ServiceCorrelationDescription>();
+            serviceLoadMetrics ??= new List<ServiceLoadMetricDescription>();
+            servicePlacementPolicies ??= new List<ServicePlacementPolicyDescription>();
+
+            return new ServiceFabricServiceData(id, name, resourceType, systemData, tags, location, placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, provisioningState, serviceKind: default, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName, etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricServicePatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
+        /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
+        /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetricDescription objects. </param>
+        /// <param name="servicePlacementPolicies"> A list that describes the correlation of the service with other services. </param>
+        /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
+        /// <param name="etag"> Azure resource etag. </param>
+        /// <returns> A new <see cref="Models.ServiceFabricServicePatch"/> instance for mocking. </returns>
+        public static ServiceFabricServicePatch ServiceFabricServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string placementConstraints = null, IEnumerable<ServiceCorrelationDescription> correlationScheme = null, IEnumerable<ServiceLoadMetricDescription> serviceLoadMetrics = null, IEnumerable<ServicePlacementPolicyDescription> servicePlacementPolicies = null, ApplicationMoveCost? defaultMoveCost = null, ETag? etag = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            correlationScheme ??= new List<ServiceCorrelationDescription>();
+            serviceLoadMetrics ??= new List<ServiceLoadMetricDescription>();
+            servicePlacementPolicies ??= new List<ServicePlacementPolicyDescription>();
+
+            return new ServiceFabricServicePatch(id, name, resourceType, systemData, tags, location, placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, serviceKind: default, etag);
+        }
     }
 }

@@ -194,18 +194,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.ThresholdCustomAlertRule"/> instance for mocking. </returns>
         public static ThresholdCustomAlertRule ThresholdCustomAlertRule(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default)
         {
-            return new ThresholdCustomAlertRule(displayName, description, isEnabled, "ThresholdCustomAlertRule", minThreshold, maxThreshold);
+            return new ThresholdCustomAlertRule(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <returns> A new <see cref="Models.CustomAlertRule"/> instance for mocking. </returns>
-        public static CustomAlertRule CustomAlertRule(string displayName = null, string description = null, bool isEnabled = default, string ruleType = null)
+        public static CustomAlertRule CustomAlertRule(string displayName = null, string description = null, bool isEnabled = default)
         {
-            return new UnknownCustomAlertRule(displayName, description, isEnabled, ruleType);
+            return new UnknownCustomAlertRule(displayName, description, isEnabled, ruleType: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TimeWindowCustomAlertRule"/>. </summary>
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.TimeWindowCustomAlertRule"/> instance for mocking. </returns>
         public static TimeWindowCustomAlertRule TimeWindowCustomAlertRule(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new TimeWindowCustomAlertRule(displayName, description, isEnabled, "TimeWindowCustomAlertRule", minThreshold, maxThreshold, timeWindowSize);
+            return new TimeWindowCustomAlertRule(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AllowlistCustomAlertRule"/>. </summary>
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             allowlistValues ??= new List<string>();
 
-            return new AllowlistCustomAlertRule(displayName, description, isEnabled, "AllowlistCustomAlertRule", valueType, allowlistValues?.ToList());
+            return new AllowlistCustomAlertRule(displayName, description, isEnabled, ruleType: null, valueType, allowlistValues?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ListCustomAlertRule"/>. </summary>
@@ -243,7 +242,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.ListCustomAlertRule"/> instance for mocking. </returns>
         public static ListCustomAlertRule ListCustomAlertRule(string displayName = null, string description = null, bool isEnabled = default, SecurityValueType? valueType = null)
         {
-            return new ListCustomAlertRule(displayName, description, isEnabled, "ListCustomAlertRule", valueType);
+            return new ListCustomAlertRule(displayName, description, isEnabled, ruleType: null, valueType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DenylistCustomAlertRule"/>. </summary>
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             denylistValues ??= new List<string>();
 
-            return new DenylistCustomAlertRule(displayName, description, isEnabled, "DenylistCustomAlertRule", valueType, denylistValues?.ToList());
+            return new DenylistCustomAlertRule(displayName, description, isEnabled, ruleType: null, valueType, denylistValues?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.IotSecuritySolutionData"/>. </summary>
@@ -1140,13 +1139,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="Models.AuthenticationDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
-        /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
         /// <returns> A new <see cref="Models.AuthenticationDetailsProperties"/> instance for mocking. </returns>
-        public static AuthenticationDetailsProperties AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string authenticationType = "Unknown")
+        public static AuthenticationDetailsProperties AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null)
         {
             grantedPermissions ??= new List<SecurityCenterCloudPermission>();
 
-            return new UnknownAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType);
+            return new UnknownAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAlertData"/>. </summary>
@@ -1226,11 +1224,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> the kind of the settings string. </param>
         /// <returns> A new <see cref="SecurityCenter.SecuritySettingData"/> instance for mocking. </returns>
-        public static SecuritySettingData SecuritySettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static SecuritySettingData SecuritySettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
-            return new SecuritySettingData(id, name, resourceType, systemData, kind);
+            return new SecuritySettingData(id, name, resourceType, systemData, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.IngestionSettingData"/>. </summary>
@@ -1314,12 +1311,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityCenterCloudOffering"/>. </summary>
-        /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.SecurityCenterCloudOffering"/> instance for mocking. </returns>
-        public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = "Unknown", string description = null)
+        public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string description = null)
         {
-            return new UnknownCloudOffering(offeringType, description);
+            return new UnknownCloudOffering(offeringType: default, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.GovernanceRuleData"/>. </summary>
@@ -1445,7 +1441,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             allowlistValues ??= new List<string>();
 
-            return new ConnectionToIPNotAllowed(displayName, description, isEnabled, "ConnectionToIpNotAllowed", valueType, allowlistValues?.ToList());
+            return new ConnectionToIPNotAllowed(displayName, description, isEnabled, ruleType: null, valueType, allowlistValues?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionFromIPNotAllowed"/>. </summary>
@@ -1459,7 +1455,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             allowlistValues ??= new List<string>();
 
-            return new ConnectionFromIPNotAllowed(displayName, description, isEnabled, "ConnectionFromIpNotAllowed", valueType, allowlistValues?.ToList());
+            return new ConnectionFromIPNotAllowed(displayName, description, isEnabled, ruleType: null, valueType, allowlistValues?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LocalUserNotAllowed"/>. </summary>
@@ -1473,7 +1469,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             allowlistValues ??= new List<string>();
 
-            return new LocalUserNotAllowed(displayName, description, isEnabled, "LocalUserNotAllowed", valueType, allowlistValues?.ToList());
+            return new LocalUserNotAllowed(displayName, description, isEnabled, ruleType: null, valueType, allowlistValues?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProcessNotAllowed"/>. </summary>
@@ -1487,7 +1483,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             allowlistValues ??= new List<string>();
 
-            return new ProcessNotAllowed(displayName, description, isEnabled, "ProcessNotAllowed", valueType, allowlistValues?.ToList());
+            return new ProcessNotAllowed(displayName, description, isEnabled, ruleType: null, valueType, allowlistValues?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ActiveConnectionsNotInAllowedRange"/>. </summary>
@@ -1500,7 +1496,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.ActiveConnectionsNotInAllowedRange"/> instance for mocking. </returns>
         public static ActiveConnectionsNotInAllowedRange ActiveConnectionsNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new ActiveConnectionsNotInAllowedRange(displayName, description, isEnabled, "ActiveConnectionsNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new ActiveConnectionsNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>. </summary>
@@ -1513,7 +1509,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/> instance for mocking. </returns>
         public static AmqpC2DMessagesNotInAllowedRange AmqpC2DMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new AmqpC2DMessagesNotInAllowedRange(displayName, description, isEnabled, "AmqpC2DMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new AmqpC2DMessagesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>. </summary>
@@ -1526,7 +1522,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.MqttC2DMessagesNotInAllowedRange"/> instance for mocking. </returns>
         public static MqttC2DMessagesNotInAllowedRange MqttC2DMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new MqttC2DMessagesNotInAllowedRange(displayName, description, isEnabled, "MqttC2DMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new MqttC2DMessagesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>. </summary>
@@ -1539,7 +1535,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.HttpC2DMessagesNotInAllowedRange"/> instance for mocking. </returns>
         public static HttpC2DMessagesNotInAllowedRange HttpC2DMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new HttpC2DMessagesNotInAllowedRange(displayName, description, isEnabled, "HttpC2DMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new HttpC2DMessagesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>. </summary>
@@ -1552,7 +1548,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/> instance for mocking. </returns>
         public static AmqpC2DRejectedMessagesNotInAllowedRange AmqpC2DRejectedMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new AmqpC2DRejectedMessagesNotInAllowedRange(displayName, description, isEnabled, "AmqpC2DRejectedMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new AmqpC2DRejectedMessagesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>. </summary>
@@ -1565,7 +1561,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/> instance for mocking. </returns>
         public static MqttC2DRejectedMessagesNotInAllowedRange MqttC2DRejectedMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new MqttC2DRejectedMessagesNotInAllowedRange(displayName, description, isEnabled, "MqttC2DRejectedMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new MqttC2DRejectedMessagesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>. </summary>
@@ -1578,7 +1574,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/> instance for mocking. </returns>
         public static HttpC2DRejectedMessagesNotInAllowedRange HttpC2DRejectedMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new HttpC2DRejectedMessagesNotInAllowedRange(displayName, description, isEnabled, "HttpC2DRejectedMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new HttpC2DRejectedMessagesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>. </summary>
@@ -1591,7 +1587,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/> instance for mocking. </returns>
         public static AmqpD2CMessagesNotInAllowedRange AmqpD2CMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new AmqpD2CMessagesNotInAllowedRange(displayName, description, isEnabled, "AmqpD2CMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new AmqpD2CMessagesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>. </summary>
@@ -1604,7 +1600,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.MqttD2CMessagesNotInAllowedRange"/> instance for mocking. </returns>
         public static MqttD2CMessagesNotInAllowedRange MqttD2CMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new MqttD2CMessagesNotInAllowedRange(displayName, description, isEnabled, "MqttD2CMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new MqttD2CMessagesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>. </summary>
@@ -1617,7 +1613,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.HttpD2CMessagesNotInAllowedRange"/> instance for mocking. </returns>
         public static HttpD2CMessagesNotInAllowedRange HttpD2CMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new HttpD2CMessagesNotInAllowedRange(displayName, description, isEnabled, "HttpD2CMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new HttpD2CMessagesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>. </summary>
@@ -1630,7 +1626,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DirectMethodInvokesNotInAllowedRange"/> instance for mocking. </returns>
         public static DirectMethodInvokesNotInAllowedRange DirectMethodInvokesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new DirectMethodInvokesNotInAllowedRange(displayName, description, isEnabled, "DirectMethodInvokesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new DirectMethodInvokesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>. </summary>
@@ -1643,7 +1639,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.FailedLocalLoginsNotInAllowedRange"/> instance for mocking. </returns>
         public static FailedLocalLoginsNotInAllowedRange FailedLocalLoginsNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new FailedLocalLoginsNotInAllowedRange(displayName, description, isEnabled, "FailedLocalLoginsNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new FailedLocalLoginsNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FileUploadsNotInAllowedRange"/>. </summary>
@@ -1656,7 +1652,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.FileUploadsNotInAllowedRange"/> instance for mocking. </returns>
         public static FileUploadsNotInAllowedRange FileUploadsNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new FileUploadsNotInAllowedRange(displayName, description, isEnabled, "FileUploadsNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new FileUploadsNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueuePurgesNotInAllowedRange"/>. </summary>
@@ -1669,7 +1665,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.QueuePurgesNotInAllowedRange"/> instance for mocking. </returns>
         public static QueuePurgesNotInAllowedRange QueuePurgesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new QueuePurgesNotInAllowedRange(displayName, description, isEnabled, "QueuePurgesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new QueuePurgesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TwinUpdatesNotInAllowedRange"/>. </summary>
@@ -1682,7 +1678,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.TwinUpdatesNotInAllowedRange"/> instance for mocking. </returns>
         public static TwinUpdatesNotInAllowedRange TwinUpdatesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new TwinUpdatesNotInAllowedRange(displayName, description, isEnabled, "TwinUpdatesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new TwinUpdatesNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/>. </summary>
@@ -1695,7 +1691,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/> instance for mocking. </returns>
         public static UnauthorizedOperationsNotInAllowedRange UnauthorizedOperationsNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
         {
-            return new UnauthorizedOperationsNotInAllowedRange(displayName, description, isEnabled, "UnauthorizedOperationsNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
+            return new UnauthorizedOperationsNotInAllowedRange(displayName, description, isEnabled, ruleType: null, minThreshold, maxThreshold, timeWindowSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlServerVulnerabilityProperties"/>. </summary>
@@ -1704,7 +1700,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SqlServerVulnerabilityProperties"/> instance for mocking. </returns>
         public static SqlServerVulnerabilityProperties SqlServerVulnerabilityProperties(string sqlServerVulnerabilityType = null, string query = null)
         {
-            return new SqlServerVulnerabilityProperties(AssessedResourceType.SqlServerVulnerability, sqlServerVulnerabilityType, query);
+            return new SqlServerVulnerabilityProperties(assessedResourceType: default, sqlServerVulnerabilityType, query);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryVulnerabilityProperties"/>. </summary>
@@ -1723,7 +1719,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             cve ??= new List<SecurityCve>();
             vendorReferences ??= new List<VendorReference>();
 
-            return new ContainerRegistryVulnerabilityProperties(AssessedResourceType.ContainerRegistryVulnerability, containerRegistryVulnerabilityPropertiesType, cvss, isPatchable, cve?.ToList(), publishedOn, vendorReferences?.ToList(), repositoryName, imageDigest);
+            return new ContainerRegistryVulnerabilityProperties(assessedResourceType: default, containerRegistryVulnerabilityPropertiesType, cvss, isPatchable, cve?.ToList(), publishedOn, vendorReferences?.ToList(), repositoryName, imageDigest);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityCvss"/>. </summary>
@@ -1767,7 +1763,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             cve ??= new List<SecurityCve>();
             vendorReferences ??= new List<VendorReference>();
 
-            return new ServerVulnerabilityProperties(new AssessedResourceType("ServerVulnerabilityAssessment"), serverVulnerabilityType, cvss, isPatchable, cve?.ToList(), threat, publishedOn, vendorReferences?.ToList());
+            return new ServerVulnerabilityProperties(assessedResourceType: default, serverVulnerabilityType, cvss, isPatchable, cve?.ToList(), threat, publishedOn, vendorReferences?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityAutomationActionEventHub"/>. </summary>
@@ -1777,7 +1773,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAutomationActionEventHub"/> instance for mocking. </returns>
         public static SecurityAutomationActionEventHub SecurityAutomationActionEventHub(ResourceIdentifier eventHubResourceId = null, string sasPolicyName = null, string connectionString = null)
         {
-            return new SecurityAutomationActionEventHub(ActionType.EventHub, eventHubResourceId, sasPolicyName, connectionString);
+            return new SecurityAutomationActionEventHub(actionType: default, eventHubResourceId, sasPolicyName, connectionString);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CefExternalSecuritySolution"/>. </summary>
@@ -1830,7 +1826,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             grantedPermissions ??= new List<SecurityCenterCloudPermission>();
 
-            return new AwsCredsAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsCreds, accountId, awsAccessKeyId, awsSecretAccessKey);
+            return new AwsCredsAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType: default, accountId, awsAccessKeyId, awsSecretAccessKey);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/>. </summary>
@@ -1844,7 +1840,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             grantedPermissions ??= new List<SecurityCenterCloudPermission>();
 
-            return new AwsAssumeRoleAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsAssumeRole, accountId, awsAssumeRoleArn, awsExternalId);
+            return new AwsAssumeRoleAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType: default, accountId, awsAssumeRoleArn, awsExternalId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GcpCredentialsDetailsProperties"/>. </summary>
@@ -1866,7 +1862,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             grantedPermissions ??= new List<SecurityCenterCloudPermission>();
 
-            return new GcpCredentialsDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.GcpCredentials, organizationId, gcpCredentialType, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUri, clientX509CertUri);
+            return new GcpCredentialsDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType: default, organizationId, gcpCredentialType, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUri, clientX509CertUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureResourceIdentifier"/>. </summary>
@@ -1874,7 +1870,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AzureResourceIdentifier"/> instance for mocking. </returns>
         public static AzureResourceIdentifier AzureResourceIdentifier(ResourceIdentifier azureResourceId = null)
         {
-            return new AzureResourceIdentifier(ResourceIdentifierType.AzureResource, azureResourceId);
+            return new AzureResourceIdentifier(resourceIdentifierType: default, azureResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogAnalyticsIdentifier"/>. </summary>
@@ -1885,7 +1881,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.LogAnalyticsIdentifier"/> instance for mocking. </returns>
         public static LogAnalyticsIdentifier LogAnalyticsIdentifier(Guid? workspaceId = null, string workspaceSubscriptionId = null, string workspaceResourceGroup = null, Guid? agentId = null)
         {
-            return new LogAnalyticsIdentifier(ResourceIdentifierType.LogAnalytics, workspaceId, workspaceSubscriptionId, workspaceResourceGroup, agentId);
+            return new LogAnalyticsIdentifier(resourceIdentifierType: default, workspaceId, workspaceSubscriptionId, workspaceResourceGroup, agentId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataExportSettings"/>. </summary>
@@ -1897,7 +1893,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DataExportSettings"/> instance for mocking. </returns>
         public static DataExportSettings DataExportSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isEnabled = null)
         {
-            return new DataExportSettings(id, name, resourceType, systemData, SettingKind.DataExportSettings, isEnabled);
+            return new DataExportSettings(id, name, resourceType, systemData, kind: default, isEnabled);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityAlertSyncSettings"/>. </summary>
@@ -1909,7 +1905,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAlertSyncSettings"/> instance for mocking. </returns>
         public static SecurityAlertSyncSettings SecurityAlertSyncSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isEnabled = null)
         {
-            return new SecurityAlertSyncSettings(id, name, resourceType, systemData, SettingKind.AlertSyncSettings, isEnabled);
+            return new SecurityAlertSyncSettings(id, name, resourceType, systemData, kind: default, isEnabled);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GcpProjectDetails"/>. </summary>
@@ -1928,7 +1924,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorAwsOffering"/> instance for mocking. </returns>
         public static CspmMonitorAwsOffering CspmMonitorAwsOffering(string description = null, string cloudRoleArn = null)
         {
-            return new CspmMonitorAwsOffering(OfferingType.CspmMonitorAws, description, cloudRoleArn != null ? new CspmMonitorAwsOfferingNativeCloudConnection(cloudRoleArn) : null);
+            return new CspmMonitorAwsOffering(offeringType: default, description, cloudRoleArn != null ? new CspmMonitorAwsOfferingNativeCloudConnection(cloudRoleArn) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderForContainersAwsOffering"/>. </summary>
@@ -1946,7 +1942,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForContainersAwsOffering"/> instance for mocking. </returns>
         public static DefenderForContainersAwsOffering DefenderForContainersAwsOffering(string description = null, string kubernetesServiceCloudRoleArn = null, string kubernetesScubaReaderCloudRoleArn = null, string cloudRoleArn = null, string kinesisToS3CloudRoleArn = null, string containerVulnerabilityAssessmentCloudRoleArn = null, string containerVulnerabilityAssessmentTaskCloudRoleArn = null, bool? isContainerVulnerabilityAssessmentEnabled = null, bool? isAutoProvisioningEnabled = null, long? kubeAuditRetentionTime = null, string scubaExternalId = null)
         {
-            return new DefenderForContainersAwsOffering(OfferingType.DefenderForContainersAws, description, kubernetesServiceCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesService(kubernetesServiceCloudRoleArn) : null, kubernetesScubaReaderCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesScubaReader(kubernetesScubaReaderCloudRoleArn) : null, cloudRoleArn != null ? new DefenderForContainersAwsOfferingCloudWatchToKinesis(cloudRoleArn) : null, kinesisToS3CloudRoleArn != null ? new DefenderForContainersAwsOfferingKinesisToS3(kinesisToS3CloudRoleArn) : null, containerVulnerabilityAssessmentCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessment(containerVulnerabilityAssessmentCloudRoleArn) : null, containerVulnerabilityAssessmentTaskCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(containerVulnerabilityAssessmentTaskCloudRoleArn) : null, isContainerVulnerabilityAssessmentEnabled, isAutoProvisioningEnabled, kubeAuditRetentionTime, scubaExternalId);
+            return new DefenderForContainersAwsOffering(offeringType: default, description, kubernetesServiceCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesService(kubernetesServiceCloudRoleArn) : null, kubernetesScubaReaderCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesScubaReader(kubernetesScubaReaderCloudRoleArn) : null, cloudRoleArn != null ? new DefenderForContainersAwsOfferingCloudWatchToKinesis(cloudRoleArn) : null, kinesisToS3CloudRoleArn != null ? new DefenderForContainersAwsOfferingKinesisToS3(kinesisToS3CloudRoleArn) : null, containerVulnerabilityAssessmentCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessment(containerVulnerabilityAssessmentCloudRoleArn) : null, containerVulnerabilityAssessmentTaskCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(containerVulnerabilityAssessmentTaskCloudRoleArn) : null, isContainerVulnerabilityAssessmentEnabled, isAutoProvisioningEnabled, kubeAuditRetentionTime, scubaExternalId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderForServersAwsOffering"/>. </summary>
@@ -1960,7 +1956,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForServersAwsOffering"/> instance for mocking. </returns>
         public static DefenderForServersAwsOffering DefenderForServersAwsOffering(string description = null, string defenderForServersCloudRoleArn = null, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning = null, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = null, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning = null, AvailableSubPlanType? availableSubPlanType = null, DefenderForServersAwsOfferingVmScanners vmScanners = null)
         {
-            return new DefenderForServersAwsOffering(OfferingType.DefenderForServersAws, description, defenderForServersCloudRoleArn != null ? new AwsDefenderForServersInfo(defenderForServersCloudRoleArn) : null, arcAutoProvisioning, vaAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersAwsOfferingSubPlan(availableSubPlanType) : null, vmScanners);
+            return new DefenderForServersAwsOffering(offeringType: default, description, defenderForServersCloudRoleArn != null ? new AwsDefenderForServersInfo(defenderForServersCloudRoleArn) : null, arcAutoProvisioning, vaAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersAwsOfferingSubPlan(availableSubPlanType) : null, vmScanners);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderForDatabasesAwsOffering"/>. </summary>
@@ -1970,7 +1966,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForDatabasesAwsOffering"/> instance for mocking. </returns>
         public static DefenderForDatabasesAwsOffering DefenderForDatabasesAwsOffering(string description = null, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = null, DefenderForDatabasesAwsOfferingRds rds = null)
         {
-            return new DefenderForDatabasesAwsOffering(OfferingType.DefenderForDatabasesAws, description, arcAutoProvisioning, rds);
+            return new DefenderForDatabasesAwsOffering(offeringType: default, description, arcAutoProvisioning, rds);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InformationProtectionAwsOffering"/>. </summary>
@@ -1979,7 +1975,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.InformationProtectionAwsOffering"/> instance for mocking. </returns>
         public static InformationProtectionAwsOffering InformationProtectionAwsOffering(string description = null, string informationProtectionCloudRoleArn = null)
         {
-            return new InformationProtectionAwsOffering(OfferingType.InformationProtectionAws, description, informationProtectionCloudRoleArn != null ? new AwsInformationProtection(informationProtectionCloudRoleArn) : null);
+            return new InformationProtectionAwsOffering(offeringType: default, description, informationProtectionCloudRoleArn != null ? new AwsInformationProtection(informationProtectionCloudRoleArn) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorGcpOffering"/>. </summary>
@@ -1988,7 +1984,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorGcpOffering"/> instance for mocking. </returns>
         public static CspmMonitorGcpOffering CspmMonitorGcpOffering(string description = null, CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection = null)
         {
-            return new CspmMonitorGcpOffering(OfferingType.CspmMonitorGcp, description, nativeCloudConnection);
+            return new CspmMonitorGcpOffering(offeringType: default, description, nativeCloudConnection);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderForServersGcpOffering"/>. </summary>
@@ -2001,7 +1997,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForServersGcpOffering"/> instance for mocking. </returns>
         public static DefenderForServersGcpOffering DefenderForServersGcpOffering(string description = null, GcpDefenderForServersInfo defenderForServers = null, bool? isEnabled = null, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning = null, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = null, AvailableSubPlanType? availableSubPlanType = null)
         {
-            return new DefenderForServersGcpOffering(OfferingType.DefenderForServersGcp, description, defenderForServers, isEnabled != null ? new DefenderForServersGcpOfferingArcAutoProvisioning(isEnabled) : null, vulnerabilityAssessmentAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersGcpOfferingSubPlan(availableSubPlanType) : null);
+            return new DefenderForServersGcpOffering(offeringType: default, description, defenderForServers, isEnabled != null ? new DefenderForServersGcpOfferingArcAutoProvisioning(isEnabled) : null, vulnerabilityAssessmentAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersGcpOfferingSubPlan(availableSubPlanType) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderForDatabasesGcpOffering"/>. </summary>
@@ -2011,7 +2007,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForDatabasesGcpOffering"/> instance for mocking. </returns>
         public static DefenderForDatabasesGcpOffering DefenderForDatabasesGcpOffering(string description = null, bool? isEnabled = null, GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning = null)
         {
-            return new DefenderForDatabasesGcpOffering(OfferingType.DefenderForDatabasesGcp, description, isEnabled != null ? new DefenderForDatabasesGcpOfferingArcAutoProvisioning(isEnabled) : null, defenderForDatabasesArcAutoProvisioning);
+            return new DefenderForDatabasesGcpOffering(offeringType: default, description, isEnabled != null ? new DefenderForDatabasesGcpOfferingArcAutoProvisioning(isEnabled) : null, defenderForDatabasesArcAutoProvisioning);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderForContainersGcpOffering"/>. </summary>
@@ -2024,7 +2020,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForContainersGcpOffering"/> instance for mocking. </returns>
         public static DefenderForContainersGcpOffering DefenderForContainersGcpOffering(string description = null, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = null, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = null, bool? isAuditLogsAutoProvisioningEnabled = null, bool? isDefenderAgentAutoProvisioningEnabled = null, bool? isPolicyAgentAutoProvisioningEnabled = null)
         {
-            return new DefenderForContainersGcpOffering(OfferingType.DefenderForContainersGcp, description, nativeCloudConnection, dataPipelineNativeCloudConnection, isAuditLogsAutoProvisioningEnabled, isDefenderAgentAutoProvisioningEnabled, isPolicyAgentAutoProvisioningEnabled);
+            return new DefenderForContainersGcpOffering(offeringType: default, description, nativeCloudConnection, dataPipelineNativeCloudConnection, isAuditLogsAutoProvisioningEnabled, isDefenderAgentAutoProvisioningEnabled, isPolicyAgentAutoProvisioningEnabled);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorGithubOffering"/>. </summary>
@@ -2032,7 +2028,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorGithubOffering"/> instance for mocking. </returns>
         public static CspmMonitorGithubOffering CspmMonitorGithubOffering(string description = null)
         {
-            return new CspmMonitorGithubOffering(OfferingType.CspmMonitorGithub, description);
+            return new CspmMonitorGithubOffering(offeringType: default, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorAzureDevOpsOffering"/>. </summary>
@@ -2040,7 +2036,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorAzureDevOpsOffering"/> instance for mocking. </returns>
         public static CspmMonitorAzureDevOpsOffering CspmMonitorAzureDevOpsOffering(string description = null)
         {
-            return new CspmMonitorAzureDevOpsOffering(OfferingType.CspmMonitorAzureDevOps, description);
+            return new CspmMonitorAzureDevOpsOffering(offeringType: default, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderCspmAwsOffering"/>. </summary>
@@ -2049,7 +2045,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderCspmAwsOffering"/> instance for mocking. </returns>
         public static DefenderCspmAwsOffering DefenderCspmAwsOffering(string description = null, DefenderCspmAwsOfferingVmScanners vmScanners = null)
         {
-            return new DefenderCspmAwsOffering(OfferingType.DefenderCspmAws, description, vmScanners);
+            return new DefenderCspmAwsOffering(offeringType: default, description, vmScanners);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderCspmGcpOffering"/>. </summary>
@@ -2057,7 +2053,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderCspmGcpOffering"/> instance for mocking. </returns>
         public static DefenderCspmGcpOffering DefenderCspmGcpOffering(string description = null)
         {
-            return new DefenderCspmGcpOffering(OfferingType.DefenderCspmGcp, description);
+            return new DefenderCspmGcpOffering(offeringType: default, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderForDevOpsGithubOffering"/>. </summary>
@@ -2065,7 +2061,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForDevOpsGithubOffering"/> instance for mocking. </returns>
         public static DefenderForDevOpsGithubOffering DefenderForDevOpsGithubOffering(string description = null)
         {
-            return new DefenderForDevOpsGithubOffering(OfferingType.DefenderForDevOpsGithub, description);
+            return new DefenderForDevOpsGithubOffering(offeringType: default, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>. </summary>
@@ -2073,7 +2069,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/> instance for mocking. </returns>
         public static DefenderForDevOpsAzureDevOpsOffering DefenderForDevOpsAzureDevOpsOffering(string description = null)
         {
-            return new DefenderForDevOpsAzureDevOpsOffering(OfferingType.DefenderForDevOpsAzureDevOps, description);
+            return new DefenderForDevOpsAzureDevOpsOffering(offeringType: default, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureResourceDetails"/>. </summary>
@@ -2081,7 +2077,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AzureResourceDetails"/> instance for mocking. </returns>
         public static AzureResourceDetails AzureResourceDetails(string id = null)
         {
-            return new AzureResourceDetails(Source.Azure, id);
+            return new AzureResourceDetails(source: default, id);
         }
     }
 }

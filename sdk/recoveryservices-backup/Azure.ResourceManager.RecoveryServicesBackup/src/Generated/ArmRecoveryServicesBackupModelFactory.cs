@@ -208,7 +208,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupGenericProtectedItem"/>. </summary>
-        /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -227,11 +226,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
         /// <returns> A new <see cref="Models.BackupGenericProtectedItem"/> instance for mocking. </returns>
-        public static BackupGenericProtectedItem BackupGenericProtectedItem(string protectedItemType = null, BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null)
+        public static BackupGenericProtectedItem BackupGenericProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new UnknownProtectedItem(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays);
+            return new UnknownProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/>. </summary>
@@ -531,7 +530,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             resourceGuardOperationRequests ??= new List<string>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new FileshareProtectedItem("AzureFileShareProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, kpisHealths, extendedInfo);
+            return new FileshareProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, kpisHealths, extendedInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthDetails"/>. </summary>
@@ -596,7 +595,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             healthDetails ??= new List<IaasVmHealthDetails>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new IaasClassicComputeVmProtectedItem("Microsoft.ClassicCompute/virtualMachines", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
+            return new IaasClassicComputeVmProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IaasVmProtectedItem"/>. </summary>
@@ -636,7 +635,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             healthDetails ??= new List<IaasVmHealthDetails>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new IaasVmProtectedItem("AzureIaaSVMProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
+            return new IaasVmProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IaasVmHealthDetails"/>. </summary>
@@ -689,7 +688,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             healthDetails ??= new List<IaasVmHealthDetails>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new IaasComputeVmProtectedItem("Microsoft.Compute/virtualMachines", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
+            return new IaasComputeVmProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IaasVmErrorInfo"/>. </summary>
@@ -731,7 +730,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new SqlProtectedItem("Microsoft.Sql/servers/databases", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, protectedItemDataId, protectionState, extendedInfo);
+            return new SqlProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, protectedItemDataId, protectionState, extendedInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadProtectedItem"/>. </summary>
@@ -773,7 +772,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadProtectedItem("AzureVmWorkloadProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupErrorDetail"/>. </summary>
@@ -827,7 +826,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSapAseDatabaseProtectedItem("AzureVmWorkloadSAPAseDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSapAseDatabaseProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>. </summary>
@@ -869,7 +868,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSapHanaDatabaseProtectedItem("AzureVmWorkloadSAPHanaDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSapHanaDatabaseProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>. </summary>
@@ -911,7 +910,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSapHanaDBInstanceProtectedItem("AzureVmWorkloadSAPHanaDBInstance", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSapHanaDBInstanceProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>. </summary>
@@ -953,7 +952,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSqlDatabaseProtectedItem("AzureVmWorkloadSQLDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSqlDatabaseProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DpmProtectedItem"/>. </summary>
@@ -983,7 +982,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new DpmProtectedItem("DPMProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, backupEngineName, protectionState, extendedInfo);
+            return new DpmProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, backupEngineName, protectionState, extendedInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GenericProtectedItem"/>. </summary>
@@ -1016,7 +1015,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             resourceGuardOperationRequests ??= new List<string>();
             sourceAssociations ??= new Dictionary<string, string>();
 
-            return new GenericProtectedItem("GenericProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, policyState, protectionState, protectedItemId, sourceAssociations, fabricName);
+            return new GenericProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, policyState, protectionState, protectedItemId, sourceAssociations, fabricName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MabErrorInfo"/>. </summary>
@@ -1060,7 +1059,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new MabFileFolderProtectedItem("MabFileFolderProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, computerName, lastBackupStatus, lastBackupOn, protectionState, deferredDeleteSyncTimeInUTC, extendedInfo);
+            return new MabFileFolderProtectedItem(protectedItemType: null, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, computerName, lastBackupStatus, lastBackupOn, protectionState, deferredDeleteSyncTimeInUTC, extendedInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InquiryValidation"/>. </summary>

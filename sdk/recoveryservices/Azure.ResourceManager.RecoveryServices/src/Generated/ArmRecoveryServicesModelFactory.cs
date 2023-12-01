@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateDetails"/>. </summary>
-        /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
         /// <param name="issuer"> Certificate issuer. </param>
@@ -45,9 +44,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="validStartOn"> Certificate Validity start Date time. </param>
         /// <param name="validEndOn"> Certificate Validity End Date time. </param>
         /// <returns> A new <see cref="Models.ResourceCertificateDetails"/> instance for mocking. </returns>
-        public static ResourceCertificateDetails ResourceCertificateDetails(string authType = null, byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null)
+        public static ResourceCertificateDetails ResourceCertificateDetails(byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null)
         {
-            return new UnknownResourceCertificateDetails(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn);
+            return new UnknownResourceCertificateDetails(authType: null, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReplicationUsage"/>. </summary>
@@ -315,7 +314,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.ResourceCertificateAndAadDetails"/> instance for mocking. </returns>
         public static ResourceCertificateAndAadDetails ResourceCertificateAndAadDetails(byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null, string aadAuthority = null, Guid aadTenantId = default, string servicePrincipalClientId = null, string servicePrincipalObjectId = null, string azureManagementEndpointAudience = null, ResourceIdentifier serviceResourceId = null, string aadAudience = null)
         {
-            return new ResourceCertificateAndAadDetails("AzureActiveDirectory", certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId, aadAudience);
+            return new ResourceCertificateAndAadDetails(authType: null, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId, aadAudience);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateAndAcsDetails"/>. </summary>
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.ResourceCertificateAndAcsDetails"/> instance for mocking. </returns>
         public static ResourceCertificateAndAcsDetails ResourceCertificateAndAcsDetails(byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null, string globalAcsNamespace = null, string globalAcsHostName = null, string globalAcsRPRealm = null)
         {
-            return new ResourceCertificateAndAcsDetails("AccessControlService", certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, globalAcsNamespace, globalAcsHostName, globalAcsRPRealm);
+            return new ResourceCertificateAndAcsDetails(authType: null, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, globalAcsNamespace, globalAcsHostName, globalAcsRPRealm);
         }
     }
 }

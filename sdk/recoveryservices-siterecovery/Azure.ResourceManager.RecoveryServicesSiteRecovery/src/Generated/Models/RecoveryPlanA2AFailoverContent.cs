@@ -18,6 +18,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanA2AFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
+        /// <param name="cloudServiceCreationOption"> A value indicating whether to use recovery cloud service for TFO or not. </param>
+        /// <param name="multiVmSyncPointOption"> A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover. </param>
+        internal RecoveryPlanA2AFailoverContent(string instanceType, A2ARpRecoveryPointType recoveryPointType, string cloudServiceCreationOption, MultiVmSyncPointOption? multiVmSyncPointOption) : base(instanceType)
+        {
+            RecoveryPointType = recoveryPointType;
+            CloudServiceCreationOption = cloudServiceCreationOption;
+            MultiVmSyncPointOption = multiVmSyncPointOption;
+            InstanceType = instanceType ?? "A2A";
+        }
+
         /// <summary> The recovery point type. </summary>
         public A2ARpRecoveryPointType RecoveryPointType { get; }
         /// <summary> A value indicating whether to use recovery cloud service for TFO or not. </summary>
