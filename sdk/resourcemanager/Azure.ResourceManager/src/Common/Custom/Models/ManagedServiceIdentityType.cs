@@ -17,12 +17,17 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentityType model, JsonSerializerOptions options)
             {
+                writer.WritePropertyName("type");
                 writer.WriteStringValue(model.ToString());
             }
             public override ManagedServiceIdentityType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return new ManagedServiceIdentityType(document.RootElement.GetString());
+                foreach (var property in document.RootElement.EnumerateObject())
+                {
+                    return new ManagedServiceIdentityType(property.Value.GetString());
+                }
+                return null;
             }
         }
     }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Recommended actions of event. </summary>
     public partial class ResourceHealthEventRecommendedActions
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventRecommendedActions"/>. </summary>
         internal ResourceHealthEventRecommendedActions()
         {
             Actions = new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventRecommendedActions"/>. </summary>
         /// <param name="message"> Recommended action title for the service health event. </param>
         /// <param name="actions"> Recommended actions for the service health event. </param>
         /// <param name="localeCode"> Recommended action locale for the service health event. </param>

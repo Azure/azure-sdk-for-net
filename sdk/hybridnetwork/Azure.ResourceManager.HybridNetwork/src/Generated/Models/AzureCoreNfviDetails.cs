@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The Azure Core NFVI detail. </summary>
     public partial class AzureCoreNfviDetails : NFVIs
     {
-        /// <summary> Initializes a new instance of AzureCoreNfviDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreNfviDetails"/>. </summary>
         public AzureCoreNfviDetails()
         {
             NfviType = NfviType.AzureCore;
         }
 
-        /// <summary> Initializes a new instance of AzureCoreNfviDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreNfviDetails"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
         /// <param name="location"> Location of the Azure core. </param>

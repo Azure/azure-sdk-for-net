@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A managed disk input details. </summary>
     public partial class A2AVmManagedDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AVmManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Arm Id. </param>
         /// <param name="recoveryResourceGroupId"> The target resource group Arm Id. </param>

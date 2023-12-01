@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster Instance View. </summary>
     public partial class ClusterInstanceViewResult
     {
-        /// <summary> Initializes a new instance of ClusterInstanceViewResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewResult"/>. </summary>
         /// <param name="name"> Name of the instance view. </param>
         /// <param name="status"> Status of the instance view. </param>
         /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ServiceStatuses = serviceStatuses.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClusterInstanceViewResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewResult"/>. </summary>
         /// <param name="name"> Name of the instance view. </param>
         /// <param name="status"> Status of the instance view. </param>
         /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </param>

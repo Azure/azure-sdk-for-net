@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class EventGridPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventGridPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateLinkResourceData"/>. </summary>
         internal EventGridPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventGridPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

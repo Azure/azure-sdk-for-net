@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource" />.
-    /// To get a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionCollection" /> instance call the GetDeviceProvisioningServicesPrivateEndpointConnections method from an instance of <see cref="DeviceProvisioningServiceResource" />.
+    /// A class representing a collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource"/>.
+    /// To get a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionCollection"/> instance call the GetDeviceProvisioningServicesPrivateEndpointConnections method from an instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

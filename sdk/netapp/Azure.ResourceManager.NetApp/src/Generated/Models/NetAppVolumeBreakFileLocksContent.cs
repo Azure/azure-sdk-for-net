@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Break file locks request. </summary>
     public partial class NetAppVolumeBreakFileLocksContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeBreakFileLocksContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakFileLocksContent"/>. </summary>
         public NetAppVolumeBreakFileLocksContent()
         {
         }

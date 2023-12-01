@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Firewall Policy NAT Rule Collection. </summary>
     public partial class FirewallPolicyNatRuleCollectionInfo : FirewallPolicyRuleCollectionInfo
     {
-        /// <summary> Initializes a new instance of FirewallPolicyNatRuleCollectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyNatRuleCollectionInfo"/>. </summary>
         public FirewallPolicyNatRuleCollectionInfo()
         {
             Rules = new ChangeTrackingList<FirewallPolicyRule>();
             RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyNatRuleCollection;
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyNatRuleCollectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyNatRuleCollectionInfo"/>. </summary>
         /// <param name="ruleCollectionType"> The type of the rule collection. </param>
         /// <param name="name"> The name of the rule collection. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>

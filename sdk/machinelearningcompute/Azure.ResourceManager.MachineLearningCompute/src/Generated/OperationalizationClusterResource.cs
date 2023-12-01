@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
 {
     /// <summary>
     /// A Class representing an OperationalizationCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalizationClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalizationClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetOperationalizationCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalizationClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalizationClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOperationalizationCluster method.
     /// </summary>
     public partial class OperationalizationClusterResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalizationClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalizationClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalizationClusterResource(ArmClient client, OperationalizationClusterData data) : this(client, data.Id)

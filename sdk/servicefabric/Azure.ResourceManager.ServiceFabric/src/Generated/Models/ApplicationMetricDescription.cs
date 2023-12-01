@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ApplicationMetricDescription
     {
-        /// <summary> Initializes a new instance of ApplicationMetricDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationMetricDescription"/>. </summary>
         public ApplicationMetricDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationMetricDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationMetricDescription"/>. </summary>
         /// <param name="name"> The name of the metric. </param>
         /// <param name="maximumCapacity">
         /// The maximum node capacity for Service Fabric application.

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create test job operation. </summary>
     public partial class RunbookTestJobCreateContent
     {
-        /// <summary> Initializes a new instance of RunbookTestJobCreateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookTestJobCreateContent"/>. </summary>
         public RunbookTestJobCreateContent()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();

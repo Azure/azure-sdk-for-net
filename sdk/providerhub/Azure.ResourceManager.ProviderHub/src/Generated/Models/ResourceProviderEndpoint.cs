@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderEndpoint. </summary>
     public partial class ResourceProviderEndpoint
     {
-        /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderEndpoint"/>. </summary>
         internal ResourceProviderEndpoint()
         {
             ApiVersions = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderEndpoint"/>. </summary>
         /// <param name="isEnabled"></param>
         /// <param name="apiVersions"></param>
         /// <param name="endpointUri"></param>

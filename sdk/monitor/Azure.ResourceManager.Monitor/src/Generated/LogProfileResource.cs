@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a LogProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetLogProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetLogProfile method.
     /// </summary>
     public partial class LogProfileResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogProfileResource(ArmClient client, LogProfileData data) : this(client, data.Id)

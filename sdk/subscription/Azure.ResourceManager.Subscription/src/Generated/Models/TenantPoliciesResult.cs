@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Tenant policy information list. </summary>
     internal partial class TenantPoliciesResult
     {
-        /// <summary> Initializes a new instance of TenantPoliciesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPoliciesResult"/>. </summary>
         internal TenantPoliciesResult()
         {
             Value = new ChangeTrackingList<TenantPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of TenantPoliciesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPoliciesResult"/>. </summary>
         /// <param name="value"> The list of tenant policies. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal TenantPoliciesResult(IReadOnlyList<TenantPolicyData> value, string nextLink)

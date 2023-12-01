@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model package operation request properties. </summary>
     public partial class ModelPackageContent
     {
-        /// <summary> Initializes a new instance of ModelPackageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPackageContent"/>. </summary>
         /// <param name="inferencingServer">
         /// [Required] Inferencing server configurations.
         /// Please note <see cref="Models.InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

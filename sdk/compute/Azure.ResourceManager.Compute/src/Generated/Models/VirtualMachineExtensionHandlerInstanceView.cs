@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a virtual machine extension handler. </summary>
     public partial class VirtualMachineExtensionHandlerInstanceView
     {
-        /// <summary> Initializes a new instance of VirtualMachineExtensionHandlerInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionHandlerInstanceView"/>. </summary>
         internal VirtualMachineExtensionHandlerInstanceView()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineExtensionHandlerInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionHandlerInstanceView"/>. </summary>
         /// <param name="virtualMachineExtensionHandlerInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> The extension handler status. </param>

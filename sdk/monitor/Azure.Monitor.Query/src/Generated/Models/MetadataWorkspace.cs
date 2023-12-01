@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Log Analytics workspaces that were part of the metadata request and that the user has access to. </summary>
     internal partial class MetadataWorkspace
     {
-        /// <summary> Initializes a new instance of MetadataWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataWorkspace"/>. </summary>
         /// <param name="id"> The ID of the Log Analytics workspace. </param>
         /// <param name="resourceId"> The ARM resource ID of the Log Analytics workspace. </param>
         /// <param name="name"> The name of the Log Analytics workspace. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>
     public partial class LinuxParameters
     {
-        /// <summary> Initializes a new instance of LinuxParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxParameters"/>. </summary>
         public LinuxParameters()
         {
             ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationLinux>();

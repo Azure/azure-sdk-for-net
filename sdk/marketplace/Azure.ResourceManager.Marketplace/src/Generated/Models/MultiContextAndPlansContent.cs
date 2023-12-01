@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Payload object for upsert offer with multiple context and plans. </summary>
     public partial class MultiContextAndPlansContent
     {
-        /// <summary> Initializes a new instance of MultiContextAndPlansContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiContextAndPlansContent"/>. </summary>
         public MultiContextAndPlansContent()
         {
             PlansContext = new ChangeTrackingList<ContextAndPlansDetails>();

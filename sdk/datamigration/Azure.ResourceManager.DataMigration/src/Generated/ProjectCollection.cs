@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProjectResource" /> and their operations.
-    /// Each <see cref="ProjectResource" /> in the collection will belong to the same instance of <see cref="DataMigrationServiceResource" />.
-    /// To get a <see cref="ProjectCollection" /> instance call the GetProjects method from an instance of <see cref="DataMigrationServiceResource" />.
+    /// A class representing a collection of <see cref="ProjectResource"/> and their operations.
+    /// Each <see cref="ProjectResource"/> in the collection will belong to the same instance of <see cref="DataMigrationServiceResource"/>.
+    /// To get a <see cref="ProjectCollection"/> instance call the GetProjects method from an instance of <see cref="DataMigrationServiceResource"/>.
     /// </summary>
     public partial class ProjectCollection : ArmCollection, IEnumerable<ProjectResource>, IAsyncEnumerable<ProjectResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProjectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProjectResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

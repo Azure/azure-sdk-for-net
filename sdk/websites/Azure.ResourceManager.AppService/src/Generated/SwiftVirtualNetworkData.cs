@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SwiftVirtualNetworkData : ResourceData
     {
-        /// <summary> Initializes a new instance of SwiftVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwiftVirtualNetworkData"/>. </summary>
         public SwiftVirtualNetworkData()
         {
         }
 
-        /// <summary> Initializes a new instance of SwiftVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwiftVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

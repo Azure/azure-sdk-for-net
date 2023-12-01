@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class FileShareConfiguration
     {
-        /// <summary> Initializes a new instance of FileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareConfiguration"/>. </summary>
         protected FileShareConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config. </param>
         internal FileShareConfiguration(ConfigurationType configurationType)
         {

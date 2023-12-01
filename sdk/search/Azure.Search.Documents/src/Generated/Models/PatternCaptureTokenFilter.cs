@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Uses Java regexes to emit multiple tokens - one for each capture group in one or more patterns. This token filter is implemented using Apache Lucene. </summary>
     public partial class PatternCaptureTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of PatternCaptureTokenFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatternCaptureTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="patterns"> A list of patterns to match against each token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="patterns"/> is null. </exception>
@@ -28,8 +28,8 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
 
-        /// <summary> Initializes a new instance of PatternCaptureTokenFilter. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <summary> Initializes a new instance of <see cref="PatternCaptureTokenFilter"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="patterns"> A list of patterns to match against each token. </param>
         /// <param name="preserveOriginal"> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </param>

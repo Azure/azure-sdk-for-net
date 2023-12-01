@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class FabricSpecificCreationContent
     {
-        /// <summary> Initializes a new instance of FabricSpecificCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificCreationContent"/>. </summary>
         protected FabricSpecificCreationContent()
         {
         }

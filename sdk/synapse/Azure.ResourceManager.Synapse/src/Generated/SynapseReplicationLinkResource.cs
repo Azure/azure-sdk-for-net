@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseReplicationLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseReplicationLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseReplicationLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseReplicationLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseReplicationLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseReplicationLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseReplicationLink method.
     /// </summary>
     public partial class SynapseReplicationLinkResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseReplicationLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseReplicationLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseReplicationLinkResource(ArmClient client, SynapseReplicationLinkData data) : this(client, data.Id)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The result of a non-compliant policy evaluation against the given resource content. </summary>
     public partial class PolicyEvaluationResult
     {
-        /// <summary> Initializes a new instance of PolicyEvaluationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyEvaluationResult"/>. </summary>
         internal PolicyEvaluationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyEvaluationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyEvaluationResult"/>. </summary>
         /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
         /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
         /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Stops compute instance after user defined period of inactivity. </summary>
     public partial class IdleShutdownSetting
     {
-        /// <summary> Initializes a new instance of IdleShutdownSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdleShutdownSetting"/>. </summary>
         public IdleShutdownSetting()
         {
         }

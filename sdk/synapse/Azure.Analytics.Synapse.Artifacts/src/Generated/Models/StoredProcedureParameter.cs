@@ -10,7 +10,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SQL stored procedure parameter. </summary>
     internal partial class StoredProcedureParameter
     {
-        /// <summary> Initializes a new instance of StoredProcedureParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoredProcedureParameter"/>. </summary>
         internal StoredProcedureParameter()
         {
         }

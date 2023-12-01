@@ -13,7 +13,7 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The content of the patient document. </summary>
     public partial class DocumentContent
     {
-        /// <summary> Initializes a new instance of DocumentContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
         /// <param name="sourceType">
         /// The type of the content's source.
         /// In case the source type is 'inline', the content is given as a string (for instance, text).

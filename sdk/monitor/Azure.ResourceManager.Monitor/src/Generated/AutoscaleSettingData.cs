@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class AutoscaleSettingData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutoscaleSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profiles"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor
             Notifications = new ChangeTrackingList<AutoscaleNotification>();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

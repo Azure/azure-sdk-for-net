@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The state of a private link service connection. </summary>
     public partial class ContainerRegistryPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkServiceConnectionState"/>. </summary>
         public ContainerRegistryPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The description for connection status. For example if connection is rejected it can indicate reason for rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>

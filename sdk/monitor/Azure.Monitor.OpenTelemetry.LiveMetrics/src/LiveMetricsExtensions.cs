@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Metrics;
@@ -14,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
     /// <summary>
     /// Extension methods to register Live Metrics.
     /// </summary>
-    internal static class LiveMetricsExtensions
+    public static class LiveMetricsExtensions
     {
         /// <summary>
         /// Adds Live Metrics to the TracerProvider.
@@ -47,6 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
             return builder.AddProcessor(sp =>
             {
+                // SETUP OPTIONS
                 LiveMetricsExporterOptions exporterOptions;
 
                 if (name == null)
@@ -63,7 +65,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                     exporterOptions = sp.GetRequiredService<IOptionsMonitor<LiveMetricsExporterOptions>>().Get(finalOptionsName);
                 }
 
-                return new LiveMetricsExtractionProcessor(new LiveMetricsExporter(exporterOptions));
+                // INITIALIZE INTERNALS
+                var manager = ManagerFactory.Instance.Get(exporterOptions);
+                return new LiveMetricsExtractionProcessor(manager);
             });
         }
     }

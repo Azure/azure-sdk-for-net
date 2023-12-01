@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Compliance Status details. </summary>
     public partial class KubernetesConfigurationComplianceStatus
     {
-        /// <summary> Initializes a new instance of KubernetesConfigurationComplianceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationComplianceStatus"/>. </summary>
         internal KubernetesConfigurationComplianceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesConfigurationComplianceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationComplianceStatus"/>. </summary>
         /// <param name="complianceState"> The compliance state of the configuration. </param>
         /// <param name="lastConfigAppliedOn"> Datetime the configuration was last applied. </param>
         /// <param name="message"> Message from when the configuration was applied. </param>

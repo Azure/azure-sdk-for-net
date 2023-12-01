@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SandboxCustomImageResource" /> and their operations.
-    /// Each <see cref="SandboxCustomImageResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
-    /// To get a <see cref="SandboxCustomImageCollection" /> instance call the GetSandboxCustomImages method from an instance of <see cref="KustoClusterResource" />.
+    /// A class representing a collection of <see cref="SandboxCustomImageResource"/> and their operations.
+    /// Each <see cref="SandboxCustomImageResource"/> in the collection will belong to the same instance of <see cref="KustoClusterResource"/>.
+    /// To get a <see cref="SandboxCustomImageCollection"/> instance call the GetSandboxCustomImages method from an instance of <see cref="KustoClusterResource"/>.
     /// </summary>
     public partial class SandboxCustomImageCollection : ArmCollection, IEnumerable<SandboxCustomImageResource>, IAsyncEnumerable<SandboxCustomImageResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SandboxCustomImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SandboxCustomImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SandboxCustomImageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sandboxCustomImageRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SandboxCustomImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SandboxCustomImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SandboxCustomImageResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sandboxCustomImageRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

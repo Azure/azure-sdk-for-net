@@ -8,7 +8,6 @@
 using Azure.Core;
 using Azure.ResourceManager.Attestation.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Attestation
 {
@@ -18,12 +17,12 @@ namespace Azure.ResourceManager.Attestation
     /// </summary>
     public partial class AttestationPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of AttestationPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationPrivateEndpointConnectionData"/>. </summary>
         public AttestationPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of AttestationPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal AttestationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, AttestationPrivateLinkServiceConnectionState connectionState, AttestationPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal AttestationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpoint privateEndpoint, AttestationPrivateLinkServiceConnectionState connectionState, AttestationPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
@@ -39,11 +38,11 @@ namespace Azure.ResourceManager.Attestation
         }
 
         /// <summary> The resource of private end point. </summary>
-        internal SubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier PrivateEndpointId
+        internal PrivateEndpoint PrivateEndpoint { get; set; }
+        /// <summary> The ARM identifier for Private Endpoint. </summary>
+        public string PrivateEndpointStringId
         {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.StringId;
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>

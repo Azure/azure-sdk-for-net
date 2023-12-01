@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of offers and plans that restricted to the context. </summary>
     public partial class CollectionOffersByContext
     {
-        /// <summary> Initializes a new instance of CollectionOffersByContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionOffersByContext"/>. </summary>
         internal CollectionOffersByContext()
         {
             Value = new ChangeTrackingList<PrivateStoreOfferResult>();
         }
 
-        /// <summary> Initializes a new instance of CollectionOffersByContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionOffersByContext"/>. </summary>
         /// <param name="context"> Offer's context, e.g. subscription ID, tenant ID. </param>
         /// <param name="value"></param>
         internal CollectionOffersByContext(string context, IReadOnlyList<PrivateStoreOfferResult> value)

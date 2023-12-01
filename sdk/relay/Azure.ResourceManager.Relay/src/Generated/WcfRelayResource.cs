@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Relay
 {
     /// <summary>
     /// A Class representing a WcfRelay along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WcfRelayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWcfRelayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource" /> using the GetWcfRelay method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WcfRelayResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWcfRelayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource"/> using the GetWcfRelay method.
     /// </summary>
     public partial class WcfRelayResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Relay
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WcfRelayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WcfRelayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WcfRelayResource(ArmClient client, WcfRelayData data) : this(client, data.Id)

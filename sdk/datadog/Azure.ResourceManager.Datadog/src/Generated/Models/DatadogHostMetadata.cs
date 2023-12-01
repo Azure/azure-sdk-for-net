@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogHostMetadata. </summary>
     public partial class DatadogHostMetadata
     {
-        /// <summary> Initializes a new instance of DatadogHostMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogHostMetadata"/>. </summary>
         internal DatadogHostMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogHostMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogHostMetadata"/>. </summary>
         /// <param name="agentVersion"> The agent version. </param>
         /// <param name="installMethod"></param>
         /// <param name="logsAgent"></param>

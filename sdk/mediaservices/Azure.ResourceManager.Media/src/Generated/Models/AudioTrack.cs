@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents an audio track in the asset. </summary>
     public partial class AudioTrack : MediaAssetTrackBase
     {
-        /// <summary> Initializes a new instance of AudioTrack. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTrack"/>. </summary>
         public AudioTrack()
         {
             OdataType = "#Microsoft.Media.AudioTrack";
         }
 
-        /// <summary> Initializes a new instance of AudioTrack. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTrack"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="fileName"> The file name to the source file. This file is located in the storage container of the asset. </param>
         /// <param name="displayName"> The display name of the audio track on a video player. In HLS, this maps to the NAME attribute of EXT-X-MEDIA. </param>

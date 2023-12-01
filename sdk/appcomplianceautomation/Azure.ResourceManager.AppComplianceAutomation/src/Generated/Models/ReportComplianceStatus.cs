@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A list which includes all the compliance result for one report. </summary>
     internal partial class ReportComplianceStatus
     {
-        /// <summary> Initializes a new instance of ReportComplianceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportComplianceStatus"/>. </summary>
         internal ReportComplianceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ReportComplianceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportComplianceStatus"/>. </summary>
         /// <param name="m365"> The Microsoft 365 certification name. </param>
         internal ReportComplianceStatus(OverviewStatus m365)
         {

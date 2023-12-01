@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Component of a firmware. </summary>
     public partial class SbomComponent
     {
-        /// <summary> Initializes a new instance of SbomComponent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SbomComponent"/>. </summary>
         internal SbomComponent()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SbomComponent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SbomComponent"/>. </summary>
         /// <param name="componentId"> ID for the component. </param>
         /// <param name="componentName"> Name for the component. </param>
         /// <param name="version"> Version for the component. </param>

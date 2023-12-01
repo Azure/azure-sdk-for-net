@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Trigger DataMove Request. </summary>
     public partial class TriggerDataMoveContent
     {
-        /// <summary> Initializes a new instance of TriggerDataMoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDataMoveContent"/>. </summary>
         /// <param name="sourceResourceId"> ARM Id of source vault. </param>
         /// <param name="sourceRegion"> Source Region. </param>
         /// <param name="dataMoveLevel"> DataMove Level. </param>

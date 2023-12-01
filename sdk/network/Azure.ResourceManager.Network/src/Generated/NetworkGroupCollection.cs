@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkGroupResource" /> and their operations.
-    /// Each <see cref="NetworkGroupResource" /> in the collection will belong to the same instance of <see cref="NetworkManagerResource" />.
-    /// To get a <see cref="NetworkGroupCollection" /> instance call the GetNetworkGroups method from an instance of <see cref="NetworkManagerResource" />.
+    /// A class representing a collection of <see cref="NetworkGroupResource"/> and their operations.
+    /// Each <see cref="NetworkGroupResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerResource"/>.
+    /// To get a <see cref="NetworkGroupCollection"/> instance call the GetNetworkGroups method from an instance of <see cref="NetworkManagerResource"/>.
     /// </summary>
     public partial class NetworkGroupCollection : ArmCollection, IEnumerable<NetworkGroupResource>, IAsyncEnumerable<NetworkGroupResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkGroupResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkGroupResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownFabricSpecificDetails. </summary>
     internal partial class UnknownFabricSpecificDetails : FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of UnknownFabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFabricSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal UnknownFabricSpecificDetails(string instanceType) : base(instanceType)
         {

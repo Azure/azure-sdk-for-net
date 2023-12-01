@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.BotService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BotServicePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="BotServicePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="BotResource" />.
-    /// To get a <see cref="BotServicePrivateEndpointConnectionCollection" /> instance call the GetBotServicePrivateEndpointConnections method from an instance of <see cref="BotResource" />.
+    /// A class representing a collection of <see cref="BotServicePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="BotServicePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="BotResource"/>.
+    /// To get a <see cref="BotServicePrivateEndpointConnectionCollection"/> instance call the GetBotServicePrivateEndpointConnections method from an instance of <see cref="BotResource"/>.
     /// </summary>
     public partial class BotServicePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<BotServicePrivateEndpointConnectionResource>, IAsyncEnumerable<BotServicePrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotServicePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BotServicePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotServicePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BotServicePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BotServicePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotServicePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

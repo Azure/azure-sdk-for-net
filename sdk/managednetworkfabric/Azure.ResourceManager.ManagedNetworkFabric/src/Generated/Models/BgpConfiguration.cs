@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> BGP configuration properties. </summary>
     public partial class BgpConfiguration : AnnotationResourceProperties
     {
-        /// <summary> Initializes a new instance of BgpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/>. </summary>
         public BgpConfiguration()
         {
             IPv4ListenRangePrefixes = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPv6NeighborAddress = new ChangeTrackingList<NeighborAddress>();
         }
 
-        /// <summary> Initializes a new instance of BgpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>

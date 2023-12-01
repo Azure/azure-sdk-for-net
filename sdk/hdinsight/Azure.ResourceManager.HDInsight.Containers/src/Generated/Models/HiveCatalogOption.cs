@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Hive Catalog Option. </summary>
     public partial class HiveCatalogOption
     {
-        /// <summary> Initializes a new instance of HiveCatalogOption. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveCatalogOption"/>. </summary>
         /// <param name="catalogName"> Name of trino catalog which should use specified hive metastore. </param>
         /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
         /// <param name="metastoreDBConnectionUriString"> Connection string for hive metastore database. </param>

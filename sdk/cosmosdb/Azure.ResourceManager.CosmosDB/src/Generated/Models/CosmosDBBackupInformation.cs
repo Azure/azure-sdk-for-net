@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Backup information of a resource. </summary>
     public partial class CosmosDBBackupInformation
     {
-        /// <summary> Initializes a new instance of CosmosDBBackupInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBackupInformation"/>. </summary>
         internal CosmosDBBackupInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBBackupInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBackupInformation"/>. </summary>
         /// <param name="continuousBackupInformation"> Information about the status of continuous backups. </param>
         internal CosmosDBBackupInformation(ContinuousBackupInformation continuousBackupInformation)
         {

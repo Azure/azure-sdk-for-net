@@ -30,6 +30,65 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [Test]
         [TestCase(true)]
         [TestCase(false)]
+        public async Task SenderReceiverActivitiesDisabled(bool useSessions)
+        {
+            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: useSessions))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                string sessionId = null;
+                if (useSessions)
+                {
+                    sessionId = "sessionId";
+                }
+
+                int numMessages = 2;
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(numMessages, sessionId));
+
+                ServiceBusReceiver receiver = null;
+                if (useSessions)
+                {
+                    receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+                }
+                else
+                {
+                    receiver = client.CreateReceiver(scope.QueueName);
+                }
+
+                var peeked = await receiver.PeekMessageAsync();
+                var received = await receiver.ReceiveMessagesAsync(numMessages);
+
+                if (useSessions)
+                {
+                    // renew lock
+                    var sessionReceiver = (ServiceBusSessionReceiver)receiver;
+                    await sessionReceiver.RenewSessionLockAsync();
+
+                    // state
+                    await sessionReceiver.SetSessionStateAsync(new BinaryData("state"));
+                    var getState = await sessionReceiver.GetSessionStateAsync();
+                }
+                else
+                {
+                    await receiver.RenewMessageLockAsync(received[-1]);
+                }
+
+                // schedule
+                foreach (var msg in ServiceBusTestUtilities.GetMessages(numMessages, sessionId))
+                {
+                    var seq = await sender.ScheduleMessageAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
+                    Assert.IsFalse(msg.ApplicationProperties.ContainsKey(MessagingClientDiagnostics.DiagnosticIdAttribute));
+                    await sender.CancelScheduledMessageAsync(seq);
+                }
+            }
+            Assert.IsEmpty(listener.Activities);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task SenderReceiverActivities(bool useSessions)
         {
             using var _ = SetAppConfigSwitch();

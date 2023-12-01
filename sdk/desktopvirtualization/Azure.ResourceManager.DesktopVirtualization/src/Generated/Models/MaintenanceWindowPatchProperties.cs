@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Maintenance window starting hour and day of week. </summary>
     public partial class MaintenanceWindowPatchProperties
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowPatchProperties"/>. </summary>
         public MaintenanceWindowPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowPatchProperties"/>. </summary>
         /// <param name="hour"> The update start hour of the day. (0 - 23). </param>
         /// <param name="dayOfWeek"> Day of the week. </param>
         internal MaintenanceWindowPatchProperties(int? hour, DesktopVirtualizationDayOfWeek? dayOfWeek)

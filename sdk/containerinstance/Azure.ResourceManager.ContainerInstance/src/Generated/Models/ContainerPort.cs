@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The port exposed on the container instance. </summary>
     public partial class ContainerPort
     {
-        /// <summary> Initializes a new instance of ContainerPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerPort"/>. </summary>
         /// <param name="port"> The port number exposed within the container group. </param>
         public ContainerPort(int port)
         {
             Port = port;
         }
 
-        /// <summary> Initializes a new instance of ContainerPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerPort"/>. </summary>
         /// <param name="protocol"> The protocol associated with the port. </param>
         /// <param name="port"> The port number exposed within the container group. </param>
         internal ContainerPort(ContainerNetworkProtocol? protocol, int port)

@@ -38,7 +38,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Initializes a new instance of PurviewDataSourceClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="dataSourceName"> The String to use. </param>
+        /// <param name="dataSourceName"> The <see cref="string"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Initializes a new instance of PurviewDataSourceClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="dataSourceName"> The String to use. </param>
+        /// <param name="dataSourceName"> The <see cref="string"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/> or <paramref name="credential"/> is null. </exception>

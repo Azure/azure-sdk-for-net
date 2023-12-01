@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an azure resource entity. </summary>
     public partial class SecurityInsightsAzureResourceEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAzureResourceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAzureResourceEntity"/>. </summary>
         public SecurityInsightsAzureResourceEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.AzureResource;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAzureResourceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAzureResourceEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSqlModelFactory
     {
-        /// <summary> Initializes a new instance of DataMaskingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DataMaskingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DataMaskingPolicyData(id, name, resourceType, systemData, location, kind, dataMaskingState, exemptPrincipals, applicationPrincipals, maskingLevel);
         }
 
-        /// <summary> Initializes a new instance of DataMaskingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMaskingRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DataMaskingRule(id, name, resourceType, systemData, location, kind, aliasName, ruleState, schemaName, tableName, columnName, maskingFunction, numberFrom, numberTo, prefixSize, suffixSize, replacementString);
         }
 
-        /// <summary> Initializes a new instance of GeoBackupPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.GeoBackupPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new GeoBackupPolicyData(id, name, resourceType, systemData, kind, location, state, storageType);
         }
 
-        /// <summary> Initializes a new instance of SqlMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlMetric"/>. </summary>
         /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time step to be used to summarize the metric values. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlMetric(startOn, endOn, timeGrain, unit, name, metricValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlMetricName"/>. </summary>
         /// <param name="value"> The name of the database metric. </param>
         /// <param name="localizedValue"> The friendly name of the database metric. </param>
         /// <returns> A new <see cref="Models.SqlMetricName"/> instance for mocking. </returns>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlMetricName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of SqlMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlMetricValue"/>. </summary>
         /// <param name="count"> The number of values for the metric. </param>
         /// <param name="average"> The average value of the metric. </param>
         /// <param name="maximum"> The max value of the metric. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlMetricValue(count, average, maximum, minimum, timestamp, total);
         }
 
-        /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlMetricDefinition"/>. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type defining how metric values are displayed. </param>
         /// <param name="resourceUriString"> The resource uri of the database. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlMetricDefinition(name, primaryAggregationType, resourceUriString, unit, metricAvailabilities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlMetricAvailability"/>. </summary>
         /// <param name="retention"> The length of retention for the database metric. </param>
         /// <param name="timeGrain"> The granularity of the database metric. </param>
         /// <returns> A new <see cref="Models.SqlMetricAvailability"/> instance for mocking. </returns>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlMetricAvailability(retention, timeGrain);
         }
 
-        /// <summary> Initializes a new instance of SqlServerCommunicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerCommunicationLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerCommunicationLinkData(id, name, resourceType, systemData, location, kind, state, partnerServer);
         }
 
-        /// <summary> Initializes a new instance of ServiceObjectiveData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ServiceObjectiveData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ServiceObjectiveData(id, name, resourceType, systemData, serviceObjectiveName, isDefault, isSystem, description, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticPoolActivity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolActivity(id, name, resourceType, systemData, location, endOn, errorCode, errorMessage, errorSeverity, operation, operationId, percentComplete, requestedDatabaseDtuMax, requestedDatabaseDtuMin, requestedDtu, requestedElasticPoolName, requestedStorageLimitInGB, elasticPoolName, serverName, startOn, state, requestedStorageLimitInMB, requestedDatabaseDtuGuarantee, requestedDatabaseDtuCap, requestedDtuGuarantee);
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolDatabaseActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticPoolDatabaseActivity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolDatabaseActivity(id, name, resourceType, systemData, location, databaseName, endOn, errorCode, errorMessage, errorSeverity, operation, operationId, percentComplete, requestedElasticPoolName, currentElasticPoolName, currentServiceObjective, requestedServiceObjective, serverName, startOn, state);
         }
 
-        /// <summary> Initializes a new instance of SqlServerUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlServerUsage"/>. </summary>
         /// <param name="name"> Name of the server usage metric. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="displayName"> The metric display name. </param>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerUsage(name, resourceName, displayName, currentValue, limit, unit, nextResetOn);
         }
 
-        /// <summary> Initializes a new instance of SqlAdvisorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlAdvisorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlAdvisorData(id, name, resourceType, systemData, kind, location, advisorStatus, autoExecuteStatus, autoExecuteStatusInheritedFrom, recommendationsStatus, lastCheckedOn, recommendedActions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.RecommendedActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecommendedActionData(id, name, resourceType, systemData, kind, location, recommendationReason, validSince, lastRefresh, state, isExecutableAction, isRevertableAction, isArchivedAction, executeActionStartOn, executeActionDuration, revertActionStartOn, revertActionDuration, executeActionInitiatedBy, executeActionInitiatedOn, revertActionInitiatedBy, revertActionInitiatedOn, score, implementationDetails, errorDetails, estimatedImpact?.ToList(), observedImpact?.ToList(), timeSeries?.ToList(), linkedObjects?.ToList(), details);
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionStateInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendedActionStateInfo"/>. </summary>
         /// <param name="currentValue"> Current state the recommended action is in. Some commonly used states are: Active      -&gt; recommended action is active and no action has been taken yet. Pending     -&gt; recommended action is approved for and is awaiting execution. Executing   -&gt; recommended action is being applied on the user database. Verifying   -&gt; recommended action was applied and is being verified of its usefulness by the system. Success     -&gt; recommended action was applied and improvement found during verification. Pending Revert  -&gt; verification found little or no improvement so recommended action is queued for revert or user has manually reverted. Reverting   -&gt; changes made while applying recommended action are being reverted on the user database. Reverted    -&gt; successfully reverted the changes made by recommended action on user database. Ignored     -&gt; user explicitly ignored/discarded the recommended action. </param>
         /// <param name="actionInitiatedBy"> Gets who initiated the execution of this recommended action. Possible Value are: User    -&gt; When user explicity notified system to apply the recommended action. System  -&gt; When auto-execute status of this advisor was set to 'Enabled', in which case the system applied it. </param>
         /// <param name="lastModified"> Gets the time when the state was last modified. </param>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecommendedActionStateInfo(currentValue, actionInitiatedBy, lastModified);
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionImplementationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendedActionImplementationInfo"/>. </summary>
         /// <param name="method"> Gets the method in which this recommended action can be manually implemented. e.g., TSql, AzurePowerShell. </param>
         /// <param name="script"> Gets the manual implementation script. e.g., T-SQL script that could be executed on the database. </param>
         /// <returns> A new <see cref="Models.RecommendedActionImplementationInfo"/> instance for mocking. </returns>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecommendedActionImplementationInfo(method, script);
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendedActionErrorInfo"/>. </summary>
         /// <param name="errorCode"> Gets the reason why the recommended action was put to error state. e.g., DatabaseHasQdsOff, IndexAlreadyExists. </param>
         /// <param name="isRetryable"> Gets whether the error could be ignored and recommended action could be retried. Possible values are: Yes/No. </param>
         /// <returns> A new <see cref="Models.RecommendedActionErrorInfo"/> instance for mocking. </returns>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecommendedActionErrorInfo(errorCode, isRetryable);
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionImpactRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendedActionImpactRecord"/>. </summary>
         /// <param name="dimensionName"> Gets the name of the impact dimension. e.g., CPUChange, DiskSpaceChange, NumberOfQueriesAffected. </param>
         /// <param name="unit"> Gets the name of the impact dimension. e.g., CPUChange, DiskSpaceChange, NumberOfQueriesAffected. </param>
         /// <param name="absoluteValue"> Gets the absolute value of this dimension if applicable. e.g., Number of Queries affected. </param>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecommendedActionImpactRecord(dimensionName, unit, absoluteValue, changeValueAbsolute, changeValueRelative);
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendedActionMetricInfo"/>. </summary>
         /// <param name="metricName"> Gets the name of the metric. e.g., CPU, Number of Queries. </param>
         /// <param name="unit"> Gets the unit in which metric is measured. e.g., DTU, Frequency. </param>
         /// <param name="timeGrain"> Gets the duration of time interval for the value given by this MetricInfo. e.g., PT1H (1 hour). </param>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecommendedActionMetricInfo(metricName, unit, timeGrain, startOn, value);
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseAutomaticTuningData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlDatabaseAutomaticTuningData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlDatabaseAutomaticTuningData(id, name, resourceType, systemData, desiredState, actualState, options);
         }
 
-        /// <summary> Initializes a new instance of AutomaticTuningOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutomaticTuningOptions"/>. </summary>
         /// <param name="desiredState"> Automatic tuning option desired state. </param>
         /// <param name="actualState"> Automatic tuning option actual state. </param>
         /// <param name="reasonCode"> Reason code if desired and actual state are different. </param>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new AutomaticTuningOptions(desiredState, actualState, reasonCode, reasonDesc);
         }
 
-        /// <summary> Initializes a new instance of DatabaseColumnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseColumnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseColumnData(id, name, resourceType, systemData, columnType, temporalType, isMemoryOptimized, isComputed);
         }
 
-        /// <summary> Initializes a new instance of DatabaseSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseSchemaData(id, name, resourceType, systemData);
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlDatabaseSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlDatabaseSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), sendToEmailAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays, createdOn);
         }
 
-        /// <summary> Initializes a new instance of DatabaseTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseTableData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseTableData(id, name, resourceType, systemData, temporalType, isMemoryOptimized);
         }
 
-        /// <summary> Initializes a new instance of DatabaseVulnerabilityAssessmentRuleBaselineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseVulnerabilityAssessmentRuleBaselineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseVulnerabilityAssessmentRuleBaselineData(id, name, resourceType, systemData, baselineResults?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DatabaseVulnerabilityAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseVulnerabilityAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseVulnerabilityAssessmentData(id, name, resourceType, systemData, storageContainerPath, storageContainerSasKey, storageAccountAccessKey, recurringScans);
         }
 
-        /// <summary> Initializes a new instance of VulnerabilityAssessmentScanRecordData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.VulnerabilityAssessmentScanRecordData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new VulnerabilityAssessmentScanRecordData(id, name, resourceType, systemData, scanId, triggerType, state, startOn, endOn, errors?.ToList(), storageContainerPath, numberOfFailedSecurityChecks);
         }
 
-        /// <summary> Initializes a new instance of VulnerabilityAssessmentScanError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VulnerabilityAssessmentScanError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.VulnerabilityAssessmentScanError"/> instance for mocking. </returns>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new VulnerabilityAssessmentScanError(code, message);
         }
 
-        /// <summary> Initializes a new instance of DatabaseVulnerabilityAssessmentScansExport. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseVulnerabilityAssessmentScansExport"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseVulnerabilityAssessmentScansExport(id, name, resourceType, systemData, exportedReportLocation);
         }
 
-        /// <summary> Initializes a new instance of DataWarehouseUserActivityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DataWarehouseUserActivityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DataWarehouseUserActivityData(id, name, resourceType, systemData, activeQueriesCount);
         }
 
-        /// <summary> Initializes a new instance of DeletedServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DeletedServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DeletedServerData(id, name, resourceType, systemData, version, deletedOn, originalId, fullyQualifiedDomainName);
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticPoolOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolOperationData(id, name, resourceType, systemData, elasticPoolName, operation, operationFriendlyName, percentComplete, serverName, startOn, state, errorCode, errorDescription, errorSeverity, isUserError, estimatedCompleteOn, description, isCancellable);
         }
 
-        /// <summary> Initializes a new instance of EncryptionProtectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.EncryptionProtectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new EncryptionProtectorData(id, name, resourceType, systemData, kind, location, subregion, serverKeyName, serverKeyType, uri, thumbprint, isAutoRotationEnabled);
         }
 
-        /// <summary> Initializes a new instance of SqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlFirewallRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlFirewallRuleData(id, name, resourceType, startIPAddress, endIPAddress);
         }
 
-        /// <summary> Initializes a new instance of ProxyResourceWithWritableName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProxyResourceWithWritableName"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ProxyResourceWithWritableName(id, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of ResourceWithWritableName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceWithWritableName"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ResourceWithWritableName(id, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of InstancePoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.InstancePoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new InstancePoolData(id, name, resourceType, systemData, tags, location, sku, subnetId, vCores, licenseType);
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobAgentData(id, name, resourceType, systemData, tags, location, sku, databaseId, state);
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobCredentialData(id, name, resourceType, systemData, username, password);
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobExecutionData(id, name, resourceType, systemData, jobVersion, stepName, stepId, jobExecutionId, lifecycle, provisioningState, createOn, startOn, endOn, currentAttempts, currentAttemptStartOn, lastMessage, target);
         }
 
-        /// <summary> Initializes a new instance of JobExecutionTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.JobExecutionTarget"/>. </summary>
         /// <param name="targetType"> The type of the target. </param>
         /// <param name="serverName"> The server name. </param>
         /// <param name="databaseName"> The database name. </param>
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new JobExecutionTarget(targetType, serverName, databaseName);
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobData(id, name, resourceType, systemData, description, version, schedule);
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobStepData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobStepData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobStepData(id, name, resourceType, systemData, stepId, targetGroup, credential, action, output, executionOptions);
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobTargetGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobTargetGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobTargetGroupData(id, name, resourceType, systemData, members?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobVersionData(id, name, resourceType, systemData);
         }
 
-        /// <summary> Initializes a new instance of SqlLocationCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlLocationCapabilities"/>. </summary>
         /// <param name="name"> The location name. </param>
         /// <param name="supportedServerVersions"> The list of supported server versions. </param>
         /// <param name="supportedManagedInstanceVersions"> The list of supported managed instance versions. </param>
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlLocationCapabilities(name, supportedServerVersions?.ToList(), supportedManagedInstanceVersions?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of SqlServerVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlServerVersionCapability"/>. </summary>
         /// <param name="name"> The server version name. </param>
         /// <param name="supportedEditions"> The list of supported database editions. </param>
         /// <param name="supportedElasticPoolEditions"> The list of supported elastic pool editions. </param>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerVersionCapability(name, supportedEditions?.ToList(), supportedElasticPoolEditions?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of EditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EditionCapability"/>. </summary>
         /// <param name="name"> The database edition name. </param>
         /// <param name="supportedServiceLevelObjectives"> The list of supported service objectives for the edition. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new EditionCapability(name, supportedServiceLevelObjectives?.ToList(), isZoneRedundant, readScale, supportedStorageCapabilities?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of ServiceObjectiveCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceObjectiveCapability"/>. </summary>
         /// <param name="id"> The unique ID of the service objective. </param>
         /// <param name="name"> The service objective name. </param>
         /// <param name="supportedMaxSizes"> The list of supported maximum database sizes. </param>
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ServiceObjectiveCapability(id, name, supportedMaxSizes?.ToList(), performanceLevel, sku, supportedLicenseTypes?.ToList(), includedMaxSize, isZoneRedundant, supportedAutoPauseDelay, supportedMinCapacities?.ToList(), computeModel, supportedMaintenanceConfigurations?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of MaxSizeRangeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MaxSizeRangeCapability"/>. </summary>
         /// <param name="minValue"> Minimum value. </param>
         /// <param name="maxValue"> Maximum value. </param>
         /// <param name="scaleSize"> Scale/step size for discrete values between the minimum value and the maximum value. </param>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new MaxSizeRangeCapability(minValue, maxValue, scaleSize, logSize, status, reason);
         }
 
-        /// <summary> Initializes a new instance of MaxSizeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MaxSizeCapability"/>. </summary>
         /// <param name="limit"> The maximum size limit (see 'unit' for the units). </param>
         /// <param name="unit"> The units that the limit is expressed in. </param>
         /// <returns> A new <see cref="Models.MaxSizeCapability"/> instance for mocking. </returns>
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new MaxSizeCapability(limit, unit);
         }
 
-        /// <summary> Initializes a new instance of LogSizeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogSizeCapability"/>. </summary>
         /// <param name="limit"> The log size limit (see 'unit' for the units). </param>
         /// <param name="unit"> The units that the limit is expressed in. </param>
         /// <returns> A new <see cref="Models.LogSizeCapability"/> instance for mocking. </returns>
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new LogSizeCapability(limit, unit);
         }
 
-        /// <summary> Initializes a new instance of PerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PerformanceLevelCapability"/>. </summary>
         /// <param name="value"> Performance level value. </param>
         /// <param name="unit"> Unit type used to measure performance level. </param>
         /// <returns> A new <see cref="Models.PerformanceLevelCapability"/> instance for mocking. </returns>
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new PerformanceLevelCapability(value, unit);
         }
 
-        /// <summary> Initializes a new instance of LicenseTypeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LicenseTypeCapability"/>. </summary>
         /// <param name="name"> License type identifier. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new LicenseTypeCapability(name, status, reason);
         }
 
-        /// <summary> Initializes a new instance of AutoPauseDelayTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutoPauseDelayTimeRange"/>. </summary>
         /// <param name="minValue"> Minimum value. </param>
         /// <param name="maxValue"> Maximum value. </param>
         /// <param name="stepSize"> Step value for discrete values between the minimum value and the maximum value. </param>
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new AutoPauseDelayTimeRange(minValue, maxValue, stepSize, @default, unit, doNotPauseValue);
         }
 
-        /// <summary> Initializes a new instance of MinCapacityCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MinCapacityCapability"/>. </summary>
         /// <param name="value"> Min capacity value. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new MinCapacityCapability(value, status, reason);
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceConfigurationCapability"/>. </summary>
         /// <param name="name"> Maintenance configuration name. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the maintenance configuration. </param>
         /// <param name="status"> The status of the capability. </param>
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new MaintenanceConfigurationCapability(name, isZoneRedundant, status, reason);
         }
 
-        /// <summary> Initializes a new instance of ReadScaleCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReadScaleCapability"/>. </summary>
         /// <param name="maxNumberOfReplicas"> The maximum number of read scale replicas. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ReadScaleCapability(maxNumberOfReplicas, status, reason);
         }
 
-        /// <summary> Initializes a new instance of StorageCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCapability"/>. </summary>
         /// <param name="storageAccountType"> The storage account type for the database's backups. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new StorageCapability(storageAccountType, status, reason);
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticPoolEditionCapability"/>. </summary>
         /// <param name="name"> The elastic pool edition name. </param>
         /// <param name="supportedElasticPoolPerformanceLevels"> The list of supported elastic pool DTU levels for the edition. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolEditionCapability(name, supportedElasticPoolPerformanceLevels?.ToList(), isZoneRedundant, status, reason);
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticPoolPerformanceLevelCapability"/>. </summary>
         /// <param name="performanceLevel"> The performance level for the pool. </param>
         /// <param name="sku"> The sku. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolPerformanceLevelCapability(performanceLevel, sku, supportedLicenseTypes?.ToList(), maxDatabaseCount, includedMaxSize, supportedMaxSizes?.ToList(), supportedPerDatabaseMaxSizes?.ToList(), supportedPerDatabaseMaxPerformanceLevels?.ToList(), isZoneRedundant, supportedMaintenanceConfigurations?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMaxPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticPoolPerDatabaseMaxPerformanceLevelCapability"/>. </summary>
         /// <param name="limit"> The maximum performance level per database. </param>
         /// <param name="unit"> Unit type used to measure performance level. </param>
         /// <param name="supportedPerDatabaseMinPerformanceLevels"> The list of supported min database performance levels. </param>
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(limit, unit, supportedPerDatabaseMinPerformanceLevels?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMinPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticPoolPerDatabaseMinPerformanceLevelCapability"/>. </summary>
         /// <param name="limit"> The minimum performance level per database. </param>
         /// <param name="unit"> Unit type used to measure performance level. </param>
         /// <param name="status"> The status of the capability. </param>
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolPerDatabaseMinPerformanceLevelCapability(limit, unit, status, reason);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceVersionCapability"/>. </summary>
         /// <param name="name"> The server version name. </param>
         /// <param name="supportedEditions"> The list of supported managed instance editions. </param>
         /// <param name="supportedInstancePoolEditions"> The list of supported instance pool editions. </param>
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceVersionCapability(name, supportedEditions?.ToList(), supportedInstancePoolEditions?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceEditionCapability"/>. </summary>
         /// <param name="name"> The managed server version name. </param>
         /// <param name="supportedFamilies"> The supported families. </param>
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceEditionCapability(name, supportedFamilies?.ToList(), supportedStorageCapabilities?.ToList(), isZoneRedundant, status, reason);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceFamilyCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceFamilyCapability"/>. </summary>
         /// <param name="name"> Family name. </param>
         /// <param name="sku"> SKU name. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceFamilyCapability(name, sku, supportedLicenseTypes?.ToList(), supportedVcoresValues?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceVcoresCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceVcoresCapability"/>. </summary>
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
         /// <param name="includedMaxSize"> Included size. </param>
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceVcoresCapability(name, value, includedMaxSize, supportedStorageSizes?.ToList(), isInstancePoolSupported, isStandaloneSupported, supportedMaintenanceConfigurations?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceMaintenanceConfigurationCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceMaintenanceConfigurationCapability"/>. </summary>
         /// <param name="name"> Maintenance configuration name. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceMaintenanceConfigurationCapability(name, status, reason);
         }
 
-        /// <summary> Initializes a new instance of InstancePoolEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InstancePoolEditionCapability"/>. </summary>
         /// <param name="name"> The instance pool version name. </param>
         /// <param name="supportedFamilies"> The supported families. </param>
         /// <param name="status"> The status of the capability. </param>
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new InstancePoolEditionCapability(name, supportedFamilies?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of InstancePoolFamilyCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InstancePoolFamilyCapability"/>. </summary>
         /// <param name="name"> Family name. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>
         /// <param name="supportedVcoresValues"> List of supported virtual cores values. </param>
@@ -1100,7 +1100,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new InstancePoolFamilyCapability(name, supportedLicenseTypes?.ToList(), supportedVcoresValues?.ToList(), status, reason);
         }
 
-        /// <summary> Initializes a new instance of InstancePoolVcoresCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InstancePoolVcoresCapability"/>. </summary>
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
         /// <param name="storageLimit"> Storage limit. </param>
@@ -1112,7 +1112,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new InstancePoolVcoresCapability(name, value, storageLimit, status, reason);
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.LongTermRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new LongTermRetentionPolicyData(id, name, resourceType, systemData, weeklyRetention, monthlyRetention, yearlyRetention, weekOfYear);
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowOptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.MaintenanceWindowOptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1147,7 +1147,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new MaintenanceWindowOptionData(id, name, resourceType, systemData, isEnabled, maintenanceWindowCycles?.ToList(), minDurationInMinutes, defaultDurationInMinutes, minCycles, timeGranularityInMinutes, allowMultipleMaintenanceWindowsPerCycle);
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.MaintenanceWindowsData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1161,7 +1161,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new MaintenanceWindowsData(id, name, resourceType, systemData, timeRanges?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ManagedBackupShortTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedBackupShortTermRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedBackupShortTermRetentionPolicyData(id, name, resourceType, systemData, retentionDays);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceQuery"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceQuery(id, name, resourceType, systemData, queryText);
         }
 
-        /// <summary> Initializes a new instance of QueryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryStatistics"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new QueryStatistics(id, name, resourceType, systemData, databaseName, queryId, startTime, endTime, intervals?.ToList());
         }
 
-        /// <summary> Initializes a new instance of QueryStatisticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryStatisticsProperties"/>. </summary>
         /// <param name="databaseName"> Database name of the database in which this query was executed. </param>
         /// <param name="queryId"> Unique query id (unique within one database). </param>
         /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
@@ -1217,7 +1217,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new QueryStatisticsProperties(databaseName, queryId, startTime, endTime, intervals?.ToList());
         }
 
-        /// <summary> Initializes a new instance of QueryMetricInterval. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryMetricInterval"/>. </summary>
         /// <param name="intervalStartTime"> The start time for the metric interval (ISO-8601 format). </param>
         /// <param name="intervalType"> Interval type (length). </param>
         /// <param name="executionCount"> Execution count of a query in this interval. </param>
@@ -1230,7 +1230,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new QueryMetricInterval(intervalStartTime, intervalType, executionCount, metrics?.ToList());
         }
 
-        /// <summary> Initializes a new instance of QueryMetricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryMetricProperties"/>. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="displayName"> The UI appropriate name for the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new QueryMetricProperties(name, displayName, unit, value, min, max, avg, sum, stdev);
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedDatabaseSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1268,7 +1268,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedDatabaseSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), sendToEmailAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays, createdOn);
         }
 
-        /// <summary> Initializes a new instance of SecurityEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityEvent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SecurityEvent(id, name, resourceType, systemData, eventOn, securityEventType, subscription, server, database, clientIP, applicationName, principalName, securityEventSqlInjectionAdditionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SecurityEventSqlInjectionAdditionalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityEventSqlInjectionAdditionalProperties"/>. </summary>
         /// <param name="threatId"> The threat ID. </param>
         /// <param name="statement"> The statement. </param>
         /// <param name="statementHighlightOffset"> The statement highlight offset. </param>
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SecurityEventSqlInjectionAdditionalProperties(threatId, statement, statementHighlightOffset, statementHighlightLength, errorCode, errorSeverity, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of ManagedTransparentDataEncryptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedTransparentDataEncryptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1314,7 +1314,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedTransparentDataEncryptionData(id, name, resourceType, systemData, state);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceAdministratorData(id, name, resourceType, systemData, administratorType, login, sid, tenantId);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceAzureADOnlyAuthenticationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceAzureADOnlyAuthenticationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1341,7 +1341,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceAzureADOnlyAuthenticationData(id, name, resourceType, systemData, isAzureADOnlyAuthenticationEnabled);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceEncryptionProtectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceEncryptionProtectorData(id, name, resourceType, systemData, kind, serverKeyName, serverKeyType, uri, thumbprint, isAutoRotationEnabled);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1375,7 +1375,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceKeyData(id, name, resourceType, systemData, kind, serverKeyType, uri, thumbprint, createdOn, isAutoRotationEnabled);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceLongTermRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceLongTermRetentionPolicyData(id, name, resourceType, systemData, weeklyRetention, monthlyRetention, yearlyRetention, weekOfYear);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceOperationData(id, name, resourceType, systemData, managedInstanceName, operation, operationFriendlyName, percentComplete, startOn, state, errorCode, errorDescription, errorSeverity, isUserError, estimatedCompleteOn, description, isCancellable, operationParameters, operationSteps);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationParametersPair. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceOperationParametersPair"/>. </summary>
         /// <param name="currentParameters"> The current parameters. </param>
         /// <param name="requestedParameters"> The requested parameters. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceOperationParametersPair"/> instance for mocking. </returns>
@@ -1425,7 +1425,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceOperationParametersPair(currentParameters, requestedParameters);
         }
 
-        /// <summary> Initializes a new instance of UpsertManagedServerOperationParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UpsertManagedServerOperationParameters"/>. </summary>
         /// <param name="family"></param>
         /// <param name="tier"></param>
         /// <param name="vCores"></param>
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new UpsertManagedServerOperationParameters(family, tier, vCores, storageSizeInGB);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationSteps. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceOperationSteps"/>. </summary>
         /// <param name="totalSteps"> The total number of operation steps. </param>
         /// <param name="currentStep"> The number of current operation steps. </param>
         /// <param name="stepsList"> The operation steps list. </param>
@@ -1448,7 +1448,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceOperationSteps(totalSteps, currentStep, stepsList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of UpsertManagedServerOperationStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UpsertManagedServerOperationStep"/>. </summary>
         /// <param name="order"></param>
         /// <param name="name"></param>
         /// <param name="status"></param>
@@ -1458,7 +1458,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new UpsertManagedServerOperationStep(order, name, status);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstancePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1472,7 +1472,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstancePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstancePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
@@ -1482,7 +1482,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstancePrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstancePrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The private link service connection description. </param>
@@ -1492,7 +1492,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstancePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstancePrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1504,7 +1504,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstancePrivateLinkData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstancePrivateLinkProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <returns> A new <see cref="Models.ManagedInstancePrivateLinkProperties"/> instance for mocking. </returns>
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstancePrivateLinkProperties(groupId, requiredMembers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TdeCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TdeCertificate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1528,7 +1528,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new TdeCertificate(id, name, resourceType, systemData, privateBlob, certPassword);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceVulnerabilityAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceVulnerabilityAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1543,7 +1543,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceVulnerabilityAssessmentData(id, name, resourceType, systemData, storageContainerPath, storageContainerSasKey, storageAccountAccessKey, recurringScans);
         }
 
-        /// <summary> Initializes a new instance of ManagedServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedServerSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1565,7 +1565,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedServerSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), sendToEmailAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays, createdOn);
         }
 
-        /// <summary> Initializes a new instance of SqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1582,7 +1582,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ServerPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
         /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
@@ -1595,7 +1595,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SqlPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
@@ -1605,7 +1605,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of SqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1617,7 +1617,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlPrivateLinkResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of SqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
@@ -1630,7 +1630,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RecoverableManagedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.RecoverableManagedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1642,7 +1642,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecoverableManagedDatabaseData(id, name, resourceType, systemData, lastAvailableBackupDate);
         }
 
-        /// <summary> Initializes a new instance of SqlServerDatabaseRestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerDatabaseRestorePointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1658,7 +1658,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerDatabaseRestorePointData(id, name, resourceType, systemData, location, restorePointType, earliestRestoreOn, restorePointCreatedOn, restorePointLabel);
         }
 
-        /// <summary> Initializes a new instance of SqlServerAutomaticTuningData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerAutomaticTuningData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1674,7 +1674,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerAutomaticTuningData(id, name, resourceType, systemData, desiredState, actualState, options);
         }
 
-        /// <summary> Initializes a new instance of AutomaticTuningServerOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutomaticTuningServerOptions"/>. </summary>
         /// <param name="desiredState"> Automatic tuning option desired state. </param>
         /// <param name="actualState"> Automatic tuning option actual state. </param>
         /// <param name="reasonCode"> Reason code if desired and actual state are different. </param>
@@ -1685,7 +1685,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new AutomaticTuningServerOptions(desiredState, actualState, reasonCode, reasonDesc);
         }
 
-        /// <summary> Initializes a new instance of SqlServerAzureADAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerAzureADAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1701,7 +1701,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerAzureADAdministratorData(id, name, resourceType, systemData, administratorType, login, sid, tenantId, isAzureADOnlyAuthenticationEnabled);
         }
 
-        /// <summary> Initializes a new instance of SqlServerAzureADOnlyAuthenticationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerAzureADOnlyAuthenticationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1713,7 +1713,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerAzureADOnlyAuthenticationData(id, name, resourceType, systemData, isAzureADOnlyAuthenticationEnabled);
         }
 
-        /// <summary> Initializes a new instance of SqlServerDevOpsAuditingSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerDevOpsAuditingSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1749,7 +1749,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerDevOpsAuditingSettingData(id, name, resourceType, systemData, isAzureMonitorTargetEnabled, isManagedIdentityInUse, state, storageEndpoint, storageAccountAccessKey, storageAccountSubscriptionId);
         }
 
-        /// <summary> Initializes a new instance of SqlServerDnsAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerDnsAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1761,7 +1761,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerDnsAliasData(id, name, resourceType, systemData, azureDnsRecord);
         }
 
-        /// <summary> Initializes a new instance of SqlServerKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1780,7 +1780,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerKeyData(id, name, resourceType, systemData, kind, location, subregion, serverKeyType, uri, thumbprint, createdOn, isAutoRotationEnabled);
         }
 
-        /// <summary> Initializes a new instance of ServerOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1804,7 +1804,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ServerOperationData(id, name, resourceType, systemData, operation, operationFriendlyName, percentComplete, serverName, startOn, state, errorCode, errorDescription, errorSeverity, isUserError, estimatedCompleteOn, description, isCancellable);
         }
 
-        /// <summary> Initializes a new instance of SqlServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1826,7 +1826,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), sendToEmailAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays, createdOn);
         }
 
-        /// <summary> Initializes a new instance of SqlServerTrustGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerTrustGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1842,7 +1842,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerTrustGroupData(id, name, resourceType, systemData, groupMembers?.ToList(), trustScopes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlServerVulnerabilityAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerVulnerabilityAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1857,7 +1857,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerVulnerabilityAssessmentData(id, name, resourceType, systemData, storageContainerPath, storageContainerSasKey, storageAccountAccessKey, recurringScans);
         }
 
-        /// <summary> Initializes a new instance of SqlAgentConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlAgentConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1869,7 +1869,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlAgentConfigurationData(id, name, resourceType, systemData, state);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionUsageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SubscriptionUsageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1884,7 +1884,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SubscriptionUsageData(id, name, resourceType, systemData, displayName, currentValue, limit, unit);
         }
 
-        /// <summary> Initializes a new instance of SyncAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SyncAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1901,7 +1901,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncAgentData(id, name, resourceType, systemData, syncDatabaseId, lastAliveOn, state, isUpToDate, expireOn, version);
         }
 
-        /// <summary> Initializes a new instance of SyncAgentKeyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SyncAgentKeyProperties"/>. </summary>
         /// <param name="syncAgentKey"> Key of sync agent. </param>
         /// <returns> A new <see cref="Models.SyncAgentKeyProperties"/> instance for mocking. </returns>
         public static SyncAgentKeyProperties SyncAgentKeyProperties(string syncAgentKey = null)
@@ -1909,7 +1909,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncAgentKeyProperties(syncAgentKey);
         }
 
-        /// <summary> Initializes a new instance of SyncAgentLinkedDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SyncAgentLinkedDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1926,7 +1926,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncAgentLinkedDatabase(id, name, resourceType, systemData, databaseType, databaseId, description, serverName, databaseName, userName);
         }
 
-        /// <summary> Initializes a new instance of SyncFullSchemaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SyncFullSchemaProperties"/>. </summary>
         /// <param name="tables"> List of tables in the database full schema. </param>
         /// <param name="lastUpdateOn"> Last update time of the database schema. </param>
         /// <returns> A new <see cref="Models.SyncFullSchemaProperties"/> instance for mocking. </returns>
@@ -1937,7 +1937,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncFullSchemaProperties(tables?.ToList(), lastUpdateOn);
         }
 
-        /// <summary> Initializes a new instance of SyncFullSchemaTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SyncFullSchemaTable"/>. </summary>
         /// <param name="columns"> List of columns in the table of database full schema. </param>
         /// <param name="errorId"> Error id of the table. </param>
         /// <param name="hasError"> If there is error in the table. </param>
@@ -1951,7 +1951,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncFullSchemaTable(columns?.ToList(), errorId, hasError, name, quotedName);
         }
 
-        /// <summary> Initializes a new instance of SyncFullSchemaTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SyncFullSchemaTableColumn"/>. </summary>
         /// <param name="dataSize"> Data size of the column. </param>
         /// <param name="dataType"> Data type of the column. </param>
         /// <param name="errorId"> Error id of the column. </param>
@@ -1965,7 +1965,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncFullSchemaTableColumn(dataSize, dataType, errorId, hasError, isPrimaryKey, name, quotedName);
         }
 
-        /// <summary> Initializes a new instance of SyncGroupLogProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SyncGroupLogProperties"/>. </summary>
         /// <param name="timestamp"> Timestamp of the sync group log. </param>
         /// <param name="logType"> Type of the sync group log. </param>
         /// <param name="source"> Source of the sync group log. </param>
@@ -1978,7 +1978,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncGroupLogProperties(timestamp, logType, source, details, tracingId, operationStatus);
         }
 
-        /// <summary> Initializes a new instance of SyncGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SyncGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2002,7 +2002,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncGroupData(id, name, resourceType, systemData, sku, interval, lastSyncOn, conflictResolutionPolicy, syncDatabaseId, hubDatabaseUserName, hubDatabasePassword, syncState, schema, isConflictLoggingEnabled, conflictLoggingRetentionInDays, usePrivateLinkConnection, privateEndpointName);
         }
 
-        /// <summary> Initializes a new instance of SyncMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SyncMemberData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2025,7 +2025,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncMemberData(id, name, resourceType, systemData, databaseType, syncAgentId, sqlServerDatabaseId, syncMemberAzureDatabaseResourceId, usePrivateLinkConnection, privateEndpointName, serverName, databaseName, userName, password, syncDirection, syncState);
         }
 
-        /// <summary> Initializes a new instance of SqlTimeZoneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlTimeZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2038,7 +2038,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlTimeZoneData(id, name, resourceType, systemData, timeZoneId, displayName);
         }
 
-        /// <summary> Initializes a new instance of SqlServerVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerVirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2052,7 +2052,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerVirtualNetworkRuleData(id, name, resourceType, systemData, virtualNetworkSubnetId, ignoreMissingVnetServiceEndpoint, state);
         }
 
-        /// <summary> Initializes a new instance of WorkloadClassifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.WorkloadClassifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2069,7 +2069,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new WorkloadClassifierData(id, name, resourceType, systemData, memberName, label, context, startTime, endTime, importance);
         }
 
-        /// <summary> Initializes a new instance of WorkloadGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.WorkloadGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2086,7 +2086,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new WorkloadGroupData(id, name, resourceType, systemData, minResourcePercent, maxResourcePercent, minResourcePercentPerRequest, maxResourcePercentPerRequest, importance, queryExecutionTimeout);
         }
 
-        /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.BackupShortTermRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2099,7 +2099,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new BackupShortTermRetentionPolicyData(id, name, resourceType, systemData, retentionDays, diffBackupIntervalInHours);
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDatabaseExtension"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2114,7 +2114,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlDatabaseExtension(id, name, resourceType, systemData, operationMode, storageKeyType, storageKey, storageUri);
         }
 
-        /// <summary> Initializes a new instance of ImportExportExtensionsOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImportExportExtensionsOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2132,7 +2132,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ImportExportExtensionsOperationResult(id, name, resourceType, systemData, requestId, requestType, lastModifiedTime, serverName, databaseName, status, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of DatabaseOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2157,7 +2157,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseOperationData(id, name, resourceType, systemData, databaseName, operation, operationFriendlyName, percentComplete, serverName, startOn, state, errorCode, errorDescription, errorSeverity, isUserError, estimatedCompleteOn, description, isCancellable);
         }
 
-        /// <summary> Initializes a new instance of DatabaseUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseUsage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2172,7 +2172,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseUsage(id, name, resourceType, systemData, displayName, currentValue, limit, unit);
         }
 
-        /// <summary> Initializes a new instance of LedgerDigestUploadData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.LedgerDigestUploadData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2185,7 +2185,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new LedgerDigestUploadData(id, name, resourceType, systemData, digestStorageEndpoint, state);
         }
 
-        /// <summary> Initializes a new instance of OutboundFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.OutboundFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2197,7 +2197,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new OutboundFirewallRuleData(id, name, resourceType, systemData, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of InstancePoolUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InstancePoolUsage"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -2211,7 +2211,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new InstancePoolUsage(id, name, resourceType, unit, currentValue, limit, requestedLimit);
         }
 
-        /// <summary> Initializes a new instance of InstancePoolUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InstancePoolUsageName"/>. </summary>
         /// <param name="value"> Usage name value. </param>
         /// <param name="localizedValue"> Usage name localized value. </param>
         /// <returns> A new <see cref="Models.InstancePoolUsageName"/> instance for mocking. </returns>
@@ -2220,7 +2220,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new InstancePoolUsageName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LongTermRetentionBackupOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2238,7 +2238,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new LongTermRetentionBackupOperationResult(id, name, resourceType, systemData, requestId, operationType, fromBackupResourceId, toBackupResourceId, targetBackupStorageRedundancy, status, message);
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.LongTermRetentionBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2257,7 +2257,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new LongTermRetentionBackupData(id, name, resourceType, systemData, serverName, serverCreateOn, databaseName, databaseDeletedOn, backupOn, backupExpireOn, backupStorageRedundancy, requestedBackupStorageRedundancy);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceLongTermRetentionBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2275,7 +2275,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceLongTermRetentionBackupData(id, name, resourceType, systemData, managedInstanceName, managedInstanceCreateOn, databaseName, databaseDeletedOn, backupOn, backupExpireOn, backupStorageRedundancy);
         }
 
-        /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.RestorableDroppedManagedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2294,7 +2294,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RestorableDroppedManagedDatabaseData(id, name, resourceType, systemData, tags, location, databaseName, createdOn, deletedOn, earliestRestoreOn);
         }
 
-        /// <summary> Initializes a new instance of SqlServerConnectionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerConnectionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2308,7 +2308,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerConnectionPolicyData(id, name, resourceType, systemData, location, kind, connectionType);
         }
 
-        /// <summary> Initializes a new instance of DistributedAvailabilityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DistributedAvailabilityGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2329,7 +2329,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DistributedAvailabilityGroupData(id, name, resourceType, systemData, targetDatabase, sourceEndpoint, primaryAvailabilityGroupName, secondaryAvailabilityGroupName, replicationMode, distributedAvailabilityGroupId, sourceReplicaId, targetReplicaId, linkState, lastHardenedLsn);
         }
 
-        /// <summary> Initializes a new instance of ServerTrustCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ServerTrustCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2343,7 +2343,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ServerTrustCertificateData(id, name, resourceType, systemData, publicBlob, thumbprint, certificateName);
         }
 
-        /// <summary> Initializes a new instance of EndpointCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.EndpointCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2355,7 +2355,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new EndpointCertificateData(id, name, resourceType, systemData, publicBlob);
         }
 
-        /// <summary> Initializes a new instance of SensitivityLabelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SensitivityLabelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2376,7 +2376,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SensitivityLabelData(id, name, resourceType, systemData, managedBy, schemaName, tableName, columnName, labelName, labelId, informationType, informationTypeId, isDisabled, rank);
         }
 
-        /// <summary> Initializes a new instance of SensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SensitivityLabelUpdate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2392,7 +2392,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SensitivityLabelUpdate(id, name, resourceType, systemData, op, schema, table, column, sensitivityLabel);
         }
 
-        /// <summary> Initializes a new instance of RecommendedSensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendedSensitivityLabelUpdate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2407,7 +2407,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecommendedSensitivityLabelUpdate(id, name, resourceType, systemData, op, schema, table, column);
         }
 
-        /// <summary> Initializes a new instance of SqlServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2528,7 +2528,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerBlobAuditingPolicyData(id, name, resourceType, systemData, isDevopsAuditEnabled, retentionDays, auditActionsAndGroups?.ToList(), isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs, isManagedIdentityInUse, state, storageEndpoint, storageAccountAccessKey, storageAccountSubscriptionId);
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlDatabaseBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2637,7 +2637,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlDatabaseBlobAuditingPolicyData(id, name, resourceType, systemData, kind, retentionDays, auditActionsAndGroups?.ToList(), isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs, isManagedIdentityInUse, state, storageEndpoint, storageAccountAccessKey, storageAccountSubscriptionId);
         }
 
-        /// <summary> Initializes a new instance of ExtendedDatabaseBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ExtendedDatabaseBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2746,7 +2746,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ExtendedDatabaseBlobAuditingPolicyData(id, name, resourceType, systemData, predicateExpression, retentionDays, auditActionsAndGroups?.ToList(), isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs, isManagedIdentityInUse, state, storageEndpoint, storageAccountAccessKey, storageAccountSubscriptionId);
         }
 
-        /// <summary> Initializes a new instance of ExtendedServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ExtendedServerBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2868,7 +2868,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ExtendedServerBlobAuditingPolicyData(id, name, resourceType, systemData, isDevopsAuditEnabled, predicateExpression, retentionDays, auditActionsAndGroups?.ToList(), isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs, isManagedIdentityInUse, state, storageEndpoint, storageAccountAccessKey, storageAccountSubscriptionId);
         }
 
-        /// <summary> Initializes a new instance of DatabaseAdvancedThreatProtectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseAdvancedThreatProtectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2881,7 +2881,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseAdvancedThreatProtectionData(id, name, resourceType, systemData, state, createdOn);
         }
 
-        /// <summary> Initializes a new instance of ServerAdvancedThreatProtectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ServerAdvancedThreatProtectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2894,7 +2894,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ServerAdvancedThreatProtectionData(id, name, resourceType, systemData, state, createdOn);
         }
 
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedServerDnsAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2907,7 +2907,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedServerDnsAliasData(id, name, resourceType, systemData, azureDnsRecord, publicAzureDnsRecord);
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseAdvancedThreatProtectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedDatabaseAdvancedThreatProtectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2920,7 +2920,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedDatabaseAdvancedThreatProtectionData(id, name, resourceType, systemData, state, createdOn);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceAdvancedThreatProtectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceAdvancedThreatProtectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2933,7 +2933,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceAdvancedThreatProtectionData(id, name, resourceType, systemData, state, createdOn);
         }
 
-        /// <summary> Initializes a new instance of SqlServerDatabaseReplicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerDatabaseReplicationLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2955,7 +2955,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerDatabaseReplicationLinkData(id, name, resourceType, systemData, partnerServer, partnerDatabase, partnerLocation, role, partnerRole, replicationMode, startOn, percentComplete, replicationState, isTerminationAllowed, linkType);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceDtcData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceDtcData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2973,7 +2973,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceDtcData(id, name, resourceType, systemData, dtcEnabled, securitySettings, externalDnsSuffixSearchList?.ToList(), dtcHostNameDnsSuffix, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SqlSynapseLinkWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlSynapseLinkWorkspace"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2987,7 +2987,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlSynapseLinkWorkspace(id, name, resourceType, systemData, workspaces?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VirtualClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.VirtualClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3006,7 +3006,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new VirtualClusterData(id, name, resourceType, systemData, tags, location, subnetId, version, childResources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceUpdateDnsServersOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceUpdateDnsServersOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3018,7 +3018,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceUpdateDnsServersOperationData(id, name, resourceType, systemData, status);
         }
 
-        /// <summary> Initializes a new instance of InstanceFailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.InstanceFailoverGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3039,7 +3039,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new InstanceFailoverGroupData(id, name, resourceType, systemData, secondaryType, readWriteEndpoint, readOnlyEndpointFailoverPolicy != null ? new InstanceFailoverGroupReadOnlyEndpoint(readOnlyEndpointFailoverPolicy) : null, replicationRole, replicationState, partnerRegions?.ToList(), managedInstancePairs?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PartnerRegionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PartnerRegionInfo"/>. </summary>
         /// <param name="location"> Geo location of the partner managed instances. </param>
         /// <param name="replicationRole"> Replication role of the partner managed instances. </param>
         /// <returns> A new <see cref="Models.PartnerRegionInfo"/> instance for mocking. </returns>
@@ -3048,7 +3048,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new PartnerRegionInfo(location, replicationRole);
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedDatabaseRestoreDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3086,7 +3086,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedDatabaseRestoreDetailData(id, name, resourceType, systemData, restoreType, status, blockReason, lastUploadedFileName, lastUploadedFileOn, lastRestoredFileName, lastRestoredFileOn, completedPercent, currentRestoredSizeInMB, currentRestorePlanSizeInMB, currentBackupType, currentRestoringFileName, numberOfFilesFound, numberOfFilesQueued, numberOfFilesSkipped, numberOfFilesRestoring, numberOfFilesRestored, numberOfFilesUnrestorable, fullBackupSets?.ToList(), diffBackupSets?.ToList(), logBackupSets?.ToList(), unrestorableFileList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailBackupSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedDatabaseRestoreDetailBackupSetProperties"/>. </summary>
         /// <param name="status"> Backup set status. </param>
         /// <param name="firstStripeName"> First stripe name. </param>
         /// <param name="numberOfStripes"> Number of stripes. </param>
@@ -3099,7 +3099,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedDatabaseRestoreDetailBackupSetProperties(status, firstStripeName, numberOfStripes, backupSizeInMB, restoreStartedOn, restoreFinishedOn);
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailUnrestorableFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedDatabaseRestoreDetailUnrestorableFileProperties"/>. </summary>
         /// <param name="name"> File name. </param>
         /// <returns> A new <see cref="Models.ManagedDatabaseRestoreDetailUnrestorableFileProperties"/> instance for mocking. </returns>
         public static ManagedDatabaseRestoreDetailUnrestorableFileProperties ManagedDatabaseRestoreDetailUnrestorableFileProperties(string name = null)
@@ -3107,7 +3107,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedDatabaseRestoreDetailUnrestorableFileProperties(name);
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3242,7 +3242,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlDatabaseData(id, name, resourceType, systemData, tags, location, sku, kind, managedBy, identity, createMode, collation, maxSizeBytes, sampleName, elasticPoolId, sourceDatabaseId, status, databaseId, createdOn, currentServiceObjectiveName, requestedServiceObjectiveName, defaultSecondaryLocation, failoverGroupId, restorePointInTime, sourceDatabaseDeletedOn, recoveryServicesRecoveryPointId, longTermRetentionBackupResourceId, recoverableDatabaseId, restorableDroppedDatabaseId, catalogCollation, isZoneRedundant, licenseType, maxLogSizeBytes, earliestRestoreOn, readScale, highAvailabilityReplicaCount, secondaryType, currentSku, autoPauseDelay, currentBackupStorageRedundancy, requestedBackupStorageRedundancy, minCapacity, pausedOn, resumedOn, maintenanceConfigurationId, isLedgerOn, isInfraEncryptionEnabled, federatedClientId, keys, encryptionProtector, preferredEnclaveType, useFreeLimit, freeLimitExhaustionBehavior, sourceResourceId, manualCutover, performCutover, availabilityZone, encryptionProtectorAutoRotation);
         }
 
-        /// <summary> Initializes a new instance of DatabaseIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseIdentity"/>. </summary>
         /// <param name="identityType"> The identity type. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant id. </param>
         /// <param name="userAssignedIdentities"> The resource ids of the user assigned identities to use. </param>
@@ -3254,7 +3254,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseIdentity(identityType, tenantId, userAssignedIdentities);
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDatabaseKey"/>. </summary>
         /// <param name="keyType"> The database key type. Only supported value is 'AzureKeyVault'. </param>
         /// <param name="thumbprint"> Thumbprint of the database key. </param>
         /// <param name="createdOn"> The database key creation date. </param>
@@ -3265,7 +3265,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlDatabaseKey(keyType, thumbprint, createdOn, subregion);
         }
 
-        /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImportExportOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3288,7 +3288,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ImportExportOperationResult(id, name, resourceType, systemData, requestId, requestType, queuedTime, lastModifiedTime, blobUri, serverName, databaseName, status, errorMessage, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionRequestStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionRequestStatus"/>. </summary>
         /// <param name="privateLinkServiceId"> Resource id for which the private endpoint is created. </param>
         /// <param name="privateEndpointConnectionName"> The connection name for the private endpoint. </param>
         /// <param name="status"> Status of this private endpoint connection. </param>
@@ -3298,7 +3298,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new PrivateEndpointConnectionRequestStatus(privateLinkServiceId, privateEndpointConnectionName, status);
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ElasticPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3335,7 +3335,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolData(id, name, resourceType, systemData, tags, location, sku, kind, state, createdOn, maxSizeBytes, minCapacity, perDatabaseSettings, isZoneRedundant, licenseType, maintenanceConfigurationId, highAvailabilityReplicaCount, preferredEnclaveType, availabilityZone);
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3372,7 +3372,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedDatabaseData(id, name, resourceType, systemData, tags, location, collation, status, createdOn, earliestRestorePoint, restorePointInTime, defaultSecondaryLocation, catalogCollation, createMode, storageContainerUri, sourceDatabaseId, crossSubscriptionSourceDatabaseId, restorableDroppedDatabaseId, crossSubscriptionRestorableDroppedDatabaseId, storageContainerIdentity, storageContainerSasToken, failoverGroupId, recoverableDatabaseId, longTermRetentionBackupResourceId, allowAutoCompleteRestore, lastBackupName, crossSubscriptionTargetManagedInstanceId, isLedgerOn);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3432,7 +3432,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceData(id, name, resourceType, systemData, tags, location, identity, sku, provisioningState, managedInstanceCreateMode, fullyQualifiedDomainName, administratorLogin, administratorLoginPassword, subnetId, state, licenseType, vCores, storageSizeInGB, collation, dnsZone, managedDnsZonePartner, isPublicDataEndpointEnabled, sourceManagedInstanceId, restorePointInTime, proxyOverride, timezoneId, instancePoolId, maintenanceConfigurationId, privateEndpointConnections?.ToList(), minimalTlsVersion, currentBackupStorageRedundancy, requestedBackupStorageRedundancy, isZoneRedundant, primaryUserAssignedIdentityId, keyId, administrators, servicePrincipal);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePecProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstancePecProperty"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="properties"> Private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.ManagedInstancePecProperty"/> instance for mocking. </returns>
@@ -3441,7 +3441,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstancePecProperty(id, properties);
         }
 
-        /// <summary> Initializes a new instance of SqlServicePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlServicePrincipal"/>. </summary>
         /// <param name="principalId"> The Azure Active Directory application object id. </param>
         /// <param name="clientId"> The Azure Active Directory application client id. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant id. </param>
@@ -3452,7 +3452,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServicePrincipal(principalId, clientId, tenantId, principalType);
         }
 
-        /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlOutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service accessed by the managed instance service, e.g., Azure Storage, Azure Active Directory, etc. </param>
         /// <param name="endpoints"> The endpoints that the managed instance service communicates with in order to function correctly. </param>
         /// <returns> A new <see cref="Models.SqlOutboundEnvironmentEndpoint"/> instance for mocking. </returns>
@@ -3463,7 +3463,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlOutboundEnvironmentEndpoint(category, endpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The IP Addresses and Ports used when connecting to DomainName. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceEndpointDependency"/> instance for mocking. </returns>
@@ -3474,7 +3474,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceEndpointDependency(domainName, endpointDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceEndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceEndpointDetail"/> instance for mocking. </returns>
         public static ManagedInstanceEndpointDetail ManagedInstanceEndpointDetail(int? port = null)
@@ -3482,7 +3482,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceEndpointDetail(port);
         }
 
-        /// <summary> Initializes a new instance of TopQueries. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TopQueries"/>. </summary>
         /// <param name="numberOfQueries"> Requested number of top queries. </param>
         /// <param name="aggregationFunction"> Aggregation function used to calculate query metrics. </param>
         /// <param name="observationMetric"> Metric used to rank queries. </param>
@@ -3498,7 +3498,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new TopQueries(numberOfQueries, aggregationFunction, observationMetric, intervalType, startTime, endTime, queries?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ManagedLedgerDigestUploadData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedLedgerDigestUploadData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3511,7 +3511,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedLedgerDigestUploadData(id, name, resourceType, systemData, digestStorageEndpoint, state);
         }
 
-        /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.RecoverableDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3529,7 +3529,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecoverableDatabaseData(id, name, resourceType, systemData, edition, serviceLevelObjective, elasticPoolName, lastAvailableBackupOn, keys);
         }
 
-        /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.RestorableDroppedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3553,7 +3553,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RestorableDroppedDatabaseData(id, name, resourceType, systemData, tags, location, sku, databaseName, maxSizeBytes, createdOn, deletedOn, earliestRestoreOn, backupStorageRedundancy, keys);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceServerConfigurationOptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceServerConfigurationOptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3566,7 +3566,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceServerConfigurationOptionData(id, name, resourceType, systemData, serverConfigurationOptionValue, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceStartStopScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3584,7 +3584,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceStartStopScheduleData(id, name, resourceType, systemData, description, timeZoneId, scheduleList?.ToList(), nextRunAction, nextExecutionTime);
         }
 
-        /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.LogicalDatabaseTransparentDataEncryptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3596,7 +3596,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new LogicalDatabaseTransparentDataEncryptionData(id, name, resourceType, systemData, state);
         }
 
-        /// <summary> Initializes a new instance of IPv6FirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.IPv6FirewallRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -3608,7 +3608,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new IPv6FirewallRuleData(id, name, resourceType, startIPv6Address, endIPv6Address);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBaselineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentBaselineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3622,7 +3622,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentBaselineData(id, name, resourceType, systemData, results);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3637,7 +3637,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(id, name, resourceType, systemData, isLatestScan, results);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBaselineRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentBaselineRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3651,7 +3651,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentBaselineRuleData(id, name, resourceType, systemData, results?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3666,7 +3666,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(id, name, resourceType, systemData, isLatestScan, results?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentScanResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentScanResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3687,7 +3687,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentScanResultData(id, name, resourceType, systemData, ruleId, status, errorMessage, isTrimmed, queryResults?.ToList(), remediation, baselineAdjustedResult, ruleMetadata);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentRemediation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentRemediation"/>. </summary>
         /// <param name="description"> SQL Vulnerability Assessment remediation description. </param>
         /// <param name="scripts"> SQL Vulnerability Assessment remediation script. </param>
         /// <param name="isAutomated"> SQL Vulnerability Assessment is remediation automated. </param>
@@ -3700,7 +3700,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentRemediation(description, scripts?.ToList(), isAutomated, portalLink);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBaselineAdjustedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineAdjustedResult"/>. </summary>
         /// <param name="baseline"> SQL Vulnerability Assessment baseline details. </param>
         /// <param name="status"> SQL Vulnerability Assessment baseline status. </param>
         /// <param name="resultsNotInBaseline"> SQL Vulnerability Assessment results that are not in baseline. </param>
@@ -3714,7 +3714,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentBaselineAdjustedResult(baseline, status, resultsNotInBaseline?.ToList(), resultsOnlyInBaseline?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBaselineDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineDetails"/>. </summary>
         /// <param name="expectedResults"> SQL Vulnerability Assessment baseline expected results. </param>
         /// <param name="updatedOn"> SQL Vulnerability Assessment baseline update time (UTC). </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineDetails"/> instance for mocking. </returns>
@@ -3725,7 +3725,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentBaselineDetails(expectedResults?.ToList(), updatedOn);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentRuleMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentRuleMetadata"/>. </summary>
         /// <param name="ruleId"> SQL Vulnerability Assessment rule Id. </param>
         /// <param name="severity"> SQL Vulnerability Assessment rule severity. </param>
         /// <param name="category"> SQL Vulnerability Assessment rule category. </param>
@@ -3743,7 +3743,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentRuleMetadata(ruleId, severity, category, ruleType, title, description, rationale, queryCheck, benchmarkReferences?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentQueryCheck. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentQueryCheck"/>. </summary>
         /// <param name="query"> SQL Vulnerability Assessment rule query. </param>
         /// <param name="expectedResult"> SQL Vulnerability Assessment query expected result. </param>
         /// <param name="columnNames"> SQL Vulnerability Assessment column names of query expected result. </param>
@@ -3756,7 +3756,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentQueryCheck(query, expectedResult?.ToList(), columnNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBenchmarkReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBenchmarkReference"/>. </summary>
         /// <param name="benchmark"> SQL Vulnerability Assessment benchmark name. </param>
         /// <param name="reference"> SQL Vulnerability Assessment benchmark reference. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBenchmarkReference"/> instance for mocking. </returns>
@@ -3765,7 +3765,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentBenchmarkReference(benchmark, reference);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentScanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentScanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3795,7 +3795,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentScanData(id, name, resourceType, systemData, scanId, triggerType, state, startOn, endOn, errors?.ToList(), server, database, sqlVersion, highSeverityFailedRulesCount, mediumSeverityFailedRulesCount, lowSeverityFailedRulesCount, totalPassedRulesCount, totalFailedRulesCount, totalRulesCount, isBaselineApplied, lastScanOn);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentScanError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentScanError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanError"/> instance for mocking. </returns>
@@ -3804,7 +3804,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentScanError(code, message);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3816,7 +3816,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentData(id, name, resourceType, systemData, state);
         }
 
-        /// <summary> Initializes a new instance of SqlNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlNameAvailabilityResponse"/>. </summary>
         /// <param name="name"> The name whose availability was checked. </param>
         /// <param name="isAvailable"> True if the name is available, otherwise false. </param>
         /// <param name="reason"> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </param>
@@ -3827,7 +3827,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlNameAvailabilityResponse(name, isAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SqlServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3861,7 +3861,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerData(id, name, resourceType, systemData, tags, location, identity, kind, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minimalTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, isIPv6Enabled, externalGovernanceStatus);
         }
 
-        /// <summary> Initializes a new instance of SqlServerPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlServerPrivateEndpointConnection"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="properties"> Private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.SqlServerPrivateEndpointConnection"/> instance for mocking. </returns>
@@ -3870,7 +3870,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerPrivateEndpointConnection(id, properties);
         }
 
-        /// <summary> Initializes a new instance of RefreshExternalGovernanceStatusOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RefreshExternalGovernanceStatusOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3887,7 +3887,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new RefreshExternalGovernanceStatusOperationResult(id, name, resourceType, systemData, requestId, requestType, queuedTime, serverName, status, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of FailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.FailoverGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3910,7 +3910,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new FailoverGroupData(id, name, resourceType, systemData, location, tags, readWriteEndpoint, readOnlyEndpoint, replicationRole, replicationState, partnerServers?.ToList(), failoverDatabases?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PartnerServerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PartnerServerInfo"/>. </summary>
         /// <param name="id"> Resource identifier of the partner server. </param>
         /// <param name="location"> Geo location of the partner server. </param>
         /// <param name="replicationRole"> Replication role of the partner server. </param>

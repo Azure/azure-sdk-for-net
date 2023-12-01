@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedRestorableDroppedDbBackupShortTermRetentionPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RestorableDroppedManagedDatabaseResource" /> using the GetManagedRestorableDroppedDbBackupShortTermRetentionPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RestorableDroppedManagedDatabaseResource"/> using the GetManagedRestorableDroppedDbBackupShortTermRetentionPolicy method.
     /// </summary>
     public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(ArmClient client, ManagedBackupShortTermRetentionPolicyData data) : this(client, data.Id)

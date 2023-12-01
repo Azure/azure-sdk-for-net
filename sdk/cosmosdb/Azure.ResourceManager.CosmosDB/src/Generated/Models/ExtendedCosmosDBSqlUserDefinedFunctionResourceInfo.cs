@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
     public partial class ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo : CosmosDBSqlUserDefinedFunctionResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>
         /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(string functionName) : base(functionName)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(functionName, nameof(functionName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>
         /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <param name="body"> Body of the User Defined Function. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>

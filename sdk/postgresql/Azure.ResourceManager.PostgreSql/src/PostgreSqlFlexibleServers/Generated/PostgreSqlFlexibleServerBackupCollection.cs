@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostgreSqlFlexibleServerBackupResource" /> and their operations.
-    /// Each <see cref="PostgreSqlFlexibleServerBackupResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource" />.
-    /// To get a <see cref="PostgreSqlFlexibleServerBackupCollection" /> instance call the GetPostgreSqlFlexibleServerBackups method from an instance of <see cref="PostgreSqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="PostgreSqlFlexibleServerBackupResource"/> and their operations.
+    /// Each <see cref="PostgreSqlFlexibleServerBackupResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="PostgreSqlFlexibleServerBackupCollection"/> instance call the GetPostgreSqlFlexibleServerBackups method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
     /// </summary>
     public partial class PostgreSqlFlexibleServerBackupCollection : ArmCollection, IEnumerable<PostgreSqlFlexibleServerBackupResource>, IAsyncEnumerable<PostgreSqlFlexibleServerBackupResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerBackupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlFlexibleServerBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerBackupBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerBackupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlFlexibleServerBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerBackupBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
     public partial class RecommendedMachineConfiguration
     {
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
         public RecommendedMachineConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
         /// <param name="vCpus"> Describes the resource range. </param>
         /// <param name="memory"> Describes the resource range. </param>
         internal RecommendedMachineConfiguration(ResourceRange vCpus, ResourceRange memory)

@@ -16,6 +16,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
+using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -49,6 +50,36 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ResetFeatureSwitch()
         {
             ActivityExtensions.ResetFeatureSwitch();
+        }
+
+        /// <summary>
+        ///   Verifies checkpoint activities are not created when feature flag is off />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointStoreActivitySourceDisabled()
+        {
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockContext = new Mock<PartitionContext>("65");
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<CheckpointStore>(), "cg", "host", "hub", 50, Mock.Of<TokenCredential>(), null) { CallBase = true };
+
+            mockProcessor
+                .Protected()
+                .Setup<EventHubConnection>("CreateConnection")
+                .Returns(Mock.Of<EventHubConnection>());
+
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            mockLogger
+                .Setup(log => log.UpdateCheckpointComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Callback(() => completionSource.TrySetResult(true));
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+
+            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 65, 998, default);
+
+            Assert.IsEmpty(listener.Activities);
         }
 
         /// <summary>
@@ -112,8 +143,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                         CancellationToken cancellationToken) =>
             (Task)
                 typeof(EventProcessorClient)
-                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, new Type[] { typeof(string), typeof(CheckpointPosition), typeof(CancellationToken) })
+                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken });
 
         /// <summary>
         /// Sets and returns the app config switch to enable Activity Source. The switch must be disposed at the end of the test.

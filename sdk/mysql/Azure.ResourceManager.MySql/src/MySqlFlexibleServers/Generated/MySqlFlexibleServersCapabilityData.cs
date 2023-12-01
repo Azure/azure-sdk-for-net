@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServersCapabilityData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServersCapabilityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersCapabilityData"/>. </summary>
         public MySqlFlexibleServersCapabilityData()
         {
             SupportedGeoBackupRegions = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             SupportedServerVersions = new ChangeTrackingList<ServerVersionCapabilityV2>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServersCapabilityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersCapabilityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

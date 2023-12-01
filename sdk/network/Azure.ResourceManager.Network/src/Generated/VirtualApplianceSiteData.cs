@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualApplianceSiteData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualApplianceSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceSiteData"/>. </summary>
         public VirtualApplianceSiteData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceSiteData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

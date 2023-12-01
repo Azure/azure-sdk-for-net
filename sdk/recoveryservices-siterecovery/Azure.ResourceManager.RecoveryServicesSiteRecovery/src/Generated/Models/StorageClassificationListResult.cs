@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of storage details. </summary>
     internal partial class StorageClassificationListResult
     {
-        /// <summary> Initializes a new instance of StorageClassificationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationListResult"/>. </summary>
         internal StorageClassificationListResult()
         {
             Value = new ChangeTrackingList<StorageClassificationData>();
         }
 
-        /// <summary> Initializes a new instance of StorageClassificationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationListResult"/>. </summary>
         /// <param name="value"> The storage details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal StorageClassificationListResult(IReadOnlyList<StorageClassificationData> value, string nextLink)

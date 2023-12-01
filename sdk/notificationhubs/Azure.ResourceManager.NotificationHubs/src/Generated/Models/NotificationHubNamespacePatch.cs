@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Parameters supplied to the Patch Namespace operation. </summary>
     public partial class NotificationHubNamespacePatch
     {
-        /// <summary> Initializes a new instance of NotificationHubNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespacePatch"/>. </summary>
         public NotificationHubNamespacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

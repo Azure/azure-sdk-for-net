@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Constructor.
         /// </summary>
-        public SuspendMode() : this("suspend")
+        public SuspendMode() : this(JobMatchingModeKind.Suspend)
         {
         }
 
@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A function for the query compilation. </summary>
     public partial class StreamAnalyticsQueryFunction
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryFunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryFunction"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="queryFunctionType"> The type of the function. </param>
         /// <param name="bindingType"> The type of the function binding. </param>

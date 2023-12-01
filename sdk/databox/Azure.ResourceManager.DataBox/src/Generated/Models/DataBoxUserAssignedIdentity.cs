@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> User assigned identity properties. </summary>
     internal partial class DataBoxUserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of DataBoxUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxUserAssignedIdentity"/>. </summary>
         public DataBoxUserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxUserAssignedIdentity"/>. </summary>
         /// <param name="resourceId"> Arm resource id for user assigned identity to be used to fetch MSI token. </param>
         internal DataBoxUserAssignedIdentity(ResourceIdentifier resourceId)
         {

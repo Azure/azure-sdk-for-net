@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Parameters for a Redis Enterprise export operation. </summary>
     public partial class ExportRedisEnterpriseDatabaseContent
     {
-        /// <summary> Initializes a new instance of ExportRedisEnterpriseDatabaseContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRedisEnterpriseDatabaseContent"/>. </summary>
         /// <param name="sasUri"> SAS URI for the target directory to export to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasUri"/> is null. </exception>
         public ExportRedisEnterpriseDatabaseContent(Uri sasUri)

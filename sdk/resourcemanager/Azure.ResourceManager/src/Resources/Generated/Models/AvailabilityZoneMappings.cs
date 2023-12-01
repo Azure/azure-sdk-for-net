@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Availability zone mappings for the region. </summary>
     public partial class AvailabilityZoneMappings
     {
-        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMappings"/>. </summary>
         internal AvailabilityZoneMappings()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMappings"/>. </summary>
         /// <param name="logicalZone"> The logical zone id for the availability zone. </param>
         /// <param name="physicalZone"> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </param>
         internal AvailabilityZoneMappings(string logicalZone, string physicalZone)

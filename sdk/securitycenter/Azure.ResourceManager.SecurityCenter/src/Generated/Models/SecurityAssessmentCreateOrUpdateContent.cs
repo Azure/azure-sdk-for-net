@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Security assessment on a resource. </summary>
     public partial class SecurityAssessmentCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentCreateOrUpdateContent"/>. </summary>
         public SecurityAssessmentCreateOrUpdateContent()
         {
             AdditionalData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

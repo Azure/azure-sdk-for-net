@@ -331,6 +331,7 @@ begin {
         "customer-voice",
         "dotnet-core",
         "dotnet-standard",
+        "document-intelligence",
         "dynamics-business-central",
         "dynamics-commerce",
         "dynamics-cust-insights",

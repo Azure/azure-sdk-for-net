@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TenantAssessmentMetadataResource" /> and their operations.
-    /// Each <see cref="TenantAssessmentMetadataResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="TenantAssessmentMetadataCollection" /> instance call the GetTenantAssessmentMetadata method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="TenantAssessmentMetadataResource"/> and their operations.
+    /// Each <see cref="TenantAssessmentMetadataResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantAssessmentMetadataCollection"/> instance call the GetTenantAssessmentMetadata method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantAssessmentMetadataCollection : ArmCollection, IEnumerable<TenantAssessmentMetadataResource>, IAsyncEnumerable<TenantAssessmentMetadataResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantAssessmentMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TenantAssessmentMetadataResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantAssessmentMetadataResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListRequest();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantAssessmentMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TenantAssessmentMetadataResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantAssessmentMetadataResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListRequest();

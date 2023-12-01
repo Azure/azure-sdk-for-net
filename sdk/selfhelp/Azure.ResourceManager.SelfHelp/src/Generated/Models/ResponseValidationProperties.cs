@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooter step input response validation properties. </summary>
     public partial class ResponseValidationProperties
     {
-        /// <summary> Initializes a new instance of ResponseValidationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseValidationProperties"/>. </summary>
         internal ResponseValidationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ResponseValidationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseValidationProperties"/>. </summary>
         /// <param name="regex"> Regex used for the input validation. </param>
         /// <param name="isRequired"> Default True. </param>
         /// <param name="validationErrorMessage"> Validation Error Message. </param>

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Description of a namespace resource. </summary>
     public partial class RelayNamespacePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of RelayNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNamespacePatch"/>. </summary>
         public RelayNamespacePatch()
         {
             PrivateEndpointConnections = new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RelayNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNamespacePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

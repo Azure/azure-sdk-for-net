@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> See [disable AAD Pod Identity for a specific Pod/Application](https://azure.github.io/aad-pod-identity/docs/configure/application_exception/) for more details. </summary>
     public partial class ManagedClusterPodIdentityException
     {
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityException. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityException"/>. </summary>
         /// <param name="name"> The name of the pod identity exception. </param>
         /// <param name="namespace"> The namespace of the pod identity exception. </param>
         /// <param name="podLabels"> The pod labels to match. </param>

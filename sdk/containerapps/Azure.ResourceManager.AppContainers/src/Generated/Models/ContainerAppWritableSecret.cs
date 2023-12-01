@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Secret definition. </summary>
     public partial class ContainerAppWritableSecret
     {
-        /// <summary> Initializes a new instance of ContainerAppWritableSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWritableSecret"/>. </summary>
         public ContainerAppWritableSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppWritableSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWritableSecret"/>. </summary>
         /// <param name="name"> Secret Name. </param>
         /// <param name="value"> Secret Value. </param>
         /// <param name="identity"> Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity. </param>

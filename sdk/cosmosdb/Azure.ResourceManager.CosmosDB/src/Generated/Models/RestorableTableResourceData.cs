@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specific Databases to restore. </summary>
     public partial class RestorableTableResourceData
     {
-        /// <summary> Initializes a new instance of RestorableTableResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTableResourceData"/>. </summary>
         internal RestorableTableResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableTableResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTableResourceData"/>. </summary>
         /// <param name="id"> The unique resource identifier of the ARM resource. </param>
         /// <param name="name"> The name of the Table. </param>
         /// <param name="resourceType"> The type of Azure resource. </param>

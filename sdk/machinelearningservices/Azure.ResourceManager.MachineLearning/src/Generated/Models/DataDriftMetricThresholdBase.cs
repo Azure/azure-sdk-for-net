@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class DataDriftMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of DataDriftMetricThresholdBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDriftMetricThresholdBase"/>. </summary>
         protected DataDriftMetricThresholdBase()
         {
         }
 
-        /// <summary> Initializes a new instance of DataDriftMetricThresholdBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDriftMetricThresholdBase"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         internal DataDriftMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold)

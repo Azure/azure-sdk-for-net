@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class UserContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of UserContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserContractData"/>. </summary>
         public UserContractData()
         {
             Identities = new ChangeTrackingList<UserIdentityContract>();
             Groups = new ChangeTrackingList<GroupContractProperties>();
         }
 
-        /// <summary> Initializes a new instance of UserContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

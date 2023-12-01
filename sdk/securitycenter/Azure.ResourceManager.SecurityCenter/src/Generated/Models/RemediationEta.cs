@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The ETA (estimated time of arrival) for remediation. </summary>
     public partial class RemediationEta
     {
-        /// <summary> Initializes a new instance of RemediationEta. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationEta"/>. </summary>
         /// <param name="eta"> ETA for remediation. </param>
         /// <param name="justification"> Justification for change of Eta. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="justification"/> is null. </exception>

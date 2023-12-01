@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Individual port mappings for inbound NAT rule created for backend pool. </summary>
     public partial class InboundNatRulePortMapping
     {
-        /// <summary> Initializes a new instance of InboundNatRulePortMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundNatRulePortMapping"/>. </summary>
         internal InboundNatRulePortMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of InboundNatRulePortMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundNatRulePortMapping"/>. </summary>
         /// <param name="inboundNatRuleName"> Name of inbound NAT rule. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT rule. </param>
         /// <param name="frontendPort"> Frontend port. </param>

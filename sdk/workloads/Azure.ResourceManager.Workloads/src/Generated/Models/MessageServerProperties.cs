@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the SAP Message Server properties. </summary>
     public partial class MessageServerProperties
     {
-        /// <summary> Initializes a new instance of MessageServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageServerProperties"/>. </summary>
         public MessageServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MessageServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageServerProperties"/>. </summary>
         /// <param name="msPort"> Message Server port. </param>
         /// <param name="internalMsPort"> Message Server internal MS port. </param>
         /// <param name="httpPort"> Message Server HTTP Port. </param>

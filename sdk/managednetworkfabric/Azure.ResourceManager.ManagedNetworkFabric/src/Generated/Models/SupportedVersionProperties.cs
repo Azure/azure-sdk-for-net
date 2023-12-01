@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Supported version details of the network device. </summary>
     public partial class SupportedVersionProperties
     {
-        /// <summary> Initializes a new instance of SupportedVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
         public SupportedVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportedVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
         /// <param name="version"> Operating system and firmware combined versions. </param>
         /// <param name="vendorOSVersion"> Operating system version. </param>
         /// <param name="vendorFirmwareVersion"> Firmware version. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of alert rule resources. </summary>
     internal partial class AlertRuleResourceCollection
     {
-        /// <summary> Initializes a new instance of AlertRuleResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleResourceCollection"/>. </summary>
         internal AlertRuleResourceCollection()
         {
             Value = new ChangeTrackingList<AlertRuleData>();
         }
 
-        /// <summary> Initializes a new instance of AlertRuleResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleResourceCollection"/>. </summary>
         /// <param name="value"> the values for the alert rule resources. </param>
         internal AlertRuleResourceCollection(IReadOnlyList<AlertRuleData> value)
         {

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Resource Name availability input parameters - Resource type and resource name. </summary>
     public partial class RecoveryServicesNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of RecoveryServicesNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesNameAvailabilityContent"/>. </summary>
         public RecoveryServicesNameAvailabilityContent()
         {
         }

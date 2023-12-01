@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.GraphServices.Models
     /// <summary> Account patch properties. </summary>
     public partial class GraphServicesAccountResourcePatch : GraphServicesTagUpdate
     {
-        /// <summary> Initializes a new instance of GraphServicesAccountResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourcePatch"/>. </summary>
         public GraphServicesAccountResourcePatch()
         {
         }

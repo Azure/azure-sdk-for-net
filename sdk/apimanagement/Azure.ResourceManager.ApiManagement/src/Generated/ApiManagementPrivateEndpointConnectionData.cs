@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionData"/>. </summary>
         public ApiManagementPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

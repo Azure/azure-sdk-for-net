@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing an AppCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppCertificate method.
     /// </summary>
     public partial class AppCertificateResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppCertificateResource(ArmClient client, AppCertificateData data) : this(client, data.Id)

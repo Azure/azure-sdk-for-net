@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Qumulo.Models
     /// <summary> MarketplaceDetails of Qumulo FileSystem resource. </summary>
     public partial class MarketplaceDetails
     {
-        /// <summary> Initializes a new instance of MarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             PublisherId = publisherId;
         }
 
-        /// <summary> Initializes a new instance of MarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>

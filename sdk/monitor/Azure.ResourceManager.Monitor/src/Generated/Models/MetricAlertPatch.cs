@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The metric alert resource for patch operations. </summary>
     public partial class MetricAlertPatch
     {
-        /// <summary> Initializes a new instance of MetricAlertPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertPatch"/>. </summary>
         public MetricAlertPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceGroupSecurityAlertResource" /> and their operations.
-    /// Each <see cref="ResourceGroupSecurityAlertResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ResourceGroupSecurityAlertCollection" /> instance call the GetResourceGroupSecurityAlerts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ResourceGroupSecurityAlertResource"/> and their operations.
+    /// Each <see cref="ResourceGroupSecurityAlertResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ResourceGroupSecurityAlertCollection"/> instance call the GetResourceGroupSecurityAlerts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ResourceGroupSecurityAlertCollection : ArmCollection, IEnumerable<ResourceGroupSecurityAlertResource>, IAsyncEnumerable<ResourceGroupSecurityAlertResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGroupSecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGroupSecurityAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGroupSecurityAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityAlertAlertsRestClient.CreateListResourceGroupLevelByRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupSecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGroupSecurityAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGroupSecurityAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityAlertAlertsRestClient.CreateListResourceGroupLevelByRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));

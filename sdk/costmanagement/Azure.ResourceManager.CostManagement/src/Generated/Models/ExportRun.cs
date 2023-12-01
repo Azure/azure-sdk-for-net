@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> An export run. </summary>
     public partial class ExportRun : ResourceData
     {
-        /// <summary> Initializes a new instance of ExportRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRun"/>. </summary>
         public ExportRun()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRun"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

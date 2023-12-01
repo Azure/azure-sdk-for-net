@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of IP Communities. </summary>
     internal partial class IPCommunitiesListResult
     {
-        /// <summary> Initializes a new instance of IPCommunitiesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunitiesListResult"/>. </summary>
         internal IPCommunitiesListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricIPCommunityData>();
         }
 
-        /// <summary> Initializes a new instance of IPCommunitiesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunitiesListResult"/>. </summary>
         /// <param name="value"> List of IP Community resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal IPCommunitiesListResult(IReadOnlyList<NetworkFabricIPCommunityData> value, string nextLink)

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> AFDOrigin group properties needed for origin group creation or update. </summary>
     public partial class FrontDoorOriginGroupPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorOriginGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupPatch"/>. </summary>
         public FrontDoorOriginGroupPatch()
         {
         }

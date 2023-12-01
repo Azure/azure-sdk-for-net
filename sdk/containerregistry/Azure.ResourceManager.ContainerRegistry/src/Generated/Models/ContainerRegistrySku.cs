@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The SKU of a container registry. </summary>
     public partial class ContainerRegistrySku
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySku"/>. </summary>
         /// <param name="name"> The SKU name of the container registry. Required for registry creation. </param>
         public ContainerRegistrySku(ContainerRegistrySkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistrySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySku"/>. </summary>
         /// <param name="name"> The SKU name of the container registry. Required for registry creation. </param>
         /// <param name="tier"> The SKU tier based on the SKU name. </param>
         internal ContainerRegistrySku(ContainerRegistrySkuName name, ContainerRegistrySkuTier? tier)

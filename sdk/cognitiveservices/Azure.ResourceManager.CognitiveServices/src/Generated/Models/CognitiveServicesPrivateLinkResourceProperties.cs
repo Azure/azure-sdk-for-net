@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Properties of a private link resource. </summary>
     public partial class CognitiveServicesPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateLinkResourceProperties"/>. </summary>
         public CognitiveServicesPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>

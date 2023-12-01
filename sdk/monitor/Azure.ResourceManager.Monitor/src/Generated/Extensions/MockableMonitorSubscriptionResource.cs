@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutoscaleSettingRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoscaleSettingResource> GetAutoscaleSettings(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutoscaleSettingRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AlertRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AlertRuleResource> GetAlertRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AlertRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AlertRuleResource> GetAlertRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ActionGroupResource> GetActionGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActionGroupRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ActionGroupResource> GetActionGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActionGroupRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventDataInfo> GetActivityLogsAsync(string filter, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventDataInfo> GetActivityLogs(string filter, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricAlertRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricAlertResource> GetMetricAlerts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricAlertRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledQueryRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledQueryRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogAlertRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ActivityLogAlertResource> GetActivityLogAlerts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogAlertRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionEndpointResource> GetDataCollectionEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataCollectionRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionRuleResource> GetDataCollectionRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataCollectionRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionRuleResource> GetDataCollectionRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

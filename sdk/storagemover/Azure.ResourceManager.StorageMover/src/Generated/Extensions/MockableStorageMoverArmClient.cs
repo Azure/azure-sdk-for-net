@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageMoverResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageMoverResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageMoverResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageMoverResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageMoverResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageMoverResource"/> object. </returns>
         public virtual StorageMoverResource GetStorageMoverResource(ResourceIdentifier id)
         {
             StorageMoverResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageMoverAgentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageMoverAgentResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageMoverAgentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageMoverAgentResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverAgentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageMoverAgentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageMoverAgentResource"/> object. </returns>
         public virtual StorageMoverAgentResource GetStorageMoverAgentResource(ResourceIdentifier id)
         {
             StorageMoverAgentResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageMoverEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageMoverEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageMoverEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageMoverEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageMoverEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageMoverEndpointResource"/> object. </returns>
         public virtual StorageMoverEndpointResource GetStorageMoverEndpointResource(ResourceIdentifier id)
         {
             StorageMoverEndpointResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageMoverProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageMoverProjectResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageMoverProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageMoverProjectResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageMoverProjectResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageMoverProjectResource"/> object. </returns>
         public virtual StorageMoverProjectResource GetStorageMoverProjectResource(ResourceIdentifier id)
         {
             StorageMoverProjectResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="JobDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="JobDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="JobDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobDefinitionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="JobDefinitionResource"/> object. </returns>
         public virtual JobDefinitionResource GetJobDefinitionResource(ResourceIdentifier id)
         {
             JobDefinitionResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobRunResource.CreateResourceIdentifier" /> to create a <see cref="JobRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="JobRunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobRunResource.CreateResourceIdentifier" /> to create a <see cref="JobRunResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobRunResource" /> object. </returns>
+        /// <returns> Returns a <see cref="JobRunResource"/> object. </returns>
         public virtual JobRunResource GetJobRunResource(ResourceIdentifier id)
         {
             JobRunResource.ValidateResourceId(id);

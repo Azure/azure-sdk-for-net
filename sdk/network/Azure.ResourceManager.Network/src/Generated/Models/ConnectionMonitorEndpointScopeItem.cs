@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the connection monitor endpoint scope item. </summary>
     public partial class ConnectionMonitorEndpointScopeItem
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointScopeItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointScopeItem"/>. </summary>
         public ConnectionMonitorEndpointScopeItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointScopeItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointScopeItem"/>. </summary>
         /// <param name="address"> The address of the endpoint item. Supported types are IPv4/IPv6 subnet mask or IPv4/IPv6 IP address. </param>
         internal ConnectionMonitorEndpointScopeItem(string address)
         {

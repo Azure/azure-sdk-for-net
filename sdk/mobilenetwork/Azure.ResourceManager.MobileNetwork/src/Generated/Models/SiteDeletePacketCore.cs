@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The packet core to delete under a site. </summary>
     public partial class SiteDeletePacketCore
     {
-        /// <summary> Initializes a new instance of SiteDeletePacketCore. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteDeletePacketCore"/>. </summary>
         public SiteDeletePacketCore()
         {
         }

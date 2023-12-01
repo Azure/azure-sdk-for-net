@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a PlacementPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PlacementPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPlacementPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource" /> using the GetPlacementPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlacementPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPlacementPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource"/> using the GetPlacementPolicy method.
     /// </summary>
     public partial class PlacementPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PlacementPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlacementPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PlacementPolicyResource(ArmClient client, PlacementPolicyData data) : this(client, data.Id)

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The update cluster identity certificate request parameters. </summary>
     public partial class HDInsightClusterUpdateIdentityCertificateContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterUpdateIdentityCertificateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateIdentityCertificateContent"/>. </summary>
         public HDInsightClusterUpdateIdentityCertificateContent()
         {
         }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A list of servers. </summary>
     internal partial class PostgreSqlServerListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerListResult"/>. </summary>
         internal PostgreSqlServerListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlServerData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerListResult"/>. </summary>
         /// <param name="value"> The list of servers. </param>
         internal PostgreSqlServerListResult(IReadOnlyList<PostgreSqlServerData> value)
         {

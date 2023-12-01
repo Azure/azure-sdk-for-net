@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource group information. </summary>
     public partial class ResourceGroupPatch
     {
-        /// <summary> Initializes a new instance of ResourceGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupPatch"/>. </summary>
         public ResourceGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

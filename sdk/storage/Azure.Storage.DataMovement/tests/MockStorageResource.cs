@@ -5,14 +5,14 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Tests.Shared;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     internal class MockStorageResource : StorageResourceItem
     {
-        private readonly Stream _readStream;
         private readonly Uri _uri;
+        private readonly int _failAfter;
+        private int _operationCount = 0;
 
         public override Uri Uri => _uri;
 
@@ -20,31 +20,28 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override string ResourceId => "Mock";
 
-        protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
+        protected internal override DataTransferOrder TransferType { get; }
 
-        protected internal override long MaxSupportedChunkSize { get; }
+        protected internal override long MaxSupportedChunkSize => Constants.GB;
 
         protected internal override long? Length { get; }
 
-        private MockStorageResource(long? length, long maxChunkSize, Uri uri = default)
+        private MockStorageResource(long? length, Uri uri, int failAfter, DataTransferOrder transferOrder = DataTransferOrder.Sequential)
         {
             Length = length;
-            MaxSupportedChunkSize = maxChunkSize;
-            if (length.HasValue)
-            {
-                _readStream = new RepeatingStream((int)(1234567 % length.Value), length.Value, revealsLength: true);
-            }
             _uri = uri ?? new Uri("https://example.com");
+            _failAfter = failAfter;
+            TransferType = transferOrder;
         }
 
-        public static MockStorageResource MakeSourceResource(long length, long? maxChunkSize = default, Uri uri = default)
+        public static MockStorageResource MakeSourceResource(long length, Uri uri = default, int failAfter = int.MaxValue)
         {
-            return new MockStorageResource(length, maxChunkSize ?? 1024, uri);
+            return new MockStorageResource(length, uri, failAfter);
         }
 
-        public static MockStorageResource MakeDestinationResource(long? maxChunkSize = default, Uri uri = default)
+        public static MockStorageResource MakeDestinationResource(Uri uri = default, DataTransferOrder transferOrder = DataTransferOrder.Sequential, int failAfter = int.MaxValue)
         {
-            return new MockStorageResource(default, maxChunkSize ?? 1024, uri);
+            return new MockStorageResource(default, uri, failAfter, transferOrder);
         }
 
         protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
@@ -54,6 +51,12 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task CopyBlockFromUriAsync(StorageResourceItem sourceResource, HttpRange range, bool overwrite, long completeLength = 0, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
         {
+            if (_operationCount > _failAfter)
+            {
+                throw new Exception($"Intentionally failing copy after {_operationCount} blocks.");
+            }
+            Interlocked.Increment(ref _operationCount);
+
             return Task.CompletedTask;
         }
 
@@ -83,8 +86,16 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task<StorageResourceReadStreamResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)
         {
-            _readStream.Position = 0;
-            return Task.FromResult(new StorageResourceReadStreamResult(_readStream));
+            if (_operationCount > _failAfter)
+            {
+                throw new Exception($"Intentionally failing read after {_operationCount} reads.");
+            }
+            Interlocked.Increment(ref _operationCount);
+
+            // This mirrors the way the real resources work. Local resources give back a stream of the full length
+            // of the file whereas remote resources will give back stream of exactly the requested length.
+            Stream result = new EmptyStream(_uri.IsFile ? Length.Value : length.Value);
+            return Task.FromResult(new StorageResourceReadStreamResult(result));
         }
 
         protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
@@ -97,9 +108,16 @@ namespace Azure.Storage.DataMovement.Tests
             return new MockResourceCheckpointData();
         }
 
-        protected internal override async Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
+        protected internal override Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
         {
-            await stream.CopyToAsync(Stream.Null);
+            if (_operationCount > _failAfter)
+            {
+                throw new Exception($"Intentionally failing write after {_operationCount} writes.");
+            }
+            Interlocked.Increment(ref _operationCount);
+
+            stream.Position += streamLength;
+            return Task.CompletedTask;
         }
     }
 }

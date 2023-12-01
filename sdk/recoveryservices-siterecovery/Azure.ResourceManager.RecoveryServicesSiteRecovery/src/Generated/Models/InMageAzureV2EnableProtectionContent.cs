@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMware Azure specific enable protection input. </summary>
     public partial class InMageAzureV2EnableProtectionContent : EnableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2EnableProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2EnableProtectionContent"/>. </summary>
         public InMageAzureV2EnableProtectionContent()
         {
             DisksToInclude = new ChangeTrackingList<InMageAzureV2DiskDetails>();

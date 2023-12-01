@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Copy log details for a storage account for Databox heavy. </summary>
     public partial class DataBoxHeavyAccountCopyLogDetails : CopyLogDetails
     {
-        /// <summary> Initializes a new instance of DataBoxHeavyAccountCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxHeavyAccountCopyLogDetails"/>. </summary>
         internal DataBoxHeavyAccountCopyLogDetails()
         {
             CopyLogLink = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
             CopyLogDetailsType = DataBoxOrderType.DataBoxHeavy;
         }
 
-        /// <summary> Initializes a new instance of DataBoxHeavyAccountCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxHeavyAccountCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB MongoDB collection resource object. </summary>
     internal partial class MongoIndexKeys
     {
-        /// <summary> Initializes a new instance of MongoIndexKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoIndexKeys"/>. </summary>
         public MongoIndexKeys()
         {
             Keys = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MongoIndexKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoIndexKeys"/>. </summary>
         /// <param name="keys"> List of keys for each MongoDB collection in the Azure Cosmos DB service. </param>
         internal MongoIndexKeys(IList<string> keys)
         {

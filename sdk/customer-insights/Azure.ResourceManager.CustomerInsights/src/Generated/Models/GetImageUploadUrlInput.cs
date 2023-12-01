@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Input type for getting image upload url. </summary>
     public partial class GetImageUploadUrlInput
     {
-        /// <summary> Initializes a new instance of GetImageUploadUrlInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetImageUploadUrlInput"/>. </summary>
         public GetImageUploadUrlInput()
         {
         }

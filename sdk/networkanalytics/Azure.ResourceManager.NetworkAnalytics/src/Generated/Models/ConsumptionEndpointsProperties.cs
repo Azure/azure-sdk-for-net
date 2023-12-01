@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Details of Consumption Properties. </summary>
     public partial class ConsumptionEndpointsProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionEndpointsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionEndpointsProperties"/>. </summary>
         internal ConsumptionEndpointsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionEndpointsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionEndpointsProperties"/>. </summary>
         /// <param name="ingestionUri"> Ingestion url to upload the data. </param>
         /// <param name="ingestionResourceId"> Resource Id of ingestion endpoint. </param>
         /// <param name="fileAccessUri"> Url to consume file type. </param>

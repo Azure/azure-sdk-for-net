@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> HvrA provider specific input for unplanned failover. </summary>
     public partial class HyperVReplicaAzureUnplannedFailoverContent : UnplannedFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureUnplannedFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureUnplannedFailoverContent"/>. </summary>
         public HyperVReplicaAzureUnplannedFailoverContent()
         {
             InstanceType = "HyperVReplicaAzure";

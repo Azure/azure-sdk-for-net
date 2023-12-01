@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperV migrate fabric model custom properties. </summary>
     public partial class HyperVMigrateFabricModelCustomProperties : FabricModelCustomProperties
     {
-        /// <summary> Initializes a new instance of HyperVMigrateFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVMigrateFabricModelCustomProperties"/>. </summary>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the migration solution ARM Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVSiteId"/> or <paramref name="migrationSolutionId"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "HyperVMigrate";
         }
 
-        /// <summary> Initializes a new instance of HyperVMigrateFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVMigrateFabricModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>
         /// <param name="fabricResourceId"> Gets or sets the fabric resource Id. </param>

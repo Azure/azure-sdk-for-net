@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereCatalogPatch
     {
-        /// <summary> Initializes a new instance of SphereCatalogPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCatalogPatch"/>. </summary>
         public SphereCatalogPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

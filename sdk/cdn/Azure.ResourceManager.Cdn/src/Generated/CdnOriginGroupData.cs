@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class CdnOriginGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of CdnOriginGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnOriginGroupData"/>. </summary>
         public CdnOriginGroupData()
         {
             Origins = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of CdnOriginGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnOriginGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties of the regional restorable account. </summary>
     public partial class ContinuousBackupRestoreLocation
     {
-        /// <summary> Initializes a new instance of ContinuousBackupRestoreLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousBackupRestoreLocation"/>. </summary>
         public ContinuousBackupRestoreLocation()
         {
         }

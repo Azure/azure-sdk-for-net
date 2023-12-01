@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The InternalNetwork patch resource definition. </summary>
     public partial class NetworkFabricInternalNetworkPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricInternalNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkPatch"/>. </summary>
         public NetworkFabricInternalNetworkPatch()
         {
             ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();

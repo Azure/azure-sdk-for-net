@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the server certificate details using common name. </summary>
     public partial class ClusterServerCertificateCommonName
     {
-        /// <summary> Initializes a new instance of ClusterServerCertificateCommonName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonName"/>. </summary>
         /// <param name="certificateCommonName"> The common name of the server certificate. </param>
         /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the server certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateCommonName"/> or <paramref name="certificateIssuerThumbprint"/> is null. </exception>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Cache Directory Services settings. </summary>
     public partial class StorageCacheDirectorySettings
     {
-        /// <summary> Initializes a new instance of StorageCacheDirectorySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheDirectorySettings"/>. </summary>
         public StorageCacheDirectorySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheDirectorySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheDirectorySettings"/>. </summary>
         /// <param name="activeDirectory"> Specifies settings for joining the HPC Cache to an Active Directory domain. </param>
         /// <param name="usernameDownload"> Specifies settings for Extended Groups. Extended Groups allows users to be members of more than 16 groups. </param>
         internal StorageCacheDirectorySettings(StorageCacheActiveDirectorySettings activeDirectory, StorageCacheUsernameDownloadSettings usernameDownload)

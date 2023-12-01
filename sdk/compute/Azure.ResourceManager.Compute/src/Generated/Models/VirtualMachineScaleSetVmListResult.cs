@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Virtual Machine Scale Set VMs operation response. </summary>
     internal partial class VirtualMachineScaleSetVmListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine scale sets VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineScaleSetVmListResult(IEnumerable<VirtualMachineScaleSetVmData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine scale sets VMs. </param>
         /// <param name="nextLink"> The uri to fetch the next page of Virtual Machine Scale Set VMs. Call ListNext() with this to fetch the next page of VMSS VMs. </param>
         internal VirtualMachineScaleSetVmListResult(IReadOnlyList<VirtualMachineScaleSetVmData> value, string nextLink)

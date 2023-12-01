@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure core network function Template application definition. </summary>
     public partial class AzureCoreNetworkFunctionArmTemplateApplication : AzureCoreNetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of AzureCoreNetworkFunctionArmTemplateApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/>. </summary>
         public AzureCoreNetworkFunctionArmTemplateApplication()
         {
             ArtifactType = AzureCoreArtifactType.ArmTemplate;
         }
 
-        /// <summary> Initializes a new instance of AzureCoreNetworkFunctionArmTemplateApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>

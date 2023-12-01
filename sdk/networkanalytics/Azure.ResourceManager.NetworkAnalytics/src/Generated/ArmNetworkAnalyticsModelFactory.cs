@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkAnalyticsModelFactory
     {
-        /// <summary> Initializes a new instance of DataProductData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalytics.DataProductData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             return new DataProductData(id, name, resourceType, systemData, tags, location, identity, resourceGuid, provisioningState, publisher, product, majorVersion, owners?.ToList(), redundancy, purviewAccount, purviewCollection, privateLinksEnabled, publicNetworkAccess, customerManagedKeyEncryptionEnabled, customerEncryptionKey, networkacls, managedResourceGroupConfiguration, availableMinorVersions?.ToList(), currentMinorVersion, documentation, consumptionEndpoints, keyVaultUri);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionEndpointsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEndpointsProperties"/>. </summary>
         /// <param name="ingestionUri"> Ingestion url to upload the data. </param>
         /// <param name="ingestionResourceId"> Resource Id of ingestion endpoint. </param>
         /// <param name="fileAccessUri"> Url to consume file type. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             return new ConsumptionEndpointsProperties(ingestionUri, ingestionResourceId, fileAccessUri, fileAccessResourceId, queryUri, queryResourceId);
         }
 
-        /// <summary> Initializes a new instance of DataProductsCatalogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalytics.DataProductsCatalogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             return new DataProductsCatalogData(id, name, resourceType, systemData, provisioningState, publishers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataProductDataType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataProductDataType"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             return new DataProductDataType(id, name, resourceType, systemData, provisioningState, state, stateReason, storageOutputRetention, databaseCacheRetention, databaseRetention, visualizationUri);
         }
 
-        /// <summary> Initializes a new instance of AccountSasToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccountSasToken"/>. </summary>
         /// <param name="storageAccountSasToken"> Field to specify storage account sas token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountSasToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.AccountSasToken"/> instance for mocking. </returns>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             return new AccountSasToken(storageAccountSasToken);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleAssignmentListResult"/>. </summary>
         /// <param name="count"> Count of role assignments. </param>
         /// <param name="roleAssignmentResponse"> list of role assignments. </param>
         /// <returns> A new <see cref="Models.RoleAssignmentListResult"/> instance for mocking. </returns>

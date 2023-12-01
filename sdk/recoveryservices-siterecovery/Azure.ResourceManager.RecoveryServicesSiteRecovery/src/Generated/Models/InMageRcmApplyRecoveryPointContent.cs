@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> ApplyRecoveryPoint input specific to InMageRcm provider. </summary>
     public partial class InMageRcmApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmApplyRecoveryPointContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmApplyRecoveryPointContent"/>. </summary>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public InMageRcmApplyRecoveryPointContent(ResourceIdentifier recoveryPointId)

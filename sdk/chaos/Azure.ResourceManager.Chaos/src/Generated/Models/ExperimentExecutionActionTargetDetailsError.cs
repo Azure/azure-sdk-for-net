@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the Experiment action target details error model. </summary>
     public partial class ExperimentExecutionActionTargetDetailsError
     {
-        /// <summary> Initializes a new instance of ExperimentExecutionActionTargetDetailsError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsError"/>. </summary>
         internal ExperimentExecutionActionTargetDetailsError()
         {
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionActionTargetDetailsError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         internal ExperimentExecutionActionTargetDetailsError(string code, string message)

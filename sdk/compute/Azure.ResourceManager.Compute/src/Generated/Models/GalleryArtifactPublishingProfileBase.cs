@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the basic gallery artifact publishing profile. </summary>
     public partial class GalleryArtifactPublishingProfileBase
     {
-        /// <summary> Initializes a new instance of GalleryArtifactPublishingProfileBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryArtifactPublishingProfileBase"/>. </summary>
         public GalleryArtifactPublishingProfileBase()
         {
             TargetRegions = new ChangeTrackingList<TargetRegion>();
             TargetExtendedLocations = new ChangeTrackingList<GalleryTargetExtendedLocation>();
         }
 
-        /// <summary> Initializes a new instance of GalleryArtifactPublishingProfileBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryArtifactPublishingProfileBase"/>. </summary>
         /// <param name="targetRegions"> The target regions where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </param>
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>

@@ -10,7 +10,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Changeable attributes for Repository. </summary>
     internal partial class RepositoryWriteableProperties
     {
-        /// <summary> Initializes a new instance of RepositoryWriteableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RepositoryWriteableProperties"/>. </summary>
         public RepositoryWriteableProperties()
         {
         }

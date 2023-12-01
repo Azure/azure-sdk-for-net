@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The locator used for joining or taking action on a call. </summary>
     internal partial class CallLocatorInternal
     {
-        /// <summary> Initializes a new instance of CallLocatorInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallLocatorInternal"/>. </summary>
         public CallLocatorInternal()
         {
         }

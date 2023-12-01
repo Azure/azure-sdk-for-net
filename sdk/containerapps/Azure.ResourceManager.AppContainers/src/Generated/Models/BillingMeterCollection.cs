@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Collection of billing meters. </summary>
     internal partial class BillingMeterCollection
     {
-        /// <summary> Initializes a new instance of BillingMeterCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingMeterCollection"/>. </summary>
         /// <param name="value"> Collection of billing meters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal BillingMeterCollection(IEnumerable<ContainerAppBillingMeter> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of BillingMeterCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingMeterCollection"/>. </summary>
         /// <param name="value"> Collection of billing meters. </param>
         internal BillingMeterCollection(IReadOnlyList<ContainerAppBillingMeter> value)
         {

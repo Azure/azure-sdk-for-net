@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualNetworkPeeringData : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkPeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringData"/>. </summary>
         public VirtualNetworkPeeringData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkPeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

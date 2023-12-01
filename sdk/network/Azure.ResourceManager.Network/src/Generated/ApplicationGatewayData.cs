@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ApplicationGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
         public ApplicationGatewayData()
         {
             AvailabilityZones = new ChangeTrackingList<string>();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
             LoadDistributionPolicies = new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

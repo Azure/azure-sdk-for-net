@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="deletedShare"> The DeletedShare to use. </param>
+        /// <param name="deletedShare"> The <see cref="DeletedShare"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/> or <paramref name="deletedShare"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="deletedShare"> The DeletedShare to use. </param>
+        /// <param name="deletedShare"> The <see cref="DeletedShare"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/> or <paramref name="deletedShare"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>

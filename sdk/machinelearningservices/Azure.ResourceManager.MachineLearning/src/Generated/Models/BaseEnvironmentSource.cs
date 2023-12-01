@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class BaseEnvironmentSource
     {
-        /// <summary> Initializes a new instance of BaseEnvironmentSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseEnvironmentSource"/>. </summary>
         protected BaseEnvironmentSource()
         {
         }
 
-        /// <summary> Initializes a new instance of BaseEnvironmentSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseEnvironmentSource"/>. </summary>
         /// <param name="baseEnvironmentSourceType"> [Required] Base environment type. </param>
         internal BaseEnvironmentSource(BaseEnvironmentSourceType baseEnvironmentSourceType)
         {

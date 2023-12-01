@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput. </summary>
     internal partial class UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(string id, string resultType) : base(id, resultType)

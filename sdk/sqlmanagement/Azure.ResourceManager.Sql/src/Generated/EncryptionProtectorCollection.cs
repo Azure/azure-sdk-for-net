@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EncryptionProtectorResource" /> and their operations.
-    /// Each <see cref="EncryptionProtectorResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get an <see cref="EncryptionProtectorCollection" /> instance call the GetEncryptionProtectors method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="EncryptionProtectorResource"/> and their operations.
+    /// Each <see cref="EncryptionProtectorResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get an <see cref="EncryptionProtectorCollection"/> instance call the GetEncryptionProtectors method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class EncryptionProtectorCollection : ArmCollection, IEnumerable<EncryptionProtectorResource>, IAsyncEnumerable<EncryptionProtectorResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EncryptionProtectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EncryptionProtectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EncryptionProtectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionProtectorRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EncryptionProtectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EncryptionProtectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EncryptionProtectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionProtectorRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

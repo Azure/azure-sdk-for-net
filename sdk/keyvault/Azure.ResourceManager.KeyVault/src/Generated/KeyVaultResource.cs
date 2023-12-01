@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
     /// A Class representing a KeyVault along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KeyVaultResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKeyVaultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetKeyVault method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KeyVaultResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKeyVaultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetKeyVault method.
     /// </summary>
     public partial class KeyVaultResource : ArmResource
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KeyVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KeyVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KeyVaultResource(ArmClient client, KeyVaultData data) : this(client, data.Id)
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KeyVaultPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KeyVaultPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KeyVaultPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByVaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KeyVaultPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KeyVaultPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KeyVaultPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByVaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryManagedIdentityCredentialData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryManagedIdentityCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/>. </summary>
         /// <param name="properties"> Managed Identity Credential properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFactoryManagedIdentityCredentialData(DataFactoryManagedIdentityCredentialProperties properties)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryManagedIdentityCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

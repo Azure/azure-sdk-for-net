@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Secret deployment resource id reference. </summary>
     public partial class SecretDeploymentResourceReference : DeploymentResourceIdReference
     {
-        /// <summary> Initializes a new instance of SecretDeploymentResourceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretDeploymentResourceReference"/>. </summary>
         public SecretDeploymentResourceReference()
         {
             IdType = IdType.Secret;
         }
 
-        /// <summary> Initializes a new instance of SecretDeploymentResourceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretDeploymentResourceReference"/>. </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
         /// <param name="id"> Resource ID. </param>
         internal SecretDeploymentResourceReference(IdType idType, ResourceIdentifier id) : base(idType)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
     public partial class RankingsResponseTablesPropertiesItemsMetricsItem
     {
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
         internal RankingsResponseTablesPropertiesItemsMetricsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
         /// <param name="metric"></param>
         /// <param name="value"></param>
         /// <param name="percentage"></param>

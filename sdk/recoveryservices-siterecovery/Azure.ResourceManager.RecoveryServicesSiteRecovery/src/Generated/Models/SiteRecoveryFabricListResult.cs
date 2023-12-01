@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of fabric details. </summary>
     internal partial class SiteRecoveryFabricListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricListResult"/>. </summary>
         internal SiteRecoveryFabricListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryFabricData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricListResult"/>. </summary>
         /// <param name="value"> The fabric details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryFabricListResult(IReadOnlyList<SiteRecoveryFabricData> value, string nextLink)

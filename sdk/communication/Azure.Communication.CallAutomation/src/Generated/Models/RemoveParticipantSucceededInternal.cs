@@ -12,39 +12,39 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The participant removed event. </summary>
     internal partial class RemoveParticipantSucceededInternal
     {
-        /// <summary> Initializes a new instance of RemoveParticipantSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantSucceededInternal"/>. </summary>
         internal RemoveParticipantSucceededInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of RemoveParticipantSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantSucceededInternal"/>. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="participant"> Participant. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="participant"> Participant. </param>
-        internal RemoveParticipantSucceededInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel participant)
+        internal RemoveParticipantSucceededInternal(string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel participant, string callConnectionId, string serverCallId, string correlationId)
         {
-            CallConnectionId = callConnectionId;
-            ServerCallId = serverCallId;
-            CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             Participant = participant;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
         }
 
+        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        public string OperationContext { get; }
+        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
+        public ResultInformation ResultInformation { get; }
+        /// <summary> Participant. </summary>
+        public CommunicationIdentifierModel Participant { get; }
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; }
         /// <summary> Server call ID. </summary>
         public string ServerCallId { get; }
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
-        public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
-        public ResultInformation ResultInformation { get; }
-        /// <summary> Participant. </summary>
-        public CommunicationIdentifierModel Participant { get; }
     }
 }

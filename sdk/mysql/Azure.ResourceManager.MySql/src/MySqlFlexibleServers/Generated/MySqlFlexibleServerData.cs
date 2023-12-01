@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MySqlFlexibleServerData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

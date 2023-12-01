@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
     /// A Class representing a DnsResolverInboundEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsResolverInboundEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDnsResolverInboundEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsResolverResource" /> using the GetDnsResolverInboundEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsResolverInboundEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDnsResolverInboundEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsResolverResource"/> using the GetDnsResolverInboundEndpoint method.
     /// </summary>
     public partial class DnsResolverInboundEndpointResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DnsResolverInboundEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsResolverInboundEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DnsResolverInboundEndpointResource(ArmClient client, DnsResolverInboundEndpointData data) : this(client, data.Id)

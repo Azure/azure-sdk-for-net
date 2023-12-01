@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
     /// A Class representing a DnsResolverOutboundEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsResolverOutboundEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDnsResolverOutboundEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsResolverResource" /> using the GetDnsResolverOutboundEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsResolverOutboundEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDnsResolverOutboundEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsResolverResource"/> using the GetDnsResolverOutboundEndpoint method.
     /// </summary>
     public partial class DnsResolverOutboundEndpointResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DnsResolverOutboundEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsResolverOutboundEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DnsResolverOutboundEndpointResource(ArmClient client, DnsResolverOutboundEndpointData data) : this(client, data.Id)

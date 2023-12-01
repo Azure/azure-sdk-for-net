@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementDeletedService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementDeletedServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementDeletedServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetApiManagementDeletedService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementDeletedServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementDeletedServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApiManagementDeletedService method.
     /// </summary>
     public partial class ApiManagementDeletedServiceResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementDeletedServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementDeletedServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementDeletedServiceResource(ArmClient client, ApiManagementDeletedServiceData data) : this(client, data.Id)

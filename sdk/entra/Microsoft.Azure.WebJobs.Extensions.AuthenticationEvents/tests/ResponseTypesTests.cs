@@ -98,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ResponseTypes.AuthEventResponse:
                     return (code: HttpStatusCode.OK, Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown:
-                    return (code: HttpStatusCode.InternalServerError, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}");
+                    return (code: HttpStatusCode.InternalServerError, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return']}");
                 default:
                     return (code: HttpStatusCode.BadRequest, string.Empty);
             };

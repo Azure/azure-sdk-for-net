@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Tokenizer for path-like hierarchies. This tokenizer is implemented using Apache Lucene. </summary>
     public partial class PathHierarchyTokenizer : LexicalTokenizer
     {
-        /// <summary> Initializes a new instance of PathHierarchyTokenizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="PathHierarchyTokenizer"/>. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PathHierarchyTokenizer(string name) : base(name)
@@ -23,8 +23,8 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Azure.Search.PathHierarchyTokenizerV2";
         }
 
-        /// <summary> Initializes a new instance of PathHierarchyTokenizer. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
+        /// <summary> Initializes a new instance of <see cref="PathHierarchyTokenizer"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="delimiter"> The delimiter character to use. Default is "/". </param>
         /// <param name="replacement"> A value that, if set, replaces the delimiter character. Default is "/". </param>

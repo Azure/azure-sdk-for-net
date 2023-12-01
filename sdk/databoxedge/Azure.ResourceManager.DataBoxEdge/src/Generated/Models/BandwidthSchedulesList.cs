@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The collection of bandwidth schedules. </summary>
     internal partial class BandwidthSchedulesList
     {
-        /// <summary> Initializes a new instance of BandwidthSchedulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BandwidthSchedulesList"/>. </summary>
         internal BandwidthSchedulesList()
         {
             Value = new ChangeTrackingList<BandwidthScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of BandwidthSchedulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BandwidthSchedulesList"/>. </summary>
         /// <param name="value"> The list of bandwidth schedules. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal BandwidthSchedulesList(IReadOnlyList<BandwidthScheduleData> value, string nextLink)

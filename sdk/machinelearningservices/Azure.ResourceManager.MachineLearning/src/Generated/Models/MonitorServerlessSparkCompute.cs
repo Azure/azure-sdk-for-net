@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Monitor serverless spark compute definition. </summary>
     public partial class MonitorServerlessSparkCompute : MonitorComputeConfigurationBase
     {
-        /// <summary> Initializes a new instance of MonitorServerlessSparkCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorServerlessSparkCompute"/>. </summary>
         /// <param name="computeIdentity">
         /// [Required] The identity scheme leveraged to by the spark jobs running on serverless Spark.
         /// Please note <see cref="MonitorComputeIdentityBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ComputeType = MonitorComputeType.ServerlessSpark;
         }
 
-        /// <summary> Initializes a new instance of MonitorServerlessSparkCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorServerlessSparkCompute"/>. </summary>
         /// <param name="computeType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="computeIdentity">
         /// [Required] The identity scheme leveraged to by the spark jobs running on serverless Spark.

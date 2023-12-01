@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The endpoint for Azure-SSIS integration runtime outbound network dependency. </summary>
     public partial class IntegrationRuntimeOutboundNetworkDependenciesEndpoint
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeOutboundNetworkDependenciesEndpoint"/>. </summary>
         internal IntegrationRuntimeOutboundNetworkDependenciesEndpoint()
         {
             EndpointDetails = new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeOutboundNetworkDependenciesEndpoint"/>. </summary>
         /// <param name="domainName"> The domain name of endpoint. </param>
         /// <param name="endpointDetails"> The details of endpoint. </param>
         internal IntegrationRuntimeOutboundNetworkDependenciesEndpoint(string domainName, IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails)

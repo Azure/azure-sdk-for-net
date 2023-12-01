@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningNotebookResourceInfo. </summary>
     public partial class MachineLearningNotebookResourceInfo
     {
-        /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
         internal MachineLearningNotebookResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
         /// <param name="fqdn"></param>
         /// <param name="isPrivateLinkEnabled"></param>
         /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>

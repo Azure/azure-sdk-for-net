@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementProductPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementProductPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementProductPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource" /> using the GetApiManagementProductPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementProductPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementProductPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource"/> using the GetApiManagementProductPolicy method.
     /// </summary>
     public partial class ApiManagementProductPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementProductPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementProductPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementProductPolicyResource(ArmClient client, PolicyContractData data) : this(client, data.Id)

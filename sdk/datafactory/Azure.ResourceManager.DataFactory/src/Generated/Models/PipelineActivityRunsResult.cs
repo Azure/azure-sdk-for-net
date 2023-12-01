@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list activity runs. </summary>
     internal partial class PipelineActivityRunsResult
     {
-        /// <summary> Initializes a new instance of PipelineActivityRunsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityRunsResult"/>. </summary>
         /// <param name="value"> List of activity runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PipelineActivityRunsResult(IEnumerable<PipelineActivityRunInformation> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PipelineActivityRunsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityRunsResult"/>. </summary>
         /// <param name="value"> List of activity runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal PipelineActivityRunsResult(IReadOnlyList<PipelineActivityRunInformation> value, string continuationToken)

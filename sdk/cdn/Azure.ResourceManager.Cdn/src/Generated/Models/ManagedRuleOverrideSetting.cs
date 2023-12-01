@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines a managed rule group override setting. </summary>
     public partial class ManagedRuleOverrideSetting
     {
-        /// <summary> Initializes a new instance of ManagedRuleOverrideSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverrideSetting"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ManagedRuleOverrideSetting(string ruleId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RuleId = ruleId;
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleOverrideSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverrideSetting"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteSlotDeploymentResource" /> and their operations.
-    /// Each <see cref="SiteSlotDeploymentResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="SiteSlotDeploymentCollection" /> instance call the GetSiteSlotDeployments method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="SiteSlotDeploymentResource"/> and their operations.
+    /// Each <see cref="SiteSlotDeploymentResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="SiteSlotDeploymentCollection"/> instance call the GetSiteSlotDeployments method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class SiteSlotDeploymentCollection : ArmCollection, IEnumerable<SiteSlotDeploymentResource>, IAsyncEnumerable<SiteSlotDeploymentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteSlotDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotDeploymentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDeploymentWebAppsRestClient.CreateListDeploymentsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteSlotDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotDeploymentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDeploymentWebAppsRestClient.CreateListDeploymentsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

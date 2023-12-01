@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Security domain properties information for Cloud HSM cluster. </summary>
     public partial class CloudHsmClusterSecurityDomainProperties
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterSecurityDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSecurityDomainProperties"/>. </summary>
         public CloudHsmClusterSecurityDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudHsmClusterSecurityDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSecurityDomainProperties"/>. </summary>
         /// <param name="fipsState"> FIPS state information for security domain. </param>
         /// <param name="activationStatus"> status of security domain activation. </param>
         internal CloudHsmClusterSecurityDomainProperties(int? fipsState, string activationStatus)

@@ -127,9 +127,10 @@ namespace Azure.Storage.DataMovement.Tests
         /// Gets the specific storage resource from the given TDestinationObjectClient
         /// e.g. ShareFileClient to a ShareFileStorageResource, BlockBlobClient to a BlockBlobStorageResource.
         /// </summary>
-        /// <param name="directoryClient">The object client to create the storage resource object.</param>
+        /// <param name="containerClient">The container client to get the respective storage resource.</param>
+        /// <param name="directoryPath">The respective directory path of the storage resource container.</param>
         /// <returns></returns>
-        protected abstract StorageResourceContainer GetDestinationStorageResourceContainer(TDestinationContainerClient sourceContainerClient, string directoryPath);
+        protected abstract StorageResourceContainer GetDestinationStorageResourceContainer(TDestinationContainerClient containerClient, string directoryPath);
 
         /// <summary>
         /// Creates the directory within the source container. Will also create any parent directories if required and is a hierarchical structure.
@@ -175,7 +176,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// Verifies the results between the source and the destination container.
         /// </summary>
         /// <param name="sourceContainer">The source client to check the contents and compare against the destination.</param>
-        /// <param name="destinationContainer">The destinatiojn client to check the contents and compare against the source.</param>
+        /// <param name="destinationContainer">The destination client to check the contents and compare against the source.</param>
         /// <param name="sourcePrefix">Optional. The prefix to start listing at the source container.</param>
         /// <param name="destinationPrefix">Optional. The prefix to start listing at the destination container.</param>
         /// <returns></returns>
@@ -253,7 +254,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0, 10)]
-        [TestCase(100, 10)]
+        [TestCase(Constants.KB / 2, 10)]
         [TestCase(Constants.KB, 10)]
         public async Task DirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
         {
@@ -562,17 +563,18 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task DirectoryToDirectory_OAuth()
+        public virtual async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
             long size = Constants.KB;
             int waitTimeInSec = 20;
             string sourceContainerName = GetNewObjectName();
+            string destContainerName = GetNewObjectName();
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync(containerName: sourceContainerName);
             TSourceContainerClient oauthSourceContainer = GetOAuthSourceContainerClient(containerName: sourceContainerName);
 
-            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-            TDestinationContainerClient oauthDestinationContainer = GetOAuthDestinationContainerClient(containerName: sourceContainerName);
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync(containerName: destContainerName);
+            TDestinationContainerClient oauthDestinationContainer = GetOAuthDestinationContainerClient(containerName: destContainerName);
 
             string sourcePrefix = "sourceFolder";
             string destinationPrefix = "destFolder";

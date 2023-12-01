@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SavingsPlanValidateResult> ValidatePurchase(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

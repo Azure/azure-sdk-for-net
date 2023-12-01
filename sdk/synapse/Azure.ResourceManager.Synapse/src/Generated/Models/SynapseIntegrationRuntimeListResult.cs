@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of integration runtime resources. </summary>
     internal partial class SynapseIntegrationRuntimeListResult
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeListResult"/>. </summary>
         /// <param name="value"> List of integration runtimes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SynapseIntegrationRuntimeListResult(IEnumerable<SynapseIntegrationRuntimeData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeListResult"/>. </summary>
         /// <param name="value"> List of integration runtimes. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal SynapseIntegrationRuntimeListResult(IReadOnlyList<SynapseIntegrationRuntimeData> value, string nextLink)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> The network interface definition. </summary>
     public partial class NetworkInterface
     {
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
         public NetworkInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="privateIPAddress"> Private Ip address of the interface. </param>
         internal NetworkInterface(ResourceIdentifier id, string privateIPAddress)

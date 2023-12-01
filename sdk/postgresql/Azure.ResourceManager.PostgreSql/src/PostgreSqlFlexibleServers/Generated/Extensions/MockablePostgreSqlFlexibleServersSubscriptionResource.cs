@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedCapabilitiesRestClient.CreateExecuteRequest(Id.SubscriptionId, locationName);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedCapabilitiesRestClient.CreateExecuteRequest(Id.SubscriptionId, locationName);
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);

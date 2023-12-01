@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The SAS URIs of the console screenshot and serial log blobs. </summary>
     public partial class RetrieveBootDiagnosticsDataResult
     {
-        /// <summary> Initializes a new instance of RetrieveBootDiagnosticsDataResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetrieveBootDiagnosticsDataResult"/>. </summary>
         internal RetrieveBootDiagnosticsDataResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RetrieveBootDiagnosticsDataResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetrieveBootDiagnosticsDataResult"/>. </summary>
         /// <param name="consoleScreenshotBlobUri"> The console screenshot blob URI. </param>
         /// <param name="serialConsoleLogBlobUri"> The serial console log blob URI. </param>
         internal RetrieveBootDiagnosticsDataResult(Uri consoleScreenshotBlobUri, Uri serialConsoleLogBlobUri)

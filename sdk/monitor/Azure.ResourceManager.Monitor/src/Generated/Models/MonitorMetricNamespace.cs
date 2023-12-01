@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
     public partial class MonitorMetricNamespace : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitorMetricNamespace. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricNamespace"/>. </summary>
         internal MonitorMetricNamespace()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricNamespace. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricNamespace"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

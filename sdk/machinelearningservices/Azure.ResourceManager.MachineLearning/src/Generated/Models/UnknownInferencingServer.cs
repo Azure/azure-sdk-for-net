@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownInferencingServer. </summary>
     internal partial class UnknownInferencingServer : InferencingServer
     {
-        /// <summary> Initializes a new instance of UnknownInferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownInferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
         internal UnknownInferencingServer(InferencingServerType serverType) : base(serverType)
         {

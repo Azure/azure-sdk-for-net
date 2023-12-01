@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicWorkflowVersionResource" /> and their operations.
-    /// Each <see cref="LogicWorkflowVersionResource" /> in the collection will belong to the same instance of <see cref="LogicWorkflowResource" />.
-    /// To get a <see cref="LogicWorkflowVersionCollection" /> instance call the GetLogicWorkflowVersions method from an instance of <see cref="LogicWorkflowResource" />.
+    /// A class representing a collection of <see cref="LogicWorkflowVersionResource"/> and their operations.
+    /// Each <see cref="LogicWorkflowVersionResource"/> in the collection will belong to the same instance of <see cref="LogicWorkflowResource"/>.
+    /// To get a <see cref="LogicWorkflowVersionCollection"/> instance call the GetLogicWorkflowVersions method from an instance of <see cref="LogicWorkflowResource"/>.
     /// </summary>
     public partial class LogicWorkflowVersionCollection : ArmCollection, IEnumerable<LogicWorkflowVersionResource>, IAsyncEnumerable<LogicWorkflowVersionResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicWorkflowVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicWorkflowVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowVersionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicWorkflowVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicWorkflowVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowVersionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The SubscriptionStateOverrideAction. </summary>
     public partial class SubscriptionStateOverrideAction
     {
-        /// <summary> Initializes a new instance of SubscriptionStateOverrideAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionStateOverrideAction"/>. </summary>
         /// <param name="state"></param>
         /// <param name="action"></param>
         public SubscriptionStateOverrideAction(SubscriptionTransitioningState state, SubscriptionNotificationOperation action)

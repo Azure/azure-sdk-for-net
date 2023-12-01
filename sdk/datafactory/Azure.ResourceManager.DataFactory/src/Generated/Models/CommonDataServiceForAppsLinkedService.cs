@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Common Data Service for Apps linked service. </summary>
     public partial class CommonDataServiceForAppsLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of CommonDataServiceForAppsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsLinkedService"/>. </summary>
         /// <param name="deploymentType"> The deployment type of the Common Data Service for Apps instance. 'Online' for Common Data Service for Apps Online and 'OnPremisesWithIfd' for Common Data Service for Apps on-premises with Ifd. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to connect to Common Data Service for Apps server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario. 'AADServicePrincipal' for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "CommonDataServiceForApps";
         }
 
-        /// <summary> Initializes a new instance of CommonDataServiceForAppsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

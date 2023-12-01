@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class AdvancedThreatProtectionSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of AdvancedThreatProtectionSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionSettingData"/>. </summary>
         public AdvancedThreatProtectionSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of AdvancedThreatProtectionSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

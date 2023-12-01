@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model asset version details. </summary>
     public partial class MachineLearningModelVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionProperties"/>. </summary>
         public MachineLearningModelVersionProperties()
         {
             Flavors = new ChangeTrackingDictionary<string, MachineLearningFlavorData>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook error. </summary>
     public partial class RunNotebookError
     {
-        /// <summary> Initializes a new instance of RunNotebookError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookError"/>. </summary>
         internal RunNotebookError()
         {
             Traceback = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RunNotebookError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookError"/>. </summary>
         /// <param name="ename"> Error name. </param>
         /// <param name="evalue"> Error message. </param>
         /// <param name="traceback"> Error trace. </param>

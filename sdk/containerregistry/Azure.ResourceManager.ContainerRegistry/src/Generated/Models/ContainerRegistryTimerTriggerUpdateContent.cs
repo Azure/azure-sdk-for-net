@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating a timer trigger. </summary>
     public partial class ContainerRegistryTimerTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTriggerUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerRegistryTimerTriggerUpdateContent(string name)

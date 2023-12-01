@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machines network configuration's DNS settings. </summary>
     internal partial class VirtualMachineNetworkInterfaceDnsSettingsConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceDnsSettingsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceDnsSettingsConfiguration"/>. </summary>
         public VirtualMachineNetworkInterfaceDnsSettingsConfiguration()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceDnsSettingsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceDnsSettingsConfiguration"/>. </summary>
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration(IList<string> dnsServers)
         {

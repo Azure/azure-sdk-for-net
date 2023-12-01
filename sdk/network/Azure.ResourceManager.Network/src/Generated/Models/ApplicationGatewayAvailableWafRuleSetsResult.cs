@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ApplicationGatewayAvailableWafRuleSets API service call. </summary>
     internal partial class ApplicationGatewayAvailableWafRuleSetsResult
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableWafRuleSetsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableWafRuleSetsResult"/>. </summary>
         internal ApplicationGatewayAvailableWafRuleSetsResult()
         {
             Value = new ChangeTrackingList<ApplicationGatewayFirewallRuleSet>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableWafRuleSetsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableWafRuleSetsResult"/>. </summary>
         /// <param name="value"> The list of application gateway rule sets. </param>
         internal ApplicationGatewayAvailableWafRuleSetsResult(IReadOnlyList<ApplicationGatewayFirewallRuleSet> value)
         {

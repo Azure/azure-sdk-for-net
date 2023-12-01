@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of CSM usage quotas. </summary>
     internal partial class CsmUsageQuotaListResult
     {
-        /// <summary> Initializes a new instance of CsmUsageQuotaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmUsageQuotaListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CsmUsageQuotaListResult(IEnumerable<CsmUsageQuota> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CsmUsageQuotaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmUsageQuotaListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal CsmUsageQuotaListResult(IReadOnlyList<CsmUsageQuota> value, string nextLink)

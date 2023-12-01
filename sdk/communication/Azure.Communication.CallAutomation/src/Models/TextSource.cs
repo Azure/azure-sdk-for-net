@@ -35,23 +35,23 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of TextSource. </summary>
         /// <param name="text"> Text for the cognitive service to be played. </param>
         /// <param name="sourceLocale"> The culture info string of the voice. </param>
-        /// <param name="gender"> The gender of the voice. </param>
+        /// <param name="voiceKind"> The Voice Kind of the voice. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public TextSource(string text, string sourceLocale, GenderType gender)
+        public TextSource(string text, string sourceLocale, VoiceKind voiceKind)
         {
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             SourceLocale = sourceLocale;
-            VoiceGender = gender;
+            VoiceKind = voiceKind;
         }
 
         /// <summary> Text for the cognitive service to be played. </summary>
         public string Text { get; }
         /// <summary> Source language locale to be played. </summary>
         public string SourceLocale { get; set; }
-        /// <summary> Voice gender type. </summary>
-        public GenderType? VoiceGender { get; set; }
+        /// <summary> Voice type. </summary>
+        public VoiceKind? VoiceKind { get; set; }
         /// <summary> Voice name to be played. </summary>
         public string VoiceName { get; set; }
         /// <summary> Endpoint where the custom voice was deployed. </summary>

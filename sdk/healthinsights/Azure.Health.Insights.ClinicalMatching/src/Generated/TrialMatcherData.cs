@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The body of the Trial Matcher request. </summary>
     public partial class TrialMatcherData
     {
-        /// <summary> Initializes a new instance of TrialMatcherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherData"/>. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
         public TrialMatcherData(IEnumerable<PatientRecord> patients)
@@ -25,7 +25,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Patients = patients.ToList();
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherData"/>. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <param name="configuration"> Configuration affecting the Trial Matcher model's inference. </param>
         internal TrialMatcherData(IList<PatientRecord> patients, TrialMatcherModelConfiguration configuration)

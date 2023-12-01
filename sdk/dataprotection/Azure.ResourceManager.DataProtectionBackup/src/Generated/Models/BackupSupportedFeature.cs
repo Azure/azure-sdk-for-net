@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Elements class for feature request. </summary>
     public partial class BackupSupportedFeature
     {
-        /// <summary> Initializes a new instance of BackupSupportedFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSupportedFeature"/>. </summary>
         internal BackupSupportedFeature()
         {
             ExposureControlledFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BackupSupportedFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSupportedFeature"/>. </summary>
         /// <param name="featureName"> support feature type. </param>
         /// <param name="supportStatus"> feature support status. </param>
         /// <param name="exposureControlledFeatures"> support feature type. </param>

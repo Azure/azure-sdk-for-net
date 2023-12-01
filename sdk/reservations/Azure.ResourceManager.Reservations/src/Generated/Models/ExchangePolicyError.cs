@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> error details. </summary>
     public partial class ExchangePolicyError
     {
-        /// <summary> Initializes a new instance of ExchangePolicyError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangePolicyError"/>. </summary>
         internal ExchangePolicyError()
         {
         }
 
-        /// <summary> Initializes a new instance of ExchangePolicyError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangePolicyError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         internal ExchangePolicyError(string code, string message)

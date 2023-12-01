@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class InfrastructureConfiguration
     {
-        /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfrastructureConfiguration"/>. </summary>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/> is null. </exception>
         protected InfrastructureConfiguration(string appResourceGroup)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             AppResourceGroup = appResourceGroup;
         }
 
-        /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfrastructureConfiguration"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         internal InfrastructureConfiguration(SapDeploymentType deploymentType, string appResourceGroup)

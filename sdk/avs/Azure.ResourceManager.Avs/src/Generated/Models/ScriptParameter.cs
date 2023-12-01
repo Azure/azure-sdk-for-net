@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An parameter that the script will accept. </summary>
     public partial class ScriptParameter
     {
-        /// <summary> Initializes a new instance of ScriptParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptParameter"/>. </summary>
         internal ScriptParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptParameter"/>. </summary>
         /// <param name="parameterType"> The type of parameter the script is expecting. psCredential is a PSCredentialObject. </param>
         /// <param name="name"> The parameter name that the script will expect a parameter value for. </param>
         /// <param name="description"> User friendly description of the parameter. </param>

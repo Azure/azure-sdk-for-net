@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMware DRA model custom properties. </summary>
     public partial class VMwareDraModelCustomProperties : DraModelCustomProperties
     {
-        /// <summary> Initializes a new instance of VMwareDraModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDraModelCustomProperties"/>. </summary>
         /// <param name="biosId"> Gets or sets the BIOS Id of the DRA machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="biosId"/> or <paramref name="marsAuthenticationIdentity"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "VMware";
         }
 
-        /// <summary> Initializes a new instance of VMwareDraModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDraModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="biosId"> Gets or sets the BIOS Id of the DRA machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>

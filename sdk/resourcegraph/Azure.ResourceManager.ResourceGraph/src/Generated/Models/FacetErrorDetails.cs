@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> Error details. </summary>
     public partial class FacetErrorDetails
     {
-        /// <summary> Initializes a new instance of FacetErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetErrorDetails"/>. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of FacetErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetErrorDetails"/>. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

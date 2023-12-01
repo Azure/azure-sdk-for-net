@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.GraphServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GraphServicesAccountResource" /> and their operations.
-    /// Each <see cref="GraphServicesAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="GraphServicesAccountResourceCollection" /> instance call the GetGraphServicesAccountResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="GraphServicesAccountResource"/> and their operations.
+    /// Each <see cref="GraphServicesAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="GraphServicesAccountResourceCollection"/> instance call the GetGraphServicesAccountResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class GraphServicesAccountResourceCollection : ArmCollection, IEnumerable<GraphServicesAccountResource>, IAsyncEnumerable<GraphServicesAccountResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GraphServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GraphServicesAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GraphServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GraphServicesAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

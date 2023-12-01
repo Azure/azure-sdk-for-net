@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Request payload for creating a backfill request for a given feature set version. </summary>
     public partial class FeatureSetVersionBackfillContent
     {
-        /// <summary> Initializes a new instance of FeatureSetVersionBackfillContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureSetVersionBackfillContent"/>. </summary>
         public FeatureSetVersionBackfillContent()
         {
             SparkConfiguration = new ChangeTrackingDictionary<string, string>();

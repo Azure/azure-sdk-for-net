@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The metric dimension. </summary>
     public partial class DataBoxEdgeMetricDimension
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricDimension"/>. </summary>
         /// <param name="sourceType"> The dimension type. </param>
         /// <param name="sourceName"> The dimension value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceType"/> or <paramref name="sourceName"/> is null. </exception>

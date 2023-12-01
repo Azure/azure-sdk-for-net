@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The state of a private link service connection. </summary>
     public partial class AppConfigurationPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of AppConfigurationPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkServiceConnectionState"/>. </summary>
         public AppConfigurationPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The Resource model definition. </summary>
     public partial class ContainerGroupPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerGroupPatch(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

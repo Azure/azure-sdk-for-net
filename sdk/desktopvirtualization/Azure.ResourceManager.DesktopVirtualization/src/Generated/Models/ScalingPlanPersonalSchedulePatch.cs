@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> ScalingPlanPersonalSchedule properties that can be patched. </summary>
     public partial class ScalingPlanPersonalSchedulePatch
     {
-        /// <summary> Initializes a new instance of ScalingPlanPersonalSchedulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanPersonalSchedulePatch"/>. </summary>
         public ScalingPlanPersonalSchedulePatch()
         {
             DaysOfWeek = new ChangeTrackingList<DesktopVirtualizationDayOfWeek>();

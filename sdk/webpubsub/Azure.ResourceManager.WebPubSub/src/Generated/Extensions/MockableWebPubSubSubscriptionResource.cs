@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebPubSubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebPubSubResource> GetWebPubSubsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebPubSubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebPubSubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebPubSubResource> GetWebPubSubs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebPubSubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </summary>
         /// <param name="location"> the location like "eastus". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </summary>
         /// <param name="location"> the location like "eastus". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRServiceUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);

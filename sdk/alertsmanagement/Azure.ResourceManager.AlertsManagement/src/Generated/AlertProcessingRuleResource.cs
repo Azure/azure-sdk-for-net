@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary>
     /// A Class representing an AlertProcessingRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AlertProcessingRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAlertProcessingRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAlertProcessingRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AlertProcessingRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAlertProcessingRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAlertProcessingRule method.
     /// </summary>
     public partial class AlertProcessingRuleResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AlertProcessingRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AlertProcessingRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AlertProcessingRuleResource(ArmClient client, AlertProcessingRuleData data) : this(client, data.Id)

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update source control operation. </summary>
     public partial class AutomationSourceControlCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationSourceControlCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlCreateOrUpdateContent"/>. </summary>
         public AutomationSourceControlCreateOrUpdateContent()
         {
         }

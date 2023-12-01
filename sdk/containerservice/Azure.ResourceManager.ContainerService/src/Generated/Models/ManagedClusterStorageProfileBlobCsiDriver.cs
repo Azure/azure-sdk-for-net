@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
     internal partial class ManagedClusterStorageProfileBlobCsiDriver
     {
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileBlobCsiDriver. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileBlobCsiDriver"/>. </summary>
         public ManagedClusterStorageProfileBlobCsiDriver()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileBlobCsiDriver. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileBlobCsiDriver"/>. </summary>
         /// <param name="isEnabled"> Whether to enable AzureBlob CSI Driver. The default value is false. </param>
         internal ManagedClusterStorageProfileBlobCsiDriver(bool? isEnabled)
         {

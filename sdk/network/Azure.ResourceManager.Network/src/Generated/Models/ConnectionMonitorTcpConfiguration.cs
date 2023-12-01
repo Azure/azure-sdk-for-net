@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the TCP configuration. </summary>
     public partial class ConnectionMonitorTcpConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorTcpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTcpConfiguration"/>. </summary>
         public ConnectionMonitorTcpConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTcpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTcpConfiguration"/>. </summary>
         /// <param name="port"> The port to connect to. </param>
         /// <param name="disableTraceRoute"> Value indicating whether path evaluation with trace route should be disabled. </param>
         /// <param name="destinationPortBehavior"> Destination port behavior. </param>

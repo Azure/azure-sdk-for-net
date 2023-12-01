@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for task that validates migration input for SQL to Azure SQL Managed Instance migrations. </summary>
     public partial class ValidateMigrationInputSqlServerSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskOutput"/>. </summary>
         internal ValidateMigrationInputSqlServerSqlMITaskOutput()
         {
             RestoreDatabaseNameErrors = new ChangeTrackingList<ReportableException>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ExistingBackupErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="name"> Name of database. </param>
         /// <param name="restoreDatabaseNameErrors"> Errors associated with the RestoreDatabaseName. </param>

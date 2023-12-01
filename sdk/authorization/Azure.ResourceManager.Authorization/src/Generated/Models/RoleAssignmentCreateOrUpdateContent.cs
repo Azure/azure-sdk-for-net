@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Role assignment create parameters. </summary>
     public partial class RoleAssignmentCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of RoleAssignmentCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateOrUpdateContent"/>. </summary>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
         /// <param name="principalId"> The principal ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> The response of get private dns zone suffix. </summary>
     public partial class MySqlFlexibleServerPrivateDnsZoneSuffixResponse
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerPrivateDnsZoneSuffixResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/>. </summary>
         internal MySqlFlexibleServerPrivateDnsZoneSuffixResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerPrivateDnsZoneSuffixResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/>. </summary>
         /// <param name="privateDnsZoneSuffix"> Represents the private DNS zone suffix. </param>
         internal MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix)
         {

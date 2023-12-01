@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of flow logs. </summary>
     internal partial class FlowLogListResult
     {
-        /// <summary> Initializes a new instance of FlowLogListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowLogListResult"/>. </summary>
         internal FlowLogListResult()
         {
             Value = new ChangeTrackingList<FlowLogData>();
         }
 
-        /// <summary> Initializes a new instance of FlowLogListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowLogListResult"/>. </summary>
         /// <param name="value"> Information about flow log resource. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal FlowLogListResult(IReadOnlyList<FlowLogData> value, string nextLink)

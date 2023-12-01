@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Rule results properties. </summary>
     internal partial class RuleResultsProperties
     {
-        /// <summary> Initializes a new instance of RuleResultsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleResultsProperties"/>. </summary>
         public RuleResultsProperties()
         {
             Results = new ChangeTrackingList<IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of RuleResultsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleResultsProperties"/>. </summary>
         /// <param name="results"> Expected results in the baseline. </param>
         internal RuleResultsProperties(IList<IList<string>> results)
         {

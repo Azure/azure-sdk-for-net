@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The collection of agent pools. </summary>
     internal partial class ContainerRegistryAgentPoolListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryAgentPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolListResult"/>. </summary>
         internal ContainerRegistryAgentPoolListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryAgentPoolData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryAgentPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         internal ContainerRegistryAgentPoolListResult(IReadOnlyList<ContainerRegistryAgentPoolData> value, string nextLink)

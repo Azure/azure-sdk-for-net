@@ -19,6 +19,9 @@ namespace Azure.Core.Pipeline
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
+
+        // we follow OpenTelemtery Semantic Conventions 1.23.0
+        // https://github.com/open-telemetry/semantic-conventions/blob/v1.23.0
         internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.23.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
 
@@ -63,9 +66,12 @@ namespace Azure.Core.Pipeline
 
         public bool IsEnabled { get; }
 
-        public void AddAttribute(string name, string value)
+        public void AddAttribute(string name, string? value)
         {
-            _activityAdapter?.AddTag(name, value);
+            if (value != null)
+            {
+                _activityAdapter?.AddTag(name, value);
+            }
         }
 
         public void AddIntegerAttribute(string name, int value)
@@ -73,18 +79,9 @@ namespace Azure.Core.Pipeline
             _activityAdapter?.AddTag(name, value);
         }
 
-        public void AddAttribute<T>(string name,
-#if AZURE_NULLABLE
-            [AllowNull]
-#endif
-            T value)
-        {
-            AddAttribute(name, value, static v => Convert.ToString(v, CultureInfo.InvariantCulture) ?? string.Empty);
-        }
-
         public void AddAttribute<T>(string name, T value, Func<T, string> format)
         {
-            if (_activityAdapter != null)
+            if (_activityAdapter != null && value != null)
             {
                 var formattedValue = format(value);
                 _activityAdapter.AddTag(name, formattedValue);
@@ -105,7 +102,10 @@ namespace Azure.Core.Pipeline
         public void Start()
         {
             Activity? started = _activityAdapter?.Start();
-            started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
+            if (_suppressNestedClientActivities)
+            {
+                started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
+            }
         }
 
         public void SetDisplayName(string displayName)
@@ -160,6 +160,8 @@ namespace Azure.Core.Pipeline
         /// Marks the scope as failed with low-cardinality error.type attribute.
         /// </summary>
         /// <param name="errorCode">Error code to associate with the failed scope.</param>
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The public property System.Exception.TargetSite.get is not compatible with trimming and produces a warning when " +
+            "preserving all public properties. Since we do not use this property, and neither does Application Insights, we can suppress the warning coming from the inner method.")]
         public void Failed(string errorCode)
         {
             _activityAdapter?.MarkFailed((Exception?)null, errorCode);
@@ -264,16 +266,12 @@ namespace Azure.Core.Pipeline
                     _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
 #else
                     _tagCollection ??= new ActivityTagsCollection();
-                    _tagCollection.Add(name, value!);
+                    _tagCollection[name] = value!;
 #endif
                 }
                 else
                 {
-#if NETCOREAPP2_1
-                    _currentActivity?.AddObjectTag(name, value);
-#else
-                    _currentActivity?.AddTag(name, value);
-#endif
+                    AddObjectTag(name, value);
                 }
             }
 
@@ -424,11 +422,7 @@ namespace Azure.Core.Pipeline
                     {
                         foreach (var tag in _tagCollection)
                         {
-#if NETCOREAPP2_1
-                            _currentActivity.AddObjectTag(tag.Key, tag.Value);
-#else
-                            _currentActivity.AddTag(tag.Key, tag.Value);
-#endif
+                            AddObjectTag(tag.Key, tag.Value!);
                         }
                     }
 
@@ -552,6 +546,22 @@ namespace Azure.Core.Pipeline
                 }
                 _traceparent = traceparent;
                 _tracestate = tracestate;
+            }
+
+            private void AddObjectTag(string name, object value)
+            {
+#if NETCOREAPP2_1
+                _currentActivity?.AddTag(name, value.ToString());
+#else
+                if (_activitySource?.HasListeners() == true)
+                {
+                    _currentActivity?.SetTag(name, value);
+                }
+                else
+                {
+                    _currentActivity?.AddTag(name, value.ToString());
+                }
+#endif
             }
 
             [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "The class constructor is marked with RequiresUnreferencedCode.")]
@@ -826,40 +836,6 @@ namespace Azure.Core.Pipeline
                 }
             }
             SetErrorStatusMethod(activity, 2 /* Error */, errorDescription);
-        }
-
-        public static void AddObjectTag(this Activity activity, string name, object value)
-        {
-            if (ActivityAddTagMethod == null)
-            {
-                var method = typeof(Activity).GetMethod("AddTag", BindingFlags.Instance | BindingFlags.Public, null, new Type[]
-                {
-                    typeof(string),
-                    typeof(object)
-                }, null);
-
-                if (method == null)
-                {
-                    // If the object overload is not available, fall back to the string overload. The assumption is that the object overload
-                    // not being available means that we cannot be using activity source, so the string cast should never fail because we will always
-                    // be passing a string value.
-                    ActivityAddTagMethod = (activityParameter, nameParameter, valueParameter) => activityParameter.AddTag(
-                        nameParameter,
-                        // null check is required to keep nullable reference compilation happy
-                        valueParameter == null ? null : (string)valueParameter);
-                }
-                else
-                {
-                    var nameParameter = Expression.Parameter(typeof(string));
-                    var valueParameter = Expression.Parameter(typeof(object));
-
-                    ActivityAddTagMethod = Expression.Lambda<Action<Activity, string, object?>>(
-                        Expression.Call(ActivityParameter, method, nameParameter, valueParameter),
-                        ActivityParameter, nameParameter, valueParameter).Compile();
-                }
-            }
-
-            ActivityAddTagMethod(activity, name, value);
         }
 
         public static bool SupportsActivitySource()

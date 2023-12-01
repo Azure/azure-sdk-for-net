@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The request for a QueryInboundNatRulePortMapping API. Either IpConfiguration or IpAddress should be set. </summary>
     public partial class QueryInboundNatRulePortMappingContent
     {
-        /// <summary> Initializes a new instance of QueryInboundNatRulePortMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryInboundNatRulePortMappingContent"/>. </summary>
         public QueryInboundNatRulePortMappingContent()
         {
         }
