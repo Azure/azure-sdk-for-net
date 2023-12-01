@@ -17,10 +17,8 @@ namespace Azure.Core.Pipeline
 
             protected override PipelineMessage CreateMessageCore()
             {
-                PipelineMessage pipelineMessage = base.CreateMessageCore();
-                HttpClientTransportRequest request = new(pipelineMessage.Request);
-                HttpMessage httpMessage = new(request, ResponseClassifier.Shared);
-                return httpMessage;
+                HttpClientTransportRequest request = new();
+                return new HttpMessage(request, ResponseClassifier.Shared);
             }
 
             /// <inheritdoc />

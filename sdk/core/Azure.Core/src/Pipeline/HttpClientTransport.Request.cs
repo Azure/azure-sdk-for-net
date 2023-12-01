@@ -18,36 +18,15 @@ namespace Azure.Core.Pipeline
     {
         private sealed class HttpClientTransportRequest : Request
         {
-            private readonly PipelineRequest _request;
-
-            public HttpClientTransportRequest(PipelineRequest request)
-            {
-                _request = request;
-            }
-
-            public override RequestMethod Method
-            {
-                get => RequestMethod.Parse(_request.Method);
-                set => _request.Method = value.Method;
-            }
-
-            public override RequestContent? Content
-            {
-                get => (RequestContent?)_request.Content;
-                set => _request.Content = value;
-            }
-
-            public override void Dispose() => _request.Dispose();
-
             protected internal override void AddHeader(string name, string value)
-                => _request.Headers.Add(name, value);
+                => PipelineMessageHeaders.Add(name, value);
 
             protected internal override bool ContainsHeader(string name)
-                => _request.Headers.TryGetValue(name, out _);
+                => PipelineMessageHeaders.TryGetValue(name, out _);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                _request.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+                PipelineMessageHeaders.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
                 foreach (KeyValuePair<string, string> header in headers)
                 {
                     yield return new HttpHeader(header.Key, header.Value);
@@ -55,13 +34,13 @@ namespace Azure.Core.Pipeline
             }
 
             protected internal override bool RemoveHeader(string name)
-                => _request.Headers.Remove(name);
+                => PipelineMessageHeaders.Remove(name);
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-                => _request.Headers.TryGetValue(name, out value);
+                => PipelineMessageHeaders.TryGetValue(name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-                => _request.Headers.TryGetValues(name, out values);
+                => PipelineMessageHeaders.TryGetValues(name, out values);
 
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 

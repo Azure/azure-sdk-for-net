@@ -51,7 +51,11 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets the request content.
         /// </summary>
-        public new virtual RequestContent? Content { get; set; }
+        public new virtual RequestContent? Content
+        {
+            get => (RequestContent?)base.Content;
+            set => base.Content = value;
+        }
 
         /// <summary>
         /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
@@ -70,6 +74,8 @@ namespace Azure.Core
         /// Gets the request HTTP headers.
         /// </summary>
         public new RequestHeaders Headers => new(this);
+
+        internal MessageHeaders PipelineMessageHeaders => base.Headers;
 
         /// <summary>
         /// Adds a header value to the header collection.
