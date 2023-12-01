@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionOperationJobExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="jobResourceId"> Name or Arm Id of the job created for this operation. </param>
-        internal DataProtectionOperationJobExtendedInfo(string objectType, string jobResourceId) : base(objectType)
+        /// <param name="jobIdentifier"> Name or Arm Id of the job created for this operation. </param>
+        internal DataProtectionOperationJobExtendedInfo(string objectType, string jobIdentifier) : base(objectType)
         {
-            JobResourceId = jobResourceId;
+            JobIdentifier = jobIdentifier;
             ObjectType = objectType ?? "OperationJobExtendedInfo";
         }
 
         /// <summary> Name or Arm Id of the job created for this operation. </summary>
-        public string JobResourceId { get; }
+        public string JobIdentifier { get; }
     }
 }

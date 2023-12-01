@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionOperationJobExtendedInfo"/>. </summary>
-        /// <param name="jobResourceId"> Name or Arm Id of the job created for this operation. </param>
+        /// <param name="jobIdentifier"> Name or Arm Id of the job created for this operation. </param>
         /// <returns> A new <see cref="Models.DataProtectionOperationJobExtendedInfo"/> instance for mocking. </returns>
-        public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(string jobResourceId = null)
+        public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(string jobIdentifier = null)
         {
-            return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", jobResourceId);
+            return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", jobIdentifier);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackup.DataProtectionBackupRecoveryPointData"/>. </summary>

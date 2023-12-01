@@ -101,7 +101,7 @@ rename-mapping:
   TriggerBackupRequest.backupRuleOptions: BackupRules
   OperationExtendedInfo: DataProtectionOperationExtendedInfo
   OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
-  OperationJobExtendedInfo.jobId: JobResourceId
+  OperationJobExtendedInfo.jobId: JobIdentifier
   AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
   AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
   AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time
