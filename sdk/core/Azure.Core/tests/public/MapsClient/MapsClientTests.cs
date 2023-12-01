@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure;
-using Maps;
-using NUnit.Framework;
 using System;
 using System.Net;
+using Maps;
+using NUnit.Framework;
+
+namespace Azure.Core.Tests.Public.TestClients;
 
 public class MapsClientTests
 {
