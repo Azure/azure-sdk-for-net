@@ -31,7 +31,7 @@ namespace Azure.Core
         /// <returns>The string represented by the Base64URL encoded string.</returns>
         internal static string DecodeString(string encoded)
         {
-            return UTF8Encoding.UTF8.GetString(Decode(encoded));
+            return Encoding.UTF8.GetString(Decode(encoded));
         }
 
         /// <summary>Encode a string as a Base64URL encoded string.</summary>
@@ -39,7 +39,7 @@ namespace Azure.Core
         /// <returns>The UTF8 bytes for the string, encoded as a Base64URL string.</returns>
         internal static string EncodeString(string value)
         {
-            return Encode(UTF8Encoding.UTF8.GetBytes(value));
+            return Encode(Encoding.UTF8.GetBytes(value));
         }
     }
 }

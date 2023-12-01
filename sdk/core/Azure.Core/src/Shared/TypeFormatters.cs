@@ -152,7 +152,7 @@ namespace Azure.Core
                 TimeSpan timeSpan when format != null => ToString(timeSpan, format),
                 TimeSpan timeSpan => XmlConvert.ToString(timeSpan),
                 Guid guid => guid.ToString(),
-                BinaryData binaryData => TypeFormatters.ConvertToString(binaryData.ToArray(), format),
+                BinaryData binaryData => ConvertToString(binaryData.ToArray(), format),
                 _ => value.ToString()!
             };
     }
