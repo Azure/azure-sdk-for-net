@@ -25,14 +25,14 @@ The set of tags whos contents should be merged into the targeted
 #>
 param(
   [Parameter(Position=0)]
-  [string] $AssetsJson
+  [string] $AssetsJson,
   [Parameter(Position=1, ValueFromRemainingArguments=$true)]
   [string[]] $TargetTags
 )
 
-. (Join-Path $PSScriptRoot ".." ".." "onboarding" "generate-assets-json.ps1")
+. (Join-Path $PSScriptRoot ".." ".." "onboarding" "common-asset-functions.ps1")
 
-function gcmd($CommandString,$WorkingDirectory=$null){
+function Git-Command($CommandString,$WorkingDirectory=$null){
     Write-Host "git $CommandString"
 
     if ($WorkingDirectory){
@@ -54,9 +54,9 @@ function gcmd($CommandString,$WorkingDirectory=$null){
     return $result
 }
 
-function ResolveProxy {
+function Resolve-Proxy {
     # this script requires the presence of git
-    Test-Exe-In-Path -ExeToLookFor "git"
+    Test-Exe-In-Path -ExeToLookFor "git" | Out-Null
 
     $testProxyExe = "test-proxy"
     # this script requires the presence of the test-proxy on the PATH
@@ -79,19 +79,37 @@ function Call-Proxy {
     param(
     [string] $TestProxyExe,
     [string] $CommandArgs,
-    [string] $MountDirectory
+    [string] $MountDirectory,
+    [boolean] $Output = $true
     )
 
     $CommandArgs += " --storage-location=$MountDirectory"
-    Write-Host "$TestProxyExe $CommandArgs"
+
+    if ($Output -eq $true){
+        Write-Host "$TestProxyExe $CommandArgs"
+    }
 
     [array] $output = & "$TestProxyExe" $CommandArgs.Split(" ")
-    
+
+    if ($Output -eq $true){
+        foreach($line in $output) {
+            Write-Host $line
+        }
+    }
+
     return $output
 }
 
+function Locate-Assets-Slice($ProxyExe, $AssetsJson, $MountDirectory) {
+    $CommandString = "config locate -a $AssetsJson"
+
+    $output = Call-Proxy -TestProxyExe $ProxyExe -CommandArgs $CommandString -MountDirectory $MountDirectory -Output $false
+
+    return $output[-1].Trim()
+}
+
 function GetTagSHA($TagName){
-    $results = gcmd "ls-remote $TagName"
+    $results = Git-Command "ls-remote $TagName"
     
     if ($results -and $lastexitcode -eq 0) {
         $arr = $results -split '\s+'
@@ -103,32 +121,71 @@ function GetTagSHA($TagName){
     exit 1
 }
 
-function StartMessage($AssetsRepository, $TargetTags){
-    Write-Host "This script will work against " -nonewline
-    Write-Host $assetsRepository -ForegroundColor Green -nonewline
-    Write-Host " and attempt to merge tags " -noneStartDirwline
-    Write-Host "$($TargetTags -join ', ')" -ForegroundColor Green
+function StartMessage($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory){
+    Write-Host "`nThis script will attempt to merge the following tag" -nonewline
+    if ($TargetTags.Length -gt 1){
+        Write-Host "s" -nonewline
+    }
+    Write-Host ":"
+    foreach($Tag in $TargetTags){
+        Write-Host " - " -nonewline
+        Write-Host "$Tag" -ForegroundColor Green
+    }
+    Write-Host "`nTargeting the assets slice targeted by " -nonewline
+    Write-Host "$AssetsJson." -ForegroundColor Green
+    Write-Host "`nThe work will be completed in " -nonewline
+    Write-Host $AssetsRepoLocation -ForegroundColor Green -nonewline
+    Write-Host "."
 }
 
-function FinishMessage($AssetsDirectory, $TargetTags){
+function FinishMessage($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory){
     $len = $TargetTags.Length
-    Write-Host "Successfully combined $len tags. Please commit the result found in " -nonewline
-    Write-Host "$AssetsDirectory." -ForegroundColor Green
+    Write-Host "`nSuccessfully combined $len tags. Invoke `"test-proxy push " -nonewline
+    Write-Host $AssetsJson -ForegroundColor Green -nonewline
+    Write-Host "`" to push the results as a new tag."
 }
 
 function CombineTags($RemainingTags){
     foreach($Tag in $RemainingTags){
         $tagSha = GetTagSHA -TagName $Tag
 
-        gcmd "cherry-pick $tagSha"
+        Git-Command "cherry-pick $tagSha"
+    }
+}
+
+function Resolve-Target-Tags($AssetsJson, $TargetTags) {
+    $jsonContent = Get-Content -Raw -Path $AssetsJson
+    $jsonObj = $JsonContent | ConvertFrom-Json
+
+    $existingTarget = $jsonObj.Tag
+
+    return $TargetTags | Where-Object {
+        if ($_ -eq $existingTarget) {
+            Write-Host "Excluding tag $($_) due from tag list, it is present in assets.json."
+        }
+        $_ -ne $existingTarget
     }
 }
 
 $ErrorActionPreference = "Stop"
 
-$ProxyExe = ResolveProxy
+# resolve the proxy location so that we can invoke it easily
+$ProxyExe = Resolve-Proxy
+
+# figure out where the root of the repo for the passed assets.json is. We need it to properly set the mounting
+# directory so that the test-proxy restore operations work IN PLACE with existing tooling
 $MountDirectory = Get-Repo-Root -StartDir $AssetsJson
 
-# StartMessage -AssetsRepository $assetsRepository -RemainingTags $TargetTags
+# using the MountingDirectory and the assets.json location, we can figure out where the assets slice actually lives within the .assets folder.
+# we will use this to invoke individual cherry-picks before pushing up the result
+$AssetsRepoLocation = Locate-Assets-Slice $ProxyExe $AssetsJson $MountDirectory
+
+# resolve the tags that we will go after. If the target assets.json contains one of these tags, it will be run _first_ in the first restore.
+# This script is intended to run in context of an existing repo, so this is just the way it's gotta be for consistency.
+$Tags = Resolve-Target-Tags $AssetsJson $TargetTags
+
+StartMessage $AssetsJson $Tags $AssetsRepoLocation $MountDirectory
+
 # CombineTags -RemainingTags $remainingTags
-# FinishMessage -AssetsDirectory $assetsDirectory
+
+FinishMessage $AssetsJson $Tags $AssetsRepoLocation $MountDirectory
