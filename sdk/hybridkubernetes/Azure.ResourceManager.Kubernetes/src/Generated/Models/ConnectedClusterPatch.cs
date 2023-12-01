@@ -20,6 +20,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> Describes the connected cluster resource properties that can be updated during PATCH operation. </param>
+        internal ConnectedClusterPatch(IDictionary<string, string> tags, BinaryData properties)
+        {
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary>

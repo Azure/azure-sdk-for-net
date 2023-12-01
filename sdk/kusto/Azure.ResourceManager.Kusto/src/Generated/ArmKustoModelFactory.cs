@@ -285,11 +285,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="kind"> Kind of the database. </param>
         /// <returns> A new <see cref="Kusto.KustoDatabaseData"/> instance for mocking. </returns>
-        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
+        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null)
         {
-            return new KustoDatabaseData(id, name, resourceType, systemData, location, kind);
+            return new KustoDatabaseData(id, name, resourceType, systemData, location, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseInviteFollowerResult"/>. </summary>
@@ -443,11 +442,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="kind"> Kind of the endpoint for the data connection. </param>
         /// <returns> A new <see cref="Kusto.KustoDataConnectionData"/> instance for mocking. </returns>
-        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
+        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null)
         {
-            return new KustoDataConnectionData(id, name, resourceType, systemData, location, kind);
+            return new KustoDataConnectionData(id, name, resourceType, systemData, location, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataConnectionValidationResults"/>. </summary>
@@ -484,7 +482,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Models.KustoReadWriteDatabase"/> instance for mocking. </returns>
         public static KustoReadWriteDatabase KustoReadWriteDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, KustoProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, bool? isFollowed = null, KustoKeyVaultProperties keyVaultProperties = null, DateTimeOffset? suspensionStartOn = null)
         {
-            return new KustoReadWriteDatabase(id, name, resourceType, systemData, location, KustoKind.ReadWrite, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, isFollowed, keyVaultProperties, suspensionStartOn != null ? new SuspensionDetails(suspensionStartOn) : null);
+            return new KustoReadWriteDatabase(id, name, resourceType, systemData, location, kind: default, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, isFollowed, keyVaultProperties, suspensionStartOn != null ? new SuspensionDetails(suspensionStartOn) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KustoReadOnlyFollowingDatabase"/>. </summary>
@@ -507,7 +505,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Models.KustoReadOnlyFollowingDatabase"/> instance for mocking. </returns>
         public static KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, KustoProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, string leaderClusterResourceId = null, string attachedDatabaseConfigurationName = null, KustoDatabasePrincipalsModificationKind? principalsModificationKind = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, string originalDatabaseName = null, KustoDatabaseShareOrigin? databaseShareOrigin = null, DateTimeOffset? suspensionStartOn = null)
         {
-            return new KustoReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, KustoKind.ReadOnlyFollowing, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind, tableLevelSharingProperties, originalDatabaseName, databaseShareOrigin, suspensionStartOn != null ? new SuspensionDetails(suspensionStartOn) : null);
+            return new KustoReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, kind: default, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind, tableLevelSharingProperties, originalDatabaseName, databaseShareOrigin, suspensionStartOn != null ? new SuspensionDetails(suspensionStartOn) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KustoEventHubDataConnection"/>. </summary>
@@ -533,7 +531,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             eventSystemProperties ??= new List<string>();
 
-            return new KustoEventHubDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.EventHub, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), compression, provisioningState, managedIdentityResourceId, managedIdentityObjectId, databaseRouting, retrievalStartOn);
+            return new KustoEventHubDataConnection(id, name, resourceType, systemData, location, kind: default, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), compression, provisioningState, managedIdentityResourceId, managedIdentityObjectId, databaseRouting, retrievalStartOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KustoIotHubDataConnection"/>. </summary>
@@ -557,7 +555,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             eventSystemProperties ??= new List<string>();
 
-            return new KustoIotHubDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.IotHub, iotHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), sharedAccessPolicyName, databaseRouting, retrievalStartOn, provisioningState);
+            return new KustoIotHubDataConnection(id, name, resourceType, systemData, location, kind: default, iotHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), sharedAccessPolicyName, databaseRouting, retrievalStartOn, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KustoEventGridDataConnection"/>. </summary>
@@ -582,7 +580,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Models.KustoEventGridDataConnection"/> instance for mocking. </returns>
         public static KustoEventGridDataConnection KustoEventGridDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier storageAccountResourceId = null, ResourceIdentifier eventGridResourceId = null, ResourceIdentifier eventHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, KustoEventGridDataFormat? dataFormat = null, bool? isFirstRecordIgnored = null, BlobStorageEventType? blobStorageEventType = null, ResourceIdentifier managedIdentityResourceId = null, Guid? managedIdentityObjectId = null, KustoDatabaseRouting? databaseRouting = null, KustoProvisioningState? provisioningState = null)
         {
-            return new KustoEventGridDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.EventGrid, storageAccountResourceId, eventGridResourceId, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, isFirstRecordIgnored, blobStorageEventType, managedIdentityResourceId, managedIdentityObjectId, databaseRouting, provisioningState);
+            return new KustoEventGridDataConnection(id, name, resourceType, systemData, location, kind: default, storageAccountResourceId, eventGridResourceId, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, isFirstRecordIgnored, blobStorageEventType, managedIdentityResourceId, managedIdentityObjectId, databaseRouting, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KustoCosmosDBDataConnection"/>. </summary>
@@ -603,7 +601,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Models.KustoCosmosDBDataConnection"/> instance for mocking. </returns>
         public static KustoCosmosDBDataConnection KustoCosmosDBDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string tableName = null, string mappingRuleName = null, ResourceIdentifier managedIdentityResourceId = null, Guid? managedIdentityObjectId = null, ResourceIdentifier cosmosDBAccountResourceId = null, string cosmosDBDatabase = null, string cosmosDBContainer = null, DateTimeOffset? retrievalStartOn = null, KustoProvisioningState? provisioningState = null)
         {
-            return new KustoCosmosDBDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.CosmosDB, tableName, mappingRuleName, managedIdentityResourceId, managedIdentityObjectId, cosmosDBAccountResourceId, cosmosDBDatabase, cosmosDBContainer, retrievalStartOn, provisioningState);
+            return new KustoCosmosDBDataConnection(id, name, resourceType, systemData, location, kind: default, tableName, mappingRuleName, managedIdentityResourceId, managedIdentityObjectId, cosmosDBAccountResourceId, cosmosDBDatabase, cosmosDBContainer, retrievalStartOn, provisioningState);
         }
     }
 }

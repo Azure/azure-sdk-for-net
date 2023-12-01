@@ -77,11 +77,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
         /// <returns> A new <see cref="Models.ConfigurationGroupValuePropertiesFormat"/> instance for mocking. </returns>
-        public static ConfigurationGroupValuePropertiesFormat ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string configurationType = "Unknown")
+        public static ConfigurationGroupValuePropertiesFormat ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null)
         {
-            return new UnknownConfigurationGroupValuePropertiesFormat(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType);
+            return new UnknownConfigurationGroupValuePropertiesFormat(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkFunctionData"/>. </summary>
@@ -121,14 +120,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfviType"> The nfvi type for the network function. </param>
         /// <param name="nfviId"> The nfviId for the network function. </param>
         /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
-        /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, string configurationType = "Unknown", IEnumerable<string> roleOverrideValues = null)
+        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
-            return new UnknownNetworkFunctionPropertiesFormat(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType, roleOverrideValues?.ToList());
+            return new UnknownNetworkFunctionPropertiesFormat(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType: default, roleOverrideValues?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.ComponentData"/>. </summary>
@@ -312,11 +310,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
-        /// <param name="networkFunctionType"> The network function type. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionVersionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkFunctionDefinitionVersionPropertiesFormat NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, string networkFunctionType = "Unknown")
+        public static NetworkFunctionDefinitionVersionPropertiesFormat NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null)
         {
-            return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(provisioningState, versionState, description, deployParameters, networkFunctionType);
+            return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(provisioningState, versionState, description, deployParameters, networkFunctionType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkServiceDesignGroupData"/>. </summary>
@@ -593,7 +590,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             repositories ??= new List<string>();
 
-            return new AzureContainerRegistryScopedTokenCredential(CredentialType.AzureContainerRegistryScopedToken, username, acrToken, acrServerUri, repositories?.ToList(), expiry);
+            return new AzureContainerRegistryScopedTokenCredential(credentialType: default, username, acrToken, acrServerUri, repositories?.ToList(), expiry);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountCredential"/>. </summary>
@@ -605,7 +602,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             containerCredentials ??= new List<AzureStorageAccountContainerCredential>();
 
-            return new AzureStorageAccountCredential(CredentialType.AzureStorageAccountToken, storageAccountId, containerCredentials?.ToList(), expiry);
+            return new AzureStorageAccountCredential(credentialType: default, storageAccountId, containerCredentials?.ToList(), expiry);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountContainerCredential"/>. </summary>
@@ -632,7 +629,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ConfigurationValueWithSecrets"/> instance for mocking. </returns>
         public static ConfigurationValueWithSecrets ConfigurationValueWithSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string secretConfigurationValue = null)
         {
-            return new ConfigurationValueWithSecrets(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType.Secret, secretConfigurationValue);
+            return new ConfigurationValueWithSecrets(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType: default, secretConfigurationValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationValueWithoutSecrets"/>. </summary>
@@ -650,7 +647,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ConfigurationValueWithoutSecrets"/> instance for mocking. </returns>
         public static ConfigurationValueWithoutSecrets ConfigurationValueWithoutSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string configurationValue = null)
         {
-            return new ConfigurationValueWithoutSecrets(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType.Open, configurationValue);
+            return new ConfigurationValueWithoutSecrets(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType: default, configurationValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionValueWithSecrets"/>. </summary>
@@ -675,7 +672,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             roleOverrideValues ??= new List<string>();
 
-            return new NetworkFunctionValueWithSecrets(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, NetworkFunctionConfigurationType.Secret, roleOverrideValues?.ToList(), secretDeploymentValues);
+            return new NetworkFunctionValueWithSecrets(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType: default, roleOverrideValues?.ToList(), secretDeploymentValues);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionValueWithoutSecrets"/>. </summary>
@@ -700,7 +697,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             roleOverrideValues ??= new List<string>();
 
-            return new NetworkFunctionValueWithoutSecrets(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, NetworkFunctionConfigurationType.Open, roleOverrideValues?.ToList(), deploymentValues);
+            return new NetworkFunctionValueWithoutSecrets(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType: default, roleOverrideValues?.ToList(), deploymentValues);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/>. </summary>
@@ -716,7 +713,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/> instance for mocking. </returns>
         public static ContainerizedNetworkFunctionDefinitionVersion ContainerizedNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, ContainerizedNetworkFunctionTemplate networkFunctionTemplate = null)
         {
-            return new ContainerizedNetworkFunctionDefinitionVersion(provisioningState, versionState, description, deployParameters, NetworkFunctionType.ContainerizedNetworkFunction, networkFunctionTemplate);
+            return new ContainerizedNetworkFunctionDefinitionVersion(provisioningState, versionState, description, deployParameters, networkFunctionType: default, networkFunctionTemplate);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/>. </summary>
@@ -732,7 +729,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/> instance for mocking. </returns>
         public static VirtualNetworkFunctionDefinitionVersion VirtualNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, VirtualNetworkFunctionTemplate networkFunctionTemplate = null)
         {
-            return new VirtualNetworkFunctionDefinitionVersion(provisioningState, versionState, description, deployParameters, NetworkFunctionType.VirtualNetworkFunction, networkFunctionTemplate);
+            return new VirtualNetworkFunctionDefinitionVersion(provisioningState, versionState, description, deployParameters, networkFunctionType: default, networkFunctionTemplate);
         }
     }
 }

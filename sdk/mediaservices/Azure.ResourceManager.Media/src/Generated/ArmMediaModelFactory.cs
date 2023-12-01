@@ -351,7 +351,6 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MediaJobOutput"/>. </summary>
-        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">
         /// A preset used to override the preset in the corresponding transform output.
@@ -364,9 +363,9 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="startOn"> The UTC date and time at which this Job Output began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job Output finished processing. </param>
         /// <returns> A new <see cref="Models.MediaJobOutput"/> instance for mocking. </returns>
-        public static MediaJobOutput MediaJobOutput(string odataType = null, MediaJobError error = null, MediaTransformPreset presetOverride = null, MediaJobState? state = null, int? progress = null, string label = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
+        public static MediaJobOutput MediaJobOutput(MediaJobError error = null, MediaTransformPreset presetOverride = null, MediaJobState? state = null, int? progress = null, string label = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
         {
-            return new UnknownJobOutput(odataType, error, presetOverride, state, progress, label, startOn, endOn);
+            return new UnknownJobOutput(odataType: null, error, presetOverride, state, progress, label, startOn, endOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MediaJobError"/>. </summary>
@@ -598,7 +597,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.AudioTrack"/> instance for mocking. </returns>
         public static AudioTrack AudioTrack(string fileName = null, string displayName = null, string languageCode = null, HlsSettings hlsSettings = null, string dashRole = null, int? mpeg4TrackId = null, int? bitRate = null)
         {
-            return new AudioTrack("#Microsoft.Media.AudioTrack", fileName, displayName, languageCode, hlsSettings, dashRole != null ? new TrackDashSettings(dashRole) : null, mpeg4TrackId, bitRate);
+            return new AudioTrack(odataType: null, fileName, displayName, languageCode, hlsSettings, dashRole != null ? new TrackDashSettings(dashRole) : null, mpeg4TrackId, bitRate);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TextTrack"/>. </summary>
@@ -610,7 +609,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.TextTrack"/> instance for mocking. </returns>
         public static TextTrack TextTrack(string fileName = null, string displayName = null, string languageCode = null, PlayerVisibility? playerVisibility = null, HlsSettings hlsSettings = null)
         {
-            return new TextTrack("#Microsoft.Media.TextTrack", fileName, displayName, languageCode, playerVisibility, hlsSettings);
+            return new TextTrack(odataType: null, fileName, displayName, languageCode, playerVisibility, hlsSettings);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MediaJobOutputAsset"/>. </summary>
@@ -629,7 +628,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.MediaJobOutputAsset"/> instance for mocking. </returns>
         public static MediaJobOutputAsset MediaJobOutputAsset(MediaJobError error = null, MediaTransformPreset presetOverride = null, MediaJobState? state = null, int? progress = null, string label = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string assetName = null)
         {
-            return new MediaJobOutputAsset("#Microsoft.Media.JobOutputAsset", error, presetOverride, state, progress, label, startOn, endOn, assetName);
+            return new MediaJobOutputAsset(odataType: null, error, presetOverride, state, progress, label, startOn, endOn, assetName);
         }
     }
 }
