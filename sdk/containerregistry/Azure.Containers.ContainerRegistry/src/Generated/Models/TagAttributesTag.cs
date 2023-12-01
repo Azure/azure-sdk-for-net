@@ -15,6 +15,13 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TagAttributesTag"/>. </summary>
+        /// <param name="signatureRecord"> SignatureRecord value. </param>
+        internal TagAttributesTag(string signatureRecord)
+        {
+            SignatureRecord = signatureRecord;
+        }
+
         /// <summary> SignatureRecord value. </summary>
         public string SignatureRecord { get; }
     }

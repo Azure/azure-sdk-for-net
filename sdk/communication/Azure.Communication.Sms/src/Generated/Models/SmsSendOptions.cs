@@ -17,6 +17,15 @@ namespace Azure.Communication.Sms
             EnableDeliveryReport = enableDeliveryReport;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SmsSendOptions"/>. </summary>
+        /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
+        /// <param name="tag"> Use this field to provide metadata that will then be sent back in the corresponding Delivery Report. </param>
+        internal SmsSendOptions(bool enableDeliveryReport, string tag)
+        {
+            EnableDeliveryReport = enableDeliveryReport;
+            Tag = tag;
+        }
+
         /// <summary> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </summary>
         public bool EnableDeliveryReport { get; }
         /// <summary> Use this field to provide metadata that will then be sent back in the corresponding Delivery Report. </summary>

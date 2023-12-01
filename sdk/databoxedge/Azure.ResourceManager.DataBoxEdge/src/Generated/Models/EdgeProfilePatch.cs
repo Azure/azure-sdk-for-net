@@ -18,6 +18,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgeProfilePatch"/>. </summary>
+        /// <param name="subscription"> The Data Box Edge/Gateway Edge Profile Subscription patch. </param>
+        internal EdgeProfilePatch(WritableSubResource subscription)
+        {
+            Subscription = subscription;
+        }
+
         /// <summary> The Data Box Edge/Gateway Edge Profile Subscription patch. </summary>
         internal WritableSubResource Subscription { get; set; }
         /// <summary> Gets or sets Id. </summary>

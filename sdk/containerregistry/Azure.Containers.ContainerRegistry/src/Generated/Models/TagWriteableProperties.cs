@@ -15,6 +15,19 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TagWriteableProperties"/>. </summary>
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        internal TagWriteableProperties(bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        {
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
+        }
+
         /// <summary> Delete enabled. </summary>
         public bool? CanDelete { get; set; }
         /// <summary> Write enabled. </summary>

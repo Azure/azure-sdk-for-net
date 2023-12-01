@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Communication.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CommunicationNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        internal CommunicationNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>

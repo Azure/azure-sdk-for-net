@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDebugInfo"/>. </summary>
+        /// <param name="name"> The resource name. </param>
+        internal DataFactoryDebugInfo(string name)
+        {
+            Name = name;
+        }
+
         /// <summary> The resource name. </summary>
         public string Name { get; set; }
     }
