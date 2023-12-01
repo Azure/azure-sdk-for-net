@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             Ids = ids.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/>. </summary>
+        /// <param name="ids"> The resource IDs of the database resources to be unlinked. </param>
+        internal ForceUnlinkRedisEnterpriseDatabaseContent(IList<ResourceIdentifier> ids)
+        {
+            Ids = ids;
+        }
+
         /// <summary> The resource IDs of the database resources to be unlinked. </summary>
         public IList<ResourceIdentifier> Ids { get; }
     }

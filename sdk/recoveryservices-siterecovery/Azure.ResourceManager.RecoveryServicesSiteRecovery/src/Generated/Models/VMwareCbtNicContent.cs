@@ -27,6 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsPrimaryNic = isPrimaryNic;
         }
 
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtNicContent"/>. </summary>
+        /// <param name="nicId"> The NIC Id. </param>
+        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="targetSubnetName"> Target subnet name. </param>
+        /// <param name="targetStaticIPAddress"> The static IP address. </param>
+        /// <param name="isSelectedForMigration"> A value indicating whether this NIC is selected for migration. </param>
+        /// <param name="targetNicName"> Target NIC name. </param>
+        /// <param name="testSubnetName"> The test subnet name. </param>
+        /// <param name="testStaticIPAddress"> The test static IP address. </param>
+        internal VMwareCbtNicContent(string nicId, string isPrimaryNic, string targetSubnetName, IPAddress targetStaticIPAddress, string isSelectedForMigration, string targetNicName, string testSubnetName, IPAddress testStaticIPAddress)
+        {
+            NicId = nicId;
+            IsPrimaryNic = isPrimaryNic;
+            TargetSubnetName = targetSubnetName;
+            TargetStaticIPAddress = targetStaticIPAddress;
+            IsSelectedForMigration = isSelectedForMigration;
+            TargetNicName = targetNicName;
+            TestSubnetName = testSubnetName;
+            TestStaticIPAddress = testStaticIPAddress;
+        }
+
         /// <summary> The NIC Id. </summary>
         public string NicId { get; }
         /// <summary> A value indicating whether this is the primary NIC. </summary>

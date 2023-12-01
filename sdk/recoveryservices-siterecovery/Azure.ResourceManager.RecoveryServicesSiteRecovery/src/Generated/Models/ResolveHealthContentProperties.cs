@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = new ChangeTrackingList<ResolveHealthError>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthContentProperties"/>. </summary>
+        /// <param name="healthErrors"> Health errors. </param>
+        internal ResolveHealthContentProperties(IList<ResolveHealthError> healthErrors)
+        {
+            HealthErrors = healthErrors;
+        }
+
         /// <summary> Health errors. </summary>
         public IList<ResolveHealthError> HealthErrors { get; }
     }

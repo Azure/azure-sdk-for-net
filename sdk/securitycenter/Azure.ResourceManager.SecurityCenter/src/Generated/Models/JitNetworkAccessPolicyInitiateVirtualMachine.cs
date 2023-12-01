@@ -28,6 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Ports = ports.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateVirtualMachine"/>. </summary>
+        /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
+        /// <param name="ports"> The ports to open for the resource with the `id`. </param>
+        internal JitNetworkAccessPolicyInitiateVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessPolicyInitiatePort> ports)
+        {
+            Id = id;
+            Ports = ports;
+        }
+
         /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>
         public ResourceIdentifier Id { get; }
         /// <summary> The ports to open for the resource with the `id`. </summary>

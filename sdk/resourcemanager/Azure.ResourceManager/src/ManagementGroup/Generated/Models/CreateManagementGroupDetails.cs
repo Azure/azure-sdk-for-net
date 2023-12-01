@@ -17,6 +17,19 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CreateManagementGroupDetails"/>. </summary>
+        /// <param name="version"> The version number of the object. </param>
+        /// <param name="updatedOn"> The date and time when this object was last updated. </param>
+        /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
+        /// <param name="parent"> (Optional) The ID of the parent management group used during creation. </param>
+        internal CreateManagementGroupDetails(int? version, DateTimeOffset? updatedOn, string updatedBy, ManagementGroupParentCreateOptions parent)
+        {
+            Version = version;
+            UpdatedOn = updatedOn;
+            UpdatedBy = updatedBy;
+            Parent = parent;
+        }
+
         /// <summary> The version number of the object. </summary>
         public int? Version { get; }
         /// <summary> The date and time when this object was last updated. </summary>

@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtResyncContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="skipCbtReset"> A value indicating whether CBT is to be reset. </param>
+        internal VMwareCbtResyncContent(string instanceType, string skipCbtReset) : base(instanceType)
+        {
+            SkipCbtReset = skipCbtReset;
+            InstanceType = instanceType ?? "VMwareCbt";
+        }
+
         /// <summary> A value indicating whether CBT is to be reset. </summary>
         public string SkipCbtReset { get; }
     }

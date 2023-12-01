@@ -21,6 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
+        /// <summary> Initializes a new instance of <see cref="A2AAddDisksContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="vmDisks"> The list of vm disk details. </param>
+        /// <param name="vmManagedDisks"> The list of vm managed disk details. </param>
+        internal A2AAddDisksContent(string instanceType, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks) : base(instanceType)
+        {
+            VmDisks = vmDisks;
+            VmManagedDisks = vmManagedDisks;
+            InstanceType = instanceType ?? "A2A";
+        }
+
         /// <summary> The list of vm disk details. </summary>
         public IList<A2AVmDiskDetails> VmDisks { get; }
         /// <summary> The list of vm managed disk details. </summary>

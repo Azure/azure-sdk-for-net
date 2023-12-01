@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeContent"/>. </summary>
+        /// <param name="properties"> Calculate exchange request properties. </param>
+        internal CalculateExchangeContent(CalculateExchangeContentProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Calculate exchange request properties. </summary>
         public CalculateExchangeContentProperties Properties { get; set; }
     }

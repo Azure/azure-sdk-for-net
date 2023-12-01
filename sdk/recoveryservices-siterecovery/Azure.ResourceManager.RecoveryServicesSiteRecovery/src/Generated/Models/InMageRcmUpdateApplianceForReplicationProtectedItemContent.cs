@@ -16,6 +16,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateApplianceForReplicationProtectedItemContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="runAsAccountId"> The run as account Id. </param>
+        internal InMageRcmUpdateApplianceForReplicationProtectedItemContent(string instanceType, string runAsAccountId) : base(instanceType)
+        {
+            RunAsAccountId = runAsAccountId;
+            InstanceType = instanceType ?? "InMageRcm";
+        }
+
         /// <summary> The run as account Id. </summary>
         public string RunAsAccountId { get; set; }
     }

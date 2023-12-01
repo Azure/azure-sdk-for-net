@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceType = SqlNameAvailabilityResourceType.MicrosoftSqlServers;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        internal SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Gets the resource type. </summary>

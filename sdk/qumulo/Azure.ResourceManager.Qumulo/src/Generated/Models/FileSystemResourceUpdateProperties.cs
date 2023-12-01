@@ -20,6 +20,21 @@ namespace Azure.ResourceManager.Qumulo.Models
             PrivateIPs = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="FileSystemResourceUpdateProperties"/>. </summary>
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <param name="userDetails"> User Details. </param>
+        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="clusterLoginUri"> File system Id of the resource. </param>
+        /// <param name="privateIPs"> Private IPs of the resource. </param>
+        internal FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, ResourceIdentifier delegatedSubnetId, Uri clusterLoginUri, IList<string> privateIPs)
+        {
+            MarketplaceDetails = marketplaceDetails;
+            UserDetails = userDetails;
+            DelegatedSubnetId = delegatedSubnetId;
+            ClusterLoginUri = clusterLoginUri;
+            PrivateIPs = privateIPs;
+        }
+
         /// <summary> Marketplace details. </summary>
         public MarketplaceDetails MarketplaceDetails { get; set; }
         /// <summary> User Details. </summary>

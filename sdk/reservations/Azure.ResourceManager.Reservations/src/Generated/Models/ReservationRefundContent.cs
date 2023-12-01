@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundContent"/>. </summary>
+        /// <param name="properties"> Properties needed for refund request including the session id from calculate refund, the scope, the reservation to be returned and the return reason. </param>
+        internal ReservationRefundContent(ReservationRefundRequestProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Properties needed for refund request including the session id from calculate refund, the scope, the reservation to be returned and the return reason. </summary>
         public ReservationRefundRequestProperties Properties { get; set; }
     }
