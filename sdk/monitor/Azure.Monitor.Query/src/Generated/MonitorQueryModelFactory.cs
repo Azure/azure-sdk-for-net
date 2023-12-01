@@ -15,6 +15,27 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Model factory for models. </summary>
     public static partial class MonitorQueryModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.LogsQueryResult"/>. </summary>
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <returns> A new <see cref="Models.LogsQueryResult"/> instance for mocking. </returns>
+        public static LogsQueryResult LogsQueryResult(IEnumerable<LogsTable> allTables = null)
+        {
+            allTables ??= new List<LogsTable>();
+
+            return new LogsQueryResult(allTables?.ToList(), statistics: default, visualization: default, error: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LogsTable"/>. </summary>
+        /// <param name="name"> The name of the table. </param>
+        /// <param name="columns"> The list of columns in this table. </param>
+        /// <returns> A new <see cref="Models.LogsTable"/> instance for mocking. </returns>
+        public static LogsTable LogsTable(string name = null, IEnumerable<LogsTableColumn> columns = null)
+        {
+            columns ??= new List<LogsTableColumn>();
+
+            return new LogsTable(name, columns?.ToList(), internalRows: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.LogsTableColumn"/>. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
@@ -30,6 +51,16 @@ namespace Azure.Monitor.Query.Models
             return new LogsTableColumn(name, type);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.LogsBatchQueryResult"/>. </summary>
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <returns> A new <see cref="Models.LogsBatchQueryResult"/> instance for mocking. </returns>
+        public static LogsBatchQueryResult LogsBatchQueryResult(IEnumerable<LogsTable> allTables = null)
+        {
+            allTables ??= new List<LogsTable>();
+
+            return new LogsBatchQueryResult(allTables?.ToList(), statistics: default, visualization: default, error: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>
         /// <param name="granularity"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
@@ -37,6 +68,20 @@ namespace Azure.Monitor.Query.Models
         public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
         {
             return new MetricAvailability(granularity, retention);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsQueryResult"/>. </summary>
+        /// <param name="cost"> The integer value representing the relative cost of the query. </param>
+        /// <param name="granularity"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
+        /// <param name="namespace"> The namespace of the metrics being queried. </param>
+        /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
+        /// <param name="metrics"> the value of the collection. </param>
+        /// <returns> A new <see cref="Models.MetricsQueryResult"/> instance for mocking. </returns>
+        public static MetricsQueryResult MetricsQueryResult(int? cost = null, TimeSpan? granularity = null, string @namespace = null, string resourceRegion = null, IEnumerable<MetricResult> metrics = null)
+        {
+            metrics ??= new List<MetricResult>();
+
+            return new MetricsQueryResult(cost, timespan: null, granularity, @namespace, resourceRegion, metrics?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricResultsResponse"/>. </summary>

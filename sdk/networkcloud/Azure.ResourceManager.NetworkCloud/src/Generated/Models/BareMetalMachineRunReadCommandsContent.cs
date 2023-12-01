@@ -30,6 +30,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             LimitTimeSeconds = limitTimeSeconds;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunReadCommandsContent"/>. </summary>
+        /// <param name="commands"> The list of read-only commands to be executed directly against the target machine. </param>
+        /// <param name="limitTimeSeconds">
+        /// The maximum time the commands are allowed to run.
+        /// If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252).
+        /// </param>
+        internal BareMetalMachineRunReadCommandsContent(IList<BareMetalMachineCommandSpecification> commands, long limitTimeSeconds)
+        {
+            Commands = commands;
+            LimitTimeSeconds = limitTimeSeconds;
+        }
+
         /// <summary> The list of read-only commands to be executed directly against the target machine. </summary>
         public IList<BareMetalMachineCommandSpecification> Commands { get; }
         /// <summary>
