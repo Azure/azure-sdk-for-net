@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2023-12-01)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Track 2 initial commit for ArcVm resources.
 
 ## 1.1.0 (2023-11-27)
 
