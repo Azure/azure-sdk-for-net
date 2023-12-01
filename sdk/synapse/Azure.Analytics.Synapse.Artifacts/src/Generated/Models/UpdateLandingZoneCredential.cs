@@ -15,6 +15,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateLandingZoneCredential"/>. </summary>
+        /// <param name="sasToken"> Landing zone's sas token. </param>
+        internal UpdateLandingZoneCredential(SecureString sasToken)
+        {
+            SasToken = sasToken;
+        }
+
         /// <summary> Landing zone's sas token. </summary>
         public SecureString SasToken { get; set; }
     }

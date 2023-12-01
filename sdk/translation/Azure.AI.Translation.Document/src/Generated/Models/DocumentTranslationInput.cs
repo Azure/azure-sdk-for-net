@@ -28,6 +28,17 @@ namespace Azure.AI.Translation.Document
             Targets = targets.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationInput"/>. </summary>
+        /// <param name="source"> Source of the input documents. </param>
+        /// <param name="targets"> Location of the destination for the output. </param>
+        /// <param name="storageUriKind"> Storage type of the input documents source string. </param>
+        internal DocumentTranslationInput(TranslationSource source, IList<TranslationTarget> targets, StorageInputUriKind? storageUriKind)
+        {
+            Source = source;
+            Targets = targets;
+            StorageUriKind = storageUriKind;
+        }
+
         /// <summary> Source of the input documents. </summary>
         public TranslationSource Source { get; }
         /// <summary> Location of the destination for the output. </summary>

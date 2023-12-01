@@ -25,6 +25,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             Documents = documents.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageBatchInput"/>. </summary>
+        /// <param name="documents"> The set of documents to process as part of this batch. </param>
+        internal MultiLanguageBatchInput(IList<MultiLanguageInput> documents)
+        {
+            Documents = documents;
+        }
+
         /// <summary> The set of documents to process as part of this batch. </summary>
         public IList<MultiLanguageInput> Documents { get; }
     }

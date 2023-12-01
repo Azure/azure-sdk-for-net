@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.StorageSync.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TriggerRolloverContent"/>. </summary>
+        /// <param name="serverCertificate"> Certificate Data. </param>
+        internal TriggerRolloverContent(BinaryData serverCertificate)
+        {
+            ServerCertificate = serverCertificate;
+        }
+
         /// <summary>
         /// Certificate Data
         /// <para>

@@ -26,6 +26,16 @@ namespace Azure.AI.TextAnalytics.Legacy
             Tasks = tasks;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchInput"/>. </summary>
+        /// <param name="displayName"> Optional display name for the analysis job. </param>
+        /// <param name="analysisInput"> Contains a set of input documents to be analyzed by the service. </param>
+        /// <param name="tasks"> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </param>
+        internal AnalyzeBatchInput(string displayName, MultiLanguageBatchInput analysisInput, JobManifestTasks tasks) : base(displayName)
+        {
+            AnalysisInput = analysisInput;
+            Tasks = tasks;
+        }
+
         /// <summary> Contains a set of input documents to be analyzed by the service. </summary>
         public MultiLanguageBatchInput AnalysisInput { get; }
         /// <summary> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </summary>
