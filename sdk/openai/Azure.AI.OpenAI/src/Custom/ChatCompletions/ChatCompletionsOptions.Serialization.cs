@@ -3,14 +3,13 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
 [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
-public partial class CompletionsOptions : IUtf8JsonSerializable
+public partial class ChatCompletionsOptions : IUtf8JsonSerializable
 {
     // CUSTOM CODE NOTE:
     //   This customized serialization allows us to reproject the logit_bias map of Token IDs to scores as the wire-
@@ -19,13 +18,28 @@ public partial class CompletionsOptions : IUtf8JsonSerializable
     void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
     {
         writer.WriteStartObject();
-        writer.WritePropertyName("prompt"u8);
+        writer.WritePropertyName("messages"u8);
         writer.WriteStartArray();
-        foreach (var item in Prompts)
+        foreach (var item in Messages)
         {
-            writer.WriteStringValue(item);
+            writer.WriteObjectValue(item);
         }
         writer.WriteEndArray();
+        if (Optional.IsCollectionDefined(Functions))
+        {
+            writer.WritePropertyName("functions"u8);
+            writer.WriteStartArray();
+            foreach (var item in Functions)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+        }
+        if (Optional.IsDefined(FunctionCall))
+        {
+            writer.WritePropertyName("function_call"u8);
+            writer.WriteObjectValue(FunctionCall);
+        }
         if (Optional.IsDefined(MaxTokens))
         {
             writer.WritePropertyName("max_tokens"u8);
@@ -41,14 +55,15 @@ public partial class CompletionsOptions : IUtf8JsonSerializable
             writer.WritePropertyName("top_p"u8);
             writer.WriteNumberValue(NucleusSamplingFactor.Value);
         }
+        // CUSTOM: serialize <int, int> to <string, int>
         if (Optional.IsCollectionDefined(TokenSelectionBiases))
         {
             writer.WritePropertyName("logit_bias"u8);
             writer.WriteStartObject();
-            foreach (KeyValuePair<int, int> keyValuePair in TokenSelectionBiases)
+            foreach (var item in TokenSelectionBiases)
             {
-                writer.WritePropertyName($"{keyValuePair.Key}");
-                writer.WriteNumberValue(keyValuePair.Value);
+                writer.WritePropertyName($"{item.Key}");
+                writer.WriteNumberValue(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -57,20 +72,10 @@ public partial class CompletionsOptions : IUtf8JsonSerializable
             writer.WritePropertyName("user"u8);
             writer.WriteStringValue(User);
         }
-        if (Optional.IsDefined(ChoicesPerPrompt))
+        if (Optional.IsDefined(ChoiceCount))
         {
             writer.WritePropertyName("n"u8);
-            writer.WriteNumberValue(ChoicesPerPrompt.Value);
-        }
-        if (Optional.IsDefined(LogProbabilityCount))
-        {
-            writer.WritePropertyName("logprobs"u8);
-            writer.WriteNumberValue(LogProbabilityCount.Value);
-        }
-        if (Optional.IsDefined(Echo))
-        {
-            writer.WritePropertyName("echo"u8);
-            writer.WriteBooleanValue(Echo.Value);
+            writer.WriteNumberValue(ChoiceCount.Value);
         }
         if (Optional.IsCollectionDefined(StopSequences))
         {
@@ -92,11 +97,6 @@ public partial class CompletionsOptions : IUtf8JsonSerializable
             writer.WritePropertyName("frequency_penalty"u8);
             writer.WriteNumberValue(FrequencyPenalty.Value);
         }
-        if (Optional.IsDefined(GenerationSampleCount))
-        {
-            writer.WritePropertyName("best_of"u8);
-            writer.WriteNumberValue(GenerationSampleCount.Value);
-        }
         if (Optional.IsDefined(InternalShouldStreamResponse))
         {
             writer.WritePropertyName("stream"u8);
@@ -106,6 +106,49 @@ public partial class CompletionsOptions : IUtf8JsonSerializable
         {
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(DeploymentName);
+        }
+        if (AzureExtensionsOptions != null)
+        {
+            // CUSTOM CODE NOTE: Extensions options currently deserialize directly into the payload (not as a
+            //                      property value therein)
+            ((IUtf8JsonSerializable)AzureExtensionsOptions).Write(writer);
+        }
+        if (Optional.IsDefined(Enhancements))
+        {
+            writer.WritePropertyName("enhancements"u8);
+            writer.WriteObjectValue(Enhancements);
+        }
+        if (Optional.IsDefined(Seed))
+        {
+            writer.WritePropertyName("seed"u8);
+            writer.WriteNumberValue(Seed.Value);
+        }
+        if (Optional.IsDefined(ResponseFormat))
+        {
+            writer.WritePropertyName("response_format"u8);
+            writer.WriteStringValue(ResponseFormat.Value.ToString());
+        }
+        if (Optional.IsCollectionDefined(Tools))
+        {
+            writer.WritePropertyName("tools"u8);
+            writer.WriteStartArray();
+            foreach (var item in Tools)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+        }
+        if (Optional.IsDefined(ToolChoice))
+        {
+            writer.WritePropertyName("tool_choice"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ToolChoice);
+#else
+            using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
         }
         writer.WriteEndObject();
     }

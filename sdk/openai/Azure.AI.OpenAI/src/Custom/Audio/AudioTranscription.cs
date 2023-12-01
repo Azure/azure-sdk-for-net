@@ -7,7 +7,7 @@ namespace Azure.AI.OpenAI;
 
 public partial class AudioTranscription
 {
-    // CUSTOM CODE NOTE: included to demote visibility of 'task'
+    // CUSTOM CODE NOTE: included to demote visibility of 'task' to internal.
 
     internal AudioTaskLabel? InternalAudioTaskLabel { get; }
 }

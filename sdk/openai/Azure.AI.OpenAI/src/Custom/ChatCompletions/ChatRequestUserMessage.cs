@@ -12,10 +12,11 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
-// CUSTOM CODE NOTE: Depending on the model being used, "Content" may either be a plain string or an array of
-// content items. This is internally represented as BinaryData, but automatically storing and reserializing the
-// permutations of data is exceptionally non-trivial. Instead, we hide the "Content" property entirely and replace
-// its serialization with direct emission of the appropriate underlying data type.
+// CUSTOM CODE NOTE:
+//   Depending on the model being used, "Content" may either be a plain string or an array of content items.
+//   This is internally represented as BinaryData, but automatically storing and reserializing the permutations
+//   of data is exceptionally non-trivial. Instead, we hide the "Content" property entirely and replace
+//   its serialization with direct emission of the appropriate underlying data type.
 
 [CodeGenSuppress("ChatRequestUserMessage", typeof(BinaryData))]
 

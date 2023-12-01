@@ -11,6 +11,10 @@ namespace Azure.AI.OpenAI;
 [CodeGenSuppress("AudioTranscriptionOptions", typeof(BinaryData))]
 public partial class AudioTranscriptionOptions
 {
+    // CUSTOM CODE NOTE:
+    //   These additions facilitate the use of an "init" pattern via a public default constructor and usable
+    //   setters.
+
     /// <summary>
     /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
     /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.

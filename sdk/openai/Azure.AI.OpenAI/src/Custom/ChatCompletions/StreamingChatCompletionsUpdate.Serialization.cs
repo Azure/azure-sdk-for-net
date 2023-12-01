@@ -8,6 +8,11 @@ using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
+
+// CUSTOM CODE NOTE:
+//   This portion of the partial class ensures we have factory exposure for all needed types, including ones
+//   added in custom code.
+
 public partial class StreamingChatCompletionsUpdate
 {
     internal static List<StreamingChatCompletionsUpdate> DeserializeStreamingChatCompletionsUpdates(JsonElement element)

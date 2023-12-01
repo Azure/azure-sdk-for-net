@@ -33,6 +33,28 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 dotnet add package Azure.AI.OpenAI --prerelease
 ```
 
+## Key concepts
+
+### Chat completion
+[From [OpenAI Capabilities: Chat completion](https://platform.openai.com/docs/guides/text-generation/chat-completions-api)]
+
+Chat models take a list of messages as input and return a model-generated message as output. Although the chat format is
+designed to make multi-turn conversations easy, it’s just as useful for single-turn tasks without any conversation.
+
+### Image generation
+[For more see [OpenAI Capabilities: Image
+generation](https://platform.openai.com/docs/guides/images/introduction?context=node)]
+
+### Audio transcription and translation
+[For more see [OpenAI Capabilities: Speech to
+text](https://platform.openai.com/docs/guides/speech-to-text/speech-to-text)]
+
+### Text embeddings
+[For more see [OpenAI Capabilities: Embeddings](https://platform.openai.com/docs/guides/embeddings/embeddings)]
+
+### Vision (preview)
+[For more see [OpenAI Capabilities: Vision](https://platform.openai.com/docs/guides/vision)]
+
 ### Authenticate the client
 
 In order to interact with Azure OpenAI or OpenAI, you'll need to create an instance of the [OpenAIClient][openai_client_class]

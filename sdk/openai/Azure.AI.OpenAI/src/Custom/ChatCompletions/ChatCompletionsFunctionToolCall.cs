@@ -10,19 +10,24 @@ namespace Azure.AI.OpenAI;
 
 public partial class ChatCompletionsFunctionToolCall : ChatCompletionsToolCall
 {
+    // CUSTOM CODE NOTE:
+    //   This code allows the concrete tool call type to directly pass through use of its underlying function
+    //   rather than having a separate layer of indirection.
+
+    /// <inheritdoc cref="FunctionCall.Name"/>
     public string Name
     {
         get => Function.Name;
         set => Function.Name = value;
     }
 
+    /// <inheritdoc cref="FunctionCall.Arguments"/>
     public string Arguments
     {
         get => Function.Arguments;
         set => Function.Arguments = value;
     }
 
-    /// <summary> The details of the function invocation requested by the tool call. </summary>
     internal FunctionCall Function { get; set; }
 
     /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolCall"/>. </summary>

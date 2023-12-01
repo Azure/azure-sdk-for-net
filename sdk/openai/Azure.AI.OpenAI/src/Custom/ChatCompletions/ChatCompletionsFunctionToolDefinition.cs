@@ -9,6 +9,10 @@ namespace Azure.AI.OpenAI;
 
 public partial class ChatCompletionsFunctionToolDefinition : ChatCompletionsToolDefinition
 {
+    // CUSTOM CODE NOTE:
+    //   This code allows the concrete tool type to directly pass through use of its underlying function
+    //   definition rather than having a separate layer of indirection.
+
     /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolDefinition"/>. </summary>
     public ChatCompletionsFunctionToolDefinition()
         : this(type: "function", new FunctionDefinition())

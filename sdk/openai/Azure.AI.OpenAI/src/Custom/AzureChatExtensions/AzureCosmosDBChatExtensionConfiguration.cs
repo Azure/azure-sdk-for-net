@@ -10,6 +10,12 @@ namespace Azure.AI.OpenAI;
 [CodeGenSuppress("AzureCosmosDBChatExtensionConfiguration", typeof(AzureCosmosDBChatExtensionParameters))]
 public partial class AzureCosmosDBChatExtensionConfiguration : AzureChatExtensionConfiguration
 {
+    // CUSTOM CODE NOTE:
+    //    These changes facilitate the direct use of the extension "configuration" classes for access to their
+    //    constituent "parameter" values. These serialize into a subordinate payload within the wire format
+    //    REST structure but don't convey additional semantic meaning, so internalizing parameter types and then
+    //    plumbing the configuration through substantially simplifies the experience.
+
     /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatExtensionConfiguration"/>. </summary>
     public AzureCosmosDBChatExtensionConfiguration()
         : this(AzureChatExtensionType.AzureCosmosDB, new AzureCosmosDBChatExtensionParameters())

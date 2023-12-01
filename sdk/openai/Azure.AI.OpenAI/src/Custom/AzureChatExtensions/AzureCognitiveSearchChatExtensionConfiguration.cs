@@ -11,6 +11,12 @@ namespace Azure.AI.OpenAI;
 [CodeGenSuppress("AzureCognitiveSearchChatExtensionConfiguration", typeof(AzureCognitiveSearchChatExtensionParameters))]
 public partial class AzureCognitiveSearchChatExtensionConfiguration : AzureChatExtensionConfiguration
 {
+    // CUSTOM CODE NOTE:
+    //    These changes facilitate the direct use of the extension "configuration" classes for access to their
+    //    constituent "parameter" values. These serialize into a subordinate payload within the wire format
+    //    REST structure but don't convey additional semantic meaning, so internalizing parameter types and then
+    //    plumbing the configuration through substantially simplifies the experience.
+
     /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionConfiguration"/>. </summary>
     public AzureCognitiveSearchChatExtensionConfiguration()
         : this(AzureChatExtensionType.AzureCognitiveSearch, new AzureCognitiveSearchChatExtensionParameters())

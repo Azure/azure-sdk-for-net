@@ -9,6 +9,10 @@ namespace Azure.AI.OpenAI;
 
 public partial class AudioTranscription
 {
+    // CUSTOM CODE NOTE:
+    //   This facilitates split deserialization behavior depending on whether the response is JSON or plain
+    //   text.
+
     internal static AudioTranscription FromResponse(Response response)
     {
         if (response.Headers.ContentType.Contains("text/plain"))

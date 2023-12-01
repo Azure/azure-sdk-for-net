@@ -8,14 +8,11 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
-public partial class AudioTranslationOptions
+public partial class AudioTranscriptionOptions
 {
-    /*
-     * CUSTOM CODE DESCRIPTION:
-     *
-     * Manual, custom multipart/form-data serialization needed.
-     *
-     */
+    // CUSTOM CODE NOTE:
+    //   This handles serialization of multipart/form-data requests, which isn't automatically generated.
+
     internal virtual RequestContent ToRequestContent()
     {
         MultipartFormDataContent content = new();
@@ -33,6 +30,10 @@ public partial class AudioTranslationOptions
         if (Optional.IsDefined(Temperature))
         {
             content.Add(MultipartContent.Create(Temperature.Value), "temperature", new Dictionary<string, string>());
+        }
+        if (Optional.IsDefined(Language))
+        {
+            content.Add(MultipartContent.Create(Language), "language", new Dictionary<string, string>());
         }
 
         string filename = Optional.IsDefined(Filename) ? Filename : "file";

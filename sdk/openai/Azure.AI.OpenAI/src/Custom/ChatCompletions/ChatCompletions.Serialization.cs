@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using Azure.Core;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using System;
 
 namespace Azure.AI.OpenAI;
 
-public partial class Completions
+public partial class ChatCompletions
 {
     // CUSTOM CODE NOTE:
     //   This fully customized deserialization allows us to support the legacy 'prompt_annotations' field name
     //   for 'prompt_filter_results' until all model versions fully migrate.
 
-    internal static Completions DeserializeCompletions(JsonElement element)
+    internal static ChatCompletions DeserializeChatCompletions(JsonElement element)
     {
         if (element.ValueKind == JsonValueKind.Null)
         {
@@ -22,8 +22,9 @@ public partial class Completions
         }
         string id = default;
         DateTimeOffset created = default;
-        Optional<IReadOnlyList<ContentFilterResultsForPrompt>> promptAnnotations = default;
-        IReadOnlyList<Choice> choices = default;
+        IReadOnlyList<ChatChoice> choices = default;
+        Optional<IReadOnlyList<ContentFilterResultsForPrompt>> promptFilterResults = default;
+        string systemFingerprint = default;
         CompletionsUsage usage = default;
         foreach (var property in element.EnumerateObject())
         {
@@ -37,8 +38,18 @@ public partial class Completions
                 created = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                 continue;
             }
+            if (property.NameEquals("choices"u8))
+            {
+                List<ChatChoice> array = new List<ChatChoice>();
+                foreach (var item in property.Value.EnumerateArray())
+                {
+                    array.Add(ChatChoice.DeserializeChatChoice(item));
+                }
+                choices = array;
+                continue;
+            }
             // CUSTOM CODE NOTE: temporary, custom handling of forked keys for prompt filter results
-            if (property.NameEquals("prompt_annotations"u8) || property.NameEquals("prompt_filter_results"))
+            if (property.NameEquals("prompt_annotations"u8) || property.NameEquals("prompt_filter_results"u8))
             {
                 if (property.Value.ValueKind == JsonValueKind.Null)
                 {
@@ -49,17 +60,12 @@ public partial class Completions
                 {
                     array.Add(ContentFilterResultsForPrompt.DeserializeContentFilterResultsForPrompt(item));
                 }
-                promptAnnotations = array;
+                promptFilterResults = array;
                 continue;
             }
-            if (property.NameEquals("choices"u8))
+            if (property.NameEquals("system_fingerprint"u8))
             {
-                List<Choice> array = new List<Choice>();
-                foreach (var item in property.Value.EnumerateArray())
-                {
-                    array.Add(Choice.DeserializeChoice(item));
-                }
-                choices = array;
+                systemFingerprint = property.Value.GetString();
                 continue;
             }
             if (property.NameEquals("usage"u8))
@@ -68,14 +74,6 @@ public partial class Completions
                 continue;
             }
         }
-        return new Completions(id, created, Optional.ToList(promptAnnotations), choices, usage);
-    }
-
-    /// <summary> Deserializes the model from a raw response. </summary>
-    /// <param name="response"> The response to deserialize the model from. </param>
-    internal static Completions FromResponse(Response response)
-    {
-        using var document = JsonDocument.Parse(response.Content);
-        return DeserializeCompletions(document.RootElement);
+        return new ChatCompletions(id, created, choices, Optional.ToList(promptFilterResults), systemFingerprint, usage);
     }
 }

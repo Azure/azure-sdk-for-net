@@ -7,5 +7,5 @@ namespace Azure.AI.OpenAI;
 
 internal readonly partial struct AudioTaskLabel
 {
-    // CUSTOM CODE NOTE: here to demote visibility to internal.
+    // CUSTOM CODE NOTE: here purely to demote visibility to internal.
 }
