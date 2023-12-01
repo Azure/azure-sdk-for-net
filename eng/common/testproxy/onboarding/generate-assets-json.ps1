@@ -216,8 +216,13 @@ Function Get-Repo-Language {
   return $lang
 }
 
-Function Get-Repo-Root {
+Function Get-Repo-Root($StartDir=$null) {
   [string] $currentDir = Get-Location
+
+  if ($StartDir){
+    $currentDir = $StartDir
+  }
+
   # -1 to strip off the trialing directory separator
   return $currentDir.Substring(0, $currentDir.LastIndexOf("sdk") - 1)
 }

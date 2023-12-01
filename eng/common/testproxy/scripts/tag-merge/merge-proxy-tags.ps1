@@ -3,33 +3,91 @@
 Merge multiple asset tagss worth of content into a single asset tag.
 
 .DESCRIPTION
-USAGE: merge-proxy-tags.ps1 TAG1 TAG2 TAG3
+USAGE: merge-proxy-tags.ps1 path/to/target_assets_json. TAG1 TAG2 TAG3
 
-Attempts to merge the contents of multiple assets tags. The first tag will be checked out, then successive tag's SHAs will be cherry-picked in one at a time.
+Attempts to merge the contents of multiple assets tags into a live .assets repository.
 
-In the occurence of a git conflict during a cherry-pick, the process is stopped, and the location of the .assets folder will be returned to the user.
+In the case one of the targeted tags exists in the targeted assets.json, that tag will always be the start point.
 
-Users should resolve the conflicts and re-run the script with the SAME ARGUMENTS.
+1. test-proxy restore <assets-file>
+2. locate recording location
+3. walk the incoming tags, cherry-picking their changes directly into the changeset _in context_
+4. In the case of a discovered git conflict, the process ends. A list of which tags merged and which didn't will be presented to the user.
+  4a. Users should resolve the git conflicts themselves (don't commit, there's a proxy bug to detect already commit stuff :D)
+  4b. Once users have the files into a state they like. They should test-proxy push.
+  4c. After pushing the resolved conflict, if there are additional tags, they should re-run this script, just excluding the tags that have been merged.
+
+This script requires that test-proxy or azure.sdk.tools.testproxy should be on the PATH.
 
 .PARAMETER TargetTags
-The set of tags whos contents should be merged into a single new tag. 
+The set of tags whos contents should be merged into the targeted 
 
 #>
 param(
-  [Parameter(Position=0, ValueFromRemainingArguments=$true)]
+  [Parameter(Position=0)]
+  [string] $AssetsJson
+  [Parameter(Position=1, ValueFromRemainingArguments=$true)]
   [string[]] $TargetTags
 )
 
-function gcmd($CommandString){
+. (Join-Path $PSScriptRoot ".." ".." "onboarding" "generate-assets-json.ps1")
+
+function gcmd($CommandString,$WorkingDirectory=$null){
     Write-Host "git $CommandString"
+
+    if ($WorkingDirectory){
+        Push-Location $WorkingDirectory
+    }
+
     $result = Invoke-Expression "git $CommandString"
 
+    if ($WorkingDirectory){
+        Pop-Location
+    }
+
     if ($lastexitcode -ne 0) {
-        Write-Host $result
+        Write-Error 
+        Write-Error $result
         exit 1
     }
 
     return $result
+}
+
+function ResolveProxy {
+    # this script requires the presence of git
+    Test-Exe-In-Path -ExeToLookFor "git"
+
+    $testProxyExe = "test-proxy"
+    # this script requires the presence of the test-proxy on the PATH
+    $proxyToolPresent = Test-Exe-In-Path -ExeToLookFor "test-proxy" -ExitOnError $false
+    $proxyStandalonePresent = Test-Exe-In-Path -ExeToLookFor "Azure.Sdk.Tools.TestProxy" -ExitOnError $false
+
+    if (-not $proxyToolPresent -and -not $proxyStandalonePresent){
+        Write-Error "This script requires the presence of a test-proxy executable to complete its operations. Exiting."
+        exit 1
+    }
+
+    if (-not $proxyToolPresent) {
+        $testProxyExe = "Azure.Sdk.Tools.TestProxy"
+    }
+
+    return $testProxyExe
+}
+
+function Call-Proxy {
+    param(
+    [string] $TestProxyExe,
+    [string] $CommandArgs,
+    [string] $MountDirectory
+    )
+
+    $CommandArgs += " --storage-location=$MountDirectory"
+    Write-Host "$TestProxyExe $CommandArgs"
+
+    [array] $output = & "$TestProxyExe" $CommandArgs.Split(" ")
+    
+    return $output
 }
 
 function GetTagSHA($TagName){
@@ -48,7 +106,7 @@ function GetTagSHA($TagName){
 function StartMessage($AssetsRepository, $TargetTags){
     Write-Host "This script will work against " -nonewline
     Write-Host $assetsRepository -ForegroundColor Green -nonewline
-    Write-Host " and attempt to merge tags " -nonewline
+    Write-Host " and attempt to merge tags " -noneStartDirwline
     Write-Host "$($TargetTags -join ', ')" -ForegroundColor Green
 }
 
@@ -68,31 +126,9 @@ function CombineTags($RemainingTags){
 
 $ErrorActionPreference = "Stop"
 
-$assetsRepository = $env:ASSETS_REPOSITORY ?? "azure/azure-sdk-assets"
-$assetsDirectory = Resolve-Path -Path "assets"
-$assetsUrl = "https://github.com/{0}" -f $assetsRepository
+$ProxyExe = ResolveProxy
+$MountDirectory = Get-Repo-Root -StartDir $AssetsJson
 
-if (!(Test-Path $assetsDirectory)){
-    New-Item -ItemType Directory -Path $assetsDirectory
-    gcmd "clone -c core.longpaths=true --no-checkout --filter=tree:0 $assetsUrl $assetsDirectory" | Out-null
-}
-else {
-    # do nothing, we've already cloned it
-    # we need a way to be able to tell if we're in a good position to continue from last
-}
-
-StartMessage -AssetsRepository $assetsRepository -RemainingTags $TargetTags
-
-$startTag = $TargetTags[0]
-$remainingTags = $TargetTags[1..($TargetTags.Length - 1)]
-
-Push-Location $assetsDirectory
-
-gcmd "-c advice.detachedHead=false checkout $startTag"
-
-CombineTags -RemainingTags $remainingTags
-
-FinishMessage -AssetsDirectory $assetsDirectory
-
-Pop-Location
-
+# StartMessage -AssetsRepository $assetsRepository -RemainingTags $TargetTags
+# CombineTags -RemainingTags $remainingTags
+# FinishMessage -AssetsDirectory $assetsDirectory
