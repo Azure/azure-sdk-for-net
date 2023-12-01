@@ -23,6 +23,15 @@ namespace Azure.Quantum.Jobs.Models
             ContainerName = containerName;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BlobDetails"/>. </summary>
+        /// <param name="containerName"> The container name. </param>
+        /// <param name="blobName"> The blob name. </param>
+        internal BlobDetails(string containerName, string blobName)
+        {
+            ContainerName = containerName;
+            BlobName = blobName;
+        }
+
         /// <summary> The container name. </summary>
         public string ContainerName { get; }
         /// <summary> The blob name. </summary>

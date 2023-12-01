@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DscNodePatch"/>. </summary>
+        /// <param name="nodeId"> Gets or sets the id of the dsc node. </param>
+        /// <param name="properties"></param>
+        internal DscNodePatch(string nodeId, DscNodeUpdateParametersProperties properties)
+        {
+            NodeId = nodeId;
+            Properties = properties;
+        }
+
         /// <summary> Gets or sets the id of the dsc node. </summary>
         public string NodeId { get; set; }
         /// <summary> Gets or sets the properties. </summary>

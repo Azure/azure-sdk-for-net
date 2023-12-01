@@ -23,6 +23,15 @@ namespace Azure.Communication.Messages
             RefValue = refValue;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppButton"/>. </summary>
+        /// <param name="subType"> The WhatsApp button sub type. </param>
+        /// <param name="refValue"> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </param>
+        internal MessageTemplateBindingsWhatsAppButton(MessageTemplateValueWhatsAppSubType? subType, string refValue)
+        {
+            SubType = subType;
+            RefValue = refValue;
+        }
+
         /// <summary> The WhatsApp button sub type. </summary>
         public MessageTemplateValueWhatsAppSubType? SubType { get; set; }
         /// <summary> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </summary>

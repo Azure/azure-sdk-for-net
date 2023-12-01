@@ -30,6 +30,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ResourceType = resourceType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityContent"/>. </summary>
+        /// <param name="skus"> The SKU of the resource. </param>
+        /// <param name="kind"> The Kind of the resource. </param>
+        /// <param name="resourceType"> The Type of the resource. </param>
+        internal CognitiveServicesSkuAvailabilityContent(IList<string> skus, string kind, ResourceType resourceType)
+        {
+            Skus = skus;
+            Kind = kind;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The SKU of the resource. </summary>
         public IList<string> Skus { get; }
         /// <summary> The Kind of the resource. </summary>

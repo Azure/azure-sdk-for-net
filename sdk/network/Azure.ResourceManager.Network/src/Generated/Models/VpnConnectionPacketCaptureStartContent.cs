@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Network.Models
             LinkConnectionNames = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionPacketCaptureStartContent"/>. </summary>
+        /// <param name="filterData"> Start Packet capture parameters on vpn connection. </param>
+        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        internal VpnConnectionPacketCaptureStartContent(string filterData, IList<string> linkConnectionNames)
+        {
+            FilterData = filterData;
+            LinkConnectionNames = linkConnectionNames;
+        }
+
         /// <summary> Start Packet capture parameters on vpn connection. </summary>
         public string FilterData { get; set; }
         /// <summary> List of site link connection names. </summary>

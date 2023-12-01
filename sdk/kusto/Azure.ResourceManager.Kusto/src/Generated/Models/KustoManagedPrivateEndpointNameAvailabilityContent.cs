@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Kusto.Models
             ResourceType = KustoManagedPrivateEndpointsType.MicrosoftKustoClustersManagedPrivateEndpoints;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KustoManagedPrivateEndpointNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Managed private endpoint resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/managedPrivateEndpoints. </param>
+        internal KustoManagedPrivateEndpointNameAvailabilityContent(string name, KustoManagedPrivateEndpointsType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Managed private endpoint resource name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/managedPrivateEndpoints. </summary>

@@ -28,6 +28,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "ItemPathBasedRestoreCriteria";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
+        /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
+        /// <param name="subItemPathPrefix"> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </param>
+        internal ItemPathBasedRestoreCriteria(string objectType, string itemPath, bool isPathRelativeToBackupItem, IList<string> subItemPathPrefix) : base(objectType)
+        {
+            ItemPath = itemPath;
+            IsPathRelativeToBackupItem = isPathRelativeToBackupItem;
+            SubItemPathPrefix = subItemPathPrefix;
+            ObjectType = objectType ?? "ItemPathBasedRestoreCriteria";
+        }
+
         /// <summary> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </summary>
         public string ItemPath { get; }
         /// <summary> Flag to specify if the path is relative to backup item or full path. </summary>

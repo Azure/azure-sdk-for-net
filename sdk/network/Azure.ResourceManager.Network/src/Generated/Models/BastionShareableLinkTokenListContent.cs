@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Network.Models
             Tokens = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="BastionShareableLinkTokenListContent"/>. </summary>
+        /// <param name="tokens"> List of Bastion Shareable Link Token. </param>
+        internal BastionShareableLinkTokenListContent(IList<string> tokens)
+        {
+            Tokens = tokens;
+        }
+
         /// <summary> List of Bastion Shareable Link Token. </summary>
         public IList<string> Tokens { get; }
     }

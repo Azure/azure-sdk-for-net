@@ -13,9 +13,9 @@ namespace Azure.Communication.CallAutomation
     public class PlayOptions
     {
         /// <summary>
-        /// A PlaySource object representing the source to play.
+        /// PlaySource objects representing the sources to play.
         /// </summary>
-        public PlaySource PlaySource { get; }
+        public IReadOnlyList<PlaySource> PlaySources { get; }
 
         /// <summary>
         /// A list of target identifiers to play the file to.
@@ -33,16 +33,26 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// The callback URI override for this transfer call request.
+        /// The callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
-        public Uri CallbackUri { get; set; }
+        public Uri OperationCallbackUri { get; set; }
+
+        /// <summary>
+        /// Creates a new PlayOptions object.
+        /// </summary>
+        public PlayOptions(IEnumerable<PlaySource> playSources, IEnumerable<CommunicationIdentifier> playTo)
+        {
+            PlaySources = playSources.ToList();
+            PlayTo = playTo.ToList();
+        }
 
         /// <summary>
         /// Creates a new PlayOptions object.
         /// </summary>
         public PlayOptions(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo)
         {
-            PlaySource = playSource;
+            PlaySources = new List<PlaySource> { playSource };
             PlayTo = playTo.ToList();
         }
     }

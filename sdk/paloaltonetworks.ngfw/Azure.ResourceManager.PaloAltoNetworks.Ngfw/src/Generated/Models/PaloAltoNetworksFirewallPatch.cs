@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallPatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The updatable properties of the FirewallResource. </param>
+        internal PaloAltoNetworksFirewallPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, FirewallUpdateProperties properties)
+        {
+            Identity = identity;
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>

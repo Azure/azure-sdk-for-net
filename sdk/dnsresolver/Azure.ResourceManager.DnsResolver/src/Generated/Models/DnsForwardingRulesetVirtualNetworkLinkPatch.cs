@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkPatch"/>. </summary>
+        /// <param name="metadata"> Metadata attached to the virtual network link. </param>
+        internal DnsForwardingRulesetVirtualNetworkLinkPatch(IDictionary<string, string> metadata)
+        {
+            Metadata = metadata;
+        }
+
         /// <summary> Metadata attached to the virtual network link. </summary>
         public IDictionary<string, string> Metadata { get; }
     }

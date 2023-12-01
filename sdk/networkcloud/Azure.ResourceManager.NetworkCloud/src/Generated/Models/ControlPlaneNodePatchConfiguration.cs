@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneNodePatchConfiguration"/>. </summary>
+        /// <param name="count"> The number of virtual machines that use this configuration. </param>
+        internal ControlPlaneNodePatchConfiguration(long? count)
+        {
+            Count = count;
+        }
+
         /// <summary> The number of virtual machines that use this configuration. </summary>
         public long? Count { get; set; }
     }

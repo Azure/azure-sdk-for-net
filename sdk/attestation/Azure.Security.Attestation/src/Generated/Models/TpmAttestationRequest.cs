@@ -14,5 +14,12 @@ namespace Azure.Security.Attestation
         public TpmAttestationRequest()
         {
         }
+
+        /// <summary> Initializes a new instance of <see cref="TpmAttestationRequest"/>. </summary>
+        /// <param name="internalData"> Protocol data containing artifacts for attestation. </param>
+        internal TpmAttestationRequest(string internalData)
+        {
+            InternalData = internalData;
+        }
     }
 }

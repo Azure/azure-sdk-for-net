@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ExcludedRPList = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointsRecommendedForMoveContent"/>. </summary>
+        /// <param name="objectType"> Gets the class type. </param>
+        /// <param name="excludedRPList"> List of Recovery Points excluded from Move. </param>
+        internal RecoveryPointsRecommendedForMoveContent(string objectType, IList<string> excludedRPList)
+        {
+            ObjectType = objectType;
+            ExcludedRPList = excludedRPList;
+        }
+
         /// <summary> Gets the class type. </summary>
         public string ObjectType { get; set; }
         /// <summary> List of Recovery Points excluded from Move. </summary>

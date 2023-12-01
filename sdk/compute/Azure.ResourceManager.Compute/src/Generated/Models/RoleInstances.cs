@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.Compute.Models
             RoleInstancesValue = roleInstancesValue.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RoleInstances"/>. </summary>
+        /// <param name="roleInstancesValue"> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </param>
+        internal RoleInstances(IList<string> roleInstancesValue)
+        {
+            RoleInstancesValue = roleInstancesValue;
+        }
+
         /// <summary> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </summary>
         public IList<string> RoleInstancesValue { get; }
     }

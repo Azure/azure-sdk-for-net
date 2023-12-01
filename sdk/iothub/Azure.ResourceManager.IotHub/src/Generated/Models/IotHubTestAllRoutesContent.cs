@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.IotHub.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="IotHubTestAllRoutesContent"/>. </summary>
+        /// <param name="routingSource"> Routing source. </param>
+        /// <param name="message"> Routing message. </param>
+        /// <param name="twin"> Routing Twin Reference. </param>
+        internal IotHubTestAllRoutesContent(IotHubRoutingSource? routingSource, RoutingMessage message, RoutingTwin twin)
+        {
+            RoutingSource = routingSource;
+            Message = message;
+            Twin = twin;
+        }
+
         /// <summary> Routing source. </summary>
         public IotHubRoutingSource? RoutingSource { get; set; }
         /// <summary> Routing message. </summary>

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SolutionResourcePatch"/>. </summary>
+        /// <param name="properties"> Solution result. </param>
+        internal SolutionResourcePatch(SolutionResourceProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Solution result. </summary>
         public SolutionResourceProperties Properties { get; set; }
     }

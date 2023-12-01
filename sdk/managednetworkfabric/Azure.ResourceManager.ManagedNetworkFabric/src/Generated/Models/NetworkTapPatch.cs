@@ -19,6 +19,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Destinations = new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkTapPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="pollingType"> Polling type. </param>
+        /// <param name="destinations"> List of destination properties to send the filter traffic. </param>
+        internal NetworkTapPatch(IDictionary<string, string> tags, string annotation, NetworkTapPollingType? pollingType, IList<NetworkTapPatchableParametersDestinationsItem> destinations) : base(tags)
+        {
+            Annotation = annotation;
+            PollingType = pollingType;
+            Destinations = destinations;
+        }
+
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Polling type. </summary>

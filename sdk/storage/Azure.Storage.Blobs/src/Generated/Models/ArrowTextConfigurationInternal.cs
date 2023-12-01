@@ -25,6 +25,13 @@ namespace Azure.Storage.Blobs.Models
             Schema = schema.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArrowTextConfigurationInternal"/>. </summary>
+        /// <param name="schema"></param>
+        internal ArrowTextConfigurationInternal(IList<ArrowFieldInternal> schema)
+        {
+            Schema = schema;
+        }
+
         /// <summary> Gets the schema. </summary>
         public IList<ArrowFieldInternal> Schema { get; }
     }

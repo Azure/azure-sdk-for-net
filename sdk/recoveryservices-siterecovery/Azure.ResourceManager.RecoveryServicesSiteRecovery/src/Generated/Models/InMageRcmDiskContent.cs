@@ -28,6 +28,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskType = diskType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        internal InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId)
+        {
+            DiskId = diskId;
+            LogStorageAccountId = logStorageAccountId;
+            DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
+        }
+
         /// <summary> The disk Id. </summary>
         public string DiskId { get; }
         /// <summary> The log storage account ARM Id. </summary>
