@@ -33,17 +33,17 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
-        /// <param name="azureCognitiveServicesEndpointUrl"> The endpoint URL of the Azure Cognitive Services resource attached. </param>
-        /// <param name="answeredByIdentifier"> The identifier of the call automation entity which answers the call. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, string azureCognitiveServicesEndpointUrl, CommunicationUserIdentifierModel answeredByIdentifier)
+        /// <param name="callIntelligenceOptions"> AI options for the call. </param>
+        /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
             OperationContext = operationContext;
             MediaStreamingConfiguration = mediaStreamingConfiguration;
             TranscriptionConfiguration = transcriptionConfiguration;
-            AzureCognitiveServicesEndpointUrl = azureCognitiveServicesEndpointUrl;
-            AnsweredByIdentifier = answeredByIdentifier;
+            CallIntelligenceOptions = callIntelligenceOptions;
+            AnsweredBy = answeredBy;
         }
 
         /// <summary> The context associated with the call. </summary>

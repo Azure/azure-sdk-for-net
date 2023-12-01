@@ -27,12 +27,15 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> Defines options for recognition. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
-        internal ContinuousDtmfRecognitionRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext, string callbackUri)
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal ContinuousDtmfRecognitionRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext, string operationCallbackUri)
         {
             TargetParticipant = targetParticipant;
             OperationContext = operationContext;
-            CallbackUri = callbackUri;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> Defines options for recognition. </summary>

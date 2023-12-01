@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dtmfOptions"> Defines configurations for DTMF. </param>
         /// <param name="choices"> Defines Ivr choices for recognize. </param>
         /// <param name="speechOptions"> Defines continuous speech recognition option. </param>
-        internal RecognizeOptionsInternal(bool? interruptPrompt, int? initialSilenceTimeoutInSeconds, CommunicationIdentifierModel targetParticipant, string speechLanguage, string speechRecognitionModelEndpointId, DtmfOptionsInternal dtmfOptions, IList<RecognizeChoice> choices, SpeechOptionsInternal speechOptions)
+        internal RecognizeOptionsInternal(bool? interruptPrompt, int? initialSilenceTimeoutInSeconds, CommunicationIdentifierModel targetParticipant, string speechLanguage, string speechRecognitionModelEndpointId, DtmfOptionsInternal dtmfOptions, IList<RecognitionChoice> choices, SpeechOptionsInternal speechOptions)
         {
             InterruptPrompt = interruptPrompt;
             InitialSilenceTimeoutInSeconds = initialSilenceTimeoutInSeconds;

@@ -31,15 +31,18 @@ namespace Azure.Communication.CallAutomation
         /// <param name="interruptCallMediaOperation"> If set recognize can barge into other existing queued-up/currently-processing requests. </param>
         /// <param name="recognizeOptions"> Defines options for recognition. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
-        internal RecognizeRequestInternal(RecognizeInputType recognizeInputType, PlaySourceInternal playPrompt, bool? interruptCallMediaOperation, RecognizeOptionsInternal recognizeOptions, string operationContext, string callbackUri)
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal RecognizeRequestInternal(RecognizeInputType recognizeInputType, PlaySourceInternal playPrompt, bool? interruptCallMediaOperation, RecognizeOptionsInternal recognizeOptions, string operationContext, string operationCallbackUri)
         {
             RecognizeInputType = recognizeInputType;
             PlayPrompt = playPrompt;
             InterruptCallMediaOperation = interruptCallMediaOperation;
             RecognizeOptions = recognizeOptions;
             OperationContext = operationContext;
-            CallbackUri = callbackUri;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> Determines the type of the recognition. </summary>

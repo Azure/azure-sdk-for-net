@@ -28,21 +28,24 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
-        /// <param name="playSourceInfo"> The source of the audio to be played. </param>
+        /// <param name="playSources"> The source of the audio to be played. </param>
         /// <param name="playTo">
         /// The list of call participants play provided audio to.
         /// Plays to everyone in the call when not provided.
         /// </param>
         /// <param name="playOptions"> Defines options for playing the audio. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
-        internal PlayRequestInternal(PlaySourceInternal playSourceInfo, IList<CommunicationIdentifierModel> playTo, PlayOptionsInternal playOptions, string operationContext, string callbackUri)
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal PlayRequestInternal(IList<PlaySourceInternal> playSources, IList<CommunicationIdentifierModel> playTo, PlayOptionsInternal playOptions, string operationContext, string operationCallbackUri)
         {
-            PlaySourceInfo = playSourceInfo;
+            PlaySources = playSources;
             PlayTo = playTo;
             PlayOptions = playOptions;
             OperationContext = operationContext;
-            CallbackUri = callbackUri;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> The source of the audio to be played. </summary>

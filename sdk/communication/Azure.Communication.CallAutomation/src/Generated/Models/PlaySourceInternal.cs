@@ -18,18 +18,18 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
-        /// <param name="sourceType"> Defines the type of the play source. </param>
-        /// <param name="playSourceId"> Defines the identifier to be used for caching related media. </param>
-        /// <param name="fileSource"> Defines the file source info to be used for play. </param>
-        /// <param name="textSource"> Defines the text source info to be used for play. </param>
-        /// <param name="ssmlSource"> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </param>
-        internal PlaySourceInternal(PlaySourceTypeInternal sourceType, string playSourceId, FileSourceInternal fileSource, TextSourceInternal textSource, SsmlSourceInternal ssmlSource)
+        /// <param name="kind"> Defines the type of the play source. </param>
+        /// <param name="playSourceCacheId"> Defines the identifier to be used for caching related media. </param>
+        /// <param name="file"> Defines the file source info to be used for play. </param>
+        /// <param name="text"> Defines the text source info to be used for play. </param>
+        /// <param name="ssml"> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </param>
+        internal PlaySourceInternal(PlaySourceTypeInternal kind, string playSourceCacheId, FileSourceInternal file, TextSourceInternal text, SsmlSourceInternal ssml)
         {
-            SourceType = sourceType;
-            PlaySourceId = playSourceId;
-            FileSource = fileSource;
-            TextSource = textSource;
-            SsmlSource = ssmlSource;
+            Kind = kind;
+            PlaySourceCacheId = playSourceCacheId;
+            File = file;
+            Text = text;
+            Ssml = ssml;
         }
 
         /// <summary> Defines the type of the play source. </summary>

@@ -36,25 +36,25 @@ namespace Azure.Communication.CallAutomation
         /// Required only when calling a PSTN callee.
         /// </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
-        /// <param name="sourceIdentity"> The identifier of the source of the call. </param>
+        /// <param name="source"> The identifier of the source of the call. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
-        /// <param name="azureCognitiveServicesEndpointUrl"> The identifier of the Cognitive Service resource assigned to this call. </param>
-        /// <param name="customContext"> Used by customer to send custom context to targets. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel sourceIdentity, string operationContext, string callbackUri, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, string azureCognitiveServicesEndpointUrl, CustomContextInternal customContext)
+        /// <param name="callIntelligenceOptions"> AI options for the call. </param>
+        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CustomCallingContextInternal customCallingContext)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
-            SourceIdentity = sourceIdentity;
+            Source = source;
             OperationContext = operationContext;
             CallbackUri = callbackUri;
             MediaStreamingConfiguration = mediaStreamingConfiguration;
             TranscriptionConfiguration = transcriptionConfiguration;
-            AzureCognitiveServicesEndpointUrl = azureCognitiveServicesEndpointUrl;
-            CustomContext = customContext;
+            CallIntelligenceOptions = callIntelligenceOptions;
+            CustomCallingContext = customCallingContext;
         }
 
         /// <summary> The targets of the call. </summary>

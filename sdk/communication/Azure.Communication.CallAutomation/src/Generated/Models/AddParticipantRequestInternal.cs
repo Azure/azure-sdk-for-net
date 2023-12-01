@@ -39,17 +39,20 @@ namespace Azure.Communication.CallAutomation
         /// The maximum value of this is 180 seconds
         /// </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="customContext"> Used by customer to send custom context to targets. </param>
-        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
-        internal AddParticipantRequestInternal(PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel participantToAdd, int? invitationTimeoutInSeconds, string operationContext, CustomContextInternal customContext, string callbackUri)
+        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal AddParticipantRequestInternal(PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel participantToAdd, int? invitationTimeoutInSeconds, string operationContext, CustomCallingContextInternal customCallingContext, string operationCallbackUri)
         {
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
             ParticipantToAdd = participantToAdd;
             InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
             OperationContext = operationContext;
-            CustomContext = customContext;
-            CallbackUri = callbackUri;
+            CustomCallingContext = customCallingContext;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary>

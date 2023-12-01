@@ -29,17 +29,17 @@ namespace Azure.Communication.CallAutomation
         /// Source language locale to be played
         /// Refer to available locales here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
         /// </param>
-        /// <param name="voiceGender"> Voice gender type. </param>
+        /// <param name="voiceKind"> Voice kind type. </param>
         /// <param name="voiceName">
         /// Voice name to be played
         /// Refer to available Text-to-speech voices here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
         /// </param>
         /// <param name="customVoiceEndpointId"> Endpoint where the custom voice was deployed. </param>
-        internal TextSourceInternal(string text, string sourceLocale, GenderType? voiceGender, string voiceName, string customVoiceEndpointId)
+        internal TextSourceInternal(string text, string sourceLocale, VoiceKind? voiceKind, string voiceName, string customVoiceEndpointId)
         {
             Text = text;
             SourceLocale = sourceLocale;
-            VoiceGender = voiceGender;
+            VoiceKind = voiceKind;
             VoiceName = voiceName;
             CustomVoiceEndpointId = customVoiceEndpointId;
         }

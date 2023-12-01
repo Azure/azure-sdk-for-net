@@ -26,17 +26,20 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
-        /// <param name="customContext"> Used by customer to send custom context to targets. </param>
+        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="transferee"> Transferee is the participant who is transferring the call. </param>
-        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
-        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, CustomContextInternal customContext, string operationContext, CommunicationIdentifierModel transferee, string callbackUri)
+        /// <param name="transferee"> Transferee is the participant who is transferred away. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, CustomCallingContextInternal customCallingContext, string operationContext, CommunicationIdentifierModel transferee, string operationCallbackUri)
         {
             TargetParticipant = targetParticipant;
-            CustomContext = customContext;
+            CustomCallingContext = customCallingContext;
             OperationContext = operationContext;
             Transferee = transferee;
-            CallbackUri = callbackUri;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> The identity of the target where call should be transferred to. </summary>
