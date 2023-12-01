@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.Compute.Models
             Secrets = new ChangeTrackingList<VaultSecretGroup>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateOSProfile"/>. </summary>
+        /// <param name="customData"> A base-64 encoded string of custom data. </param>
+        /// <param name="windowsConfiguration"> The Windows Configuration of the OS profile. </param>
+        /// <param name="linuxConfiguration"> The Linux Configuration of the OS profile. </param>
+        /// <param name="secrets"> The List of certificates for addition to the VM. </param>
+        internal VirtualMachineScaleSetUpdateOSProfile(string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets)
+        {
+            CustomData = customData;
+            WindowsConfiguration = windowsConfiguration;
+            LinuxConfiguration = linuxConfiguration;
+            Secrets = secrets;
+        }
+
         /// <summary> A base-64 encoded string of custom data. </summary>
         public string CustomData { get; set; }
         /// <summary> The Windows Configuration of the OS profile. </summary>

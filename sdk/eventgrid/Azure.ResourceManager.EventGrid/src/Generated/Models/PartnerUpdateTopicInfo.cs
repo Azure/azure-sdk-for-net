@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PartnerUpdateTopicInfo"/>. </summary>
+        /// <param name="eventTypeInfo"> Event type info for the partner topic. </param>
+        internal PartnerUpdateTopicInfo(PartnerTopicEventTypeInfo eventTypeInfo)
+        {
+            EventTypeInfo = eventTypeInfo;
+        }
+
         /// <summary> Event type info for the partner topic. </summary>
         public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
     }

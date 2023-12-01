@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddDisksContent"/>. </summary>
+        /// <param name="properties"> Add disks input properties. </param>
+        internal SiteRecoveryAddDisksContent(SiteRecoveryAddDisksProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Add disks input properties. </summary>
         internal SiteRecoveryAddDisksProperties Properties { get; set; }
         /// <summary>

@@ -27,6 +27,19 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionName = dimensionName;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AnomalyDimensionQuery"/>. </summary>
+        /// <param name="startTime"> start time. </param>
+        /// <param name="endTime"> end time. </param>
+        /// <param name="dimensionName"> dimension to query. </param>
+        /// <param name="dimensionFilter"></param>
+        internal AnomalyDimensionQuery(DateTimeOffset startTime, DateTimeOffset endTime, string dimensionName, DimensionKey dimensionFilter)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            DimensionName = dimensionName;
+            DimensionFilter = dimensionFilter;
+        }
+
         /// <summary> start time. </summary>
         public DateTimeOffset StartTime { get; }
         /// <summary> end time. </summary>

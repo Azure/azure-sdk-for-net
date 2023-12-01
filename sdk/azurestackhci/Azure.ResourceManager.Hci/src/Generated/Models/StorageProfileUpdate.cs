@@ -20,6 +20,13 @@ namespace Azure.ResourceManager.Hci.Models
             DataDisks = new ChangeTrackingList<WritableSubResource>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageProfileUpdate"/>. </summary>
+        /// <param name="dataDisks"> adds data disks to the virtual machine instance for the update call. </param>
+        internal StorageProfileUpdate(IList<WritableSubResource> dataDisks)
+        {
+            DataDisks = dataDisks;
+        }
+
         /// <summary> adds data disks to the virtual machine instance for the update call. </summary>
         public IList<WritableSubResource> DataDisks { get; }
     }

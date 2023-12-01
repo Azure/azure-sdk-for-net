@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Webhooks = new ChangeTrackingDictionary<string, MachineLearningWebhook>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PartialNotificationSetting"/>. </summary>
+        /// <param name="webhooks">
+        /// Send webhook callback to a service. Key is a user-provided name for the webhook.
+        /// Please note <see cref="MachineLearningWebhook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureDevOpsWebhook"/>.
+        /// </param>
+        internal PartialNotificationSetting(IDictionary<string, MachineLearningWebhook> webhooks)
+        {
+            Webhooks = webhooks;
+        }
+
         /// <summary>
         /// Send webhook callback to a service. Key is a user-provided name for the webhook.
         /// Please note <see cref="MachineLearningWebhook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Grafana.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelPatch"/>. </summary>
+        /// <param name="tags"> The new tags of the managed private endpoint. </param>
+        internal ManagedPrivateEndpointModelPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> The new tags of the managed private endpoint. </summary>
         public IDictionary<string, string> Tags { get; }
     }

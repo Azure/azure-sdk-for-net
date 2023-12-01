@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageContent"/>. </summary>
+        /// <param name="name"> The name for the image we create. </param>
+        /// <param name="labVirtualMachineId"> The ID of the lab virtual machine you want to save an image from. </param>
+        internal LabVirtualMachineImageContent(string name, ResourceIdentifier labVirtualMachineId)
+        {
+            Name = name;
+            LabVirtualMachineId = labVirtualMachineId;
+        }
+
         /// <summary> The name for the image we create. </summary>
         public string Name { get; set; }
         /// <summary> The ID of the lab virtual machine you want to save an image from. </summary>

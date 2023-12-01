@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> Private Endpoint Connection Resource Id. </param>
+        /// <param name="properties"> The connection state of the private endpoint connection. </param>
+        internal ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, PrivateEndpointConnectionRequestProperties properties)
+        {
+            Id = id;
+            Properties = properties;
+        }
+
         /// <summary> Private Endpoint Connection Resource Id. </summary>
         public ResourceIdentifier Id { get; set; }
         /// <summary> The connection state of the private endpoint connection. </summary>

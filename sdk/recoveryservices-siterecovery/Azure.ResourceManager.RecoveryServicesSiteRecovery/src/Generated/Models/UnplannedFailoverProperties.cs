@@ -15,6 +15,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UnplannedFailoverProperties"/>. </summary>
+        /// <param name="failoverDirection"> Failover direction. </param>
+        /// <param name="sourceSiteOperations"> Source site operations status. </param>
+        /// <param name="providerSpecificDetails">
+        /// Provider specific settings.
+        /// Please note <see cref="UnplannedFailoverProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AUnplannedFailoverContent"/>, <see cref="HyperVReplicaAzureUnplannedFailoverContent"/>, <see cref="InMageUnplannedFailoverContent"/>, <see cref="InMageAzureV2UnplannedFailoverContent"/> and <see cref="InMageRcmUnplannedFailoverContent"/>.
+        /// </param>
+        internal UnplannedFailoverProperties(string failoverDirection, string sourceSiteOperations, UnplannedFailoverProviderSpecificContent providerSpecificDetails)
+        {
+            FailoverDirection = failoverDirection;
+            SourceSiteOperations = sourceSiteOperations;
+            ProviderSpecificDetails = providerSpecificDetails;
+        }
+
         /// <summary> Failover direction. </summary>
         public string FailoverDirection { get; set; }
         /// <summary> Source site operations status. </summary>

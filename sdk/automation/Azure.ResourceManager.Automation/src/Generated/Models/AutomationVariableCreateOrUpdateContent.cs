@@ -23,6 +23,19 @@ namespace Azure.ResourceManager.Automation.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutomationVariableCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the variable. </param>
+        /// <param name="value"> Gets or sets the value of the variable. </param>
+        /// <param name="description"> Gets or sets the description of the variable. </param>
+        /// <param name="isEncrypted"> Gets or sets the encrypted flag of the variable. </param>
+        internal AutomationVariableCreateOrUpdateContent(string name, string value, string description, bool? isEncrypted)
+        {
+            Name = name;
+            Value = value;
+            Description = description;
+            IsEncrypted = isEncrypted;
+        }
+
         /// <summary> Gets or sets the name of the variable. </summary>
         public string Name { get; }
         /// <summary> Gets or sets the value of the variable. </summary>

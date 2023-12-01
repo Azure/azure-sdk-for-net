@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.Cdn.Models
             ContentPaths = contentPaths.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="LoadContent"/>. </summary>
+        /// <param name="contentPaths"> The path to the content to be loaded. Path should be a relative file URL of the origin. </param>
+        internal LoadContent(IList<string> contentPaths)
+        {
+            ContentPaths = contentPaths;
+        }
+
         /// <summary> The path to the content to be loaded. Path should be a relative file URL of the origin. </summary>
         public IList<string> ContentPaths { get; }
     }

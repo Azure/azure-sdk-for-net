@@ -28,6 +28,27 @@ namespace Azure.Monitor.Query.Models
             Labels = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataQuery"/>. </summary>
+        /// <param name="id"> The ID of the query. </param>
+        /// <param name="displayName"> The display name of the query. </param>
+        /// <param name="description"> The description of the query. </param>
+        /// <param name="body"> The KQL body of the query. </param>
+        /// <param name="labels"> The user defined labels associated with the query. </param>
+        /// <param name="tags"> The tags associated with the query. </param>
+        /// <param name="properties"> The properties of the query. </param>
+        /// <param name="related"> The related metadata items for the query. </param>
+        internal MetadataQuery(string id, string displayName, string description, string body, IReadOnlyList<string> labels, object tags, object properties, MetadataQueryRelated related)
+        {
+            Id = id;
+            DisplayName = displayName;
+            Description = description;
+            Body = body;
+            Labels = labels;
+            Tags = tags;
+            Properties = properties;
+            Related = related;
+        }
+
         /// <summary> The ID of the query. </summary>
         public string Id { get; }
         /// <summary> The display name of the query. </summary>

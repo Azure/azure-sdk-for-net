@@ -27,6 +27,27 @@ namespace Azure.ResourceManager.Compute.Models
             ToTime = toTime;
         }
 
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsInputBase"/>. </summary>
+        /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
+        /// <param name="fromTime"> From time of the query. </param>
+        /// <param name="toTime"> To time of the query. </param>
+        /// <param name="groupByThrottlePolicy"> Group query result by Throttle Policy applied. </param>
+        /// <param name="groupByOperationName"> Group query result by Operation Name. </param>
+        /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
+        /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
+        /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
+        internal LogAnalyticsInputBase(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent)
+        {
+            BlobContainerSasUri = blobContainerSasUri;
+            FromTime = fromTime;
+            ToTime = toTime;
+            GroupByThrottlePolicy = groupByThrottlePolicy;
+            GroupByOperationName = groupByOperationName;
+            GroupByResourceName = groupByResourceName;
+            GroupByClientApplicationId = groupByClientApplicationId;
+            GroupByUserAgent = groupByUserAgent;
+        }
+
         /// <summary> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </summary>
         public Uri BlobContainerSasUri { get; }
         /// <summary> From time of the query. </summary>

@@ -21,6 +21,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             PackageNameMasksToExclude = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="LinuxParameters"/>. </summary>
+        /// <param name="classificationsToInclude"> The update classifications to select when installing patches for Linux. </param>
+        /// <param name="packageNameMasksToInclude"> packages to include in the patch operation. Format: packageName_packageVersion. </param>
+        /// <param name="packageNameMasksToExclude"> packages to exclude in the patch operation. Format: packageName_packageVersion. </param>
+        internal LinuxParameters(IList<VmGuestPatchClassificationLinux> classificationsToInclude, IList<string> packageNameMasksToInclude, IList<string> packageNameMasksToExclude)
+        {
+            ClassificationsToInclude = classificationsToInclude;
+            PackageNameMasksToInclude = packageNameMasksToInclude;
+            PackageNameMasksToExclude = packageNameMasksToExclude;
+        }
+
         /// <summary> The update classifications to select when installing patches for Linux. </summary>
         public IList<VmGuestPatchClassificationLinux> ClassificationsToInclude { get; }
         /// <summary> packages to include in the patch operation. Format: packageName_packageVersion. </summary>

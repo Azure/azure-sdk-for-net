@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
+        internal NetworkFabricIPPrefixPatch(IDictionary<string, string> tags, string annotation, IList<IPPrefixRule> ipPrefixRules) : base(tags)
+        {
+            Annotation = annotation;
+            IPPrefixRules = ipPrefixRules;
+        }
+
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> The list of IP Prefix Rules. </summary>
