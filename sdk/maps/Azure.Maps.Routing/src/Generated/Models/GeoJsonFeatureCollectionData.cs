@@ -25,6 +25,13 @@ namespace Azure.Maps.Routing.Models
             Features = features.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollectionData"/>. </summary>
+        /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
+        internal GeoJsonFeatureCollectionData(IList<GeoJsonFeature> features)
+        {
+            Features = features;
+        }
+
         /// <summary> Contains a list of valid `GeoJSON Feature` objects. </summary>
         public IList<GeoJsonFeature> Features { get; }
     }

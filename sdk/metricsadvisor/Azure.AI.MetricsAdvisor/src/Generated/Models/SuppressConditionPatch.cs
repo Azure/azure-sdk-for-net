@@ -15,6 +15,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SuppressConditionPatch"/>. </summary>
+        /// <param name="minNumber"> min point number, value range : [1, +∞). </param>
+        /// <param name="minRatio"> min point ratio, value range : (0, 100]. </param>
+        internal SuppressConditionPatch(int? minNumber, double? minRatio)
+        {
+            MinNumber = minNumber;
+            MinRatio = minRatio;
+        }
+
         /// <summary> min point number, value range : [1, +∞). </summary>
         public int? MinNumber { get; set; }
         /// <summary> min point ratio, value range : (0, 100]. </summary>

@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Kusto.Models
             ImageType = SandboxCustomImageType.MicrosoftKustoClustersSandboxCustomImages;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SandboxCustomImagesCheckNameContent"/>. </summary>
+        /// <param name="name"> Sandbox custom image resource name. </param>
+        /// <param name="imageType"> The type of resource, for instance Microsoft.Kusto/clusters/sandboxCustomImages. </param>
+        internal SandboxCustomImagesCheckNameContent(string name, SandboxCustomImageType imageType)
+        {
+            Name = name;
+            ImageType = imageType;
+        }
+
         /// <summary> Sandbox custom image resource name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/sandboxCustomImages. </summary>
