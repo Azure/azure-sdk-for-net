@@ -110,6 +110,7 @@ namespace Microsoft.Extensions.Hosting
 
             builder.Services.AddAzureClientsCore();
             builder.Services.TryAddSingleton<MessagingProvider>();
+            builder.Services.AddSingleton<CleanupService>();
             builder.Services.AddSingleton<ServiceBusClientFactory>();
             #if NET6_0_OR_GREATER
             builder.Services.AddSingleton<SettlementService>();

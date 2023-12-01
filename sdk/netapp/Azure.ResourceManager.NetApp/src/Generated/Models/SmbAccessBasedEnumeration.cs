@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+    /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
     public readonly partial struct SmbAccessBasedEnumeration : IEquatable<SmbAccessBasedEnumeration>
     {
         private readonly string _value;

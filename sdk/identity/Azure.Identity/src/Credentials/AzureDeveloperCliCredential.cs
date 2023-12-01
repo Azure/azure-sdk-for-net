@@ -65,7 +65,7 @@ namespace Azure.Identity
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _pipeline = pipeline;
             _processService = processService ?? ProcessService.Default;
-            TenantId = options?.TenantId;
+            TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
             _isChainedCredential = options?.IsChainedCredential ?? false;
@@ -111,6 +111,13 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             string tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
+
+            Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
+
+            foreach (var scope in context.Scopes)
+            {
+                ScopeUtilities.ValidateScope(scope);
+            }
 
             GetFileNameAndArguments(context.Scopes, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureDeveloperCliProcessStartInfo(fileName, argument);

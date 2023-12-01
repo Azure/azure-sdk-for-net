@@ -2,15 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
@@ -60,7 +54,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 new CreateJobOptions(jobId, channelResponse, queueResponse.Value.Id)
                 {
                     Priority = 1,
-                    MatchingMode = new JobMatchingMode(new ScheduleAndSuspendMode(timeToEnqueueJob))
+                    MatchingMode = new ScheduleAndSuspendMode(timeToEnqueueJob)
                 });
             AddForCleanup(new Task(async () => await client.DeleteJobAsync(jobId)));
 
@@ -74,12 +68,12 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var updateJobToStartMatching =
                 await client.UpdateJobAsync(new UpdateJobOptions(jobId)
                 {
-                    MatchingMode = new JobMatchingMode(new QueueAndMatchMode())
+                    MatchingMode = new QueueAndMatchMode()
                 });
 
             Assert.AreEqual(RouterJobStatus.Queued, updateJobToStartMatching.Value.Status);
             Assert.NotNull(updateJobToStartMatching.Value.ScheduledAt);
-            Assert.AreEqual(JobMatchModeType.QueueAndMatchMode, updateJobToStartMatching.Value.MatchingMode.ModeType);
+            Assert.AreEqual(typeof(QueueAndMatchMode), updateJobToStartMatching.Value.MatchingMode.GetType());
 
             var worker = await Poll(async () => await client.GetWorkerAsync(registerWorker.Value.Id),
                 w => w.Value.Offers.Any(x => x.JobId == updateJobToStartMatching.Value.Id),

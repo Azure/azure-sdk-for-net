@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 {
     /// <summary>
     /// A class representing the ContainerServiceFleetUpdateRun data model.
-    /// An UpdateRun is a multi-stage process to perform update operations across members of a Fleet.
+    /// A multi-stage process to perform update operations across members of a Fleet.
     /// </summary>
     public partial class ContainerServiceFleetUpdateRunData : ResourceData
     {
@@ -31,6 +31,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="systemData"> The systemData. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
+        /// <param name="updateStrategyId">
+        /// The resource id of the FleetUpdateStrategy resource to reference.
+        ///
+        /// When creating a new run, there are three ways to define a strategy for the run:
+        /// 1. Define a new strategy in place: Set the "strategy" field.
+        /// 2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
+        /// 3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
+        ///
+        /// Setting both "updateStrategyId" and "strategy" is invalid.
+        ///
+        /// UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
+        /// Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
+        /// UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
+        /// </param>
         /// <param name="strategy">
         /// The strategy defines the order in which the clusters will be updated.
         /// If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
@@ -38,10 +52,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>
-        internal ContainerServiceFleetUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ContainerServiceFleetUpdateRunProvisioningState? provisioningState, ContainerServiceFleetUpdateRunStrategy strategy, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate, ContainerServiceFleetUpdateRunStatus status) : base(id, name, resourceType, systemData)
+        internal ContainerServiceFleetUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ContainerServiceFleetUpdateRunProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpdateRunStrategy strategy, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate, ContainerServiceFleetUpdateRunStatus status) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ProvisioningState = provisioningState;
+            UpdateStrategyId = updateStrategyId;
             Strategy = strategy;
             ManagedClusterUpdate = managedClusterUpdate;
             Status = status;
@@ -52,12 +67,27 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <summary> The provisioning state of the UpdateRun resource. </summary>
         public ContainerServiceFleetUpdateRunProvisioningState? ProvisioningState { get; }
         /// <summary>
+        /// The resource id of the FleetUpdateStrategy resource to reference.
+        ///
+        /// When creating a new run, there are three ways to define a strategy for the run:
+        /// 1. Define a new strategy in place: Set the "strategy" field.
+        /// 2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
+        /// 3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
+        ///
+        /// Setting both "updateStrategyId" and "strategy" is invalid.
+        ///
+        /// UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
+        /// Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
+        /// UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
+        /// </summary>
+        public ResourceIdentifier UpdateStrategyId { get; set; }
+        /// <summary>
         /// The strategy defines the order in which the clusters will be updated.
         /// If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
         /// The strategy of the UpdateRun can be modified until the run is started.
         /// </summary>
         internal ContainerServiceFleetUpdateRunStrategy Strategy { get; set; }
-        /// <summary> The list of stages that compose this update run. </summary>
+        /// <summary> The list of stages that compose this update run. Min size: 1. </summary>
         public IList<ContainerServiceFleetUpdateStage> StrategyStages
         {
             get => Strategy is null ? default : Strategy.Stages;

@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -41,7 +38,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create queue
             string queueId = "queue-id-1";
-            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -128,7 +125,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create queue
             string queueId = "queue-id-1";
-            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
+            Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
 
             // Setting up 2 identical workers
             string worker1Id = "worker-id-1";
@@ -220,7 +217,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create queue
             string queueId = "queue-id-1";
-            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -352,7 +349,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create queue
             string queueId = "queue-id-1";
-            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 

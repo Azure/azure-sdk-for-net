@@ -36,7 +36,6 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResourceType.BlockBlob => "BlockBlob",
                 StorageResourceType.PageBlob => "PageBlob",
                 StorageResourceType.AppendBlob => "AppendBlob",
-                StorageResourceType.Local => "LocalFile",
                 _ => throw new NotImplementedException(),
             };
         }
@@ -48,7 +47,6 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResourceType.BlockBlob => "blob",
                 StorageResourceType.PageBlob => "blob",
                 StorageResourceType.AppendBlob => "blob",
-                StorageResourceType.Local => "local",
                 _ => throw new NotImplementedException(),
             };
         }
@@ -67,8 +65,8 @@ namespace Azure.Storage.DataMovement.Tests
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
             mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointStoreOptions(checkpointerPath));
-            mock.Setup(p => p.SourcePath).Returns(sourcePath);
-            mock.Setup(p => p.DestinationPath).Returns(destinationPath);
+            mock.Setup(p => p.SourceUri).Returns(new Uri(sourcePath));
+            mock.Setup(p => p.DestinationUri).Returns(new Uri(destinationPath));
             mock.Setup(p => p.SourceTypeId).Returns(sourceResourceId);
             mock.Setup(p => p.DestinationTypeId).Returns(destinationResourceId);
             mock.Setup(p => p.SourceProviderId).Returns(sourceProviderId);
@@ -167,8 +165,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType sourceType = StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
@@ -206,7 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
 
-            StorageResourceType sourceType = StorageResourceType.Local;
+            StorageResourceType sourceType = StorageResourceType.BlockBlob;
             StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
             DataTransferProperties transferProperties = GetProperties(
@@ -262,8 +260,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.PageBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.PageBlob;
+            StorageResourceType sourceType = StorageResourceType.PageBlob;
+            StorageResourceType destinationType = StorageResourceType.PageBlob;
 
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
@@ -301,7 +299,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
 
-            StorageResourceType sourceType = StorageResourceType.Local;
+            StorageResourceType sourceType = StorageResourceType.PageBlob;
             StorageResourceType destinationType = StorageResourceType.PageBlob;
 
             DataTransferProperties transferProperties = GetProperties(
@@ -357,8 +355,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.AppendBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.AppendBlob;
+            StorageResourceType sourceType = StorageResourceType.AppendBlob;
+            StorageResourceType destinationType = StorageResourceType.AppendBlob;
 
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
@@ -396,7 +394,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
 
-            StorageResourceType sourceType = StorageResourceType.Local;
+            StorageResourceType sourceType = StorageResourceType.AppendBlob;
             StorageResourceType destinationType = StorageResourceType.AppendBlob;
 
             DataTransferProperties transferProperties = GetProperties(
@@ -459,8 +457,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
             }
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType sourceType = StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
             string originalPath = isSource ? sourceParentPath : destinationParentPath;
 

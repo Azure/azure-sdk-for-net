@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = await _containerServiceFleetUpdateRunUpdateRunsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceFleetArmOperation(_containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerServiceFleetArmOperation(_containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2016-03-30");
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = _containerServiceFleetUpdateRunUpdateRunsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var operation = new ContainerServiceFleetArmOperation(_containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerServiceFleetArmOperation(_containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2016-03-30");
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = await _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(new ContainerServiceFleetUpdateRunOperationSource(Client), _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(new ContainerServiceFleetUpdateRunOperationSource(Client), _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation, apiVersionOverrideValue: "2016-03-30");
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(new ContainerServiceFleetUpdateRunOperationSource(Client), _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(new ContainerServiceFleetUpdateRunOperationSource(Client), _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation, apiVersionOverrideValue: "2016-03-30");
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

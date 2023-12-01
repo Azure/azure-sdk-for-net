@@ -603,16 +603,15 @@ namespace Azure.AI.OpenAI
 
                 if (_isConfiguredForAzureOpenAI)
                 {
-                    Operation<BatchImageGenerationOperationResponse> imagesOperation
+                    Operation<ImageGenerations> imagesOperation
                         = BeginAzureBatchImageGeneration(
                             WaitUntil.Completed,
                             imageGenerationOptions,
                             cancellationToken);
 
                     rawResponse = imagesOperation.GetRawResponse();
-                    BatchImageGenerationOperationResponse operationResponse = imagesOperation.Value;
 
-                    responseValue = operationResponse.Result;
+                    responseValue = imagesOperation.Value;
                 }
                 else
                 {
@@ -663,7 +662,7 @@ namespace Azure.AI.OpenAI
 
                 if (_isConfiguredForAzureOpenAI)
                 {
-                    Operation<BatchImageGenerationOperationResponse> imagesOperation
+                    Operation<ImageGenerations> imagesOperation
                         = await BeginAzureBatchImageGenerationAsync(
                             WaitUntil.Completed,
                             imageGenerationOptions,
@@ -671,9 +670,8 @@ namespace Azure.AI.OpenAI
                         .ConfigureAwait(false);
 
                     rawResponse = imagesOperation.GetRawResponse();
-                    BatchImageGenerationOperationResponse operationResponse = imagesOperation.Value;
 
-                    responseValue = operationResponse.Result;
+                    responseValue = imagesOperation.Value;
                 }
                 else
                 {

@@ -23,6 +23,19 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             #endregion
         }
 
+        public void SetUpClientWithOptions()
+        {
+            #region Snippet:CreateLogsIngestionClientWithOptions
+            var endpoint = new Uri("<data_collection_endpoint_uri>");
+            var credential = new DefaultAzureCredential();
+            var clientOptions = new LogsIngestionClientOptions
+            {
+                Audience = LogsIngestionAudience.AzureChina
+            };
+            var client = new LogsIngestionClient(endpoint, credential, clientOptions);
+            #endregion
+        }
+
         public void LogData()
         {
             #region Snippet:UploadCustomLogs

@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -39,13 +38,13 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     }
     );
 
-Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: "Queue-1", distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365",
     });
 
-Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: "Queue-2", distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_XBox",
@@ -129,7 +128,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     }
 );
 
-Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -141,7 +140,7 @@ Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQue
         }
     });
 
-Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-2",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -246,7 +245,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     }
     );
 
-Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -260,7 +259,7 @@ Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQue
         },
     });
 
-Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-2",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -274,7 +273,7 @@ Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQue
         },
     });
 
-Response<Models.RouterQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-3",
         distributionPolicyId: distributionPolicy.Value.Id)

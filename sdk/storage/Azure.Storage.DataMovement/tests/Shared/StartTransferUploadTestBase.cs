@@ -36,6 +36,10 @@ namespace Azure.Storage.DataMovement.Tests
         ///
         /// The async is defaulted to true, since we do not have sync StartTransfer methods.
         /// </summary>
+        /// <param name="expectedOverwriteExceptionMessage">
+        /// To confirm the correct overwrite exception was thrown, we check against
+        /// this exception message to verify.
+        /// </param>
         /// <param name="generatedResourcenamePrefix"></param>
         /// <param name="mode"></param>
         public StartTransferUploadTestBase(

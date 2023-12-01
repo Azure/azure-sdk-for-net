@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -54,7 +52,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 );
 
             string queueId = "Queue-1";
-            Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_365",
@@ -197,7 +195,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 );
 
             string queueId = "Queue-1";
-            Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_365",
@@ -352,7 +350,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 );
 
             string queueId = "Queue-1";
-            Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: queueId,
                     distributionPolicyId: distributionPolicy.Value.Id)

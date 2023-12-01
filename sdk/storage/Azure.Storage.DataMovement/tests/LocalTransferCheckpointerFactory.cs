@@ -152,6 +152,7 @@ namespace Azure.Storage.DataMovement.Tests
             string parentDestinationPath = _testDestinationPath,
             string sourceProviderId = _testSourceProviderId,
             string destinationProviderId = _testDestinationProviderId,
+            bool isContainer = false,
             DataTransferStatus status = default)
         {
             status ??= new DataTransferStatus();
@@ -162,6 +163,7 @@ namespace Azure.Storage.DataMovement.Tests
                 JobPlanOperation.ServiceToService,
                 sourceProviderId,
                 destinationProviderId,
+                isContainer,
                 false, /* enumerationComplete */
                 status,
                 parentSourcePath,

@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -25,7 +24,7 @@ Response<DistributionPolicy> distributionPolicy =
     await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(
         "distribution-policy-id", TimeSpan.FromMinutes(5), new LongestIdleMode()));
 
-Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
+Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
 
 string jobId = "router-job-id";
 
@@ -79,7 +78,7 @@ Console.WriteLine($"Successfully retrieved job with id: {queriedJob.Value.Id}");
 ## Get a job position
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobPosition_Async
-Response<Models.RouterJobPositionDetails> jobPositionDetails = await routerClient.GetQueuePositionAsync(jobId);
+Response<RouterJobPositionDetails> jobPositionDetails = await routerClient.GetQueuePositionAsync(jobId);
 
 Console.WriteLine($"Job position for id `{jobPositionDetails.Value.JobId}` successfully retrieved. JobPosition: {jobPositionDetails.Value.Position}");
 ```
@@ -97,21 +96,10 @@ Response<RouterJob> updatedJob = await routerClient.UpdateJobAsync(
 Console.WriteLine($"Job has been successfully updated. Current value of channelReference: {updatedJob.Value.ChannelReference}"); // "45678"
 ```
 
-## Remove from job
-
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp_Async
-Response updatedJobWithoutChannelReference = await routerClient.UpdateJobAsync(jobId,
-    RequestContent.Create(new { ChannelReference = (string?)null }));
-
-Response<RouterJob> queriedJobWithoutChannelReference = await routerClient.GetJobAsync(jobId);
-
-Console.WriteLine($"Job has been successfully updated. 'ChannelReference' has been removed: {string.IsNullOrWhiteSpace(queriedJobWithoutChannelReference.Value.ChannelReference)}");
-```
-
 ## Reclassify a job
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob_Async
-Response reclassifyJob = await routerClient.ReclassifyJobAsync(jobWithCpId);
+Response reclassifyJob = await routerClient.ReclassifyJobAsync(jobWithCpId, CancellationToken.None);
 ```
 
 ## Accept a job offer
@@ -136,7 +124,7 @@ while ((await routerClient.GetWorkerAsync(worker.Value.Id)).Value.Offers.All(off
 
 Response<RouterWorker> queriedWorker = await routerClient.GetWorkerAsync(worker.Value.Id);
 
-Models.RouterJobOffer? issuedOffer = queriedWorker.Value.Offers.First<RouterJobOffer>(offer => offer.JobId == jobId);
+RouterJobOffer? issuedOffer = queriedWorker.Value.Offers.First<RouterJobOffer>(offer => offer.JobId == jobId);
 
 Console.WriteLine($"Worker has been successfully issued to worker with offerId: {issuedOffer.OfferId} and offer expiry time: {issuedOffer.ExpiresAt}");
 

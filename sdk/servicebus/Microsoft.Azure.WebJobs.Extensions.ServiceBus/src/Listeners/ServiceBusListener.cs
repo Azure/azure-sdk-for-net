@@ -305,12 +305,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _stoppingCancellationTokenSource.Cancel();
             _functionExecutionCancellationTokenSource.Cancel();
 
-            if (_batchReceiver.IsValueCreated)
-            {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-                _batchReceiver.Value.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-            }
+            // ServiceBusClient and receivers will be disposed in CachedClientCleanupService, so as not to dispose it while it's still in
+            // use by other listeners. Processors are disposed here as they cannot be shared amongst listeners.
 
             if (_messageProcessor.IsValueCreated)
             {
@@ -323,13 +319,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 _sessionMessageProcessor.Value.Processor.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-            }
-
-            if (_client.IsValueCreated)
-            {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-                _client.Value.DisposeAsync().AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 

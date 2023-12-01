@@ -16,6 +16,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -144,7 +146,7 @@ rename-mapping:
   ManagementGroup.properties.created: CreatedOn
   ManagementGroup.properties.dataReceived: DataReceivedOn
   StorageAccount.id: -|arm-id
-  WorkspacePurgeResponse.operationId: -|uuid
+  WorkspacePurgeResponse.operationId: OperationStringId
   WorkspacePurgeBody: OperationalInsightsWorkspacePurgeContent
   WorkspacePurgeBodyFilters: OperationalInsightsWorkspacePurgeFilter
   Capacity: OperationalInsightsClusterCapacity

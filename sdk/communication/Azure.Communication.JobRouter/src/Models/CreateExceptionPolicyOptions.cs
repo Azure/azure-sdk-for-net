@@ -40,5 +40,10 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> (Optional) The name of the exception policy. </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

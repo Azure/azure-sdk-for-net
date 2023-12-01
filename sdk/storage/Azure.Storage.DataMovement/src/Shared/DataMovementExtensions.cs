@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
-            string childSourceName = childSourcePath.Substring(sourceResource.Uri.GetPath().Length + 1);
+            string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
             string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
             DataTransferStatus jobPartStatus = header.AtomicJobStatus;
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement
             string childSourcePath = header.SourcePath;
             string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
-            string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.GetPath().Length + 1);
+            string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
             DataTransferStatus jobPartStatus = header.AtomicJobStatus;
             UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
                 job: baseJob,
@@ -205,16 +205,8 @@ namespace Azure.Storage.DataMovement
                 preserveLastModifiedTime: false, // TODO: update when supported
                 checksumVerificationOption: 0); // TODO: update when supported
 
-            // Create the source Path
-            // Remove any query or SAS that could be attach to the Uri
-            UriBuilder sourceUriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
-            sourceUriBuilder.Query = "";
-            string sourcePath = sourceUriBuilder.Uri.AbsoluteUri;
-
-            // Remove any query or SAS that could be attach to the Uri
-            UriBuilder destinationUriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
-            destinationUriBuilder.Query = "";
-            string destinationPath = destinationUriBuilder.Uri.AbsoluteUri;
+            string sourcePath = jobPart._sourceResource.Uri.ToSanitizedString();
+            string destinationPath = jobPart._destinationResource.Uri.ToSanitizedString();
 
             return new JobPartPlanHeader(
                 version: DataMovementConstants.JobPartPlanFile.SchemaVersion,
@@ -265,11 +257,8 @@ namespace Azure.Storage.DataMovement
                 throw Errors.MismatchTransferId(jobPart._dataTransfer.Id, header.TransferId);
             }
 
-            // Check source path'
-            // Remove any query or SAS that could be attach to the Uri
-            UriBuilder sourceUriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
-            sourceUriBuilder.Query = "";
-            string passedSourcePath = sourceUriBuilder.Uri.AbsoluteUri;
+            // Check source path
+            string passedSourcePath = jobPart._sourceResource.Uri.ToSanitizedString();
 
             // We only check if it starts with the path because if we're passed a container
             // then we only need to check if the prefix matches
@@ -279,10 +268,7 @@ namespace Azure.Storage.DataMovement
             }
 
             // Check destination path
-            // Remove any query or SAS that could be attach to the Uri
-            UriBuilder destinationUriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
-            destinationUriBuilder.Query = "";
-            string passedDestinationPath = destinationUriBuilder.Uri.AbsoluteUri;
+            string passedDestinationPath = jobPart._destinationResource.Uri.ToSanitizedString();
 
             // We only check if it starts with the path because if we're passed a container
             // then we only need to check if the prefix matches

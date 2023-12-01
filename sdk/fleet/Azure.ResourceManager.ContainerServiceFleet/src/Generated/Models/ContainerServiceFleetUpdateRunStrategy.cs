@@ -12,11 +12,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> The UpdateRunStrategy configures the sequence of Stages and Groups in which the clusters will be updated. </summary>
+    /// <summary>
+    /// Defines the update sequence of the clusters via stages and groups.
+    ///
+    /// Stages within a run are executed sequentially one after another.
+    /// Groups within a stage are executed in parallel.
+    /// Member clusters within a group are updated sequentially one after another.
+    ///
+    /// A valid strategy contains no duplicate groups within or across stages.
+    /// </summary>
     internal partial class ContainerServiceFleetUpdateRunStrategy
     {
         /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStrategy. </summary>
-        /// <param name="stages"> The list of stages that compose this update run. </param>
+        /// <param name="stages"> The list of stages that compose this update run. Min size: 1. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stages"/> is null. </exception>
         public ContainerServiceFleetUpdateRunStrategy(IEnumerable<ContainerServiceFleetUpdateStage> stages)
         {
@@ -26,13 +34,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStrategy. </summary>
-        /// <param name="stages"> The list of stages that compose this update run. </param>
+        /// <param name="stages"> The list of stages that compose this update run. Min size: 1. </param>
         internal ContainerServiceFleetUpdateRunStrategy(IList<ContainerServiceFleetUpdateStage> stages)
         {
             Stages = stages;
         }
 
-        /// <summary> The list of stages that compose this update run. </summary>
+        /// <summary> The list of stages that compose this update run. Min size: 1. </summary>
         public IList<ContainerServiceFleetUpdateStage> Stages { get; }
     }
 }

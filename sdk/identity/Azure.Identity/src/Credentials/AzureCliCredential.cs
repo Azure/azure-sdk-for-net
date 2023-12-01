@@ -73,7 +73,7 @@ namespace Azure.Identity
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
-            TenantId = options?.TenantId;
+            TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
             _isChainedCredential = options?.IsChainedCredential ?? false;
@@ -121,6 +121,7 @@ namespace Azure.Identity
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
             string tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
 
+            Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
             ScopeUtilities.ValidateScope(resource);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);

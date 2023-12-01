@@ -307,6 +307,142 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// Get details of the specified network sibling set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/queryNetworkSiblingSet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_QueryNetworkSiblingSet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> Network sibling set to query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryNetworkSiblingSetNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = await NetAppResourceRestClient.QueryNetworkSiblingSetAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get details of the specified network sibling set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/queryNetworkSiblingSet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_QueryNetworkSiblingSet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> Network sibling set to query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryNetworkSiblingSetNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = NetAppResourceRestClient.QueryNetworkSiblingSet(Id.SubscriptionId, location, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the network features of the specified network sibling set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/updateNetworkSiblingSet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_UpdateNetworkSiblingSet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> Update for the specified network sibling set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateNetworkSiblingSetNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = await NetAppResourceRestClient.UpdateNetworkSiblingSetAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetworkSiblingSet>(new NetworkSiblingSetOperationSource(), NetAppResourceClientDiagnostics, Pipeline, NetAppResourceRestClient.CreateUpdateNetworkSiblingSetRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the network features of the specified network sibling set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/updateNetworkSiblingSet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_UpdateNetworkSiblingSet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> Update for the specified network sibling set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateNetworkSiblingSetNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = NetAppResourceRestClient.UpdateNetworkSiblingSet(Id.SubscriptionId, location, content, cancellationToken);
+                var operation = new NetAppArmOperation<NetworkSiblingSet>(new NetworkSiblingSetOperationSource(), NetAppResourceClientDiagnostics, Pipeline, NetAppResourceRestClient.CreateUpdateNetworkSiblingSetRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get the default and current limits for quotas
         /// <list type="bullet">
         /// <item>

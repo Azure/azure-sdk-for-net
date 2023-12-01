@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -127,10 +123,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             }
 
             // Additionally workers can be queried with several filters like queueId, capacity, state etc.
-            workers = routerClient.GetWorkersAsync(new GetWorkersOptions()
-            {
-                ChannelId = "Voip", State = RouterWorkerStateSelector.All
-            });
+            workers = routerClient.GetWorkersAsync(channelId: "Voip", state: RouterWorkerStateSelector.All);
 
             await foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10))
             {

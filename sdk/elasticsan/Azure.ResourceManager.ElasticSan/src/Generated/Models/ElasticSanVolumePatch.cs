@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Response for Volume request. </summary>
@@ -17,5 +19,18 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Volume size. </summary>
         public long? SizeGiB { get; set; }
+        /// <summary> Parent resource information. </summary>
+        internal ManagedByInfo ManagedBy { get; set; }
+        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
+        public ResourceIdentifier ManagedByResourceId
+        {
+            get => ManagedBy is null ? default : ManagedBy.ResourceId;
+            set
+            {
+                if (ManagedBy is null)
+                    ManagedBy = new ManagedByInfo();
+                ManagedBy.ResourceId = value;
+            }
+        }
     }
 }

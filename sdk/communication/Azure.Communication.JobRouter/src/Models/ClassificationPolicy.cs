@@ -3,13 +3,14 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("ClassificationPolicy")]
     [CodeGenSuppress("ClassificationPolicy")]
-    public partial class ClassificationPolicy
+    public partial class ClassificationPolicy: IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         internal ClassificationPolicy()
@@ -71,5 +72,54 @@ namespace Azure.Communication.JobRouter.Models
         /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>
         public RouterRule PrioritizationRule { get; internal set; }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(FallbackQueueId))
+            {
+                writer.WritePropertyName("fallbackQueueId"u8);
+                writer.WriteStringValue(FallbackQueueId);
+            }
+            if (Optional.IsCollectionDefined(_queueSelectors))
+            {
+                writer.WritePropertyName("queueSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in _queueSelectors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PrioritizationRule))
+            {
+                writer.WritePropertyName("prioritizationRule"u8);
+                writer.WriteObjectValue(PrioritizationRule);
+            }
+            if (Optional.IsCollectionDefined(_workerSelectors))
+            {
+                writer.WritePropertyName("workerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in _workerSelectors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

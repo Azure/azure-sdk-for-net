@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -94,18 +91,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Console.WriteLine($"Successfully fetched exception policy with id: {queriedExceptionPolicy.Value.Id}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicy_Async
-
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicyRemoveProp_Async
-
-            // we are going to remove Name
-            Response updateExceptionPolicyWithoutName = await routerClient.UpdateExceptionPolicyAsync(exceptionPolicyId,
-                RequestContent.Create(new { Name = (string?)null }));
-
-            Response<ExceptionPolicy> queriedExceptionPolicyWithoutName = await routerClient.GetExceptionPolicyAsync(exceptionPolicyId);
-
-            Console.WriteLine($"Exception policy successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedExceptionPolicyWithoutName.Value.Name)}");
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicyRemoveProp_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicy_Async
 

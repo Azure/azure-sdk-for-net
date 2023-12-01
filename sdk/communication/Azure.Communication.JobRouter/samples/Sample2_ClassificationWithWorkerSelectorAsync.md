@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -51,7 +50,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     );
 
 string queueId = "Queue-1";
-Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365",
@@ -165,7 +164,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     );
 
 string queueId = "Queue-1";
-Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365",
@@ -292,7 +291,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     );
 
 string queueId = "Queue-1";
-Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: queueId,
         distributionPolicyId: distributionPolicy.Value.Id)

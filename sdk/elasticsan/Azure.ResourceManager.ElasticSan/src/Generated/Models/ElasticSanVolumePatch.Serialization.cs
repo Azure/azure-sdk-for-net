@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("sizeGiB"u8);
                 writer.WriteNumberValue(SizeGiB.Value);
             }
+            if (Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteObjectValue(ManagedBy);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

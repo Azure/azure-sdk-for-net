@@ -25,5 +25,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public long? BaseSizeTiB { get; set; }
         /// <summary> Extended size of the Elastic San appliance in TiB. </summary>
         public long? ExtendedCapacitySizeTiB { get; set; }
+        /// <summary> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

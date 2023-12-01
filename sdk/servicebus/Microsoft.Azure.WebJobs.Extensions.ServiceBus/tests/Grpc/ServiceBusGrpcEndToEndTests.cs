@@ -2,12 +2,17 @@
 // Licensed under the MIT License.
 #if NET6_0_OR_GREATER
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Tests;
+using Google.Protobuf;
 using Grpc.Core;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.ServiceBus.Grpc;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc;
 using Microsoft.Azure.WebJobs.ServiceBus;
@@ -16,7 +21,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    public class ServiceBusGrpcEndToEndTests : WebJobsServiceBusTestBase
+    public class ServiceBusGrpcEndToEndTests : ServiceBusGrpcEndToEndTestsBase
     {
         public ServiceBusGrpcEndToEndTests() : base(isSession: false)
         {
@@ -242,7 +247,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         Locktoken = message.LockToken,
                         DeadletterErrorDescription = "description",
                         DeadletterReason = "reason",
-                        PropertiesToModify = {{ "key", new SettlementProperties { IntValue = 42} }}
+                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object>{{ "key", 42}})
                     },
                     new MockServerCallContext());
 
@@ -266,13 +271,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var message = messages.Single();
 
                 Assert.AreEqual("foobar", message.Body.ToString());
+                var dict = new Dictionary<string, object> { { "key", 42 } };
+                var map = new AmqpMap(dict);
+                var buffer = new ByteBuffer(200, true);
+                AmqpCodec.EncodeMap(map, buffer);
                 await SettlementService.Deadletter(
                     new DeadletterRequest()
                     {
                         Locktoken = message.LockToken,
                         DeadletterErrorDescription = "description",
                         DeadletterReason = "reason",
-                        PropertiesToModify = { { "key", new SettlementProperties { IntValue = 42 } } }
+                        PropertiesToModify = ByteString.CopyFrom(buffer.Buffer)
                     },
                     new MockServerCallContext());
 
@@ -298,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new DeferRequest
                     {
                         Locktoken = message.LockToken,
-                        PropertiesToModify = {{ "key", new SettlementProperties { BoolValue = true} }}
+                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object>{{ "key", true}})
                     },
                     new MockServerCallContext());
                 var deferredMessage = (await receiveActions.ReceiveDeferredMessagesAsync(
@@ -322,7 +331,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new DeferRequest
                     {
                         Locktoken = message.LockToken,
-                        PropertiesToModify = {{ "key", new SettlementProperties { BoolValue = true} }}
+                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object>{{ "key", true}})
                     },
                     new MockServerCallContext());
                 var deferredMessage = (await receiveActions.ReceiveDeferredMessagesAsync(
@@ -344,7 +353,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new AbandonRequest
                     {
                         Locktoken = message.LockToken,
-                        PropertiesToModify = {{ "key", new SettlementProperties { StringValue = "value"} }}
+                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object>{{ "key", "value"}})
                     },
                     new MockServerCallContext());
                 _waitHandle1.Set();
@@ -364,35 +373,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new AbandonRequest
                     {
                         Locktoken = message.LockToken,
-                        PropertiesToModify = {{ "key", new SettlementProperties { StringValue = "value"} }}
+                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object>{{ "key", "value"}})
                     },
                     new MockServerCallContext());
                 _waitHandle1.Set();
             }
-        }
-
-        internal class MockServerCallContext : ServerCallContext
-        {
-            protected override Task WriteResponseHeadersAsyncCore(Metadata responseHeaders)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override ContextPropagationToken CreatePropagationTokenCore(ContextPropagationOptions options)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override string MethodCore { get; }
-            protected override string HostCore { get; }
-            protected override string PeerCore { get; }
-            protected override DateTime DeadlineCore { get; }
-            protected override Metadata RequestHeadersCore { get; }
-            protected override CancellationToken CancellationTokenCore { get; } = CancellationToken.None;
-            protected override Metadata ResponseTrailersCore { get; }
-            protected override Status StatusCore { get; set; }
-            protected override WriteOptions WriteOptionsCore { get; set; }
-            protected override AuthContext AuthContextCore { get; }
         }
     }
 }

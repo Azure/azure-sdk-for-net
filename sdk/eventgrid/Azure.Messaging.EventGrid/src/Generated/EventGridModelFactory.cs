@@ -1741,6 +1741,428 @@ namespace Azure.Messaging.EventGrid
             return new AcsUserDisconnectedEventData(userCommunicationIdentifier);
         }
 
+        /// <summary> Initializes a new instance of AcsRouterJobCancelledEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="note"> Router Job Note. </param>
+        /// <param name="dispositionCode"> Router Job Disposition Code. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobCancelledEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobCancelledEventData AcsRouterJobCancelledEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string note = null, string dispositionCode = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new AcsRouterJobCancelledEventData(jobId, channelReference, channelId, queueId, labels, tags, note, dispositionCode);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobEventData AcsRouterJobEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new AcsRouterJobEventData(jobId, channelReference, channelId, queueId, labels, tags);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterEventData"/> instance for mocking. </returns>
+        public static AcsRouterEventData AcsRouterEventData(string jobId = null, string channelReference = null, string channelId = null)
+        {
+            return new AcsRouterEventData(jobId, channelReference, channelId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobClassifiedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="queueDetails"> Router Job Queue Info. </param>
+        /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
+        /// <param name="priority"> Router Job Priority. </param>
+        /// <param name="attachedWorkerSelectors"> Router Job Attached Worker Selector. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobClassifiedEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobClassifiedEventData AcsRouterJobClassifiedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, AcsRouterQueueDetails queueDetails = null, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            attachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+
+            return new AcsRouterJobClassifiedEventData(jobId, channelReference, channelId, queueId, labels, tags, queueDetails, classificationPolicyId, priority, attachedWorkerSelectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterQueueDetails. </summary>
+        /// <param name="id"> Router Queue Id. </param>
+        /// <param name="name"> Router Queue Name. </param>
+        /// <param name="labels"> Router Queue Labels. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterQueueDetails"/> instance for mocking. </returns>
+        public static AcsRouterQueueDetails AcsRouterQueueDetails(string id = null, string name = null, IReadOnlyDictionary<string, string> labels = null)
+        {
+            labels ??= new Dictionary<string, string>();
+
+            return new AcsRouterQueueDetails(id, name, labels);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobClosedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="assignmentId"> Router Job Closed Assignment Id. </param>
+        /// <param name="workerId"> Router Job Closed Worker Id. </param>
+        /// <param name="dispositionCode"> Router Job Closed Disposition Code. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobClosedEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobClosedEventData AcsRouterJobClosedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null, string dispositionCode = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new AcsRouterJobClosedEventData(jobId, channelReference, channelId, queueId, labels, tags, assignmentId, workerId, dispositionCode);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobCompletedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="assignmentId"> Router Job Completed Assignment Id. </param>
+        /// <param name="workerId"> Router Job Completed Worker Id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobCompletedEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobCompletedEventData AcsRouterJobCompletedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new AcsRouterJobCompletedEventData(jobId, channelReference, channelId, queueId, labels, tags, assignmentId, workerId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobDeletedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobDeletedEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobDeletedEventData AcsRouterJobDeletedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new AcsRouterJobDeletedEventData(jobId, channelReference, channelId, queueId, labels, tags);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobExceptionTriggeredEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="ruleKey"> Router Job Exception Triggered Rule Key. </param>
+        /// <param name="exceptionRuleId"> Router Job Exception Triggered Rule Id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobExceptionTriggeredEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobExceptionTriggeredEventData AcsRouterJobExceptionTriggeredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string ruleKey = null, string exceptionRuleId = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new AcsRouterJobExceptionTriggeredEventData(jobId, channelReference, channelId, queueId, labels, tags, ruleKey, exceptionRuleId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobQueuedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="priority"> Router Job Priority. </param>
+        /// <param name="attachedWorkerSelectors"> Router Job Queued Attached Worker Selector. </param>
+        /// <param name="requestedWorkerSelectors"> Router Job Queued Requested Worker Selector. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobQueuedEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobQueuedEventData AcsRouterJobQueuedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            attachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            requestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+
+            return new AcsRouterJobQueuedEventData(jobId, channelReference, channelId, queueId, labels, tags, priority, attachedWorkerSelectors?.ToList(), requestedWorkerSelectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobReceivedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="status"> Router Job Received Job Status. </param>
+        /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
+        /// <param name="priority"> Router Job Priority. </param>
+        /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
+        /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
+        /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobReceivedEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, AcsRouterJobStatus? status = null, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null, DateTimeOffset? scheduledOn = null, bool unavailableForMatching = default)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            requestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+
+            return new AcsRouterJobReceivedEventData(jobId, channelReference, channelId, queueId, labels, tags, status, classificationPolicyId, priority, requestedWorkerSelectors?.ToList(), scheduledOn, unavailableForMatching);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobSchedulingFailedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="priority"> Router Job Priority. </param>
+        /// <param name="expiredAttachedWorkerSelectors"> Router Job Scheduling Failed Attached Worker Selector Expired. </param>
+        /// <param name="expiredRequestedWorkerSelectors"> Router Job Scheduling Failed Requested Worker Selector Expired. </param>
+        /// <param name="scheduledOn"> Router Job Scheduling Failed Scheduled Time in UTC. </param>
+        /// <param name="failureReason"> Router Job Scheduling Failed Reason. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobSchedulingFailedEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobSchedulingFailedEventData AcsRouterJobSchedulingFailedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, DateTimeOffset? scheduledOn = null, string failureReason = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            expiredAttachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            expiredRequestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+
+            return new AcsRouterJobSchedulingFailedEventData(jobId, channelReference, channelId, queueId, labels, tags, priority, expiredAttachedWorkerSelectors?.ToList(), expiredRequestedWorkerSelectors?.ToList(), scheduledOn, failureReason);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobUnassignedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="assignmentId"> Router Job Unassigned Assignment Id. </param>
+        /// <param name="workerId"> Router Job Unassigned Worker Id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobUnassignedEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobUnassignedEventData AcsRouterJobUnassignedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new AcsRouterJobUnassignedEventData(jobId, channelReference, channelId, queueId, labels, tags, assignmentId, workerId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobWaitingForActivationEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="priority"> Router Job Waiting For Activation Priority. </param>
+        /// <param name="expiredAttachedWorkerSelectors"> Router Job Waiting For Activation Worker Selector Expired. </param>
+        /// <param name="expiredRequestedWorkerSelectors"> Router Job Waiting For Activation Requested Worker Selector Expired. </param>
+        /// <param name="scheduledOn"> Router Job Waiting For Activation Scheduled Time in UTC. </param>
+        /// <param name="unavailableForMatching"> Router Job Waiting For Activation Unavailable For Matching. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobWaitingForActivationEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobWaitingForActivationEventData AcsRouterJobWaitingForActivationEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, DateTimeOffset? scheduledOn = null, bool unavailableForMatching = default)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            expiredAttachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            expiredRequestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+
+            return new AcsRouterJobWaitingForActivationEventData(jobId, channelReference, channelId, queueId, labels, tags, priority, expiredAttachedWorkerSelectors?.ToList(), expiredRequestedWorkerSelectors?.ToList(), scheduledOn, unavailableForMatching);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobWorkerSelectorsExpiredEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="expiredRequestedWorkerSelectors"> Router Job Worker Selectors Expired Requested Worker Selectors. </param>
+        /// <param name="expiredAttachedWorkerSelectors"> Router Job Worker Selectors Expired Attached Worker Selectors. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobWorkerSelectorsExpiredEventData"/> instance for mocking. </returns>
+        public static AcsRouterJobWorkerSelectorsExpiredEventData AcsRouterJobWorkerSelectorsExpiredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            expiredRequestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            expiredAttachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+
+            return new AcsRouterJobWorkerSelectorsExpiredEventData(jobId, channelReference, channelId, queueId, labels, tags, expiredRequestedWorkerSelectors?.ToList(), expiredAttachedWorkerSelectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterWorkerDeletedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="workerId"> Router Worker events Worker Id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerDeletedEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerDeletedEventData AcsRouterWorkerDeletedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null)
+        {
+            return new AcsRouterWorkerDeletedEventData(jobId, channelReference, channelId, workerId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterWorkerEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="workerId"> Router Worker events Worker Id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerEventData AcsRouterWorkerEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null)
+        {
+            return new AcsRouterWorkerEventData(jobId, channelReference, channelId, workerId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterWorkerDeregisteredEventData. </summary>
+        /// <param name="workerId"> Router Worker Deregistered Worker Id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerDeregisteredEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerDeregisteredEventData AcsRouterWorkerDeregisteredEventData(string workerId = null)
+        {
+            return new AcsRouterWorkerDeregisteredEventData(workerId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterWorkerOfferAcceptedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="workerId"> Router Worker events Worker Id. </param>
+        /// <param name="queueId"> Router Worker Offer Accepted Queue Id. </param>
+        /// <param name="offerId"> Router Worker Offer Accepted Offer Id. </param>
+        /// <param name="assignmentId"> Router Worker Offer Accepted Assignment Id. </param>
+        /// <param name="jobPriority"> Router Worker Offer Accepted Job Priority. </param>
+        /// <param name="workerLabels"> Router Worker Offer Accepted Worker Labels. </param>
+        /// <param name="workerTags"> Router Worker Offer Accepted Worker Tags. </param>
+        /// <param name="jobLabels"> Router Worker Offer Accepted Job Labels. </param>
+        /// <param name="jobTags"> Router Worker Offer Accepted Job Tags. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferAcceptedEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerOfferAcceptedEventData AcsRouterWorkerOfferAcceptedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, string assignmentId = null, int? jobPriority = null, IReadOnlyDictionary<string, string> workerLabels = null, IReadOnlyDictionary<string, string> workerTags = null, IReadOnlyDictionary<string, string> jobLabels = null, IReadOnlyDictionary<string, string> jobTags = null)
+        {
+            workerLabels ??= new Dictionary<string, string>();
+            workerTags ??= new Dictionary<string, string>();
+            jobLabels ??= new Dictionary<string, string>();
+            jobTags ??= new Dictionary<string, string>();
+
+            return new AcsRouterWorkerOfferAcceptedEventData(jobId, channelReference, channelId, workerId, queueId, offerId, assignmentId, jobPriority, workerLabels, workerTags, jobLabels, jobTags);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterWorkerOfferDeclinedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="workerId"> Router Worker events Worker Id. </param>
+        /// <param name="queueId"> Router Worker Offer Declined Queue Id. </param>
+        /// <param name="offerId"> Router Worker Offer Declined Offer Id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferDeclinedEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerOfferDeclinedEventData AcsRouterWorkerOfferDeclinedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null)
+        {
+            return new AcsRouterWorkerOfferDeclinedEventData(jobId, channelReference, channelId, workerId, queueId, offerId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterWorkerOfferExpiredEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="workerId"> Router Worker events Worker Id. </param>
+        /// <param name="queueId"> Router Worker Offer Expired Queue Id. </param>
+        /// <param name="offerId"> Router Worker Offer Expired Offer Id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferExpiredEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerOfferExpiredEventData AcsRouterWorkerOfferExpiredEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null)
+        {
+            return new AcsRouterWorkerOfferExpiredEventData(jobId, channelReference, channelId, workerId, queueId, offerId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterWorkerOfferIssuedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="workerId"> Router Worker events Worker Id. </param>
+        /// <param name="queueId"> Router Worker Offer Issued Queue Id. </param>
+        /// <param name="offerId"> Router Worker Offer Issued Offer Id. </param>
+        /// <param name="jobPriority"> Router Worker Offer Issued Job Priority. </param>
+        /// <param name="workerLabels"> Router Worker Offer Issued Worker Labels. </param>
+        /// <param name="offeredOn"> Router Worker Offer Issued Time in UTC. </param>
+        /// <param name="expiresOn"> Router Worker Offer Issued Expiration Time in UTC. </param>
+        /// <param name="workerTags"> Router Worker Offer Issued Worker Tags. </param>
+        /// <param name="jobLabels"> Router Worker Offer Issued Job Labels. </param>
+        /// <param name="jobTags"> Router Worker Offer Issued Job Tags. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferIssuedEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerOfferIssuedEventData AcsRouterWorkerOfferIssuedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, int? jobPriority = null, IReadOnlyDictionary<string, string> workerLabels = null, DateTimeOffset? offeredOn = null, DateTimeOffset? expiresOn = null, IReadOnlyDictionary<string, string> workerTags = null, IReadOnlyDictionary<string, string> jobLabels = null, IReadOnlyDictionary<string, string> jobTags = null)
+        {
+            workerLabels ??= new Dictionary<string, string>();
+            workerTags ??= new Dictionary<string, string>();
+            jobLabels ??= new Dictionary<string, string>();
+            jobTags ??= new Dictionary<string, string>();
+
+            return new AcsRouterWorkerOfferIssuedEventData(jobId, channelReference, channelId, workerId, queueId, offerId, jobPriority, workerLabels, offeredOn, expiresOn, workerTags, jobLabels, jobTags);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterWorkerOfferRevokedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="workerId"> Router Worker events Worker Id. </param>
+        /// <param name="queueId"> Router Worker Offer Revoked Queue Id. </param>
+        /// <param name="offerId"> Router Worker Offer Revoked Offer Id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferRevokedEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerOfferRevokedEventData AcsRouterWorkerOfferRevokedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null)
+        {
+            return new AcsRouterWorkerOfferRevokedEventData(jobId, channelReference, channelId, workerId, queueId, offerId);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterWorkerRegisteredEventData. </summary>
+        /// <param name="workerId"> Router Worker Registered Worker Id. </param>
+        /// <param name="queueAssignments"> Router Worker Registered Queue Info. </param>
+        /// <param name="channelConfigurations"> Router Worker Registered Channel Configuration. </param>
+        /// <param name="totalCapacity"> Router Worker Register Total Capacity. </param>
+        /// <param name="labels"> Router Worker Registered Labels. </param>
+        /// <param name="tags"> Router Worker Registered Tags. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerRegisteredEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerRegisteredEventData AcsRouterWorkerRegisteredEventData(string workerId = null, IEnumerable<AcsRouterQueueDetails> queueAssignments = null, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null)
+        {
+            queueAssignments ??= new List<AcsRouterQueueDetails>();
+            channelConfigurations ??= new List<AcsRouterChannelConfiguration>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new AcsRouterWorkerRegisteredEventData(workerId, queueAssignments?.ToList(), channelConfigurations?.ToList(), totalCapacity, labels, tags);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterChannelConfiguration. </summary>
+        /// <param name="channelId"> Channel ID for Router Job. </param>
+        /// <param name="capacityCostPerJob"> Capacity Cost Per Job for Router Job. </param>
+        /// <param name="maxNumberOfJobs"> Max Number of Jobs for Router Job. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterChannelConfiguration"/> instance for mocking. </returns>
+        public static AcsRouterChannelConfiguration AcsRouterChannelConfiguration(string channelId = null, int? capacityCostPerJob = null, int? maxNumberOfJobs = null)
+        {
+            return new AcsRouterChannelConfiguration(channelId, capacityCostPerJob, maxNumberOfJobs);
+        }
+
         /// <summary> Initializes a new instance of AcsChatMessageReceivedEventData. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
@@ -2595,6 +3017,59 @@ namespace Azure.Messaging.EventGrid
         public static HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
         {
             return new HealthcareDicomImageDeletedEventData(partitionName, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
+        }
+
+        /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedDetails. </summary>
+        /// <param name="id"> id of the resource for which the event is being emitted. </param>
+        /// <param name="name"> name of the resource for which the event is being emitted. </param>
+        /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
+        /// <param name="location"> the location of the resource for which the event is being emitted. </param>
+        /// <param name="tags"> the tags on the resource for which the event is being emitted. </param>
+        /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedDetails"/> instance for mocking. </returns>
+        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = null, string name = null, string resourceType = null, string location = null, string tags = null, IReadOnlyDictionary<string, object> properties = null)
+        {
+            properties ??= new Dictionary<string, object>();
+
+            return new ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location, tags, properties);
+        }
+
+        /// <summary> Initializes a new instance of ResourceNotificationsOperationalDetails. </summary>
+        /// <param name="resourceEventTime"> Date and Time when resource was updated. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsOperationalDetails"/> instance for mocking. </returns>
+        public static ResourceNotificationsOperationalDetails ResourceNotificationsOperationalDetails(DateTimeOffset? resourceEventTime = null)
+        {
+            return new ResourceNotificationsOperationalDetails(resourceEventTime);
+        }
+
+        /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedEventData. </summary>
+        /// <param name="resourceDetails"> resourceInfo details for update event. </param>
+        /// <param name="operationalDetails"> details about operational info. </param>
+        /// <param name="apiVersion"> api version of the resource properties bag. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedEventData"/> instance for mocking. </returns>
+        public static ResourceNotificationsResourceUpdatedEventData ResourceNotificationsResourceUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
+        {
+            return new ResourceNotificationsResourceUpdatedEventData(resourceDetails, operationalDetails, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData. </summary>
+        /// <param name="resourceDetails"> resourceInfo details for update event. </param>
+        /// <param name="operationalDetails"> details about operational info. </param>
+        /// <param name="apiVersion"> api version of the resource properties bag. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData"/> instance for mocking. </returns>
+        public static ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
+        {
+            return new ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(resourceDetails, operationalDetails, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ResourceNotificationsHealthResourcesAnnotatedEventData. </summary>
+        /// <param name="resourceDetails"> resourceInfo details for update event. </param>
+        /// <param name="operationalDetails"> details about operational info. </param>
+        /// <param name="apiVersion"> api version of the resource properties bag. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsHealthResourcesAnnotatedEventData"/> instance for mocking. </returns>
+        public static ResourceNotificationsHealthResourcesAnnotatedEventData ResourceNotificationsHealthResourcesAnnotatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
+        {
+            return new ResourceNotificationsHealthResourcesAnnotatedEventData(resourceDetails, operationalDetails, apiVersion);
         }
     }
 }

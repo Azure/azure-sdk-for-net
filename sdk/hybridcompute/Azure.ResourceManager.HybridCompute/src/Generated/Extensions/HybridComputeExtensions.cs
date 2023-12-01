@@ -88,6 +88,25 @@ namespace Azure.ResourceManager.HybridCompute
         }
         #endregion
 
+        #region ExtensionValueResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtensionValueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtensionValueResource.CreateResourceIdentifier" /> to create an <see cref="ExtensionValueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExtensionValueResource" /> object. </returns>
+        public static ExtensionValueResource GetExtensionValueResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ExtensionValueResource.ValidateResourceId(id);
+                return new ExtensionValueResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region HybridComputePrivateLinkScopeResource
         /// <summary>
         /// Gets an object representing a <see cref="HybridComputePrivateLinkScopeResource" /> along with the instance operations that can be performed on it but with no data.
@@ -257,6 +276,76 @@ namespace Azure.ResourceManager.HybridCompute
         public static Response<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetHybridComputePrivateLinkScopes().Get(scopeName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ExtensionValueResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the Extension being received. </param>
+        /// <param name="publisher"> The publisher of the Extension being received. </param>
+        /// <param name="extensionType"> The extensionType of the Extension being received. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisher"/> or <paramref name="extensionType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/> or <paramref name="extensionType"/> is null. </exception>
+        /// <returns> An object representing collection of ExtensionValueResources and their operations over a ExtensionValueResource. </returns>
+        public static ExtensionValueCollection GetExtensionValues(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType)
+        {
+            Argument.AssertNotNullOrEmpty(publisher, nameof(publisher));
+            Argument.AssertNotNullOrEmpty(extensionType, nameof(extensionType));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExtensionValues(location, publisher, extensionType);
+        }
+
+        /// <summary>
+        /// Gets an Extension Metadata based on location, publisher, extensionType and version
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the Extension being received. </param>
+        /// <param name="publisher"> The publisher of the Extension being received. </param>
+        /// <param name="extensionType"> The extensionType of the Extension being received. </param>
+        /// <param name="version"> The version of the Extension being received. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ExtensionValueResource>> GetExtensionValueAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetExtensionValues(location, publisher, extensionType).GetAsync(version, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an Extension Metadata based on location, publisher, extensionType and version
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the Extension being received. </param>
+        /// <param name="publisher"> The publisher of the Extension being received. </param>
+        /// <param name="extensionType"> The extensionType of the Extension being received. </param>
+        /// <param name="version"> The version of the Extension being received. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ExtensionValueResource> GetExtensionValue(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetExtensionValues(location, publisher, extensionType).Get(version, cancellationToken);
         }
 
         /// <summary>

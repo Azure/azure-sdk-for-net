@@ -1,27 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
+using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("RouterWorker")]
-    public partial class RouterWorker
+    public partial class RouterWorker : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
-        internal RouterWorker()
-        {
-            _queueAssignments = new ChangeTrackingDictionary<string, object>();
-            _labels = new ChangeTrackingDictionary<string, object>();
-            _tags = new ChangeTrackingDictionary<string, object>();
-            _channelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
-            Offers = new ChangeTrackingList<RouterJobOffer>();
-            AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
-        }
-
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
@@ -45,13 +35,13 @@ namespace Azure.Communication.JobRouter.Models
         public bool? AvailableForOffers { get; internal set; }
 
         [CodeGenMember("Labels")]
-        internal IDictionary<string, object> _labels
+        internal IDictionary<string, BinaryData> _labels
         {
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Labels?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
@@ -59,20 +49,20 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value);
+                        Labels[label.Key] = new LabelValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
         }
 
         [CodeGenMember("Tags")]
-        internal IDictionary<string, object> _tags
+        internal IDictionary<string, BinaryData> _tags
         {
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Tags?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
@@ -80,7 +70,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var tag in value)
                     {
-                        Tags[tag.Key] = new LabelValue(tag.Value);
+                        Tags[tag.Key] = new LabelValue(tag.Value.ToObjectFromJson());
                     }
                 }
             }
@@ -96,23 +86,19 @@ namespace Azure.Communication.JobRouter.Models
             {
                 foreach (var channelConfiguration in value)
                 {
-                    ChannelConfigurations[channelConfiguration.Key] = new ChannelConfiguration(channelConfiguration.Value.CapacityCostPerJob)
-                    {
-                        MaxNumberOfJobs = channelConfiguration.Value.MaxNumberOfJobs
-                    };
+                    ChannelConfigurations[channelConfiguration.Key] = new ChannelConfiguration(channelConfiguration.Value.CapacityCostPerJob, channelConfiguration.Value.MaxNumberOfJobs);
                 }
             }
         }
 
         [CodeGenMember("QueueAssignments")]
-        internal IDictionary<string, object> _queueAssignments
+        internal IReadOnlyDictionary<string, RouterQueueAssignment> _queueAssignments
         {
             get
             {
                 return QueueAssignments != null
-                    ? QueueAssignments.ToDictionary(x => x.Key,
-                        x => (object)x.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? QueueAssignments.ToDictionary(x => x.Key, x => x.Value)
+                    : new ChangeTrackingDictionary<string, RouterQueueAssignment>();
             }
             set
             {
@@ -121,6 +107,88 @@ namespace Azure.Communication.JobRouter.Models
                     QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
             }
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(_queueAssignments))
+            {
+                writer.WritePropertyName("queueAssignments"u8);
+                writer.WriteStartObject();
+                foreach (var item in _queueAssignments)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(TotalCapacity))
+            {
+                writer.WritePropertyName("totalCapacity"u8);
+                writer.WriteNumberValue(TotalCapacity.Value);
+            }
+            if (Optional.IsCollectionDefined(_labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in _labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in _tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_channelConfigurations))
+            {
+                writer.WritePropertyName("channelConfigurations"u8);
+                writer.WriteStartObject();
+                foreach (var item in _channelConfigurations)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(AvailableForOffers))
+            {
+                writer.WritePropertyName("availableForOffers"u8);
+                writer.WriteBooleanValue(AvailableForOffers.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

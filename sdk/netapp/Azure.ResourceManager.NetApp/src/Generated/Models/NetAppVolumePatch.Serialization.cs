@@ -92,10 +92,32 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolnessPeriod"u8);
                 writer.WriteNumberValue(CoolnessPeriod.Value);
             }
+            if (Optional.IsDefined(CoolAccessRetrievalPolicy))
+            {
+                writer.WritePropertyName("coolAccessRetrievalPolicy"u8);
+                writer.WriteStringValue(CoolAccessRetrievalPolicy.Value.ToString());
+            }
             if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
                 writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
+            }
+            if (Optional.IsDefined(SmbAccessBasedEnumeration))
+            {
+                if (SmbAccessBasedEnumeration != null)
+                {
+                    writer.WritePropertyName("smbAccessBasedEnumeration"u8);
+                    writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("smbAccessBasedEnumeration");
+                }
+            }
+            if (Optional.IsDefined(SmbNonBrowsable))
+            {
+                writer.WritePropertyName("smbNonBrowsable"u8);
+                writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

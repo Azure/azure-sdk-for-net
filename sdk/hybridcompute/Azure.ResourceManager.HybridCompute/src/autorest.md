@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/hybridcompute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a29126ca8200a6c981a4e908e41fe55730df4cad/specification/hybridcompute/resource-manager/readme.md
+tag: package-2022-12
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,6 +18,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  # Mitigate the duplication schema named 'ErrorDetail'
+  lenient-model-deduplication: true
 
 prepend-rp-prefix:
   - Location
@@ -64,4 +66,45 @@ acronym-mapping:
 models-to-treat-empty-string-as-null:
   - AgentConfiguration
 
+directive:  
+  - from: HybridCompute.json
+    where: $.definitions.MachineInstallPatchesParameters.properties.maximumDuration
+    transform: $['format'] = 'duration'
+
+  - from: HybridCompute.json
+    where: $.definitions.MachineUpdateProperties.properties.privateLinkScopeResourceId
+    transform: $['format'] = 'arm-id'
+
+  - from: HybridCompute.json
+    where: $.definitions.MachineProperties.properties.privateLinkScopeResourceId
+    transform: $['format'] = 'arm-id'
+  
+  - from: HybridCompute.json
+    where: $.definitions.AgentUpgrade.properties.correlationId
+    transform: $['format'] = 'uuid'
+  
+  - from: HybridCompute.json
+    where: $.definitions.AgentUpgrade.properties.lastAttemptTimestamp
+    transform: $['format'] = 'date-time'
+
+  - from: HybridCompute.json
+    where: $.definitions.MachineProperties.properties.vmUuid
+    transform: $['format'] = 'uuid'
+
+  - from: HybridCompute.json
+    where: $.definitions.MachineProperties.properties.vmId
+    transform: $['format'] = 'uuid'
+
+  - from: HybridCompute.json
+    where: $.definitions.MachineUpdateProperties.properties.parentClusterResourceId
+    transform: $['format'] = 'arm-id'
+
+  - from: HybridCompute.json
+    where: $.definitions.MachineProperties.properties.parentClusterResourceId
+    transform: $['format'] = 'arm-id'
+
+  - from: HybridCompute.json
+    where: $.definitions.MachineAssessPatchesResult.properties.assessmentActivityId
+    transform: $['format'] = 'uuid'
+  
 ```

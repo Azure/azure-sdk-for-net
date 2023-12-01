@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
@@ -45,11 +44,24 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationResourceId,
             bool isContainer)
         {
+            UriBuilder sourceBuilder = new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Host = "",
+                Path = sourcePath,
+            };
+            UriBuilder destinationBuilder = new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Host = "",
+                Path = destinationPath,
+            };
+
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
             mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointStoreOptions(checkpointerPath));
-            mock.Setup(p => p.SourcePath).Returns(sourcePath);
-            mock.Setup(p => p.DestinationPath).Returns(destinationPath);
+            mock.Setup(p => p.SourceUri).Returns(sourceBuilder.Uri);
+            mock.Setup(p => p.DestinationUri).Returns(destinationBuilder.Uri);
             mock.Setup(p => p.SourceTypeId).Returns(sourceResourceId);
             mock.Setup(p => p.DestinationTypeId).Returns(destinationResourceId);
             mock.Setup(p => p.IsContainer).Returns(isContainer);

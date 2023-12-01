@@ -1,6 +1,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/<service name>/Azure.ResourceManager.ContainerServiceFleet",
-  "Tag": ""
+  "TagPrefix": "net/fleet/Azure.ResourceManager.ContainerServiceFleet",
+  "Tag": "net/fleet/Azure.ResourceManager.ContainerServiceFleet_3a38e8ed58"
 }

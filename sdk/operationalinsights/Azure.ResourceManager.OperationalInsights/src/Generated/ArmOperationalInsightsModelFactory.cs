@@ -268,11 +268,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeResult. </summary>
-        /// <param name="operationId"> Id to use when querying for status for a particular purge operation. </param>
+        /// <param name="operationStringId"> Id to use when querying for status for a particular purge operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationStringId"/> is null. </exception>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeResult"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspacePurgeResult OperationalInsightsWorkspacePurgeResult(Guid operationId = default)
+        public static OperationalInsightsWorkspacePurgeResult OperationalInsightsWorkspacePurgeResult(string operationStringId = null)
         {
-            return new OperationalInsightsWorkspacePurgeResult(operationId);
+            if (operationStringId == null)
+            {
+                throw new ArgumentNullException(nameof(operationStringId));
+            }
+
+            return new OperationalInsightsWorkspacePurgeResult(operationStringId);
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeStatusResult. </summary>

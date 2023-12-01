@@ -63,13 +63,13 @@ namespace Azure.Storage.DataMovement
     {
         protected internal DataTransferProperties() { }
         public virtual Azure.Storage.DataMovement.TransferCheckpointStoreOptions Checkpointer { get { throw null; } }
-        public virtual string DestinationPath { get { throw null; } }
         public virtual string DestinationProviderId { get { throw null; } }
         public virtual string DestinationTypeId { get { throw null; } }
+        public virtual System.Uri DestinationUri { get { throw null; } }
         public virtual bool IsContainer { get { throw null; } }
-        public virtual string SourcePath { get { throw null; } }
         public virtual string SourceProviderId { get { throw null; } }
         public virtual string SourceTypeId { get { throw null; } }
+        public virtual System.Uri SourceUri { get { throw null; } }
         public virtual string TransferId { get { throw null; } }
     }
     public enum DataTransferState

@@ -24,7 +24,6 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 ### Using statements
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ### Create a JobRouter Client
@@ -98,7 +97,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
 ### Queue
 Next, we can create the queue.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
-Response<Models.RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -175,7 +174,7 @@ foreach (EventGridEvent egEvent in egEvents)
 However, we could also wait a few seconds and then query the worker directly against the JobRouter API to see if an offer was issued to it.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
 Response<RouterWorker> result = await routerClient.GetWorkerAsync(worker.Value.Id);
-foreach (Models.RouterJobOffer? offer in result.Value.Offers)
+foreach (RouterJobOffer? offer in result.Value.Offers)
 {
     Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
 }
@@ -185,7 +184,7 @@ foreach (Models.RouterJobOffer? offer in result.Value.Offers)
 Once a worker receives an offer, it can take two possible actions: accept or decline. We are going to accept the offer.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
 // fetching the offer id
-Models.RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
+RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
 
 string offerId = jobOffer.OfferId; // `OfferId` can be retrieved directly from consuming event from Event grid
 

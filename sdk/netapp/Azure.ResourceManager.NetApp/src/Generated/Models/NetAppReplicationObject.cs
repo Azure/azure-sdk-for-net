@@ -37,9 +37,6 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeResourceId = remoteVolumeResourceId;
             RemoteVolumeRegion = remoteVolumeRegion;
         }
-
-        /// <summary> Id. </summary>
-        public string ReplicationId { get; set; }
         /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
         public NetAppEndpointType? EndpointType { get; set; }
         /// <summary> Schedule. </summary>

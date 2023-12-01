@@ -106,6 +106,25 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
         #endregion
 
+        #region FleetUpdateStrategyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FleetUpdateStrategyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FleetUpdateStrategyResource.CreateResourceIdentifier" /> to create a <see cref="FleetUpdateStrategyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FleetUpdateStrategyResource" /> object. </returns>
+        public static FleetUpdateStrategyResource GetFleetUpdateStrategyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FleetUpdateStrategyResource.ValidateResourceId(id);
+                return new FleetUpdateStrategyResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         /// <summary> Gets a collection of ContainerServiceFleetResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerServiceFleetResources and their operations over a ContainerServiceFleetResource. </returns>

@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -38,7 +37,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
 
 // Create queue
 string queueId = "queue-id-1";
-Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
     queueId: queueId,
     distributionPolicyId: distributionPolicyId));
 
@@ -108,7 +107,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
 
 // Create queue
 string queueId = "queue-id-1";
-Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
+Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
 
 // Setting up 2 identical workers
 string worker1Id = "worker-id-1";
@@ -181,7 +180,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
 
 // Create queue
 string queueId = "queue-id-1";
-Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
     queueId: queueId,
     distributionPolicyId: distributionPolicyId));
 
@@ -296,7 +295,7 @@ Response<DistributionPolicy> distributionPolicy =
 
 // Create queue
 string queueId = "queue-id-1";
-Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
     queueId: queueId,
     distributionPolicyId: distributionPolicyId));
 

@@ -2,11 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -51,7 +47,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create queue
             string jobQueueId = "my-default-queue";
-            Response<Models.RouterQueue> jobQueue =
+            Response<RouterQueue> jobQueue =
                 await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
             Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
@@ -129,7 +125,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create queue
             string jobQueueId = "my-default-queue";
-            Response<Models.RouterQueue> jobQueue =
+            Response<RouterQueue> jobQueue =
                 await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
             Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
@@ -233,7 +229,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create queue
             string jobQueueId = "my-default-queue";
-            Response<Models.RouterQueue> jobQueue =
+            Response<RouterQueue> jobQueue =
                 await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
             Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");

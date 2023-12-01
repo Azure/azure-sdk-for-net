@@ -54,30 +54,33 @@ namespace Azure.Storage.DataMovement
                 header = JobPlanHeader.Deserialize(stream);
             }
 
-            (string sourceResourceId, string destResourceId) = await checkpointer.GetResourceIdsAsync(
+            string sourceTypeId = default;
+            string destinationTypeId = default;
+            // Only need to get type ids for single transfers
+            if (!header.IsContainer)
+            {
+                (sourceTypeId, destinationTypeId) = await checkpointer.GetResourceIdsAsync(
                     transferId,
                     cancellationToken).ConfigureAwait(false);
-
-            bool isContainer =
-                (await checkpointer.CurrentJobPartCountAsync(transferId, cancellationToken).ConfigureAwait(false)) > 1;
+            }
 
             return new DataTransferProperties
             {
                 TransferId = transferId,
-                SourceTypeId = sourceResourceId,
-                SourcePath = header.ParentSourcePath,
+                SourceTypeId = sourceTypeId,
+                SourceUri = new Uri(header.ParentSourcePath),
                 SourceProviderId = header.SourceProviderId,
-                DestinationTypeId = destResourceId,
-                DestinationPath = header.ParentDestinationPath,
+                DestinationTypeId = destinationTypeId,
+                DestinationUri = new Uri(header.ParentDestinationPath),
                 DestinationProviderId = header.DestinationProviderId,
-                IsContainer = isContainer,
+                IsContainer = header.IsContainer,
             };
         }
 
         internal static async Task<bool> IsEnumerationCompleteAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             using (Stream stream = await checkpointer.ReadJobPlanFileAsync(
                 transferId,
@@ -92,7 +95,7 @@ namespace Azure.Storage.DataMovement
         internal static async Task OnEnumerationCompleteAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             byte[] enumerationComplete = { Convert.ToByte(true) };
             await checkpointer.WriteToJobPlanFileAsync(

@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 #region Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements_Async
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements_Async
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
@@ -39,7 +36,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
-            Response<Models.RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "queue-1",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -77,7 +74,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
             Response<RouterWorker> result = await routerClient.GetWorkerAsync(worker.Value.Id);
-            foreach (Models.RouterJobOffer? offer in result.Value.Offers)
+            foreach (RouterJobOffer? offer in result.Value.Offers)
             {
                 Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
             }
@@ -86,7 +83,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
 
             // fetching the offer id
-            Models.RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
+            RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
 
             string offerId = jobOffer.OfferId; // `OfferId` can be retrieved directly from consuming event from Event grid
 
