@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Logic.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ListOperationCallbackUrlParameterInfo"/>. </summary>
+        /// <param name="notAfter"> The expiry time. </param>
+        /// <param name="keyType"> The key type. </param>
+        internal ListOperationCallbackUrlParameterInfo(DateTimeOffset? notAfter, LogicKeyType? keyType)
+        {
+            NotAfter = notAfter;
+            KeyType = keyType;
+        }
+
         /// <summary> The expiry time. </summary>
         public DateTimeOffset? NotAfter { get; set; }
         /// <summary> The key type. </summary>

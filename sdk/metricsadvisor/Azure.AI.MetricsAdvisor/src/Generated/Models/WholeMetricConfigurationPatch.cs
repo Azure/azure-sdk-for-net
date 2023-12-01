@@ -15,6 +15,23 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="WholeMetricConfigurationPatch"/>. </summary>
+        /// <param name="conditionOperator">
+        /// condition operator
+        ///
+        /// should be specified when combining multiple detection conditions
+        /// </param>
+        /// <param name="smartDetectionCondition"></param>
+        /// <param name="hardThresholdCondition"></param>
+        /// <param name="changeThresholdCondition"></param>
+        internal WholeMetricConfigurationPatch(DetectionConditionOperator? conditionOperator, SmartDetectionConditionPatch smartDetectionCondition, HardThresholdConditionPatch hardThresholdCondition, ChangeThresholdConditionPatch changeThresholdCondition)
+        {
+            ConditionOperator = conditionOperator;
+            SmartDetectionCondition = smartDetectionCondition;
+            HardThresholdCondition = hardThresholdCondition;
+            ChangeThresholdCondition = changeThresholdCondition;
+        }
+
         /// <summary>
         /// condition operator
         ///

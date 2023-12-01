@@ -21,6 +21,21 @@ namespace Azure.Security.KeyVault.Administration.Models
             AssignableScopes = new ChangeTrackingList<KeyVaultRoleScope>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionProperties"/>. </summary>
+        /// <param name="roleName"> The role name. </param>
+        /// <param name="description"> The role definition description. </param>
+        /// <param name="roleType"> The role type. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="assignableScopes"> Role definition assignable scopes. </param>
+        internal RoleDefinitionProperties(string roleName, string description, KeyVaultRoleType? roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes)
+        {
+            RoleName = roleName;
+            Description = description;
+            RoleType = roleType;
+            Permissions = permissions;
+            AssignableScopes = assignableScopes;
+        }
+
         /// <summary> The role name. </summary>
         public string RoleName { get; set; }
         /// <summary> The role definition description. </summary>

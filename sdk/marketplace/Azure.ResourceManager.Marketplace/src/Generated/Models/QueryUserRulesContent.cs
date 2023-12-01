@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Marketplace.Models
             SubscriptionIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="QueryUserRulesContent"/>. </summary>
+        /// <param name="subscriptionIds"> List of subscription IDs. </param>
+        internal QueryUserRulesContent(IList<string> subscriptionIds)
+        {
+            SubscriptionIds = subscriptionIds;
+        }
+
         /// <summary> List of subscription IDs. </summary>
         public IList<string> SubscriptionIds { get; }
     }

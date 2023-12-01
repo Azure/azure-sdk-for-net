@@ -25,6 +25,13 @@ namespace Azure.Maps.Routing.Models
             Coordinates = coordinates.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygonData"/>. </summary>
+        /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
+        internal GeoJsonPolygonData(IList<IList<IList<double>>> coordinates)
+        {
+            Coordinates = coordinates;
+        }
+
         /// <summary> Coordinates for the `GeoJson Polygon` geometry type. </summary>
         public IList<IList<IList<double>>> Coordinates { get; }
     }
