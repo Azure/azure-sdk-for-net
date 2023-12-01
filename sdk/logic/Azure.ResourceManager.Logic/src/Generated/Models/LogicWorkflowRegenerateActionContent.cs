@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Logic.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRegenerateActionContent"/>. </summary>
+        /// <param name="keyType"> The key type. </param>
+        internal LogicWorkflowRegenerateActionContent(LogicKeyType? keyType)
+        {
+            KeyType = keyType;
+        }
+
         /// <summary> The key type. </summary>
         public LogicKeyType? KeyType { get; set; }
     }

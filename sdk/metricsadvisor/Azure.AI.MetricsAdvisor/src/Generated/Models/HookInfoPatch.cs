@@ -23,6 +23,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             Admins = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="HookInfoPatch"/>. </summary>
+        /// <param name="hookType"> hook type. </param>
+        /// <param name="hookName"> hook unique name. </param>
+        /// <param name="description"> hook description. </param>
+        /// <param name="externalLink"> hook external link. </param>
+        /// <param name="admins"> hook administrators. </param>
+        internal HookInfoPatch(NotificationHookKind hookType, string hookName, string description, string externalLink, IList<string> admins)
+        {
+            HookType = hookType;
+            HookName = hookName;
+            Description = description;
+            ExternalLink = externalLink;
+            Admins = admins;
+        }
+
         /// <summary> hook type. </summary>
         internal NotificationHookKind HookType { get; set; }
         /// <summary> hook unique name. </summary>

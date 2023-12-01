@@ -19,6 +19,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionFilter = new ChangeTrackingList<DimensionKey>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyFilterCondition"/>. </summary>
+        /// <param name="dimensionFilter"> dimension filter. </param>
+        /// <param name="severityFilter"></param>
+        internal DetectionAnomalyFilterCondition(IList<DimensionKey> dimensionFilter, SeverityFilterCondition severityFilter)
+        {
+            DimensionFilter = dimensionFilter;
+            SeverityFilter = severityFilter;
+        }
+
         /// <summary> dimension filter. </summary>
         public IList<DimensionKey> DimensionFilter { get; }
         /// <summary> Gets or sets the severity filter. </summary>

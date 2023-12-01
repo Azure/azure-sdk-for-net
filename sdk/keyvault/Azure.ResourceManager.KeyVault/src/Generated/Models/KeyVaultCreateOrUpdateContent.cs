@@ -27,6 +27,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The supported Azure location where the key vault should be created. </param>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        internal KeyVaultCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, KeyVaultProperties properties)
+        {
+            Location = location;
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary> The supported Azure location where the key vault should be created. </summary>
         public AzureLocation Location { get; }
         /// <summary> The tags that will be assigned to the key vault. </summary>

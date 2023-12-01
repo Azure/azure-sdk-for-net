@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.KeyVault.Models
             ResourceType = "Microsoft.KeyVault/vaults";
         }
 
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The vault name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.KeyVault/vaults. </param>
+        internal KeyVaultNameAvailabilityContent(string name, ResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The vault name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.KeyVault/vaults. </summary>

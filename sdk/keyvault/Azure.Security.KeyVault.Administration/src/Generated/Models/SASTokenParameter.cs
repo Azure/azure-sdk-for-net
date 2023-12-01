@@ -23,6 +23,17 @@ namespace Azure.Security.KeyVault.Administration.Models
             StorageResourceUri = storageResourceUri;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SASTokenParameter"/>. </summary>
+        /// <param name="storageResourceUri"> Azure Blob storage container Uri. </param>
+        /// <param name="token"> The SAS token pointing to an Azure Blob storage container. </param>
+        /// <param name="useManagedIdentity"> Indicates which authentication method should be used. If set to true, Managed HSM will use the configured user-assigned managed identity to authenticate with Azure Storage. Otherwise, a SAS token has to be specified. </param>
+        internal SASTokenParameter(string storageResourceUri, string token, bool? useManagedIdentity)
+        {
+            StorageResourceUri = storageResourceUri;
+            Token = token;
+            UseManagedIdentity = useManagedIdentity;
+        }
+
         /// <summary> Azure Blob storage container Uri. </summary>
         public string StorageResourceUri { get; }
         /// <summary> The SAS token pointing to an Azure Blob storage container. </summary>
