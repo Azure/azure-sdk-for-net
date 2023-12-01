@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SwitchProtectionContent"/>. </summary>
+        /// <param name="properties"> Switch protection properties. </param>
+        internal SwitchProtectionContent(SwitchProtectionProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Switch protection properties. </summary>
         public SwitchProtectionProperties Properties { get; set; }
     }

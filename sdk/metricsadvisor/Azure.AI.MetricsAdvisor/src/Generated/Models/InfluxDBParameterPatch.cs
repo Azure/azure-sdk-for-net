@@ -15,6 +15,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="InfluxDBParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this InfluxDB. </param>
+        /// <param name="database"> A database name. </param>
+        /// <param name="userName"> The user name of the account that can access this database. </param>
+        /// <param name="password"> The password of the account that can access this database. </param>
+        /// <param name="query"> The script to query this database. </param>
+        internal InfluxDBParameterPatch(string connectionString, string database, string userName, string password, string query)
+        {
+            ConnectionString = connectionString;
+            Database = database;
+            UserName = userName;
+            Password = password;
+            Query = query;
+        }
+
         /// <summary> The connection string of this InfluxDB. </summary>
         public string ConnectionString { get; set; }
         /// <summary> A database name. </summary>

@@ -24,6 +24,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrateContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        internal VMwareCbtMigrateContent(string instanceType, string performShutdown, string osUpgradeVersion) : base(instanceType)
+        {
+            PerformShutdown = performShutdown;
+            OSUpgradeVersion = osUpgradeVersion;
+            InstanceType = instanceType ?? "VMwareCbt";
+        }
+
         /// <summary> A value indicating whether VM is to be shutdown. </summary>
         public string PerformShutdown { get; }
         /// <summary> A value indicating the inplace OS Upgrade version. </summary>

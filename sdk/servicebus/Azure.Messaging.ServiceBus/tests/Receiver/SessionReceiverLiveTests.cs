@@ -1144,5 +1144,55 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         .EqualTo(ServiceBusFailureReason.SessionLockLost));
             }
         }
+
+        [Test]
+        public async Task SessionOrderingIsGuaranteed()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var receiver = await client.AcceptSessionAsync(scope.QueueName, "session");
+                var sender = client.CreateSender(scope.QueueName);
+
+                CancellationTokenSource cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromSeconds(60));
+
+                var receive = ReceiveMessagesAsync();
+
+                var send = SendMessagesAsync();
+
+                await Task.WhenAll(send, receive);
+
+                async Task SendMessagesAsync()
+                {
+                    while (!cts.IsCancellationRequested)
+                    {
+                        await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("session"));
+                        await Task.Delay(TimeSpan.FromMilliseconds(100));
+                    }
+                }
+
+                async Task ReceiveMessagesAsync()
+                {
+                    long lastSequenceNumber = 0;
+                    while (!cts.IsCancellationRequested)
+                    {
+                        var messages = await receiver.ReceiveMessagesAsync(10);
+                        foreach (var message in messages)
+                        {
+                            if (message.SequenceNumber != lastSequenceNumber + 1)
+                            {
+                                Assert.Fail(
+                                    $"Last sequence number: {lastSequenceNumber}, current sequence number: {message.SequenceNumber}");
+                            }
+
+                            lastSequenceNumber = message.SequenceNumber;
+
+                            await receiver.CompleteMessageAsync(message);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

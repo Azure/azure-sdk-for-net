@@ -17,6 +17,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VMwareVmInstancePatch"/>. </summary>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        internal VMwareVmInstancePatch(VmInstanceHardwareProfile hardwareProfile, StorageProfileUpdate storageProfile, VMwareNetworkProfileUpdate networkProfile)
+        {
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            NetworkProfile = networkProfile;
+        }
+
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
         public VmInstanceHardwareProfile HardwareProfile { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>

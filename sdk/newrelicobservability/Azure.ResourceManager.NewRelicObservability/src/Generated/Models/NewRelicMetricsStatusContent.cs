@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             UserEmail = userEmail;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusContent"/>. </summary>
+        /// <param name="azureResourceIds"> Azure resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        internal NewRelicMetricsStatusContent(IList<string> azureResourceIds, string userEmail)
+        {
+            AzureResourceIds = azureResourceIds;
+            UserEmail = userEmail;
+        }
+
         /// <summary> Azure resource IDs. </summary>
         public IList<string> AzureResourceIds { get; }
         /// <summary> User Email. </summary>

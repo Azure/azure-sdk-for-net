@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Hci.Models
             Certificates = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="HciClusterRawCertificate"/>. </summary>
+        /// <param name="certificates"></param>
+        internal HciClusterRawCertificate(IList<string> certificates)
+        {
+            Certificates = certificates;
+        }
+
         /// <summary> Gets the certificates. </summary>
         public IList<string> Certificates { get; }
     }

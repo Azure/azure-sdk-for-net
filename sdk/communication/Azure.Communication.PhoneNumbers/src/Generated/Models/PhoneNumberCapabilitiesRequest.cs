@@ -15,6 +15,15 @@ namespace Azure.Communication.PhoneNumbers
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilitiesRequest"/>. </summary>
+        /// <param name="calling"> Capability value for calling. </param>
+        /// <param name="sms"> Capability value for SMS. </param>
+        internal PhoneNumberCapabilitiesRequest(PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
+        {
+            Calling = calling;
+            Sms = sms;
+        }
+
         /// <summary> Capability value for calling. </summary>
         public PhoneNumberCapabilityType? Calling { get; set; }
         /// <summary> Capability value for SMS. </summary>

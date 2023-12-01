@@ -20,6 +20,17 @@ namespace Azure.Communication.Messages
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueMedia"/>. </summary>
+        /// <param name="url"> The (public) URL of the media. </param>
+        /// <param name="caption"> The [optional] caption of the media object. </param>
+        /// <param name="fileName"> The [optional] filename of the media file. </param>
+        internal MessageTemplateValueMedia(Uri url, string caption, string fileName)
+        {
+            Url = url;
+            Caption = caption;
+            FileName = fileName;
+        }
+
         /// <summary> The (public) URL of the media. </summary>
         public Uri Url { get; set; }
         /// <summary> The [optional] caption of the media object. </summary>
