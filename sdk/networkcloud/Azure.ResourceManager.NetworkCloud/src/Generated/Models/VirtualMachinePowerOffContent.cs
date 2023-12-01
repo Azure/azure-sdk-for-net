@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePowerOffContent"/>. </summary>
+        /// <param name="skipShutdown"> The indicator of whether to skip the graceful OS shutdown and power off the virtual machine immediately. </param>
+        internal VirtualMachinePowerOffContent(SkipShutdown? skipShutdown)
+        {
+            SkipShutdown = skipShutdown;
+        }
+
         /// <summary> The indicator of whether to skip the graceful OS shutdown and power off the virtual machine immediately. </summary>
         public SkipShutdown? SkipShutdown { get; set; }
     }
