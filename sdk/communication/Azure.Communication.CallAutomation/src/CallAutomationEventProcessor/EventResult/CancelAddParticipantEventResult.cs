@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="CancelAddParticipantEventResult"/> is returned from WaitForEvent of <see cref="CancelAddParticipantResult"/>.</summary>
+    /// <summary><see cref="CancelAddParticipantEventResult"/> is returned from WaitForEvent of <see cref="CancelAddParticipantOperationResult"/>.</summary>
     public class CancelAddParticipantEventResult
     {
         /// <summary>
@@ -12,9 +12,9 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="AddParticipantCancelled"/> event will be returned when the invitation was cancelled successfully.
+        /// <see cref="CancelAddParticipantSucceeded"/> event will be returned when the invitation was cancelled successfully.
         /// </summary>
-        public AddParticipantCancelled SuccessResult { get; }
+        public CancelAddParticipantSucceeded SuccessResult { get; }
 
         /// <summary>
         /// <see cref="CancelAddParticipantFailed"/> event will be returned when the invitation could not be cancelled.
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// <see cref="CommunicationIdentifier"/> Participant whoose invitation was cancelled. Only applicable for
-        /// <see cref="AddParticipantCancelled"/> event
+        /// <see cref="CancelAddParticipantSucceeded"/> event
         /// </summary>
         public CommunicationIdentifier Participant { get; }
 
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
 
         internal CancelAddParticipantEventResult(
             bool isSuccess,
-            AddParticipantCancelled successResult,
+            CancelAddParticipantSucceeded successResult,
             CancelAddParticipantFailed failureResult,
             string invitationId,
             CommunicationIdentifier participant = null)

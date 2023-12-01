@@ -295,7 +295,7 @@ namespace Azure.Storage.DataMovement
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
                         _dataTransfer.Id,
-                        JobPartStatus,
+                        JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
                     nameof(JobPartInternal),
@@ -361,7 +361,7 @@ namespace Azure.Storage.DataMovement
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
                         _dataTransfer.Id,
-                        JobPartStatus,
+                        JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
                     nameof(JobPartInternal),
@@ -407,7 +407,7 @@ namespace Azure.Storage.DataMovement
                     await PartTransferStatusEventHandler.RaiseAsync(
                         new TransferStatusEventArgs(
                             _dataTransfer.Id,
-                            JobPartStatus,
+                            JobPartStatus.DeepCopy(),
                             false,
                             _cancellationToken),
                         nameof(JobPartInternal),

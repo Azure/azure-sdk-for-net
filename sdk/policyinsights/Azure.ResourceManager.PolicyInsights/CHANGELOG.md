@@ -1,10 +1,10 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0 (2023-11-29)
 
 ### Features Added
 
-### Breaking Changes
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Bugs Fixed
 
@@ -12,6 +12,8 @@
 - Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `SlimPolicyMetadata`.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.2.0-beta.1 (2023-05-31)
 

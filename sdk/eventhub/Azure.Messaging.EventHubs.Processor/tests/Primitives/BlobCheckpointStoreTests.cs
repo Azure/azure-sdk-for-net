@@ -4,7 +4,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Moq;
@@ -109,6 +111,41 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         public async Task UpdateCheckpointAsyncDelegatesTheCall()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+
+            var expectedNamespace = "fakeNS";
+            var expectedHub = "fakeHub";
+            var expectedConsumerGroup = "fakeGroup";
+            var expectedPartition = "fakePart";
+            var expectedOffset = 123;
+            var expectedProcessorId = "Id";
+            var expectedSequence = 999;
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var blobCheckpointStore = new BlobCheckpointStore(mockCheckpointStore.Object);
+
+            await blobCheckpointStore.UpdateCheckpointAsync(expectedNamespace, expectedHub, expectedConsumerGroup, expectedPartition, expectedProcessorId, new CheckpointPosition(expectedSequence, expectedOffset), cancellationSource.Token);
+
+            mockCheckpointStore.Verify(store => store.UpdateCheckpointAsync(
+                expectedNamespace,
+                expectedHub,
+                expectedConsumerGroup,
+                expectedPartition,
+                expectedProcessorId,
+                It.Is<CheckpointPosition>(csp =>
+                    csp.Offset == expectedOffset
+                    && csp.SequenceNumber == expectedSequence),
+                cancellationSource.Token),
+            Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobCheckpointStore.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task UpdateCheckpointAsyncOldOverloadDelegatesTheCall()
         {
             using var cancellationSource = new CancellationTokenSource();
 

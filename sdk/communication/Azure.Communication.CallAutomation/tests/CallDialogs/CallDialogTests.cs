@@ -13,12 +13,40 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
     public class CallDialogTests : CallAutomationTestBase
     {
         private const string dialogId = "92e08834-b6ee-4ede-8956-9fefa27a691c";
-        private static readonly StartDialogOptions _startDialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", new Dictionary<string, object>())
+
+        private static readonly Dictionary<string, object> dialogContextWithObject = new Dictionary<string, object>()
+        {
+            {
+                "context",
+                new Dictionary<string, object>
+                {
+                    { "name", 1 }
+                }
+            }
+        };
+        private static readonly Dictionary<string, object> dialogContextWithString = new Dictionary<string, object>()
+        {
+            {
+                "context",
+                "context"
+            }
+        };
+        private static readonly StartDialog _startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialogOptions _startDialogWithIdOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, "botAppId", new Dictionary<string, object>())
+        private static readonly StartDialog _startDialogWithCustomObjectOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContextWithObject))
+        {
+            OperationContext = "context"
+        };
+
+        private static readonly StartDialog _startDialogWithStringOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContextWithString))
+        {
+            OperationContext = "context"
+        };
+
+        private static readonly StartDialog _startDialogWithIdOptions = new StartDialog(dialogId, new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
         {
             OperationContext = "context"
         };

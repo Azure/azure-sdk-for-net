@@ -36,10 +36,10 @@ catch (RequestFailedException ex)
     throw;
 }
 
-Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
-Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
-Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
-Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
+Console.WriteLine("Hate severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate)?.Severity ?? 0);
+Console.WriteLine("SelfHarm severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm)?.Severity ?? 0);
+Console.WriteLine("Sexual severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Sexual)?.Severity ?? 0);
+Console.WriteLine("Violence severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Violence)?.Severity ?? 0);
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety/README.md
