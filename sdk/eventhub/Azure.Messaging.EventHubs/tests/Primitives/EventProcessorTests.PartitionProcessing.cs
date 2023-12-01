@@ -1643,7 +1643,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), new EventProcessorOptions()) { CallBase = true };
 
             mockLogger
-                .Setup(log => log.EventProcessorPartitionProcessingEventPositionDetermined(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>()))
+                .Setup(log => log.EventProcessorPartitionProcessingEventPositionDetermined(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), false, null, null))
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockConsumer
@@ -1672,7 +1672,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     mockProcessor.Object.EventHubName,
                     mockProcessor.Object.ConsumerGroup,
                     expectedEventPosition.ToString(),
-                    false),
+                    false,
+                    null, // no checkpoint was used
+                    null), // no checkpoint was used
                 Times.Once);
 
             cancellationSource.Cancel();

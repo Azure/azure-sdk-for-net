@@ -22,10 +22,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("sourceLocale"u8);
                 writer.WriteStringValue(SourceLocale);
             }
-            if (Optional.IsDefined(VoiceGender))
+            if (Optional.IsDefined(VoiceKind))
             {
-                writer.WritePropertyName("voiceGender"u8);
-                writer.WriteStringValue(VoiceGender.Value.ToString());
+                writer.WritePropertyName("voiceKind"u8);
+                writer.WriteStringValue(VoiceKind.Value.ToString());
             }
             if (Optional.IsDefined(VoiceName))
             {
