@@ -15,5 +15,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             InstanceType = "InMageAzureV2";
         }
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ApplyRecoveryPointContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal InMageAzureV2ApplyRecoveryPointContent(string instanceType) : base(instanceType)
+        {
+            InstanceType = instanceType ?? "InMageAzureV2";
+        }
     }
 }
