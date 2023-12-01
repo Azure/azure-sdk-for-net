@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -67,26 +68,18 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 VisualFeatures.Read);
 
             // Print text (OCR) analysis results to the console
-            Console.WriteLine($"Image analysis results:");
-            Console.WriteLine($" Read:");
-            Console.WriteLine($"   Model version: {result.Read.ModelVersion}");
-            Console.WriteLine($"   String index type: {result.Read.StringIndexType}");
-            Console.WriteLine($"   Angle: {result.Read.Pages[0].Angle}");
-            Console.WriteLine($"   Content:\n{result.Read.Content}");
-            // for style in result.Read.Styles:
-            //    Console.WriteLine("   Style: {}".format(style)) // TODO: This was empty for me. Should be removed from JSON result?
-            Console.WriteLine("   Lines:");
-            foreach (DocumentLine line in result.Read.Pages[0].Lines)
-            {
-                string pointsString = "{" + string.Join(", ", line.BoundingBox.Select(point => point.ToString())) + "}";
-                Console.WriteLine($"     Line: '{line.Content}', Bounding box {pointsString}, Span offset {line.Spans[0].Offset}, Span length {line.Spans[0].Length}");
-            }
-            Console.WriteLine("   Words:");
-            foreach (DocumentWord word in result.Read.Pages[0].Words)
-            {
-                string pointsString = "{" + string.Join(", ", word.BoundingBox.Select(point => point.ToString())) + "}";
-                Console.WriteLine($"     Word: '{word.Content}', Bounding box {pointsString}, Confidence {word.Confidence:F4}, Span offset {word.Span.Offset}, Span length {word.Span.Length}");
-            }
+            Console.WriteLine("Image analysis results:");
+            Console.WriteLine(" Read:");
+
+            foreach (DetectedTextBlock block in result.Read.Blocks)
+                foreach (DetectedTextLine line in block.Lines)
+                {
+                    Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
+                    foreach (DetectedTextWord word in line.Words)
+                    {
+                        Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.ToString("#.####")}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
+                    }
+                }
             #endregion
         }
 
@@ -102,26 +95,18 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 VisualFeatures.Read);
 
             // Print text (OCR) analysis results to the console
-            Console.WriteLine($"Image analysis results:");
-            Console.WriteLine($" Read:");
-            Console.WriteLine($"   Model version: {result.Read.ModelVersion}");
-            Console.WriteLine($"   String index type: {result.Read.StringIndexType}");
-            Console.WriteLine($"   Angle: {result.Read.Pages[0].Angle}");
-            Console.WriteLine($"   Content:\n{result.Read.Content}");
-            // for style in result.Read.Styles:
-            //    Console.WriteLine("   Style: {}".format(style)) // TODO: This was empty for me. Should be removed from JSON result?
-            Console.WriteLine("   Lines:");
-            foreach (DocumentLine line in result.Read.Pages[0].Lines)
-            {
-                string pointsString = "{" + string.Join(", ", line.BoundingBox.Select(point => point.ToString())) + "}";
-                Console.WriteLine($"     Line: '{line.Content}', Bounding box {pointsString}, Span offset {line.Spans[0].Offset}, Span length {line.Spans[0].Length}");
-            }
-            Console.WriteLine("   Words:");
-            foreach (DocumentWord word in result.Read.Pages[0].Words)
-            {
-                string pointsString = "{" + string.Join(", ", word.BoundingBox.Select(point => point.ToString())) + "}";
-                Console.WriteLine($"     Word: '{word.Content}', Bounding box {pointsString}, Confidence {word.Confidence:F4}, Span offset {word.Span.Offset}, Span length {word.Span.Length}");
-            }
+            Console.WriteLine("Image analysis results:");
+            Console.WriteLine(" Read:");
+
+            foreach (DetectedTextBlock block in result.Read.Blocks)
+                foreach (DetectedTextLine line in block.Lines)
+                {
+                    Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
+                    foreach (DetectedTextWord word in line.Words)
+                    {
+                        Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.ToString("#.####")}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
+                    }
+                }
             #endregion
         }
 

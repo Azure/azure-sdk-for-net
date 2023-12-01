@@ -170,30 +170,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
             else
             {
-                Assert.IsNotNull(readResult);
-                Assert.IsFalse(string.IsNullOrWhiteSpace(readResult.ModelVersion));
-                Assert.IsFalse(string.IsNullOrEmpty(readResult.Content));
-                foreach (var onePage in readResult.Pages)
-                {
-                    Assert.IsTrue(onePage.Height > 0 || onePage.Width > 0);
-                    foreach (var oneLine in onePage.Lines)
-                    {
-                        Assert.IsNotNull(oneLine.BoundingBox);
-                        bool nonZero = false;
-
-                        foreach (var onePoint in oneLine.BoundingBox)
-                        {
-                            if (onePoint != 0)
-                            {
-                                nonZero = true;
-                                break;
-                            }
-                        }
-                        Assert.IsTrue(nonZero);
-
-                        Assert.IsFalse(string.IsNullOrWhiteSpace(oneLine.Content));
-                    }
-                }
+                ValidateRead(iaResult);
             }
         }
 
@@ -340,66 +317,37 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
         {
             ReadResult readResult = result.Read;
             Assert.IsNotNull(readResult);
-            Assert.IsNotNull(readResult.Content);
-            Assert.IsTrue(readResult.Content.Equals("Sample text\nHand writing\n123 456"));
-            Assert.IsNotNull(readResult.ModelVersion);
-            Assert.IsFalse(string.IsNullOrEmpty(readResult.ModelVersion));
-            Assert.IsNotNull(readResult.Pages);
-            Assert.AreEqual(readResult.Pages.Count, 1);
 
-            DocumentPage page = readResult.Pages[0];
-            Assert.IsNotNull(page);
-            Assert.IsNotNull(page.Angle);
-            Assert.AreEqual(page.PageNumber, 1);
-            Assert.AreEqual(page.Height, result.Metadata.Height);
-            Assert.AreEqual(page.Width, result.Metadata.Width);
+            StringBuilder allText = new StringBuilder();
+            int words = 0;
+            int lines = 0;
 
-            var words = page.Words;
-            Assert.IsNotNull(words);
-            Assert.AreEqual(words.Count, 6);
+            var pagePolygon = new ImagePoint[] { new ImagePoint(0, 0),
+                                                 new ImagePoint(0, result.Metadata.Height),
+                                                 new ImagePoint(result.Metadata.Width, result.Metadata.Height),
+                                                 new ImagePoint(result.Metadata.Width, 0) };
+            foreach (var block in readResult.Blocks)
+                foreach (var oneLine in block.Lines)
+                {
+                    Assert.True(oneLine.BoundingPolygon.All(p => IsInPolygon(p, pagePolygon)));
 
-            DocumentWord word = words[0];
-            Assert.IsNotNull(word);
-            Assert.IsTrue(word.Content.Equals("Sample"));
-            Assert.IsTrue(word.Confidence > 0.0);
+                    words += oneLine.Words.Count;
+                    lines++;
+                    allText.AppendLine(oneLine.Text);
+                    foreach (var word in oneLine.Words)
+                    {
+                        Assert.True(word.BoundingPolygon.All(p => IsInPolygon(p, oneLine.BoundingPolygon)));
+                        Assert.Greater(word.Confidence, 0);
+                        Assert.Less(word.Confidence, 1);
+                        Assert.True(oneLine.Text.Contains(word.Text));
+                    }
+                }
 
-            DocumentSpan span = word.Span;
-            Assert.IsNotNull(span);
-            Assert.AreEqual(span.Offset, 0);
-            Assert.AreEqual(span.Length, 6);
-
-            var polygon = word.BoundingBox;
-            Assert.IsNotNull(polygon);
-            Assert.AreEqual(polygon.Count, 8);
-            for (int i = 0; i < polygon.Count; i++)
-            {
-                Assert.IsTrue(polygon[i] > 0.0);
-            }
-
-            var lines = page.Lines;
-            Assert.IsNotNull(lines);
-            Assert.AreEqual(lines.Count, 3);
-
-            DocumentLine line = lines[0];
-            Assert.IsNotNull(line);
-            Assert.IsTrue(line.Content.Equals("Sample text"));
-
-            var spans = line.Spans;
-            Assert.IsNotNull(spans);
-            Assert.AreEqual(spans.Count, 1);
-            span = spans[0];
-            Assert.IsNotNull(span);
-            Assert.AreEqual(span.Offset, 0);
-            Assert.AreEqual(span.Length, 11);
-
-            polygon = line.BoundingBox;
-            Assert.IsNotNull(polygon);
-            Assert.AreEqual(polygon.Count, 8);
-            for (int i = 0; i < polygon.Count; i++)
-            {
-                Assert.IsTrue(polygon[i] > 0.0);
-            }
+            Assert.AreEqual(words, 6);
+            Assert.AreEqual(lines, 3);
+            Assert.Equals(allText.ToString(), "Sample text\nHand writing\n123 456");
         }
+
         private void ValidateBoxInResult(ImageBoundingBox box, ImageMetadata imageMetadata)
         {
             Assert.GreaterOrEqual(box.X, 0);
@@ -408,6 +356,35 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             Assert.LessOrEqual(box.Y, imageMetadata.Height);
             Assert.LessOrEqual(box.Height, imageMetadata.Height - box.Y);
             Assert.LessOrEqual(box.Width, imageMetadata.Width - box.X);
+        }
+
+        private static bool IsInPolygon(ImagePoint suspectPoint, IEnumerable<ImagePoint> polygon)
+        {
+            int intersectCount = 0;
+            ImagePoint[] points = new ImagePoint[polygon.Count() + 1];
+            polygon.ToArray().CopyTo(points, 0);
+            points[points.Length - 1] = points[0];
+
+            for (int i = 0; i < points.Length - 1; i++)
+            {
+                ImagePoint p1 = points[i];
+                ImagePoint p2 = points[i + 1];
+
+                if (((p1.Y > suspectPoint.Y) != (p2.Y > suspectPoint.Y)) &&
+                    (suspectPoint.X < (p2.X - p1.X) * (suspectPoint.Y - p1.Y) / (p2.Y - p1.Y) + p1.X))
+                {
+                    intersectCount++;
+                }
+            }
+
+            bool result = intersectCount % 2 != 0;
+
+            if (!result)
+            {
+                Console.WriteLine("Point {0} is not in polygon {1}", suspectPoint, string.Join(" ", polygon));
+            }
+
+            return result;
         }
 
         private class BoundingBoxComparer : IEqualityComparer<ImageBoundingBox>

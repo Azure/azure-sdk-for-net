@@ -11,28 +11,32 @@ using Azure;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    public partial class DocumentWord
+    public partial class DetectedTextWord
     {
-        internal static DocumentWord DeserializeDocumentWord(JsonElement element)
+        internal static DetectedTextWord DeserializeDetectedTextWord(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<float> boundingBox = default;
+            string text = default;
+            IReadOnlyList<ImagePoint> boundingPolygon = default;
             float confidence = default;
-            string content = default;
-            DocumentSpan span = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("boundingBox"u8))
+                if (property.NameEquals("text"u8))
                 {
-                    List<float> array = new List<float>();
+                    text = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("boundingPolygon"u8))
+                {
+                    List<ImagePoint> array = new List<ImagePoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetSingle());
+                        array.Add(ImagePoint.DeserializeImagePoint(item));
                     }
-                    boundingBox = array;
+                    boundingPolygon = array;
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))
@@ -40,26 +44,16 @@ namespace Azure.AI.Vision.ImageAnalysis
                     confidence = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("content"u8))
-                {
-                    content = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("span"u8))
-                {
-                    span = DocumentSpan.DeserializeDocumentSpan(property.Value);
-                    continue;
-                }
             }
-            return new DocumentWord(boundingBox, confidence, content, span);
+            return new DetectedTextWord(text, boundingPolygon, confidence);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DocumentWord FromResponse(Response response)
+        internal static DetectedTextWord FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDocumentWord(document.RootElement);
+            return DeserializeDetectedTextWord(document.RootElement);
         }
     }
 }

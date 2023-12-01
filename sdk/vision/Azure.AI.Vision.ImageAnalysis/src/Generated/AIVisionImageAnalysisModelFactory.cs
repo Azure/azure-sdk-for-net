@@ -169,83 +169,57 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ReadResult"/>. </summary>
-        /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
-        /// <param name="pages"> A list of analyzed pages. </param>
-        /// <param name="stringIndexType"> The method used to compute string offset and length, possible values include: 'textElements', 'unicodeCodePoint', 'utf16CodeUnit' etc. </param>
-        /// <param name="styles"> Extracted font styles. </param>
-        /// <param name="modelVersion"> The model used to generate the Read result. </param>
+        /// <param name="blocks"> A list of text blocks in the image. At the moment only one block is returned, containing all the text detected in the image. </param>
         /// <returns> A new <see cref="ImageAnalysis.ReadResult"/> instance for mocking. </returns>
-        public static ReadResult ReadResult(string content = null, IEnumerable<DocumentPage> pages = null, string stringIndexType = null, IEnumerable<DocumentStyle> styles = null, string modelVersion = null)
+        public static ReadResult ReadResult(IEnumerable<DetectedTextBlock> blocks = null)
         {
-            pages ??= new List<DocumentPage>();
-            styles ??= new List<DocumentStyle>();
+            blocks ??= new List<DetectedTextBlock>();
 
-            return new ReadResult(content, pages?.ToList(), stringIndexType, styles?.ToList(), modelVersion);
+            return new ReadResult(blocks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentPage"/>. </summary>
-        /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
-        /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
-        /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
-        /// <param name="pageNumber"> 1-based page number in the input document. </param>
-        /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
-        /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
-        /// <param name="words"> Extracted words from the page. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(float angle = default, float height = default, IEnumerable<DocumentLine> lines = null, int pageNumber = default, IEnumerable<DocumentSpan> spans = null, float width = default, IEnumerable<DocumentWord> words = null)
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTextBlock"/>. </summary>
+        /// <param name="lines"> A list of text lines in this block. </param>
+        /// <returns> A new <see cref="ImageAnalysis.DetectedTextBlock"/> instance for mocking. </returns>
+        public static DetectedTextBlock DetectedTextBlock(IEnumerable<DetectedTextLine> lines = null)
         {
-            lines ??= new List<DocumentLine>();
-            spans ??= new List<DocumentSpan>();
-            words ??= new List<DocumentWord>();
+            lines ??= new List<DetectedTextLine>();
 
-            return new DocumentPage(angle, height, lines?.ToList(), pageNumber, spans?.ToList(), width, words?.ToList());
+            return new DetectedTextBlock(lines?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentLine"/>. </summary>
-        /// <param name="boundingBox"> The bounding box of the line. </param>
-        /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
-        /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DocumentLine"/> instance for mocking. </returns>
-        public static DocumentLine DocumentLine(IEnumerable<float> boundingBox = null, string content = null, IEnumerable<DocumentSpan> spans = null)
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTextLine"/>. </summary>
+        /// <param name="text"> Text content of the detected text line. </param>
+        /// <param name="boundingPolygon"> A bounding polygon around the text line. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
+        /// <param name="words"> A list of words in this line. </param>
+        /// <returns> A new <see cref="ImageAnalysis.DetectedTextLine"/> instance for mocking. </returns>
+        public static DetectedTextLine DetectedTextLine(string text = null, IEnumerable<ImagePoint> boundingPolygon = null, IEnumerable<DetectedTextWord> words = null)
         {
-            boundingBox ??= new List<float>();
-            spans ??= new List<DocumentSpan>();
+            boundingPolygon ??= new List<ImagePoint>();
+            words ??= new List<DetectedTextWord>();
 
-            return new DocumentLine(boundingBox?.ToList(), content, spans?.ToList());
+            return new DetectedTextLine(text, boundingPolygon?.ToList(), words?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentSpan"/>. </summary>
-        /// <param name="length"> Number of characters in the content represented by the span. </param>
-        /// <param name="offset"> Zero-based index of the content represented by the span. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DocumentSpan"/> instance for mocking. </returns>
-        public static DocumentSpan DocumentSpan(int length = default, int offset = default)
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImagePoint"/>. </summary>
+        /// <param name="x"> The horizontal x-coordinate of this point, in pixels. Zero values corresponds to the left-most pixels in the image. </param>
+        /// <param name="y"> The vertical y-coordinate of this point, in pixels. Zero values corresponds to the top-most pixels in the image. </param>
+        /// <returns> A new <see cref="ImageAnalysis.ImagePoint"/> instance for mocking. </returns>
+        public static ImagePoint ImagePoint(int x = default, int y = default)
         {
-            return new DocumentSpan(length, offset);
+            return new ImagePoint(x, y);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentWord"/>. </summary>
-        /// <param name="boundingBox"> Bounding box of the word. </param>
-        /// <param name="confidence"> Confidence of correctly extracting the word. </param>
-        /// <param name="content"> Text content of the word. </param>
-        /// <param name="span"> Location of the word in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DocumentWord"/> instance for mocking. </returns>
-        public static DocumentWord DocumentWord(IEnumerable<float> boundingBox = null, float confidence = default, string content = null, DocumentSpan span = null)
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTextWord"/>. </summary>
+        /// <param name="text"> Text content of the word. </param>
+        /// <param name="boundingPolygon"> A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
+        /// <param name="confidence"> The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection. </param>
+        /// <returns> A new <see cref="ImageAnalysis.DetectedTextWord"/> instance for mocking. </returns>
+        public static DetectedTextWord DetectedTextWord(string text = null, IEnumerable<ImagePoint> boundingPolygon = null, float confidence = default)
         {
-            boundingBox ??= new List<float>();
+            boundingPolygon ??= new List<ImagePoint>();
 
-            return new DocumentWord(boundingBox?.ToList(), confidence, content, span);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DocumentStyle"/>. </summary>
-        /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        /// <param name="isHandwritten"> Is content handwritten or not. </param>
-        /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DocumentStyle"/> instance for mocking. </returns>
-        public static DocumentStyle DocumentStyle(float confidence = default, bool isHandwritten = default, IEnumerable<DocumentSpan> spans = null)
-        {
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentStyle(confidence, isHandwritten, spans?.ToList());
+            return new DetectedTextWord(text, boundingPolygon?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.SmartCropsResult"/>. </summary>

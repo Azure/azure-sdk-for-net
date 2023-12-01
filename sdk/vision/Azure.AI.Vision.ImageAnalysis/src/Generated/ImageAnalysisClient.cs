@@ -38,7 +38,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
         /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// Azure AI Computer Vision endpoint (protocol and hostname, for example:
         /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -49,7 +49,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
         /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// Azure AI Computer Vision endpoint (protocol and hostname, for example:
         /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -523,7 +523,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/computervision", false);
+            uri.AppendRaw("/unifiedvision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
             if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
             {
@@ -560,7 +560,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/computervision", false);
+            uri.AppendRaw("/unifiedvision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
             if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
             {

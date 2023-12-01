@@ -10,38 +10,38 @@ using Azure;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    public partial class DocumentSpan
+    public partial class ImagePoint
     {
-        internal static DocumentSpan DeserializeDocumentSpan(JsonElement element)
+        internal static ImagePoint DeserializeImagePoint(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int length = default;
-            int offset = default;
+            int x = default;
+            int y = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("length"u8))
+                if (property.NameEquals("x"u8))
                 {
-                    length = property.Value.GetInt32();
+                    x = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("offset"u8))
+                if (property.NameEquals("y"u8))
                 {
-                    offset = property.Value.GetInt32();
+                    y = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new DocumentSpan(length, offset);
+            return new ImagePoint(x, y);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DocumentSpan FromResponse(Response response)
+        internal static ImagePoint FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDocumentSpan(document.RootElement);
+            return DeserializeImagePoint(document.RootElement);
         }
     }
 }

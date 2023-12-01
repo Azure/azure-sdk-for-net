@@ -11,37 +11,37 @@ using Azure;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    public partial class ReadResult
+    public partial class DetectedTextBlock
     {
-        internal static ReadResult DeserializeReadResult(JsonElement element)
+        internal static DetectedTextBlock DeserializeDetectedTextBlock(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<DetectedTextBlock> blocks = default;
+            IReadOnlyList<DetectedTextLine> lines = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blocks"u8))
+                if (property.NameEquals("lines"u8))
                 {
-                    List<DetectedTextBlock> array = new List<DetectedTextBlock>();
+                    List<DetectedTextLine> array = new List<DetectedTextLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedTextBlock.DeserializeDetectedTextBlock(item));
+                        array.Add(DetectedTextLine.DeserializeDetectedTextLine(item));
                     }
-                    blocks = array;
+                    lines = array;
                     continue;
                 }
             }
-            return new ReadResult(blocks);
+            return new DetectedTextBlock(lines);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ReadResult FromResponse(Response response)
+        internal static DetectedTextBlock FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeReadResult(document.RootElement);
+            return DeserializeDetectedTextBlock(document.RootElement);
         }
     }
 }
