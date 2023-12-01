@@ -20,6 +20,21 @@ namespace Azure.ResourceManager.Avs.Models
             HostMembers = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
+        /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
+        /// <param name="vmMembers"> Virtual machine members list. </param>
+        /// <param name="hostMembers"> Host members list. </param>
+        /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
+        /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
+        internal PlacementPolicyPatch(PlacementPolicyState? state, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType)
+        {
+            State = state;
+            VmMembers = vmMembers;
+            HostMembers = hostMembers;
+            AffinityStrength = affinityStrength;
+            AzureHybridBenefitType = azureHybridBenefitType;
+        }
+
         /// <summary> Whether the placement policy is enabled or disabled. </summary>
         public PlacementPolicyState? State { get; set; }
         /// <summary> Virtual machine members list. </summary>

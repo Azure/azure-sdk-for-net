@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.ManagedCertificateProperties"/> instance for mocking. </returns>
         public static ManagedCertificateProperties ManagedCertificateProperties(string subject = null, DateTimeOffset? expiresOn = null)
         {
-            return new ManagedCertificateProperties(SecretType.ManagedCertificate, subject, expiresOn);
+            return new ManagedCertificateProperties(secretType: default, subject, expiresOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomerCertificateProperties"/>. </summary>
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             subjectAlternativeNames ??= new List<string>();
 
-            return new CustomerCertificateProperties(SecretType.CustomerCertificate, secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null, secretVersion, useLatestVersion, subject, expiresOn, certificateAuthority, subjectAlternativeNames?.ToList(), thumbprint);
+            return new CustomerCertificateProperties(secretType: default, secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null, secretVersion, useLatestVersion, subject, expiresOn, certificateAuthority, subjectAlternativeNames?.ToList(), thumbprint);
         }
     }
 }

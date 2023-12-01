@@ -140,14 +140,13 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BotChannelProperties"/>. </summary>
-        /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <returns> A new <see cref="Models.BotChannelProperties"/> instance for mocking. </returns>
-        public static BotChannelProperties BotChannelProperties(string channelName = null, ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
+        public static BotChannelProperties BotChannelProperties(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
         {
-            return new UnknownChannel(channelName, etag, provisioningState, location);
+            return new UnknownChannel(channelName: null, etag, provisioningState, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BotChannelGetWithKeysResult"/>. </summary>
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.AlexaChannel"/> instance for mocking. </returns>
         public static AlexaChannel AlexaChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, AlexaChannelProperties properties = null)
         {
-            return new AlexaChannel("AlexaChannel", etag, provisioningState, location, properties);
+            return new AlexaChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AlexaChannelProperties"/>. </summary>
@@ -380,7 +379,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.FacebookChannel"/> instance for mocking. </returns>
         public static FacebookChannel FacebookChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, FacebookChannelProperties properties = null)
         {
-            return new FacebookChannel("FacebookChannel", etag, provisioningState, location, properties);
+            return new FacebookChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FacebookChannelProperties"/>. </summary>
@@ -406,7 +405,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.EmailChannel"/> instance for mocking. </returns>
         public static EmailChannel EmailChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, EmailChannelProperties properties = null)
         {
-            return new EmailChannel("EmailChannel", etag, provisioningState, location, properties);
+            return new EmailChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OutlookChannel"/>. </summary>
@@ -416,7 +415,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.OutlookChannel"/> instance for mocking. </returns>
         public static OutlookChannel OutlookChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
         {
-            return new OutlookChannel("OutlookChannel", etag, provisioningState, location);
+            return new OutlookChannel(channelName: null, etag, provisioningState, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MsTeamsChannel"/>. </summary>
@@ -427,7 +426,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.MsTeamsChannel"/> instance for mocking. </returns>
         public static MsTeamsChannel MsTeamsChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, MsTeamsChannelProperties properties = null)
         {
-            return new MsTeamsChannel("MsTeamsChannel", etag, provisioningState, location, properties);
+            return new MsTeamsChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SkypeChannel"/>. </summary>
@@ -438,7 +437,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.SkypeChannel"/> instance for mocking. </returns>
         public static SkypeChannel SkypeChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, SkypeChannelProperties properties = null)
         {
-            return new SkypeChannel("SkypeChannel", etag, provisioningState, location, properties);
+            return new SkypeChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KikChannel"/>. </summary>
@@ -449,7 +448,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.KikChannel"/> instance for mocking. </returns>
         public static KikChannel KikChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, KikChannelProperties properties = null)
         {
-            return new KikChannel("KikChannel", etag, provisioningState, location, properties);
+            return new KikChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebChatChannel"/>. </summary>
@@ -460,7 +459,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.WebChatChannel"/> instance for mocking. </returns>
         public static WebChatChannel WebChatChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, WebChatChannelProperties properties = null)
         {
-            return new WebChatChannel("WebChatChannel", etag, provisioningState, location, properties);
+            return new WebChatChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebChatChannelProperties"/>. </summary>
@@ -510,7 +509,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.DirectLineChannel"/> instance for mocking. </returns>
         public static DirectLineChannel DirectLineChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, DirectLineChannelProperties properties = null)
         {
-            return new DirectLineChannel("DirectLineChannel", etag, provisioningState, location, properties);
+            return new DirectLineChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DirectLineSite"/>. </summary>
@@ -549,7 +548,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.TelegramChannel"/> instance for mocking. </returns>
         public static TelegramChannel TelegramChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, TelegramChannelProperties properties = null)
         {
-            return new TelegramChannel("TelegramChannel", etag, provisioningState, location, properties);
+            return new TelegramChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SmsChannel"/>. </summary>
@@ -560,7 +559,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.SmsChannel"/> instance for mocking. </returns>
         public static SmsChannel SmsChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, SmsChannelProperties properties = null)
         {
-            return new SmsChannel("SmsChannel", etag, provisioningState, location, properties);
+            return new SmsChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SlackChannel"/>. </summary>
@@ -571,7 +570,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.SlackChannel"/> instance for mocking. </returns>
         public static SlackChannel SlackChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, SlackChannelProperties properties = null)
         {
-            return new SlackChannel("SlackChannel", etag, provisioningState, location, properties);
+            return new SlackChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SlackChannelProperties"/>. </summary>
@@ -600,7 +599,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.LineChannel"/> instance for mocking. </returns>
         public static LineChannel LineChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, LineChannelProperties properties = null)
         {
-            return new LineChannel("LineChannel", etag, provisioningState, location, properties);
+            return new LineChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LineChannelProperties"/>. </summary>
@@ -633,7 +632,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.DirectLineSpeechChannel"/> instance for mocking. </returns>
         public static DirectLineSpeechChannel DirectLineSpeechChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, DirectLineSpeechChannelProperties properties = null)
         {
-            return new DirectLineSpeechChannel("DirectLineSpeechChannel", etag, provisioningState, location, properties);
+            return new DirectLineSpeechChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Omnichannel"/>. </summary>
@@ -643,7 +642,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.Omnichannel"/> instance for mocking. </returns>
         public static Omnichannel Omnichannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
         {
-            return new Omnichannel("Omnichannel", etag, provisioningState, location);
+            return new Omnichannel(channelName: null, etag, provisioningState, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TelephonyChannel"/>. </summary>
@@ -654,7 +653,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.TelephonyChannel"/> instance for mocking. </returns>
         public static TelephonyChannel TelephonyChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, TelephonyChannelProperties properties = null)
         {
-            return new TelephonyChannel("TelephonyChannel", etag, provisioningState, location, properties);
+            return new TelephonyChannel(channelName: null, etag, provisioningState, location, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AcsChatChannel"/>. </summary>
@@ -664,7 +663,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.AcsChatChannel"/> instance for mocking. </returns>
         public static AcsChatChannel AcsChatChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
         {
-            return new AcsChatChannel("AcsChatChannel", etag, provisioningState, location);
+            return new AcsChatChannel(channelName: null, etag, provisioningState, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchAssistant"/>. </summary>
@@ -674,7 +673,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.SearchAssistant"/> instance for mocking. </returns>
         public static SearchAssistant SearchAssistant(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
         {
-            return new SearchAssistant("SearchAssistant", etag, provisioningState, location);
+            return new SearchAssistant(channelName: null, etag, provisioningState, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.M365Extensions"/>. </summary>
@@ -684,7 +683,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.M365Extensions"/> instance for mocking. </returns>
         public static M365Extensions M365Extensions(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
         {
-            return new M365Extensions("M365Extensions", etag, provisioningState, location);
+            return new M365Extensions(channelName: null, etag, provisioningState, location);
         }
     }
 }

@@ -614,7 +614,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformCertificateProperties"/>. </summary>
-        /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
         /// <param name="issuedOn"> The issue date of certificate. </param>
@@ -624,11 +623,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="dnsNames"> The domain list of certificate. </param>
         /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
         /// <returns> A new <see cref="Models.AppPlatformCertificateProperties"/> instance for mocking. </returns>
-        public static AppPlatformCertificateProperties AppPlatformCertificateProperties(string certificatePropertiesType = null, string thumbprint = null, string issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? activateOn = null, string subjectName = null, IEnumerable<string> dnsNames = null, AppPlatformCertificateProvisioningState? provisioningState = null)
+        public static AppPlatformCertificateProperties AppPlatformCertificateProperties(string thumbprint = null, string issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? activateOn = null, string subjectName = null, IEnumerable<string> dnsNames = null, AppPlatformCertificateProvisioningState? provisioningState = null)
         {
             dnsNames ??= new List<string>();
 
-            return new UnknownCertificateProperties(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState);
+            return new UnknownCertificateProperties(certificatePropertiesType: null, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformNameAvailabilityResult"/>. </summary>
@@ -1032,7 +1031,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             dnsNames ??= new List<string>();
 
-            return new AppPlatformKeyVaultCertificateProperties("KeyVaultCertificate", thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, vaultUri, keyVaultCertName, certVersion, isPrivateKeyExcluded);
+            return new AppPlatformKeyVaultCertificateProperties(certificatePropertiesType: null, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, vaultUri, keyVaultCertName, certVersion, isPrivateKeyExcluded);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformContentCertificateProperties"/>. </summary>
@@ -1050,7 +1049,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             dnsNames ??= new List<string>();
 
-            return new AppPlatformContentCertificateProperties("ContentCertificate", thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, content);
+            return new AppPlatformContentCertificateProperties(certificatePropertiesType: null, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, content);
         }
     }
 }

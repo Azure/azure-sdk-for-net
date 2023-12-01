@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Cdn.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyPatch"/>. </summary>
+        /// <param name="tags"> CdnWebApplicationFirewallPolicy tags. </param>
+        internal CdnWebApplicationFirewallPolicyPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> CdnWebApplicationFirewallPolicy tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

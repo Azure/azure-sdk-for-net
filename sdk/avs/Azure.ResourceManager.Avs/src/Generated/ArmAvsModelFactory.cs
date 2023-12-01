@@ -303,17 +303,16 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDhcpEntity"/>. </summary>
-        /// <param name="dhcpType"> Type of DHCP: SERVER or RELAY. </param>
         /// <param name="displayName"> Display name of the DHCP entity. </param>
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <returns> A new <see cref="Models.WorkloadNetworkDhcpEntity"/> instance for mocking. </returns>
-        public static WorkloadNetworkDhcpEntity WorkloadNetworkDhcpEntity(string dhcpType = "Unknown", string displayName = null, IEnumerable<string> segments = null, WorkloadNetworkDhcpProvisioningState? provisioningState = null, long? revision = null)
+        public static WorkloadNetworkDhcpEntity WorkloadNetworkDhcpEntity(string displayName = null, IEnumerable<string> segments = null, WorkloadNetworkDhcpProvisioningState? provisioningState = null, long? revision = null)
         {
             segments ??= new List<string>();
 
-            return new UnknownWorkloadNetworkDhcpEntity(dhcpType, displayName, segments?.ToList(), provisioningState, revision);
+            return new UnknownWorkloadNetworkDhcpEntity(dhcpType: default, displayName, segments?.ToList(), provisioningState, revision);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkGatewayData"/>. </summary>
@@ -465,12 +464,11 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsPrivateCloudAddonProperties"/>. </summary>
-        /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <returns> A new <see cref="Models.AvsPrivateCloudAddonProperties"/> instance for mocking. </returns>
-        public static AvsPrivateCloudAddonProperties AvsPrivateCloudAddonProperties(string addonType = "Unknown", AddonProvisioningState? provisioningState = null)
+        public static AvsPrivateCloudAddonProperties AvsPrivateCloudAddonProperties(AddonProvisioningState? provisioningState = null)
         {
-            return new UnknownAddonProperties(addonType, provisioningState);
+            return new UnknownAddonProperties(addonType: default, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
@@ -505,14 +503,13 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlacementPolicyProperties"/>. </summary>
-        /// <param name="policyType"> placement policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Models.PlacementPolicyProperties"/> instance for mocking. </returns>
-        public static PlacementPolicyProperties PlacementPolicyProperties(string policyType = "Unknown", PlacementPolicyState? state = null, string displayName = null, PlacementPolicyProvisioningState? provisioningState = null)
+        public static PlacementPolicyProperties PlacementPolicyProperties(PlacementPolicyState? state = null, string displayName = null, PlacementPolicyProvisioningState? provisioningState = null)
         {
-            return new UnknownPlacementPolicyProperties(policyType, state, displayName, provisioningState);
+            return new UnknownPlacementPolicyProperties(policyType: default, state, displayName, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ScriptPackageData"/>. </summary>
@@ -605,7 +602,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonSrmProperties"/> instance for mocking. </returns>
         public static AddonSrmProperties AddonSrmProperties(AddonProvisioningState? provisioningState = null, string licenseKey = null)
         {
-            return new AddonSrmProperties(AddonType.SRM, provisioningState, licenseKey);
+            return new AddonSrmProperties(addonType: default, provisioningState, licenseKey);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonVrProperties"/>. </summary>
@@ -614,7 +611,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonVrProperties"/> instance for mocking. </returns>
         public static AddonVrProperties AddonVrProperties(AddonProvisioningState? provisioningState = null, int vrsCount = default)
         {
-            return new AddonVrProperties(AddonType.VR, provisioningState, vrsCount);
+            return new AddonVrProperties(addonType: default, provisioningState, vrsCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonHcxProperties"/>. </summary>
@@ -623,7 +620,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonHcxProperties"/> instance for mocking. </returns>
         public static AddonHcxProperties AddonHcxProperties(AddonProvisioningState? provisioningState = null, string offer = null)
         {
-            return new AddonHcxProperties(AddonType.HCX, provisioningState, offer);
+            return new AddonHcxProperties(addonType: default, provisioningState, offer);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonArcProperties"/>. </summary>
@@ -632,7 +629,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonArcProperties"/> instance for mocking. </returns>
         public static AddonArcProperties AddonArcProperties(AddonProvisioningState? provisioningState = null, string vCenter = null)
         {
-            return new AddonArcProperties(AddonType.Arc, provisioningState, vCenter);
+            return new AddonArcProperties(addonType: default, provisioningState, vCenter);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDhcpServer"/>. </summary>
@@ -647,7 +644,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             segments ??= new List<string>();
 
-            return new WorkloadNetworkDhcpServer(DhcpTypeEnum.Server, displayName, segments?.ToList(), provisioningState, revision, serverAddress, leaseTime);
+            return new WorkloadNetworkDhcpServer(dhcpType: default, displayName, segments?.ToList(), provisioningState, revision, serverAddress, leaseTime);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDhcpRelay"/>. </summary>
@@ -662,7 +659,7 @@ namespace Azure.ResourceManager.Avs.Models
             segments ??= new List<string>();
             serverAddresses ??= new List<string>();
 
-            return new WorkloadNetworkDhcpRelay(DhcpTypeEnum.Relay, displayName, segments?.ToList(), provisioningState, revision, serverAddresses?.ToList());
+            return new WorkloadNetworkDhcpRelay(dhcpType: default, displayName, segments?.ToList(), provisioningState, revision, serverAddresses?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmPlacementPolicyProperties"/>. </summary>
@@ -676,7 +673,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             vmMembers ??= new List<ResourceIdentifier>();
 
-            return new VmPlacementPolicyProperties(PlacementPolicyType.VmVm, state, displayName, provisioningState, vmMembers?.ToList(), affinityType);
+            return new VmPlacementPolicyProperties(policyType: default, state, displayName, provisioningState, vmMembers?.ToList(), affinityType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmHostPlacementPolicyProperties"/>. </summary>
@@ -694,7 +691,7 @@ namespace Azure.ResourceManager.Avs.Models
             vmMembers ??= new List<ResourceIdentifier>();
             hostMembers ??= new List<string>();
 
-            return new VmHostPlacementPolicyProperties(PlacementPolicyType.VmHost, state, displayName, provisioningState, vmMembers?.ToList(), hostMembers?.ToList(), affinityType, affinityStrength, azureHybridBenefitType);
+            return new VmHostPlacementPolicyProperties(policyType: default, state, displayName, provisioningState, vmMembers?.ToList(), hostMembers?.ToList(), affinityType, affinityStrength, azureHybridBenefitType);
         }
     }
 }

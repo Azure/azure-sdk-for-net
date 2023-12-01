@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CdnCustomDomainCreateOrUpdateContent"/>. </summary>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
+        internal CdnCustomDomainCreateOrUpdateContent(string hostName)
+        {
+            HostName = hostName;
+        }
+
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>
         public string HostName { get; set; }
     }

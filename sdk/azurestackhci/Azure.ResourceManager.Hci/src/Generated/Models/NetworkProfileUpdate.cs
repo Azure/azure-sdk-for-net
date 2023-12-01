@@ -20,6 +20,13 @@ namespace Azure.ResourceManager.Hci.Models
             NetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileUpdate"/>. </summary>
+        /// <param name="networkInterfaces"> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </param>
+        internal NetworkProfileUpdate(IList<WritableSubResource> networkInterfaces)
+        {
+            NetworkInterfaces = networkInterfaces;
+        }
+
         /// <summary> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </summary>
         public IList<WritableSubResource> NetworkInterfaces { get; }
     }

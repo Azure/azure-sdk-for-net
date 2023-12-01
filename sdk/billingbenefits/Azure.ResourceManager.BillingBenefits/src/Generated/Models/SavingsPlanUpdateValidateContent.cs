@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Benefits = new ChangeTrackingList<BillingBenefitsSavingsPlanPatchProperties>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUpdateValidateContent"/>. </summary>
+        /// <param name="benefits"></param>
+        internal SavingsPlanUpdateValidateContent(IList<BillingBenefitsSavingsPlanPatchProperties> benefits)
+        {
+            Benefits = benefits;
+        }
+
         /// <summary> Gets the benefits. </summary>
         public IList<BillingBenefitsSavingsPlanPatchProperties> Benefits { get; }
     }

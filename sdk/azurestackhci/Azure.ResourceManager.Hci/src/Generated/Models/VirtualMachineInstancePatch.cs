@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePatch"/>. </summary>
+        /// <param name="properties"> Defines the resource properties for the update. </param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        internal VirtualMachineInstancePatch(VirtualMachineInstanceUpdateProperties properties, ManagedServiceIdentity identity)
+        {
+            Properties = properties;
+            Identity = identity;
+        }
+
         /// <summary> Defines the resource properties for the update. </summary>
         public VirtualMachineInstanceUpdateProperties Properties { get; set; }
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>

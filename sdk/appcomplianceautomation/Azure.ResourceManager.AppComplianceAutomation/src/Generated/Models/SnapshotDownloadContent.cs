@@ -17,6 +17,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             DownloadType = downloadType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SnapshotDownloadContent"/>. </summary>
+        /// <param name="reportCreatorTenantId"> Tenant id. </param>
+        /// <param name="downloadType"> Indicates the download type. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        internal SnapshotDownloadContent(string reportCreatorTenantId, DownloadType downloadType, string offerGuid)
+        {
+            ReportCreatorTenantId = reportCreatorTenantId;
+            DownloadType = downloadType;
+            OfferGuid = offerGuid;
+        }
+
         /// <summary> Tenant id. </summary>
         public string ReportCreatorTenantId { get; set; }
         /// <summary> Indicates the download type. </summary>

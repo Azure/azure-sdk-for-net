@@ -17,6 +17,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionCreateOrUpdateContent"/>. </summary>
+        /// <param name="description"> Description of the Tag. </param>
+        /// <param name="externalDocsUri"> Absolute URL of external resources describing the tag. </param>
+        /// <param name="externalDocsDescription"> Description of the external resources describing the tag. </param>
+        internal ApiTagDescriptionCreateOrUpdateContent(string description, Uri externalDocsUri, string externalDocsDescription)
+        {
+            Description = description;
+            ExternalDocsUri = externalDocsUri;
+            ExternalDocsDescription = externalDocsDescription;
+        }
+
         /// <summary> Description of the Tag. </summary>
         public string Description { get; set; }
         /// <summary> Absolute URL of external resources describing the tag. </summary>

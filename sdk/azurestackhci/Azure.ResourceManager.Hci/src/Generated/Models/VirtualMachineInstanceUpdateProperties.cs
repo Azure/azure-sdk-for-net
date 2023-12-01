@@ -18,6 +18,19 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceUpdateProperties"/>. </summary>
+        /// <param name="hardwareProfile"> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </param>
+        /// <param name="storageProfile"></param>
+        /// <param name="networkProfile"> NetworkProfile - describes the network update configuration the virtual machine instance. </param>
+        /// <param name="osProfile"> OsProfile - describes the update configuration of the operating system. </param>
+        internal VirtualMachineInstanceUpdateProperties(HardwareProfileUpdate hardwareProfile, StorageProfileUpdate storageProfile, NetworkProfileUpdate networkProfile, OSProfileUpdate osProfile)
+        {
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            NetworkProfile = networkProfile;
+            OSProfile = osProfile;
+        }
+
         /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>
         public HardwareProfileUpdate HardwareProfile { get; set; }
         /// <summary> Gets or sets the storage profile. </summary>

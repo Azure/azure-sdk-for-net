@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             data ??= new List<MonitorServiceDetails>();
 
-            return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, data?.ToList());
+            return new MonitorServiceList(metadataIdentifier: default, data?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorServiceDetails"/>. </summary>
