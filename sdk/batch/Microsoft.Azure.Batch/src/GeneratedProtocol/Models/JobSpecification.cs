@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         public JobSpecification()
         {
-            PoolInfo = new PoolInformation();
             CustomInit();
         }
 
