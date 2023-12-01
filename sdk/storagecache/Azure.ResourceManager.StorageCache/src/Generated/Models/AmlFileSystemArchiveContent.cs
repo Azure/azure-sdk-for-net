@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemArchiveContent"/>. </summary>
+        /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
+        internal AmlFileSystemArchiveContent(string filesystemPath)
+        {
+            FilesystemPath = filesystemPath;
+        }
+
         /// <summary> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </summary>
         public string FilesystemPath { get; set; }
     }
