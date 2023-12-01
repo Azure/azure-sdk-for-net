@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRulePatch"/>. </summary>
+        /// <param name="startIPAddress"> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <param name="endIPAddress"> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        internal DataLakeStoreFirewallRulePatch(IPAddress startIPAddress, IPAddress endIPAddress)
+        {
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
+        }
+
         /// <summary> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>
         public IPAddress StartIPAddress { get; set; }
         /// <summary> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>

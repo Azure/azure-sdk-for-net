@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ResourceType = ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the container registry. </param>
+        /// <param name="resourceType"> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </param>
+        internal ContainerRegistryNameAvailabilityContent(string name, ContainerRegistryResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The name of the container registry. </summary>
         public string Name { get; }
         /// <summary> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </summary>

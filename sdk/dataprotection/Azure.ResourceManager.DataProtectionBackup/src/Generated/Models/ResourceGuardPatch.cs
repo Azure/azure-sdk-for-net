@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardPatch"/>. </summary>
+        /// <param name="tags"> Resource Guard tags. </param>
+        internal ResourceGuardPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Resource Guard tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
