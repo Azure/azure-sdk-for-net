@@ -28,7 +28,6 @@ public abstract class PipelineRequest : IDisposable
     public virtual Uri Uri
     {
         get => GetUriCore();
-
         set => _uri = value;
     }
 
