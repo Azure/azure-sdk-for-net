@@ -26,6 +26,15 @@ namespace Azure.Communication.Identity.Models
             Scopes = scopes.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityAccessTokenRequest"/>. </summary>
+        /// <param name="scopes"> List of scopes attached to the token. </param>
+        /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
+        internal CommunicationIdentityAccessTokenRequest(IList<CommunicationTokenScope> scopes, int? expiresInMinutes)
+        {
+            Scopes = scopes;
+            ExpiresInMinutes = expiresInMinutes;
+        }
+
         /// <summary> List of scopes attached to the token. </summary>
         public IList<CommunicationTokenScope> Scopes { get; }
         /// <summary> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </summary>

@@ -18,6 +18,17 @@ namespace Azure.ResourceManager.DataBox.Models
             ValidationType = DataBoxValidationInputDiscriminator.ValidatePreferences;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PreferencesValidationContent"/>. </summary>
+        /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="preference"> Preference of transport and data center. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        internal PreferencesValidationContent(DataBoxValidationInputDiscriminator validationType, DataBoxOrderPreferences preference, DataBoxSkuName deviceType) : base(validationType)
+        {
+            Preference = preference;
+            DeviceType = deviceType;
+            ValidationType = validationType;
+        }
+
         /// <summary> Preference of transport and data center. </summary>
         public DataBoxOrderPreferences Preference { get; set; }
         /// <summary> Device type to be used for the job. </summary>

@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContinuousBackupRestoreLocation"/>. </summary>
+        /// <param name="location"> The name of the continuous backup restore location. </param>
+        internal ContinuousBackupRestoreLocation(AzureLocation? location)
+        {
+            Location = location;
+        }
+
         /// <summary> The name of the continuous backup restore location. </summary>
         public AzureLocation? Location { get; set; }
     }
