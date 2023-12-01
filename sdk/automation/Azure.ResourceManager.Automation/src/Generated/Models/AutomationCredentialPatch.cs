@@ -15,6 +15,19 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialPatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the credential. </param>
+        /// <param name="userName"> Gets or sets the user name of the credential. </param>
+        /// <param name="password"> Gets or sets the password of the credential. </param>
+        /// <param name="description"> Gets or sets the description of the credential. </param>
+        internal AutomationCredentialPatch(string name, string userName, string password, string description)
+        {
+            Name = name;
+            UserName = userName;
+            Password = password;
+            Description = description;
+        }
+
         /// <summary> Gets or sets the name of the credential. </summary>
         public string Name { get; set; }
         /// <summary> Gets or sets the user name of the credential. </summary>

@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSecurityPolicyPatch"/>. </summary>
+        /// <param name="properties">
+        /// object which contains security policy parameters
+        /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
+        /// </param>
+        internal FrontDoorSecurityPolicyPatch(SecurityPolicyProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary>
         /// object which contains security policy parameters
         /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

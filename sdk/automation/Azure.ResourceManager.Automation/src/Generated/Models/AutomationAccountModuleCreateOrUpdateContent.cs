@@ -25,6 +25,19 @@ namespace Azure.ResourceManager.Automation.Models
             ContentLink = contentLink;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountModuleCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        internal AutomationAccountModuleCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, AutomationContentLink contentLink)
+        {
+            Name = name;
+            Location = location;
+            Tags = tags;
+            ContentLink = contentLink;
+        }
+
         /// <summary> Gets or sets name of the resource. </summary>
         public string Name { get; set; }
         /// <summary> Gets or sets the location of the resource. </summary>

@@ -26,6 +26,27 @@ namespace Azure.Communication.CallAutomation
             Choices = new ChangeTrackingList<RecognitionChoice>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
+        /// <param name="interruptPrompt"> Determines if we interrupt the prompt and start recognizing. </param>
+        /// <param name="initialSilenceTimeoutInSeconds"> Time to wait for first input after prompt (if any). </param>
+        /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
+        /// <param name="speechLanguage"> Speech language to be recognized, If not set default is en-US. </param>
+        /// <param name="speechRecognitionModelEndpointId"> Endpoint where the custom model was deployed. </param>
+        /// <param name="dtmfOptions"> Defines configurations for DTMF. </param>
+        /// <param name="choices"> Defines Ivr choices for recognize. </param>
+        /// <param name="speechOptions"> Defines continuous speech recognition option. </param>
+        internal RecognizeOptionsInternal(bool? interruptPrompt, int? initialSilenceTimeoutInSeconds, CommunicationIdentifierModel targetParticipant, string speechLanguage, string speechRecognitionModelEndpointId, DtmfOptionsInternal dtmfOptions, IList<RecognitionChoice> choices, SpeechOptionsInternal speechOptions)
+        {
+            InterruptPrompt = interruptPrompt;
+            InitialSilenceTimeoutInSeconds = initialSilenceTimeoutInSeconds;
+            TargetParticipant = targetParticipant;
+            SpeechLanguage = speechLanguage;
+            SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId;
+            DtmfOptions = dtmfOptions;
+            Choices = choices;
+            SpeechOptions = speechOptions;
+        }
+
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
         public bool? InterruptPrompt { get; set; }
         /// <summary> Time to wait for first input after prompt (if any). </summary>

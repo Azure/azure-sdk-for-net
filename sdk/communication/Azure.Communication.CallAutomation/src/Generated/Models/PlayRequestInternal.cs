@@ -27,6 +27,27 @@ namespace Azure.Communication.CallAutomation
             PlayTo = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
+        /// <param name="playSources"> The source of the audio to be played. </param>
+        /// <param name="playTo">
+        /// The list of call participants play provided audio to.
+        /// Plays to everyone in the call when not provided.
+        /// </param>
+        /// <param name="playOptions"> Defines options for playing the audio. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal PlayRequestInternal(IList<PlaySourceInternal> playSources, IList<CommunicationIdentifierModel> playTo, PlayOptionsInternal playOptions, string operationContext, string operationCallbackUri)
+        {
+            PlaySources = playSources;
+            PlayTo = playTo;
+            PlayOptions = playOptions;
+            OperationContext = operationContext;
+            OperationCallbackUri = operationCallbackUri;
+        }
+
         /// <summary> The source of the audio to be played. </summary>
         public IList<PlaySourceInternal> PlaySources { get; }
         /// <summary> Defines options for playing the audio. </summary>

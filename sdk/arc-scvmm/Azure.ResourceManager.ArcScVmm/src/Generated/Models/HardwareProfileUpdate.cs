@@ -15,6 +15,23 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HardwareProfileUpdate"/>. </summary>
+        /// <param name="memoryMB"> MemoryMB is the size of a virtual machine's memory, in MB. </param>
+        /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
+        /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
+        /// <param name="dynamicMemoryEnabled"> Gets or sets a value indicating whether to enable dynamic memory or not. </param>
+        /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
+        /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
+        internal HardwareProfileUpdate(int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB)
+        {
+            MemoryMB = memoryMB;
+            CpuCount = cpuCount;
+            LimitCpuForMigration = limitCpuForMigration;
+            DynamicMemoryEnabled = dynamicMemoryEnabled;
+            DynamicMemoryMaxMB = dynamicMemoryMaxMB;
+            DynamicMemoryMinMB = dynamicMemoryMinMB;
+        }
+
         /// <summary> MemoryMB is the size of a virtual machine's memory, in MB. </summary>
         public int? MemoryMB { get; set; }
         /// <summary> Gets or sets the number of vCPUs for the vm. </summary>

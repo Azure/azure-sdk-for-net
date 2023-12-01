@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Batch.Models
             ResourceType = "Microsoft.Batch/batchAccounts";
         }
 
+        /// <summary> Initializes a new instance of <see cref="BatchNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name to check for availability. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        internal BatchNameAvailabilityContent(string name, ResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The name to check for availability. </summary>
         public string Name { get; }
         /// <summary> The resource type. </summary>
