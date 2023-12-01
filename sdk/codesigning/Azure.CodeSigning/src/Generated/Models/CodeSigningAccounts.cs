@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> The paginated list of code signing accounts. </summary>
     internal partial class CodeSigningAccounts

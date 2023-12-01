@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> The reason that a code signing account name could not be used. The Reason element is only returned if nameAvailable is false. </summary>
     public enum Reason

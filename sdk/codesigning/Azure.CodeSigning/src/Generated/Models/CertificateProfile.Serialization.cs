@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     public partial class CertificateProfile : IUtf8JsonSerializable
     {

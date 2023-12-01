@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> Properties of the certificate. </summary>
     public partial class Certificate

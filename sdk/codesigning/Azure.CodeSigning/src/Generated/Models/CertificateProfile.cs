@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> Certificate profile resource. </summary>
     public partial class CertificateProfile : ResourceData

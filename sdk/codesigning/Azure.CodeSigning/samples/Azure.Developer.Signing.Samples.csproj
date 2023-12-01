@@ -7,6 +7,6 @@
     <PackageReference Include="NUnit3TestAdapter" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Microsoft.TrustedSigning.csproj" />
+    <ProjectReference Include="..\src\Azure.Developer.Signing.csproj" />
   </ItemGroup>
 </Project>

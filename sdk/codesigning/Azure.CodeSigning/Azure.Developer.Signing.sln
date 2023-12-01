@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.TrustedSigning", "src\Microsoft.TrustedSigning.csproj", "{6B052A6C-4C9D-4BB1-BE49-B08FE2BA9020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Developer.Signing", "src\Azure.Developer.Signing.csproj", "{6B052A6C-4C9D-4BB1-BE49-B08FE2BA9020}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.TrustedSigning.Tests", "tests\Microsoft.TrustedSigning.Tests.csproj", "{987EFFC0-29B8-47B8-81C0-FADD9D973776}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Developer.Signing.Tests", "tests\Azure.Developer.Signing.Tests.csproj", "{987EFFC0-29B8-47B8-81C0-FADD9D973776}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.TrustedSigning.Samples", "samples\Microsoft.TrustedSigning.Samples.csproj", "{D279B5C5-29A3-4A8C-9201-F77AC8463F8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Developer.Signing.Samples", "samples\Azure.Developer.Signing.Samples.csproj", "{D279B5C5-29A3-4A8C-9201-F77AC8463F8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

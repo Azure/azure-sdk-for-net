@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> Provisioning state of the code signing account. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>

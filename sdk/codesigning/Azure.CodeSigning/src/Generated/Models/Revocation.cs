@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> Revocations history of a certificate. </summary>
     public partial class Revocation

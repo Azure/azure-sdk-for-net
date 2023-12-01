@@ -4,6 +4,6 @@
     <PackageReference Include="Azure.ResourceManager" Version="1.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Microsoft.TrustedSigning.csproj" />
+    <ProjectReference Include="..\src\Azure.Developer.Signing.csproj" />
   </ItemGroup>
 </Project>

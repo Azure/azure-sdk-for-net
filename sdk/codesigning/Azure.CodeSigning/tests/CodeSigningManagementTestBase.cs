@@ -8,7 +8,7 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace Microsoft.TrustedSigning.Tests
+namespace Azure.Developer.Signing.Tests
 {
     public class CodeSigningManagementTestBase : ManagementRecordedTestBase<CodeSigningManagementTestEnvironment>
     {

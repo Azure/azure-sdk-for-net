@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
-    <PackageId>Microsoft.TrustedSigning</PackageId>
+    <PackageId>Azure.Developer.Signing</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider CodeSigning.</Description>
     <PackageTags>azure;management;arm;resource manager;codesigning</PackageTags>
   </PropertyGroup>

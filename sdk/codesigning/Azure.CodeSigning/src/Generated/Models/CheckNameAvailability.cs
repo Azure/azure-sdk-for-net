@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> The parameters used to check the availability of the code signing account name. </summary>
     public partial class CheckNameAvailability

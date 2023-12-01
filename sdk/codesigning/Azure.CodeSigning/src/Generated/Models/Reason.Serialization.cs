@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     internal static partial class ReasonExtensions
     {

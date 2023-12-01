@@ -9,10 +9,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Microsoft.TrustedSigning.Models;
+using Azure.Developer.Signing.Models;
 using Azure.Core;
 
-namespace Microsoft.TrustedSigning
+namespace Azure.Developer.Signing
 {
     internal class CodeSigningAccountOperationSource : IOperationSource<CodeSigningAccount>
     {

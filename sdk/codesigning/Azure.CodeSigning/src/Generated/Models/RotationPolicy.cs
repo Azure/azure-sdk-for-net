@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> Rotation policy of the certificate. </summary>
     public readonly partial struct RotationPolicy : IEquatable<RotationPolicy>

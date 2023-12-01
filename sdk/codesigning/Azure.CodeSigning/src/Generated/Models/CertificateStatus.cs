@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> Status of the certificate. </summary>
     public readonly partial struct CertificateStatus : IEquatable<CertificateStatus>

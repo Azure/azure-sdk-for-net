@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> The CheckNameAvailability operation response. </summary>
     public partial class CheckNameAvailabilityResult

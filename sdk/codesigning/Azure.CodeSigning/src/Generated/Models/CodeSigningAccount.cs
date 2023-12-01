@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Microsoft.TrustedSigning.Models
+namespace Azure.Developer.Signing.Models
 {
     /// <summary> Code signing account resource. </summary>
     public partial class CodeSigningAccount : TrackedResourceData
