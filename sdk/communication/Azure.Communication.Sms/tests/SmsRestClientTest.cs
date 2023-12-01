@@ -17,7 +17,7 @@ namespace Azure.Communication.Sms.Tests
         public void SmsRestClient_NullClientDiagnostics_ShouldThrow()
         {
             var httpPipeline = HttpPipelineBuilder.Build(new SmsClientOptions());
-            var uri = "http://localhost";
+            var uri = new Uri("http://localhost");
 
             Assert.Throws<ArgumentNullException>(() => new SmsRestClient(null, httpPipeline, uri));
         }
@@ -26,7 +26,7 @@ namespace Azure.Communication.Sms.Tests
         public void SmsRestClient_NullHttpPipeline_ShouldThrow()
         {
             var clientDiagnostics = new ClientDiagnostics(new SmsClientOptions());
-            var endpoint = "http://localhost";
+            var endpoint = new Uri("http://localhost");
 
             Assert.Throws<ArgumentNullException>(() => new SmsRestClient(clientDiagnostics, null, endpoint));
         }
@@ -46,7 +46,7 @@ namespace Azure.Communication.Sms.Tests
             var clientOptions = new SmsClientOptions();
             var clientDiagnostics = new ClientDiagnostics(clientOptions);
             var httpPipeline = HttpPipelineBuilder.Build(clientOptions);
-            var uri = "http://localhost";
+            var uri = new Uri("http://localhost");
 
             Assert.Throws<ArgumentNullException>(() => new SmsRestClient(clientDiagnostics, httpPipeline, uri, null));
         }
@@ -170,7 +170,7 @@ namespace Azure.Communication.Sms.Tests
             var clientOptions = new SmsClientOptions();
             var clientDiagnostics = new ClientDiagnostics(clientOptions);
             var httpPipeline = HttpPipelineBuilder.Build(clientOptions);
-            var endpoint = "http://localhost";
+            var endpoint = new Uri("http://localhost");
 
             return new SmsRestClient(clientDiagnostics, httpPipeline, endpoint);
         }
