@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Sims = sims.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SimDeleteList"/>. </summary>
+        /// <param name="sims"> A list of SIM resource names to delete. </param>
+        internal SimDeleteList(IList<string> sims)
+        {
+            Sims = sims;
+        }
+
         /// <summary> A list of SIM resource names to delete. </summary>
         public IList<string> Sims { get; }
     }
