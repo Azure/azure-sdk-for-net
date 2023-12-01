@@ -11,7 +11,7 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.CodeSigning.Models
+namespace Microsoft.TrustedSigning.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCodeSigningModelFactory

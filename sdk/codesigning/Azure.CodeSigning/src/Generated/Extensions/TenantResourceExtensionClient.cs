@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.CodeSigning.Models;
+using Microsoft.TrustedSigning.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
