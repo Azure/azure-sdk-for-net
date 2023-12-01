@@ -20,10 +20,10 @@ namespace Azure.AI.ContentSafety
                 writer.WritePropertyName("content"u8);
                 writer.WriteBase64StringValue(Content.ToArray(), "D");
             }
-            if (Optional.IsDefined(BlobUrl))
+            if (Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUrl"u8);
-                writer.WriteStringValue(BlobUrl.AbsoluteUri);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }

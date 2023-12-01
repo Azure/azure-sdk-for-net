@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
-            Choices = new ChangeTrackingList<RecognizeChoice>();
+            Choices = new ChangeTrackingList<RecognitionChoice>();
         }
 
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Defines configurations for DTMF. </summary>
         public DtmfOptionsInternal DtmfOptions { get; set; }
         /// <summary> Defines Ivr choices for recognize. </summary>
-        public IList<RecognizeChoice> Choices { get; }
+        public IList<RecognitionChoice> Choices { get; }
         /// <summary> Defines continuous speech recognition option. </summary>
         public SpeechOptionsInternal SpeechOptions { get; set; }
     }

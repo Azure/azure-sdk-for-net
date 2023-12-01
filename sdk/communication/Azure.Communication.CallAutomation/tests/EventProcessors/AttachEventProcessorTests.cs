@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
 
             // Assert if the delegate was also called
             Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
@@ -46,7 +46,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             handler.DetachOngoingEventProcessor<CallConnected>(CallConnectionId);
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
 
             // Assert if the delegate didnt get called
             Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
@@ -66,7 +66,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Then replace with correct one
             handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
-            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
 
             // Assert if the delegate was also called
             Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             // Add delegate for call connected event
             handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
-            var internalEvent = new CallTransferAcceptedInternal(CallConnectionId, ServerCallId, CorelationId, null, null, null, null);
+            var internalEvent = new CallTransferAcceptedInternal(null, null, null, null, CallConnectionId, ServerCallId, CorelationId);
 
             // Create and send event to event processor first
             SendAndProcessEvent(handler, new CallTransferAccepted(internalEvent));
@@ -103,9 +103,9 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallDisconnected(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallDisconnected(null, CallConnectionId, ServerCallId, CorelationId));
 
-            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(null,CallConnectionId, ServerCallId, CorelationId));
 
             // Assert if the delegate was never called
             Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);

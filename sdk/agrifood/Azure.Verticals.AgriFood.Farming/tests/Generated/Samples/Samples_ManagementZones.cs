@@ -23,8 +23,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -38,8 +39,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -53,8 +55,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -77,8 +80,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -101,8 +105,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetManagementZone_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetManagementZone("<partyId>", "<managementZoneId>", null);
 
@@ -114,8 +119,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetManagementZone_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetManagementZoneAsync("<partyId>", "<managementZoneId>", null);
 
@@ -127,8 +133,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetManagementZone_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetManagementZone("<partyId>", "<managementZoneId>", null);
 
@@ -155,8 +162,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetManagementZone_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetManagementZoneAsync("<partyId>", "<managementZoneId>", null);
 
@@ -183,8 +191,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<managementZoneId>", content);
@@ -197,8 +206,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<managementZoneId>", content);
@@ -211,8 +221,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -254,8 +265,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -297,8 +309,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<managementZoneId>");
 
@@ -309,8 +322,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<managementZoneId>");
 
@@ -321,8 +335,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<managementZoneId>");
 
@@ -333,8 +348,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<managementZoneId>");
 
@@ -345,8 +361,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetManagementZones_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetManagementZones(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -359,8 +376,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetManagementZones_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetManagementZonesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -373,8 +391,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetManagementZones_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetManagementZones(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -402,8 +421,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetManagementZones_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetManagementZonesAsync(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -431,8 +451,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetManagementZonesByPartyId_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetManagementZonesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -445,8 +466,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetManagementZonesByPartyId_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetManagementZonesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -459,8 +481,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetManagementZonesByPartyId_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetManagementZonesByPartyId("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -488,8 +511,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetManagementZonesByPartyId_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             await foreach (BinaryData item in client.GetManagementZonesByPartyIdAsync("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -517,8 +541,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<managementZoneId>", null);
             BinaryData responseData = operation.Value;
@@ -533,8 +558,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<managementZoneId>", null);
             BinaryData responseData = operation.Value;
@@ -549,8 +575,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<managementZoneId>", null);
             BinaryData responseData = operation.Value;
@@ -574,8 +601,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+            ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<managementZoneId>", null);
             BinaryData responseData = operation.Value;
