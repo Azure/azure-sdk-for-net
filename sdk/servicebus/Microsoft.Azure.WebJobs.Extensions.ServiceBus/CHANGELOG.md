@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed cleanup behavior when targeting .NET Framework so that Service Bus clients are properly disposed.
+
 ### Other Changes
 
 ## 5.13.4 (2023-11-09)
