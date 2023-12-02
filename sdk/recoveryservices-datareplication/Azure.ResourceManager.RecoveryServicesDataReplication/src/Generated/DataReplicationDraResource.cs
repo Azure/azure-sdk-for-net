@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly DraRestOperations _dataReplicationDraDraRestClient;
         private readonly DataReplicationDraData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationFabrics/fabricAgents";
+
         /// <summary> Initializes a new instance of the <see cref="DataReplicationDraResource"/> class for mocking. </summary>
         protected DataReplicationDraResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationFabrics/fabricAgents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

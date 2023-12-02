@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly EndpointCertificatesRestOperations _endpointCertificateRestClient;
         private readonly EndpointCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/endpointCertificates";
+
         /// <summary> Initializes a new instance of the <see cref="EndpointCertificateResource"/> class for mocking. </summary>
         protected EndpointCertificateResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/endpointCertificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

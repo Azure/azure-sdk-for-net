@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly EmergingIssuesRestOperations _serviceEmergingIssueEmergingIssuesRestClient;
         private readonly ServiceEmergingIssueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/emergingIssues";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceEmergingIssueResource"/> class for mocking. </summary>
         protected ServiceEmergingIssueResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ResourceHealth
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/emergingIssues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

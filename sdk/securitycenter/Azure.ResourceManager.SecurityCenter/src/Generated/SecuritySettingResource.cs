@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SettingsRestOperations _securitySettingSettingsRestClient;
         private readonly SecuritySettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/settings";
+
         /// <summary> Initializes a new instance of the <see cref="SecuritySettingResource"/> class for mocking. </summary>
         protected SecuritySettingResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/settings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

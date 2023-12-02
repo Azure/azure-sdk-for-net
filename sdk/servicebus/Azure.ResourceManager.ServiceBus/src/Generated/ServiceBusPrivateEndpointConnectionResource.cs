@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly PrivateEndpointConnectionsRestOperations _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly ServiceBusPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected ServiceBusPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
