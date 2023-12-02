@@ -13,6 +13,26 @@ namespace Azure.Maps.Rendering
     /// <summary> Model factory for models. </summary>
     public static partial class MapsRenderingModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Rendering.MapTileSet"/>. </summary>
+        /// <param name="tileJsonVersion"> Describes the version of the TileJSON spec that is implemented by this JSON object. </param>
+        /// <param name="tileSetName"> A name describing the tileset. The name can contain any legal character. Implementations SHOULD NOT interpret the name as HTML. </param>
+        /// <param name="tileSetDescription"> Text description of the tileset. The description can contain any legal character. Implementations SHOULD NOT interpret the description as HTML. </param>
+        /// <param name="tileSetVersion"> A semver.org style version number for the tiles contained within the tileset. When changes across tiles are introduced, the minor version MUST change. </param>
+        /// <param name="copyrightAttribution"> Copyright attribution to be displayed on the map. Implementations MAY decide to treat this as HTML or literal text. For security reasons, make absolutely sure that this field can't be abused as a vector for XSS or beacon tracking. </param>
+        /// <param name="mapTileLegend"> A legend to be displayed with the map. Implementations MAY decide to treat this as HTML or literal text. For security reasons, make absolutely sure that this field can't be abused as a vector for XSS or beacon tracking. </param>
+        /// <param name="tileEndpoints"> An array of tile endpoints. If multiple endpoints are specified, clients may use any combination of endpoints. All endpoints MUST return the same content for the same URL. The array MUST contain at least one endpoint. </param>
+        /// <param name="geoJsonDataFiles"> An array of data files in GeoJSON format. </param>
+        /// <param name="minZoomLevel"> The minimum zoom level. </param>
+        /// <param name="maxZoomLevel"> The maximum zoom level. </param>
+        /// <returns> A new <see cref="Rendering.MapTileSet"/> instance for mocking. </returns>
+        public static MapTileSet MapTileSet(string tileJsonVersion = null, string tileSetName = null, string tileSetDescription = null, string tileSetVersion = null, string copyrightAttribution = null, string mapTileLegend = null, IEnumerable<string> tileEndpoints = null, IEnumerable<string> geoJsonDataFiles = null, int? minZoomLevel = null, int? maxZoomLevel = null)
+        {
+            tileEndpoints ??= new List<string>();
+            geoJsonDataFiles ??= new List<string>();
+
+            return new MapTileSet(tileJsonVersion, tileSetName, tileSetDescription, tileSetVersion, copyrightAttribution, template: null, mapTileLegend, schemeInternal: null, tileEndpoints?.ToList(), grids: null, geoJsonDataFiles?.ToList(), minZoomLevel, maxZoomLevel, boundsInternal: null, centerInternal: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Rendering.CopyrightCaption"/>. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="copyright"> Copyrights Caption property. </param>
