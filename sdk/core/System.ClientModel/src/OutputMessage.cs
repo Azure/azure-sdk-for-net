@@ -8,38 +8,59 @@ namespace System.ClientModel;
 
 public abstract class OutputMessage
 {
-    public abstract PipelineResponse GetRawResponse();
+    private readonly PipelineResponse _response;
+
+    protected OutputMessage(PipelineResponse response)
+    {
+        ClientUtilities.AssertNotNull(response, nameof(response));
+
+        _response = response;
+    }
+
+    public PipelineResponse GetRawResponse() => _response;
+
+    #region Factory methods for OutputMessage and subtypes
 
     public static OutputMessage FromResponse(PipelineResponse response)
-        => new NoModelOutputMessage(response);
+        => new ClientModelOutputMessage(response);
 
     public static OutputMessage<T> FromValue<T>(T value, PipelineResponse response)
     {
-        // Null values are required to use OptionalOutputMessage<T>
+        // Null values must use OptionalOutputMessage<T>
         if (value is null)
         {
-            throw new ArgumentException("OutputMessage<T> contract guarantees that OutputMessage<T>.Value is non-null.", nameof(value));
+            string message = "OutputMessage<T> contract guarantees that OutputMessage<T>.Value is non-null. " +
+                "If you need to return an OutputMessage where the Value is null, please use OptionalOutputMessage<T> instead.";
+
+            throw new ArgumentNullException(nameof(value), message);
         }
 
-        ClientUtilities.AssertNotNull(response, nameof(response));
-
-        return new OutputMessage<T>(value, response);
+        return new ClientModelOutputMessage<T>(value, response);
     }
 
     public static OptionalOutputMessage<T> FromOptionalValue<T>(T? value, PipelineResponse response)
-    {
-        ClientUtilities.AssertNotNull(response, nameof(response));
+        => new ClientModelOptionalOutputMessage<T>(value, response);
 
-        return new OptionalOutputMessage<T>(value, response);
+    #endregion
+
+    #region Private implementation subtypes of abstract OutputMessage types
+    private class ClientModelOutputMessage : OutputMessage
+    {
+        public ClientModelOutputMessage(PipelineResponse response)
+            : base(response) { }
     }
 
-    private class NoModelOutputMessage : OutputMessage
+    private class ClientModelOptionalOutputMessage<T> : OptionalOutputMessage<T>
     {
-        public readonly PipelineResponse _response;
-
-        public NoModelOutputMessage(PipelineResponse response)
-            => _response = response;
-
-        public override PipelineResponse GetRawResponse() => _response;
+        public ClientModelOptionalOutputMessage(T? value, PipelineResponse response)
+            : base(value, response) { }
     }
+
+    private class ClientModelOutputMessage<T> : OutputMessage<T>
+    {
+        public ClientModelOutputMessage(T value, PipelineResponse response)
+            : base(value, response) { }
+    }
+
+    #endregion
 }
