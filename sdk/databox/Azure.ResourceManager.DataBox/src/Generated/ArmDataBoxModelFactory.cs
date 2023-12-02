@@ -221,6 +221,18 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSkuCost(meterId, meterType, multiplier);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AddressValidationOutput"/>. </summary>
+        /// <param name="error"> Error code and message of validation response. </param>
+        /// <param name="validationStatus"> The address validation status. </param>
+        /// <param name="alternateAddresses"> List of alternate addresses. </param>
+        /// <returns> A new <see cref="Models.AddressValidationOutput"/> instance for mocking. </returns>
+        public static AddressValidationOutput AddressValidationOutput(ResponseError error = null, AddressValidationStatus? validationStatus = null, IEnumerable<DataBoxShippingAddress> alternateAddresses = null)
+        {
+            alternateAddresses ??= new List<DataBoxShippingAddress>();
+
+            return new AddressValidationOutput(validationType: default, error, validationStatus, alternateAddresses?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.AddressValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>
