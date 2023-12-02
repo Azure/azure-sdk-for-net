@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Certificate = certificate;
         }
 
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateContent"/>. </summary>
+        /// <param name="authenticationType"> The authentication type. </param>
+        /// <param name="certificate"> The base64 encoded certificate raw data. </param>
+        internal UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType, string certificate)
+        {
+            AuthenticationType = authenticationType;
+            Certificate = certificate;
+        }
+
         /// <summary> The authentication type. </summary>
         public DataBoxEdgeAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The base64 encoded certificate raw data. </summary>

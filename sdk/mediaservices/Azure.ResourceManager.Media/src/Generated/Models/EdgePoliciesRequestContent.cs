@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Media.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgePoliciesRequestContent"/>. </summary>
+        /// <param name="deviceId"> Unique identifier of the edge device. </param>
+        internal EdgePoliciesRequestContent(string deviceId)
+        {
+            DeviceId = deviceId;
+        }
+
         /// <summary> Unique identifier of the edge device. </summary>
         public string DeviceId { get; set; }
     }

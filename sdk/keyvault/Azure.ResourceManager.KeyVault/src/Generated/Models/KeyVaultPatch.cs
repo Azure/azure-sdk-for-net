@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.KeyVault.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPatch"/>. </summary>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        internal KeyVaultPatch(IDictionary<string, string> tags, KeyVaultPatchProperties properties)
+        {
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary> The tags that will be assigned to the key vault. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the vault. </summary>

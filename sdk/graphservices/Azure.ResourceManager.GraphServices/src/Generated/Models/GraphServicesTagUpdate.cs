@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.GraphServices.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="GraphServicesTagUpdate"/>. </summary>
+        /// <param name="tags"> List of key value pairs that describe the resource. This will overwrite the existing tags. </param>
+        internal GraphServicesTagUpdate(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> List of key value pairs that describe the resource. This will overwrite the existing tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

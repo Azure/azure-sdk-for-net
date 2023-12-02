@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SelfHelpNameAvailabilityContent"/>. </summary>
+        /// <param name="resourceName"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        internal SelfHelpNameAvailabilityContent(string resourceName, ResourceType? resourceType)
+        {
+            ResourceName = resourceName;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string ResourceName { get; set; }
         /// <summary> The resource type. </summary>

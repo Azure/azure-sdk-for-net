@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.DataBox.Models
             StorageLocation = storageLocation;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityContent"/>. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        internal ScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country)
+        {
+            StorageLocation = storageLocation;
+            SkuName = skuName;
+            Country = country;
+        }
+
         /// <summary> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </summary>
         public AzureLocation StorageLocation { get; }
         /// <summary> Sku Name for which the order is to be scheduled. </summary>

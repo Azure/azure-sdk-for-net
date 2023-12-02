@@ -5,8 +5,21 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\StorageTestBase.SasVersion.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\RepeatingStream.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\Sas\*.cs" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.Storage.DataMovement.Files.Shares.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />
   </ItemGroup>
 </Project>

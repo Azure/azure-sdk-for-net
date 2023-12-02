@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachinePowerOffContent"/>. </summary>
+        /// <param name="skipShutdown"> The indicator of whether to skip the graceful OS shutdown and power off the bare metal machine immediately. </param>
+        internal BareMetalMachinePowerOffContent(BareMetalMachineSkipShutdown? skipShutdown)
+        {
+            SkipShutdown = skipShutdown;
+        }
+
         /// <summary> The indicator of whether to skip the graceful OS shutdown and power off the bare metal machine immediately. </summary>
         public BareMetalMachineSkipShutdown? SkipShutdown { get; set; }
     }

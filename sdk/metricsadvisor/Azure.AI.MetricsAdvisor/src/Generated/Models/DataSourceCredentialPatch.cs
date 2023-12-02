@@ -19,6 +19,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialPatch"/>. </summary>
+        /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
+        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
+        /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        internal DataSourceCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription)
+        {
+            DataSourceCredentialType = dataSourceCredentialType;
+            DataSourceCredentialName = dataSourceCredentialName;
+            DataSourceCredentialDescription = dataSourceCredentialDescription;
+        }
+
         /// <summary> Type of data source credential. </summary>
         internal DataSourceCredentialKind DataSourceCredentialType { get; set; }
         /// <summary> Name of data source credential. </summary>

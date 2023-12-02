@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterEnableClusterMonitoringContent"/>. </summary>
+        /// <param name="workspaceId"> The cluster monitor workspace ID. </param>
+        /// <param name="primaryKey"> The cluster monitor workspace key. </param>
+        internal HDInsightClusterEnableClusterMonitoringContent(string workspaceId, string primaryKey)
+        {
+            WorkspaceId = workspaceId;
+            PrimaryKey = primaryKey;
+        }
+
         /// <summary> The cluster monitor workspace ID. </summary>
         public string WorkspaceId { get; set; }
         /// <summary> The cluster monitor workspace key. </summary>

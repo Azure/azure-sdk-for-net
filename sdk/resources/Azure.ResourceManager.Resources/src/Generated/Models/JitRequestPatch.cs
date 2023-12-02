@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Resources.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="JitRequestPatch"/>. </summary>
+        /// <param name="tags"> Jit request tags. </param>
+        internal JitRequestPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Jit request tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskAttachContent"/>. </summary>
+        /// <param name="leasedByLabVmId"> The resource ID of the Lab virtual machine to which the disk is attached. </param>
+        internal DevTestLabDiskAttachContent(ResourceIdentifier leasedByLabVmId)
+        {
+            LeasedByLabVmId = leasedByLabVmId;
+        }
+
         /// <summary> The resource ID of the Lab virtual machine to which the disk is attached. </summary>
         public ResourceIdentifier LeasedByLabVmId { get; set; }
     }

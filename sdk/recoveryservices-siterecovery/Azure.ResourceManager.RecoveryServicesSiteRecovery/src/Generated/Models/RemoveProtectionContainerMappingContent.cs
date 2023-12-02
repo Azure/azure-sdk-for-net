@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RemoveProtectionContainerMappingContent"/>. </summary>
+        /// <param name="properties"> Configure protection input properties. </param>
+        internal RemoveProtectionContainerMappingContent(RemoveProtectionContainerMappingProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Configure protection input properties. </summary>
         internal RemoveProtectionContainerMappingProperties Properties { get; set; }
         /// <summary> The class type. </summary>

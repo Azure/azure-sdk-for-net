@@ -20,6 +20,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ComputeRackDefinitions = new ChangeTrackingList<NetworkCloudRackDefinition>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
+        /// <param name="clusterServicePrincipal"> The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
+        /// <param name="computeRackDefinitions">
+        /// The list of rack definitions for the compute racks in a multi-rack
+        /// cluster, or an empty list in a single-rack cluster.
+        /// </param>
+        internal NetworkCloudClusterPatch(IDictionary<string, string> tags, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions)
+        {
+            Tags = tags;
+            AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
+            ClusterLocation = clusterLocation;
+            ClusterServicePrincipal = clusterServicePrincipal;
+            ComputeDeploymentThreshold = computeDeploymentThreshold;
+            ComputeRackDefinitions = computeRackDefinitions;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>

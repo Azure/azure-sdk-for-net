@@ -354,11 +354,11 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
             for (int i = 0; i < metricsQueryResults.Values.Count; i++)
             {
-                foreach (var value in metricsQueryResults.Values[i].Value)
+                foreach (MetricResult value in metricsQueryResults.Values[i].Value)
                 {
-                    for (int j = 0; j < value.Timeseries.Count; j++)
+                    for (int j = 0; j < value.TimeSeries.Count; j++)
                     {
-                        Assert.GreaterOrEqual(value.Timeseries[j].Data[i].Total, 0);
+                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Total, 0);
                     }
                 }
             }

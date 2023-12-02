@@ -14,6 +14,25 @@ namespace Azure.Communication.Email
     /// <summary> Message payload for sending an email. </summary>
     public partial class EmailMessage
     {
+        /// <summary> Initializes a new instance of <see cref="EmailMessage"/>. </summary>
+        /// <param name="headers"> Custom email headers to be passed. </param>
+        /// <param name="senderAddress"> Sender email address from a verified domain. </param>
+        /// <param name="content"> Email content to be sent. </param>
+        /// <param name="recipients"> Recipients for the email. </param>
+        /// <param name="attachments"> List of attachments. Please note that we limit the total size of an email request (which includes attachments) to 10MB. </param>
+        /// <param name="replyTo"> Email addresses where recipients' replies will be sent to. </param>
+        /// <param name="userEngagementTrackingDisabled"> Indicates whether user engagement tracking should be disabled for this request if the resource-level user engagement tracking setting was already enabled in the control plane. </param>
+        internal EmailMessage(IDictionary<string, string> headers, string senderAddress, EmailContent content, EmailRecipients recipients, IList<EmailAttachment> attachments, IList<EmailAddress> replyTo, bool? userEngagementTrackingDisabled)
+        {
+            Headers = headers;
+            SenderAddress = senderAddress;
+            Content = content;
+            Recipients = recipients;
+            Attachments = attachments;
+            ReplyTo = replyTo;
+            UserEngagementTrackingDisabled = userEngagementTrackingDisabled;
+        }
+
         /// <summary> Custom email headers to be passed. </summary>
         public IDictionary<string, string> Headers { get; }
         /// <summary> Sender email address from a verified domain. </summary>

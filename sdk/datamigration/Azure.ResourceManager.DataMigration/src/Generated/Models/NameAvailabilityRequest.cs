@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NameAvailabilityRequest"/>. </summary>
+        /// <param name="name"> The proposed resource name. </param>
+        /// <param name="resourceType"> The resource type chain (e.g. virtualMachines/extensions). </param>
+        internal NameAvailabilityRequest(string name, string resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The proposed resource name. </summary>
         public string Name { get; set; }
         /// <summary> The resource type chain (e.g. virtualMachines/extensions). </summary>
