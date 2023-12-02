@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -23,7 +24,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareSmbSettings DeserializeShareSmbSettings(XElement element)
+        internal static ShareSmbSettings DeserializeShareSmbSettings(XElement element, ModelReaderWriterOptions options = null)
         {
             SmbMultichannel multichannel = default;
             if (element.Element("Multichannel") is XElement multichannelElement)

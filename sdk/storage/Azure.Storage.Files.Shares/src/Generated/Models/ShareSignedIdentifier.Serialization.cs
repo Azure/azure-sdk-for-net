@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -26,7 +27,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareSignedIdentifier DeserializeShareSignedIdentifier(XElement element)
+        internal static ShareSignedIdentifier DeserializeShareSignedIdentifier(XElement element, ModelReaderWriterOptions options = null)
         {
             string id = default;
             ShareAccessPolicy accessPolicy = default;

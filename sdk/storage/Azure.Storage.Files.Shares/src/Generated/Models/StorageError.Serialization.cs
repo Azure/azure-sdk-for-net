@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Text.Json;
 using System.Xml.Linq;
 using Azure.Core;
@@ -13,7 +14,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class StorageError
     {
-        internal static StorageError DeserializeStorageError(XElement element)
+        internal static StorageError DeserializeStorageError(XElement element, ModelReaderWriterOptions options = null)
         {
             string message = default;
             if (element.Element("Message") is XElement messageElement)

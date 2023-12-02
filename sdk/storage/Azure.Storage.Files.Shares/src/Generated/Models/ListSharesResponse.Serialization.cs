@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ListSharesResponse
     {
-        internal static ListSharesResponse DeserializeListSharesResponse(XElement element)
+        internal static ListSharesResponse DeserializeListSharesResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string prefix = default;

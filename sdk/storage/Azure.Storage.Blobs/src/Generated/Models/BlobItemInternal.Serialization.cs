@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class BlobItemInternal
     {
-        internal static BlobItemInternal DeserializeBlobItemInternal(XElement element)
+        internal static BlobItemInternal DeserializeBlobItemInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             BlobName name = default;
             bool deleted = default;

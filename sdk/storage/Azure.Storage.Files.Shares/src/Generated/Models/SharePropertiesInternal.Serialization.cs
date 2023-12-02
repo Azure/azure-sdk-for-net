@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class SharePropertiesInternal
     {
-        internal static SharePropertiesInternal DeserializeSharePropertiesInternal(XElement element)
+        internal static SharePropertiesInternal DeserializeSharePropertiesInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset lastModified = default;
             string etag = default;

@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class BlobPrefix
     {
-        internal static BlobPrefix DeserializeBlobPrefix(XElement element)
+        internal static BlobPrefix DeserializeBlobPrefix(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             if (element.Element("Name") is XElement nameElement)

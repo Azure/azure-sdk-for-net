@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Queues.Models
 {
     public partial class QueueItem
     {
-        internal static QueueItem DeserializeQueueItem(XElement element)
+        internal static QueueItem DeserializeQueueItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             IDictionary<string, string> metadata = default;

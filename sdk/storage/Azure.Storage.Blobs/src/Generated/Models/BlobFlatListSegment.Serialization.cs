@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class BlobFlatListSegment
     {
-        internal static BlobFlatListSegment DeserializeBlobFlatListSegment(XElement element)
+        internal static BlobFlatListSegment DeserializeBlobFlatListSegment(XElement element, ModelReaderWriterOptions options = null)
         {
             IReadOnlyList<BlobItemInternal> blobItems = default;
             var array = new List<BlobItemInternal>();

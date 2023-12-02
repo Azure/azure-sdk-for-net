@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class FileRange
     {
-        internal static FileRange DeserializeFileRange(XElement element)
+        internal static FileRange DeserializeFileRange(XElement element, ModelReaderWriterOptions options = null)
         {
             long start = default;
             long end = default;

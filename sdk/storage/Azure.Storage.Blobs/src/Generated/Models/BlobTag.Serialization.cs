@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -25,7 +26,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobTag DeserializeBlobTag(XElement element)
+        internal static BlobTag DeserializeBlobTag(XElement element, ModelReaderWriterOptions options = null)
         {
             string key = default;
             string value = default;

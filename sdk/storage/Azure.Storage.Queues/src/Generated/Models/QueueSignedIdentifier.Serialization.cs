@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -23,7 +24,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueSignedIdentifier DeserializeQueueSignedIdentifier(XElement element)
+        internal static QueueSignedIdentifier DeserializeQueueSignedIdentifier(XElement element, ModelReaderWriterOptions options = null)
         {
             string id = default;
             QueueAccessPolicy accessPolicy = default;

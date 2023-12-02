@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -38,7 +39,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobAccessPolicy DeserializeBlobAccessPolicy(XElement element)
+        internal static BlobAccessPolicy DeserializeBlobAccessPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset? policyStartsOn = default;
             DateTimeOffset? policyExpiresOn = default;

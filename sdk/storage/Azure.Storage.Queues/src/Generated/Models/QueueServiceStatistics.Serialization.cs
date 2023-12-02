@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Queues.Models
 {
     public partial class QueueServiceStatistics
     {
-        internal static QueueServiceStatistics DeserializeQueueServiceStatistics(XElement element)
+        internal static QueueServiceStatistics DeserializeQueueServiceStatistics(XElement element, ModelReaderWriterOptions options = null)
         {
             QueueGeoReplication geoReplication = default;
             if (element.Element("GeoReplication") is XElement geoReplicationElement)

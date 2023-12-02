@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
 {
     public partial class UserDelegationKey
     {
-        internal static UserDelegationKey DeserializeUserDelegationKey(XElement element)
+        internal static UserDelegationKey DeserializeUserDelegationKey(XElement element, ModelReaderWriterOptions options = null)
         {
             string signedObjectId = default;
             string signedTenantId = default;

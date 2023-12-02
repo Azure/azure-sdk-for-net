@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ListFilesAndDirectoriesSegmentResponse
     {
-        internal static ListFilesAndDirectoriesSegmentResponse DeserializeListFilesAndDirectoriesSegmentResponse(XElement element)
+        internal static ListFilesAndDirectoriesSegmentResponse DeserializeListFilesAndDirectoriesSegmentResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string shareName = default;

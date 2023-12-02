@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ShareItemInternal
     {
-        internal static ShareItemInternal DeserializeShareItemInternal(XElement element)
+        internal static ShareItemInternal DeserializeShareItemInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             string snapshot = default;

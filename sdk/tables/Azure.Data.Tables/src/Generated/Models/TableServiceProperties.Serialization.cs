@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
@@ -41,7 +42,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableServiceProperties DeserializeTableServiceProperties(XElement element)
+        internal static TableServiceProperties DeserializeTableServiceProperties(XElement element, ModelReaderWriterOptions options = null)
         {
             TableAnalyticsLoggingSettings logging = default;
             TableMetrics hourMetrics = default;

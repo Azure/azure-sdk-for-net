@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Queues.Models
 {
     internal partial class ListQueuesSegmentResponse
     {
-        internal static ListQueuesSegmentResponse DeserializeListQueuesSegmentResponse(XElement element)
+        internal static ListQueuesSegmentResponse DeserializeListQueuesSegmentResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string prefix = default;

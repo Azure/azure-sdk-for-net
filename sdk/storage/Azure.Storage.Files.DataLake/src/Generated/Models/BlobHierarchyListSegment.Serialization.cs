@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class BlobHierarchyListSegment
     {
-        internal static BlobHierarchyListSegment DeserializeBlobHierarchyListSegment(XElement element)
+        internal static BlobHierarchyListSegment DeserializeBlobHierarchyListSegment(XElement element, ModelReaderWriterOptions options = null)
         {
             IReadOnlyList<BlobPrefix> blobPrefixes = default;
             IReadOnlyList<BlobItemInternal> blobItems = default;

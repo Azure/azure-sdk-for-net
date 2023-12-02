@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
     public partial class BlobServiceStatistics
     {
-        internal static BlobServiceStatistics DeserializeBlobServiceStatistics(XElement element)
+        internal static BlobServiceStatistics DeserializeBlobServiceStatistics(XElement element, ModelReaderWriterOptions options = null)
         {
             BlobGeoReplication geoReplication = default;
             if (element.Element("GeoReplication") is XElement geoReplicationElement)

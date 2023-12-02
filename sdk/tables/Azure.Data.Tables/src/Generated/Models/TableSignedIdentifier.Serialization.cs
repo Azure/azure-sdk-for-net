@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -26,7 +27,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableSignedIdentifier DeserializeTableSignedIdentifier(XElement element)
+        internal static TableSignedIdentifier DeserializeTableSignedIdentifier(XElement element, ModelReaderWriterOptions options = null)
         {
             string id = default;
             TableAccessPolicy accessPolicy = default;

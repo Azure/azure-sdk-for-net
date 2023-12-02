@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Batch.Models
 {
     internal partial class StorageError
     {
-        internal static StorageError DeserializeStorageError(XElement element)
+        internal static StorageError DeserializeStorageError(XElement element, ModelReaderWriterOptions options = null)
         {
             string message = default;
             string code = default;

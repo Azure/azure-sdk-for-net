@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
     internal partial class FilterBlobItem
     {
-        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element)
+        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             string containerName = default;

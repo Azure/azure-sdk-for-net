@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
     internal partial class ClearRange
     {
-        internal static ClearRange DeserializeClearRange(XElement element)
+        internal static ClearRange DeserializeClearRange(XElement element, ModelReaderWriterOptions options = null)
         {
             long start = default;
             long end = default;

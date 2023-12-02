@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class FilesAndDirectoriesListSegment
     {
-        internal static FilesAndDirectoriesListSegment DeserializeFilesAndDirectoriesListSegment(XElement element)
+        internal static FilesAndDirectoriesListSegment DeserializeFilesAndDirectoriesListSegment(XElement element, ModelReaderWriterOptions options = null)
         {
             IReadOnlyList<DirectoryItem> directoryItems = default;
             IReadOnlyList<FileItem> fileItems = default;

@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
     internal partial struct PageRange
     {
-        internal static PageRange DeserializePageRange(XElement element)
+        internal static PageRange DeserializePageRange(XElement element, ModelReaderWriterOptions options = null)
         {
             long start = default;
             long end = default;

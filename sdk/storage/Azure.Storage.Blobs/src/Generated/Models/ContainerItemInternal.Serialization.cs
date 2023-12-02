@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class ContainerItemInternal
     {
-        internal static ContainerItemInternal DeserializeContainerItemInternal(XElement element)
+        internal static ContainerItemInternal DeserializeContainerItemInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             bool? deleted = default;

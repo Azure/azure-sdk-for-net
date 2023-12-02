@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.ClientModel;
 using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
     internal partial class ListBlobsFlatSegmentResponse
     {
-        internal static ListBlobsFlatSegmentResponse DeserializeListBlobsFlatSegmentResponse(XElement element)
+        internal static ListBlobsFlatSegmentResponse DeserializeListBlobsFlatSegmentResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string containerName = default;
