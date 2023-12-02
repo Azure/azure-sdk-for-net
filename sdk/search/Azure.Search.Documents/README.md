@@ -1,4 +1,4 @@
-# Azure AISearch client library for .NET
+# Azure AI Search client library for .NET
 
 [Azure AI Search](https://docs.microsoft.com/azure/search/) (formerly known as "Azure Cognitive Search") is an AI-powered information retrieval platform that helps developers build rich search experiences and generative AI apps that combine large language models with enterprise data.
 
@@ -10,7 +10,7 @@ The Azure AI Search service is well suited for the following
   or if your data is already in Azure, create an indexer to pull in data
   automatically.
 * Attach skillsets to an indexer to create searchable content from images
-  and unstructured dcouments. A skillset leverages AI from Cognitive Services
+  and unstructured documents. A skillset leverages APIs from Azure AI Services
   for built-in OCR, entity recognition, key phrase extraction, language
   detection, text translation, and sentiment analysis. You can also add
   custom skills to integrate external processing of your content during
@@ -538,7 +538,6 @@ See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/
 ## Next steps
 
 * Go further with Azure.Search.Documents and our [samples][samples]
-* Watch a [demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
 * Read more about the [Azure AI Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
 
 ## Contributing
