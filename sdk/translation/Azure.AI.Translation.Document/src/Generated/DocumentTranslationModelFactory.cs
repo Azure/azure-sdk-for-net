@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,21 @@ namespace Azure.AI.Translation.Document
     /// <summary> Model factory for models. </summary>
     public static partial class DocumentTranslationModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Document.DocumentStatusResult"/>. </summary>
+        /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
+        /// <param name="sourceDocumentUri"> Location of the source document. </param>
+        /// <param name="createdOn"> Operation created date time. </param>
+        /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
+        /// <param name="status"> List of possible statuses for job or document. </param>
+        /// <param name="translatedToLanguageCode"> To language. </param>
+        /// <param name="id"> Document Id. </param>
+        /// <param name="charactersCharged"> Character charged by the API. </param>
+        /// <returns> A new <see cref="Document.DocumentStatusResult"/> instance for mocking. </returns>
+        public static DocumentStatusResult DocumentStatusResult(Uri translatedDocumentUri = null, Uri sourceDocumentUri = null, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default, DocumentTranslationStatus status = default, string translatedToLanguageCode = null, string id = null, long charactersCharged = default)
+        {
+            return new DocumentStatusResult(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedToLanguageCode, error: default, progress: default, id, charactersCharged);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Document.DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>

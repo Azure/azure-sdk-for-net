@@ -12,6 +12,14 @@ namespace Azure.Data.Tables.Models
     /// <summary> Model factory for models. </summary>
     public static partial class TableModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.TableItem"/>. </summary>
+        /// <param name="name"> The name of the table. </param>
+        /// <returns> A new <see cref="Models.TableItem"/> instance for mocking. </returns>
+        public static TableItem TableItem(string name = null)
+        {
+            return new TableItem(name, odataType: null, odataId: null, odataEditLink: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.TableServiceStatistics"/>. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
         /// <returns> A new <see cref="Models.TableServiceStatistics"/> instance for mocking. </returns>
