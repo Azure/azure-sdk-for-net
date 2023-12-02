@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         private readonly StorageAccountsRestOperations _dataLakeAnalyticsStorageContainerStorageAccountsRestClient;
         private readonly DataLakeAnalyticsStorageContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts/storageAccounts/containers";
+
         /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsStorageContainerResource"/> class for mocking. </summary>
         protected DataLakeAnalyticsStorageContainerResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts/storageAccounts/containers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

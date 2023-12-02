@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly RestorableTimeRangesRestOperations _restorableTimeRangesRestClient;
         private readonly DataProtectionBackupInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances";
+
         /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupInstanceResource"/> class for mocking. </summary>
         protected DataProtectionBackupInstanceResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

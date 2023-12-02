@@ -64,6 +64,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly PartitionKeyRangeIdRegionRestOperations _partitionKeyRangeIdRegionRestClient;
         private readonly CosmosDBAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBAccountResource"/> class for mocking. </summary>
         protected CosmosDBAccountResource()
         {
@@ -112,9 +115,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

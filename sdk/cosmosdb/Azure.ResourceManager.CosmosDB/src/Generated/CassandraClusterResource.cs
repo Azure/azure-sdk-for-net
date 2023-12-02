@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly CassandraClustersRestOperations _cassandraClusterRestClient;
         private readonly CassandraClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/cassandraClusters";
+
         /// <summary> Initializes a new instance of the <see cref="CassandraClusterResource"/> class for mocking. </summary>
         protected CassandraClusterResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/cassandraClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
