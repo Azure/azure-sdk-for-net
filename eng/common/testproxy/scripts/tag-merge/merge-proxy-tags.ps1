@@ -32,7 +32,7 @@ param(
 
 . (Join-Path $PSScriptRoot ".." ".." "onboarding" "common-asset-functions.ps1")
 
-function Git-Command($CommandString,$WorkingDirectory=$null){
+function Git-Command($CommandString,$WorkingDirectory=$null) {
     Write-Host "git $CommandString"
 
     if ($WorkingDirectory){
@@ -46,7 +46,6 @@ function Git-Command($CommandString,$WorkingDirectory=$null){
     }
 
     if ($lastexitcode -ne 0) {
-        Write-Error 
         Write-Error $result
         exit 1
     }
@@ -91,6 +90,14 @@ function Call-Proxy {
 
     [array] $output = & "$TestProxyExe" $CommandArgs.Split(" ")
 
+    if ($lastexitcode -ne 0){
+        foreach($line in $output) {
+            Write-Host $line
+        }
+        Write-Error "Proxy exe exited with unexpected non-zero exit code."
+        exit 1
+    }
+
     if ($Output -eq $true){
         foreach($line in $output) {
             Write-Host $line
@@ -108,20 +115,33 @@ function Locate-Assets-Slice($ProxyExe, $AssetsJson, $MountDirectory) {
     return $output[-1].Trim()
 }
 
-function GetTagSHA($TagName){
-    $results = Git-Command "ls-remote $TagName"
+function Get-Tag-SHA($TagName, $WorkingDirectory) {
+    $results = Git-Command "ls-remote origin $TagName" $WorkingDirectory
     
     if ($results -and $lastexitcode -eq 0) {
         $arr = $results -split '\s+'
         
         return $arr[0]
     }
-    
+
     Write-Error "Unable to fetch tag SHA for $TagName. The tag does not exist on the repository."
     exit 1
 }
 
-function StartMessage($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory){
+function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory) {
+    $alreadyCombinedTags = Load-Incomplete-Progress $MountDirectory
+
+    if ($alreadyCombinedTags) {
+        Write-Host "This script has detected the presence of a .mergeprogress file with folder $MountDirectory."
+        Write-Host "Attempting to continue from a previous run, and excluding: "
+        foreach($Tag in $alreadyCombinedTags){
+            Write-Host " - " -nonewline
+            Write-Host "$Tag" -ForegroundColor Green
+        }
+    }
+
+    $TargetTags = $TargetTags | Where-Object { $_ -notin $alreadyCombinedTags }
+
     Write-Host "`nThis script will attempt to merge the following tag" -nonewline
     if ($TargetTags.Length -gt 1){
         Write-Host "s" -nonewline
@@ -136,21 +156,15 @@ function StartMessage($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirec
     Write-Host "`nThe work will be completed in " -nonewline
     Write-Host $AssetsRepoLocation -ForegroundColor Green -nonewline
     Write-Host "."
+
+    Read-Host -Prompt "If the above looks correct, press enter, otherwise, ctrl-c"
 }
 
-function FinishMessage($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory){
+function Finish-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory) {
     $len = $TargetTags.Length
     Write-Host "`nSuccessfully combined $len tags. Invoke `"test-proxy push " -nonewline
     Write-Host $AssetsJson -ForegroundColor Green -nonewline
     Write-Host "`" to push the results as a new tag."
-}
-
-function CombineTags($RemainingTags){
-    foreach($Tag in $RemainingTags){
-        $tagSha = GetTagSHA -TagName $Tag
-
-        Git-Command "cherry-pick $tagSha"
-    }
 }
 
 function Resolve-Target-Tags($AssetsJson, $TargetTags) {
@@ -167,25 +181,84 @@ function Resolve-Target-Tags($AssetsJson, $TargetTags) {
     }
 }
 
+function Save-Incomplete-Progress($Tag, $MountDirectory) {
+    $progressFile = (Join-Path $MountDirectory ".mergeprogress")
+    [array] $existingTags = @()
+    if (Test-Path $progressFile) {
+        $existingTags = (Get-Content -Path $progressFile) -split "`n" | ForEach-Object { $_.Trim() }
+    }
+
+    $existingTags = $existingTags + $Tag | Select-Object -Unique
+
+    Set-Content -Path $progressFile -Value ($existingTags -join "`n") | Out-Null
+
+    return $existingTags
+}
+
+function Load-Incomplete-Progress($MountDirectory) {
+    $progressFile = (Join-Path $MountDirectory ".mergeprogress")
+    [array] $existingTags = @()
+    if (Test-Path $progressFile) {
+        $existingTags = (Get-Content -Path $progressFile) -split "`n" | ForEach-Object { $_.Trim() }
+    }
+
+    return $existingTags
+}
+
+function Cleanup-Incomplete-Progress($MountDirectory) {
+    $progressFile = (Join-Path $MountDirectory ".mergeprogress")
+
+    if (Test-Path $progressFile) {
+        Remove-Item $progressFile | Out-Null
+    }
+}
+
+function Prepare-Assets($ProxyExe, $MountDirectory, $AssetsJson) {
+    $inprogress = Load-Incomplete-Progress $MountDirectory
+
+    if ($inprogress.Length -eq 0) {
+        Call-Proxy -TestProxyExe $ProxyExe -CommandArgs "reset -y -a $AssetsJson" -MountDirectory $MountDirectory -Output $false
+    }
+}
+
+function CombineTags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
+    foreach($Tag in $RemainingTags){
+        $tagSha = Get-Tag-SHA $Tag $AssetsRepoLocation
+        
+        $cherryPickOut = Git-Command "cherry-pick $tagSha" $AssetsRepoLocation
+
+        Save-Incomplete-Progress $Tag $MountDirectory
+    }
+    
+    # todo: if we managed to get here without any errors, we need to touch a file that all the cherry-picked commits will push up so that test-proxy push
+    # properly sees the additional commits
+
+    # if we have successfully gotten to the end without any non-zero exit codes...delete the mergeprogress file, we're g2g
+    Cleanup-Incomplete-Progress $MountDirectory
+}
+
 $ErrorActionPreference = "Stop"
 
 # resolve the proxy location so that we can invoke it easily
-$ProxyExe = Resolve-Proxy
+$proxyExe = Resolve-Proxy
 
 # figure out where the root of the repo for the passed assets.json is. We need it to properly set the mounting
 # directory so that the test-proxy restore operations work IN PLACE with existing tooling
-$MountDirectory = Get-Repo-Root -StartDir $AssetsJson
+$mountDirectory = Get-Repo-Root -StartDir $AssetsJson
 
-# using the MountingDirectory and the assets.json location, we can figure out where the assets slice actually lives within the .assets folder.
+# ensure we actually have the .assets folder that we can cherry-pick on top of
+Prepare-Assets $proxyExe $mountDirectory $AssetsJson
+
+# using the mountingDirectory and the assets.json location, we can figure out where the assets slice actually lives within the .assets folder.
 # we will use this to invoke individual cherry-picks before pushing up the result
-$AssetsRepoLocation = Locate-Assets-Slice $ProxyExe $AssetsJson $MountDirectory
+$assetsRepoLocation = Locate-Assets-Slice $proxyExe $AssetsJson $mountDirectory
 
-# resolve the tags that we will go after. If the target assets.json contains one of these tags, it will be run _first_ in the first restore.
-# This script is intended to run in context of an existing repo, so this is just the way it's gotta be for consistency.
-$Tags = Resolve-Target-Tags $AssetsJson $TargetTags
+# resolve the tags that we will go after. If the target assets.json contains one of these tags, that tag is _already present_
+# because the entire point of this script is to run in context of a set of recordings in the repo
+$tags = Resolve-Target-Tags $AssetsJson $TargetTags
 
-StartMessage $AssetsJson $Tags $AssetsRepoLocation $MountDirectory
+Start-Message $AssetsJson $Tags $AssetsRepoLocation $mountDirectory
 
-# CombineTags -RemainingTags $remainingTags
+$CombinedTags = CombineTags $Tags $AssetsRepoLocation $mountDirectory
 
-FinishMessage $AssetsJson $Tags $AssetsRepoLocation $MountDirectory
+Finish-Message $AssetsJson $CombinedTags $AssetsRepoLocation $mountDirectory
