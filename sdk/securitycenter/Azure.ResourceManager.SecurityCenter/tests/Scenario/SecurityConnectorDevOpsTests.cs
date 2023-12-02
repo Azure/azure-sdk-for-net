@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var onboardedOrg = await devopsConfigurationResource.Value.GetAzureDevOpsOrgs().GetAsync("dfdsdktest");
 
-            Assert.AreEqual("dfd365", onboardedOrg.Value.Data.Name);
+            Assert.AreEqual("dfdsdktest", onboardedOrg.Value.Data.Name);
             Assert.AreEqual(DevOpsProvisioningState.Succeeded, onboardedOrg.Value.Data.Properties.ProvisioningState);
             Assert.AreEqual(OnboardingState.Onboarded, onboardedOrg.Value.Data.Properties.OnboardingState);
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var onboardedOrgs = await devopsConfigurationResource.Value.GetAzureDevOpsOrgs().GetAllAsync().ToEnumerableAsync();
             var onboardedOrg = onboardedOrgs.Where(org => org.Data.Name.Equals("dfdsdktest")).FirstOrDefault();
 
-            Assert.AreEqual("dfd365", onboardedOrg.Data.Name);
+            Assert.AreEqual("dfdsdktest", onboardedOrg.Data.Name);
             Assert.AreEqual(DevOpsProvisioningState.Succeeded, onboardedOrg.Data.Properties.ProvisioningState);
             Assert.AreEqual(OnboardingState.Onboarded, onboardedOrg.Data.Properties.OnboardingState);
 
