@@ -2,8 +2,7 @@
 
 [Azure AI Search](https://docs.microsoft.com/azure/search/) (formerly known as "Azure Cognitive Search") is an AI-powered information retrieval platform that helps developers build rich search experiences and generative AI apps that combine large language models with enterprise data.
 
-The Azure AI Search service is well suited for the following
- application scenarios:
+The Azure AI Search service is well suited for the following application scenarios:
 
 * Consolidate varied content types into a single searchable index.
   To populate an index, you can push JSON documents that contain your content,
@@ -16,7 +15,7 @@ The Azure AI Search service is well suited for the following
   custom skills to integrate external processing of your content during
   data ingestion.
 * In a search client application, implement query logic and user experiences
-  similar to commercial web search engines and copilot apps.
+  similar to commercial web search engines and chat-style apps.
 
 Use the Azure.Search.Documents client library to:
 
