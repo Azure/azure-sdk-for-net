@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly NotificationRecipientEmailRestOperations _notificationRecipientEmailRestClient;
         private readonly ApiManagementNotificationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/notifications";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementNotificationResource"/> class for mocking. </summary>
         protected ApiManagementNotificationResource()
         {
@@ -75,9 +78,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/notifications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Hci
         private readonly OffersRestOperations _offerRestClient;
         private readonly HciClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="HciClusterResource"/> class for mocking. </summary>
         protected HciClusterResource()
         {
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

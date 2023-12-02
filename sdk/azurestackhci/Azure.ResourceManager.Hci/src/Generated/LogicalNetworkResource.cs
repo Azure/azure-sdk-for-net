@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Hci
         private readonly LogicalNetworksRestOperations _logicalNetworkRestClient;
         private readonly LogicalNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/logicalNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="LogicalNetworkResource"/> class for mocking. </summary>
         protected LogicalNetworkResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/logicalNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

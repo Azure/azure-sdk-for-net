@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly ServiceRegistriesRestOperations _appPlatformServiceRegistryServiceRegistriesRestClient;
         private readonly AppPlatformServiceRegistryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/serviceRegistries";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformServiceRegistryResource"/> class for mocking. </summary>
         protected AppPlatformServiceRegistryResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/serviceRegistries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
