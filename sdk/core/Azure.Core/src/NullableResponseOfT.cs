@@ -39,7 +39,10 @@ namespace Azure
         {
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the HTTP response returned by the service.
+        /// </summary>
+        /// <returns>The HTTP response returned by the service.</returns>
         public new virtual Response GetRawResponse() => (Response)base.GetRawResponse();
 
         /// <inheritdoc />
