@@ -54,6 +54,7 @@ namespace Azure
         public override int GetHashCode() => base.GetHashCode();
 
         /// <inheritdoc />
-        public override string ToString() => $"Status: {GetRawResponse()?.Status}, Value: {(HasValue ? Value : NoValue)}";
+        public override string ToString()
+             => $"Status: {GetRawResponse()?.Status}, Value: {(HasValue ? Value : NoValue)}";
     }
 }

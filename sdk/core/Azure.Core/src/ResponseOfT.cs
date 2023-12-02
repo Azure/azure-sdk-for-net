@@ -42,7 +42,7 @@ namespace Azure
         public override bool HasValue => true;
 
         /// <inheritdoc />
-        public override T Value => Value;
+        public override T Value => base.Value!;
 
         /// <summary>
         /// Returns the value of this <see cref="Response{T}"/> object.
