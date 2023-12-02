@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.StorageSync
         private readonly WorkflowsRestOperations _storageSyncWorkflowWorkflowsRestClient;
         private readonly StorageSyncWorkflowData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/workflows";
+
         /// <summary> Initializes a new instance of the <see cref="StorageSyncWorkflowResource"/> class for mocking. </summary>
         protected StorageSyncWorkflowResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.StorageSync
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/workflows";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

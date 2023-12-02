@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.AppService
         private readonly RecommendationsRestOperations _hostingEnvironmentRecommendationRecommendationsRestClient;
         private readonly AppServiceEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments";
+
         /// <summary> Initializes a new instance of the <see cref="AppServiceEnvironmentResource"/> class for mocking. </summary>
         protected AppServiceEnvironmentResource()
         {
@@ -76,9 +79,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

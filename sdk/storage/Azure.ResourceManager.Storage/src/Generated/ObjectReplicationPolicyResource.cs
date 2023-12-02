@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Storage
         private readonly ObjectReplicationPoliciesRestOperations _objectReplicationPolicyRestClient;
         private readonly ObjectReplicationPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/objectReplicationPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="ObjectReplicationPolicyResource"/> class for mocking. </summary>
         protected ObjectReplicationPolicyResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/objectReplicationPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
