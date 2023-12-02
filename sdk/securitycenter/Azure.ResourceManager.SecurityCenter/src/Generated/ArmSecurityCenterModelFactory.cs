@@ -80,7 +80,708 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CustomEntityStoreAssignmentData(id, name, resourceType, systemData, principal, entityStoreDatabaseLink);
         }
 
+<<<<<<< HEAD
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.ComplianceResultData"/>. </summary>
+=======
+        /// <summary> Initializes a new instance of MdeOnboarding. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="onboardingPackageWindows"> The onboarding package used to onboard Windows machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
+        /// <param name="onboardingPackageLinux"> The onboarding package used to onboard Linux machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
+        /// <returns> A new <see cref="Models.MdeOnboarding"/> instance for mocking. </returns>
+        public static MdeOnboarding MdeOnboarding(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, byte[] onboardingPackageWindows = null, byte[] onboardingPackageLinux = null)
+        {
+            return new MdeOnboarding(id, name, resourceType, systemData, onboardingPackageWindows, onboardingPackageLinux);
+        }
+
+        /// <summary> Initializes a new instance of GovernanceAssignmentData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="owner"> The Owner for the governance assignment - e.g. user@contoso.com - see example. </param>
+        /// <param name="remediationDueOn"> The remediation due-date - after this date Secure Score will be affected (in case of  active grace-period). </param>
+        /// <param name="remediationEta"> The ETA (estimated time of arrival) for remediation (optional), see example. </param>
+        /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance assignment. </param>
+        /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
+        /// <param name="additionalData"> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </param>
+        /// <returns> A new <see cref="SecurityCenter.GovernanceAssignmentData"/> instance for mocking. </returns>
+        public static GovernanceAssignmentData GovernanceAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string owner = null, DateTimeOffset? remediationDueOn = null, RemediationEta remediationEta = null, bool? isGracePeriod = null, GovernanceEmailNotification governanceEmailNotification = null, GovernanceAssignmentAdditionalInfo additionalData = null)
+        {
+            return new GovernanceAssignmentData(id, name, resourceType, systemData, owner, remediationDueOn, remediationEta, isGracePeriod, governanceEmailNotification, additionalData);
+        }
+
+        /// <summary> Initializes a new instance of GovernanceRuleData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tenantId"> The tenantId (GUID). </param>
+        /// <param name="displayName"> Display name of the governance rule. </param>
+        /// <param name="description"> Description of the governance rule. </param>
+        /// <param name="remediationTimeframe"> Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days. </param>
+        /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance rule. </param>
+        /// <param name="rulePriority"> The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed. </param>
+        /// <param name="isDisabled"> Defines whether the rule is active/inactive. </param>
+        /// <param name="ruleType"> The rule type of the governance rule, defines the source of the rule e.g. Integrated. </param>
+        /// <param name="sourceResourceType"> The governance rule source, what the rule affects, e.g. Assessments. </param>
+        /// <param name="excludedScopes"> Excluded scopes, filter out the descendants of the scope (on management scopes). </param>
+        /// <param name="conditionSets"> The governance rule conditionSets - see examples. </param>
+        /// <param name="includeMemberScopes"> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </param>
+        /// <param name="ownerSource"> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </param>
+        /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
+        /// <param name="metadata"> The governance rule metadata. </param>
+        /// <returns> A new <see cref="SecurityCenter.GovernanceRuleData"/> instance for mocking. </returns>
+        public static GovernanceRuleData GovernanceRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string displayName = null, string description = null, string remediationTimeframe = null, bool? isGracePeriod = null, int? rulePriority = null, bool? isDisabled = null, GovernanceRuleType? ruleType = null, GovernanceRuleSourceResourceType? sourceResourceType = null, IEnumerable<string> excludedScopes = null, IEnumerable<BinaryData> conditionSets = null, bool? includeMemberScopes = null, GovernanceRuleOwnerSource ownerSource = null, GovernanceRuleEmailNotification governanceEmailNotification = null, GovernanceRuleMetadata metadata = null)
+        {
+            excludedScopes ??= new List<string>();
+            conditionSets ??= new List<BinaryData>();
+
+            return new GovernanceRuleData(id, name, resourceType, systemData, tenantId, displayName, description, remediationTimeframe, isGracePeriod, rulePriority, isDisabled, ruleType, sourceResourceType, excludedScopes?.ToList(), conditionSets?.ToList(), includeMemberScopes, ownerSource, governanceEmailNotification, metadata);
+        }
+
+        /// <summary> Initializes a new instance of GovernanceRuleMetadata. </summary>
+        /// <param name="createdBy"> Governance rule Created by object id (GUID). </param>
+        /// <param name="createdOn"> Governance rule creation date. </param>
+        /// <param name="updatedBy"> Governance rule last updated by object id (GUID). </param>
+        /// <param name="updatedOn"> Governance rule last update date. </param>
+        /// <returns> A new <see cref="Models.GovernanceRuleMetadata"/> instance for mocking. </returns>
+        public static GovernanceRuleMetadata GovernanceRuleMetadata(string createdBy = null, DateTimeOffset? createdOn = null, string updatedBy = null, DateTimeOffset? updatedOn = null)
+        {
+            return new GovernanceRuleMetadata(createdBy, createdOn, updatedBy, updatedOn);
+        }
+
+        /// <summary> Initializes a new instance of SecurityApplicationData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> display name of the application. </param>
+        /// <param name="description"> description of the application. </param>
+        /// <param name="sourceResourceType"> The application source, what it affects, e.g. Assessments. </param>
+        /// <param name="conditionSets"> The application conditionSets - see examples. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityApplicationData"/> instance for mocking. </returns>
+        public static SecurityApplicationData SecurityApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, ApplicationSourceResourceType? sourceResourceType = null, IEnumerable<BinaryData> conditionSets = null)
+        {
+            conditionSets ??= new List<BinaryData>();
+
+            return new SecurityApplicationData(id, name, resourceType, systemData, displayName, description, sourceResourceType, conditionSets?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DefenderForStorageSettingData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isEnabledPropertiesIsEnabled"> Indicates whether Defender for Storage is enabled on this storage account. </param>
+        /// <param name="overrideSubscriptionLevelSettings"> Indicates whether the settings defined for this storage account should override the settings defined for the subscription. </param>
+        /// <param name="isEnabledPropertiesSensitiveDataDiscoveryIsEnabled"> Indicates whether Sensitive Data Discovery should be enabled. </param>
+        /// <param name="operationStatusPropertiesSensitiveDataDiscoveryOperationStatus"> Upon failure or partial success. Additional data describing Sensitive Data Discovery enable/disable operation. </param>
+        /// <param name="scanResultsEventGridTopicResourceId"> Optional. Resource id of an Event Grid Topic to send scan results to. </param>
+        /// <param name="operationStatusPropertiesMalwareScanningOperationStatus"> Upon failure or partial success. Additional data describing Malware Scanning enable/disable operation. </param>
+        /// <param name="isEnabledPropertiesMalwareScanningOnUploadIsEnabled"> Indicates whether On Upload malware scanning should be enabled. </param>
+        /// <param name="capGBPerMonth"> Defines the max GB to be scanned per Month. Set to -1 if no capping is needed. </param>
+        /// <returns> A new <see cref="SecurityCenter.DefenderForStorageSettingData"/> instance for mocking. </returns>
+        public static DefenderForStorageSettingData DefenderForStorageSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isEnabledPropertiesIsEnabled = null, bool? overrideSubscriptionLevelSettings = null, bool? isEnabledPropertiesSensitiveDataDiscoveryIsEnabled = null, ExtensionOperationStatus operationStatusPropertiesSensitiveDataDiscoveryOperationStatus = null, ResourceIdentifier scanResultsEventGridTopicResourceId = null, ExtensionOperationStatus operationStatusPropertiesMalwareScanningOperationStatus = null, bool? isEnabledPropertiesMalwareScanningOnUploadIsEnabled = null, int? capGBPerMonth = null)
+        {
+            return new DefenderForStorageSettingData(id, name, resourceType, systemData, isEnabledPropertiesIsEnabled, overrideSubscriptionLevelSettings, isEnabledPropertiesSensitiveDataDiscoveryIsEnabled, operationStatusPropertiesSensitiveDataDiscoveryOperationStatus, scanResultsEventGridTopicResourceId, operationStatusPropertiesMalwareScanningOperationStatus, isEnabledPropertiesMalwareScanningOnUploadIsEnabled, capGBPerMonth);
+        }
+
+        /// <summary> Initializes a new instance of ExtensionOperationStatus. </summary>
+        /// <param name="code"> The operation status code. </param>
+        /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
+        /// <returns> A new <see cref="Models.ExtensionOperationStatus"/> instance for mocking. </returns>
+        public static ExtensionOperationStatus ExtensionOperationStatus(string code = null, string message = null)
+        {
+            return new ExtensionOperationStatus(code, message);
+        }
+
+        /// <summary> Initializes a new instance of SecurityOperatorData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityOperatorData"/> instance for mocking. </returns>
+        public static SecurityOperatorData SecurityOperatorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null)
+        {
+            return new SecurityOperatorData(id, name, resourceType, systemData, identity);
+        }
+
+        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBaselineRuleData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="ruleResults"> Rule results properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentBaselineRuleData SqlVulnerabilityAssessmentBaselineRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<IList<string>> ruleResults = null)
+        {
+            ruleResults ??= new List<IList<string>>();
+
+            return new SqlVulnerabilityAssessmentBaselineRuleData(id, name, resourceType, systemData, ruleResults != null ? new RuleResultsProperties(ruleResults?.ToList()) : null);
+        }
+
+        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentScanData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> A vulnerability assessment scan record properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentScanData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanData SqlVulnerabilityAssessmentScanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlVulnerabilityAssessmentScanProperties properties = null)
+        {
+            return new SqlVulnerabilityAssessmentScanData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentScanResult. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> A vulnerability assessment scan result properties for a single rule. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanResult"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanResult SqlVulnerabilityAssessmentScanResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlVulnerabilityAssessmentScanResultProperties properties = null)
+        {
+            return new SqlVulnerabilityAssessmentScanResult(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of GetSensitivitySettingsResponseData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The sensitivity settings properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.GetSensitivitySettingsResponseData"/> instance for mocking. </returns>
+        public static GetSensitivitySettingsResponseData GetSensitivitySettingsResponseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GetSensitivitySettingsResponseProperties properties = null)
+        {
+            return new GetSensitivitySettingsResponseData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of GetSensitivitySettingsResponseProperties. </summary>
+        /// <param name="sensitiveInfoTypesIds"> List of selected sensitive info types' IDs. </param>
+        /// <param name="sensitivityThresholdLabelOrder"> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </param>
+        /// <param name="sensitivityThresholdLabelId"> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </param>
+        /// <param name="mipInformation"> Microsoft information protection built-in and custom information types, labels, and integration status. </param>
+        /// <returns> A new <see cref="Models.GetSensitivitySettingsResponseProperties"/> instance for mocking. </returns>
+        public static GetSensitivitySettingsResponseProperties GetSensitivitySettingsResponseProperties(IEnumerable<Guid> sensitiveInfoTypesIds = null, float? sensitivityThresholdLabelOrder = null, Guid? sensitivityThresholdLabelId = null, GetSensitivitySettingsResponsePropertiesMipInformation mipInformation = null)
+        {
+            sensitiveInfoTypesIds ??= new List<Guid>();
+
+            return new GetSensitivitySettingsResponseProperties(sensitiveInfoTypesIds?.ToList(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, mipInformation);
+        }
+
+        /// <summary> Initializes a new instance of GetSensitivitySettingsResponsePropertiesMipInformation. </summary>
+        /// <param name="mipIntegrationStatus"> Microsoft information protection integration status. </param>
+        /// <param name="labels"> List of Microsoft information protection sensitivity labels. </param>
+        /// <param name="customInfoTypes"> List of custom user-defined information types. </param>
+        /// <param name="builtInInfoTypes"> List of pre-configured sensitive information types. </param>
+        /// <returns> A new <see cref="Models.GetSensitivitySettingsResponsePropertiesMipInformation"/> instance for mocking. </returns>
+        public static GetSensitivitySettingsResponsePropertiesMipInformation GetSensitivitySettingsResponsePropertiesMipInformation(MipIntegrationStatus? mipIntegrationStatus = null, IEnumerable<Label> labels = null, IEnumerable<InfoType> customInfoTypes = null, IEnumerable<BuiltInInfoType> builtInInfoTypes = null)
+        {
+            labels ??= new List<Label>();
+            customInfoTypes ??= new List<InfoType>();
+            builtInInfoTypes ??= new List<BuiltInInfoType>();
+
+            return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, labels?.ToList(), customInfoTypes?.ToList(), builtInInfoTypes?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of Label. </summary>
+        /// <param name="name"> The display name of the label. </param>
+        /// <param name="id"> The ID of the label. </param>
+        /// <param name="order"> Labels are ordered by sensitivity level. The higher the order of the label, the more sensitive it is. </param>
+        /// <returns> A new <see cref="Models.Label"/> instance for mocking. </returns>
+        public static Label Label(string name = null, Guid? id = null, float? order = null)
+        {
+            return new Label(name, id, order);
+        }
+
+        /// <summary> Initializes a new instance of InfoType. </summary>
+        /// <param name="name"> Display name of the info type. </param>
+        /// <param name="id"> Id of the info type. </param>
+        /// <param name="description"> Description of the info type. </param>
+        /// <returns> A new <see cref="Models.InfoType"/> instance for mocking. </returns>
+        public static InfoType InfoType(string name = null, Guid? id = null, string description = null)
+        {
+            return new InfoType(name, id, description);
+        }
+
+        /// <summary> Initializes a new instance of BuiltInInfoType. </summary>
+        /// <param name="name"> Display name of the info type. </param>
+        /// <param name="id"> Id of the info type. </param>
+        /// <param name="builtInInfoTypeValue"> Category of the built-in info type. </param>
+        /// <returns> A new <see cref="Models.BuiltInInfoType"/> instance for mocking. </returns>
+        public static BuiltInInfoType BuiltInInfoType(string name = null, Guid? id = null, string builtInInfoTypeValue = null)
+        {
+            return new BuiltInInfoType(name, id, builtInInfoTypeValue);
+        }
+
+        /// <summary> Initializes a new instance of HealthReportData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="resourceDetails"> The resource details of the health report. </param>
+        /// <param name="environmentDetails"> The environment details of the resource. </param>
+        /// <param name="healthDataClassification"> The classification of the health report. </param>
+        /// <param name="status"> The status of the health report. </param>
+        /// <param name="affectedDefendersPlans"> The affected defenders plans by unhealthy report. </param>
+        /// <param name="affectedDefendersSubPlans"> The affected defenders sub plans by unhealthy report. </param>
+        /// <param name="reportAdditionalData"> Additional data for the given health report, this field can include more details on the resource and the health scenario. </param>
+        /// <param name="issues"> A collection of the issues in the report. </param>
+        /// <returns> A new <see cref="SecurityCenter.HealthReportData"/> instance for mocking. </returns>
+        public static HealthReportData HealthReportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthReportResourceDetails resourceDetails = null, EnvironmentDetails environmentDetails = null, HealthDataClassification healthDataClassification = null, HealthReportStatus status = null, IEnumerable<string> affectedDefendersPlans = null, IEnumerable<string> affectedDefendersSubPlans = null, IReadOnlyDictionary<string, string> reportAdditionalData = null, IEnumerable<Issue> issues = null)
+        {
+            affectedDefendersPlans ??= new List<string>();
+            affectedDefendersSubPlans ??= new List<string>();
+            reportAdditionalData ??= new Dictionary<string, string>();
+            issues ??= new List<Issue>();
+
+            return new HealthReportData(id, name, resourceType, systemData, resourceDetails, environmentDetails, healthDataClassification, status, affectedDefendersPlans?.ToList(), affectedDefendersSubPlans?.ToList(), reportAdditionalData, issues?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of HealthReportResourceDetails. </summary>
+        /// <param name="source"> The status of the health report. </param>
+        /// <param name="id"> The azure id of the resource. </param>
+        /// <param name="connectorId"> The id of the connector. </param>
+        /// <returns> A new <see cref="Models.HealthReportResourceDetails"/> instance for mocking. </returns>
+        public static HealthReportResourceDetails HealthReportResourceDetails(Source? source = null, string id = null, string connectorId = null)
+        {
+            return new HealthReportResourceDetails(source, id, connectorId);
+        }
+
+        /// <summary> Initializes a new instance of HealthReportStatus. </summary>
+        /// <param name="code"> The status of the health report. </param>
+        /// <param name="reason"> The reason of the given status. </param>
+        /// <param name="lastScannedOn"> The date of when the resource was scanned in the last time. </param>
+        /// <param name="statusChangeOn"> The date of when the status of the health report was changed in the last time. </param>
+        /// <param name="firstEvaluationOn"> The date of when the resource of the health report was scanned in the first time. </param>
+        /// <returns> A new <see cref="Models.HealthReportStatus"/> instance for mocking. </returns>
+        public static HealthReportStatus HealthReportStatus(StatusName? code = null, string reason = null, DateTimeOffset? lastScannedOn = null, DateTimeOffset? statusChangeOn = null, DateTimeOffset? firstEvaluationOn = null)
+        {
+            return new HealthReportStatus(code, reason, lastScannedOn, statusChangeOn, firstEvaluationOn);
+        }
+
+        /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Azure DevOps Organization properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.AzureDevOpsOrgData"/> instance for mocking. </returns>
+        public static AzureDevOpsOrgData AzureDevOpsOrgData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureDevOpsOrgProperties properties = null)
+        {
+            return new AzureDevOpsOrgData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of AzureDevOpsOrgProperties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
+        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        ///
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="onboardingState">
+        /// Details about resource onboarding status across all connectors.
+        ///
+        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
+        /// Onboarded - this resource has already been onboarded by the specified connector.
+        /// NotOnboarded - this resource has not been onboarded to any connector.
+        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// </param>
+        /// <param name="actionableRemediation"> Configuration payload for PR Annotations. </param>
+        /// <returns> A new <see cref="Models.AzureDevOpsOrgProperties"/> instance for mocking. </returns>
+        public static AzureDevOpsOrgProperties AzureDevOpsOrgProperties(string provisioningStatusMessage = null, DateTimeOffset? provisioningStatusUpdateTimeUtc = null, DevOpsProvisioningState? provisioningState = null, OnboardingState? onboardingState = null, ActionableRemediation actionableRemediation = null)
+        {
+            return new AzureDevOpsOrgProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, onboardingState, actionableRemediation);
+        }
+
+        /// <summary> Initializes a new instance of AzureDevOpsProjectData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Azure DevOps Project properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.AzureDevOpsProjectData"/> instance for mocking. </returns>
+        public static AzureDevOpsProjectData AzureDevOpsProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureDevOpsProjectProperties properties = null)
+        {
+            return new AzureDevOpsProjectData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of AzureDevOpsProjectProperties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
+        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        ///
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="parentOrgName"> Gets or sets parent Azure DevOps Organization name. </param>
+        /// <param name="projectId"> Gets or sets Azure DevOps Project id. </param>
+        /// <param name="onboardingState">
+        /// Details about resource onboarding status across all connectors.
+        ///
+        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
+        /// Onboarded - this resource has already been onboarded by the specified connector.
+        /// NotOnboarded - this resource has not been onboarded to any connector.
+        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// </param>
+        /// <param name="actionableRemediation"> Configuration payload for PR Annotations. </param>
+        /// <returns> A new <see cref="Models.AzureDevOpsProjectProperties"/> instance for mocking. </returns>
+        public static AzureDevOpsProjectProperties AzureDevOpsProjectProperties(string provisioningStatusMessage = null, DateTimeOffset? provisioningStatusUpdateTimeUtc = null, DevOpsProvisioningState? provisioningState = null, string parentOrgName = null, string projectId = null, OnboardingState? onboardingState = null, ActionableRemediation actionableRemediation = null)
+        {
+            return new AzureDevOpsProjectProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, parentOrgName, projectId, onboardingState, actionableRemediation);
+        }
+
+        /// <summary> Initializes a new instance of AzureDevOpsRepositoryData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Azure DevOps Repository properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.AzureDevOpsRepositoryData"/> instance for mocking. </returns>
+        public static AzureDevOpsRepositoryData AzureDevOpsRepositoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureDevOpsRepositoryProperties properties = null)
+        {
+            return new AzureDevOpsRepositoryData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of AzureDevOpsRepositoryProperties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
+        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        ///
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="parentOrgName"> Gets or sets parent Azure DevOps Organization name. </param>
+        /// <param name="parentProjectName"> Gets or sets parent Azure DevOps Project name. </param>
+        /// <param name="repoId"> Gets or sets Azure DevOps Repository id. </param>
+        /// <param name="repoUri"> Gets or sets Azure DevOps Repository url. </param>
+        /// <param name="visibility"> Gets or sets Azure DevOps repository visibility, whether it is public or private etc. </param>
+        /// <param name="onboardingState">
+        /// Details about resource onboarding status across all connectors.
+        ///
+        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
+        /// Onboarded - this resource has already been onboarded by the specified connector.
+        /// NotOnboarded - this resource has not been onboarded to any connector.
+        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// </param>
+        /// <param name="actionableRemediation"> Configuration payload for PR Annotations. </param>
+        /// <returns> A new <see cref="Models.AzureDevOpsRepositoryProperties"/> instance for mocking. </returns>
+        public static AzureDevOpsRepositoryProperties AzureDevOpsRepositoryProperties(string provisioningStatusMessage = null, DateTimeOffset? provisioningStatusUpdateTimeUtc = null, DevOpsProvisioningState? provisioningState = null, string parentOrgName = null, string parentProjectName = null, string repoId = null, Uri repoUri = null, string visibility = null, OnboardingState? onboardingState = null, ActionableRemediation actionableRemediation = null)
+        {
+            return new AzureDevOpsRepositoryProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, parentOrgName, parentProjectName, repoId, repoUri, visibility, onboardingState, actionableRemediation);
+        }
+
+        /// <summary> Initializes a new instance of DevOpsConfigurationData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> DevOps Configuration properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.DevOpsConfigurationData"/> instance for mocking. </returns>
+        public static DevOpsConfigurationData DevOpsConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevOpsConfigurationProperties properties = null)
+        {
+            return new DevOpsConfigurationData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of DevOpsConfigurationProperties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
+        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        ///
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="authorizationCode"> Authorization payload. </param>
+        /// <param name="autoDiscovery"> AutoDiscovery states. </param>
+        /// <param name="topLevelInventoryList">
+        /// List of top-level inventory to select when AutoDiscovery is disabled.
+        /// This field is ignored when AutoDiscovery is enabled.
+        /// </param>
+        /// <returns> A new <see cref="Models.DevOpsConfigurationProperties"/> instance for mocking. </returns>
+        public static DevOpsConfigurationProperties DevOpsConfigurationProperties(string provisioningStatusMessage = null, DateTimeOffset? provisioningStatusUpdateTimeUtc = null, DevOpsProvisioningState? provisioningState = null, string authorizationCode = null, AutoDiscovery? autoDiscovery = null, IEnumerable<string> topLevelInventoryList = null)
+        {
+            topLevelInventoryList ??= new List<string>();
+
+            return new DevOpsConfigurationProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, authorizationCode != null ? new Authorization(authorizationCode) : null, autoDiscovery, topLevelInventoryList?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of GitHubOwnerData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> GitHub Owner properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.GitHubOwnerData"/> instance for mocking. </returns>
+        public static GitHubOwnerData GitHubOwnerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GitHubOwnerProperties properties = null)
+        {
+            return new GitHubOwnerData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of GitHubOwnerProperties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
+        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        ///
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="ownerUri"> Gets or sets GitHub Owner url. </param>
+        /// <param name="gitHubInternalId"> Gets or sets internal GitHub id. </param>
+        /// <param name="onboardingState">
+        /// Details about resource onboarding status across all connectors.
+        ///
+        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
+        /// Onboarded - this resource has already been onboarded by the specified connector.
+        /// NotOnboarded - this resource has not been onboarded to any connector.
+        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// </param>
+        /// <returns> A new <see cref="Models.GitHubOwnerProperties"/> instance for mocking. </returns>
+        public static GitHubOwnerProperties GitHubOwnerProperties(string provisioningStatusMessage = null, DateTimeOffset? provisioningStatusUpdateTimeUtc = null, DevOpsProvisioningState? provisioningState = null, Uri ownerUri = null, string gitHubInternalId = null, OnboardingState? onboardingState = null)
+        {
+            return new GitHubOwnerProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, ownerUri, gitHubInternalId, onboardingState);
+        }
+
+        /// <summary> Initializes a new instance of GitHubRepositoryData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> GitHub Repository properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.GitHubRepositoryData"/> instance for mocking. </returns>
+        public static GitHubRepositoryData GitHubRepositoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GitHubRepositoryProperties properties = null)
+        {
+            return new GitHubRepositoryData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of GitHubRepositoryProperties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
+        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        ///
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="repoId">
+        /// Gets or sets GitHub Repository id.
+        ///
+        /// This is a numeric id defined by Github.
+        /// Eg: "123456".
+        /// </param>
+        /// <param name="repoName">
+        /// Gets or sets GitHub Repository name.
+        /// Eg: "new-repo-1".
+        /// </param>
+        /// <param name="repoFullName">
+        /// Gets or sets GitHub Full Name.
+        /// Repository name, prefixed with Owner name.
+        /// Eg: "my-org/new-repo-1".
+        /// </param>
+        /// <param name="onboardingState">
+        /// Details about resource onboarding status across all connectors.
+        ///
+        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
+        /// Onboarded - this resource has already been onboarded by the specified connector.
+        /// NotOnboarded - this resource has not been onboarded to any connector.
+        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// </param>
+        /// <param name="repoUri"> Gets or sets GitHub Repository url. </param>
+        /// <param name="parentOwnerName"> Gets or sets parent GitHub Owner name. </param>
+        /// <returns> A new <see cref="Models.GitHubRepositoryProperties"/> instance for mocking. </returns>
+        public static GitHubRepositoryProperties GitHubRepositoryProperties(string provisioningStatusMessage = null, DateTimeOffset? provisioningStatusUpdateTimeUtc = null, DevOpsProvisioningState? provisioningState = null, string repoId = null, string repoName = null, string repoFullName = null, OnboardingState? onboardingState = null, Uri repoUri = null, string parentOwnerName = null)
+        {
+            return new GitHubRepositoryProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, repoId, repoName, repoFullName, onboardingState, repoUri, parentOwnerName);
+        }
+
+        /// <summary> Initializes a new instance of GitLabGroupData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> GitLab Group properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.GitLabGroupData"/> instance for mocking. </returns>
+        public static GitLabGroupData GitLabGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GitLabGroupProperties properties = null)
+        {
+            return new GitLabGroupData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of GitLabGroupProperties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
+        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        ///
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="fullyQualifiedName">
+        /// Gets or sets the fully-qualified name of the Group object.
+        ///
+        /// This contains the entire namespace hierarchy where namespaces are separated by the '$' character.
+        /// </param>
+        /// <param name="fullyQualifiedFriendlyName">
+        /// Gets or sets the human readable fully-qualified name of the Group object.
+        ///
+        /// This contains the entire namespace hierarchy as seen on GitLab UI where namespaces are separated by the '/' character.
+        /// </param>
+        /// <param name="uri"> Gets or sets the url of the GitLab Group. </param>
+        /// <param name="onboardingState">
+        /// Details about resource onboarding status across all connectors.
+        ///
+        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
+        /// Onboarded - this resource has already been onboarded by the specified connector.
+        /// NotOnboarded - this resource has not been onboarded to any connector.
+        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// </param>
+        /// <returns> A new <see cref="Models.GitLabGroupProperties"/> instance for mocking. </returns>
+        public static GitLabGroupProperties GitLabGroupProperties(string provisioningStatusMessage = null, DateTimeOffset? provisioningStatusUpdateTimeUtc = null, DevOpsProvisioningState? provisioningState = null, string fullyQualifiedName = null, string fullyQualifiedFriendlyName = null, Uri uri = null, OnboardingState? onboardingState = null)
+        {
+            return new GitLabGroupProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, fullyQualifiedName, fullyQualifiedFriendlyName, uri, onboardingState);
+        }
+
+        /// <summary> Initializes a new instance of GitLabProjectData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> GitLab Project properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.GitLabProjectData"/> instance for mocking. </returns>
+        public static GitLabProjectData GitLabProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GitLabProjectProperties properties = null)
+        {
+            return new GitLabProjectData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of GitLabProjectProperties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
+        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        ///
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="fullyQualifiedName">
+        /// Gets or sets the fully-qualified name of the project object.
+        ///
+        /// This contains the entire hierarchy where entities are separated by the '$' character.
+        /// </param>
+        /// <param name="fullyQualifiedFriendlyName">
+        /// Gets or sets the human readable fully-qualified name of the Project object.
+        ///
+        /// This contains the entire namespace hierarchy as seen on GitLab UI where entities are separated by the '/' character.
+        /// </param>
+        /// <param name="fullyQualifiedParentGroupName">
+        /// Gets or sets the fully-qualified name of the project's parent group object.
+        ///
+        /// This contains the entire hierarchy where namespaces are separated by the '$' character.
+        /// </param>
+        /// <param name="uri"> Gets or sets the url of the GitLab Project. </param>
+        /// <param name="onboardingState">
+        /// Details about resource onboarding status across all connectors.
+        ///
+        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
+        /// Onboarded - this resource has already been onboarded by the specified connector.
+        /// NotOnboarded - this resource has not been onboarded to any connector.
+        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// </param>
+        /// <returns> A new <see cref="Models.GitLabProjectProperties"/> instance for mocking. </returns>
+        public static GitLabProjectProperties GitLabProjectProperties(string provisioningStatusMessage = null, DateTimeOffset? provisioningStatusUpdateTimeUtc = null, DevOpsProvisioningState? provisioningState = null, string fullyQualifiedName = null, string fullyQualifiedFriendlyName = null, string fullyQualifiedParentGroupName = null, Uri uri = null, OnboardingState? onboardingState = null)
+        {
+            return new GitLabProjectProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, fullyQualifiedName, fullyQualifiedFriendlyName, fullyQualifiedParentGroupName, uri, onboardingState);
+        }
+
+        /// <summary> Initializes a new instance of SecurityConnectorData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
+        /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
+        /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
+        /// <param name="offerings">
+        /// A collection of offerings for the security connector.
+        /// Please note <see cref="Models.SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.CspmMonitorAwsOffering"/>, <see cref="Models.CspmMonitorAzureDevOpsOffering"/>, <see cref="Models.CspmMonitorGcpOffering"/>, <see cref="Models.CspmMonitorGitLabOffering"/>, <see cref="Models.CspmMonitorGithubOffering"/>, <see cref="Models.DefenderCspmAwsOffering"/>, <see cref="Models.DefenderCspmGcpOffering"/>, <see cref="Models.DefenderForContainersAwsOffering"/>, <see cref="Models.DefenderForContainersGcpOffering"/>, <see cref="Models.DefenderForDatabasesAwsOffering"/>, <see cref="Models.DefenderForDatabasesGcpOffering"/>, <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="Models.DefenderForDevOpsGitLabOffering"/>, <see cref="Models.DefenderForDevOpsGithubOffering"/>, <see cref="Models.DefenderForServersAwsOffering"/>, <see cref="Models.DefenderForServersGcpOffering"/> and <see cref="Models.InformationProtectionAwsOffering"/>.
+        /// </param>
+        /// <param name="environmentData">
+        /// The security connector environment data.
+        /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
+        /// </param>
+        /// <param name="kind"> Kind of the resource. </param>
+        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
+        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string hierarchyIdentifier = null, DateTimeOffset? hierarchyIdentifierTrialEndOn = null, SecurityCenterCloudName? environmentName = null, IEnumerable<SecurityCenterCloudOffering> offerings = null, SecurityConnectorEnvironment environmentData = null, string kind = null, ETag? eTag = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            offerings ??= new List<SecurityCenterCloudOffering>();
+
+            return new SecurityConnectorData(id, name, resourceType, systemData, tags, location, hierarchyIdentifier, hierarchyIdentifierTrialEndOn, environmentName, offerings?.ToList(), environmentData, kind, eTag);
+        }
+
+        /// <summary> Initializes a new instance of SecurityCenterCloudOffering. </summary>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
+        /// <returns> A new <see cref="Models.SecurityCenterCloudOffering"/> instance for mocking. </returns>
+        public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = "Unknown", string description = null)
+        {
+            return new UnknownCloudOffering(offeringType, description);
+        }
+
+        /// <summary> Initializes a new instance of ComplianceResultData. </summary>
+>>>>>>> f49344353ba (Fix autorest mapping and add unit tests)
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

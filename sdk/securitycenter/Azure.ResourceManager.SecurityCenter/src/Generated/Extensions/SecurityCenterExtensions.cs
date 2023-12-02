@@ -41,6 +41,447 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
+<<<<<<< HEAD
+=======
+        /// Gets a collection of SecurityComplianceResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSecurityCompliances(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SecurityComplianceResources and their operations over a SecurityComplianceResource. </returns>
+        public static SecurityComplianceCollection GetSecurityCompliances(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetSecurityCompliances(scope);
+        }
+
+        /// <summary>
+        /// Details of a specific Compliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSecurityComplianceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityComplianceResource>> GetSecurityComplianceAsync(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterArmClient(client).GetSecurityComplianceAsync(scope, complianceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of a specific Compliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSecurityCompliance(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityComplianceResource> GetSecurityCompliance(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetSecurityCompliance(scope, complianceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of GovernanceRuleResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetGovernanceRules(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of GovernanceRuleResources and their operations over a GovernanceRuleResource. </returns>
+        public static GovernanceRuleCollection GetGovernanceRules(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetGovernanceRules(scope);
+        }
+
+        /// <summary>
+        /// Get a specific governance rule for the requested scope by ruleId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetGovernanceRuleAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<GovernanceRuleResource>> GetGovernanceRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterArmClient(client).GetGovernanceRuleAsync(scope, ruleId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific governance rule for the requested scope by ruleId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetGovernanceRule(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<GovernanceRuleResource> GetGovernanceRule(this ArmClient client, ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetGovernanceRule(scope, ruleId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of DefenderForStorageSettingResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetDefenderForStorageSettings(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of DefenderForStorageSettingResources and their operations over a DefenderForStorageSettingResource. </returns>
+        public static DefenderForStorageSettingCollection GetDefenderForStorageSettings(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetDefenderForStorageSettings(scope);
+        }
+
+        /// <summary>
+        /// Gets the Defender for Storage settings for the specified storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefenderForStorage_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetDefenderForStorageSettingAsync(ResourceIdentifier,DefenderForStorageSettingName,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static async Task<Response<DefenderForStorageSettingResource>> GetDefenderForStorageSettingAsync(this ArmClient client, ResourceIdentifier scope, DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterArmClient(client).GetDefenderForStorageSettingAsync(scope, settingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Defender for Storage settings for the specified storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefenderForStorage_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetDefenderForStorageSetting(ResourceIdentifier,DefenderForStorageSettingName,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static Response<DefenderForStorageSettingResource> GetDefenderForStorageSetting(this ArmClient client, ResourceIdentifier scope, DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetDefenderForStorageSetting(scope, settingName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SqlVulnerabilityAssessmentBaselineRuleResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentBaselineRules(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SqlVulnerabilityAssessmentBaselineRuleResources and their operations over a SqlVulnerabilityAssessmentBaselineRuleResource. </returns>
+        public static SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentBaselineRules(scope);
+        }
+
+        /// <summary>
+        /// Gets the results for a given rule in the Baseline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentBaselineRuleAsync(ResourceIdentifier,string,Guid,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentBaselineRuleAsync(scope, ruleId, workspaceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the results for a given rule in the Baseline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentBaselineRule(ResourceIdentifier,string,Guid,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentBaselineRule(scope, ruleId, workspaceId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentScans(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
+        public static SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScans(scope);
+        }
+
+        /// <summary>
+        /// Gets the scan details of a single scan record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentScanAsync(ResourceIdentifier,string,Guid,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanAsync(scope, scanId, workspaceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the scan details of a single scan record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentScan(ResourceIdentifier,string,Guid,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScan(scope, scanId, workspaceId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of HealthReportResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetHealthReports(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of HealthReportResources and their operations over a HealthReportResource. </returns>
+        public static HealthReportCollection GetHealthReports(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetHealthReports(scope);
+        }
+
+        /// <summary>
+        /// Get health report of resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/healthReports/{healthReportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthReports_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetHealthReportAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="healthReportName"> The health report Key - Unique key for the health report type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HealthReportResource>> GetHealthReportAsync(this ArmClient client, ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterArmClient(client).GetHealthReportAsync(scope, healthReportName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get health report of resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/healthReports/{healthReportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthReports_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetHealthReport(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="healthReportName"> The health report Key - Unique key for the health report type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<HealthReportResource> GetHealthReport(this ArmClient client, ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterArmClient(client).GetHealthReport(scope, healthReportName, cancellationToken);
+        }
+
+        /// <summary>
+>>>>>>> f49344353ba (Fix autorest mapping and add unit tests)
         /// Gets a collection of ComplianceResultResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
@@ -2983,6 +3424,821 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
+<<<<<<< HEAD
+=======
+        /// Gets a list of API collections within a resource group that have been onboarded to Microsoft Defender for APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/apiCollections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>APICollections_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetApiCollections(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApiCollectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiCollectionResource> GetApiCollectionsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetApiCollectionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of API collections within a resource group that have been onboarded to Microsoft Defender for APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/apiCollections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>APICollections_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetApiCollections(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiCollectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiCollectionResource> GetApiCollections(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetApiCollections(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SecurityCenterLocationResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCenterLocations()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityCenterLocationResources and their operations over a SecurityCenterLocationResource. </returns>
+        public static SecurityCenterLocationCollection GetSecurityCenterLocations(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterLocations();
+        }
+
+        /// <summary>
+        /// Details of a specific location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCenterLocationAsync(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityCenterLocationResource>> GetSecurityCenterLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterLocationAsync(ascLocation, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of a specific location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCenterLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static Response<SecurityCenterLocationResource> GetSecurityCenterLocation(this SubscriptionResource subscriptionResource, AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterLocation(ascLocation, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AutoProvisioningSettingResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAutoProvisioningSettings()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AutoProvisioningSettingResources and their operations over a AutoProvisioningSettingResource. </returns>
+        public static AutoProvisioningSettingCollection GetAutoProvisioningSettings(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAutoProvisioningSettings();
+        }
+
+        /// <summary>
+        /// Details of a specific setting
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAutoProvisioningSettingAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="settingName"> Auto provisioning setting key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AutoProvisioningSettingResource>> GetAutoProvisioningSettingAsync(this SubscriptionResource subscriptionResource, string settingName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAutoProvisioningSettingAsync(settingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of a specific setting
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAutoProvisioningSetting(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="settingName"> Auto provisioning setting key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<AutoProvisioningSettingResource> GetAutoProvisioningSetting(this SubscriptionResource subscriptionResource, string settingName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAutoProvisioningSetting(settingName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SecurityWorkspaceSettingResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityWorkspaceSettings()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityWorkspaceSettingResources and their operations over a SecurityWorkspaceSettingResource. </returns>
+        public static SecurityWorkspaceSettingCollection GetSecurityWorkspaceSettings(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityWorkspaceSettings();
+        }
+
+        /// <summary>
+        /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityWorkspaceSettingAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceSettingName"> Name of the security setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityWorkspaceSettingResource>> GetSecurityWorkspaceSettingAsync(this SubscriptionResource subscriptionResource, string workspaceSettingName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityWorkspaceSettingAsync(workspaceSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityWorkspaceSetting(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceSettingName"> Name of the security setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityWorkspaceSettingResource> GetSecurityWorkspaceSetting(this SubscriptionResource subscriptionResource, string workspaceSettingName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityWorkspaceSetting(workspaceSettingName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SecurityAlertsSuppressionRuleResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityAlertsSuppressionRules()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityAlertsSuppressionRuleResources and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
+        public static SecurityAlertsSuppressionRuleCollection GetSecurityAlertsSuppressionRules(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityAlertsSuppressionRules();
+        }
+
+        /// <summary>
+        /// Get dismiss rule, with name: {alertsSuppressionRuleName}, for the given subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityAlertsSuppressionRuleAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityAlertsSuppressionRuleResource>> GetSecurityAlertsSuppressionRuleAsync(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityAlertsSuppressionRuleAsync(alertsSuppressionRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get dismiss rule, with name: {alertsSuppressionRuleName}, for the given subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityAlertsSuppressionRule(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityAlertsSuppressionRuleResource> GetSecurityAlertsSuppressionRule(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityAlertsSuppressionRule(alertsSuppressionRuleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RegulatoryComplianceStandardResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetRegulatoryComplianceStandards()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of RegulatoryComplianceStandardResources and their operations over a RegulatoryComplianceStandardResource. </returns>
+        public static RegulatoryComplianceStandardCollection GetRegulatoryComplianceStandards(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetRegulatoryComplianceStandards();
+        }
+
+        /// <summary>
+        /// Supported regulatory compliance details state for selected standard
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetRegulatoryComplianceStandardAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RegulatoryComplianceStandardResource>> GetRegulatoryComplianceStandardAsync(this SubscriptionResource subscriptionResource, string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetRegulatoryComplianceStandardAsync(regulatoryComplianceStandardName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Supported regulatory compliance details state for selected standard
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetRegulatoryComplianceStandard(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RegulatoryComplianceStandardResource> GetRegulatoryComplianceStandard(this SubscriptionResource subscriptionResource, string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetRegulatoryComplianceStandard(regulatoryComplianceStandardName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SecurityCloudConnectorResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCloudConnectors()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityCloudConnectorResources and their operations over a SecurityCloudConnectorResource. </returns>
+        public static SecurityCloudConnectorCollection GetSecurityCloudConnectors(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCloudConnectors();
+        }
+
+        /// <summary>
+        /// Details of a specific cloud account connector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCloudConnectorAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="connectorName"> Name of the cloud account connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityCloudConnectorResource>> GetSecurityCloudConnectorAsync(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCloudConnectorAsync(connectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of a specific cloud account connector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCloudConnector(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="connectorName"> Name of the cloud account connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityCloudConnectorResource> GetSecurityCloudConnector(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCloudConnector(connectorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SecurityContactResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityContacts()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityContactResources and their operations over a SecurityContactResource. </returns>
+        public static SecurityContactCollection GetSecurityContacts(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContacts();
+        }
+
+        /// <summary>
+        /// Get Default Security contact configurations for the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityContacts_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityContactAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="securityContactName"> Name of the security contact object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityContactResource>> GetSecurityContactAsync(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContactAsync(securityContactName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Default Security contact configurations for the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityContacts_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityContact(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="securityContactName"> Name of the security contact object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityContactResource> GetSecurityContact(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContact(securityContactName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SubscriptionSecurityApplicationResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSubscriptionSecurityApplications()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionSecurityApplicationResources and their operations over a SubscriptionSecurityApplicationResource. </returns>
+        public static SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionSecurityApplications();
+        }
+
+        /// <summary>
+        /// Get a specific application for the requested scope by applicationId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Application_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSubscriptionSecurityApplicationAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionSecurityApplicationResource>> GetSubscriptionSecurityApplicationAsync(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionSecurityApplicationAsync(applicationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific application for the requested scope by applicationId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Application_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSubscriptionSecurityApplication(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionSecurityApplication(applicationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SecureScoreResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecureScores()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecureScoreResources and their operations over a SecureScoreResource. </returns>
+        public static SecureScoreCollection GetSecureScores(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScores();
+        }
+
+        /// <summary>
+        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use 'ascScore'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecureScoreAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecureScoreResource>> GetSecureScoreAsync(this SubscriptionResource subscriptionResource, string secureScoreName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScoreAsync(secureScoreName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use 'ascScore'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecureScore(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecureScoreResource> GetSecureScore(this SubscriptionResource subscriptionResource, string secureScoreName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScore(secureScoreName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SubscriptionAssessmentMetadataResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAllSubscriptionAssessmentMetadata()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionAssessmentMetadataResources and their operations over a SubscriptionAssessmentMetadataResource. </returns>
+        public static SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAllSubscriptionAssessmentMetadata();
+        }
+
+        /// <summary>
+        /// Get metadata information on an assessment type in a specific subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_GetInSubscription</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSubscriptionAssessmentMetadataAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(this SubscriptionResource subscriptionResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionAssessmentMetadataAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get metadata information on an assessment type in a specific subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_GetInSubscription</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSubscriptionAssessmentMetadata(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(this SubscriptionResource subscriptionResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionAssessmentMetadata(assessmentMetadataName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SecuritySettingResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecuritySettings()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecuritySettingResources and their operations over a SecuritySettingResource. </returns>
+        public static SecuritySettingCollection GetSecuritySettings(this SubscriptionResource subscriptionResource)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySettings();
+        }
+
+        /// <summary>
+        /// Settings of different configurations in Microsoft Defender for Cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Settings_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecuritySettingAsync(SecuritySettingName,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="settingName"> The name of the setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecuritySettingResource>> GetSecuritySettingAsync(this SubscriptionResource subscriptionResource, SecuritySettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySettingAsync(settingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Settings of different configurations in Microsoft Defender for Cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Settings_Get</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecuritySetting(SecuritySettingName,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="settingName"> The name of the setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static Response<SecuritySettingResource> GetSecuritySetting(this SubscriptionResource subscriptionResource, SecuritySettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySetting(settingName, cancellationToken);
+        }
+
+        /// <summary>
+>>>>>>> f49344353ba (Fix autorest mapping and add unit tests)
         /// Gets a collection of SecurityCenterPricingResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>

@@ -57,6 +57,345 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return apiVersion;
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary> Gets a collection of SecurityComplianceResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SecurityComplianceResources and their operations over a SecurityComplianceResource. </returns>
+        public virtual SecurityComplianceCollection GetSecurityCompliances(ResourceIdentifier scope)
+        {
+            return new SecurityComplianceCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Details of a specific Compliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityComplianceResource>> GetSecurityComplianceAsync(ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        {
+            return await GetSecurityCompliances(scope).GetAsync(complianceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of a specific Compliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityComplianceResource> GetSecurityCompliance(ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        {
+            return GetSecurityCompliances(scope).Get(complianceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GovernanceRuleResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of GovernanceRuleResources and their operations over a GovernanceRuleResource. </returns>
+        public virtual GovernanceRuleCollection GetGovernanceRules(ResourceIdentifier scope)
+        {
+            return new GovernanceRuleCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Get a specific governance rule for the requested scope by ruleId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GovernanceRuleResource>> GetGovernanceRuleAsync(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        {
+            return await GetGovernanceRules(scope).GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific governance rule for the requested scope by ruleId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GovernanceRuleResource> GetGovernanceRule(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        {
+            return GetGovernanceRules(scope).Get(ruleId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DefenderForStorageSettingResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of DefenderForStorageSettingResources and their operations over a DefenderForStorageSettingResource. </returns>
+        public virtual DefenderForStorageSettingCollection GetDefenderForStorageSettings(ResourceIdentifier scope)
+        {
+            return new DefenderForStorageSettingCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Gets the Defender for Storage settings for the specified storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefenderForStorage_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DefenderForStorageSettingResource>> GetDefenderForStorageSettingAsync(ResourceIdentifier scope, DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return await GetDefenderForStorageSettings(scope).GetAsync(settingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Defender for Storage settings for the specified storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefenderForStorage_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<DefenderForStorageSettingResource> GetDefenderForStorageSetting(ResourceIdentifier scope, DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return GetDefenderForStorageSettings(scope).Get(settingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlVulnerabilityAssessmentBaselineRuleResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SqlVulnerabilityAssessmentBaselineRuleResources and their operations over a SqlVulnerabilityAssessmentBaselineRuleResource. </returns>
+        public virtual SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(ResourceIdentifier scope)
+        {
+            return new SqlVulnerabilityAssessmentBaselineRuleCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Gets the results for a given rule in the Baseline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlVulnerabilityAssessmentBaselineRules(scope).GetAsync(ruleId, workspaceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the results for a given rule in the Baseline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return GetSqlVulnerabilityAssessmentBaselineRules(scope).Get(ruleId, workspaceId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
+        public virtual SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(ResourceIdentifier scope)
+        {
+            return new SqlVulnerabilityAssessmentScanCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Gets the scan details of a single scan record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlVulnerabilityAssessmentScans(scope).GetAsync(scanId, workspaceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the scan details of a single scan record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return GetSqlVulnerabilityAssessmentScans(scope).Get(scanId, workspaceId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HealthReportResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of HealthReportResources and their operations over a HealthReportResource. </returns>
+        public virtual HealthReportCollection GetHealthReports(ResourceIdentifier scope)
+        {
+            return new HealthReportCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Get health report of resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/healthReports/{healthReportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthReports_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="healthReportName"> The health report Key - Unique key for the health report type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HealthReportResource>> GetHealthReportAsync(ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
+        {
+            return await GetHealthReports(scope).GetAsync(healthReportName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get health report of resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/healthReports/{healthReportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthReports_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="healthReportName"> The health report Key - Unique key for the health report type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HealthReportResource> GetHealthReport(ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
+        {
+            return GetHealthReports(scope).Get(healthReportName, cancellationToken);
+        }
+
+>>>>>>> f49344353ba (Fix autorest mapping and add unit tests)
         /// <summary> Gets a collection of ComplianceResultResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ComplianceResultResources and their operations over a ComplianceResultResource. </returns>

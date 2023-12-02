@@ -462,4 +462,16 @@ directive:
     where: $.parameters
     transform: >
         $.Scope['x-ms-skip-url-encoding'] = true;
+  - from: defenderForStorageSettings.json
+    where: $.parameters
+    transform: >
+        $.DefenderForStorageSettingName['x-ms-enum']['name'] = "defenderForStorageSettingName";
+  - from: healthReports.json
+    where: $.definitions
+    transform: >
+      $.resourceDetails['x-ms-client-name'] = 'HealthReportResourceDetails';
+  - from: healthReports.json
+    where: $.definitions
+    transform: >
+      $.status['x-ms-client-name'] = 'HealthReportStatus';
 ```
