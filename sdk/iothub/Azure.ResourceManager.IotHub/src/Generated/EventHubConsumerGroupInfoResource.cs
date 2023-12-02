@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.IotHub
         private readonly IotHubResourceRestOperations _eventHubConsumerGroupInfoIotHubResourceRestClient;
         private readonly EventHubConsumerGroupInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubConsumerGroupInfoResource"/> class for mocking. </summary>
         protected EventHubConsumerGroupInfoResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.IotHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
