@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -70,9 +71,7 @@ namespace Azure
         /// <param name="response">The HTTP response.</param>
         /// <returns>A new instance of <see cref="Response{T}"/> with the provided value and HTTP response.</returns>
         public static Response<T> FromValue<T>(T value, Response response)
-        {
-            return new ValueResponse<T>(response, value);
-        }
+            => new AzureCoreResponse<T>(value, response);
 
         /// <summary>
         /// Returns the string representation of this <see cref="Response"/>.
@@ -95,5 +94,59 @@ namespace Azure
                 stream = null;
             }
         }
+
+        #region Private implementation subtypes of abstract Response types
+        private class AzureCoreResponse<T> : Response<T>
+        {
+            public AzureCoreResponse(T value, Response response)
+                : base(value, response) { }
+        }
+
+        internal class AzureCoreDefaultResponse : Response
+        {
+            private readonly string DefaultMessage = "Types derived from abstract Response<T> must provide an implementation of the virtual GetRawResponse method that returns a non-null Response value.";
+
+            public override string ClientRequestId
+            {
+                get => throw new NotSupportedException(DefaultMessage);
+                set => throw new NotSupportedException(DefaultMessage);
+            }
+
+            public override int Status => throw new NotSupportedException(DefaultMessage);
+
+            public override string ReasonPhrase => throw new NotSupportedException(DefaultMessage);
+
+            public override Stream? ContentStream
+            {
+                get => throw new NotSupportedException(DefaultMessage);
+                set => throw new NotSupportedException(DefaultMessage);
+            }
+
+            public override void Dispose()
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override bool ContainsHeader(string name)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+        }
+        #endregion
     }
 }

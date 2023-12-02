@@ -17,6 +17,10 @@ public abstract class OutputMessage
         _response = response;
     }
 
+    /// <summary>
+    /// Returns the HTTP response returned by the service.
+    /// </summary>
+    /// <returns>The HTTP response returned by the service.</returns>
     public PipelineResponse GetRawResponse() => _response;
 
     #region Factory methods for OutputMessage and subtypes

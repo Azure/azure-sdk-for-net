@@ -96,7 +96,7 @@ namespace Azure.Core
             private readonly Response _response;
             private readonly RequestFailedException _exception;
 
-            public ErrorResponse(Response response, RequestFailedException exception)
+            public ErrorResponse(Response response, RequestFailedException exception) : base()
             {
                 _response = response;
                 _exception = exception;

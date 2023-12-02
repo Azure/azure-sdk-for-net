@@ -114,16 +114,16 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
-    public abstract partial class NullableResponse<T>
+    public abstract partial class NullableResponse<T> : System.ClientModel.OptionalOutputMessage<T>
     {
-        protected NullableResponse() { }
-        public abstract bool HasValue { get; }
-        public abstract T? Value { get; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected NullableResponse() : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected NullableResponse(T? value, Azure.Response response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public abstract Azure.Response GetRawResponse();
+        public virtual new Azure.Response GetRawResponse() { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class Operation
@@ -256,7 +256,9 @@ namespace Azure
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected Response() { }
+        protected Response(T value, Azure.Response response) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }

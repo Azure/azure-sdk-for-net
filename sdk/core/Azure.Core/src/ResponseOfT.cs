@@ -18,6 +18,25 @@ namespace Azure
 #pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected Response() : base(default, DefaultResponse)
+        {
+            // Added for back-compat with GA APIs.  Any type that derives from
+            // Response<T> must provide an implementation for GetRawResponse that
+            // replaces DefaultResponse with the Response populated on HttpMessage
+            // during the call to pipeline.Send.
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="response"></param>
+        protected Response(T value, Response response) : base(value, response) { }
+
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool HasValue => true;
