@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network
         private readonly PublicIPPrefixesRestOperations _publicIPPrefixRestClient;
         private readonly PublicIPPrefixData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/publicIPPrefixes";
+
         /// <summary> Initializes a new instance of the <see cref="PublicIPPrefixResource"/> class for mocking. </summary>
         protected PublicIPPrefixResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/publicIPPrefixes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

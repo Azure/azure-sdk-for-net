@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly CloudServicesNetworksRestOperations _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient;
         private readonly NetworkCloudCloudServicesNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/cloudServicesNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudCloudServicesNetworkResource"/> class for mocking. </summary>
         protected NetworkCloudCloudServicesNetworkResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/cloudServicesNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

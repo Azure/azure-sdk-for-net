@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualHubBgpConnectionsRestOperations _bgpConnectionVirtualHubBgpConnectionsRestClient;
         private readonly BgpConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/bgpConnections";
+
         /// <summary> Initializes a new instance of the <see cref="BgpConnectionResource"/> class for mocking. </summary>
         protected BgpConnectionResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/bgpConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

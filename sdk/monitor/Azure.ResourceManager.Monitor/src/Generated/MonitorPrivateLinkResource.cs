@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Monitor
         private readonly PrivateLinkResourcesRestOperations _monitorPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly MonitorPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/privateLinkScopes/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkResource"/> class for mocking. </summary>
         protected MonitorPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/privateLinkScopes/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
