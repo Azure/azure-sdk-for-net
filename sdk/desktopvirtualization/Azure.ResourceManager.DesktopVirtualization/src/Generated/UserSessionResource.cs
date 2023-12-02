@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly UserSessionsRestOperations _userSessionRestClient;
         private readonly UserSessionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools/sessionHosts/userSessions";
+
         /// <summary> Initializes a new instance of the <see cref="UserSessionResource"/> class for mocking. </summary>
         protected UserSessionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools/sessionHosts/userSessions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

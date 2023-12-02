@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly IotConnectorsRestOperations _healthcareApisIotConnectorIotConnectorsRestClient;
         private readonly HealthcareApisIotConnectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/iotconnectors";
+
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotConnectorResource"/> class for mocking. </summary>
         protected HealthcareApisIotConnectorResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/iotconnectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly ApplicationsRestOperations _virtualApplicationApplicationsRestClient;
         private readonly VirtualApplicationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/applicationGroups/applications";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualApplicationResource"/> class for mocking. </summary>
         protected VirtualApplicationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/applicationGroups/applications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

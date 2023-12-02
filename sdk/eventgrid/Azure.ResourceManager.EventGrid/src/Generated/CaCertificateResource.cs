@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly CaCertificatesRestOperations _caCertificateRestClient;
         private readonly CaCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/caCertificates";
+
         /// <summary> Initializes a new instance of the <see cref="CaCertificateResource"/> class for mocking. </summary>
         protected CaCertificateResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/caCertificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
