@@ -109,9 +109,10 @@ foreach (dynamic task in jobResults.Tasks.Items)
             Console.WriteLine($"Text: {summary.Text}");
             Console.WriteLine($"Aspect: {summary.Aspect}");
         }
-        if(results.Warnings.Any()){
+        if (results.Warnings.Any())
+        {
             Console.WriteLine("Warnings:");
-            foreach(dynamic warning in conversation.Warnings)
+            foreach (dynamic warning in conversation.Warnings)
             {
                 Console.WriteLine($"Code: {warning.Code}");
                 Console.WriteLine($"Message: {warning.Message}");
@@ -119,9 +120,11 @@ foreach (dynamic task in jobResults.Tasks.Items)
         }
         Console.WriteLine();
     }
-    if(results.Errors.Any()){
+    if (results.Errors.Any())
+    {
         Console.WriteLine("Errors:");
-        foreach(dynamic error in results.Errors){
+        foreach (dynamic error in results.Errors)
+        {
             Console.WriteLine($"Error: {error}");    
         } 
     }
