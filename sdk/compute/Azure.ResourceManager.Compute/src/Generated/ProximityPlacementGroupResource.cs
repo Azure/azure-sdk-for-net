@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute
         private readonly ProximityPlacementGroupsRestOperations _proximityPlacementGroupRestClient;
         private readonly ProximityPlacementGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/proximityPlacementGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ProximityPlacementGroupResource"/> class for mocking. </summary>
         protected ProximityPlacementGroupResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/proximityPlacementGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

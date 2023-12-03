@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Datadog
         private readonly MonitorsRestOperations _datadogMonitorResourceMonitorsRestClient;
         private readonly DatadogMonitorResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="DatadogMonitorResource"/> class for mocking. </summary>
         protected DatadogMonitorResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.Datadog
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

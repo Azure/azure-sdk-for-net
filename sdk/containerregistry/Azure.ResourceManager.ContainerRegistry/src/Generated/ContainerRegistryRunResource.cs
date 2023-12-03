@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly RunsRestOperations _containerRegistryRunRunsRestClient;
         private readonly ContainerRegistryRunData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/runs";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryRunResource"/> class for mocking. </summary>
         protected ContainerRegistryRunResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/runs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

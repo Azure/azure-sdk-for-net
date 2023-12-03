@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly CassandraResourcesRestOperations _cassandraViewGetResultCassandraResourcesRestClient;
         private readonly CassandraViewGetResultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views";
+
         /// <summary> Initializes a new instance of the <see cref="CassandraViewGetResultResource"/> class for mocking. </summary>
         protected CassandraViewGetResultResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

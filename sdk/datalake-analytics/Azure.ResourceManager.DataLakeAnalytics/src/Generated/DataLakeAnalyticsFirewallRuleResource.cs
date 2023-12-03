@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         private readonly FirewallRulesRestOperations _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient;
         private readonly DataLakeAnalyticsFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsFirewallRuleResource"/> class for mocking. </summary>
         protected DataLakeAnalyticsFirewallRuleResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
