@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Monitor
         private readonly ActionGroupsRestOperations _actionGroupRestClient;
         private readonly ActionGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/actionGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ActionGroupResource"/> class for mocking. </summary>
         protected ActionGroupResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/actionGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.Network
         private readonly ServiceAssociationLinksRestOperations _serviceAssociationLinksRestClient;
         private readonly SubnetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworks/subnets";
+
         /// <summary> Initializes a new instance of the <see cref="SubnetResource"/> class for mocking. </summary>
         protected SubnetResource()
         {
@@ -75,9 +78,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworks/subnets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualHubsRestOperations _virtualHubRestClient;
         private readonly VirtualHubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualHubResource"/> class for mocking. </summary>
         protected VirtualHubResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

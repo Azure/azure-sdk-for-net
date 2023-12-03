@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly ServicesRestOperations _mobileNetworkServiceServicesRestClient;
         private readonly MobileNetworkServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/mobileNetworks/services";
+
         /// <summary> Initializes a new instance of the <see cref="MobileNetworkServiceResource"/> class for mocking. </summary>
         protected MobileNetworkServiceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/mobileNetworks/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

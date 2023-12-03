@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network
         private readonly NetworkManagementRestOperations _expressRouteProviderPortRestClient;
         private readonly ExpressRouteProviderPortData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteProviderPorts";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteProviderPortResource"/> class for mocking. </summary>
         protected ExpressRouteProviderPortResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteProviderPorts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
