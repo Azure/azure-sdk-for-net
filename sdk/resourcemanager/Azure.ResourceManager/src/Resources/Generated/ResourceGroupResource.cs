@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Resources
         private readonly ResourcesRestOperations _resourceGroupResourcesRestClient;
         private readonly ResourceGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResource"/> class for mocking. </summary>
         protected ResourceGroupResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

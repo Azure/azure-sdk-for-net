@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AssessmentsMetadataRestOperations _subscriptionAssessmentMetadataAssessmentsMetadataRestClient;
         private readonly SecurityAssessmentMetadataData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/assessmentMetadata";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionAssessmentMetadataResource"/> class for mocking. </summary>
         protected SubscriptionAssessmentMetadataResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/assessmentMetadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Reservations
         private readonly ReservationRestOperations _reservationDetailReservationRestClient;
         private readonly ReservationDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Capacity/reservationOrders/reservations";
+
         /// <summary> Initializes a new instance of the <see cref="ReservationDetailResource"/> class for mocking. </summary>
         protected ReservationDetailResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Reservations
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Capacity/reservationOrders/reservations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

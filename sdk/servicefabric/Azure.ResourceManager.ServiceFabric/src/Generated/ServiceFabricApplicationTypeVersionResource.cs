@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ServiceFabric
         private readonly ApplicationTypeVersionsRestOperations _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient;
         private readonly ServiceFabricApplicationTypeVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/clusters/applicationTypes/versions";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceFabricApplicationTypeVersionResource"/> class for mocking. </summary>
         protected ServiceFabricApplicationTypeVersionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ServiceFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/clusters/applicationTypes/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

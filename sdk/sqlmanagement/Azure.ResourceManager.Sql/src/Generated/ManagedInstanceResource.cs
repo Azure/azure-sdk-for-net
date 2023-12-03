@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabasesRestOperations _managedDatabaseRestClient;
         private readonly ManagedInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceResource"/> class for mocking. </summary>
         protected ManagedInstanceResource()
         {
@@ -82,9 +85,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

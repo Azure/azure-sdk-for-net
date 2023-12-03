@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly SubscriptionsRestOperations _serviceBusSubscriptionSubscriptionsRestClient;
         private readonly ServiceBusSubscriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/subscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusSubscriptionResource"/> class for mocking. </summary>
         protected ServiceBusSubscriptionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/subscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
