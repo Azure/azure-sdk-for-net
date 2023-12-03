@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly VolumeGroupsRestOperations _elasticSanVolumeGroupVolumeGroupsRestClient;
         private readonly ElasticSanVolumeGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeGroupResource"/> class for mocking. </summary>
         protected ElasticSanVolumeGroupResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

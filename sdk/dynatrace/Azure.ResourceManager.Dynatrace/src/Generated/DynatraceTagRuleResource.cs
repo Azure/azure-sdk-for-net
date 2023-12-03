@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Dynatrace
         private readonly TagRulesRestOperations _dynatraceTagRuleTagRulesRestClient;
         private readonly DynatraceTagRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors/tagRules";
+
         /// <summary> Initializes a new instance of the <see cref="DynatraceTagRuleResource"/> class for mocking. </summary>
         protected DynatraceTagRuleResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Dynatrace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors/tagRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
