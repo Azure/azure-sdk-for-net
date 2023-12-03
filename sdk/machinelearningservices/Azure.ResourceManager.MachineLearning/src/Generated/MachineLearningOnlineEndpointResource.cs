@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly OnlineEndpointsRestOperations _machineLearningOnlineEndpointOnlineEndpointsRestClient;
         private readonly MachineLearningOnlineEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/onlineEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningOnlineEndpointResource"/> class for mocking. </summary>
         protected MachineLearningOnlineEndpointResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/onlineEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

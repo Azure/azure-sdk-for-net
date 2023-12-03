@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly ArtifactManifestsRestOperations _artifactManifestRestClient;
         private readonly ArtifactManifestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/artifactStores/artifactManifests";
+
         /// <summary> Initializes a new instance of the <see cref="ArtifactManifestResource"/> class for mocking. </summary>
         protected ArtifactManifestResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/artifactStores/artifactManifests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

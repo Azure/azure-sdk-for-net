@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Logic
         private readonly WorkflowRunActionScopeRepetitionsRestOperations _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsRestClient;
         private readonly LogicWorkflowRunActionRepetitionDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions/scopeRepetitions";
+
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> class for mocking. </summary>
         protected LogicWorkflowRunActionScopeRepetitionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions/scopeRepetitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

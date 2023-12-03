@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly RegistryComponentContainersRestOperations _machineLearninRegistryComponentContainerRegistryComponentContainersRestClient;
         private readonly MachineLearningComponentContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/registries/components";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearninRegistryComponentContainerResource"/> class for mocking. </summary>
         protected MachineLearninRegistryComponentContainerResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/registries/components";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

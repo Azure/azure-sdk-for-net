@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Marketplace
         private readonly PrivateStoreRestOperations _marketplaceAdminApprovalRequestPrivateStoreRestClient;
         private readonly MarketplaceAdminApprovalRequestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/adminRequestApprovals";
+
         /// <summary> Initializes a new instance of the <see cref="MarketplaceAdminApprovalRequestResource"/> class for mocking. </summary>
         protected MarketplaceAdminApprovalRequestResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Marketplace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/adminRequestApprovals";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
