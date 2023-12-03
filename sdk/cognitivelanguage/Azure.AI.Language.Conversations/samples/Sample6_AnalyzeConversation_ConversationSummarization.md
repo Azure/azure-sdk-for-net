@@ -103,12 +103,6 @@ foreach (dynamic task in jobResults.Tasks.Items)
     foreach (dynamic conversation in results.Conversations)
     {
         Console.WriteLine($"Conversation: #{conversation.Id}");
-        Console.WriteLine("Warnings:");
-        foreach(dynamic warning in conversation.Warnings)
-        {
-            Console.WriteLine($"Code: {warning.Code}");
-            Console.WriteLine($"Message: {warning.Message}");
-        }
         Console.WriteLine("Summaries:");
         foreach (dynamic summary in conversation.Summaries)
         {
@@ -116,11 +110,6 @@ foreach (dynamic task in jobResults.Tasks.Items)
             Console.WriteLine($"Aspect: {summary.Aspect}");
         }
         Console.WriteLine();
-    }
-    Console.WriteLine("Errors:");
-    foreach(dynamic error in results.Errors)
-    {
-        Console.WriteLine($"Error: {error}");    
     }
 }
 ```
