@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes an event grid input data source that contains stream data. </summary>
     public partial class EventGridStreamInputDataSource : StreamInputDataSource
     {
-        /// <summary> Initializes a new instance of EventGridStreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridStreamInputDataSource"/>. </summary>
         public EventGridStreamInputDataSource()
         {
             StorageAccounts = new ChangeTrackingList<StreamAnalyticsStorageAccount>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             StreamInputDataSourceType = "Microsoft.EventGrid/EventSubscriptions";
         }
 
-        /// <summary> Initializes a new instance of EventGridStreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridStreamInputDataSource"/>. </summary>
         /// <param name="streamInputDataSourceType"> Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="subscriber"> Subscribers for the Event Grid. Currently only EventHub Subscriber is supported. </param>
         /// <param name="schema"> Indicates the Event Grid schema type. </param>

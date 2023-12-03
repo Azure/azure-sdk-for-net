@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The subscriptions list to get the related collections. </summary>
     public partial class CollectionsToSubscriptionsMappingContent
     {
-        /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingContent"/>. </summary>
         public CollectionsToSubscriptionsMappingContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingContent"/>. </summary>
+        /// <param name="properties"> Subscriptions ids list. </param>
+        internal CollectionsToSubscriptionsMappingContent(CollectionsToSubscriptionsMappingProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Subscriptions ids list. </summary>

@@ -13,10 +13,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The IP Community patch resource definition. </summary>
     public partial class NetworkFabricIPCommunityPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricIPCommunityPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityPatch"/>. </summary>
         public NetworkFabricIPCommunityPatch()
         {
             IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
+        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IList<IPCommunityRule> ipCommunityRules) : base(tags)
+        {
+            IPCommunityRules = ipCommunityRules;
         }
 
         /// <summary> List of IP Community Rules. </summary>

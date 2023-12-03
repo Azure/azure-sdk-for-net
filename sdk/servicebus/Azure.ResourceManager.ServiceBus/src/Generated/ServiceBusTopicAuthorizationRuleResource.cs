@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusTopicAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusTopicAuthorizationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusTopicAuthorizationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusTopicResource" /> using the GetServiceBusTopicAuthorizationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusTopicAuthorizationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusTopicAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusTopicResource"/> using the GetServiceBusTopicAuthorizationRule method.
     /// </summary>
     public partial class ServiceBusTopicAuthorizationRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceBusTopicAuthorizationRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="topicName"> The topicName. </param>
+        /// <param name="authorizationRuleName"> The authorizationRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusTopicAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusTopicAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusTopicAuthorizationRuleResource(ArmClient client, ServiceBusAuthorizationRuleData data) : this(client, data.Id)

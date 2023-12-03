@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a encoded task step. </summary>
     public partial class ContainerRegistryEncodedTaskStep : ContainerRegistryTaskStepProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskStep"/>. </summary>
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encodedTaskContent"/> is null. </exception>
         public ContainerRegistryEncodedTaskStep(string encodedTaskContent)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryTaskStepType = ContainerRegistryTaskStepType.EncodedTask;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskStep"/>. </summary>
         /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Data Factory expression definition. </summary>
     public partial class DataFactoryExpression
     {
-        /// <summary> Initializes a new instance of DataFactoryExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryExpression"/>. </summary>
         /// <param name="expressionType"> Expression type. </param>
         /// <param name="value"> Expression value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

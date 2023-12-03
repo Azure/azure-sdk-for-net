@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabArtifact along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabArtifactResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabArtifactResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabArtifactSourceResource" /> using the GetDevTestLabArtifact method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabArtifactResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabArtifactResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabArtifactSourceResource"/> using the GetDevTestLabArtifact method.
     /// </summary>
     public partial class DevTestLabArtifactResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabArtifactResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabArtifactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabArtifactResource(ArmClient client, DevTestLabArtifactData data) : this(client, data.Id)

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
     /// A Class representing a ConfluentOrganization along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConfluentOrganizationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetConfluentOrganizationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetConfluentOrganization method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConfluentOrganizationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetConfluentOrganizationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetConfluentOrganization method.
     /// </summary>
     public partial class ConfluentOrganizationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConfluentOrganizationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="organizationName"> The organizationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string organizationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Confluent
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ConfluentOrganizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConfluentOrganizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConfluentOrganizationResource(ArmClient client, ConfluentOrganizationData data) : this(client, data.Id)

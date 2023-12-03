@@ -13,10 +13,39 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Snapshot update resource. </summary>
     public partial class SnapshotPatch
     {
-        /// <summary> Initializes a new instance of SnapshotPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPatch"/>. </summary>
         public SnapshotPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </param>
+        /// <param name="osType"> the Operating System type. </param>
+        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a snapshot supports hibernation. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
+        internal SnapshotPatch(IDictionary<string, string> tags, SnapshotSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities)
+        {
+            Tags = tags;
+            Sku = sku;
+            OSType = osType;
+            DiskSizeGB = diskSizeGB;
+            EncryptionSettingsGroup = encryptionSettingsGroup;
+            Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            SupportsHibernation = supportsHibernation;
+            PublicNetworkAccess = publicNetworkAccess;
+            DataAccessAuthMode = dataAccessAuthMode;
+            SupportedCapabilities = supportedCapabilities;
         }
 
         /// <summary> Resource tags. </summary>

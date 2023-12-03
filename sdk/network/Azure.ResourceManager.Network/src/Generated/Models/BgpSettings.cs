@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> BGP settings details. </summary>
     public partial class BgpSettings
     {
-        /// <summary> Initializes a new instance of BgpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpSettings"/>. </summary>
         public BgpSettings()
         {
             BgpPeeringAddresses = new ChangeTrackingList<NetworkIPConfigurationBgpPeeringAddress>();
         }
 
-        /// <summary> Initializes a new instance of BgpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpSettings"/>. </summary>
         /// <param name="asn"> The BGP speaker's ASN. </param>
         /// <param name="bgpPeeringAddress"> The BGP peering address and BGP identifier of this BGP speaker. </param>
         /// <param name="peerWeight"> The weight added to routes learned from this BGP speaker. </param>

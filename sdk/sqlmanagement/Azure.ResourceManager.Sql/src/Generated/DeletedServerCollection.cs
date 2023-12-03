@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeletedServerResource" /> and their operations.
-    /// Each <see cref="DeletedServerResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="DeletedServerCollection" /> instance call the GetDeletedServers method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="DeletedServerResource"/> and their operations.
+    /// Each <see cref="DeletedServerResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="DeletedServerCollection"/> instance call the GetDeletedServers method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class DeletedServerCollection : ArmCollection, IEnumerable<DeletedServerResource>, IAsyncEnumerable<DeletedServerResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeletedServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedServerRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeletedServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedServerRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));

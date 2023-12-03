@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StreamingJobOutputResource" /> and their operations.
-    /// Each <see cref="StreamingJobOutputResource" /> in the collection will belong to the same instance of <see cref="StreamingJobResource" />.
-    /// To get a <see cref="StreamingJobOutputCollection" /> instance call the GetStreamingJobOutputs method from an instance of <see cref="StreamingJobResource" />.
+    /// A class representing a collection of <see cref="StreamingJobOutputResource"/> and their operations.
+    /// Each <see cref="StreamingJobOutputResource"/> in the collection will belong to the same instance of <see cref="StreamingJobResource"/>.
+    /// To get a <see cref="StreamingJobOutputCollection"/> instance call the GetStreamingJobOutputs method from an instance of <see cref="StreamingJobResource"/>.
     /// </summary>
     public partial class StreamingJobOutputCollection : ArmCollection, IEnumerable<StreamingJobOutputResource>, IAsyncEnumerable<StreamingJobOutputResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '*' as a valid value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingJobOutputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingJobOutputResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobOutputResource> GetAllAsync(string select = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobOutputOutputsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '*' as a valid value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingJobOutputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingJobOutputResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobOutputResource> GetAll(string select = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobOutputOutputsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);

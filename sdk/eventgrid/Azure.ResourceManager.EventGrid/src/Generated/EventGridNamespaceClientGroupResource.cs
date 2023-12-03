@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridNamespaceClientGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridNamespaceClientGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridNamespaceClientGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource" /> using the GetEventGridNamespaceClientGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridNamespaceClientGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridNamespaceClientGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource"/> using the GetEventGridNamespaceClientGroup method.
     /// </summary>
     public partial class EventGridNamespaceClientGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventGridNamespaceClientGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="clientGroupName"> The clientGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string clientGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/clientGroups/{clientGroupName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridNamespaceClientGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridNamespaceClientGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridNamespaceClientGroupResource(ArmClient client, EventGridNamespaceClientGroupData data) : this(client, data.Id)

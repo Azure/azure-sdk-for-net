@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a DataShareConsumerInvitation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataShareConsumerInvitationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataShareConsumerInvitationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetDataShareConsumerInvitation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataShareConsumerInvitationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataShareConsumerInvitationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetDataShareConsumerInvitation method.
     /// </summary>
     public partial class DataShareConsumerInvitationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataShareConsumerInvitationResource"/> instance. </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="invitationId"> The invitationId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(AzureLocation location, Guid invitationId)
         {
             var resourceId = $"/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.DataShare
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataShareConsumerInvitationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataShareConsumerInvitationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataShareConsumerInvitationResource(ArmClient client, DataShareConsumerInvitationData data) : this(client, data.Id)

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class LocalRulestackCertificateObjectData : ResourceData
     {
-        /// <summary> Initializes a new instance of LocalRulestackCertificateObjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackCertificateObjectData"/>. </summary>
         /// <param name="certificateSelfSigned"> use certificate self signed. </param>
         public LocalRulestackCertificateObjectData(FirewallBooleanType certificateSelfSigned)
         {
             CertificateSelfSigned = certificateSelfSigned;
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackCertificateObjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackCertificateObjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

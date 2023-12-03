@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Object that includes an array of resources and a possible link for next set. </summary>
     internal partial class ReportResourceList
     {
-        /// <summary> Initializes a new instance of ReportResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportResourceList"/>. </summary>
         internal ReportResourceList()
         {
             Value = new ChangeTrackingList<ReportResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ReportResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportResourceList"/>. </summary>
         /// <param name="value"> List of the reports. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

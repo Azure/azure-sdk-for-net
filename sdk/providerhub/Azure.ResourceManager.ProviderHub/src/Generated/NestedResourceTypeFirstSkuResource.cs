@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
     /// A Class representing a NestedResourceTypeFirstSku along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NestedResourceTypeFirstSkuResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNestedResourceTypeFirstSkuResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource" /> using the GetNestedResourceTypeFirstSku method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NestedResourceTypeFirstSkuResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNestedResourceTypeFirstSkuResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource"/> using the GetNestedResourceTypeFirstSku method.
     /// </summary>
     public partial class NestedResourceTypeFirstSkuResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NestedResourceTypeFirstSkuResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="nestedResourceTypeFirst"> The nestedResourceTypeFirst. </param>
+        /// <param name="sku"> The sku. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NestedResourceTypeFirstSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NestedResourceTypeFirstSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NestedResourceTypeFirstSkuResource(ArmClient client, ResourceTypeSkuData data) : this(client, data.Id)

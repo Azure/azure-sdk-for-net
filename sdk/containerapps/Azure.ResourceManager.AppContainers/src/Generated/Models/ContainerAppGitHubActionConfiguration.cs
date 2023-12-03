@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Configuration properties that define the mutable settings of a Container App SourceControl. </summary>
     public partial class ContainerAppGitHubActionConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppGitHubActionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppGitHubActionConfiguration"/>. </summary>
         public ContainerAppGitHubActionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppGitHubActionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppGitHubActionConfiguration"/>. </summary>
         /// <param name="registryInfo"> Registry configurations. </param>
         /// <param name="azureCredentials"> AzureCredentials configurations. </param>
         /// <param name="contextPath"> Context path. </param>

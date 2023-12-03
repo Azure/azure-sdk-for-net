@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a MobileNetworkSim along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MobileNetworkSimResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMobileNetworkSimResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MobileNetworkSimGroupResource" /> using the GetMobileNetworkSim method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MobileNetworkSimResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMobileNetworkSimResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MobileNetworkSimGroupResource"/> using the GetMobileNetworkSim method.
     /// </summary>
     public partial class MobileNetworkSimResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileNetworkSimResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="simGroupName"> The simGroupName. </param>
+        /// <param name="simName"> The simName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims/{simName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MobileNetworkSimResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkSimResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MobileNetworkSimResource(ArmClient client, MobileNetworkSimData data) : this(client, data.Id)

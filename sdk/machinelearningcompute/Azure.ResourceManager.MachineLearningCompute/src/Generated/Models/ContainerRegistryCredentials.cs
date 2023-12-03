@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Information about the Azure Container Registry which contains the images deployed to the cluster. </summary>
     public partial class ContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         internal ContainerRegistryCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         /// <param name="loginServer"> The ACR login server name. User name is the first part of the FQDN. </param>
         /// <param name="password"> The ACR primary password. </param>
         /// <param name="password2"> The ACR secondary password. </param>

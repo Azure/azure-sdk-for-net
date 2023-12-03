@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a MigrationConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MigrationConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMigrationConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource" /> using the GetMigrationConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MigrationConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMigrationConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource"/> using the GetMigrationConfiguration method.
     /// </summary>
     public partial class MigrationConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MigrationConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="configName"> The configName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, MigrationConfigurationName configName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MigrationConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MigrationConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MigrationConfigurationResource(ArmClient client, MigrationConfigurationData data) : this(client, data.Id)

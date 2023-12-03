@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A list of PostgreSQL Server keys. </summary>
     internal partial class PostgreSqlServerKeyListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerKeyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerKeyListResult"/>. </summary>
         internal PostgreSqlServerKeyListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlServerKeyData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerKeyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerKeyListResult"/>. </summary>
         /// <param name="value"> A list of PostgreSQL Server keys. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal PostgreSqlServerKeyListResult(IReadOnlyList<PostgreSqlServerKeyData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan script action details. </summary>
     public partial class RecoveryPlanScriptActionDetails : RecoveryPlanActionDetails
     {
-        /// <summary> Initializes a new instance of RecoveryPlanScriptActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanScriptActionDetails"/>. </summary>
         /// <param name="path"> The script path. </param>
         /// <param name="fabricLocation"> The fabric location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "ScriptActionDetails";
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanScriptActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanScriptActionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
         /// <param name="path"> The script path. </param>
         /// <param name="timeout"> The script timeout. </param>

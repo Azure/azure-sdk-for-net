@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteConfigSnapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteConfigSnapshotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteConfigSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteConfigResource" /> using the GetSiteConfigSnapshot method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteConfigSnapshotResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteConfigSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteConfigResource"/> using the GetSiteConfigSnapshot method.
     /// </summary>
     public partial class SiteConfigSnapshotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteConfigSnapshotResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="snapshotId"> The snapshotId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string snapshotId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteConfigSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteConfigSnapshotResource(ArmClient client, SiteConfigData data) : this(client, data.Id)

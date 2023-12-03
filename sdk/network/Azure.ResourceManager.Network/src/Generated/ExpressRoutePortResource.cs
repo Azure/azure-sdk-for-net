@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRoutePort along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRoutePortResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRoutePortResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetExpressRoutePort method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRoutePortResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRoutePortResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetExpressRoutePort method.
     /// </summary>
     public partial class ExpressRoutePortResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRoutePortResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="expressRoutePortName"> The expressRoutePortName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRoutePortName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRoutePortResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRoutePortResource(ArmClient client, ExpressRoutePortData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteLinkResources and their operations over a ExpressRouteLinkResource. </returns>
         public virtual ExpressRouteLinkCollection GetExpressRouteLinks()
         {
-            return GetCachedClient(Client => new ExpressRouteLinkCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteLinkCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteLinkResource>> GetExpressRouteLinkAsync(string linkName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteLinkResource> GetExpressRouteLink(string linkName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRoutePortAuthorizationResources and their operations over a ExpressRoutePortAuthorizationResource. </returns>
         public virtual ExpressRoutePortAuthorizationCollection GetExpressRoutePortAuthorizations()
         {
-            return GetCachedClient(Client => new ExpressRoutePortAuthorizationCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRoutePortAuthorizationCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRoutePortAuthorizationResource>> GetExpressRoutePortAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(string authorizationName, CancellationToken cancellationToken = default)
         {

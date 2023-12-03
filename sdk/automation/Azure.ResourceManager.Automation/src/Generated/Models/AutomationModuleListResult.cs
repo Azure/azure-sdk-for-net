@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list module operation. </summary>
     internal partial class AutomationModuleListResult
     {
-        /// <summary> Initializes a new instance of AutomationModuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleListResult"/>. </summary>
         internal AutomationModuleListResult()
         {
             Value = new ChangeTrackingList<AutomationModuleData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationModuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of modules. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationModuleListResult(IReadOnlyList<AutomationModuleData> value, string nextLink)

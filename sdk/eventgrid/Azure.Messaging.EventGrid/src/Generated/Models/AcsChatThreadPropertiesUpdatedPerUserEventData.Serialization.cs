@@ -24,6 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             Optional<CommunicationIdentifierModel> editedByCommunicationIdentifier = default;
             Optional<DateTimeOffset> editTime = default;
+            Optional<IReadOnlyDictionary<string, string>> metadata = default;
             Optional<IReadOnlyDictionary<string, object>> properties = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
@@ -48,6 +49,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         continue;
                     }
                     editTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -109,7 +124,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Optional.ToNullable(editTime), Optional.ToDictionary(properties));
+            return new AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Optional.ToNullable(editTime), Optional.ToDictionary(metadata), Optional.ToDictionary(properties));
         }
 
         internal partial class AcsChatThreadPropertiesUpdatedPerUserEventDataConverter : JsonConverter<AcsChatThreadPropertiesUpdatedPerUserEventData>

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an IPAllocation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IPAllocationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIPAllocationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetIPAllocation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IPAllocationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIPAllocationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIPAllocation method.
     /// </summary>
     public partial class IPAllocationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IPAllocationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ipAllocationName"> The ipAllocationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ipAllocationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IPAllocationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IPAllocationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IPAllocationResource(ArmClient client, IPAllocationData data) : this(client, data.Id)

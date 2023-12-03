@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a capacity reservation that includes the name of the capacity reservation. It is used for the response to the instance view of a capacity reservation group. </summary>
     public partial class CapacityReservationInstanceViewWithName : CapacityReservationInstanceView
     {
-        /// <summary> Initializes a new instance of CapacityReservationInstanceViewWithName. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationInstanceViewWithName"/>. </summary>
         internal CapacityReservationInstanceViewWithName()
         {
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationInstanceViewWithName. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationInstanceViewWithName"/>. </summary>
         /// <param name="utilizationInfo"> Unutilized capacity of the capacity reservation. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="name"> The name of the capacity reservation. </param>

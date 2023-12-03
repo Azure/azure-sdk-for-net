@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class CompletionsOptions
     {
-        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompletionsOptions"/>. </summary>
         /// <param name="prompts"> The prompts to generate completions from. </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
         /// <param name="temperature">
@@ -84,12 +84,12 @@ namespace Azure.AI.OpenAI
         /// Use carefully and ensure reasonable settings for max_tokens and stop.
         /// </param>
         /// <param name="internalShouldStreamResponse"> A value indicating whether chat completions should be streamed for this request. </param>
-        /// <param name="internalNonAzureModelName">
+        /// <param name="deploymentName">
         /// The model name to provide as part of this completions request.
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string internalNonAzureModelName)
+        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string deploymentName)
         {
             Prompts = prompts;
             MaxTokens = maxTokens;
@@ -105,7 +105,7 @@ namespace Azure.AI.OpenAI
             FrequencyPenalty = frequencyPenalty;
             GenerationSampleCount = generationSampleCount;
             InternalShouldStreamResponse = internalShouldStreamResponse;
-            InternalNonAzureModelName = internalNonAzureModelName;
+            DeploymentName = deploymentName;
         }
         /// <summary>
         /// An identifier for the caller or end user of the operation. This may be used for tracking

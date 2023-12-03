@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Describes a storage account connection. </summary>
     public partial class OperationalInsightsStorageAccount
     {
-        /// <summary> Initializes a new instance of OperationalInsightsStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsStorageAccount"/>. </summary>
         /// <param name="id"> The Azure Resource Manager ID of the storage account resource. </param>
         /// <param name="key"> The storage account key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="key"/> is null. </exception>

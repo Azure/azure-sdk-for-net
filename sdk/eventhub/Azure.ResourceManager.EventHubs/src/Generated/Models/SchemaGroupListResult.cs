@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The result of the List SchemaGroup operation. </summary>
     internal partial class SchemaGroupListResult
     {
-        /// <summary> Initializes a new instance of SchemaGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaGroupListResult"/>. </summary>
         internal SchemaGroupListResult()
         {
             Value = new ChangeTrackingList<EventHubsSchemaGroupData>();
         }
 
-        /// <summary> Initializes a new instance of SchemaGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaGroupListResult"/>. </summary>
         /// <param name="value"> Result of the List SchemaGroups operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Schema Groups. </param>
         internal SchemaGroupListResult(IReadOnlyList<EventHubsSchemaGroupData> value, string nextLink)

@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Listeners;
-using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.WebJobs.Host.Triggers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,8 +9,14 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Host.Bindings;
+using Microsoft.Azure.WebJobs.Host.Listeners;
+using Microsoft.Azure.WebJobs.Host.Protocols;
+using Microsoft.Azure.WebJobs.Host.Triggers;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.EmptyResponse;
 using AuthenticationEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventMetadata;
 
@@ -84,7 +85,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public async Task<ITriggerData> BindAsync(object value, ValueBindingContext context)
         {
             var request = (HttpRequestMessage)value;
-            AuthenticationEventResponseHandler eventResponseHandler = (AuthenticationEventResponseHandler)request.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
+            AuthenticationEventResponseHandler eventResponseHandler =
+                (AuthenticationEventResponseHandler)request.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
             try
             {
                 if (request == null)
@@ -97,7 +99,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 AuthenticationEventMetadata eventMetadata = GetEventAndValidateSchema(payload);
 
                 eventResponseHandler.Request = GetRequestForEvent(request, payload, eventMetadata, Claims);
-                return new TriggerData(new AuthenticationEventValueBinder(eventResponseHandler.Request, _authEventTriggerAttr), GetBindingData(context, value, eventResponseHandler))
+
+                return new TriggerData(
+                    new AuthenticationEventValueBinder(
+                        eventResponseHandler.Request,
+                        _authEventTriggerAttr),
+                        GetBindingData(
+                            context,
+                            value,
+                            eventResponseHandler))
                 {
                     ReturnValueProvider = eventResponseHandler
                 };
@@ -118,7 +128,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <returns>A TriggerData Object with the failed event request based on the event. With the related request status set.</returns>
         /// <seealso cref="TriggerData" />
         /// <seealso cref="AuthenticationEventResponseHandler" />
-        private TriggerData GetFaultyRequest(ValueBindingContext context, object value, HttpRequestMessage request, AuthenticationEventResponseHandler eventResponseHandler, Exception ex)
+        private TriggerData GetFaultyRequest(
+            ValueBindingContext context,
+            object value,
+            HttpRequestMessage request,
+            AuthenticationEventResponseHandler eventResponseHandler,
+            Exception ex)
         {
             eventResponseHandler.Request = _parameterInfo.ParameterType == typeof(string) ? new EmptyRequest(request) : AuthenticationEventMetadata.CreateEventRequest(request, _parameterInfo.ParameterType, null);
             eventResponseHandler.Request.StatusMessage = ex.Message;
@@ -127,6 +142,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 UnauthorizedAccessException => RequestStatusType.TokenInvalid,
                 ValidationException => RequestStatusType.ValidationError,
+                AuthenticationEventTriggerRequestValidationException => RequestStatusType.ValidationError,
                 _ => RequestStatusType.Failed,
             };
 
@@ -228,11 +244,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <returns>The Event Metadata object.</returns>
         /// <exception cref="AggregateException">Aggregates all the schema validation exceptions.</exception>
         /// <exception cref="Exception">IF the event cannot be determined or if the object model event differs from the requested event on the incoming payload.</exception>
-        private static AuthenticationEventMetadata GetEventAndValidateSchema(string body)
+        internal static AuthenticationEventMetadata GetEventAndValidateSchema(string body)
         {
-            if (!Helpers.IsJson(body))
+            try
             {
-                throw new InvalidDataException();
+                Helpers.ValidateJson(body);
+            }
+            catch (JsonException ex)
+            {
+                throw new AuthenticationEventTriggerRequestValidationException($"{AuthenticationEventResource.Ex_Invalid_JsonPayload}: {ex.Message}", ex.InnerException);
             }
 
             return AuthenticationEventMetadataLoader.GetEventMetadata(body);

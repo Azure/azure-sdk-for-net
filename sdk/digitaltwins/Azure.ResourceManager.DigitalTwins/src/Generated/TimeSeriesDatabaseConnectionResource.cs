@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
     /// A Class representing a TimeSeriesDatabaseConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TimeSeriesDatabaseConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTimeSeriesDatabaseConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource" /> using the GetTimeSeriesDatabaseConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TimeSeriesDatabaseConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTimeSeriesDatabaseConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource"/> using the GetTimeSeriesDatabaseConnection method.
     /// </summary>
     public partial class TimeSeriesDatabaseConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TimeSeriesDatabaseConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="timeSeriesDatabaseConnectionName"> The timeSeriesDatabaseConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/timeSeriesDatabaseConnections/{timeSeriesDatabaseConnectionName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TimeSeriesDatabaseConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TimeSeriesDatabaseConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TimeSeriesDatabaseConnectionResource(ArmClient client, TimeSeriesDatabaseConnectionData data) : this(client, data.Id)

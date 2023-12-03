@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryVaultSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryVaultSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryVaultSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSiteRecoveryVaultSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryVaultSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryVaultSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSiteRecoveryVaultSetting method.
     /// </summary>
     public partial class SiteRecoveryVaultSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryVaultSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="vaultSettingName"> The vaultSettingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string vaultSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryVaultSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryVaultSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryVaultSettingResource(ArmClient client, SiteRecoveryVaultSettingData data) : this(client, data.Id)

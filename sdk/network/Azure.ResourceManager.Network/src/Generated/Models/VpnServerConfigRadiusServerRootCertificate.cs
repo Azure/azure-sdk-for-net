@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of Radius Server root certificate of VpnServerConfiguration. </summary>
     public partial class VpnServerConfigRadiusServerRootCertificate
     {
-        /// <summary> Initializes a new instance of VpnServerConfigRadiusServerRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigRadiusServerRootCertificate"/>. </summary>
         public VpnServerConfigRadiusServerRootCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigRadiusServerRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigRadiusServerRootCertificate"/>. </summary>
         /// <param name="name"> The certificate name. </param>
         /// <param name="publicCertData"> The certificate public data. </param>
         internal VpnServerConfigRadiusServerRootCertificate(string name, BinaryData publicCertData)

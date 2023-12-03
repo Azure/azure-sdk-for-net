@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests
@@ -179,6 +181,47 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(audioTranslation.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(audioTranslation.Segments, Is.Not.Null.Or.Empty);
             Assert.That(audioTranslation.Segments.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public async Task TestStreamingChatCompletions()
+        {
+            const string expectedId = "expected-id-value";
+
+            StreamingChatCompletionsUpdate[] updates = new[]
+            {
+                AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                    expectedId,
+                    DateTime.Now,
+                    role: ChatRole.Assistant,
+                    contentUpdate: "hello"),
+                AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                    expectedId,
+                    DateTime.Now,
+                    contentUpdate: " world"),
+                AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                    expectedId,
+                    DateTime.Now,
+                    finishReason: CompletionsFinishReason.Stopped),
+            };
+
+            async IAsyncEnumerable<StreamingChatCompletionsUpdate> EnumerateMockUpdates()
+            {
+                foreach (StreamingChatCompletionsUpdate update in updates)
+                {
+                    yield return update;
+                }
+                await Task.Delay(0);
+            }
+
+            StringBuilder contentBuilder = new();
+            await foreach (StreamingChatCompletionsUpdate update in EnumerateMockUpdates())
+            {
+                Assert.That(update.Id == expectedId);
+                Assert.That(update.Created > new DateTimeOffset(new DateTime(2023, 1, 1)));
+                contentBuilder.Append(update.ContentUpdate);
+            }
+            Assert.That(contentBuilder.ToString() == "hello world");
         }
     }
 }

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Purview
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PurviewPrivateLinkResource" /> and their operations.
-    /// Each <see cref="PurviewPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="PurviewAccountResource" />.
-    /// To get a <see cref="PurviewPrivateLinkResourceCollection" /> instance call the GetPurviewPrivateLinkResources method from an instance of <see cref="PurviewAccountResource" />.
+    /// A class representing a collection of <see cref="PurviewPrivateLinkResource"/> and their operations.
+    /// Each <see cref="PurviewPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="PurviewAccountResource"/>.
+    /// To get a <see cref="PurviewPrivateLinkResourceCollection"/> instance call the GetPurviewPrivateLinkResources method from an instance of <see cref="PurviewAccountResource"/>.
     /// </summary>
     public partial class PurviewPrivateLinkResourceCollection : ArmCollection, IEnumerable<PurviewPrivateLinkResource>, IAsyncEnumerable<PurviewPrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PurviewPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PurviewPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PurviewPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PurviewPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PurviewPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

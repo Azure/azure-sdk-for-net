@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The updatable properties of the TagRule. </summary>
     public partial class DynatraceTagRulePatch
     {
-        /// <summary> Initializes a new instance of DynatraceTagRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
         public DynatraceTagRulePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        internal DynatraceTagRulePatch(DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules)
+        {
+            LogRules = logRules;
+            MetricRules = metricRules;
         }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>

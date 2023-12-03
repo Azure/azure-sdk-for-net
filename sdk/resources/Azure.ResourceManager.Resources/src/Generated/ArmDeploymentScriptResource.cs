@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing an ArmDeploymentScript along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArmDeploymentScriptResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArmDeploymentScriptResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetArmDeploymentScript method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArmDeploymentScriptResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArmDeploymentScriptResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetArmDeploymentScript method.
     /// </summary>
     public partial class ArmDeploymentScriptResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ArmDeploymentScriptResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scriptName"> The scriptName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}";
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArmDeploymentScriptResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmDeploymentScriptResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArmDeploymentScriptResource(ArmClient client, ArmDeploymentScriptData data) : this(client, data.Id)
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets an object representing a ScriptLogResource along with the instance operations that can be performed on it in the ArmDeploymentScript. </summary>
-        /// <returns> Returns a <see cref="ScriptLogResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScriptLogResource"/> object. </returns>
         public virtual ScriptLogResource GetScriptLog()
         {
             return new ScriptLogResource(Client, Id.AppendChildResource("logs", "default"));
@@ -315,7 +318,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScriptLogResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScriptLogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScriptLogResource> GetLogsAsync(CancellationToken cancellationToken = default)
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptLogDeploymentScriptsRestClient.CreateGetLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -336,7 +339,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScriptLogResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScriptLogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScriptLogResource> GetLogs(CancellationToken cancellationToken = default)
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptLogDeploymentScriptsRestClient.CreateGetLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

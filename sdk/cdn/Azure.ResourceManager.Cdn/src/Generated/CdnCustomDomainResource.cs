@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a CdnCustomDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CdnCustomDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCdnCustomDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CdnEndpointResource" /> using the GetCdnCustomDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CdnCustomDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCdnCustomDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CdnEndpointResource"/> using the GetCdnCustomDomain method.
     /// </summary>
     public partial class CdnCustomDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CdnCustomDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
+        /// <param name="customDomainName"> The customDomainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CdnCustomDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnCustomDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CdnCustomDomainResource(ArmClient client, CdnCustomDomainData data) : this(client, data.Id)

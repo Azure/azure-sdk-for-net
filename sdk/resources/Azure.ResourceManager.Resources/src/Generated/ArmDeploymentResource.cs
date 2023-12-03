@@ -22,13 +22,15 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing an ArmDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArmDeploymentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArmDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" />, <see cref="ResourceGroupResource" />, <see cref="ManagementGroupResource" /> or <see cref="TenantResource" /> using the GetArmDeployment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArmDeploymentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArmDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/>, <see cref="ResourceGroupResource"/>, <see cref="ManagementGroupResource"/> or <see cref="TenantResource"/> using the GetArmDeployment method.
     /// </summary>
     public partial class ArmDeploymentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ArmDeploymentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Resources/deployments/{deploymentName}";
@@ -46,7 +48,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArmDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArmDeploymentResource(ArmClient client, ArmDeploymentData data) : this(client, data.Id)
@@ -769,7 +771,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArmDeploymentOperation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArmDeploymentOperation> GetDeploymentOperationsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _deploymentOperationsRestClient.CreateListAtScopeRequest(Id.Parent, Id.Name, top);
@@ -792,7 +794,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ArmDeploymentOperation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArmDeploymentOperation> GetDeploymentOperations(int? top = null, CancellationToken cancellationToken = default)
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _deploymentOperationsRestClient.CreateListAtScopeRequest(Id.Parent, Id.Name, top);

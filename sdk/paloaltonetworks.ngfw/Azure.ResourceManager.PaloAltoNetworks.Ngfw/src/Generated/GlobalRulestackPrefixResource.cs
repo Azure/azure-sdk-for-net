@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a GlobalRulestackPrefix along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GlobalRulestackPrefixResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGlobalRulestackPrefixResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource" /> using the GetGlobalRulestackPrefix method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GlobalRulestackPrefixResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGlobalRulestackPrefixResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource"/> using the GetGlobalRulestackPrefix method.
     /// </summary>
     public partial class GlobalRulestackPrefixResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GlobalRulestackPrefixResource"/> instance. </summary>
+        /// <param name="globalRulestackName"> The globalRulestackName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName, string name)
         {
             var resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GlobalRulestackPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GlobalRulestackPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GlobalRulestackPrefixResource(ArmClient client, GlobalRulestackPrefixData data) : this(client, data.Id)

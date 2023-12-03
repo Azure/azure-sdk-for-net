@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> `GeoJSON` geometry, representing the area circle's center. </summary>
     public partial class AreaGeometry
     {
-        /// <summary> Initializes a new instance of AreaGeometry. </summary>
+        /// <summary> Initializes a new instance of <see cref="AreaGeometry"/>. </summary>
         /// <param name="type"> `GeoJSON` geometry type. </param>
         /// <param name="coordinates">
         /// Coordinates of the area circle's center, represented according to the `GeoJSON` standard.
@@ -30,7 +30,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Coordinates = coordinates.ToList();
         }
 
-        /// <summary> Initializes a new instance of AreaGeometry. </summary>
+        /// <summary> Initializes a new instance of <see cref="AreaGeometry"/>. </summary>
         /// <param name="type"> `GeoJSON` geometry type. </param>
         /// <param name="coordinates">
         /// Coordinates of the area circle's center, represented according to the `GeoJSON` standard.

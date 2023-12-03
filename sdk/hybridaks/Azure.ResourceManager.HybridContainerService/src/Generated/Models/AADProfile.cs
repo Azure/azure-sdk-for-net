@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> AAD Profile specifies attributes for Azure Active Directory integration. </summary>
     public partial class AADProfile : AADProfileSecret
     {
-        /// <summary> Initializes a new instance of AADProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AADProfile"/>. </summary>
         public AADProfile()
         {
             AdminGroupObjectIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AADProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AADProfile"/>. </summary>
         /// <param name="serverAppSecret"> The server AAD application secret. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
         /// <param name="clientAppId"> The client AAD application ID. </param>

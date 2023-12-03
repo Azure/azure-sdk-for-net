@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseClusterPrincipalAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseClusterPrincipalAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseClusterPrincipalAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseKustoPoolResource" /> using the GetSynapseClusterPrincipalAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseClusterPrincipalAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseClusterPrincipalAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseKustoPoolResource"/> using the GetSynapseClusterPrincipalAssignment method.
     /// </summary>
     public partial class SynapseClusterPrincipalAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseClusterPrincipalAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="kustoPoolName"> The kustoPoolName. </param>
+        /// <param name="principalAssignmentName"> The principalAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string principalAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/principalAssignments/{principalAssignmentName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseClusterPrincipalAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseClusterPrincipalAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseClusterPrincipalAssignmentResource(ArmClient client, SynapseClusterPrincipalAssignmentData data) : this(client, data.Id)

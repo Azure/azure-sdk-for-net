@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.IotCentral
 {
     /// <summary>
     /// A Class representing an IotCentralPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotCentralPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotCentralPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotCentralAppResource" /> using the GetIotCentralPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotCentralPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotCentralPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotCentralAppResource"/> using the GetIotCentralPrivateLinkResource method.
     /// </summary>
     public partial class IotCentralPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IotCentralPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="groupId"> The groupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string groupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}/privateLinkResources/{groupId}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.IotCentral
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotCentralPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotCentralPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotCentralPrivateLinkResource(ArmClient client, IotCentralPrivateLinkResourceData data) : this(client, data.Id)

@@ -19,13 +19,20 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlDatabaseColumn along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlDatabaseColumnResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlDatabaseColumnResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseTableResource" /> using the GetSqlDatabaseColumn method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlDatabaseColumnResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlDatabaseColumnResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseTableResource"/> using the GetSqlDatabaseColumn method.
     /// </summary>
     public partial class SqlDatabaseColumnResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlDatabaseColumnResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="schemaName"> The schemaName. </param>
+        /// <param name="tableName"> The tableName. </param>
+        /// <param name="columnName"> The columnName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}";
@@ -43,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlDatabaseColumnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlDatabaseColumnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlDatabaseColumnResource(ArmClient client, DatabaseColumnData data) : this(client, data.Id)
@@ -96,7 +103,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseSensitivityLabelResources and their operations over a SqlDatabaseSensitivityLabelResource. </returns>
         public virtual SqlDatabaseSensitivityLabelCollection GetSqlDatabaseSensitivityLabels()
         {
-            return GetCachedClient(Client => new SqlDatabaseSensitivityLabelCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseSensitivityLabelCollection(client, Id));
         }
 
         /// <summary>

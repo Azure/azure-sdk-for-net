@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
         public Queue<Activity> Activities { get; } =
             new Queue<Activity>();
 
-        public TestActivitySourceListener(string name, Action<Activity> activityStartedCallback = default) : this(source => source.Name.StartsWith(name), activityStartedCallback)
+        public TestActivitySourceListener(string name, Action<Activity> activityStartedCallback = default) : this(source => source.Name.Equals(name), activityStartedCallback)
         {
         }
 

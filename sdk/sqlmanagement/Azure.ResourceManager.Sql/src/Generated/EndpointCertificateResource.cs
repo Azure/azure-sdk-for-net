@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing an EndpointCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EndpointCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEndpointCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetEndpointCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EndpointCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEndpointCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetEndpointCertificate method.
     /// </summary>
     public partial class EndpointCertificateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EndpointCertificateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="endpointType"> The endpointType. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string endpointType)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/endpointCertificates/{endpointType}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EndpointCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EndpointCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EndpointCertificateResource(ArmClient client, EndpointCertificateData data) : this(client, data.Id)

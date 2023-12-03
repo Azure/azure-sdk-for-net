@@ -13,11 +13,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The parameters that can be provided when updating workbook properties properties. </summary>
     public partial class WorkbookPatch
     {
-        /// <summary> Initializes a new instance of WorkbookPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookPatch"/>. </summary>
         public WorkbookPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             TagsPropertiesTags = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookPatch"/>. </summary>
+        /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="displayName"> The user-defined name (display name) of the workbook. </param>
+        /// <param name="serializedData"> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </param>
+        /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
+        /// <param name="tagsPropertiesTags"> A list of 0 or more tags that are associated with this workbook definition. </param>
+        /// <param name="description"> The description of the workbook. </param>
+        /// <param name="revision"> The unique revision id for this workbook definition. </param>
+        internal WorkbookPatch(WorkbookUpdateSharedTypeKind? kind, IDictionary<string, string> tags, string displayName, string serializedData, string category, IList<string> tagsPropertiesTags, string description, string revision)
+        {
+            Kind = kind;
+            Tags = tags;
+            DisplayName = displayName;
+            SerializedData = serializedData;
+            Category = category;
+            TagsPropertiesTags = tagsPropertiesTags;
+            Description = description;
+            Revision = revision;
         }
 
         /// <summary> The kind of workbook. Only valid value is shared. </summary>

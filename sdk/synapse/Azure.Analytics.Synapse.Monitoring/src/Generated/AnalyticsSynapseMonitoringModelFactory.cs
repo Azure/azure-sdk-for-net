@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     /// <summary> Model factory for models. </summary>
     public static partial class AnalyticsSynapseMonitoringModelFactory
     {
-        /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkJobListViewResponse"/>. </summary>
         /// <param name="nJobs"></param>
         /// <param name="sparkJobs"></param>
         /// <returns> A new <see cref="Models.SparkJobListViewResponse"/> instance for mocking. </returns>
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             return new SparkJobListViewResponse(nJobs, sparkJobs?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkJob"/>. </summary>
         /// <param name="state"></param>
         /// <param name="name"></param>
         /// <param name="submitter"></param>
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             return new SparkJob(state, name, submitter, compute, sparkApplicationId, livyId, timing?.ToList(), sparkJobDefinition, pipeline?.ToList(), jobType, submitTime, endTime, queuedDuration, runningDuration, totalDuration);
         }
 
-        /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlQueryStringDataModel"/>. </summary>
         /// <param name="query"></param>
         /// <returns> A new <see cref="Models.SqlQueryStringDataModel"/> instance for mocking. </returns>
         public static SqlQueryStringDataModel SqlQueryStringDataModel(string query = null)

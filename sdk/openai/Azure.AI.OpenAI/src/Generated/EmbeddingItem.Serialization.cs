@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure;
 
@@ -19,18 +19,24 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            IReadOnlyList<float> embedding = default;
+            ReadOnlyMemory<float> embedding = default;
             int index = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("embedding"u8))
                 {
-                    List<float> array = new List<float>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    int index0 = 0;
+                    float[] array = new float[property.Value.GetArrayLength()];
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetSingle());
+                        array[index0] = item.GetSingle();
+                        index0++;
                     }
-                    embedding = array;
+                    embedding = new ReadOnlyMemory<float>(array);
                     continue;
                 }
                 if (property.NameEquals("index"u8))

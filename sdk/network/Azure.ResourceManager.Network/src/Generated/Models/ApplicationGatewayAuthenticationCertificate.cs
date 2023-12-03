@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Authentication certificates of an application gateway. </summary>
     public partial class ApplicationGatewayAuthenticationCertificate : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayAuthenticationCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAuthenticationCertificate"/>. </summary>
         public ApplicationGatewayAuthenticationCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayAuthenticationCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAuthenticationCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

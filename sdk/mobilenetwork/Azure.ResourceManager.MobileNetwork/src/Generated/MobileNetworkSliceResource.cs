@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a MobileNetworkSlice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MobileNetworkSliceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMobileNetworkSliceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MobileNetworkResource" /> using the GetMobileNetworkSlice method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MobileNetworkSliceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMobileNetworkSliceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MobileNetworkResource"/> using the GetMobileNetworkSlice method.
     /// </summary>
     public partial class MobileNetworkSliceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileNetworkSliceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="mobileNetworkName"> The mobileNetworkName. </param>
+        /// <param name="sliceName"> The sliceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MobileNetworkSliceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkSliceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MobileNetworkSliceResource(ArmClient client, MobileNetworkSliceData data) : this(client, data.Id)

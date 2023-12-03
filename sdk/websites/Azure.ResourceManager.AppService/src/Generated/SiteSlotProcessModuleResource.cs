@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotProcessModule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotProcessModuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotProcessModuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotProcessResource" /> using the GetSiteSlotProcessModule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotProcessModuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotProcessModuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotProcessResource"/> using the GetSiteSlotProcessModule method.
     /// </summary>
     public partial class SiteSlotProcessModuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotProcessModuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="processId"> The processId. </param>
+        /// <param name="baseAddress"> The baseAddress. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string processId, string baseAddress)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotProcessModuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotProcessModuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotProcessModuleResource(ArmClient client, ProcessModuleInfoData data) : this(client, data.Id)

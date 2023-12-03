@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Information describing the type of billing plan for this reservation. </summary>
     public partial class ReservationOrderBillingPlanInformation
     {
-        /// <summary> Initializes a new instance of ReservationOrderBillingPlanInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderBillingPlanInformation"/>. </summary>
         internal ReservationOrderBillingPlanInformation()
         {
             Transactions = new ChangeTrackingList<PaymentDetail>();
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderBillingPlanInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderBillingPlanInformation"/>. </summary>
         /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
         /// <param name="startOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementPolicy method.
     /// </summary>
     public partial class ApiManagementPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="policyId"> The policyId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, PolicyName policyId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementPolicyResource(ArmClient client, PolicyContractData data) : this(client, data.Id)

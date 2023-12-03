@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Subscription
     /// </summary>
     public partial class SubscriptionAliasData : ResourceData
     {
-        /// <summary> Initializes a new instance of SubscriptionAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasData"/>. </summary>
         internal SubscriptionAliasData()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

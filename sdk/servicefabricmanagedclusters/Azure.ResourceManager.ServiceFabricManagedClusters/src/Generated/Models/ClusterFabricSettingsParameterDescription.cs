@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a parameter in fabric settings of the cluster. </summary>
     public partial class ClusterFabricSettingsParameterDescription
     {
-        /// <summary> Initializes a new instance of ClusterFabricSettingsParameterDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterFabricSettingsParameterDescription"/>. </summary>
         /// <param name="name"> The parameter name of fabric setting. </param>
         /// <param name="value"> The parameter value of fabric setting. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

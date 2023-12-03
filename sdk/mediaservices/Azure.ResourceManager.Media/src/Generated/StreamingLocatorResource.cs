@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a StreamingLocator along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingLocatorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamingLocatorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetStreamingLocator method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamingLocatorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamingLocatorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource"/> using the GetStreamingLocator method.
     /// </summary>
     public partial class StreamingLocatorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StreamingLocatorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="streamingLocatorName"> The streamingLocatorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.Media
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamingLocatorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamingLocatorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamingLocatorResource(ArmClient client, StreamingLocatorData data) : this(client, data.Id)
@@ -310,7 +314,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingLocatorContentKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingLocatorContentKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingLocatorContentKey> GetContentKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListContentKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -331,7 +335,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingLocatorContentKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingLocatorContentKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingLocatorContentKey> GetContentKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListContentKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

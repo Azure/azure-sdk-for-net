@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Managed integration runtime status. </summary>
     public partial class ManagedIntegrationRuntimeStatus : IntegrationRuntimeStatus
     {
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeStatus"/>. </summary>
         internal ManagedIntegrationRuntimeStatus()
         {
             Nodes = new ChangeTrackingList<ManagedIntegrationRuntimeNode>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             RuntimeType = IntegrationRuntimeType.Managed;
         }
 
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeStatus"/>. </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>

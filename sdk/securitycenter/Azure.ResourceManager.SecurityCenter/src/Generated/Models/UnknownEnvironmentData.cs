@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The UnknownEnvironmentData. </summary>
     internal partial class UnknownEnvironmentData : SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of UnknownEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEnvironmentData"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         internal UnknownEnvironmentData(EnvironmentType environmentType) : base(environmentType)
         {

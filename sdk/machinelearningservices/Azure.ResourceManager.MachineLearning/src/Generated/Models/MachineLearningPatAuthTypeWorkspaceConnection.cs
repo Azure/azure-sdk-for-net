@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningPatAuthTypeWorkspaceConnection. </summary>
     public partial class MachineLearningPatAuthTypeWorkspaceConnection : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningPatAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>. </summary>
         public MachineLearningPatAuthTypeWorkspaceConnection()
         {
             AuthType = MachineLearningConnectionAuthType.Pat;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPatAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="expiryOn"></param>

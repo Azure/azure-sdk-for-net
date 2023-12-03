@@ -18,13 +18,14 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a DataPolicyManifest along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataPolicyManifestResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataPolicyManifestResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetDataPolicyManifest method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataPolicyManifestResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataPolicyManifestResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetDataPolicyManifest method.
     /// </summary>
     public partial class DataPolicyManifestResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataPolicyManifestResource"/> instance. </summary>
+        /// <param name="policyMode"> The policyMode. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string policyMode)
         {
             var resourceId = $"/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}";
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataPolicyManifestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataPolicyManifestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataPolicyManifestResource(ArmClient client, DataPolicyManifestData data) : this(client, data.Id)

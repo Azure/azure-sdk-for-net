@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EdgeOrderItemResource" /> and their operations.
-    /// Each <see cref="EdgeOrderItemResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="EdgeOrderItemCollection" /> instance call the GetEdgeOrderItems method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="EdgeOrderItemResource"/> and their operations.
+    /// Each <see cref="EdgeOrderItemResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="EdgeOrderItemCollection"/> instance call the GetEdgeOrderItems method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EdgeOrderItemCollection : ArmCollection, IEnumerable<EdgeOrderItemResource>, IAsyncEnumerable<EdgeOrderItemResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeOrderItemResource> GetAllAsync(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeOrderItemResource> GetAll(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);

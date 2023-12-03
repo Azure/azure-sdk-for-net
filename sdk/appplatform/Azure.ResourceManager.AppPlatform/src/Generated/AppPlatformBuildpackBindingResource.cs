@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBuildpackBinding along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBuildpackBindingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBuildpackBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuilderResource" /> using the GetAppPlatformBuildpackBinding method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBuildpackBindingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBuildpackBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuilderResource"/> using the GetAppPlatformBuildpackBinding method.
     /// </summary>
     public partial class AppPlatformBuildpackBindingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformBuildpackBindingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="buildServiceName"> The buildServiceName. </param>
+        /// <param name="builderName"> The builderName. </param>
+        /// <param name="buildpackBindingName"> The buildpackBindingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string builderName, string buildpackBindingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}/buildpackBindings/{buildpackBindingName}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBuildpackBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildpackBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBuildpackBindingResource(ArmClient client, AppPlatformBuildpackBindingData data) : this(client, data.Id)

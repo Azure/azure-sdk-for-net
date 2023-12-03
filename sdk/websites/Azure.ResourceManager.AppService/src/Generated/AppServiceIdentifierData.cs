@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceIdentifierData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceIdentifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceIdentifierData"/>. </summary>
         public AppServiceIdentifierData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceIdentifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceIdentifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

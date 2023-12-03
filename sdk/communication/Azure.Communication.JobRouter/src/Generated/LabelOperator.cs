@@ -25,9 +25,9 @@ namespace Azure.Communication.JobRouter
         private const string EqualValue = "equal";
         private const string NotEqualValue = "notEqual";
         private const string LessThanValue = "lessThan";
-        private const string LessThanEqualValue = "lessThanEqual";
+        private const string LessThanOrEqualValue = "lessThanOrEqual";
         private const string GreaterThanValue = "greaterThan";
-        private const string GreaterThanEqualValue = "greaterThanEqual";
+        private const string GreaterThanOrEqualValue = "greaterThanOrEqual";
 
         /// <summary> Equal. </summary>
         public static LabelOperator Equal { get; } = new LabelOperator(EqualValue);
@@ -36,11 +36,11 @@ namespace Azure.Communication.JobRouter
         /// <summary> Less than. </summary>
         public static LabelOperator LessThan { get; } = new LabelOperator(LessThanValue);
         /// <summary> Less than or equal. </summary>
-        public static LabelOperator LessThanEqual { get; } = new LabelOperator(LessThanEqualValue);
+        public static LabelOperator LessThanOrEqual { get; } = new LabelOperator(LessThanOrEqualValue);
         /// <summary> Greater than. </summary>
         public static LabelOperator GreaterThan { get; } = new LabelOperator(GreaterThanValue);
         /// <summary> Greater than or equal. </summary>
-        public static LabelOperator GreaterThanEqual { get; } = new LabelOperator(GreaterThanEqualValue);
+        public static LabelOperator GreaterThanOrEqual { get; } = new LabelOperator(GreaterThanOrEqualValue);
         /// <summary> Determines if two <see cref="LabelOperator"/> values are the same. </summary>
         public static bool operator ==(LabelOperator left, LabelOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LabelOperator"/> values are not the same. </summary>

@@ -19,13 +19,19 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBuildResult along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBuildResultResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBuildResultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildResource" /> using the GetAppPlatformBuildResult method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBuildResultResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBuildResultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildResource"/> using the GetAppPlatformBuildResult method.
     /// </summary>
     public partial class AppPlatformBuildResultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformBuildResultResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="buildServiceName"> The buildServiceName. </param>
+        /// <param name="buildName"> The buildName. </param>
+        /// <param name="buildResultName"> The buildResultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, string buildResultName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}/results/{buildResultName}";
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBuildResultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildResultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBuildResultResource(ArmClient client, AppPlatformBuildResultData data) : this(client, data.Id)

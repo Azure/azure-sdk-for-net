@@ -21,7 +21,8 @@ namespace Azure.Security.KeyVault.Keys
         internal const string KeysPath = "/keys/";
         internal const string DeletedKeysPath = "/deletedkeys/";
         internal const string RngPath = "/rng";
-
+        private const string OTelKeyNameKey = "az.keyvault.key.name";
+        private const string OTelKeyVersionKey = "az.keyvault.key.version";
         private readonly KeyVaultPipeline _pipeline;
 
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -98,7 +99,7 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -131,7 +132,7 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -160,7 +161,7 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(ecKeyOptions);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateEcKey)}");
-            scope.AddAttribute("key", ecKeyOptions.Name);
+            scope.AddAttribute(OTelKeyNameKey, ecKeyOptions.Name);
             scope.Start();
 
             try
@@ -189,7 +190,7 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(ecKeyOptions);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateEcKey)}");
-            scope.AddAttribute("key", ecKeyOptions.Name);
+            scope.AddAttribute(OTelKeyNameKey, ecKeyOptions.Name);
             scope.Start();
 
             try
@@ -218,7 +219,7 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(rsaKeyOptions);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateRsaKey)}");
-            scope.AddAttribute("key", rsaKeyOptions.Name);
+            scope.AddAttribute(OTelKeyNameKey, rsaKeyOptions.Name);
             scope.Start();
 
             try
@@ -247,7 +248,7 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(rsaKeyOptions);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateRsaKey)}");
-            scope.AddAttribute("key", rsaKeyOptions.Name);
+            scope.AddAttribute(OTelKeyNameKey, rsaKeyOptions.Name);
             scope.Start();
 
             try
@@ -276,7 +277,7 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(octKeyOptions);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
-            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.AddAttribute(OTelKeyNameKey, octKeyOptions.Name);
             scope.Start();
 
             try
@@ -305,7 +306,7 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(octKeyOptions);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
-            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.AddAttribute(OTelKeyNameKey, octKeyOptions.Name);
             scope.Start();
 
             try
@@ -340,8 +341,8 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
-            scope.AddAttribute("key", properties.Name);
-            scope.AddAttribute("version", properties.Version);
+            scope.AddAttribute(OTelKeyNameKey, properties.Name);
+            scope.AddAttribute(OTelKeyVersionKey, properties.Version);
             scope.Start();
 
             try
@@ -376,8 +377,8 @@ namespace Azure.Security.KeyVault.Keys
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
-            scope.AddAttribute("key", properties.Name);
-            scope.AddAttribute("version", properties.Version);
+            scope.AddAttribute(OTelKeyNameKey, properties.Name);
+            scope.AddAttribute(OTelKeyVersionKey, properties.Version);
             scope.Start();
 
             try
@@ -410,8 +411,8 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
-            scope.AddAttribute("key", name);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute(OTelKeyNameKey, name);
+            scope.AddAttribute(OTelKeyVersionKey, version);
             scope.Start();
 
             try
@@ -444,8 +445,8 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
-            scope.AddAttribute("key", name);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute(OTelKeyNameKey, name);
+            scope.AddAttribute(OTelKeyVersionKey, version);
             scope.Start();
 
             try
@@ -567,7 +568,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetDeletedKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -600,7 +601,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetDeletedKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -639,7 +640,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartDeleteKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -679,7 +680,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartDeleteKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -753,7 +754,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(PurgeDeletedKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -786,7 +787,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(PurgeDeletedKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -821,7 +822,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartRecoverDeletedKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -857,7 +858,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartRecoverDeletedKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -900,7 +901,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(BackupKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -944,7 +945,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(BackupKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -1066,7 +1067,7 @@ namespace Azure.Security.KeyVault.Keys
             var importKeyOptions = new ImportKeyOptions(name, keyMaterial);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -1104,7 +1105,7 @@ namespace Azure.Security.KeyVault.Keys
             var importKeyOptions = new ImportKeyOptions(name, keyMaterial);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -1137,7 +1138,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(importKeyOptions, nameof(importKeyOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
-            scope.AddAttribute("key", importKeyOptions.Name);
+            scope.AddAttribute(OTelKeyNameKey, importKeyOptions.Name);
             scope.Start();
 
             try
@@ -1170,7 +1171,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(importKeyOptions, nameof(importKeyOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
-            scope.AddAttribute("key", importKeyOptions.Name);
+            scope.AddAttribute(OTelKeyNameKey, importKeyOptions.Name);
             scope.Start();
 
             try
@@ -1272,8 +1273,8 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
-            scope.AddAttribute("key", options.Name);
-            scope.AddAttribute("version", options.Version);
+            scope.AddAttribute(OTelKeyNameKey, options.Name);
+            scope.AddAttribute(OTelKeyVersionKey, options.Version);
             scope.Start();
 
             try
@@ -1321,8 +1322,8 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
-            scope.AddAttribute("key", options.Name);
-            scope.AddAttribute("version", options.Version);
+            scope.AddAttribute(OTelKeyNameKey, options.Name);
+            scope.AddAttribute(OTelKeyVersionKey, options.Version);
             scope.Start();
 
             try
@@ -1383,7 +1384,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyRotationPolicy)}");
-            scope.AddAttribute("key", keyName);
+            scope.AddAttribute(OTelKeyNameKey, keyName);
             scope.Start();
 
             try
@@ -1414,7 +1415,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyRotationPolicy)}");
-            scope.AddAttribute("key", keyName);
+            scope.AddAttribute(OTelKeyNameKey, keyName);
             scope.Start();
 
             try
@@ -1445,7 +1446,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RotateKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -1476,7 +1477,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RotateKey)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute(OTelKeyNameKey, name);
             scope.Start();
 
             try
@@ -1510,7 +1511,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(policy, nameof(policy));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyRotationPolicy)}");
-            scope.AddAttribute("key", keyName);
+            scope.AddAttribute(OTelKeyNameKey, keyName);
             scope.Start();
 
             try
@@ -1544,7 +1545,7 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNull(policy, nameof(policy));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyRotationPolicy)}");
-            scope.AddAttribute("key", keyName);
+            scope.AddAttribute(OTelKeyNameKey, keyName);
             scope.Start();
 
             try

@@ -19,17 +19,12 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            string kind = default;
             Optional<int> minConcurrentOffers = default;
             Optional<int> maxConcurrentOffers = default;
             Optional<bool> bypassSelectors = default;
+            DistributionModeKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("minConcurrentOffers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -57,8 +52,13 @@ namespace Azure.Communication.JobRouter
                     bypassSelectors = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new DistributionModeKind(property.Value.GetString());
+                    continue;
+                }
             }
-            return new RoundRobinMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors));
+            return new RoundRobinMode(minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), kind);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class RouteMapData : ResourceData
     {
-        /// <summary> Initializes a new instance of RouteMapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMapData"/>. </summary>
         public RouteMapData()
         {
             AssociatedInboundConnections = new ChangeTrackingList<string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
             Rules = new ChangeTrackingList<RouteMapRule>();
         }
 
-        /// <summary> Initializes a new instance of RouteMapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMapData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

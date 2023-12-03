@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricRoutePolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricRoutePolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricRoutePolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabricRoutePolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricRoutePolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricRoutePolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabricRoutePolicy method.
     /// </summary>
     public partial class NetworkFabricRoutePolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricRoutePolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="routePolicyName"> The routePolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string routePolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricRoutePolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricRoutePolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricRoutePolicyResource(ArmClient client, NetworkFabricRoutePolicyData data) : this(client, data.Id)

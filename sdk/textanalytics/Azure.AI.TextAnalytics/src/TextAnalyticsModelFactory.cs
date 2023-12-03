@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Model factory that enables mocking for the Text Analytics library.
     /// </summary>
-    [CodeGenType(nameof(TextAnalyticsModelFactory))]
+    [CodeGenType("AITextAnalyticsModelFactory")]
     public static partial class TextAnalyticsModelFactory
     {
         #region Common

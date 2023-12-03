@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Response for ListAdaptiveNetworkHardenings API service call. </summary>
     internal partial class AdaptiveNetworkHardeningsList
     {
-        /// <summary> Initializes a new instance of AdaptiveNetworkHardeningsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningsList"/>. </summary>
         internal AdaptiveNetworkHardeningsList()
         {
             Value = new ChangeTrackingList<AdaptiveNetworkHardeningData>();
         }
 
-        /// <summary> Initializes a new instance of AdaptiveNetworkHardeningsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningsList"/>. </summary>
         /// <param name="value"> A list of Adaptive Network Hardenings resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal AdaptiveNetworkHardeningsList(IReadOnlyList<AdaptiveNetworkHardeningData> value, string nextLink)

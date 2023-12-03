@@ -21,13 +21,15 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a DeletedSite along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedSiteResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeletedSiteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedSite method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeletedSiteResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeletedSiteResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeletedSite method.
     /// </summary>
     public partial class DeletedSiteResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedSiteResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="deletedSiteId"> The deletedSiteId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string deletedSiteId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}";
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeletedSiteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeletedSiteResource(ArmClient client, DeletedSiteData data) : this(client, data.Id)
@@ -167,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppSnapshot"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppSnapshot> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteGlobalRestClient.CreateGetDeletedWebAppSnapshotsRequest(Id.SubscriptionId, Id.Name);
@@ -188,7 +190,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppSnapshot"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppSnapshot> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteGlobalRestClient.CreateGetDeletedWebAppSnapshotsRequest(Id.SubscriptionId, Id.Name);

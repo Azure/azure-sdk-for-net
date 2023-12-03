@@ -21,13 +21,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 {
     /// <summary>
     /// A Class representing a KubernetesClusterExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KubernetesClusterExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKubernetesClusterExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetKubernetesClusterExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KubernetesClusterExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKubernetesClusterExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetKubernetesClusterExtension method.
     /// </summary>
     public partial class KubernetesClusterExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KubernetesClusterExtensionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterRp"> The clusterRp. </param>
+        /// <param name="clusterResourceName"> The clusterResourceName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="extensionName"> The extensionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}";
@@ -43,7 +49,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KubernetesClusterExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KubernetesClusterExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KubernetesClusterExtensionResource(ArmClient client, KubernetesClusterExtensionData data) : this(client, data.Id)

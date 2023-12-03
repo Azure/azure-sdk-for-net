@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The response of available scope api containing scopes and their eligibilities. </summary>
     public partial class AvailableScopesProperties
     {
-        /// <summary> Initializes a new instance of AvailableScopesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableScopesProperties"/>. </summary>
         internal AvailableScopesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableScopesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableScopesProperties"/>. </summary>
         /// <param name="properties"> The scopes checked by the available scope api. </param>
         internal AvailableScopesProperties(SubscriptionScopeProperties properties)
         {

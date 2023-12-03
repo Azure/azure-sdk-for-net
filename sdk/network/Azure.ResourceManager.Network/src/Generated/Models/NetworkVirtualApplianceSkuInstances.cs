@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of available Sku and instances. </summary>
     public partial class NetworkVirtualApplianceSkuInstances
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuInstances. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuInstances"/>. </summary>
         public NetworkVirtualApplianceSkuInstances()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuInstances. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuInstances"/>. </summary>
         /// <param name="scaleUnit"> Scale Unit. </param>
         /// <param name="instanceCount"> Instance Count. </param>
         internal NetworkVirtualApplianceSkuInstances(string scaleUnit, int? instanceCount)

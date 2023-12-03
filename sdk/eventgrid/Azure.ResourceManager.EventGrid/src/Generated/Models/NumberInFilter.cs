@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> NumberIn Filter. </summary>
     public partial class NumberInFilter : EventGridFilter
     {
-        /// <summary> Initializes a new instance of NumberInFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberInFilter"/>. </summary>
         public NumberInFilter()
         {
             Values = new ChangeTrackingList<double>();
             OperatorType = FilterOperatorType.NumberIn;
         }
 
-        /// <summary> Initializes a new instance of NumberInFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberInFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
         /// <param name="values"> The set of filter values. </param>

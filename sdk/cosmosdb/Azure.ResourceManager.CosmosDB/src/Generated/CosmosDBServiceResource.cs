@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCosmosDBService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetCosmosDBService method.
     /// </summary>
     public partial class CosmosDBServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBServiceResource(ArmClient client, CosmosDBServiceData data) : this(client, data.Id)

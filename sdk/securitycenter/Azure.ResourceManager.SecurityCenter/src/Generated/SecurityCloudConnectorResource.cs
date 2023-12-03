@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityCloudConnector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityCloudConnectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityCloudConnectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSecurityCloudConnector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityCloudConnectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityCloudConnectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecurityCloudConnector method.
     /// </summary>
     public partial class SecurityCloudConnectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityCloudConnectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="connectorName"> The connectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string connectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityCloudConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityCloudConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityCloudConnectorResource(ArmClient client, SecurityCloudConnectorData data) : this(client, data.Id)

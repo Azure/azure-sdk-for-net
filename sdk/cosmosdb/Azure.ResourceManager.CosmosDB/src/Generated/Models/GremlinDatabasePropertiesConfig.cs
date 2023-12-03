@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The GremlinDatabasePropertiesConfig. </summary>
     public partial class GremlinDatabasePropertiesConfig : CosmosDBBaseConfig
     {
-        /// <summary> Initializes a new instance of GremlinDatabasePropertiesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabasePropertiesConfig"/>. </summary>
         public GremlinDatabasePropertiesConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of GremlinDatabasePropertiesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabasePropertiesConfig"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal GremlinDatabasePropertiesConfig(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Uploaded Jar binary for a deployment. </summary>
     public partial class NetCoreZipUploadedUserSourceInfo : AppPlatformUploadedUserSourceInfo
     {
-        /// <summary> Initializes a new instance of NetCoreZipUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetCoreZipUploadedUserSourceInfo"/>. </summary>
         public NetCoreZipUploadedUserSourceInfo()
         {
             UserSourceInfoType = "NetCoreZip";
         }
 
-        /// <summary> Initializes a new instance of NetCoreZipUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetCoreZipUploadedUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         /// <param name="relativePath"> Relative path of the storage which stores the source. </param>

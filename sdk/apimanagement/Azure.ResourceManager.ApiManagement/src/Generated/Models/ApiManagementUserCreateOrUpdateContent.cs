@@ -13,10 +13,33 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> User create details. </summary>
     public partial class ApiManagementUserCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementUserCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementUserCreateOrUpdateContent"/>. </summary>
         public ApiManagementUserCreateOrUpdateContent()
         {
             Identities = new ChangeTrackingList<UserIdentityContract>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementUserCreateOrUpdateContent"/>. </summary>
+        /// <param name="state"> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </param>
+        /// <param name="note"> Optional note about a user set by the administrator. </param>
+        /// <param name="identities"> Collection of user identities. </param>
+        /// <param name="email"> Email address. Must not be empty and must be unique within the service instance. </param>
+        /// <param name="firstName"> First name. </param>
+        /// <param name="lastName"> Last name. </param>
+        /// <param name="password"> User Password. If no value is provided, a default password is generated. </param>
+        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy portal. </param>
+        /// <param name="confirmation"> Determines the type of confirmation e-mail that will be sent to the newly created user. </param>
+        internal ApiManagementUserCreateOrUpdateContent(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string email, string firstName, string lastName, string password, AppType? appType, ConfirmationEmailType? confirmation)
+        {
+            State = state;
+            Note = note;
+            Identities = identities;
+            Email = email;
+            FirstName = firstName;
+            LastName = lastName;
+            Password = password;
+            AppType = appType;
+            Confirmation = confirmation;
         }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Map of filter type and the details to transfer all data. This field is required only if the TransferConfigurationType is given as TransferAll. </summary>
     internal partial class TransferConfigurationTransferAllDetails
     {
-        /// <summary> Initializes a new instance of TransferConfigurationTransferAllDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferConfigurationTransferAllDetails"/>. </summary>
         public TransferConfigurationTransferAllDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TransferConfigurationTransferAllDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferConfigurationTransferAllDetails"/>. </summary>
         /// <param name="include"> Details to transfer all data. </param>
         internal TransferConfigurationTransferAllDetails(TransferAllDetails include)
         {

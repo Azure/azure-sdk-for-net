@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing an AuthorizationRoleDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AuthorizationRoleDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAuthorizationRoleDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetAuthorizationRoleDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AuthorizationRoleDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAuthorizationRoleDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAuthorizationRoleDefinition method.
     /// </summary>
     public partial class AuthorizationRoleDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AuthorizationRoleDefinitionResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="roleDefinitionId"> The roleDefinitionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, ResourceIdentifier roleDefinitionId)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Authorization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AuthorizationRoleDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AuthorizationRoleDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AuthorizationRoleDefinitionResource(ArmClient client, AuthorizationRoleDefinitionData data) : this(client, data.Id)

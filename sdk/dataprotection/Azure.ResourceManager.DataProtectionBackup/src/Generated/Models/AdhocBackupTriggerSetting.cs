@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Adhoc backup trigger option. </summary>
     internal partial class AdhocBackupTriggerSetting
     {
-        /// <summary> Initializes a new instance of AdhocBackupTriggerSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupTriggerSetting"/>. </summary>
         public AdhocBackupTriggerSetting()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupTriggerSetting"/>. </summary>
+        /// <param name="retentionTagOverride"></param>
+        internal AdhocBackupTriggerSetting(string retentionTagOverride)
+        {
+            RetentionTagOverride = retentionTagOverride;
         }
 
         /// <summary> Gets or sets the retention tag override. </summary>

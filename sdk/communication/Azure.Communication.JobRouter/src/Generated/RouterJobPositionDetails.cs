@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Position and estimated wait time for a job. </summary>
     public partial class RouterJobPositionDetails
     {
-        /// <summary> Initializes a new instance of RouterJobPositionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/>. </summary>
         /// <param name="jobId"> Id of the job these details are about. </param>
         /// <param name="position"> Position of the job in question within that queue. </param>
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a DataBoxEdgeRole along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataBoxEdgeRoleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeRoleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetDataBoxEdgeRole method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataBoxEdgeRoleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataBoxEdgeRoleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetDataBoxEdgeRole method.
     /// </summary>
     public partial class DataBoxEdgeRoleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataBoxEdgeRoleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeRoleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeRoleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataBoxEdgeRoleResource(ArmClient client, DataBoxEdgeRoleData data) : this(client, data.Id)
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeRoleAddonResources and their operations over a DataBoxEdgeRoleAddonResource. </returns>
         public virtual DataBoxEdgeRoleAddonCollection GetDataBoxEdgeRoleAddons()
         {
-            return GetCachedClient(Client => new DataBoxEdgeRoleAddonCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeRoleAddonCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeRoleAddonResource>> GetDataBoxEdgeRoleAddonAsync(string addonName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeRoleAddonResource> GetDataBoxEdgeRoleAddon(string addonName, CancellationToken cancellationToken = default)
         {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Gets an object representing a MonitoringMetricConfigurationResource along with the instance operations that can be performed on it in the DataBoxEdgeRole. </summary>
-        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource"/> object. </returns>
         public virtual MonitoringMetricConfigurationResource GetMonitoringMetricConfiguration()
         {
             return new MonitoringMetricConfigurationResource(Client, Id.AppendChildResource("monitoringConfig", "default"));

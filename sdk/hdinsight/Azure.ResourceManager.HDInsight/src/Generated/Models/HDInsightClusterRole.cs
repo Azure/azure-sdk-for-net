@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Describes a role on the cluster. </summary>
     public partial class HDInsightClusterRole
     {
-        /// <summary> Initializes a new instance of HDInsightClusterRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterRole"/>. </summary>
         public HDInsightClusterRole()
         {
             DataDisksGroups = new ChangeTrackingList<HDInsightClusterDataDiskGroup>();
             ScriptActions = new ChangeTrackingList<ScriptAction>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterRole"/>. </summary>
         /// <param name="name"> The name of the role. </param>
         /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
         /// <param name="targetInstanceCount"> The instance count of the cluster. </param>

@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.Subscription
 {
     /// <summary>
     /// A Class representing a BillingAccountPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingAccountPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingAccountPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingAccountPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingAccountPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingAccountPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingAccountPolicy method.
     /// </summary>
     public partial class BillingAccountPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingAccountPolicyResource"/> instance. </summary>
+        /// <param name="billingAccountId"> The billingAccountId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string billingAccountId)
         {
             var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default";
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Subscription
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingAccountPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingAccountPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingAccountPolicyResource(ArmClient client, BillingAccountPolicyData data) : this(client, data.Id)

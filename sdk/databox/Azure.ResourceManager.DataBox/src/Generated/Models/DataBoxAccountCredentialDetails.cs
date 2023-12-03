@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Credential details of the account. </summary>
     public partial class DataBoxAccountCredentialDetails
     {
-        /// <summary> Initializes a new instance of DataBoxAccountCredentialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxAccountCredentialDetails"/>. </summary>
         internal DataBoxAccountCredentialDetails()
         {
             ShareCredentialDetails = new ChangeTrackingList<ShareCredentialDetails>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxAccountCredentialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxAccountCredentialDetails"/>. </summary>
         /// <param name="accountName"> Name of the account. </param>
         /// <param name="dataAccountType"> Type of the account. </param>
         /// <param name="accountConnectionString"> Connection string of the account endpoint to use the account as a storage endpoint on the device. </param>

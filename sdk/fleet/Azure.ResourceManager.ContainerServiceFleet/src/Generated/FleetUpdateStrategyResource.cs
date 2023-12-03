@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 {
     /// <summary>
     /// A Class representing a FleetUpdateStrategy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FleetUpdateStrategyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFleetUpdateStrategyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource" /> using the GetFleetUpdateStrategy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FleetUpdateStrategyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFleetUpdateStrategyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource"/> using the GetFleetUpdateStrategy method.
     /// </summary>
     public partial class FleetUpdateStrategyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FleetUpdateStrategyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="fleetName"> The fleetName. </param>
+        /// <param name="updateStrategyName"> The updateStrategyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateStrategies/{updateStrategyName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FleetUpdateStrategyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FleetUpdateStrategyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FleetUpdateStrategyResource(ArmClient client, FleetUpdateStrategyData data) : this(client, data.Id)

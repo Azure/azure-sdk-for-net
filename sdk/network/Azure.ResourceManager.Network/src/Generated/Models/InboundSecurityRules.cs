@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the Inbound Security Rules resource. </summary>
     public partial class InboundSecurityRules
     {
-        /// <summary> Initializes a new instance of InboundSecurityRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundSecurityRules"/>. </summary>
         public InboundSecurityRules()
         {
         }
 
-        /// <summary> Initializes a new instance of InboundSecurityRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundSecurityRules"/>. </summary>
         /// <param name="protocol"> Protocol. This should be either TCP or UDP. </param>
         /// <param name="sourceAddressPrefix"> The CIDR or source IP range. Only /30, /31 and /32 Ip ranges are allowed. </param>
         /// <param name="destinationPortRange"> NVA port ranges to be opened up. One needs to provide specific ports. </param>

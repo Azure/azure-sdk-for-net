@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Log settings of script activity. </summary>
     public partial class ScriptActivityTypeLogSettings
     {
-        /// <summary> Initializes a new instance of ScriptActivityTypeLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityTypeLogSettings"/>. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
         public ScriptActivityTypeLogSettings(ScriptActivityLogDestination logDestination)
         {
             LogDestination = logDestination;
         }
 
-        /// <summary> Initializes a new instance of ScriptActivityTypeLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityTypeLogSettings"/>. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
         internal ScriptActivityTypeLogSettings(ScriptActivityLogDestination logDestination, LogLocationSettings logLocationSettings)

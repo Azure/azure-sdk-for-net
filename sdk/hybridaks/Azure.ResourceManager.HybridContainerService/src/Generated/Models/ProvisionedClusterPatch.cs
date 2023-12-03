@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The provisionedClusters resource patch definition. </summary>
     public partial class ProvisionedClusterPatch
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPatch"/>. </summary>
         public ProvisionedClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal ProvisionedClusterPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

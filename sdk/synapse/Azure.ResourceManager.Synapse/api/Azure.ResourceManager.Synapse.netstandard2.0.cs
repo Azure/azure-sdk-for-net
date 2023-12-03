@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapseBigDataPoolInfoData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapseBigDataPoolInfoData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapseBigDataPoolInfoData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties AutoPause { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties AutoScale { get { throw null; } set { } }
         public int? CacheSize { get { throw null; } set { } }
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapseKustoPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapseKustoPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapseKustoPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku sku) { }
         public System.Uri DataIngestionUri { get { throw null; } }
         public bool? EnablePurge { get { throw null; } set { } }
         public bool? EnableStreamingIngest { get { throw null; } set { } }
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapsePrivateLinkHubData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapsePrivateLinkHubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapsePrivateLinkHubData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } set { } }
     }
@@ -1612,7 +1612,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapseSqlPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapseSqlPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapseSqlPoolData(Azure.Core.AzureLocation location) { }
         public string Collation { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode? CreateMode { get { throw null; } set { } }
@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapseWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapseWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapseWorkspaceData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier AdlaResourceId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ConnectivityEndpoints { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails DefaultDataLakeStorage { get { throw null; } set { } }
@@ -2235,6 +2235,89 @@ namespace Azure.ResourceManager.Synapse
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseWorkspaceSqlAdministratorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseWorkspaceSqlAdministratorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Synapse.Mocking
+{
+    public partial class MockableSynapseArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSynapseArmClient() { }
+        public virtual Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationResource GetSynapseAadOnlyAuthenticationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationResource GetSynapseAttachedDatabaseConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource GetSynapseBigDataPoolInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentResource GetSynapseClusterPrincipalAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentResource GetSynapseDatabasePrincipalAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseDatabaseResource GetSynapseDatabaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseDataConnectionResource GetSynapseDataConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyResource GetSynapseDataMaskingPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseDataMaskingRuleResource GetSynapseDataMaskingRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityResource GetSynapseDataWarehouseUserActivityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingResource GetSynapseDedicatedSqlMinimalTlsSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseEncryptionProtectorResource GetSynapseEncryptionProtectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyResource GetSynapseExtendedServerBlobAuditingPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyResource GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyResource GetSynapseGeoBackupPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeResource GetSynapseIntegrationRuntimeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoResource GetSynapseIPFirewallRuleInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseKeyResource GetSynapseKeyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseKustoPoolResource GetSynapseKustoPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseLibraryResource GetSynapseLibraryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionResource GetSynapseMaintenanceWindowOptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseMaintenanceWindowResource GetSynapseMaintenanceWindowResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingResource GetSynapseManagedIdentitySqlControlSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationResource GetSynapseMetadataSyncConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubResource GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionResource GetSynapsePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource GetSynapsePrivateLinkHubResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapsePrivateLinkResource GetSynapsePrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolResource GetSynapseRecoverableSqlPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseReplicationLinkResource GetSynapseReplicationLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolResource GetSynapseRestorableDroppedSqlPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseRestorePointResource GetSynapseRestorePointResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource GetSynapseSensitivityLabelResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyResource GetSynapseServerBlobAuditingPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyResource GetSynapseServerSecurityAlertPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentResource GetSynapseServerVulnerabilityAssessmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSparkConfigurationResource GetSynapseSparkConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyResource GetSynapseSqlPoolBlobAuditingPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSqlPoolColumnResource GetSynapseSqlPoolColumnResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyResource GetSynapseSqlPoolConnectionPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSqlPoolResource GetSynapseSqlPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaResource GetSynapseSqlPoolSchemaResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyResource GetSynapseSqlPoolSecurityAlertPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSqlPoolTableResource GetSynapseSqlPoolTableResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentResource GetSynapseSqlPoolVulnerabilityAssessmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionResource GetSynapseTransparentDataEncryptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordResource GetSynapseVulnerabilityAssessmentScanRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseWorkloadClassifierResource GetSynapseWorkloadClassifierResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseWorkloadGroupResource GetSynapseWorkloadGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseWorkspaceAdministratorResource GetSynapseWorkspaceAdministratorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseWorkspacePrivateLinkResource GetSynapseWorkspacePrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseWorkspaceResource GetSynapseWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableSynapseResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSynapseResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHub(string privateLinkHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource>> GetSynapsePrivateLinkHubAsync(string privateLinkHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseWorkspaceResource> GetSynapseWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseWorkspaceResource>> GetSynapseWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseWorkspaceCollection GetSynapseWorkspaces() { throw null; }
+    }
+    public partial class MockableSynapseSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSynapseSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription> GetSkusKustoPools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription> GetSkusKustoPoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SynapseWorkspaceResource> GetSynapseWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.SynapseWorkspaceResource> GetSynapseWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Synapse.Models

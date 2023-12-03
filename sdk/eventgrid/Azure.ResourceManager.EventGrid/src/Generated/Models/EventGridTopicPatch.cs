@@ -14,11 +14,37 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Topic update. </summary>
     public partial class EventGridTopicPatch
     {
-        /// <summary> Initializes a new instance of EventGridTopicPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridTopicPatch"/>. </summary>
         public EventGridTopicPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventGridTopicPatch"/>. </summary>
+        /// <param name="tags"> Tags of the Topic resource. </param>
+        /// <param name="identity"> Topic resource identity information. </param>
+        /// <param name="sku"> The Sku pricing tier for the topic. </param>
+        /// <param name="publicNetworkAccess">
+        /// This determines if traffic is allowed over public network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicUpdateParameterProperties.InboundIpRules" /&gt;
+        /// </param>
+        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the topic. </param>
+        /// <param name="dataResidencyBoundary"> The data residency boundary for the topic. </param>
+        /// <param name="eventTypeInfo"> The eventTypeInfo for the topic. </param>
+        internal EventGridTopicPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ResourceSku sku, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary, PartnerTopicEventTypeInfo eventTypeInfo)
+        {
+            Tags = tags;
+            Identity = identity;
+            Sku = sku;
+            PublicNetworkAccess = publicNetworkAccess;
+            InboundIPRules = inboundIPRules;
+            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
+            DataResidencyBoundary = dataResidencyBoundary;
+            EventTypeInfo = eventTypeInfo;
         }
 
         /// <summary> Tags of the Topic resource. </summary>

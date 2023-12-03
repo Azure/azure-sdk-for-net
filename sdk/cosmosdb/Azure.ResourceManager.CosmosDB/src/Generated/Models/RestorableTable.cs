@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB Table event. </summary>
     public partial class RestorableTable : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTable"/>. </summary>
         internal RestorableTable()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTable"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningRegistryDataVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningRegistryDataVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningRegistryDataVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryDataContainerResource" /> using the GetMachineLearningRegistryDataVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningRegistryDataVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningRegistryDataVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryDataContainerResource"/> using the GetMachineLearningRegistryDataVersion method.
     /// </summary>
     public partial class MachineLearningRegistryDataVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningRegistryDataVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="version"> The version. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string name, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningRegistryDataVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryDataVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningRegistryDataVersionResource(ArmClient client, MachineLearningDataVersionData data) : this(client, data.Id)

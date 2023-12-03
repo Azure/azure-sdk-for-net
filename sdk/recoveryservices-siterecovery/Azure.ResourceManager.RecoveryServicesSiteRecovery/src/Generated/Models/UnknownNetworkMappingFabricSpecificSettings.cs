@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownNetworkMappingFabricSpecificSettings. </summary>
     internal partial class UnknownNetworkMappingFabricSpecificSettings : NetworkMappingFabricSpecificSettings
     {
-        /// <summary> Initializes a new instance of UnknownNetworkMappingFabricSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownNetworkMappingFabricSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         internal UnknownNetworkMappingFabricSpecificSettings(string instanceType) : base(instanceType)
         {

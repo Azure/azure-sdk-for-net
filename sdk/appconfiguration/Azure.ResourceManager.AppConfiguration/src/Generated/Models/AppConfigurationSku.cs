@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> Describes a configuration store SKU. </summary>
     public partial class AppConfigurationSku
     {
-        /// <summary> Initializes a new instance of AppConfigurationSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationSku"/>. </summary>
         /// <param name="name"> The SKU name of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppConfigurationSku(string name)

@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedTransparentDataEncryption along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedTransparentDataEncryptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedTransparentDataEncryptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedTransparentDataEncryption method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedTransparentDataEncryptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedTransparentDataEncryptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedTransparentDataEncryption method.
     /// </summary>
     public partial class ManagedTransparentDataEncryptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedTransparentDataEncryptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="tdeName"> The tdeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, TransparentDataEncryptionName tdeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedTransparentDataEncryptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedTransparentDataEncryptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedTransparentDataEncryptionResource(ArmClient client, ManagedTransparentDataEncryptionData data) : this(client, data.Id)

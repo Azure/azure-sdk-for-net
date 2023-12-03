@@ -5,7 +5,6 @@
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Represents the request data used to generate images. </summary>
     public partial class ImageGenerationOptions
     {
         /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>

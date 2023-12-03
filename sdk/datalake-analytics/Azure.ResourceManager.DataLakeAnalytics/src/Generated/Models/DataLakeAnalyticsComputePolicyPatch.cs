@@ -15,9 +15,34 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsComputePolicyPatch
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyPatch"/>. </summary>
         public DataLakeAnalyticsComputePolicyPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyPatch"/>. </summary>
+        /// <param name="objectId">
+        /// The AAD object identifier for the entity to create a policy for.
+        /// Serialized Name: UpdateComputePolicyParameters.properties.objectId
+        /// </param>
+        /// <param name="objectType">
+        /// The type of AAD object the object identifier refers to.
+        /// Serialized Name: UpdateComputePolicyParameters.properties.objectType
+        /// </param>
+        /// <param name="maxDegreeOfParallelismPerJob">
+        /// The maximum degree of parallelism per job this user can use to submit jobs. This property, the min priority per job property, or both must be passed.
+        /// Serialized Name: UpdateComputePolicyParameters.properties.maxDegreeOfParallelismPerJob
+        /// </param>
+        /// <param name="minPriorityPerJob">
+        /// The minimum priority per job this user can use to submit jobs. This property, the max degree of parallelism per job property, or both must be passed.
+        /// Serialized Name: UpdateComputePolicyParameters.properties.minPriorityPerJob
+        /// </param>
+        internal DataLakeAnalyticsComputePolicyPatch(Guid? objectId, AadObjectIdentifierType? objectType, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob)
+        {
+            ObjectId = objectId;
+            ObjectType = objectType;
+            MaxDegreeOfParallelismPerJob = maxDegreeOfParallelismPerJob;
+            MinPriorityPerJob = minPriorityPerJob;
         }
 
         /// <summary>

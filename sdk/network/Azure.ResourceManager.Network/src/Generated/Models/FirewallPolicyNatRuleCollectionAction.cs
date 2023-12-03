@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the FirewallPolicyNatRuleCollectionAction. </summary>
     internal partial class FirewallPolicyNatRuleCollectionAction
     {
-        /// <summary> Initializes a new instance of FirewallPolicyNatRuleCollectionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyNatRuleCollectionAction"/>. </summary>
         public FirewallPolicyNatRuleCollectionAction()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyNatRuleCollectionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyNatRuleCollectionAction"/>. </summary>
         /// <param name="actionType"> The type of action. </param>
         internal FirewallPolicyNatRuleCollectionAction(FirewallPolicyNatRuleCollectionActionType? actionType)
         {

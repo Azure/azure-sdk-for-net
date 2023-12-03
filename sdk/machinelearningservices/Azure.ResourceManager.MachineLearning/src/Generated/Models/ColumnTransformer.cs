@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Column transformer parameters. </summary>
     public partial class ColumnTransformer
     {
-        /// <summary> Initializes a new instance of ColumnTransformer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ColumnTransformer"/>. </summary>
         public ColumnTransformer()
         {
             Fields = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ColumnTransformer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ColumnTransformer"/>. </summary>
         /// <param name="fields"> Fields to apply transformer logic on. </param>
         /// <param name="parameters">
         /// Different properties to be passed to transformer.

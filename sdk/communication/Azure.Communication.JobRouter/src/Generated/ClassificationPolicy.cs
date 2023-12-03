@@ -13,38 +13,32 @@ namespace Azure.Communication.JobRouter
     /// <summary> A container for the rules that govern how jobs are classified. </summary>
     public partial class ClassificationPolicy
     {
-        /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
-        /// <param name="id"> Unique identifier of this policy. </param>
-        /// <param name="name"> Friendly name of this policy. </param>
-        /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
-        /// <param name="queueSelectors"> The queue selectors to resolve a queue for a given job. </param>
-        /// <param name="prioritizationRule">
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
-        /// </param>
-        /// <param name="workerSelectors"> The worker label selectors to attach to a given job. </param>
-        internal ClassificationPolicy(string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectors, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectors)
+        /// <summary> Initializes a new instance of <see cref="ClassificationPolicy"/>. </summary>
+        internal ClassificationPolicy()
         {
+            QueueSelectorAttachments = new ChangeTrackingList<QueueSelectorAttachment>();
+            WorkerSelectorAttachments = new ChangeTrackingList<WorkerSelectorAttachment>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationPolicy"/>. </summary>
+        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of a classification policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="fallbackQueueId"> Id of a fallback queue to select if queue selector attachments doesn't find a match. </param>
+        /// <param name="queueSelectorAttachments"> Queue selector attachments used to resolve a queue for a job. </param>
+        /// <param name="prioritizationRule"> A rule to determine a priority score for a job. </param>
+        /// <param name="workerSelectorAttachments"> Worker selector attachments used to attach worker selectors to a job. </param>
+        internal ClassificationPolicy(string etag, string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectorAttachments, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectorAttachments)
+        {
+            _etag = etag;
             Id = id;
             Name = name;
             FallbackQueueId = fallbackQueueId;
-            _queueSelectors = queueSelectors;
+            QueueSelectorAttachments = queueSelectorAttachments;
             PrioritizationRule = prioritizationRule;
-            _workerSelectors = workerSelectors;
+            WorkerSelectorAttachments = workerSelectorAttachments;
         }
-
-        /// <summary> Unique identifier of this policy. </summary>
+        /// <summary> Id of a classification policy. </summary>
         public string Id { get; }
     }
 }

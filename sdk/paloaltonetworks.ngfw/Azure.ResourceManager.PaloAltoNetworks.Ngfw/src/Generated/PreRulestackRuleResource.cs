@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a PreRulestackRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PreRulestackRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPreRulestackRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource" /> using the GetPreRulestackRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PreRulestackRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPreRulestackRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource"/> using the GetPreRulestackRule method.
     /// </summary>
     public partial class PreRulestackRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PreRulestackRuleResource"/> instance. </summary>
+        /// <param name="globalRulestackName"> The globalRulestackName. </param>
+        /// <param name="priority"> The priority. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName, string priority)
         {
             var resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PreRulestackRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PreRulestackRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PreRulestackRuleResource(ArmClient client, PreRulestackRuleData data) : this(client, data.Id)
@@ -308,7 +310,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FirewallRuleCounter>> GetCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -339,7 +341,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FirewallRuleCounter> GetCounters(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -370,7 +372,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RefreshCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -401,7 +403,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RefreshCounters(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -432,7 +434,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -463,7 +465,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FirewallRuleResetConter> ResetCounters(string firewallName = null, CancellationToken cancellationToken = default)
         {

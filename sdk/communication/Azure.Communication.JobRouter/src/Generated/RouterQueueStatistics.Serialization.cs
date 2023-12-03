@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
             }
             string queueId = default;
             int length = default;
-            Optional<IReadOnlyDictionary<string, double>> estimatedWaitTimeMinutes = default;
+            Optional<IDictionary<string, double>> estimatedWaitTimeMinutes = default;
             Optional<double> longestJobWaitTimeMinutes = default;
             foreach (var property in element.EnumerateObject())
             {

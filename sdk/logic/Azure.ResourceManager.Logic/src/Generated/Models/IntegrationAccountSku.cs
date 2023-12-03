@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration account sku. </summary>
     internal partial class IntegrationAccountSku
     {
-        /// <summary> Initializes a new instance of IntegrationAccountSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         public IntegrationAccountSku(IntegrationAccountSkuName name)
         {

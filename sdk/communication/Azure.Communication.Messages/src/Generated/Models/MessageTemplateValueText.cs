@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's text value information. </summary>
     internal partial class MessageTemplateValueText
     {
-        /// <summary> Initializes a new instance of MessageTemplateValueText. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueText"/>. </summary>
         /// <param name="text"> The text value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public MessageTemplateValueText(string text)

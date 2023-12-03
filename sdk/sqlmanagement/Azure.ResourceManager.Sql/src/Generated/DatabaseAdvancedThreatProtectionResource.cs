@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a DatabaseAdvancedThreatProtection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatabaseAdvancedThreatProtectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDatabaseAdvancedThreatProtectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetDatabaseAdvancedThreatProtection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseAdvancedThreatProtectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDatabaseAdvancedThreatProtectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetDatabaseAdvancedThreatProtection method.
     /// </summary>
     public partial class DatabaseAdvancedThreatProtectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DatabaseAdvancedThreatProtectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="advancedThreatProtectionName"> The advancedThreatProtectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, AdvancedThreatProtectionName advancedThreatProtectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatabaseAdvancedThreatProtectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseAdvancedThreatProtectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatabaseAdvancedThreatProtectionResource(ArmClient client, DatabaseAdvancedThreatProtectionData data) : this(client, data.Id)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Details of ACR account to be used for the Registry. </summary>
     public partial class RegistryAcrDetails
     {
-        /// <summary> Initializes a new instance of RegistryAcrDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryAcrDetails"/>. </summary>
         public RegistryAcrDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RegistryAcrDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryAcrDetails"/>. </summary>
         /// <param name="systemCreatedAcrAccount"> Details of system created ACR account to be used for the Registry. </param>
         /// <param name="userCreatedAcrAccount"> Details of user created ACR account to be used for the Registry. Not supported in most cases and will throw 400 error if provided. </param>
         internal RegistryAcrDetails(SystemCreatedAcrAccount systemCreatedAcrAccount, UserCreatedAcrAccount userCreatedAcrAccount)

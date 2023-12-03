@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Parameters required for content purge. </summary>
     public partial class FrontDoorEndpointPurgeContent
     {
-        /// <summary> Initializes a new instance of FrontDoorEndpointPurgeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPurgeContent"/>. </summary>
         /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentPaths"/> is null. </exception>
         public FrontDoorEndpointPurgeContent(IEnumerable<string> contentPaths)
@@ -23,6 +23,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Argument.AssertNotNull(contentPaths, nameof(contentPaths));
 
             ContentPaths = contentPaths.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPurgeContent"/>. </summary>
+        /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
+        internal FrontDoorEndpointPurgeContent(IList<string> contentPaths)
+        {
+            ContentPaths = contentPaths;
         }
 
         /// <summary> The path to the content to be purged. Can describe a file path or a wild card directory. </summary>

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkDeviceInterface along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkDeviceInterfaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkDeviceInterfaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkDeviceResource" /> using the GetNetworkDeviceInterface method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkDeviceInterfaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkDeviceInterfaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkDeviceResource"/> using the GetNetworkDeviceInterface method.
     /// </summary>
     public partial class NetworkDeviceInterfaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkDeviceInterfaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkDeviceName"> The networkDeviceName. </param>
+        /// <param name="networkInterfaceName"> The networkInterfaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkDeviceInterfaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceInterfaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkDeviceInterfaceResource(ArmClient client, NetworkDeviceInterfaceData data) : this(client, data.Id)

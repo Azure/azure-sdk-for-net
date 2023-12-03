@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> class to define the summary of the health error details. </summary>
     public partial class HealthErrorSummary
     {
-        /// <summary> Initializes a new instance of HealthErrorSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthErrorSummary"/>. </summary>
         internal HealthErrorSummary()
         {
             AffectedResourceCorrelationIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HealthErrorSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthErrorSummary"/>. </summary>
         /// <param name="summaryCode"> The code of the health error. </param>
         /// <param name="category"> The category of the health error. </param>
         /// <param name="severity"> Severity of error. </param>

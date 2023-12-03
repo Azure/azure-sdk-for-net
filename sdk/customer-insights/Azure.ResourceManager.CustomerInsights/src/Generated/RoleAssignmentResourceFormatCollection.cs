@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RoleAssignmentResourceFormatResource" /> and their operations.
-    /// Each <see cref="RoleAssignmentResourceFormatResource" /> in the collection will belong to the same instance of <see cref="HubResource" />.
-    /// To get a <see cref="RoleAssignmentResourceFormatCollection" /> instance call the GetRoleAssignmentResourceFormats method from an instance of <see cref="HubResource" />.
+    /// A class representing a collection of <see cref="RoleAssignmentResourceFormatResource"/> and their operations.
+    /// Each <see cref="RoleAssignmentResourceFormatResource"/> in the collection will belong to the same instance of <see cref="HubResource"/>.
+    /// To get a <see cref="RoleAssignmentResourceFormatCollection"/> instance call the GetRoleAssignmentResourceFormats method from an instance of <see cref="HubResource"/>.
     /// </summary>
     public partial class RoleAssignmentResourceFormatCollection : ArmCollection, IEnumerable<RoleAssignmentResourceFormatResource>, IAsyncEnumerable<RoleAssignmentResourceFormatResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleAssignmentResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoleAssignmentResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleAssignmentResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleAssignmentResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoleAssignmentResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleAssignmentResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

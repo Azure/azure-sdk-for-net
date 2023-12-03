@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class ComputePrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of ComputePrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePrivateLinkResourceListResult"/>. </summary>
         internal ComputePrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<ComputePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ComputePrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal ComputePrivateLinkResourceListResult(IReadOnlyList<ComputePrivateLinkResourceData> value)
         {

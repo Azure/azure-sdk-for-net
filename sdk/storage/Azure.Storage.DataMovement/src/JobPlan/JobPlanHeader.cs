@@ -99,6 +99,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             Argument.AssertNotNullOrEmpty(sourceProviderId, nameof(sourceProviderId));
             Argument.AssertNotNullOrEmpty(destinationProviderId, nameof(destinationProviderId));
+            Argument.AssertNotNull(jobStatus, nameof(jobStatus));
             Argument.AssertNotNull(createTime, nameof(createTime));
             Argument.AssertNotNullOrEmpty(parentSourcePath, nameof(parentSourcePath));
             Argument.AssertNotNullOrEmpty(parentDestinationPath, nameof(parentDestinationPath));
@@ -168,7 +169,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
-            WritePaddedString(writer, Version, DataMovementConstants.JobPlanFile.VersionStrNumBytes);
+            writer.WritePaddedString(Version, DataMovementConstants.JobPlanFile.VersionStrNumBytes);
 
             // TransferId (write as bytes)
             Guid transferId = Guid.Parse(TransferId);
@@ -181,10 +182,10 @@ namespace Azure.Storage.DataMovement.JobPlan
             writer.Write((byte)OperationType);
 
             // SourceProviderId
-            WritePaddedString(writer, SourceProviderId, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
+            writer.WritePaddedString(SourceProviderId, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
 
             // DestinationProviderId
-            WritePaddedString(writer, DestinationProviderId, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
+            writer.WritePaddedString(DestinationProviderId, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
 
             // IsContainer
             writer.Write(Convert.ToByte(IsContainer));
@@ -246,10 +247,10 @@ namespace Azure.Storage.DataMovement.JobPlan
             JobPlanOperation operationType = (JobPlanOperation)operationTypeByte;
 
             // SourceProviderId
-            string sourceProviderId = ReadPaddedString(reader, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
+            string sourceProviderId = reader.ReadPaddedString(DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
 
             // DestinationProviderId
-            string destProviderId = ReadPaddedString(reader, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
+            string destProviderId = reader.ReadPaddedString(DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
 
             // IsContainer
             byte isContainerByte = reader.ReadByte();
@@ -326,25 +327,6 @@ namespace Azure.Storage.DataMovement.JobPlan
                 parentDestinationPath,
                 sourceCheckpointData,
                 destinationCheckpointData);
-        }
-
-        private static void WritePaddedString(BinaryWriter writer, string value, int setSizeInBytes)
-        {
-            byte[] valueBytes = Encoding.UTF8.GetBytes(value);
-            writer.Write(valueBytes);
-
-            int padding = setSizeInBytes - valueBytes.Length;
-            if (padding > 0)
-            {
-                char[] paddingArray = new char[padding];
-                writer.Write(paddingArray);
-            }
-        }
-
-        private static string ReadPaddedString(BinaryReader reader, int numBytes)
-        {
-            byte[] stringBytes = reader.ReadBytes(numBytes);
-            return stringBytes.ToString(numBytes).TrimEnd('\0');
         }
 
         private static void CheckSchemaVersion(string version)

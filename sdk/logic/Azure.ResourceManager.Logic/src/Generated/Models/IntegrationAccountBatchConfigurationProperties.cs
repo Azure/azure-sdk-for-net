@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The batch configuration properties definition. </summary>
     public partial class IntegrationAccountBatchConfigurationProperties : ArtifactProperties
     {
-        /// <summary> Initializes a new instance of IntegrationAccountBatchConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBatchConfigurationProperties"/>. </summary>
         /// <param name="batchGroupName"> The name of the batch group. </param>
         /// <param name="releaseCriteria"> The batch release criteria. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchGroupName"/> or <paramref name="releaseCriteria"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             ReleaseCriteria = releaseCriteria;
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountBatchConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBatchConfigurationProperties"/>. </summary>
         /// <param name="createdOn"> The artifact creation time. </param>
         /// <param name="changedOn"> The artifact changed time. </param>
         /// <param name="metadata"> Anything. </param>

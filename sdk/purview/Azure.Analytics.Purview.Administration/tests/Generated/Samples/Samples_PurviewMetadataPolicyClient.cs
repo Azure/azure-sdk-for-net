@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             using RequestContent content = null;
             Response response = client.UpdateMetadataPolicy("<policyId>", content);
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             using RequestContent content = null;
             Response response = await client.UpdateMetadataPolicyAsync("<policyId>", content);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -147,7 +147,7 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -240,7 +240,7 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             Response response = client.GetMetadataPolicy("<policyId>", null);
 
@@ -254,7 +254,7 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
 
@@ -268,7 +268,7 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             Response response = client.GetMetadataPolicy("<policyId>", null);
 
@@ -303,7 +303,7 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
 

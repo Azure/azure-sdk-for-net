@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The response containing the usage data. </summary>
     internal partial class ContainerInstanceUsageListResult
     {
-        /// <summary> Initializes a new instance of ContainerInstanceUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsageListResult"/>. </summary>
         internal ContainerInstanceUsageListResult()
         {
             Value = new ChangeTrackingList<ContainerInstanceUsage>();
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsageListResult"/>. </summary>
         /// <param name="value"> The usage data. </param>
         internal ContainerInstanceUsageListResult(IReadOnlyList<ContainerInstanceUsage> value)
         {

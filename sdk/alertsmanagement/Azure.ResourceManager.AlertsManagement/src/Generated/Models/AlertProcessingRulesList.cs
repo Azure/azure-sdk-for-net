@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> List of alert processing rules. </summary>
     internal partial class AlertProcessingRulesList
     {
-        /// <summary> Initializes a new instance of AlertProcessingRulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRulesList"/>. </summary>
         internal AlertProcessingRulesList()
         {
             Value = new ChangeTrackingList<AlertProcessingRuleData>();
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRulesList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of alert processing rules. </param>
         /// <param name="value"> List of alert processing rules. </param>
         internal AlertProcessingRulesList(string nextLink, IReadOnlyList<AlertProcessingRuleData> value)

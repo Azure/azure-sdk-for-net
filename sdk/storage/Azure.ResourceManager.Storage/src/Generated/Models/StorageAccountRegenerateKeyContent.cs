@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The parameters used to regenerate the storage account key. </summary>
     public partial class StorageAccountRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of StorageAccountRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountRegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> The name of storage keys that want to be regenerated, possible values are key1, key2, kerb1, kerb2. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public StorageAccountRegenerateKeyContent(string keyName)

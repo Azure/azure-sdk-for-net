@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MySql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlConfigurationResource" /> and their operations.
-    /// Each <see cref="MySqlConfigurationResource" /> in the collection will belong to the same instance of <see cref="MySqlServerResource" />.
-    /// To get a <see cref="MySqlConfigurationCollection" /> instance call the GetMySqlConfigurations method from an instance of <see cref="MySqlServerResource" />.
+    /// A class representing a collection of <see cref="MySqlConfigurationResource"/> and their operations.
+    /// Each <see cref="MySqlConfigurationResource"/> in the collection will belong to the same instance of <see cref="MySqlServerResource"/>.
+    /// To get a <see cref="MySqlConfigurationCollection"/> instance call the GetMySqlConfigurations method from an instance of <see cref="MySqlServerResource"/>.
     /// </summary>
     public partial class MySqlConfigurationCollection : ArmCollection, IEnumerable<MySqlConfigurationResource>, IAsyncEnumerable<MySqlConfigurationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

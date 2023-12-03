@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The response spec of checking name availability. </summary>
     public partial class HDInsightNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityResult"/>. </summary>
         internal HDInsightNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> This indicates whether the name is available. </param>
         /// <param name="reason"> The reason of the result. </param>
         /// <param name="message"> The related message. </param>

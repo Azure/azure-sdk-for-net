@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Qumulo.Models
     /// <summary> User Details of Qumulo FileSystem resource. </summary>
     public partial class QumuloUserDetails
     {
-        /// <summary> Initializes a new instance of QumuloUserDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="QumuloUserDetails"/>. </summary>
         public QumuloUserDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of QumuloUserDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="QumuloUserDetails"/>. </summary>
         /// <param name="email"> User Email. </param>
         internal QumuloUserDetails(string email)
         {

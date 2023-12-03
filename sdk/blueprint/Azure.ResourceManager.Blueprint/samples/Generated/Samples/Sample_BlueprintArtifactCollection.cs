@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
             {
                 ["storageAccountType"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameters('storageAccountType')]"),
+                    Value = BinaryData.FromString("\"[parameters('storageAccountType')]\""),
                 },
             })
             {
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Blueprint.Samples
             {
                 ["tagName"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("costCenter"),
+                    Value = BinaryData.FromString("\"costCenter\""),
                 },
                 ["tagValue"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameter('costCenter')]"),
+                    Value = BinaryData.FromString("\"[parameter('costCenter')]\""),
                 },
             })
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
 
             // invoke the operation
             string artifactName = "ownerAssignment";
-            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("[parameters('owners')]"))
+            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("\"[parameters('owners')]\""))
             {
                 DisplayName = "enforce owners of given subscription",
             };
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
             {
                 ["storageAccountType"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameters('storageAccountType')]"),
+                    Value = BinaryData.FromString("\"[parameters('storageAccountType')]\""),
                 },
             })
             {
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.Blueprint.Samples
             {
                 ["tagName"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("costCenter"),
+                    Value = BinaryData.FromString("\"costCenter\""),
                 },
                 ["tagValue"] = new ParameterValue()
                 {
-                    Value = BinaryData.FromString("[parameter('costCenter')]"),
+                    Value = BinaryData.FromString("\"[parameter('costCenter')]\""),
                 },
             })
             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
 
             // invoke the operation
             string artifactName = "ownerAssignment";
-            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("[parameters('owners')]"))
+            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("\"[parameters('owners')]\""))
             {
                 DisplayName = "enforce owners of given subscription",
             };

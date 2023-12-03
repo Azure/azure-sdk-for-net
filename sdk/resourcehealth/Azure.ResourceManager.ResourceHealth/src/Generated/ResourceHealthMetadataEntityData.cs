@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ResourceHealthMetadataEntityData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceHealthMetadataEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataEntityData"/>. </summary>
         internal ResourceHealthMetadataEntityData()
         {
             DependsOn = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceHealth
             SupportedValues = new ChangeTrackingList<MetadataSupportedValueDetail>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthMetadataEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

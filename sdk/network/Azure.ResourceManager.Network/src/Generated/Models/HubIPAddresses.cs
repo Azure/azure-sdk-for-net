@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP addresses associated with azure firewall. </summary>
     public partial class HubIPAddresses
     {
-        /// <summary> Initializes a new instance of HubIPAddresses. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPAddresses"/>. </summary>
         public HubIPAddresses()
         {
         }
 
-        /// <summary> Initializes a new instance of HubIPAddresses. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPAddresses"/>. </summary>
         /// <param name="publicIPs"> Public IP addresses associated with azure firewall. </param>
         /// <param name="privateIPAddress"> Private IP Address associated with azure firewall. </param>
         internal HubIPAddresses(HubPublicIPAddresses publicIPs, string privateIPAddress)

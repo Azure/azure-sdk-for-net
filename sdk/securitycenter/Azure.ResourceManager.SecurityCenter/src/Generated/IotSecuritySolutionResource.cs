@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing an IotSecuritySolution along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotSecuritySolutionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotSecuritySolutionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetIotSecuritySolution method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotSecuritySolutionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotSecuritySolutionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIotSecuritySolution method.
     /// </summary>
     public partial class IotSecuritySolutionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IotSecuritySolutionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="solutionName"> The solutionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotSecuritySolutionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotSecuritySolutionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotSecuritySolutionResource(ArmClient client, IotSecuritySolutionData data) : this(client, data.Id)
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Gets an object representing a IotSecuritySolutionAnalyticsModelResource along with the instance operations that can be performed on it in the IotSecuritySolution. </summary>
-        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource"/> object. </returns>
         public virtual IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModel()
         {
             return new IotSecuritySolutionAnalyticsModelResource(Client, Id.AppendChildResource("analyticsModels", "default"));

@@ -13,9 +13,19 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereProductPatch
     {
-        /// <summary> Initializes a new instance of SphereProductPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereProductPatch"/>. </summary>
         public SphereProductPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SphereProductPatch"/>. </summary>
+        /// <param name="description">
+        /// Description of the product
+        /// Serialized Name: ProductUpdate.properties.description
+        /// </param>
+        internal SphereProductPatch(string description)
+        {
+            Description = description;
         }
 
         /// <summary>

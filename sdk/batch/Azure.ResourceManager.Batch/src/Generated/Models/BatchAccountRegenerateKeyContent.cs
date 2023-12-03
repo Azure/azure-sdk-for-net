@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters supplied to the RegenerateKey operation. </summary>
     public partial class BatchAccountRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of BatchAccountRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRegenerateKeyContent"/>. </summary>
         /// <param name="keyType"> The type of account key to regenerate. </param>
         public BatchAccountRegenerateKeyContent(BatchAccountKeyType keyType)
         {

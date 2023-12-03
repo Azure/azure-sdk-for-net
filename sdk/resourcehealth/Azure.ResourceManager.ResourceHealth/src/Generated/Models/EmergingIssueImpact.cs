@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Object of the emerging issue impact on services and regions. </summary>
     public partial class EmergingIssueImpact
     {
-        /// <summary> Initializes a new instance of EmergingIssueImpact. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueImpact"/>. </summary>
         internal EmergingIssueImpact()
         {
             Regions = new ChangeTrackingList<EmergingIssueImpactedRegion>();
         }
 
-        /// <summary> Initializes a new instance of EmergingIssueImpact. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueImpact"/>. </summary>
         /// <param name="id"> The impacted service id. </param>
         /// <param name="name"> The impacted service name. </param>
         /// <param name="regions"> The list of impacted regions for corresponding emerging issues. </param>

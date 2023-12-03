@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Response contract for enable backup validation request. </summary>
     public partial class PreValidateEnableBackupResult
     {
-        /// <summary> Initializes a new instance of PreValidateEnableBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreValidateEnableBackupResult"/>. </summary>
         internal PreValidateEnableBackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PreValidateEnableBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreValidateEnableBackupResult"/>. </summary>
         /// <param name="status"> Validation Status. </param>
         /// <param name="errorCode"> Response error code. </param>
         /// <param name="errorMessage"> Response error message. </param>

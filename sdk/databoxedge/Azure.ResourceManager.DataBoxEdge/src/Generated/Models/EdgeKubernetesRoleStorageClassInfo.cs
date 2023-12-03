@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes storage class info. </summary>
     public partial class EdgeKubernetesRoleStorageClassInfo
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleStorageClassInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleStorageClassInfo"/>. </summary>
         internal EdgeKubernetesRoleStorageClassInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleStorageClassInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleStorageClassInfo"/>. </summary>
         /// <param name="name"> Storage class name. </param>
         /// <param name="kubernetesRoleStorageClassInfoType"> Storage class type. </param>
         /// <param name="posixCompliant"> If provisioned storage is posix compliant. </param>

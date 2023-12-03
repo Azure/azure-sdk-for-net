@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class represents the vm NicUpdates task details. </summary>
     public partial class VmNicUpdatesTaskDetails : SiteRecoveryTaskTypeDetails
     {
-        /// <summary> Initializes a new instance of VmNicUpdatesTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmNicUpdatesTaskDetails"/>. </summary>
         internal VmNicUpdatesTaskDetails()
         {
             InstanceType = "VmNicUpdatesTaskDetails";
         }
 
-        /// <summary> Initializes a new instance of VmNicUpdatesTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmNicUpdatesTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="vmId"> Virtual machine Id. </param>
         /// <param name="nicId"> Nic Id. </param>

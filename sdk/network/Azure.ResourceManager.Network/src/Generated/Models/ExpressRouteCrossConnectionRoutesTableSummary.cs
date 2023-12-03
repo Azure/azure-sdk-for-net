@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The routes table associated with the ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCrossConnectionRoutesTableSummary
     {
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionRoutesTableSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionRoutesTableSummary"/>. </summary>
         internal ExpressRouteCrossConnectionRoutesTableSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionRoutesTableSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionRoutesTableSummary"/>. </summary>
         /// <param name="neighbor"> IP address of Neighbor router. </param>
         /// <param name="asn"> Autonomous system number. </param>
         /// <param name="upDown"> The length of time that the BGP session has been in the Established state, or the current status if not in the Established state. </param>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmIotFirmwareDefenseModelFactory
     {
-        /// <summary> Initializes a new instance of FirmwareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareData(id, name, resourceType, systemData, fileName, vendor, model, version, description, fileSize, status, statusMessages?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of UriToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UriToken"/>. </summary>
         /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
         /// <param name="uploadUri"> SAS URL for file uploading. Kept for backwards compatibility. </param>
         /// <returns> A new <see cref="Models.UriToken"/> instance for mocking. </returns>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new UriToken(uri, uploadUri);
         }
 
-        /// <summary> Initializes a new instance of FirmwareSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareSummary"/>. </summary>
         /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
         /// <param name="fileSize"> Firmware file size in bytes. </param>
         /// <param name="extractedFileCount"> Extracted file count. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareSummary(extractedSize, fileSize, extractedFileCount, componentCount, binaryCount, analysisTimeSeconds, rootFileSystems);
         }
 
-        /// <summary> Initializes a new instance of SbomComponent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SbomComponent"/>. </summary>
         /// <param name="componentId"> ID for the component. </param>
         /// <param name="componentName"> Name for the component. </param>
         /// <param name="version"> Version for the component. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new SbomComponent(componentId, componentName, version, license, releaseOn, paths?.ToList(), isUpdateAvailable);
         }
 
-        /// <summary> Initializes a new instance of BinaryHardening. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardening"/>. </summary>
         /// <param name="binaryHardeningId"> ID for the binary hardening result. </param>
         /// <param name="architecture"> The architecture of the uploaded firmware. </param>
         /// <param name="path"> path for binary hardening. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new BinaryHardening(binaryHardeningId, architecture, path, @class, runpath, rpath, nx, pie, relro, canary, stripped);
         }
 
-        /// <summary> Initializes a new instance of BinaryHardeningSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningSummary"/>. </summary>
         /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
         /// <param name="nx"> NX summary percentage. </param>
         /// <param name="pie"> PIE summary percentage. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new BinaryHardeningSummary(totalFiles, nx, pie, relro, canary, stripped);
         }
 
-        /// <summary> Initializes a new instance of PasswordHash. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PasswordHash"/>. </summary>
         /// <param name="passwordHashId"> ID for password hash. </param>
         /// <param name="filePath"> File path of the password hash. </param>
         /// <param name="salt"> Salt of the password hash. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new PasswordHash(passwordHashId, filePath, salt, hash, context, username, algorithm);
         }
 
-        /// <summary> Initializes a new instance of FirmwareCve. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCve"/>. </summary>
         /// <param name="cveId"> ID of CVE. </param>
         /// <param name="component"> Component of CVE. </param>
         /// <param name="severity"> Severity of CVE. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCve(cveId, component, severity, name, cvssScore, cvssVersion, cvssV2Score, cvssV3Score, publishOn, updatedOn, links?.ToList(), description);
         }
 
-        /// <summary> Initializes a new instance of CveLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CveLink"/>. </summary>
         /// <param name="href"> Href of CVE link. </param>
         /// <param name="label"> Label of CVE link. </param>
         /// <returns> A new <see cref="Models.CveLink"/> instance for mocking. </returns>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CveLink(href, label);
         }
 
-        /// <summary> Initializes a new instance of CveSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CveSummary"/>. </summary>
         /// <param name="critical"> The total number of critical severity CVEs detected. </param>
         /// <param name="high"> The total number of high severity CVEs detected. </param>
         /// <param name="medium"> The total number of medium severity CVEs detected. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CveSummary(critical, high, medium, low, unknown, undefined);
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificateSummary"/>. </summary>
         /// <param name="totalCertificates"> Total number of certificates found. </param>
         /// <param name="pairedKeys"> Total number of paired private keys found for the certificates. </param>
         /// <param name="expired"> Total number of expired certificates found. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCryptoCertificateSummary(totalCertificates, pairedKeys, expired, expiringSoon, weakSignature, selfSigned, shortKeySize);
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoKeySummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoKeySummary"/>. </summary>
         /// <param name="totalKeys"> Total number of cryptographic keys found. </param>
         /// <param name="publicKeys"> Total number of (non-certificate) public keys found. </param>
         /// <param name="privateKeys"> Total number of private keys found. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCryptoKeySummary(totalKeys, publicKeys, privateKeys, pairedKeys, shortKeySize);
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificate"/>. </summary>
         /// <param name="cryptoCertId"> ID for the certificate. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="subject"> Subject information of the certificate. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCryptoCertificate(cryptoCertId, name, subject, issuer, issuedOn, expireOn, role, signatureAlgorithm, keySize, keyAlgorithm, encoding, serialNumber, fingerprint, usage?.ToList(), filePaths?.ToList(), pairedKey, isExpired, isSelfSigned, isWeakSignature, isShortKeySize);
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificateEntity"/>. </summary>
         /// <param name="commonName"> Common name of the certificate entity. </param>
         /// <param name="organization"> Organization of the certificate entity. </param>
         /// <param name="organizationalUnit"> The organizational unit of the certificate entity. </param>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCryptoCertificateEntity(commonName, organization, organizationalUnit, state, country);
         }
 
-        /// <summary> Initializes a new instance of PairedKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PairedKey"/>. </summary>
         /// <param name="id"> ID of the paired key or certificate. </param>
         /// <param name="pairedKeyType"> The type indicating whether the paired object is a key or certificate. </param>
         /// <param name="additionalProperties"> Additional paired key properties. </param>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new PairedKey(id, pairedKeyType, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoKey"/>. </summary>
         /// <param name="firmwareCryptoKeyId"> ID for the key. </param>
         /// <param name="keyType"> Type of the key (public or private). </param>
         /// <param name="keySize"> Size of the key in bits. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCryptoKey(firmwareCryptoKeyId, keyType, keySize, keyAlgorithm, usage?.ToList(), filePaths?.ToList(), pairedKey, isShortKeySize);
         }
 
-        /// <summary> Initializes a new instance of FirmwareWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

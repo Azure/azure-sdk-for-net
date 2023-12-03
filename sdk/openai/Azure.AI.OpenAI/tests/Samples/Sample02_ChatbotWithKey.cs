@@ -19,25 +19,24 @@ namespace Azure.AI.OpenAI.Tests.Samples
             string endpoint = "https://myaccount.openai.azure.com/";
             var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
 
-            List<string> examplePrompts = new(){
-                "How are you today?",
-                "What is Azure OpenAI?",
-                "Why do children love dinosaurs?",
-                "Generate a proof of Euler's identity",
-                "Describe in single words only the good things that come into your mind about your mother.",
+            CompletionsOptions completionsOptions = new()
+            {
+                DeploymentName = "text-davinci-003",
+                Prompts =
+                {
+                    "How are you today?",
+                    "What is Azure OpenAI?",
+                    "Why do children love dinosaurs?",
+                    "Generate a proof of Euler's identity",
+                    "Describe in single words only the good things that come into your mind about your mother."
+                },
             };
 
-            string deploymentName = "text-davinci-003";
+            Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
 
-            foreach (string prompt in examplePrompts)
+            foreach (Choice choice in completionsResponse.Value.Choices)
             {
-                Console.Write($"Input: {prompt}");
-                CompletionsOptions completionsOptions = new CompletionsOptions();
-                completionsOptions.Prompts.Add(prompt);
-
-                Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
-                string completion = completionsResponse.Value.Choices[0].Text;
-                Console.WriteLine($"Chatbot: {completion}");
+                Console.WriteLine($"Response for prompt {choice.Index}: {choice.Text}");
             }
             #endregion
         }

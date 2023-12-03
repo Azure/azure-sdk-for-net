@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a LocalRulestackFqdn along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LocalRulestackFqdnResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLocalRulestackFqdnResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LocalRulestackResource" /> using the GetLocalRulestackFqdn method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LocalRulestackFqdnResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLocalRulestackFqdnResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LocalRulestackResource"/> using the GetLocalRulestackFqdn method.
     /// </summary>
     public partial class LocalRulestackFqdnResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LocalRulestackFqdnResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="localRulestackName"> The localRulestackName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string localRulestackName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LocalRulestackFqdnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LocalRulestackFqdnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LocalRulestackFqdnResource(ArmClient client, LocalRulestackFqdnData data) : this(client, data.Id)

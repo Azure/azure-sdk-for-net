@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBFirewallRuleResource" /> and their operations.
-    /// Each <see cref="CosmosDBFirewallRuleResource" /> in the collection will belong to the same instance of <see cref="MongoClusterResource" />.
-    /// To get a <see cref="CosmosDBFirewallRuleCollection" /> instance call the GetCosmosDBFirewallRules method from an instance of <see cref="MongoClusterResource" />.
+    /// A class representing a collection of <see cref="CosmosDBFirewallRuleResource"/> and their operations.
+    /// Each <see cref="CosmosDBFirewallRuleResource"/> in the collection will belong to the same instance of <see cref="MongoClusterResource"/>.
+    /// To get a <see cref="CosmosDBFirewallRuleCollection"/> instance call the GetCosmosDBFirewallRules method from an instance of <see cref="MongoClusterResource"/>.
     /// </summary>
     public partial class CosmosDBFirewallRuleCollection : ArmCollection, IEnumerable<CosmosDBFirewallRuleResource>, IAsyncEnumerable<CosmosDBFirewallRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBFirewallRuleMongoClustersRestClient.CreateListFirewallRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBFirewallRuleMongoClustersRestClient.CreateListFirewallRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

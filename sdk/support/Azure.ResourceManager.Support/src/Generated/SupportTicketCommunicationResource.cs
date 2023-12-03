@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SupportTicketCommunication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportTicketCommunicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportTicketCommunicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionSupportTicketResource" /> using the GetSupportTicketCommunication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketCommunicationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSupportTicketCommunicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionSupportTicketResource"/> using the GetSupportTicketCommunication method.
     /// </summary>
     public partial class SupportTicketCommunicationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SupportTicketCommunicationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="supportTicketName"> The supportTicketName. </param>
+        /// <param name="communicationName"> The communicationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string supportTicketName, string communicationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Support
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportTicketCommunicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportTicketCommunicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportTicketCommunicationResource(ArmClient client, SupportTicketCommunicationData data) : this(client, data.Id)

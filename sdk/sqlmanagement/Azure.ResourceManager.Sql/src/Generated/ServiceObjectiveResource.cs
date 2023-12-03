@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ServiceObjective along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceObjectiveResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceObjectiveResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetServiceObjective method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceObjectiveResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceObjectiveResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetServiceObjective method.
     /// </summary>
     public partial class ServiceObjectiveResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceObjectiveResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="serviceObjectiveName"> The serviceObjectiveName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string serviceObjectiveName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceObjectiveResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceObjectiveResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceObjectiveResource(ArmClient client, ServiceObjectiveData data) : this(client, data.Id)

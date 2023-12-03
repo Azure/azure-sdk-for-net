@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogHost. </summary>
     public partial class DatadogHost
     {
-        /// <summary> Initializes a new instance of DatadogHost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogHost"/>. </summary>
         internal DatadogHost()
         {
             Aliases = new ChangeTrackingList<string>();
             Apps = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DatadogHost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogHost"/>. </summary>
         /// <param name="name"> The name of the host. </param>
         /// <param name="aliases"> The aliases for the host. </param>
         /// <param name="apps"> The Datadog integrations reporting metrics for the host. </param>

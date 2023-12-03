@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
     /// A Class representing a SnapshotResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SnapshotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ReportResource" /> using the GetSnapshotResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SnapshotResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ReportResource"/> using the GetSnapshotResource method.
     /// </summary>
     public partial class SnapshotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SnapshotResource"/> instance. </summary>
+        /// <param name="reportName"> The reportName. </param>
+        /// <param name="snapshotName"> The snapshotName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string reportName, string snapshotName)
         {
             var resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SnapshotResource(ArmClient client, SnapshotResourceData data) : this(client, data.Id)

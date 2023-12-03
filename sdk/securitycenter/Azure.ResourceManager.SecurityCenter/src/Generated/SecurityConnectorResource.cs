@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityConnector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityConnectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityConnectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSecurityConnector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityConnectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityConnectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityConnector method.
     /// </summary>
     public partial class SecurityConnectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityConnectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="securityConnectorName"> The securityConnectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string securityConnectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}";
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityConnectorResource(ArmClient client, SecurityConnectorData data) : this(client, data.Id)
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityConnectorApplicationResources and their operations over a SecurityConnectorApplicationResource. </returns>
         public virtual SecurityConnectorApplicationCollection GetSecurityConnectorApplications()
         {
-            return GetCachedClient(Client => new SecurityConnectorApplicationCollection(Client, Id));
+            return GetCachedClient(client => new SecurityConnectorApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +113,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityConnectorApplicationResource>> GetSecurityConnectorApplicationAsync(string applicationId, CancellationToken cancellationToken = default)
         {
@@ -133,8 +136,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityConnectorApplicationResource> GetSecurityConnectorApplication(string applicationId, CancellationToken cancellationToken = default)
         {

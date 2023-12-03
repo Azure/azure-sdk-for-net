@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualMachineScaleSetVmRunCommandResource" /> and their operations.
-    /// Each <see cref="VirtualMachineScaleSetVmRunCommandResource" /> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetVmResource" />.
-    /// To get a <see cref="VirtualMachineScaleSetVmRunCommandCollection" /> instance call the GetVirtualMachineScaleSetVmRunCommands method from an instance of <see cref="VirtualMachineScaleSetVmResource" />.
+    /// A class representing a collection of <see cref="VirtualMachineScaleSetVmRunCommandResource"/> and their operations.
+    /// Each <see cref="VirtualMachineScaleSetVmRunCommandResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetVmResource"/>.
+    /// To get a <see cref="VirtualMachineScaleSetVmRunCommandCollection"/> instance call the GetVirtualMachineScaleSetVmRunCommands method from an instance of <see cref="VirtualMachineScaleSetVmResource"/>.
     /// </summary>
     public partial class VirtualMachineScaleSetVmRunCommandCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetVmRunCommandResource>, IAsyncEnumerable<VirtualMachineScaleSetVmRunCommandResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineScaleSetVmRunCommandResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetVmRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineScaleSetVmRunCommandResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetVmRunCommandResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetVmRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineScaleSetVmRunCommandResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);

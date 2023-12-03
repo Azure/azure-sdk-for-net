@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The set of data plane operations permitted through this Role Definition. </summary>
     public partial class CosmosDBSqlRolePermission
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlRolePermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRolePermission"/>. </summary>
         public CosmosDBSqlRolePermission()
         {
             DataActions = new ChangeTrackingList<string>();
             NotDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlRolePermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRolePermission"/>. </summary>
         /// <param name="dataActions"> An array of data actions that are allowed. </param>
         /// <param name="notDataActions"> An array of data actions that are denied. </param>
         internal CosmosDBSqlRolePermission(IList<string> dataActions, IList<string> notDataActions)

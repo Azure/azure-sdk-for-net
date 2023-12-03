@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridPartnerNamespacePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridPartnerNamespacePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PartnerNamespaceResource" /> using the GetEventGridPartnerNamespacePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridPartnerNamespacePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PartnerNamespaceResource"/> using the GetEventGridPartnerNamespacePrivateEndpointConnection method.
     /// </summary>
     public partial class EventGridPartnerNamespacePrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="parentName"> The parentName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridPartnerNamespacePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridPartnerNamespacePrivateEndpointConnectionResource(ArmClient client, EventGridPrivateEndpointConnectionData data) : this(client, data.Id)

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHealthcareApisModelFactory
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApis.HealthcareApisServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisServiceData(id, name, resourceType, systemData, tags, location, properties, kind, etag, identity);
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthcareApisServiceProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="accessPolicies"> The access policies of the service instance. </param>
         /// <param name="cosmosDbConfiguration"> The settings for the Cosmos DB database backing the service. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisServiceProperties(provisioningState, accessPolicies?.ToList(), cosmosDbConfiguration, authenticationConfiguration, corsConfiguration, exportStorageAccountName != null ? new ServiceExportConfigurationInfo(exportStorageAccountName) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, acrConfiguration, importConfiguration);
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApis.HealthcareApisPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthcareApisNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
         /// <param name="reason"> The reason for unavailability. </param>
         /// <param name="message"> The detailed reason message. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApis.HealthcareApisPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApis.HealthcareApisWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisWorkspaceData(id, name, resourceType, systemData, tags, location, properties, etag);
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisWorkspaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthcareApisWorkspaceProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisWorkspaceProperties(provisioningState, privateEndpointConnections?.ToList(), publicNetworkAccess);
         }
 
-        /// <summary> Initializes a new instance of DicomServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApis.DicomServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new DicomServiceData(id, name, resourceType, systemData, tags, location, provisioningState, authenticationConfiguration, corsConfiguration, serviceUri, privateEndpointConnections?.ToList(), publicNetworkAccess, identity, etag);
         }
 
-        /// <summary> Initializes a new instance of DicomServiceAuthenticationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DicomServiceAuthenticationConfiguration"/>. </summary>
         /// <param name="authority"> The authority url for the service. </param>
         /// <param name="audiences"> The audiences for the service. </param>
         /// <returns> A new <see cref="Models.DicomServiceAuthenticationConfiguration"/> instance for mocking. </returns>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new DicomServiceAuthenticationConfiguration(authority, audiences?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApis.HealthcareApisIotConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisIotConnectorData(id, name, resourceType, systemData, tags, location, provisioningState, ingestionEndpointConfiguration, deviceMappingContent != null ? new HealthcareApisIotMappingProperties(deviceMappingContent) : null, identity, etag);
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotFhirDestinationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApis.HealthcareApisIotFhirDestinationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisIotFhirDestinationData(id, name, resourceType, systemData, provisioningState, resourceIdentityResolutionType, fhirServiceResourceId, fhirMappingContent != null ? new HealthcareApisIotMappingProperties(fhirMappingContent) : null, location, etag);
         }
 
-        /// <summary> Initializes a new instance of FhirServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApis.FhirServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Configuration to bind a ContainerApp to a dev ContainerApp Service. </summary>
     public partial class ContainerAppServiceBind
     {
-        /// <summary> Initializes a new instance of ContainerAppServiceBind. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppServiceBind"/>. </summary>
         public ContainerAppServiceBind()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppServiceBind. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppServiceBind"/>. </summary>
         /// <param name="serviceId"> Resource id of the target service. </param>
         /// <param name="name"> Name of the service bind. </param>
         internal ContainerAppServiceBind(ResourceIdentifier serviceId, string name)

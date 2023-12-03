@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of managed applications. </summary>
     internal partial class ArmApplicationListResult
     {
-        /// <summary> Initializes a new instance of ArmApplicationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationListResult"/>. </summary>
         internal ArmApplicationListResult()
         {
             Value = new ChangeTrackingList<ArmApplicationData>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationListResult"/>. </summary>
         /// <param name="value"> The array of managed applications. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ArmApplicationListResult(IReadOnlyList<ArmApplicationData> value, string nextLink)

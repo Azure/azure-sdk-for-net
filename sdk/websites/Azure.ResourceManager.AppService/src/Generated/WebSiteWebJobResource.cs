@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteWebJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteWebJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteWebJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteWebJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteWebJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteWebJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteWebJob method.
     /// </summary>
     public partial class WebSiteWebJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteWebJobResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="webJobName"> The webJobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteWebJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteWebJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteWebJobResource(ArmClient client, WebJobData data) : this(client, data.Id)

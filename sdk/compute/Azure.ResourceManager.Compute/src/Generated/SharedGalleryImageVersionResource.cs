@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a SharedGalleryImageVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SharedGalleryImageVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSharedGalleryImageVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SharedGalleryImageResource" /> using the GetSharedGalleryImageVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SharedGalleryImageVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSharedGalleryImageVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SharedGalleryImageResource"/> using the GetSharedGalleryImageVersion method.
     /// </summary>
     public partial class SharedGalleryImageVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SharedGalleryImageVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="galleryUniqueName"> The galleryUniqueName. </param>
+        /// <param name="galleryImageName"> The galleryImageName. </param>
+        /// <param name="galleryImageVersionName"> The galleryImageVersionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SharedGalleryImageVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SharedGalleryImageVersionResource(ArmClient client, SharedGalleryImageVersionData data) : this(client, data.Id)

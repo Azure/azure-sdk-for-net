@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
     /// A Class representing a ServiceFabricApplicationTypeVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceFabricApplicationTypeVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceFabricApplicationTypeVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricApplicationTypeResource" /> using the GetServiceFabricApplicationTypeVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricApplicationTypeVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceFabricApplicationTypeVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricApplicationTypeResource"/> using the GetServiceFabricApplicationTypeVersion method.
     /// </summary>
     public partial class ServiceFabricApplicationTypeVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceFabricApplicationTypeVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="applicationTypeName"> The applicationTypeName. </param>
+        /// <param name="version"> The version. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceFabricApplicationTypeVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricApplicationTypeVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceFabricApplicationTypeVersionResource(ArmClient client, ServiceFabricApplicationTypeVersionData data) : this(client, data.Id)

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VpnGatewayNatRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VpnGatewayNatRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVpnGatewayNatRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VpnGatewayResource" /> using the GetVpnGatewayNatRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VpnGatewayNatRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVpnGatewayNatRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VpnGatewayResource"/> using the GetVpnGatewayNatRule method.
     /// </summary>
     public partial class VpnGatewayNatRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VpnGatewayNatRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
+        /// <param name="natRuleName"> The natRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VpnGatewayNatRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VpnGatewayNatRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VpnGatewayNatRuleResource(ArmClient client, VpnGatewayNatRuleData data) : this(client, data.Id)

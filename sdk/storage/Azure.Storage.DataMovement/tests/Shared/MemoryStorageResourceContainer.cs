@@ -93,5 +93,15 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
         }
+
+        protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

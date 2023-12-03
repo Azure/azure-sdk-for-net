@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Configuration setting of LCM (Local Configuration Manager). </summary>
     public partial class LcmConfigurationSetting
     {
-        /// <summary> Initializes a new instance of LcmConfigurationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="LcmConfigurationSetting"/>. </summary>
         internal LcmConfigurationSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of LcmConfigurationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="LcmConfigurationSetting"/>. </summary>
         /// <param name="configurationMode"> Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect. </param>
         /// <param name="isModuleOverwriteAllowed"> If true - new configurations downloaded from the pull service are allowed to overwrite the old ones on the target node. Otherwise, false. </param>
         /// <param name="actionAfterReboot"> Specifies what happens after a reboot during the application of a configuration. The possible values are ContinueConfiguration and StopConfiguration. </param>

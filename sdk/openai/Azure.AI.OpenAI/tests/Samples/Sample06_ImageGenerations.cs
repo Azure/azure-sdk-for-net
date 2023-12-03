@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests.Samples
 {
-    public partial class StreamingChat
+    public partial class ImagesSamples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]

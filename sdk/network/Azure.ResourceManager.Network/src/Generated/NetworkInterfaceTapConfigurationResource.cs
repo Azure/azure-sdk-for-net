@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkInterfaceTapConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkInterfaceTapConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkInterfaceTapConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkInterfaceResource" /> using the GetNetworkInterfaceTapConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkInterfaceTapConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkInterfaceTapConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkInterfaceResource"/> using the GetNetworkInterfaceTapConfiguration method.
     /// </summary>
     public partial class NetworkInterfaceTapConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkInterfaceTapConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkInterfaceName"> The networkInterfaceName. </param>
+        /// <param name="tapConfigurationName"> The tapConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkInterfaceName, string tapConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkInterfaceTapConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceTapConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkInterfaceTapConfigurationResource(ArmClient client, NetworkInterfaceTapConfigurationData data) : this(client, data.Id)

@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformConfigServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformConfigServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformConfigServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformConfigServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformConfigServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformConfigServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformConfigServer method.
     /// </summary>
     public partial class AppPlatformConfigServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformConfigServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/default";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformConfigServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformConfigServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformConfigServerResource(ArmClient client, AppPlatformConfigServerData data) : this(client, data.Id)

@@ -20,6 +20,7 @@ namespace Azure.Core.Pipeline
         private readonly string? _resourceProviderNamespace;
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
+        private readonly bool _isStable;
 
 #if NETCOREAPP2_1
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
@@ -27,11 +28,20 @@ namespace Azure.Core.Pipeline
         private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
 #endif
 
-        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
+        /// <summary>
+        /// Creates diagnostic scope factory.
+        /// </summary>
+        /// <param name="clientNamespace">The namespace which is used as a prefix for all ActivitySources created by the factory and the name of DiagnosticSource (when used).</param>
+        /// <param name="resourceProviderNamespace">Azure resource provider namespace.</param>
+        /// <param name="isActivityEnabled">Flag indicating if distributed tracing is enabled.</param>
+        /// <param name="suppressNestedClientActivities">Flag indicating if nested Azure SDK activities describing public API calls should be suppressed.</param>
+        /// <param name="isStable">Whether instrumentation is considered stable. When false, experimental feature flag controls if tracing is enabled.</param>
+        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities = true, bool isStable = false)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
             _suppressNestedClientActivities = suppressNestedClientActivities;
+            _isStable = isStable;
 
             if (IsActivityEnabled)
             {
@@ -85,26 +95,25 @@ namespace Azure.Core.Pipeline
         ///     result Azure.Storage.Blobs.BlobClient
         /// </summary>
 #if NETCOREAPP2_1
-        private static object? GetActivitySource(string ns, string name)
+        private object? GetActivitySource(string ns, string name)
 #else
-        private static ActivitySource? GetActivitySource(string ns, string name)
+        private ActivitySource? GetActivitySource(string ns, string name)
 #endif
         {
+            bool enabled = _isStable;
 #if NETCOREAPP2_1
-            if (!ActivityExtensions.SupportsActivitySource())
+            enabled |= ActivityExtensions.SupportsActivitySource();
 #else
-            if (!ActivityExtensions.SupportsActivitySource)
+            enabled |= ActivityExtensions.SupportsActivitySource;
 #endif
+            if (!enabled)
             {
                 return null;
             }
 
-            string clientName = ns;
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
-            if (indexOfDot != -1)
-            {
-                clientName += "." + name.Substring(0, indexOfDot);
-            }
+            string clientName = ns + "." + ((indexOfDot < 0) ? name : name.Substring(0, indexOfDot));
+
 #if NETCOREAPP2_1
             return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
 #else

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
     /// A Class representing a FrontendEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontendEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontendEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FrontDoorResource" /> using the GetFrontendEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontendEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontendEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FrontDoorResource"/> using the GetFrontendEndpoint method.
     /// </summary>
     public partial class FrontendEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontendEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="frontDoorName"> The frontDoorName. </param>
+        /// <param name="frontendEndpointName"> The frontendEndpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/frontendEndpoints/{frontendEndpointName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontendEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontendEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontendEndpointResource(ArmClient client, FrontendEndpointData data) : this(client, data.Id)

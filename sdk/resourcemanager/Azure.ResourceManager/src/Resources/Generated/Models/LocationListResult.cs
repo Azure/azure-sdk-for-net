@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Location list operation response. </summary>
     internal partial class LocationListResult
     {
-        /// <summary> Initializes a new instance of LocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationListResult"/>. </summary>
         internal LocationListResult()
         {
             Value = new ChangeTrackingList<LocationExpanded>();
         }
 
-        /// <summary> Initializes a new instance of LocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationListResult"/>. </summary>
         /// <param name="value"> An array of locations. </param>
         internal LocationListResult(IReadOnlyList<LocationExpanded> value)
         {

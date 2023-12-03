@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of OnlineEndpoint entities. </summary>
     internal partial class OnlineEndpointTrackedResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineEndpointTrackedResourceArmPaginatedResult"/>. </summary>
         internal OnlineEndpointTrackedResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningOnlineEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineEndpointTrackedResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of OnlineEndpoint objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type OnlineEndpoint. </param>
         internal OnlineEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningOnlineEndpointData> value)

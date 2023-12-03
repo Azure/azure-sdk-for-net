@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container Apps Job versioned application definition. Defines the desired state of an immutable revision. Any changes to this section Will result in a new revision being created. </summary>
     public partial class ContainerAppJobTemplate
     {
-        /// <summary> Initializes a new instance of ContainerAppJobTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobTemplate"/>. </summary>
         public ContainerAppJobTemplate()
         {
             InitContainers = new ChangeTrackingList<ContainerAppInitContainer>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Volumes = new ChangeTrackingList<ContainerAppVolume>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobTemplate"/>. </summary>
         /// <param name="initContainers"> List of specialized containers that run before app containers. </param>
         /// <param name="containers"> List of container definitions for the Container App. </param>
         /// <param name="volumes"> List of volume definitions for the Container App. </param>

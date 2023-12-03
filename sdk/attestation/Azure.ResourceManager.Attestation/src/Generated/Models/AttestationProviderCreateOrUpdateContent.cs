@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Parameters for creating an attestation provider. </summary>
     public partial class AttestationProviderCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AttestationProviderCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The supported Azure location where the attestation provider should be created. </param>
         /// <param name="properties"> Properties of the attestation provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
@@ -24,6 +24,17 @@ namespace Azure.ResourceManager.Attestation.Models
 
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The supported Azure location where the attestation provider should be created. </param>
+        /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
+        /// <param name="properties"> Properties of the attestation provider. </param>
+        internal AttestationProviderCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, AttestationServiceCreationSpecificParams properties)
+        {
+            Location = location;
+            Tags = tags;
             Properties = properties;
         }
 

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteRecoveryProtectableItemResource" /> and their operations.
-    /// Each <see cref="SiteRecoveryProtectableItemResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource" />.
-    /// To get a <see cref="SiteRecoveryProtectableItemCollection" /> instance call the GetSiteRecoveryProtectableItems method from an instance of <see cref="SiteRecoveryProtectionContainerResource" />.
+    /// A class representing a collection of <see cref="SiteRecoveryProtectableItemResource"/> and their operations.
+    /// Each <see cref="SiteRecoveryProtectableItemResource"/> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
+    /// To get a <see cref="SiteRecoveryProtectableItemCollection"/> instance call the GetSiteRecoveryProtectableItems method from an instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
     /// </summary>
     public partial class SiteRecoveryProtectableItemCollection : ArmCollection, IEnumerable<SiteRecoveryProtectableItemResource>, IAsyncEnumerable<SiteRecoveryProtectableItemResource>
     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="take"> take OData query parameter. </param>
         /// <param name="skipToken"> skipToken OData query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteRecoveryProtectableItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryProtectableItemResource> GetAllAsync(string filter = null, string take = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryProtectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="take"> take OData query parameter. </param>
         /// <param name="skipToken"> skipToken OData query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteRecoveryProtectableItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryProtectableItemResource> GetAll(string filter = null, string take = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryProtectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);

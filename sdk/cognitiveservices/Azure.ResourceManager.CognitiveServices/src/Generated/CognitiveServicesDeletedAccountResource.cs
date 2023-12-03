@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A Class representing a CognitiveServicesDeletedAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CognitiveServicesDeletedAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCognitiveServicesDeletedAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCognitiveServicesDeletedAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesDeletedAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCognitiveServicesDeletedAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetCognitiveServicesDeletedAccount method.
     /// </summary>
     public partial class CognitiveServicesDeletedAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CognitiveServicesDeletedAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CognitiveServicesDeletedAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesDeletedAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CognitiveServicesDeletedAccountResource(ArmClient client, CognitiveServicesAccountData data) : this(client, data.Id)

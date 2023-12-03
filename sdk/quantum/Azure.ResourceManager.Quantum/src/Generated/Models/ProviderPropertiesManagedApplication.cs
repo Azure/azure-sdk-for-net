@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Provider's Managed-Application info. </summary>
     public partial class ProviderPropertiesManagedApplication
     {
-        /// <summary> Initializes a new instance of ProviderPropertiesManagedApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesManagedApplication"/>. </summary>
         internal ProviderPropertiesManagedApplication()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderPropertiesManagedApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesManagedApplication"/>. </summary>
         /// <param name="publisherId"> Provider's publisher id. </param>
         /// <param name="offerId"> Provider's offer id. </param>
         internal ProviderPropertiesManagedApplication(string publisherId, string offerId)

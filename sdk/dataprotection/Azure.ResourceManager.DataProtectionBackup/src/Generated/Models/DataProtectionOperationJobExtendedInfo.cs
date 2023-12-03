@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Operation Job Extended Info. </summary>
     public partial class DataProtectionOperationJobExtendedInfo : DataProtectionOperationExtendedInfo
     {
-        /// <summary> Initializes a new instance of DataProtectionOperationJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionOperationJobExtendedInfo"/>. </summary>
         internal DataProtectionOperationJobExtendedInfo()
         {
             ObjectType = "OperationJobExtendedInfo";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionOperationJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionOperationJobExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="jobResourceId"> Arm Id of the job created for this operation. </param>
         internal DataProtectionOperationJobExtendedInfo(string objectType, ResourceIdentifier jobResourceId) : base(objectType)

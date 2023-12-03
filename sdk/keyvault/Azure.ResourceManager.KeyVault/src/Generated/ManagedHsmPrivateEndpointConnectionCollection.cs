@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedHsmPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="ManagedHsmPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ManagedHsmResource" />.
-    /// To get a <see cref="ManagedHsmPrivateEndpointConnectionCollection" /> instance call the GetManagedHsmPrivateEndpointConnections method from an instance of <see cref="ManagedHsmResource" />.
+    /// A class representing a collection of <see cref="ManagedHsmPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="ManagedHsmPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ManagedHsmResource"/>.
+    /// To get a <see cref="ManagedHsmPrivateEndpointConnectionCollection"/> instance call the GetManagedHsmPrivateEndpointConnections method from an instance of <see cref="ManagedHsmResource"/>.
     /// </summary>
     public partial class ManagedHsmPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ManagedHsmPrivateEndpointConnectionResource>, IAsyncEnumerable<ManagedHsmPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedHsmPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedHsmPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedHsmPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedHsmPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedHsmPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedHsmPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

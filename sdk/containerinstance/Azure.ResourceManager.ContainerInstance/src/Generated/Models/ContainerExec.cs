@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container execution command, for liveness or readiness probe. </summary>
     internal partial class ContainerExec
     {
-        /// <summary> Initializes a new instance of ContainerExec. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerExec"/>. </summary>
         public ContainerExec()
         {
             Command = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerExec. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerExec"/>. </summary>
         /// <param name="command"> The commands to execute within the container. </param>
         internal ContainerExec(IList<string> command)
         {

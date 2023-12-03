@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabVm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabVmResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabVmResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource" /> using the GetDevTestLabVm method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabVmResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabVmResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabVm method.
     /// </summary>
     public partial class DevTestLabVmResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabVmResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabVmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabVmResource(ArmClient client, DevTestLabVmData data) : this(client, data.Id)
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabVmScheduleResources and their operations over a DevTestLabVmScheduleResource. </returns>
         public virtual DevTestLabVmScheduleCollection GetDevTestLabVmSchedules()
         {
-            return GetCachedClient(Client => new DevTestLabVmScheduleCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabVmScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +115,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -135,8 +139,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(string name, string expand = null, CancellationToken cancellationToken = default)
         {

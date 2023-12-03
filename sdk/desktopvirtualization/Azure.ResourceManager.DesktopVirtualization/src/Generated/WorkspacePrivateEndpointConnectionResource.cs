@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing a WorkspacePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkspacePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkspacePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualWorkspaceResource" /> using the GetWorkspacePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkspacePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkspacePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualWorkspaceResource"/> using the GetWorkspacePrivateEndpointConnection method.
     /// </summary>
     public partial class WorkspacePrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkspacePrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkspacePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkspacePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkspacePrivateEndpointConnectionResource(ArmClient client, DesktopVirtualizationPrivateEndpointConnectionDataData data) : this(client, data.Id)

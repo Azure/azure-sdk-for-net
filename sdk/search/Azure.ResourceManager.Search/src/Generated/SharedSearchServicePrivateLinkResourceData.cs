@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Search
     /// </summary>
     public partial class SharedSearchServicePrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SharedSearchServicePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedSearchServicePrivateLinkResourceData"/>. </summary>
         public SharedSearchServicePrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedSearchServicePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedSearchServicePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

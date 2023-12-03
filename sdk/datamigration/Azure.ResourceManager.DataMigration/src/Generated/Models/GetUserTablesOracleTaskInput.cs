@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that gets the list of tables contained within a provided list of Oracle schemas. </summary>
     public partial class GetUserTablesOracleTaskInput
     {
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Information for connecting to Oracle source. </param>
         /// <param name="selectedSchemas"> List of Oracle schemas for which to collect tables. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedSchemas"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedSchemas = selectedSchemas.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Information for connecting to Oracle source. </param>
         /// <param name="selectedSchemas"> List of Oracle schemas for which to collect tables. </param>
         internal GetUserTablesOracleTaskInput(OracleConnectionInfo connectionInfo, IList<string> selectedSchemas)

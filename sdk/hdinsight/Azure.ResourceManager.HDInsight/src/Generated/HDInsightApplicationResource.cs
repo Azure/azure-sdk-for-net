@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A Class representing a HDInsightApplication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightApplicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHDInsightApplicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource" /> using the GetHDInsightApplication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightApplicationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHDInsightApplicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetHDInsightApplication method.
     /// </summary>
     public partial class HDInsightApplicationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HDInsightApplicationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="applicationName"> The applicationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.HDInsight
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HDInsightApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HDInsightApplicationResource(ArmClient client, HDInsightApplicationData data) : this(client, data.Id)

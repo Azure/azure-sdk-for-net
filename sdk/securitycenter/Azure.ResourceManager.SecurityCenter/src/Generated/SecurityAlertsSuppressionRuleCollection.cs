@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityAlertsSuppressionRuleResource" /> and their operations.
-    /// Each <see cref="SecurityAlertsSuppressionRuleResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SecurityAlertsSuppressionRuleCollection" /> instance call the GetSecurityAlertsSuppressionRules method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityAlertsSuppressionRuleResource"/> and their operations.
+    /// Each <see cref="SecurityAlertsSuppressionRuleResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityAlertsSuppressionRuleCollection"/> instance call the GetSecurityAlertsSuppressionRules method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityAlertsSuppressionRuleCollection : ArmCollection, IEnumerable<SecurityAlertsSuppressionRuleResource>, IAsyncEnumerable<SecurityAlertsSuppressionRuleResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertType"> Type of the alert to get rules for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAlertsSuppressionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityAlertsSuppressionRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityAlertsSuppressionRuleResource> GetAllAsync(string alertType = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertType"> Type of the alert to get rules for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAlertsSuppressionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityAlertsSuppressionRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityAlertsSuppressionRuleResource> GetAll(string alertType = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);

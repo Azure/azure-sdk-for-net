@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotVirtualNetworkConnectionGateway along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotVirtualNetworkConnectionGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotVirtualNetworkConnectionResource" /> using the GetSiteSlotVirtualNetworkConnectionGateway method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotVirtualNetworkConnectionGatewayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotVirtualNetworkConnectionResource"/> using the GetSiteSlotVirtualNetworkConnectionGateway method.
     /// </summary>
     public partial class SiteSlotVirtualNetworkConnectionGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="vnetName"> The vnetName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotVirtualNetworkConnectionGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotVirtualNetworkConnectionGatewayResource(ArmClient client, AppServiceVirtualNetworkGatewayData data) : this(client, data.Id)

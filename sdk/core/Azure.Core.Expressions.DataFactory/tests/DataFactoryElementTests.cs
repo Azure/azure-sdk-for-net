@@ -492,6 +492,22 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
+        public void BinaryDataCanHandleNonObjectsValues()
+        {
+            var docString = JsonDocument.Parse(StringJson);
+            var dfeString = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docString.RootElement)!;
+            Assert.AreEqual(StringJson, JsonSerializer.Serialize(dfeString));
+
+            var docBool = JsonDocument.Parse(BoolJson);
+            var dfeBool = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docBool.RootElement)!;
+            Assert.AreEqual(BoolJson, JsonSerializer.Serialize(dfeBool));
+
+            var docInt = JsonDocument.Parse(IntJson);
+            var dfeInt = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docInt.RootElement)!;
+            Assert.AreEqual(IntJson, JsonSerializer.Serialize(dfeInt));
+        }
+
+        [Test]
         public void SerializationOfListOfT()
         {
             var elements = new List<TestModel>

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class SiteRecoveryJobDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobDetails"/>. </summary>
         protected SiteRecoveryJobDetails()
         {
             AffectedObjectDetails = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         internal SiteRecoveryJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails)

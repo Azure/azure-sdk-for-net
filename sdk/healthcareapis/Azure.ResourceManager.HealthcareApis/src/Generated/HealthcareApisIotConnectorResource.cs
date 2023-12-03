@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// A Class representing a HealthcareApisIotConnector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthcareApisIotConnectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthcareApisIotConnectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource" /> using the GetHealthcareApisIotConnector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisIotConnectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthcareApisIotConnectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource"/> using the GetHealthcareApisIotConnector method.
     /// </summary>
     public partial class HealthcareApisIotConnectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HealthcareApisIotConnectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="iotConnectorName"> The iotConnectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthcareApisIotConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthcareApisIotConnectorResource(ArmClient client, HealthcareApisIotConnectorData data) : this(client, data.Id)
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisIotFhirDestinationResources and their operations over a HealthcareApisIotFhirDestinationResource. </returns>
         public virtual HealthcareApisIotFhirDestinationCollection GetHealthcareApisIotFhirDestinations()
         {
-            return GetCachedClient(Client => new HealthcareApisIotFhirDestinationCollection(Client, Id));
+            return GetCachedClient(client => new HealthcareApisIotFhirDestinationCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthcareApisIotFhirDestinationResource>> GetHealthcareApisIotFhirDestinationAsync(string fhirDestinationName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +137,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HealthcareApisIotFhirDestinationResource> GetHealthcareApisIotFhirDestination(string fhirDestinationName, CancellationToken cancellationToken = default)
         {

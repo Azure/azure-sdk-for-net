@@ -182,7 +182,7 @@ if (Test-Path "Function:SetPackageVersion")
 {
   $replaceLatestEntryTitle = $true
   $latestVersion = Get-LatestReleaseDateFromChangeLog -ChangeLogLocation $packageProperties.ChangeLogPath
-  if ($latestVersion)
+  if ($latestVersion -and $latestVersion -ne $ParsedReleaseDate)
   {
     $promptMessage = "The latest entry in the CHANGELOG.md already has a release date. Do you want to replace the latest entry title? Please enter (y or n)."
     while (($readInput = Read-Host -Prompt $promptMessage) -notmatch '^[yn]$'){ }

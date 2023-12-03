@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
     /// A Class representing a QuotaRequestDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="QuotaRequestDetailResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetQuotaRequestDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetQuotaRequestDetail method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="QuotaRequestDetailResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetQuotaRequestDetailResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetQuotaRequestDetail method.
     /// </summary>
     public partial class QuotaRequestDetailResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="QuotaRequestDetailResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerId"> The providerId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="id"> The id. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, Guid id)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Reservations
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "QuotaRequestDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="QuotaRequestDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal QuotaRequestDetailResource(ArmClient client, QuotaRequestDetailData data) : this(client, data.Id)

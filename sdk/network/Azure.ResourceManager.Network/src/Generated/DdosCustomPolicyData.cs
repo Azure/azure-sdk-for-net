@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class DdosCustomPolicyData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
         public DdosCustomPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

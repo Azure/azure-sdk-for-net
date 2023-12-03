@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing a LogicWorkflow along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicWorkflowResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetLogicWorkflow method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicWorkflowResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogicWorkflowResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLogicWorkflow method.
     /// </summary>
     public partial class LogicWorkflowResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicWorkflowResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workflowName"> The workflowName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicWorkflowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicWorkflowResource(ArmClient client, LogicWorkflowData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of LogicWorkflowVersionResources and their operations over a LogicWorkflowVersionResource. </returns>
         public virtual LogicWorkflowVersionCollection GetLogicWorkflowVersions()
         {
-            return GetCachedClient(Client => new LogicWorkflowVersionCollection(Client, Id));
+            return GetCachedClient(client => new LogicWorkflowVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LogicWorkflowVersionResource>> GetLogicWorkflowVersionAsync(string versionId, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LogicWorkflowVersionResource> GetLogicWorkflowVersion(string versionId, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of LogicWorkflowTriggerResources and their operations over a LogicWorkflowTriggerResource. </returns>
         public virtual LogicWorkflowTriggerCollection GetLogicWorkflowTriggers()
         {
-            return GetCachedClient(Client => new LogicWorkflowTriggerCollection(Client, Id));
+            return GetCachedClient(client => new LogicWorkflowTriggerCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="triggerName"> The workflow trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LogicWorkflowTriggerResource>> GetLogicWorkflowTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="triggerName"> The workflow trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LogicWorkflowTriggerResource> GetLogicWorkflowTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +202,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of LogicWorkflowRunResources and their operations over a LogicWorkflowRunResource. </returns>
         public virtual LogicWorkflowRunCollection GetLogicWorkflowRuns()
         {
-            return GetCachedClient(Client => new LogicWorkflowRunCollection(Client, Id));
+            return GetCachedClient(client => new LogicWorkflowRunCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +220,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="runName"> The workflow run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LogicWorkflowRunResource>> GetLogicWorkflowRunAsync(string runName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +243,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="runName"> The workflow run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LogicWorkflowRunResource> GetLogicWorkflowRun(string runName, CancellationToken cancellationToken = default)
         {

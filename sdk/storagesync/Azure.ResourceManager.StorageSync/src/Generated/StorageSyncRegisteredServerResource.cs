@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
     /// A Class representing a StorageSyncRegisteredServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageSyncRegisteredServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageSyncRegisteredServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource" /> using the GetStorageSyncRegisteredServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageSyncRegisteredServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageSyncRegisteredServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource"/> using the GetStorageSyncRegisteredServer method.
     /// </summary>
     public partial class StorageSyncRegisteredServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageSyncRegisteredServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageSyncServiceName"> The storageSyncServiceName. </param>
+        /// <param name="serverId"> The serverId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.StorageSync
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageSyncRegisteredServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncRegisteredServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageSyncRegisteredServerResource(ArmClient client, StorageSyncRegisteredServerData data) : this(client, data.Id)

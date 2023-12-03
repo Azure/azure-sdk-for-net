@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthcareApisWorkspaceResource" /> and their operations.
-    /// Each <see cref="HealthcareApisWorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="HealthcareApisWorkspaceCollection" /> instance call the GetHealthcareApisWorkspaces method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="HealthcareApisWorkspaceResource"/> and their operations.
+    /// Each <see cref="HealthcareApisWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="HealthcareApisWorkspaceCollection"/> instance call the GetHealthcareApisWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class HealthcareApisWorkspaceCollection : ArmCollection, IEnumerable<HealthcareApisWorkspaceResource>, IAsyncEnumerable<HealthcareApisWorkspaceResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthcareApisWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthcareApisWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

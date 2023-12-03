@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlServerAdministrator along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlServerAdministratorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlServerAdministratorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlServerAdministrator method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlServerAdministratorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlServerAdministratorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource"/> using the GetMySqlServerAdministrator method.
     /// </summary>
     public partial class MySqlServerAdministratorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlServerAdministratorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/administrators/activeDirectory";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.MySql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlServerAdministratorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlServerAdministratorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlServerAdministratorResource(ArmClient client, MySqlServerAdministratorData data) : this(client, data.Id)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Tag information. </summary>
     public partial class PredefinedTagValue
     {
-        /// <summary> Initializes a new instance of PredefinedTagValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagValue"/>. </summary>
         internal PredefinedTagValue()
         {
         }
 
-        /// <summary> Initializes a new instance of PredefinedTagValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagValue"/>. </summary>
         /// <param name="id"> The tag value ID. </param>
         /// <param name="tagValue"> The tag value. </param>
         /// <param name="count"> The tag value count. </param>

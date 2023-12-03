@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The ManagedGrafanaSku. </summary>
     internal partial class ManagedGrafanaSku
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaSku"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ManagedGrafanaSku(string name)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class ConfluentOrganizationListResult
     {
-        /// <summary> Initializes a new instance of ConfluentOrganizationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationListResult"/>. </summary>
         internal ConfluentOrganizationListResult()
         {
             Value = new ChangeTrackingList<ConfluentOrganizationData>();
         }
 
-        /// <summary> Initializes a new instance of ConfluentOrganizationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationListResult"/>. </summary>
         /// <param name="value"> Result of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
         internal ConfluentOrganizationListResult(IReadOnlyList<ConfluentOrganizationData> value, string nextLink)

@@ -43,6 +43,7 @@ public class AudioTranslationTests : OpenAITestBase
 
         var requestOptions = new AudioTranslationOptions()
         {
+            DeploymentName = deploymentOrModelName,
             AudioData = BinaryData.FromStream(audioFileStream),
             Temperature = (float)0.25,
         };
@@ -59,9 +60,7 @@ public class AudioTranslationTests : OpenAITestBase
             };
         }
 
-        Response<AudioTranslation> response = await client.GetAudioTranslationAsync(
-            deploymentOrModelName,
-            requestOptions);
+        Response<AudioTranslation> response = await client.GetAudioTranslationAsync(requestOptions);
 
         string text = response.Value.Text;
         Assert.That(text, Is.Not.Null.Or.Empty);

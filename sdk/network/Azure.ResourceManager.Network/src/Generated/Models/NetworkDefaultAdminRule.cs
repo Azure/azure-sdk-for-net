@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network default admin rule. </summary>
     public partial class NetworkDefaultAdminRule : BaseAdminRuleData
     {
-        /// <summary> Initializes a new instance of NetworkDefaultAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDefaultAdminRule"/>. </summary>
         public NetworkDefaultAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = AdminRuleKind.Default;
         }
 
-        /// <summary> Initializes a new instance of NetworkDefaultAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDefaultAdminRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

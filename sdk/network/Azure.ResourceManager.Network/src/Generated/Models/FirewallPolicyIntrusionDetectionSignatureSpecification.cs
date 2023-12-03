@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Intrusion detection signatures specification states. </summary>
     public partial class FirewallPolicyIntrusionDetectionSignatureSpecification
     {
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionSignatureSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionSignatureSpecification"/>. </summary>
         public FirewallPolicyIntrusionDetectionSignatureSpecification()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionSignatureSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionSignatureSpecification"/>. </summary>
         /// <param name="id"> Signature id. </param>
         /// <param name="mode"> The signature state. </param>
         internal FirewallPolicyIntrusionDetectionSignatureSpecification(string id, FirewallPolicyIntrusionDetectionStateType? mode)

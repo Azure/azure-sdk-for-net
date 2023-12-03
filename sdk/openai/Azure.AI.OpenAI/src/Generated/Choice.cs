@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class Choice
     {
-        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <summary> Initializes a new instance of <see cref="Choice"/>. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI
             FinishReason = finishReason;
         }
 
-        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <summary> Initializes a new instance of <see cref="Choice"/>. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="contentFilterResults">

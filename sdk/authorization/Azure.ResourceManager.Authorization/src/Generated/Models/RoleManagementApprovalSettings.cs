@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The approval settings. </summary>
     public partial class RoleManagementApprovalSettings
     {
-        /// <summary> Initializes a new instance of RoleManagementApprovalSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementApprovalSettings"/>. </summary>
         public RoleManagementApprovalSettings()
         {
             ApprovalStages = new ChangeTrackingList<RoleManagementApprovalStage>();
         }
 
-        /// <summary> Initializes a new instance of RoleManagementApprovalSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementApprovalSettings"/>. </summary>
         /// <param name="isApprovalRequired"> Determines whether approval is required or not. </param>
         /// <param name="isApprovalRequiredForExtension"> Determines whether approval is required for assignment extension. </param>
         /// <param name="isRequestorJustificationRequired"> Determine whether requestor justification is required. </param>

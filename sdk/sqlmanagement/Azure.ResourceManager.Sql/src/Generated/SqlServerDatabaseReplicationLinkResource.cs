@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerDatabaseReplicationLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerDatabaseReplicationLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerDatabaseReplicationLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetSqlServerDatabaseReplicationLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerDatabaseReplicationLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerDatabaseReplicationLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetSqlServerDatabaseReplicationLink method.
     /// </summary>
     public partial class SqlServerDatabaseReplicationLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerDatabaseReplicationLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="linkId"> The linkId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string linkId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerDatabaseReplicationLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerDatabaseReplicationLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerDatabaseReplicationLinkResource(ArmClient client, SqlServerDatabaseReplicationLinkData data) : this(client, data.Id)

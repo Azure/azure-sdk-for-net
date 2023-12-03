@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityAutomation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityAutomationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityAutomationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSecurityAutomation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityAutomationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityAutomationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityAutomation method.
     /// </summary>
     public partial class SecurityAutomationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityAutomationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationName"> The automationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityAutomationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityAutomationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityAutomationResource(ArmClient client, SecurityAutomationData data) : this(client, data.Id)

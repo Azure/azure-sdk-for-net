@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Dynamics CRM linked service. </summary>
     public partial class DynamicsCrmLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of DynamicsCrmLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmLinkedService"/>. </summary>
         /// <param name="deploymentType"> The deployment type of the Dynamics CRM instance. 'Online' for Dynamics CRM Online and 'OnPremisesWithIfd' for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to connect to Dynamics CRM server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "DynamicsCrm";
         }
 
-        /// <summary> Initializes a new instance of DynamicsCrmLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

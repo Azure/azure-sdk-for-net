@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
     /// A Class representing a BlueprintVersionArtifact along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BlueprintVersionArtifactResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBlueprintVersionArtifactResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PublishedBlueprintResource" /> using the GetBlueprintVersionArtifact method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BlueprintVersionArtifactResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBlueprintVersionArtifactResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PublishedBlueprintResource"/> using the GetBlueprintVersionArtifact method.
     /// </summary>
     public partial class BlueprintVersionArtifactResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BlueprintVersionArtifactResource"/> instance. </summary>
+        /// <param name="resourceScope"> The resourceScope. </param>
+        /// <param name="blueprintName"> The blueprintName. </param>
+        /// <param name="versionId"> The versionId. </param>
+        /// <param name="artifactName"> The artifactName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceScope, string blueprintName, string versionId, string artifactName)
         {
             var resourceId = $"{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Blueprint
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BlueprintVersionArtifactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BlueprintVersionArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BlueprintVersionArtifactResource(ArmClient client, ArtifactData data) : this(client, data.Id)

@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 {
     /// <summary>
     /// A Class representing a ConfidentialLedger along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConfidentialLedgerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetConfidentialLedgerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetConfidentialLedger method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConfidentialLedgerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetConfidentialLedgerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetConfidentialLedger method.
     /// </summary>
     public partial class ConfidentialLedgerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConfidentialLedgerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ledgerName"> The ledgerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ledgerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}";
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ConfidentialLedgerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConfidentialLedgerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConfidentialLedgerResource(ArmClient client, ConfidentialLedgerData data) : this(client, data.Id)

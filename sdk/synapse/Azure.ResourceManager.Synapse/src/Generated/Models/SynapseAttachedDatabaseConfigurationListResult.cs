@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list attached database configurations operation response. </summary>
     internal partial class SynapseAttachedDatabaseConfigurationListResult
     {
-        /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseAttachedDatabaseConfigurationListResult"/>. </summary>
         internal SynapseAttachedDatabaseConfigurationListResult()
         {
             Value = new ChangeTrackingList<SynapseAttachedDatabaseConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseAttachedDatabaseConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of attached database configurations. </param>
         internal SynapseAttachedDatabaseConfigurationListResult(IReadOnlyList<SynapseAttachedDatabaseConfigurationData> value)
         {

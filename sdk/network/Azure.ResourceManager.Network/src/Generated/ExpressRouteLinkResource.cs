@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRouteLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRoutePortResource" /> using the GetExpressRouteLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRoutePortResource"/> using the GetExpressRouteLink method.
     /// </summary>
     public partial class ExpressRouteLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="expressRoutePortName"> The expressRoutePortName. </param>
+        /// <param name="linkName"> The linkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRoutePortName, string linkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteLinkResource(ArmClient client, ExpressRouteLinkData data) : this(client, data.Id)

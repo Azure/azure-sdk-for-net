@@ -19,13 +19,20 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSqlPoolColumn along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSqlPoolColumnResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSqlPoolColumnResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolTableResource" /> using the GetSynapseSqlPoolColumn method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSqlPoolColumnResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSqlPoolColumnResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolTableResource"/> using the GetSynapseSqlPoolColumn method.
     /// </summary>
     public partial class SynapseSqlPoolColumnResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseSqlPoolColumnResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
+        /// <param name="schemaName"> The schemaName. </param>
+        /// <param name="tableName"> The tableName. </param>
+        /// <param name="columnName"> The columnName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}";
@@ -43,7 +50,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSqlPoolColumnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolColumnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSqlPoolColumnResource(ArmClient client, SynapseSqlPoolColumnData data) : this(client, data.Id)
@@ -96,7 +103,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseSensitivityLabelResources and their operations over a SynapseSensitivityLabelResource. </returns>
         public virtual SynapseSensitivityLabelCollection GetSynapseSensitivityLabels()
         {
-            return GetCachedClient(Client => new SynapseSensitivityLabelCollection(Client, Id));
+            return GetCachedClient(client => new SynapseSensitivityLabelCollection(client, Id));
         }
 
         /// <summary>

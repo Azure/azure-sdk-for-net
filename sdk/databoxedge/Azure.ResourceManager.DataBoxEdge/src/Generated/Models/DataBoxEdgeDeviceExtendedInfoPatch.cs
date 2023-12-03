@@ -13,9 +13,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The Data Box Edge/Gateway device extended info patch. </summary>
     public partial class DataBoxEdgeDeviceExtendedInfoPatch
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceExtendedInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceExtendedInfoPatch"/>. </summary>
         public DataBoxEdgeDeviceExtendedInfoPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceExtendedInfoPatch"/>. </summary>
+        /// <param name="clientSecretStoreId"> The Key Vault ARM Id for client secrets. </param>
+        /// <param name="clientSecretStoreUri"> The url to access the Client Key Vault. </param>
+        /// <param name="channelIntegrityKeyName"> The name for Channel Integrity Key stored in the Client Key Vault. </param>
+        /// <param name="channelIntegrityKeyVersion"> The version of Channel Integrity Key stored in the Client Key Vault. </param>
+        /// <param name="syncStatus"> For changing or to initiate the resync to key-vault set the status to KeyVaultSyncPending, rest of the status will not be applicable. </param>
+        internal DataBoxEdgeDeviceExtendedInfoPatch(ResourceIdentifier clientSecretStoreId, Uri clientSecretStoreUri, string channelIntegrityKeyName, string channelIntegrityKeyVersion, EdgeKeyVaultSyncStatus? syncStatus)
+        {
+            ClientSecretStoreId = clientSecretStoreId;
+            ClientSecretStoreUri = clientSecretStoreUri;
+            ChannelIntegrityKeyName = channelIntegrityKeyName;
+            ChannelIntegrityKeyVersion = channelIntegrityKeyVersion;
+            SyncStatus = syncStatus;
         }
 
         /// <summary> The Key Vault ARM Id for client secrets. </summary>

@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetContainerAppJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerAppJob method.
     /// </summary>
     public partial class ContainerAppJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppJobResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="jobName"> The jobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}";
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppJobResource(ArmClient client, ContainerAppJobData data) : this(client, data.Id)
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppJobExecutionResources and their operations over a ContainerAppJobExecutionResource. </returns>
         public virtual ContainerAppJobExecutionCollection GetContainerAppJobExecutions()
         {
-            return GetCachedClient(Client => new ContainerAppJobExecutionCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppJobExecutionCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +115,8 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="jobExecutionName"> Job execution name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppJobExecutionResource>> GetContainerAppJobExecutionAsync(string jobExecutionName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="jobExecutionName"> Job execution name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppJobExecutionResource> GetContainerAppJobExecution(string jobExecutionName, CancellationToken cancellationToken = default)
         {
@@ -503,7 +506,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppWritableSecret" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppWritableSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppWritableSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -524,7 +527,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppWritableSecret" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppWritableSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppWritableSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

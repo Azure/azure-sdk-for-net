@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Fixed training parameters that won't be swept over during AutoML NLP training. </summary>
     public partial class NlpFixedParameters
     {
-        /// <summary> Initializes a new instance of NlpFixedParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpFixedParameters"/>. </summary>
         public NlpFixedParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of NlpFixedParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpFixedParameters"/>. </summary>
         /// <param name="gradientAccumulationSteps"> Number of steps to accumulate gradients over before running a backward pass. </param>
         /// <param name="learningRate"> The learning rate for the training procedure. </param>
         /// <param name="learningRateScheduler"> The type of learning rate schedule to use during the training procedure. </param>

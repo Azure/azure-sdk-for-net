@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Type conversion settings. </summary>
     public partial class TypeConversionSettings
     {
-        /// <summary> Initializes a new instance of TypeConversionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TypeConversionSettings"/>. </summary>
         public TypeConversionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of TypeConversionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TypeConversionSettings"/>. </summary>
         /// <param name="allowDataTruncation"> Whether to allow data truncation when converting the data. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="treatBooleanAsNumber"> Whether to treat boolean values as numbers. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dateTimeFormat"> The format for DateTime values. Type: string (or Expression with resultType string). </param>

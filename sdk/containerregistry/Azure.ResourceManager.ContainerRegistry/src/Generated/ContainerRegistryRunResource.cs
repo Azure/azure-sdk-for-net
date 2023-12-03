@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A Class representing a ContainerRegistryRun along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerRegistryRunResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerRegistryRunResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource" /> using the GetContainerRegistryRun method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerRegistryRunResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerRegistryRunResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource"/> using the GetContainerRegistryRun method.
     /// </summary>
     public partial class ContainerRegistryRunResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerRegistryRunResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="runId"> The runId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string runId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/runs/{runId}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerRegistryRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerRegistryRunResource(ArmClient client, ContainerRegistryRunData data) : this(client, data.Id)

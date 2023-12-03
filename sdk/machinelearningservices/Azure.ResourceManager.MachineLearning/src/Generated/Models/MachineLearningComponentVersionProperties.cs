@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Definition of a component version: defines resources that span component types. </summary>
     public partial class MachineLearningComponentVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningComponentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionProperties"/>. </summary>
         public MachineLearningComponentVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComponentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubsSchemaGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsSchemaGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsSchemaGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHubsSchemaGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubsSchemaGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubsSchemaGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHubsSchemaGroup method.
     /// </summary>
     public partial class EventHubsSchemaGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubsSchemaGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="schemaGroupName"> The schemaGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string schemaGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/schemagroups/{schemaGroupName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsSchemaGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsSchemaGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsSchemaGroupResource(ArmClient client, EventHubsSchemaGroupData data) : this(client, data.Id)

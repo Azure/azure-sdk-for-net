@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ValidationThreshold indicates allowed machine and node hardware and deployment failures. </summary>
     public partial class ValidationThreshold
     {
-        /// <summary> Initializes a new instance of ValidationThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationThreshold"/>. </summary>
         /// <param name="grouping"> Selection of how the type evaluation is applied to the cluster calculation. </param>
         /// <param name="thresholdType"> Selection of how the threshold should be evaluated. </param>
         /// <param name="value"> The numeric threshold value. </param>

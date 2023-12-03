@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Describes a supported private link resource for the Azure Cognitive Search service. </summary>
     public partial class SearchPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of SearchPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateLinkResource"/>. </summary>
         public SearchPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

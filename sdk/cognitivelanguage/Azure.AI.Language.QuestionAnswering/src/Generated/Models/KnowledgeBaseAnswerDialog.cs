@@ -13,13 +13,13 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Dialog associated with Answer. </summary>
     public partial class KnowledgeBaseAnswerDialog
     {
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerDialog"/>. </summary>
         internal KnowledgeBaseAnswerDialog()
         {
             Prompts = new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerDialog"/>. </summary>
         /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
         internal KnowledgeBaseAnswerDialog(bool? isContextOnly, IReadOnlyList<KnowledgeBaseAnswerPrompt> prompts)

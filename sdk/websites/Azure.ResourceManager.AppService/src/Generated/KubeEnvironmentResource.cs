@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a KubeEnvironment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KubeEnvironmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKubeEnvironmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetKubeEnvironment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KubeEnvironmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKubeEnvironmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetKubeEnvironment method.
     /// </summary>
     public partial class KubeEnvironmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KubeEnvironmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}";
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KubeEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KubeEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KubeEnvironmentResource(ArmClient client, KubeEnvironmentData data) : this(client, data.Id)

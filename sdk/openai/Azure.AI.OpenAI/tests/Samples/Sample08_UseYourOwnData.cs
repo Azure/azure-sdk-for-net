@@ -21,8 +21,18 @@ namespace Azure.AI.OpenAI.Tests.Samples
             var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
             #region Snippet:ChatUsingYourOwnData
-            var chatCompletionsOptions = new ChatCompletionsOptions()
+
+            AzureCognitiveSearchChatExtensionConfiguration contosoExtensionConfig = new()
             {
+                SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
+                IndexName = "contoso-products-index",
+            };
+
+            contosoExtensionConfig.SetSearchKey("<your Cognitive Search resource API key>");
+
+            ChatCompletionsOptions chatCompletionsOptions = new()
+            {
+                DeploymentName = "gpt-35-turbo-0613",
                 Messages =
                 {
                     new ChatMessage(
@@ -30,31 +40,26 @@ namespace Azure.AI.OpenAI.Tests.Samples
                         "You are a helpful assistant that answers questions about the Contoso product database."),
                     new ChatMessage(ChatRole.User, "What are the best-selling Contoso products this month?")
                 },
+
                 // The addition of AzureChatExtensionsOptions enables the use of Azure OpenAI capabilities that add to
                 // the behavior of Chat Completions, here the "using your own data" feature to supplement the context
                 // with information from an Azure Cognitive Search resource with documents that have been indexed.
                 AzureExtensionsOptions = new AzureChatExtensionsOptions()
                 {
-                    Extensions =
-                    {
-                        new AzureCognitiveSearchChatExtensionConfiguration()
-                        {
-                            SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
-                            IndexName = "contoso-products-index",
-                            SearchKey = new AzureKeyCredential("<your Cognitive Search resource API key>"),
-                        }
-                    }
+                    Extensions = { contosoExtensionConfig }
                 }
             };
-            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-                "gpt-35-turbo-0613",
-                chatCompletionsOptions);
+
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
             ChatMessage message = response.Value.Choices[0].Message;
+
             // The final, data-informed response still appears in the ChatMessages as usual
             Console.WriteLine($"{message.Role}: {message.Content}");
+
             // Responses that used extensions will also have Context information that includes special Tool messages
             // to explain extension activity and provide supplemental information like citations.
             Console.WriteLine($"Citations and other information:");
+
             foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
             {
                 // Note: citations and other extension payloads from the "tool" role are often encoded JSON documents

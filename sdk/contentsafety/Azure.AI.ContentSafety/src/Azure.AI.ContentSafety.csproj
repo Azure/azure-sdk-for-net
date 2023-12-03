@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the ContentSafety client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation ContentSafety for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0</Version>
     <PackageTags>Azure ContentSafety</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

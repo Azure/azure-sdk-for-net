@@ -29,25 +29,26 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
                         new LongestIdleMode())
                     { Name = "Simple-Queue-Distribution" });
+            AddForCleanup(new Task(async () => await administrationClient.DeleteDistributionPolicyAsync(distributionPolicyResponse.Value.Id)));
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
                 {
                     Name = "test",
                 });
+            AddForCleanup(new Task(async () => await administrationClient.DeleteQueueAsync(queueResponse.Value.Id)));
 
             var workerId1 = GenerateUniqueId($"{IdPrefix}-w1");
             var registerWorker = await client.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId: workerId1, totalCapacity: 1)
+                new CreateWorkerOptions(workerId: workerId1, capacity: 1)
                 {
-                    QueueAssignments = { [queueResponse.Value.Id] = new RouterQueueAssignment() },
-                    ChannelConfigurations = { [channelResponse] = new ChannelConfiguration(1) },
+                    Queues = { queueResponse.Value.Id, },
+                    Channels = { new RouterChannel(channelResponse, 1) },
                     AvailableForOffers = true,
                 });
-            AddForCleanup(new Task(async () => await client.UpdateWorkerAsync(new UpdateWorkerOptions(workerId1) { AvailableForOffers = false })));
             AddForCleanup(new Task(async () => await client.DeleteWorkerAsync(workerId1)));
 
-            var jobId = GenerateUniqueId($"JobId-SQ-{ScenarioPrefix}");
+            var jobId = GenerateUniqueId($"{IdPrefix}-JobId-SQ-{ScenarioPrefix}");
             var timeToEnqueueJob = GetOrSetScheduledTimeUtc(DateTimeOffset.UtcNow.AddSeconds(10));
 
             var createJob = await client.CreateJobAsync(
@@ -66,7 +67,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.That(job.Value.ScheduledAt, Is.EqualTo(timeToEnqueueJob).Within(30).Seconds);
 
             var updateJobToStartMatching =
-                await client.UpdateJobAsync(new UpdateJobOptions(jobId)
+                await client.UpdateJobAsync(new RouterJob(jobId)
                 {
                     MatchingMode = new QueueAndMatchMode()
                 });
@@ -89,8 +90,12 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.AreEqual(createJob.Value.Id, accept.Value.JobId);
             Assert.AreEqual(worker.Value.Id, accept.Value.WorkerId);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(
-                new DeclineJobOfferOptions(worker.Value.Id, offer.OfferId) { RetryOfferAt = DateTimeOffset.MinValue }));
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.DeclineJobOfferAsync(
+                    new DeclineJobOfferOptions(worker.Value.Id, offer.OfferId)
+                    {
+                        RetryOfferAt = DateTimeOffset.MinValue
+                    }));
 
             var complete = await client.CompleteJobAsync(new CompleteJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
             {
@@ -114,6 +119,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.NotNull(finalJobState.Value.ScheduledAt);
 
             // delete worker for straggling offers if any
+            await client.UpdateWorkerAsync(new RouterWorker(workerId1) { AvailableForOffers = false });
             await client.DeleteWorkerAsync(workerId1);
         }
     }

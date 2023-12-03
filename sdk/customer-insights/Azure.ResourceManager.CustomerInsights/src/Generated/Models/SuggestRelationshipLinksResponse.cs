@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The response of suggest relationship links operation. </summary>
     public partial class SuggestRelationshipLinksResponse
     {
-        /// <summary> Initializes a new instance of SuggestRelationshipLinksResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuggestRelationshipLinksResponse"/>. </summary>
         internal SuggestRelationshipLinksResponse()
         {
             SuggestedRelationships = new ChangeTrackingList<RelationshipsLookup>();
         }
 
-        /// <summary> Initializes a new instance of SuggestRelationshipLinksResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuggestRelationshipLinksResponse"/>. </summary>
         /// <param name="interactionName"> The interaction name. </param>
         /// <param name="suggestedRelationships"> Suggested relationships for the type. </param>
         internal SuggestRelationshipLinksResponse(string interactionName, IReadOnlyList<RelationshipsLookup> suggestedRelationships)

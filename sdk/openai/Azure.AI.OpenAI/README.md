@@ -74,9 +74,11 @@ OpenAIClient client = useAzureOpenAI
         new AzureKeyCredential("your-azure-openai-resource-api-key"))
     : new OpenAIClient("your-api-key-from-platform.openai.com");
 
-Response<Completions> response = await client.GetCompletionsAsync(
-    "text-davinci-003", // assumes a matching model deployment or model name
-    "Hello, world!");
+Response<Completions> response = await client.GetCompletionsAsync(new CompletionsOptions()
+{
+    DeploymentName = "text-davinci-003", // assumes a matching model deployment or model name
+    Prompts = { "Hello, world!" },
+});
 
 foreach (Choice choice in response.Value.Choices)
 {
@@ -103,7 +105,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/tests/Samples).
 
-### Generate Chatbot Response
+### Generate chatbot response
 
 The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredential, then generates text responses to input prompts.
 
@@ -111,16 +113,18 @@ The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredentia
 string endpoint = "https://myaccount.openai.azure.com/";
 var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
-string deploymentName = "text-davinci-003";
-string prompt = "What is Azure OpenAI?";
-Console.Write($"Input: {prompt}");
+CompletionsOptions completionsOptions = new()
+{
+    DeploymentName = "text-davinci-003",
+    Prompts = { "What is Azure OpenAI?" },
+};
 
-Response<Completions> completionsResponse = client.GetCompletions(deploymentName, prompt);
+Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Chatbot: {completion}");
 ```
 
-### Generate Multiple Chatbot Responses With Subscription Key
+### Generate multiple chatbot responses with subscription key
 
 The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an example of generating text responses to input prompts using an Azure subscription key
 
@@ -130,29 +134,28 @@ string key = "YOUR_AZURE_OPENAI_KEY";
 string endpoint = "https://myaccount.openai.azure.com/";
 var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
 
-List<string> examplePrompts = new(){
-    "How are you today?",
-    "What is Azure OpenAI?",
-    "Why do children love dinosaurs?",
-    "Generate a proof of Euler's identity",
-    "Describe in single words only the good things that come into your mind about your mother.",
+CompletionsOptions completionsOptions = new()
+{
+    DeploymentName = "text-davinci-003",
+    Prompts =
+    {
+        "How are you today?",
+        "What is Azure OpenAI?",
+        "Why do children love dinosaurs?",
+        "Generate a proof of Euler's identity",
+        "Describe in single words only the good things that come into your mind about your mother."
+    },
 };
 
-string deploymentName = "text-davinci-003";
+Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
 
-foreach (string prompt in examplePrompts)
+foreach (Choice choice in completionsResponse.Value.Choices)
 {
-    Console.Write($"Input: {prompt}");
-    CompletionsOptions completionsOptions = new CompletionsOptions();
-    completionsOptions.Prompts.Add(prompt);
-
-    Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
-    string completion = completionsResponse.Value.Choices[0].Text;
-    Console.WriteLine($"Chatbot: {completion}");
+    Console.WriteLine($"Response for prompt {choice.Index}: {choice.Text}");
 }
 ```
 
-### Summarize Text with Completion
+### Summarize text with completion
 
 The `SummarizeText` method generates a summarization of the given input prompt.
 
@@ -180,23 +183,23 @@ string summarizationPrompt = @$"
 Console.Write($"Input: {summarizationPrompt}");
 var completionsOptions = new CompletionsOptions()
 {
+    DeploymentName = "text-davinci-003",
     Prompts = { summarizationPrompt },
 };
 
-string deploymentName = "text-davinci-003";
-
-Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
+Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Summarization: {completion}");
 ```
 
-### Stream Chat Messages with non-Azure OpenAI
+### Stream chat messages with non-Azure OpenAI
 
 ```C# Snippet:StreamChatMessages
 string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
 var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
 var chatCompletionsOptions = new ChatCompletionsOptions()
 {
+    DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
     Messages =
     {
         new ChatMessage(ChatRole.System, "You are a helpful assistant. You will talk like a pirate."),
@@ -206,22 +209,52 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
     }
 };
 
-Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(
-    deploymentOrModelName: "gpt-3.5-turbo",
-    chatCompletionsOptions);
-using StreamingChatCompletions streamingChatCompletions = response.Value;
-
-await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
+await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(chatCompletionsOptions))
 {
-    await foreach (ChatMessage message in choice.GetMessageStreaming())
+    if (chatUpdate.Role.HasValue)
     {
-        Console.Write(message.Content);
+        Console.Write($"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ");
     }
-    Console.WriteLine();
+    if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+    {
+        Console.Write(chatUpdate.ContentUpdate);
+    }
 }
 ```
 
-### Use Chat Functions
+When explicitly requesting more than one `Choice` while streaming, use the `ChoiceIndex` property on
+`StreamingChatCompletionsUpdate` to determine which `Choice` each update corresponds to.
+
+```C# Snippet:StreamChatMessagesWithMultipleChoices
+// A ChoiceCount > 1 will feature multiple, parallel, independent text generations arriving on the
+// same response. This may be useful when choosing between multiple candidates for a single request.
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    Messages = { new ChatMessage(ChatRole.User, "Write a limerick about bananas.") },
+    ChoiceCount = 4
+};
+
+await foreach (StreamingChatCompletionsUpdate chatUpdate
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
+{
+    // Choice-specific information like Role and ContentUpdate will also provide a ChoiceIndex that allows
+    // StreamingChatCompletionsUpdate data for independent choices to be appropriately separated.
+    if (chatUpdate.ChoiceIndex.HasValue)
+    {
+        int choiceIndex = chatUpdate.ChoiceIndex.Value;
+        if (chatUpdate.Role.HasValue)
+        {
+            textBoxes[choiceIndex].Text += $"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ";
+        }
+        if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+        {
+            textBoxes[choiceIndex].Text += chatUpdate.ContentUpdate;
+        }
+    }
+}
+```
+
+### Use chat functions
 
 Chat Functions allow a caller of Chat Completions to define capabilities that the model can use to extend its
 functionality into external tools and data sources.
@@ -274,16 +307,17 @@ var conversationMessages = new List<ChatMessage>()
     new(ChatRole.User, "What is the weather like in Boston?"),
 };
 
-var chatCompletionsOptions = new ChatCompletionsOptions();
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    DeploymentName = "gpt-35-turbo-0613",
+};
 foreach (ChatMessage chatMessage in conversationMessages)
 {
     chatCompletionsOptions.Messages.Add(chatMessage);
 }
 chatCompletionsOptions.Functions.Add(getWeatherFuntionDefinition);
 
-Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-    "gpt-35-turbo-0613",
-    chatCompletionsOptions);
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ```
 
 If the model determines that it should call a Chat Function, a finish reason of 'FunctionCall' will be populated on
@@ -335,6 +369,47 @@ if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
 }
 ```
 
+When using streaming, capture streaming response components as they arrive and accumulate streaming function arguments
+in the same manner used for streaming content. Then, in the place of using the `ChatMessage` from the non-streaming
+response, instead add a new `ChatMessage` instance for history, created from the streamed information.
+
+```C# Snippet::ChatFunctions::StreamingFunctions
+string functionName = null;
+StringBuilder contentBuilder = new();
+StringBuilder functionArgumentsBuilder = new();
+ChatRole streamedRole = default;
+CompletionsFinishReason finishReason = default;
+
+await foreach (StreamingChatCompletionsUpdate update
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
+{
+    contentBuilder.Append(update.ContentUpdate);
+    functionName ??= update.FunctionName;
+    functionArgumentsBuilder.Append(update.FunctionArgumentsUpdate);
+    streamedRole = update.Role ?? default;
+    finishReason = update.FinishReason ?? default;
+}
+
+if (finishReason == CompletionsFinishReason.FunctionCall)
+{
+    string lastContent = contentBuilder.ToString();
+    string unvalidatedArguments = functionArgumentsBuilder.ToString();
+    ChatMessage chatMessageForHistory = new(streamedRole, lastContent)
+    {
+        FunctionCall = new(functionName, unvalidatedArguments),
+    };
+    conversationMessages.Add(chatMessageForHistory);
+
+    // Handle from here just like the non-streaming case
+}
+```
+
+Please note: while streamed function information (name, arguments) may be evaluated as it arrives, it should not be
+considered complete or confirmed until the `FinishReason` of `FunctionCall` is received. It may be appropriate to make
+best-effort attempts at "warm-up" or other speculative preparation based on a function name or particular key/value
+appearing in the accumulated, partial JSON arguments, but no strong assumptions about validity, ordering, or other
+details should be evaluated until the arguments are fully available and confirmed via `FinishReason`.
+
 ### Use your own data with Azure OpenAI
 
 The use your own data feature is unique to Azure OpenAI and won't work with a client configured to use the non-Azure service.
@@ -343,8 +418,17 @@ See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.co
 **NOTE:** The concurrent use of [Chat Functions](#use-chat-functions) and Azure Chat Extensions on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
 
 ```C# Snippet:ChatUsingYourOwnData
-var chatCompletionsOptions = new ChatCompletionsOptions()
+AzureCognitiveSearchChatExtensionConfiguration contosoExtensionConfig = new()
 {
+    SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
+    IndexName = "contoso-products-index",
+};
+
+contosoExtensionConfig.SetSearchKey("<your Cognitive Search resource API key>");
+
+ChatCompletionsOptions chatCompletionsOptions = new()
+{
+    DeploymentName = "gpt-35-turbo-0613",
     Messages =
     {
         new ChatMessage(
@@ -352,31 +436,26 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
             "You are a helpful assistant that answers questions about the Contoso product database."),
         new ChatMessage(ChatRole.User, "What are the best-selling Contoso products this month?")
     },
+
     // The addition of AzureChatExtensionsOptions enables the use of Azure OpenAI capabilities that add to
     // the behavior of Chat Completions, here the "using your own data" feature to supplement the context
     // with information from an Azure Cognitive Search resource with documents that have been indexed.
     AzureExtensionsOptions = new AzureChatExtensionsOptions()
     {
-        Extensions =
-        {
-            new AzureCognitiveSearchChatExtensionConfiguration()
-            {
-                SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
-                IndexName = "contoso-products-index",
-                SearchKey = new AzureKeyCredential("<your Cognitive Search resource API key>"),
-            }
-        }
+        Extensions = { contosoExtensionConfig }
     }
 };
-Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-    "gpt-35-turbo-0613",
-    chatCompletionsOptions);
+
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ChatMessage message = response.Value.Choices[0].Message;
+
 // The final, data-informed response still appears in the ChatMessages as usual
 Console.WriteLine($"{message.Role}: {message.Content}");
+
 // Responses that used extensions will also have Context information that includes special Tool messages
 // to explain extension activity and provide supplemental information like citations.
 Console.WriteLine($"Citations and other information:");
+
 foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
 {
     // Note: citations and other extension payloads from the "tool" role are often encoded JSON documents
@@ -384,6 +463,21 @@ foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
     Console.WriteLine($"{contextMessage.Role}: {contextMessage.Content}");
 }
 ```
+
+### Generate embeddings
+
+```C# Snippet:GenerateEmbeddings
+EmbeddingsOptions embeddingsOptions = new()
+{
+    DeploymentName = "text-embedding-ada-002",
+    Input = { "Your text string goes here" },
+};
+Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsOptions);
+
+// The response includes the generated embedding.
+EmbeddingItem item = response.Value.Data[0];
+ReadOnlyMemory<float> embedding = item.Embedding;
+``````
 
 ### Generate images with DALL-E image generation models
 
@@ -406,13 +500,13 @@ using Stream audioStreamFromFile = File.OpenRead("myAudioFile.mp3");
 
 var transcriptionOptions = new AudioTranscriptionOptions()
 {
+    DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
     AudioData = BinaryData.FromStream(audioStreamFromFile),
     ResponseFormat = AudioTranscriptionFormat.Verbose,
 };
 
-Response<AudioTranscription> transcriptionResponse = await client.GetAudioTranscriptionAsync(
-    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
-    transcriptionOptions);
+Response<AudioTranscription> transcriptionResponse
+    = await client.GetAudioTranscriptionAsync(transcriptionOptions);
 AudioTranscription transcription = transcriptionResponse.Value;
 
 // When using Simple, SRT, or VTT formats, only transcription.Text will be populated
@@ -427,13 +521,12 @@ using Stream audioStreamFromFile = File.OpenRead("mySpanishAudioFile.mp3");
 
 var translationOptions = new AudioTranslationOptions()
 {
+    DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
     AudioData = BinaryData.FromStream(audioStreamFromFile),
     ResponseFormat = AudioTranslationFormat.Verbose,
 };
 
-Response<AudioTranslation> translationResponse = await client.GetAudioTranslationAsync(
-    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
-    translationOptions);
+Response<AudioTranslation> translationResponse = await client.GetAudioTranslationAsync(translationOptions);
 AudioTranslation translation = translationResponse.Value;
 
 // When using Simple, SRT, or VTT formats, only translation.Text will be populated
@@ -441,6 +534,52 @@ Console.WriteLine($"Translation ({translation.Duration.Value.TotalSeconds}s):");
 // .Text will be translated to English (ISO-639-1 "en")
 Console.WriteLine(translation.Text);
 ```
+
+### Customize HTTP behavior
+
+As part of the Azure SDK, `OpenAIClient` integrates with Azure.Core's `HttpPipeline` and supports rich customization of
+HTTP messaging behavior via instances of `HttpPipelinePolicy`. This allows traffic manipulation like proxy redirection,
+API gateway use, insertion of custom query string parameters, and more.
+
+To customize the HTTP behavior of OpenAIClient, first implement a class derived from
+`Azure.Core.Pipeline.HttpPipelinePolicy` that performs any desired per-message operations before continuing pipeline
+execution via `ProcessNext`/`ProcessNextAsync`. For example, this is a custom policy that adds a static query string
+parameter key/value pair to all request URIs:
+
+```C# Snippet:ImplementACustomHttpPipelinePolicy
+public class SimpleQueryStringPolicy : HttpPipelinePolicy
+{
+    public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+    {
+        message?.Request?.Uri?.AppendQuery("myParameterName", "valueForMyParameter");
+        ProcessNext(message, pipeline);
+    }
+
+    public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+    {
+        message?.Request?.Uri?.AppendQuery("myParameterName", "valueForMyParameter");
+        return ProcessNextAsync(message, pipeline);
+    }
+}
+```
+
+Then, to apply the custom policy, add it to an instance of `OpenAIClientOptions` that is in turn used to instantiate an
+`OpenAIClient` instance:
+
+```C# Snippet:ConfigureClientsWithCustomHttpPipelinePolicy
+OpenAIClientOptions clientOptions = new();
+clientOptions.AddPolicy(
+    policy: new SimpleQueryStringPolicy(),
+    position: HttpPipelinePosition.PerRetry);
+
+OpenAIClient client = new(
+    endpoint: new Uri("https://myresource.openai.azure.com"),
+    keyCredential: new AzureKeyCredential(myApiKey),
+    clientOptions);
+```
+
+The above client will execute the custom policy on all requests, including retries, ensuring that the additional query
+string parameter key/value pair is added.
 
 ## Troubleshooting
 

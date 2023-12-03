@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.NetworkFunction
     /// </summary>
     public partial class AzureTrafficCollectorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AzureTrafficCollectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AzureTrafficCollectorData(AzureLocation location) : base(location)
         {
             CollectorPolicies = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of AzureTrafficCollectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

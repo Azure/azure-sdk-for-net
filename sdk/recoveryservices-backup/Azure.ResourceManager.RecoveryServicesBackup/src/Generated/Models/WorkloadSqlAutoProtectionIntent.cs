@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure Workload SQL Auto Protection intent item. </summary>
     public partial class WorkloadSqlAutoProtectionIntent : WorkloadAutoProtectionIntent
     {
-        /// <summary> Initializes a new instance of WorkloadSqlAutoProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlAutoProtectionIntent"/>. </summary>
         public WorkloadSqlAutoProtectionIntent()
         {
             ProtectionIntentItemType = ProtectionIntentItemType.AzureWorkloadSqlAutoProtectionIntent;
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlAutoProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlAutoProtectionIntent"/>. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>

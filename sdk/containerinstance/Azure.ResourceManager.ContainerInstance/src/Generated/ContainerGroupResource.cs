@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary>
     /// A Class representing a ContainerGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetContainerGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerGroup method.
     /// </summary>
     public partial class ContainerGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerGroupName"> The containerGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}";
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerGroupResource(ArmClient client, ContainerGroupData data) : this(client, data.Id)
@@ -504,7 +507,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -525,7 +528,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

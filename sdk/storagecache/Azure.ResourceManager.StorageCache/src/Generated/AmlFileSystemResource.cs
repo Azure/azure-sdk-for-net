@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
     /// A Class representing an AmlFileSystem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AmlFileSystemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAmlFileSystemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAmlFileSystem method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AmlFileSystemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAmlFileSystemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAmlFileSystem method.
     /// </summary>
     public partial class AmlFileSystemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AmlFileSystemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="amlFileSystemName"> The amlFileSystemName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFileSystemName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFileSystemName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.StorageCache
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AmlFileSystemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AmlFileSystemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AmlFileSystemResource(ArmClient client, AmlFileSystemData data) : this(client, data.Id)

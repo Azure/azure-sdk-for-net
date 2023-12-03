@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Trigger configuration of an event driven job. </summary>
     public partial class EventTriggerConfiguration
     {
-        /// <summary> Initializes a new instance of EventTriggerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventTriggerConfiguration"/>. </summary>
         public EventTriggerConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of EventTriggerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventTriggerConfiguration"/>. </summary>
         /// <param name="replicaCompletionCount"> Minimum number of successful replica completions before overall job completion. </param>
         /// <param name="parallelism"> Number of parallel replicas of a job that can run at a given time. </param>
         /// <param name="scale"> Scaling configurations for event driven jobs. </param>

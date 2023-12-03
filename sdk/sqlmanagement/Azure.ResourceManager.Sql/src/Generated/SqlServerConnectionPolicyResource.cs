@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerConnectionPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerConnectionPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerConnectionPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlServerConnectionPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerConnectionPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerConnectionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerConnectionPolicy method.
     /// </summary>
     public partial class SqlServerConnectionPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerConnectionPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="connectionPolicyName"> The connectionPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, ConnectionPolicyName connectionPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerConnectionPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerConnectionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerConnectionPolicyResource(ArmClient client, SqlServerConnectionPolicyData data) : this(client, data.Id)

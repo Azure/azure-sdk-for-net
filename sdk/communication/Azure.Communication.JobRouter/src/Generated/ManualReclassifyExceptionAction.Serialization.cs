@@ -22,8 +22,9 @@ namespace Azure.Communication.JobRouter
             }
             Optional<string> queueId = default;
             Optional<int> priority = default;
-            Optional<IReadOnlyList<RouterWorkerSelector>> workerSelectors = default;
-            string kind = default;
+            Optional<IList<RouterWorkerSelector>> workerSelectors = default;
+            Optional<string> id = default;
+            ExceptionActionKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueId"u8))
@@ -54,13 +55,18 @@ namespace Azure.Communication.JobRouter
                     workerSelectors = array;
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new ExceptionActionKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new ManualReclassifyExceptionAction(kind, queueId.Value, Optional.ToNullable(priority), Optional.ToList(workerSelectors));
+            return new ManualReclassifyExceptionAction(id.Value, kind, queueId.Value, Optional.ToNullable(priority), Optional.ToList(workerSelectors));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

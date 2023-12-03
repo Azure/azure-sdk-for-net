@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the delegation. </summary>
     public partial class VirtualApplianceDelegationProperties
     {
-        /// <summary> Initializes a new instance of VirtualApplianceDelegationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceDelegationProperties"/>. </summary>
         public VirtualApplianceDelegationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceDelegationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceDelegationProperties"/>. </summary>
         /// <param name="serviceName"> The service name to which the NVA is delegated. </param>
         /// <param name="provisioningState"> The current provisioning state. </param>
         internal VirtualApplianceDelegationProperties(string serviceName, NetworkProvisioningState? provisioningState)

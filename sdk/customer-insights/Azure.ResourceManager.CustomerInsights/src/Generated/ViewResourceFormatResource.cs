@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a ViewResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ViewResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetViewResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetViewResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ViewResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetViewResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetViewResourceFormat method.
     /// </summary>
     public partial class ViewResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ViewResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="viewName"> The viewName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string viewName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/views/{viewName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ViewResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ViewResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ViewResourceFormatResource(ArmClient client, ViewResourceFormatData data) : this(client, data.Id)

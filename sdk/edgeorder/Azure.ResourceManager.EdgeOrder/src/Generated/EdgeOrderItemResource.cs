@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
     /// A Class representing an EdgeOrderItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EdgeOrderItemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEdgeOrderItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEdgeOrderItem method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeOrderItemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEdgeOrderItemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEdgeOrderItem method.
     /// </summary>
     public partial class EdgeOrderItemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EdgeOrderItemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="orderItemName"> The orderItemName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string orderItemName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EdgeOrderItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeOrderItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeOrderItemResource(ArmClient client, EdgeOrderItemData data) : this(client, data.Id)

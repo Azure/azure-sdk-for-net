@@ -13,9 +13,20 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the representation of topology. </summary>
     public partial class TopologyContent
     {
-        /// <summary> Initializes a new instance of TopologyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologyContent"/>. </summary>
         public TopologyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TopologyContent"/>. </summary>
+        /// <param name="targetResourceGroupName"> The name of the target resource group to perform topology on. </param>
+        /// <param name="targetVirtualNetwork"> The reference to the Virtual Network resource. </param>
+        /// <param name="targetSubnet"> The reference to the Subnet resource. </param>
+        internal TopologyContent(string targetResourceGroupName, WritableSubResource targetVirtualNetwork, WritableSubResource targetSubnet)
+        {
+            TargetResourceGroupName = targetResourceGroupName;
+            TargetVirtualNetwork = targetVirtualNetwork;
+            TargetSubnet = targetSubnet;
         }
 
         /// <summary> The name of the target resource group to perform topology on. </summary>

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteSlotResourceHealthMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotResourceHealthMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotResourceHealthMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetWebSiteSlotResourceHealthMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotResourceHealthMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteSlotResourceHealthMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetWebSiteSlotResourceHealthMetadata method.
     /// </summary>
     public partial class WebSiteSlotResourceHealthMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotResourceHealthMetadataResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotResourceHealthMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotResourceHealthMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteSlotResourceHealthMetadataResource(ArmClient client, ResourceHealthMetadataData data) : this(client, data.Id)

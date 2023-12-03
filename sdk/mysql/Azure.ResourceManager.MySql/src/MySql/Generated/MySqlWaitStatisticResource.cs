@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlWaitStatistic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlWaitStatisticResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlWaitStatisticResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlWaitStatistic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlWaitStatisticResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlWaitStatisticResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource"/> using the GetMySqlWaitStatistic method.
     /// </summary>
     public partial class MySqlWaitStatisticResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlWaitStatisticResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="waitStatisticsId"> The waitStatisticsId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string waitStatisticsId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/waitStatistics/{waitStatisticsId}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.MySql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlWaitStatisticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlWaitStatisticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlWaitStatisticResource(ArmClient client, MySqlWaitStatisticData data) : this(client, data.Id)

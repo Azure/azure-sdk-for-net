@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteSlotConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotConfigResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetWebSiteSlotConfig method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotConfigResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteSlotConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetWebSiteSlotConfig method.
     /// </summary>
     public partial class WebSiteSlotConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web";
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteSlotConfigResource(ArmClient client, SiteConfigData data) : this(client, data.Id)
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotConfigSnapshotResources and their operations over a SiteSlotConfigSnapshotResource. </returns>
         public virtual SiteSlotConfigSnapshotCollection GetSiteSlotConfigSnapshots()
         {
-            return GetCachedClient(Client => new SiteSlotConfigSnapshotCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotConfigSnapshotCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +119,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotConfigSnapshotResource>> GetSiteSlotConfigSnapshotAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -138,8 +142,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotConfigSnapshotResource> GetSiteSlotConfigSnapshot(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -368,7 +372,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteConfigurationSnapshotInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfoSlotAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
@@ -390,7 +394,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteConfigurationSnapshotInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfoSlot(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);

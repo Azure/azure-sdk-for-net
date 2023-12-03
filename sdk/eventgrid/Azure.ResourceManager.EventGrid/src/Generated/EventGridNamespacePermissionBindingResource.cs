@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridNamespacePermissionBinding along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridNamespacePermissionBindingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridNamespacePermissionBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource" /> using the GetEventGridNamespacePermissionBinding method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridNamespacePermissionBindingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridNamespacePermissionBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource"/> using the GetEventGridNamespacePermissionBinding method.
     /// </summary>
     public partial class EventGridNamespacePermissionBindingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventGridNamespacePermissionBindingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="permissionBindingName"> The permissionBindingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/permissionBindings/{permissionBindingName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridNamespacePermissionBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridNamespacePermissionBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridNamespacePermissionBindingResource(ArmClient client, EventGridNamespacePermissionBindingData data) : this(client, data.Id)

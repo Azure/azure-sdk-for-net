@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Resource location data properties. </summary>
     public partial class ResourceLocationDataContract
     {
-        /// <summary> Initializes a new instance of ResourceLocationDataContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceLocationDataContract"/>. </summary>
         /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceLocationDataContract(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ResourceLocationDataContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceLocationDataContract"/>. </summary>
         /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <param name="city"> The city or locality where the resource is located. </param>
         /// <param name="district"> The district, state, or province where the resource is located. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The TmpfsOptions. </summary>
     internal partial class TmpfsOptions
     {
-        /// <summary> Initializes a new instance of TmpfsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TmpfsOptions"/>. </summary>
         public TmpfsOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of TmpfsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TmpfsOptions"/>. </summary>
         /// <param name="size"> Mention the Tmpfs size. </param>
         internal TmpfsOptions(int? size)
         {

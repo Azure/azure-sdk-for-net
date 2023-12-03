@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
     /// A Class representing a ManagedClusterUpgradeProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedClusterUpgradeProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedClusterUpgradeProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource" /> using the GetManagedClusterUpgradeProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedClusterUpgradeProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedClusterUpgradeProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource"/> using the GetManagedClusterUpgradeProfile method.
     /// </summary>
     public partial class ManagedClusterUpgradeProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedClusterUpgradeProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/upgradeProfiles/default";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedClusterUpgradeProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedClusterUpgradeProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedClusterUpgradeProfileResource(ArmClient client, ManagedClusterUpgradeProfileData data) : this(client, data.Id)

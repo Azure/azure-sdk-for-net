@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ManagedServices
     /// </summary>
     public partial class ManagedServicesRegistrationAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentData"/>. </summary>
         public ManagedServicesRegistrationAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

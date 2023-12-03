@@ -20,13 +20,19 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SyncMember along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SyncMemberResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSyncMemberResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SyncGroupResource" /> using the GetSyncMember method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SyncMemberResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSyncMemberResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SyncGroupResource"/> using the GetSyncMember method.
     /// </summary>
     public partial class SyncMemberResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SyncMemberResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="syncGroupName"> The syncGroupName. </param>
+        /// <param name="syncMemberName"> The syncMemberName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/syncMembers/{syncMemberName}";
@@ -42,7 +48,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SyncMemberResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SyncMemberResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SyncMemberResource(ArmClient client, SyncMemberData data) : this(client, data.Id)
@@ -310,7 +316,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SyncFullSchemaProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SyncFullSchemaProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncFullSchemaProperties> GetMemberSchemasAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -332,7 +338,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncFullSchemaProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SyncFullSchemaProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncFullSchemaProperties> GetMemberSchemas(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

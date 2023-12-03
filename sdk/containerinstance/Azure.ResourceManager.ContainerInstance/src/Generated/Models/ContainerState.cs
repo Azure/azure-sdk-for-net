@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container instance state. </summary>
     public partial class ContainerState
     {
-        /// <summary> Initializes a new instance of ContainerState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerState"/>. </summary>
         internal ContainerState()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerState"/>. </summary>
         /// <param name="state"> The state of the container instance. </param>
         /// <param name="startOn"> The date-time when the container instance state started. </param>
         /// <param name="exitCode"> The container instance exit codes correspond to those from the `docker run` command. </param>

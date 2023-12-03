@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the destination of connection monitor. </summary>
     public partial class ConnectionMonitorDestination
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorDestination"/>. </summary>
         public ConnectionMonitorDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorDestination"/>. </summary>
         /// <param name="resourceId"> The ID of the resource used as the destination by connection monitor. </param>
         /// <param name="address"> Address of the connection monitor destination (IP or domain name). </param>
         /// <param name="port"> The destination port used by connection monitor. </param>

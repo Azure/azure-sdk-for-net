@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Intrusion detection bypass traffic specification. </summary>
     public partial class FirewallPolicyIntrusionDetectionBypassTrafficSpecifications
     {
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionBypassTrafficSpecifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionBypassTrafficSpecifications"/>. </summary>
         public FirewallPolicyIntrusionDetectionBypassTrafficSpecifications()
         {
             SourceAddresses = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationIPGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionBypassTrafficSpecifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionBypassTrafficSpecifications"/>. </summary>
         /// <param name="name"> Name of the bypass traffic rule. </param>
         /// <param name="description"> Description of the bypass traffic rule. </param>
         /// <param name="protocol"> The rule bypass protocol. </param>

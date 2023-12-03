@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Container for SQL workloads under SQL Availability Group. </summary>
     public partial class SqlAvailabilityGroupWorkloadProtectionContainer : WorkloadContainer
     {
-        /// <summary> Initializes a new instance of SqlAvailabilityGroupWorkloadProtectionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>. </summary>
         public SqlAvailabilityGroupWorkloadProtectionContainer()
         {
             ContainerType = ProtectableContainerType.SqlAvailabilityGroupWorkLoadContainer;
         }
 
-        /// <summary> Initializes a new instance of SqlAvailabilityGroupWorkloadProtectionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

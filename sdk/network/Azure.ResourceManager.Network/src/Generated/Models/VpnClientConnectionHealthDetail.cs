@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VPN client connection health detail. </summary>
     public partial class VpnClientConnectionHealthDetail
     {
-        /// <summary> Initializes a new instance of VpnClientConnectionHealthDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealthDetail"/>. </summary>
         internal VpnClientConnectionHealthDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnClientConnectionHealthDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealthDetail"/>. </summary>
         /// <param name="vpnConnectionId"> The vpn client Id. </param>
         /// <param name="vpnConnectionDurationInSeconds"> The duration time of a connected vpn client. </param>
         /// <param name="vpnConnectionOn"> The start time of a connected vpn client. </param>

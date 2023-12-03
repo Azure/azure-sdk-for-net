@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudKubernetesCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudKubernetesClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudKubernetesClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudKubernetesCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudKubernetesClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudKubernetesClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudKubernetesCluster method.
     /// </summary>
     public partial class NetworkCloudKubernetesClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudKubernetesClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="kubernetesClusterName"> The kubernetesClusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string kubernetesClusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudKubernetesClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudKubernetesClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudKubernetesClusterResource(ArmClient client, NetworkCloudKubernetesClusterData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudAgentPoolResources and their operations over a NetworkCloudAgentPoolResource. </returns>
         public virtual NetworkCloudAgentPoolCollection GetNetworkCloudAgentPools()
         {
-            return GetCachedClient(Client => new NetworkCloudAgentPoolCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudAgentPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="agentPoolName"> The name of the Kubernetes cluster agent pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudAgentPoolResource>> GetNetworkCloudAgentPoolAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="agentPoolName"> The name of the Kubernetes cluster agent pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudAgentPoolResource> GetNetworkCloudAgentPool(string agentPoolName, CancellationToken cancellationToken = default)
         {

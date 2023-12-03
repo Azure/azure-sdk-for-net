@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Represents server metrics. </summary>
     public partial class SynapseServerUsage
     {
-        /// <summary> Initializes a new instance of SynapseServerUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerUsage"/>. </summary>
         internal SynapseServerUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseServerUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerUsage"/>. </summary>
         /// <param name="name"> Name of the server usage metric. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="displayName"> The metric display name. </param>

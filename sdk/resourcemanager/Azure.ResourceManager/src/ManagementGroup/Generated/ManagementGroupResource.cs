@@ -21,13 +21,14 @@ namespace Azure.ResourceManager.ManagementGroups
 {
     /// <summary>
     /// A Class representing a ManagementGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagementGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagementGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetManagementGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagementGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagementGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetManagementGroup method.
     /// </summary>
     public partial class ManagementGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupResource"/> instance. </summary>
+        /// <param name="groupId"> The groupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string groupId)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{groupId}";
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagementGroupResource(ArmClient client, ManagementGroupData data) : this(client, data.Id)
@@ -330,7 +331,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DescendantData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DescendantData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DescendantData> GetDescendantsAsync(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DescendantData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DescendantData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DescendantData> GetDescendants(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);

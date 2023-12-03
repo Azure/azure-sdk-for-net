@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudBareMetalMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudBareMetalMachineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudBareMetalMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudBareMetalMachine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudBareMetalMachineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudBareMetalMachineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudBareMetalMachine method.
     /// </summary>
     public partial class NetworkCloudBareMetalMachineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudBareMetalMachineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="bareMetalMachineName"> The bareMetalMachineName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudBareMetalMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudBareMetalMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudBareMetalMachineResource(ArmClient client, NetworkCloudBareMetalMachineData data) : this(client, data.Id)

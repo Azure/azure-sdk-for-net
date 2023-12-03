@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a GlobalRulestackFqdn along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GlobalRulestackFqdnResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGlobalRulestackFqdnResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource" /> using the GetGlobalRulestackFqdn method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GlobalRulestackFqdnResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGlobalRulestackFqdnResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource"/> using the GetGlobalRulestackFqdn method.
     /// </summary>
     public partial class GlobalRulestackFqdnResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GlobalRulestackFqdnResource"/> instance. </summary>
+        /// <param name="globalRulestackName"> The globalRulestackName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName, string name)
         {
             var resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GlobalRulestackFqdnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GlobalRulestackFqdnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GlobalRulestackFqdnResource(ArmClient client, GlobalRulestackFqdnData data) : this(client, data.Id)

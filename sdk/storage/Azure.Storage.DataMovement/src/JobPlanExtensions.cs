@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.IO.MemoryMappedFiles;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
@@ -12,52 +11,6 @@ namespace Azure.Storage.DataMovement
 {
     internal static partial class JobPlanExtensions
     {
-        internal static JobPartPlanHeader GetJobPartPlanHeader(this JobPartPlanFileName fileName)
-        {
-            JobPartPlanHeader result;
-            int bufferSize = DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes;
-
-            using MemoryMappedFile memoryMappedFile = MemoryMappedFile.CreateFromFile(fileName.ToString());
-            using (MemoryMappedViewStream stream = memoryMappedFile.CreateViewStream(0, bufferSize, MemoryMappedFileAccess.Read))
-            {
-                if (!stream.CanRead)
-                {
-                    throw Errors.CannotReadMmfStream(fileName.ToString());
-                }
-                result = JobPartPlanHeader.Deserialize(stream);
-            }
-            return result;
-        }
-
-        internal static async Task<string> GetHeaderUShortValue(
-            this TransferCheckpointer checkpointer,
-            string transferId,
-            int startIndex,
-            int streamReadLength,
-            int valueLength,
-            CancellationToken cancellationToken)
-        {
-            string value;
-            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: startIndex,
-                length: streamReadLength,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                BinaryReader reader = new BinaryReader(stream);
-
-                // Read Path Length
-                byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
-                ushort pathLength = pathLengthBuffer.ToUShort();
-
-                // Read Path
-                byte[] pathBuffer = reader.ReadBytes(valueLength);
-                value = pathBuffer.ToString(pathLength);
-            }
-            return value;
-        }
-
         internal static async Task<string> GetHeaderLongValue(
             this TransferCheckpointer checkpointer,
             string transferId,

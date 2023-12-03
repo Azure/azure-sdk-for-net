@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class HybridRunbookWorkerData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridRunbookWorkerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerData"/>. </summary>
         public HybridRunbookWorkerData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridRunbookWorkerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

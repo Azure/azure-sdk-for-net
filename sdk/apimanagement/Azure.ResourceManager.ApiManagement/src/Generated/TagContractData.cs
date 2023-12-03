@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class TagContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of TagContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagContractData"/>. </summary>
         public TagContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of TagContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,62 +15,36 @@ namespace Azure.AI.OpenAI
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            // CUSTOM: only serialize if prompts is non-empty
-            if (Optional.IsCollectionDefined(Prompts) && Prompts.Count > 0)
+            writer.WritePropertyName("prompt"u8);
+            writer.WriteStartArray();
+            foreach (var item in Prompts)
             {
-                writer.WritePropertyName("prompt"u8);
-                writer.WriteStartArray();
-                foreach (var item in Prompts)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(item);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(MaxTokens))
             {
-                if (MaxTokens != null)
-                {
-                    writer.WritePropertyName("max_tokens"u8);
-                    writer.WriteNumberValue(MaxTokens.Value);
-                }
-                else
-                {
-                    writer.WriteNull("max_tokens");
-                }
+                writer.WritePropertyName("max_tokens"u8);
+                writer.WriteNumberValue(MaxTokens.Value);
             }
             if (Optional.IsDefined(Temperature))
             {
-                if (Temperature != null)
-                {
-                    writer.WritePropertyName("temperature"u8);
-                    writer.WriteNumberValue(Temperature.Value);
-                }
-                else
-                {
-                    writer.WriteNull("temperature");
-                }
+                writer.WritePropertyName("temperature"u8);
+                writer.WriteNumberValue(Temperature.Value);
             }
             if (Optional.IsDefined(NucleusSamplingFactor))
             {
-                if (NucleusSamplingFactor != null)
-                {
-                    writer.WritePropertyName("top_p"u8);
-                    writer.WriteNumberValue(NucleusSamplingFactor.Value);
-                }
-                else
-                {
-                    writer.WriteNull("top_p");
-                }
+                writer.WritePropertyName("top_p"u8);
+                writer.WriteNumberValue(NucleusSamplingFactor.Value);
             }
-            // CUSTOM: serialize <int, int> to <string, int>
             if (Optional.IsCollectionDefined(TokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
                 writer.WriteStartObject();
-                foreach (var item in TokenSelectionBiases)
+                foreach (KeyValuePair<int, int> keyValuePair in TokenSelectionBiases)
                 {
-                    writer.WritePropertyName($"{item.Key}");
-                    writer.WriteNumberValue(item.Value);
+                    writer.WritePropertyName($"{keyValuePair.Key}");
+                    writer.WriteNumberValue(keyValuePair.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -80,39 +55,18 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(ChoicesPerPrompt))
             {
-                if (ChoicesPerPrompt != null)
-                {
-                    writer.WritePropertyName("n"u8);
-                    writer.WriteNumberValue(ChoicesPerPrompt.Value);
-                }
-                else
-                {
-                    writer.WriteNull("n");
-                }
+                writer.WritePropertyName("n"u8);
+                writer.WriteNumberValue(ChoicesPerPrompt.Value);
             }
             if (Optional.IsDefined(LogProbabilityCount))
             {
-                if (LogProbabilityCount != null)
-                {
-                    writer.WritePropertyName("logprobs"u8);
-                    writer.WriteNumberValue(LogProbabilityCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("logprobs");
-                }
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteNumberValue(LogProbabilityCount.Value);
             }
             if (Optional.IsDefined(Echo))
             {
-                if (Echo != null)
-                {
-                    writer.WritePropertyName("echo"u8);
-                    writer.WriteBooleanValue(Echo.Value);
-                }
-                else
-                {
-                    writer.WriteNull("echo");
-                }
+                writer.WritePropertyName("echo"u8);
+                writer.WriteBooleanValue(Echo.Value);
             }
             if (Optional.IsCollectionDefined(StopSequences))
             {
@@ -126,56 +80,28 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(PresencePenalty))
             {
-                if (PresencePenalty != null)
-                {
-                    writer.WritePropertyName("presence_penalty"u8);
-                    writer.WriteNumberValue(PresencePenalty.Value);
-                }
-                else
-                {
-                    writer.WriteNull("presence_penalty");
-                }
+                writer.WritePropertyName("presence_penalty"u8);
+                writer.WriteNumberValue(PresencePenalty.Value);
             }
             if (Optional.IsDefined(FrequencyPenalty))
             {
-                if (FrequencyPenalty != null)
-                {
-                    writer.WritePropertyName("frequency_penalty"u8);
-                    writer.WriteNumberValue(FrequencyPenalty.Value);
-                }
-                else
-                {
-                    writer.WriteNull("frequency_penalty");
-                }
+                writer.WritePropertyName("frequency_penalty"u8);
+                writer.WriteNumberValue(FrequencyPenalty.Value);
             }
             if (Optional.IsDefined(GenerationSampleCount))
             {
-                if (GenerationSampleCount != null)
-                {
-                    writer.WritePropertyName("best_of"u8);
-                    writer.WriteNumberValue(GenerationSampleCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("best_of");
-                }
+                writer.WritePropertyName("best_of"u8);
+                writer.WriteNumberValue(GenerationSampleCount.Value);
             }
             if (Optional.IsDefined(InternalShouldStreamResponse))
             {
-                if (InternalShouldStreamResponse != null)
-                {
-                    writer.WritePropertyName("stream"u8);
-                    writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
-                }
-                else
-                {
-                    writer.WriteNull("stream");
-                }
+                writer.WritePropertyName("stream"u8);
+                writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
             }
-            if (Optional.IsDefined(InternalNonAzureModelName))
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(InternalNonAzureModelName);
+                writer.WriteStringValue(DeploymentName);
             }
             writer.WriteEndObject();
         }

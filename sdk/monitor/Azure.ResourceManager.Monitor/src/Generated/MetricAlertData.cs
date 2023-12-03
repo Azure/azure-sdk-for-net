@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MetricAlertData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MetricAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
         /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor
             Actions = new ChangeTrackingList<MetricAlertAction>();
         }
 
-        /// <summary> Initializes a new instance of MetricAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

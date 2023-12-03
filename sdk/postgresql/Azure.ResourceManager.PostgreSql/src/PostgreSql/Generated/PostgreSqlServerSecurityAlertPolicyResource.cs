@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
     /// A Class representing a PostgreSqlServerSecurityAlertPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlServerSecurityAlertPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlServerSecurityAlertPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource" /> using the GetPostgreSqlServerSecurityAlertPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlServerSecurityAlertPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlServerSecurityAlertPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource"/> using the GetPostgreSqlServerSecurityAlertPolicy method.
     /// </summary>
     public partial class PostgreSqlServerSecurityAlertPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostgreSqlServerSecurityAlertPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="securityAlertPolicyName"> The securityAlertPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlSecurityAlertPolicyName securityAlertPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlServerSecurityAlertPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlServerSecurityAlertPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlServerSecurityAlertPolicyResource(ArmClient client, PostgreSqlServerSecurityAlertPolicyData data) : this(client, data.Id)

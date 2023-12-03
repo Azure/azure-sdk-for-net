@@ -10,14 +10,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Definition of a single variable for a Pipeline. </summary>
     public partial class VariableSpecification
     {
-        /// <summary> Initializes a new instance of VariableSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableSpecification"/>. </summary>
         /// <param name="type"> Variable type. </param>
         public VariableSpecification(VariableType type)
         {
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of VariableSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableSpecification"/>. </summary>
         /// <param name="type"> Variable type. </param>
         /// <param name="defaultValue"> Default value of variable. </param>
         internal VariableSpecification(VariableType type, object defaultValue)

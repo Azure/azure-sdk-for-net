@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing a SessionHost along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SessionHostResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSessionHostResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HostPoolResource" /> using the GetSessionHost method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SessionHostResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSessionHostResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HostPoolResource"/> using the GetSessionHost method.
     /// </summary>
     public partial class SessionHostResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SessionHostResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hostPoolName"> The hostPoolName. </param>
+        /// <param name="sessionHostName"> The sessionHostName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SessionHostResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SessionHostResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SessionHostResource(ArmClient client, SessionHostData data) : this(client, data.Id)
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of UserSessionResources and their operations over a UserSessionResource. </returns>
         public virtual UserSessionCollection GetUserSessions()
         {
-            return GetCachedClient(Client => new UserSessionCollection(Client, Id));
+            return GetCachedClient(client => new UserSessionCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +113,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<UserSessionResource>> GetUserSessionAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
@@ -132,8 +136,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<UserSessionResource> GetUserSession(string userSessionId, CancellationToken cancellationToken = default)
         {

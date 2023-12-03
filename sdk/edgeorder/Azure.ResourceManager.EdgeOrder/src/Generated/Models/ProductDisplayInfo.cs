@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Describes product display information. </summary>
     public partial class ProductDisplayInfo
     {
-        /// <summary> Initializes a new instance of ProductDisplayInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDisplayInfo"/>. </summary>
         public ProductDisplayInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductDisplayInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDisplayInfo"/>. </summary>
         /// <param name="productFamilyDisplayName"> Product family display name. </param>
         /// <param name="configurationDisplayName"> Configuration display name. </param>
         internal ProductDisplayInfo(string productFamilyDisplayName, string configurationDisplayName)

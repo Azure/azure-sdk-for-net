@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPowerBIDedicatedModelFactory
     {
-        /// <summary> Initializes a new instance of DedicatedCapacityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerBIDedicated.DedicatedCapacityData"/>. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
         /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new DedicatedCapacityData(id, name, resourceType, location, tags, systemData, sku, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList()) : null, mode, tenantId, friendlyName, state, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PowerBIDedicatedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PowerBIDedicatedResourceData"/>. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
         /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new PowerBIDedicatedResourceData(id, name, resourceType, location, tags, systemData);
         }
 
-        /// <summary> Initializes a new instance of SkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SkuDetails"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <returns> A new <see cref="Models.SkuDetails"/> instance for mocking. </returns>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new SkuDetails(resourceType, sku);
         }
 
-        /// <summary> Initializes a new instance of CheckCapacityNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CheckCapacityNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicator of availability of the capacity name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed message of the request unavailability. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new CheckCapacityNameAvailabilityResult(nameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of AutoScaleVCoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerBIDedicated.AutoScaleVCoreData"/>. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
         /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>

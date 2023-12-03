@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Attestation
 {
     /// <summary>
     /// A Class representing an AttestationProvider along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AttestationProviderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAttestationProviderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAttestationProvider method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AttestationProviderResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAttestationProviderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAttestationProvider method.
     /// </summary>
     public partial class AttestationProviderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AttestationProviderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="providerName"> The providerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string providerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}";
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.Attestation
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AttestationProviderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AttestationProviderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AttestationProviderResource(ArmClient client, AttestationProviderData data) : this(client, data.Id)
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> An object representing collection of AttestationPrivateEndpointConnectionResources and their operations over a AttestationPrivateEndpointConnectionResource. </returns>
         public virtual AttestationPrivateEndpointConnectionCollection GetAttestationPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new AttestationPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AttestationPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.Attestation
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AttestationPrivateEndpointConnectionResource>> GetAttestationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.Attestation
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AttestationPrivateEndpointConnectionResource> GetAttestationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -361,7 +364,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttestationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AttestationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationPrivateLinkResource> GetPrivateLinkResourcesByProviderAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByProviderRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -382,7 +385,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttestationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AttestationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationPrivateLinkResource> GetPrivateLinkResourcesByProvider(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByProviderRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

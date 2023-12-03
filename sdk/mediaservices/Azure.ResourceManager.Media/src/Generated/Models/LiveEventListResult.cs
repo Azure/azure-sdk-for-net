@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The LiveEvent list result. </summary>
     internal partial class LiveEventListResult
     {
-        /// <summary> Initializes a new instance of LiveEventListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventListResult"/>. </summary>
         internal LiveEventListResult()
         {
             Value = new ChangeTrackingList<MediaLiveEventData>();
         }
 
-        /// <summary> Initializes a new instance of LiveEventListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventListResult"/>. </summary>
         /// <param name="value"> The result of the List Live Event operation. </param>
         /// <param name="odataCount"> The number of result. </param>
         /// <param name="odataNextLink"> The link to the next set of results. Not empty if value contains incomplete list of live outputs. </param>

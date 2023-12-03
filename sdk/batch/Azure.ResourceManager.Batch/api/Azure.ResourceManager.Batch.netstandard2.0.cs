@@ -417,6 +417,42 @@ namespace Azure.ResourceManager.Batch
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
 }
+namespace Azure.ResourceManager.Batch.Mocking
+{
+    public partial class MockableBatchArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBatchArmClient() { }
+        public virtual Azure.ResourceManager.Batch.BatchAccountCertificateResource GetBatchAccountCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchAccountDetectorResource GetBatchAccountDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchAccountPoolResource GetBatchAccountPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchAccountResource GetBatchAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchApplicationPackageResource GetBatchApplicationPackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchApplicationResource GetBatchApplicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchPrivateLinkResource GetBatchPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableBatchResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBatchResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource>> GetBatchAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Batch.BatchAccountCollection GetBatchAccounts() { throw null; }
+    }
+    public partial class MockableBatchSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBatchSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult> CheckBatchNameAvailability(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota> GetBatchQuotas(Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota>> GetBatchQuotasAsync(Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedCloudServiceSkus(Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Batch.Models
 {
     public static partial class ArmBatchModelFactory

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityCenterPricingData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityCenterPricingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPricingData"/>. </summary>
         public SecurityCenterPricingData()
         {
             ReplacedBy = new ChangeTrackingList<string>();
             Extensions = new ChangeTrackingList<PlanExtension>();
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterPricingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPricingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

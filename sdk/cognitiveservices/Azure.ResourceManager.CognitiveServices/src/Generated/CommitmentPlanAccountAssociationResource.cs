@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A Class representing a CommitmentPlanAccountAssociation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommitmentPlanAccountAssociationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCommitmentPlanAccountAssociationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesCommitmentPlanResource" /> using the GetCommitmentPlanAccountAssociation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommitmentPlanAccountAssociationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommitmentPlanAccountAssociationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesCommitmentPlanResource"/> using the GetCommitmentPlanAccountAssociation method.
     /// </summary>
     public partial class CommitmentPlanAccountAssociationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommitmentPlanAccountAssociationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="commitmentPlanName"> The commitmentPlanName. </param>
+        /// <param name="commitmentPlanAssociationName"> The commitmentPlanAssociationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CommitmentPlanAccountAssociationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommitmentPlanAccountAssociationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CommitmentPlanAccountAssociationResource(ArmClient client, CommitmentPlanAccountAssociationData data) : this(client, data.Id)

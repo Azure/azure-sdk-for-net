@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Details of a monitor service. </summary>
     public partial class MonitorServiceDetails
     {
-        /// <summary> Initializes a new instance of MonitorServiceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorServiceDetails"/>. </summary>
         internal MonitorServiceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorServiceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorServiceDetails"/>. </summary>
         /// <param name="name"> Monitor service name. </param>
         /// <param name="displayName"> Monitor service display name. </param>
         internal MonitorServiceDetails(string name, string displayName)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Storage properties. </summary>
     internal partial class ManagedEnvironmentStorageProperties
     {
-        /// <summary> Initializes a new instance of ManagedEnvironmentStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStorageProperties"/>. </summary>
         public ManagedEnvironmentStorageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedEnvironmentStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStorageProperties"/>. </summary>
         /// <param name="azureFile"> Azure file properties. </param>
         internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile)
         {

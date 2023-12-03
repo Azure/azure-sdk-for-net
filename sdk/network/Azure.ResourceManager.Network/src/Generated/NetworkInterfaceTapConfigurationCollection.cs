@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkInterfaceTapConfigurationResource" /> and their operations.
-    /// Each <see cref="NetworkInterfaceTapConfigurationResource" /> in the collection will belong to the same instance of <see cref="NetworkInterfaceResource" />.
-    /// To get a <see cref="NetworkInterfaceTapConfigurationCollection" /> instance call the GetNetworkInterfaceTapConfigurations method from an instance of <see cref="NetworkInterfaceResource" />.
+    /// A class representing a collection of <see cref="NetworkInterfaceTapConfigurationResource"/> and their operations.
+    /// Each <see cref="NetworkInterfaceTapConfigurationResource"/> in the collection will belong to the same instance of <see cref="NetworkInterfaceResource"/>.
+    /// To get a <see cref="NetworkInterfaceTapConfigurationCollection"/> instance call the GetNetworkInterfaceTapConfigurations method from an instance of <see cref="NetworkInterfaceResource"/>.
     /// </summary>
     public partial class NetworkInterfaceTapConfigurationCollection : ArmCollection, IEnumerable<NetworkInterfaceTapConfigurationResource>, IAsyncEnumerable<NetworkInterfaceTapConfigurationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceTapConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkInterfaceTapConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkInterfaceTapConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceTapConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceTapConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkInterfaceTapConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkInterfaceTapConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceTapConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

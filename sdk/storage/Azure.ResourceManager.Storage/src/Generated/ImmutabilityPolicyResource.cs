@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing an ImmutabilityPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ImmutabilityPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetImmutabilityPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BlobContainerResource" /> using the GetImmutabilityPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ImmutabilityPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetImmutabilityPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BlobContainerResource"/> using the GetImmutabilityPolicy method.
     /// </summary>
     public partial class ImmutabilityPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ImmutabilityPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="containerName"> The containerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string containerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/immutabilityPolicies/default";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ImmutabilityPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ImmutabilityPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ImmutabilityPolicyResource(ArmClient client, ImmutabilityPolicyData data) : this(client, data.Id)

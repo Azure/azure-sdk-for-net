@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudVirtualMachineConsole along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudVirtualMachineConsoleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudVirtualMachineConsoleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudVirtualMachineResource" /> using the GetNetworkCloudVirtualMachineConsole method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudVirtualMachineConsoleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudVirtualMachineConsoleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudVirtualMachineResource"/> using the GetNetworkCloudVirtualMachineConsole method.
     /// </summary>
     public partial class NetworkCloudVirtualMachineConsoleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudVirtualMachineConsoleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineName"> The virtualMachineName. </param>
+        /// <param name="consoleName"> The consoleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName, string consoleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}/consoles/{consoleName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudVirtualMachineConsoleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudVirtualMachineConsoleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudVirtualMachineConsoleResource(ArmClient client, NetworkCloudVirtualMachineConsoleData data) : this(client, data.Id)

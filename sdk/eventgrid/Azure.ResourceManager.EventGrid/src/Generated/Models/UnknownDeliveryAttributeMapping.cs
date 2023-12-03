@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The UnknownDeliveryAttributeMapping. </summary>
     internal partial class UnknownDeliveryAttributeMapping : DeliveryAttributeMapping
     {
-        /// <summary> Initializes a new instance of UnknownDeliveryAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
         /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
         internal UnknownDeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType) : base(name, mappingType)

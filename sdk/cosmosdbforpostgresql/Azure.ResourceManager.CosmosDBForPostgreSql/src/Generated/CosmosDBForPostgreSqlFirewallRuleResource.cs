@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
     /// A Class representing a CosmosDBForPostgreSqlFirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBForPostgreSqlFirewallRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBForPostgreSqlFirewallRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource" /> using the GetCosmosDBForPostgreSqlFirewallRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBForPostgreSqlFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource"/> using the GetCosmosDBForPostgreSqlFirewallRule method.
     /// </summary>
     public partial class CosmosDBForPostgreSqlFirewallRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="firewallRuleName"> The firewallRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string firewallRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBForPostgreSqlFirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBForPostgreSqlFirewallRuleResource(ArmClient client, CosmosDBForPostgreSqlFirewallRuleData data) : this(client, data.Id)

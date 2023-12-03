@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Sets the CORS rules. You can include up to five CorsRule elements in the request. </summary>
     internal partial class StorageCorsRules
     {
-        /// <summary> Initializes a new instance of StorageCorsRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCorsRules"/>. </summary>
         public StorageCorsRules()
         {
             CorsRules = new ChangeTrackingList<StorageCorsRule>();
         }
 
-        /// <summary> Initializes a new instance of StorageCorsRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCorsRules"/>. </summary>
         /// <param name="corsRules"> The List of CORS rules. You can include up to five CorsRule elements in the request. </param>
         internal StorageCorsRules(IList<StorageCorsRule> corsRules)
         {

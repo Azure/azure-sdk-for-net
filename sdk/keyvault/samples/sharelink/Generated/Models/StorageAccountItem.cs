@@ -13,13 +13,13 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The storage account item containing storage account metadata. </summary>
     public partial class StorageAccountItem
     {
-        /// <summary> Initializes a new instance of StorageAccountItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountItem"/>. </summary>
         internal StorageAccountItem()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of StorageAccountItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountItem"/>. </summary>
         /// <param name="id"> Storage identifier. </param>
         /// <param name="resourceId"> Storage account resource Id. </param>
         /// <param name="attributes"> The storage account management attributes. </param>

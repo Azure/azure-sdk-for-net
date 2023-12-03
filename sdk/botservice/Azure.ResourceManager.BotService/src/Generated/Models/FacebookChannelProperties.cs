@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Facebook channel. </summary>
     public partial class FacebookChannelProperties
     {
-        /// <summary> Initializes a new instance of FacebookChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacebookChannelProperties"/>. </summary>
         /// <param name="appId"> Facebook application id. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.BotService.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of FacebookChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacebookChannelProperties"/>. </summary>
         /// <param name="verifyToken"> Verify token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="pages"> The list of Facebook pages. </param>
         /// <param name="appId"> Facebook application id. </param>

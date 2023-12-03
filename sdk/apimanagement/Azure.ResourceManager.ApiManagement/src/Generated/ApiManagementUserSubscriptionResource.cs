@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementUserSubscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementUserSubscriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementUserSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementUserResource" /> using the GetApiManagementUserSubscription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementUserSubscriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementUserSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementUserResource"/> using the GetApiManagementUserSubscription method.
     /// </summary>
     public partial class ApiManagementUserSubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementUserSubscriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="userId"> The userId. </param>
+        /// <param name="sid"> The sid. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string userId, string sid)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/subscriptions/{sid}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementUserSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementUserSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementUserSubscriptionResource(ArmClient client, SubscriptionContractData data) : this(client, data.Id)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for creating a schedule. </summary>
     public partial class DevTestLabScheduleCreationParameter
     {
-        /// <summary> Initializes a new instance of DevTestLabScheduleCreationParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleCreationParameter"/>. </summary>
         public DevTestLabScheduleCreationParameter()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabScheduleCreationParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleCreationParameter"/>. </summary>
         /// <param name="name"> The name of the virtual machine or environment. </param>
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>

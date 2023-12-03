@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The collection of storage account credentials. </summary>
     internal partial class StorageAccountCredentialList
     {
-        /// <summary> Initializes a new instance of StorageAccountCredentialList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentialList"/>. </summary>
         internal StorageAccountCredentialList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeStorageAccountCredentialData>();
         }
 
-        /// <summary> Initializes a new instance of StorageAccountCredentialList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentialList"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal StorageAccountCredentialList(IReadOnlyList<DataBoxEdgeStorageAccountCredentialData> value, string nextLink)

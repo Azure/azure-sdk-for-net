@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the TenantBillingPeriodResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="TenantBillingPeriodConsumptionResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Billing/billingAccounts/billingPeriods.
+    /// You can only construct a <see cref="TenantBillingPeriodConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingAccounts/billingPeriods.
     /// </summary>
     public partial class TenantBillingPeriodConsumptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantBillingPeriodConsumptionResource"/> instance. </summary>
+        /// <param name="billingAccountId"> The billingAccountId. </param>
+        /// <param name="billingPeriodName"> The billingPeriodName. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string billingAccountId, string billingPeriodName)
         {
             var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}";

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A Class representing a HDInsightPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHDInsightPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource" /> using the GetHDInsightPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHDInsightPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetHDInsightPrivateEndpointConnection method.
     /// </summary>
     public partial class HDInsightPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HDInsightPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HDInsightPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HDInsightPrivateEndpointConnectionResource(ArmClient client, HDInsightPrivateEndpointConnectionData data) : this(client, data.Id)

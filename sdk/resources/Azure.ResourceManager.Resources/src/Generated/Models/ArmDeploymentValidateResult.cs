@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Information from validate template deployment response. </summary>
     public partial class ArmDeploymentValidateResult
     {
-        /// <summary> Initializes a new instance of ArmDeploymentValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentValidateResult"/>. </summary>
         internal ArmDeploymentValidateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentValidateResult"/>. </summary>
         /// <param name="error"> The deployment validation error. </param>
         /// <param name="properties"> The template deployment properties. </param>
         internal ArmDeploymentValidateResult(ResponseError error, ArmDeploymentPropertiesExtended properties)

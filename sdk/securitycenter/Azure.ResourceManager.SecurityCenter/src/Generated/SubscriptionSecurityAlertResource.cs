@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SubscriptionSecurityAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionSecurityAlertResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionSecurityAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource" /> using the GetSubscriptionSecurityAlert method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionSecurityAlertResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionSecurityAlertResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource"/> using the GetSubscriptionSecurityAlert method.
     /// </summary>
     public partial class SubscriptionSecurityAlertResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionSecurityAlertResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="ascLocation"> The ascLocation. </param>
+        /// <param name="alertName"> The alertName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation ascLocation, string alertName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionSecurityAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionSecurityAlertResource(ArmClient client, SecurityAlertData data) : this(client, data.Id)

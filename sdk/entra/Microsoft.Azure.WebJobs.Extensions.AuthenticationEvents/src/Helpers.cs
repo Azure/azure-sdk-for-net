@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +9,9 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -46,16 +47,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(AuthenticationEventResource.Ex_Event_Missing, ex);
+                throw new AuthenticationEventTriggerRequestValidationException(ex.Message, ex.InnerException);
             }
         }
 
         internal static HttpResponseMessage HttpErrorResponse(Exception ex)
         {
-            return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+            var response = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
             {
                 Content = new StringContent(GetFailedRequestPayload(ex))
             };
+
+            // Set the metrics on header
+            EventTriggerMetrics.Instance.SetMetricHeaders(response);
+
+            return response;
         }
 
         internal static string GetFailedRequestPayload(Exception ex)
@@ -102,18 +108,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>Determines whether the specified input is json.</summary>
         /// <param name="input">The input.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified input is json; otherwise, <c>false</c>.</returns>
-        internal static bool IsJson(string input)
+        internal static void ValidateJson(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
-                return false;
+                throw new JsonException(AuthenticationEventResource.Ex_Empty_Json);
             }
 
-            input = input.Trim();
-            return (input.StartsWith("{", StringComparison.OrdinalIgnoreCase) && input.EndsWith("}", StringComparison.OrdinalIgnoreCase))
-                || (input.StartsWith("[", StringComparison.OrdinalIgnoreCase) && input.EndsWith("]", StringComparison.OrdinalIgnoreCase));
+            // try parsing input to json object
+            using var _ = JsonDocument.Parse(input);
         }
 
         internal static AuthenticationEventAction GetEventActionForActionType(string actionType)

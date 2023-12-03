@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A Class representing a CognitiveServicesCommitmentPlan along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CognitiveServicesCommitmentPlanResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCognitiveServicesCommitmentPlanResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCognitiveServicesCommitmentPlan method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesCommitmentPlanResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCognitiveServicesCommitmentPlanResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCognitiveServicesCommitmentPlan method.
     /// </summary>
     public partial class CognitiveServicesCommitmentPlanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CognitiveServicesCommitmentPlanResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="commitmentPlanName"> The commitmentPlanName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string commitmentPlanName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CognitiveServicesCommitmentPlanResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesCommitmentPlanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CognitiveServicesCommitmentPlanResource(ArmClient client, CommitmentPlanData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CommitmentPlanAccountAssociationResources and their operations over a CommitmentPlanAccountAssociationResource. </returns>
         public virtual CommitmentPlanAccountAssociationCollection GetCommitmentPlanAccountAssociations()
         {
-            return GetCachedClient(Client => new CommitmentPlanAccountAssociationCollection(Client, Id));
+            return GetCachedClient(client => new CommitmentPlanAccountAssociationCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CommitmentPlanAccountAssociationResource>> GetCommitmentPlanAccountAssociationAsync(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CommitmentPlanAccountAssociationResource> GetCommitmentPlanAccountAssociation(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {

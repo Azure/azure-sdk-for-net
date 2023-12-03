@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningCodeContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningCodeContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningCodeContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningCodeContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningCodeContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningCodeContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningCodeContainer method.
     /// </summary>
     public partial class MachineLearningCodeContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningCodeContainerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningCodeContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningCodeContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningCodeContainerResource(ArmClient client, MachineLearningCodeContainerData data) : this(client, data.Id)
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An object representing collection of MachineLearningCodeVersionResources and their operations over a MachineLearningCodeVersionResource. </returns>
         public virtual MachineLearningCodeVersionCollection GetMachineLearningCodeVersions()
         {
-            return GetCachedClient(Client => new MachineLearningCodeVersionCollection(Client, Id));
+            return GetCachedClient(client => new MachineLearningCodeVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MachineLearningCodeVersionResource>> GetMachineLearningCodeVersionAsync(string version, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningCodeVersionResource> GetMachineLearningCodeVersion(string version, CancellationToken cancellationToken = default)
         {

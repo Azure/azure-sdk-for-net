@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A Class representing an ElasticSanVolume along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticSanVolumeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticSanVolumeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanVolumeGroupResource" /> using the GetElasticSanVolume method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanVolumeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanVolumeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticSanVolumeGroupResource"/> using the GetElasticSanVolume method.
     /// </summary>
     public partial class ElasticSanVolumeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ElasticSanVolumeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="elasticSanName"> The elasticSanName. </param>
+        /// <param name="volumeGroupName"> The volumeGroupName. </param>
+        /// <param name="volumeName"> The volumeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticSanVolumeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSanVolumeResource(ArmClient client, ElasticSanVolumeData data) : this(client, data.Id)

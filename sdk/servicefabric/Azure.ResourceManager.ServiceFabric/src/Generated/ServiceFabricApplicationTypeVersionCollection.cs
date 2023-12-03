@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceFabricApplicationTypeVersionResource" /> and their operations.
-    /// Each <see cref="ServiceFabricApplicationTypeVersionResource" /> in the collection will belong to the same instance of <see cref="ServiceFabricApplicationTypeResource" />.
-    /// To get a <see cref="ServiceFabricApplicationTypeVersionCollection" /> instance call the GetServiceFabricApplicationTypeVersions method from an instance of <see cref="ServiceFabricApplicationTypeResource" />.
+    /// A class representing a collection of <see cref="ServiceFabricApplicationTypeVersionResource"/> and their operations.
+    /// Each <see cref="ServiceFabricApplicationTypeVersionResource"/> in the collection will belong to the same instance of <see cref="ServiceFabricApplicationTypeResource"/>.
+    /// To get a <see cref="ServiceFabricApplicationTypeVersionCollection"/> instance call the GetServiceFabricApplicationTypeVersions method from an instance of <see cref="ServiceFabricApplicationTypeResource"/>.
     /// </summary>
     public partial class ServiceFabricApplicationTypeVersionCollection : ArmCollection, IEnumerable<ServiceFabricApplicationTypeVersionResource>, IAsyncEnumerable<ServiceFabricApplicationTypeVersionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricApplicationTypeVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricApplicationTypeVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricApplicationTypeVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricApplicationTypeVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricApplicationTypeVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricApplicationTypeVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

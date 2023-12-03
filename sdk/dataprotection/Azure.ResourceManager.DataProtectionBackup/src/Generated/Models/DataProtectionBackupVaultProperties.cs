@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Backup Vault. </summary>
     public partial class DataProtectionBackupVaultProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="storageSettings"> Storage Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageSettings"/> is null. </exception>
         public DataProtectionBackupVaultProperties(IEnumerable<DataProtectionBackupStorageSetting> storageSettings)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             StorageSettings = storageSettings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="monitoringSettings"> Monitoring Settings. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>

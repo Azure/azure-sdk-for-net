@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class ChatTranscriptDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of ChatTranscriptDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatTranscriptDetailData"/>. </summary>
         public ChatTranscriptDetailData()
         {
             Messages = new ChangeTrackingList<ChatTranscriptMessageProperties>();
         }
 
-        /// <summary> Initializes a new instance of ChatTranscriptDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatTranscriptDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

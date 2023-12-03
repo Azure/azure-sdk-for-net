@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The list of cognitive services accounts operation response. </summary>
     internal partial class CognitiveServicesAccountListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountListResult"/>. </summary>
         internal CognitiveServicesAccountListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesAccountData>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of accounts. </param>
         /// <param name="value"> Gets the list of Cognitive Services accounts and their properties. </param>
         internal CognitiveServicesAccountListResult(string nextLink, IReadOnlyList<CognitiveServicesAccountData> value)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt specific test migrate input. </summary>
     public partial class VMwareCbtTestMigrateContent : TestMigrateProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtTestMigrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtTestMigrateContent"/>. </summary>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="networkId"> The test network Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> or <paramref name="networkId"/> is null. </exception>
@@ -27,6 +27,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             NetworkId = networkId;
             VmNics = new ChangeTrackingList<VMwareCbtNicContent>();
             InstanceType = "VMwareCbt";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtTestMigrateContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryPointId"> The recovery point Id. </param>
+        /// <param name="networkId"> The test network Id. </param>
+        /// <param name="vmNics"> The list of NIC details. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        internal VMwareCbtTestMigrateContent(string instanceType, ResourceIdentifier recoveryPointId, ResourceIdentifier networkId, IList<VMwareCbtNicContent> vmNics, string osUpgradeVersion) : base(instanceType)
+        {
+            RecoveryPointId = recoveryPointId;
+            NetworkId = networkId;
+            VmNics = vmNics;
+            OSUpgradeVersion = osUpgradeVersion;
+            InstanceType = instanceType ?? "VMwareCbt";
         }
 
         /// <summary> The recovery point Id. </summary>

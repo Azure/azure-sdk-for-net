@@ -9,25 +9,19 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are distributed in order to workers, starting with the worker that is after the last worker to receive a job. </summary>
-    [CodeGenModel("RoundRobinMode")]
-    [CodeGenSuppress("RoundRobinMode", typeof(int), typeof(int))]
     public partial class RoundRobinMode : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of RoundRobinModePolicy. </summary>
-        public RoundRobinMode() : this(null)
+        public RoundRobinMode()
         {
-        }
-
-        internal RoundRobinMode(string kind)
-        {
-            Kind = kind ?? "round-robin";
+            Kind = DistributionModeKind.RoundRobin;
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(MinConcurrentOffers))
             {
                 writer.WritePropertyName("minConcurrentOffers"u8);

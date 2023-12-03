@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
     /// A Class representing a CostManagementAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CostManagementAlertResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCostManagementAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetCostManagementAlert method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CostManagementAlertResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCostManagementAlertResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCostManagementAlert method.
     /// </summary>
     public partial class CostManagementAlertResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CostManagementAlertResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="alertId"> The alertId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string alertId)
         {
             var resourceId = $"{scope}/providers/Microsoft.CostManagement/alerts/{alertId}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.CostManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CostManagementAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CostManagementAlertResource(ArmClient client, CostManagementAlertData data) : this(client, data.Id)

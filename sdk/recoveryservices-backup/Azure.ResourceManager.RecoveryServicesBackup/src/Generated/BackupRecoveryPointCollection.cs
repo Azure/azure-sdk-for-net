@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BackupRecoveryPointResource" /> and their operations.
-    /// Each <see cref="BackupRecoveryPointResource" /> in the collection will belong to the same instance of <see cref="BackupProtectedItemResource" />.
-    /// To get a <see cref="BackupRecoveryPointCollection" /> instance call the GetBackupRecoveryPoints method from an instance of <see cref="BackupProtectedItemResource" />.
+    /// A class representing a collection of <see cref="BackupRecoveryPointResource"/> and their operations.
+    /// Each <see cref="BackupRecoveryPointResource"/> in the collection will belong to the same instance of <see cref="BackupProtectedItemResource"/>.
+    /// To get a <see cref="BackupRecoveryPointCollection"/> instance call the GetBackupRecoveryPoints method from an instance of <see cref="BackupProtectedItemResource"/>.
     /// </summary>
     public partial class BackupRecoveryPointCollection : ArmCollection, IEnumerable<BackupRecoveryPointResource>, IAsyncEnumerable<BackupRecoveryPointResource>
     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BackupRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupRecoveryPointResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BackupRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupRecoveryPointResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);

@@ -25,6 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <value>Data type of cloud event.</value>
         [JsonPropertyName("oDataType")]
         [OneOf("microsoft.graph.onTokenIssuanceStartCalloutData", "")]
+        [Required]
         public string ODataType { get; set; } = string.Empty;
 
         /// <summary>Initializes a new instance of the <see cref="CloudEventRequest{T, K}" /> class.</summary>

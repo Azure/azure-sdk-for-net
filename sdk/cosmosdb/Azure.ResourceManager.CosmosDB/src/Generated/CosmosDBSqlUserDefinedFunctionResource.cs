@@ -20,13 +20,19 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBSqlUserDefinedFunction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBSqlUserDefinedFunctionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBSqlUserDefinedFunctionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBSqlContainerResource" /> using the GetCosmosDBSqlUserDefinedFunction method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBSqlUserDefinedFunctionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBSqlUserDefinedFunctionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBSqlContainerResource"/> using the GetCosmosDBSqlUserDefinedFunction method.
     /// </summary>
     public partial class CosmosDBSqlUserDefinedFunctionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBSqlUserDefinedFunctionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="containerName"> The containerName. </param>
+        /// <param name="userDefinedFunctionName"> The userDefinedFunctionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}";
@@ -42,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBSqlUserDefinedFunctionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlUserDefinedFunctionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBSqlUserDefinedFunctionResource(ArmClient client, CosmosDBSqlUserDefinedFunctionData data) : this(client, data.Id)

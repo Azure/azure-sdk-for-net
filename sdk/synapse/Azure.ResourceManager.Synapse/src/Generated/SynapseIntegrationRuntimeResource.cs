@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseIntegrationRuntime along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseIntegrationRuntimeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseIntegrationRuntimeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseIntegrationRuntime method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseIntegrationRuntimeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseIntegrationRuntimeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseIntegrationRuntime method.
     /// </summary>
     public partial class SynapseIntegrationRuntimeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseIntegrationRuntimeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="integrationRuntimeName"> The integrationRuntimeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/integrationRuntimes/{integrationRuntimeName}";
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseIntegrationRuntimeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseIntegrationRuntimeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseIntegrationRuntimeResource(ArmClient client, SynapseIntegrationRuntimeData data) : this(client, data.Id)
@@ -532,7 +536,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -553,7 +557,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -781,7 +785,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseSsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseSsisObjectMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseSsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
@@ -803,7 +807,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseSsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseSsisObjectMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseSsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);

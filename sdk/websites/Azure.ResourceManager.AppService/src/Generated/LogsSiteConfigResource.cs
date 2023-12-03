@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a LogsSiteConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogsSiteConfigResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogsSiteConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetLogsSiteConfig method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogsSiteConfigResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogsSiteConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetLogsSiteConfig method.
     /// </summary>
     public partial class LogsSiteConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogsSiteConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogsSiteConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogsSiteConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogsSiteConfigResource(ArmClient client, SiteLogsConfigData data) : this(client, data.Id)

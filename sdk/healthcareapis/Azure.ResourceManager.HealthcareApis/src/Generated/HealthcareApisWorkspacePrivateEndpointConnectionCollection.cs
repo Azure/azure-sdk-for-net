@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource" />.
-    /// To get a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionCollection" /> instance call the GetHealthcareApisWorkspacePrivateEndpointConnections method from an instance of <see cref="HealthcareApisWorkspaceResource" />.
+    /// A class representing a collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource"/>.
+    /// To get a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionCollection"/> instance call the GetHealthcareApisWorkspacePrivateEndpointConnections method from an instance of <see cref="HealthcareApisWorkspaceResource"/>.
     /// </summary>
     public partial class HealthcareApisWorkspacePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HealthcareApisWorkspacePrivateEndpointConnectionResource>, IAsyncEnumerable<HealthcareApisWorkspacePrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthcareApisWorkspacePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthcareApisWorkspacePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

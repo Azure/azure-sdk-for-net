@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing a LogicWorkflowTriggerHistory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicWorkflowTriggerHistoryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowTriggerHistoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowTriggerResource" /> using the GetLogicWorkflowTriggerHistory method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicWorkflowTriggerHistoryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogicWorkflowTriggerHistoryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowTriggerResource"/> using the GetLogicWorkflowTriggerHistory method.
     /// </summary>
     public partial class LogicWorkflowTriggerHistoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicWorkflowTriggerHistoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workflowName"> The workflowName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
+        /// <param name="historyName"> The historyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, string historyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowTriggerHistoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicWorkflowTriggerHistoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicWorkflowTriggerHistoryResource(ArmClient client, LogicWorkflowTriggerHistoryData data) : this(client, data.Id)

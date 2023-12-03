@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The quarantine policy for a container registry. </summary>
     internal partial class ContainerRegistryQuarantinePolicy
     {
-        /// <summary> Initializes a new instance of ContainerRegistryQuarantinePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryQuarantinePolicy"/>. </summary>
         public ContainerRegistryQuarantinePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryQuarantinePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryQuarantinePolicy"/>. </summary>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
         internal ContainerRegistryQuarantinePolicy(ContainerRegistryPolicyStatus? status)
         {

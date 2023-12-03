@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryLinkedService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryLinkedServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryLinkedServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryLinkedService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryLinkedServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryLinkedServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryLinkedService method.
     /// </summary>
     public partial class DataFactoryLinkedServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataFactoryLinkedServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
+        /// <param name="linkedServiceName"> The linkedServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/linkedservices/{linkedServiceName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryLinkedServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryLinkedServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryLinkedServiceResource(ArmClient client, DataFactoryLinkedServiceData data) : this(client, data.Id)

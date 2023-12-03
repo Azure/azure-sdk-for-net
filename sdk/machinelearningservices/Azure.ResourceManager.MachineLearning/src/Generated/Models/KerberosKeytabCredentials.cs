@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The KerberosKeytabCredentials. </summary>
     public partial class KerberosKeytabCredentials : MachineLearningDatastoreCredentials
     {
-        /// <summary> Initializes a new instance of KerberosKeytabCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="KerberosKeytabCredentials"/>. </summary>
         /// <param name="secrets"> [Required] Keytab secrets. </param>
         /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>
         /// <param name="kerberosPrincipal"> [Required] Kerberos Username. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CredentialsType = CredentialsType.KerberosKeytab;
         }
 
-        /// <summary> Initializes a new instance of KerberosKeytabCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="KerberosKeytabCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="secrets"> [Required] Keytab secrets. </param>
         /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>

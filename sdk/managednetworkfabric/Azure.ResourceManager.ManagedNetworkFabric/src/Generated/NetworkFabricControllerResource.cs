@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricController along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricControllerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricControllerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabricController method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricControllerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricControllerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabricController method.
     /// </summary>
     public partial class NetworkFabricControllerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricControllerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkFabricControllerName"> The networkFabricControllerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFabricControllerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricControllerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricControllerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricControllerResource(ArmClient client, NetworkFabricControllerData data) : this(client, data.Id)

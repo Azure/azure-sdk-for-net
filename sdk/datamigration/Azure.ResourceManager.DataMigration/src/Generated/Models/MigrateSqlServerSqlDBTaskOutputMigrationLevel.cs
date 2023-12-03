@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlDBTaskOutputMigrationLevel. </summary>
     public partial class MigrateSqlServerSqlDBTaskOutputMigrationLevel : MigrateSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>. </summary>
         internal MigrateSqlServerSqlDBTaskOutputMigrationLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="startedOn"> Migration start time. </param>

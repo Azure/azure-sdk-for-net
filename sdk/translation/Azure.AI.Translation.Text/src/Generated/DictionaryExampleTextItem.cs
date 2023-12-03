@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Element containing the text with translation. </summary>
     public partial class DictionaryExampleTextItem : InputTextItem
     {
-        /// <summary> Initializes a new instance of DictionaryExampleTextItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryExampleTextItem"/>. </summary>
         /// <param name="text"> Text to translate. </param>
         /// <param name="translation">
         /// A string specifying the translated text previously returned by the Dictionary lookup operation.

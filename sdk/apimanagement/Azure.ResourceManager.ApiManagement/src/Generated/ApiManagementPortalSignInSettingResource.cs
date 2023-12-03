@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementPortalSignInSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementPortalSignInSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementPortalSignInSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementPortalSignInSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementPortalSignInSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementPortalSignInSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementPortalSignInSetting method.
     /// </summary>
     public partial class ApiManagementPortalSignInSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementPortalSignInSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signin";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementPortalSignInSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalSignInSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementPortalSignInSettingResource(ArmClient client, ApiManagementPortalSignInSettingData data) : this(client, data.Id)

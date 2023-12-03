@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing a Traffic Manager HeatMap query experience properties. </summary>
     public partial class TrafficManagerHeatMapQueryExperience
     {
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapQueryExperience. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapQueryExperience"/>. </summary>
         /// <param name="endpointId"> The id of the endpoint from the 'endpoints' array which these queries were routed to. </param>
         /// <param name="queryCount"> The number of queries originating from this location. </param>
         public TrafficManagerHeatMapQueryExperience(int endpointId, int queryCount)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             QueryCount = queryCount;
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapQueryExperience. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapQueryExperience"/>. </summary>
         /// <param name="endpointId"> The id of the endpoint from the 'endpoints' array which these queries were routed to. </param>
         /// <param name="queryCount"> The number of queries originating from this location. </param>
         /// <param name="latency"> The latency experienced by queries originating from this location. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Informix linked service. </summary>
     public partial class InformixLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of InformixLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformixLinkedService"/>. </summary>
         /// <param name="connectionString"> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public InformixLinkedService(DataFactoryElement<string> connectionString)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Informix";
         }
 
-        /// <summary> Initializes a new instance of InformixLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformixLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

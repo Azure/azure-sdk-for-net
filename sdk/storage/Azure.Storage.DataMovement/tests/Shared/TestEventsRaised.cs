@@ -33,6 +33,7 @@ namespace Azure.Storage.DataMovement.Tests
         private static readonly DataTransferStatus FailedCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, true, false);
 
         public List<TransferItemFailedEventArgs> FailedEvents { get; internal set; }
+        private object _failedEventsLock = new();
         public List<TransferStatusEventArgs> StatusEvents { get; internal set; }
         public List<TransferItemSkippedEventArgs> SkippedEvents { get; internal set; }
         public ConcurrentBag<TransferItemCompletedEventArgs> SingleCompletedEvents { get; internal set; }
@@ -84,7 +85,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         private Task AppendFailedArg(TransferItemFailedEventArgs args)
         {
-            FailedEvents.Add(args);
+            lock (_failedEventsLock)
+            {
+                FailedEvents.Add(args);
+            }
             return Task.CompletedTask;
         }
 
@@ -186,14 +190,17 @@ namespace Azure.Storage.DataMovement.Tests
         /// This asserts that the expected events occurred during a single transfer that is expected
         /// to have a <see cref="DataTransferState.CompletedWithFailedTransfers"/> at the end without any skips.
         /// </summary>
-        public async Task AssertSingleFailedCheck()
+        public async Task AssertSingleFailedCheck(int failureCount)
         {
             Assert.IsEmpty(SkippedEvents);
             Assert.IsEmpty(SingleCompletedEvents);
-            Assert.AreEqual(1, FailedEvents.Count);
-            Assert.NotNull(FailedEvents.First().Exception);
-            Assert.NotNull(FailedEvents.First().SourceResource.Uri);
-            Assert.NotNull(FailedEvents.First().DestinationResource.Uri);
+            Assert.AreEqual(failureCount, FailedEvents.Count);
+            foreach (TransferItemFailedEventArgs args in FailedEvents)
+            {
+                Assert.NotNull(args.Exception);
+                Assert.NotNull(args.SourceResource.Uri);
+                Assert.NotNull(args.DestinationResource.Uri);
+            }
 
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(

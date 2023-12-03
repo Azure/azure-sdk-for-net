@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing an UserSession along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="UserSessionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetUserSessionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SessionHostResource" /> using the GetUserSession method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="UserSessionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetUserSessionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SessionHostResource"/> using the GetUserSession method.
     /// </summary>
     public partial class UserSessionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="UserSessionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hostPoolName"> The hostPoolName. </param>
+        /// <param name="sessionHostName"> The sessionHostName. </param>
+        /// <param name="userSessionId"> The userSessionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "UserSessionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="UserSessionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal UserSessionResource(ArmClient client, UserSessionData data) : this(client, data.Id)

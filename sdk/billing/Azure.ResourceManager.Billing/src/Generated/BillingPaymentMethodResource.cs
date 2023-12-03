@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A Class representing a BillingPaymentMethod along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingPaymentMethodResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingPaymentMethodResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingPaymentMethod method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingPaymentMethodResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingPaymentMethod method.
     /// </summary>
     public partial class BillingPaymentMethodResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingPaymentMethodResource"/> instance. </summary>
+        /// <param name="paymentMethodName"> The paymentMethodName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string paymentMethodName)
         {
             var resourceId = $"/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}";
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Billing
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingPaymentMethodResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)

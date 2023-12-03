@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an AvsPrivateCloudClusterVirtualMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvsPrivateCloudClusterVirtualMachineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvsPrivateCloudClusterVirtualMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource" /> using the GetAvsPrivateCloudClusterVirtualMachine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudClusterVirtualMachineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudClusterVirtualMachineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource"/> using the GetAvsPrivateCloudClusterVirtualMachine method.
     /// </summary>
     public partial class AvsPrivateCloudClusterVirtualMachineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="virtualMachineId"> The virtualMachineId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string virtualMachineId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvsPrivateCloudClusterVirtualMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsPrivateCloudClusterVirtualMachineResource(ArmClient client, AvsPrivateCloudClusterVirtualMachineData data) : this(client, data.Id)

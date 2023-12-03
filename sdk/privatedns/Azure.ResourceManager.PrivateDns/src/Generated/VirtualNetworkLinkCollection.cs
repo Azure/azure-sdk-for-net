@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualNetworkLinkResource" /> and their operations.
-    /// Each <see cref="VirtualNetworkLinkResource" /> in the collection will belong to the same instance of <see cref="PrivateDnsZoneResource" />.
-    /// To get a <see cref="VirtualNetworkLinkCollection" /> instance call the GetVirtualNetworkLinks method from an instance of <see cref="PrivateDnsZoneResource" />.
+    /// A class representing a collection of <see cref="VirtualNetworkLinkResource"/> and their operations.
+    /// Each <see cref="VirtualNetworkLinkResource"/> in the collection will belong to the same instance of <see cref="PrivateDnsZoneResource"/>.
+    /// To get a <see cref="VirtualNetworkLinkCollection"/> instance call the GetVirtualNetworkLinks method from an instance of <see cref="PrivateDnsZoneResource"/>.
     /// </summary>
     public partial class VirtualNetworkLinkCollection : ArmCollection, IEnumerable<VirtualNetworkLinkResource>, IAsyncEnumerable<VirtualNetworkLinkResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </summary>
         /// <param name="top"> The maximum number of virtual network links to return. If not specified, returns up to 100 virtual network links. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualNetworkLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkLinkResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </summary>
         /// <param name="top"> The maximum number of virtual network links to return. If not specified, returns up to 100 virtual network links. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualNetworkLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkLinkResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);

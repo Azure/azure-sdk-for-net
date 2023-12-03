@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningBatchDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningBatchDeploymentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningBatchDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningBatchEndpointResource" /> using the GetMachineLearningBatchDeployment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningBatchDeploymentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningBatchDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningBatchEndpointResource"/> using the GetMachineLearningBatchDeployment method.
     /// </summary>
     public partial class MachineLearningBatchDeploymentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningBatchDeploymentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}/deployments/{deploymentName}";
@@ -42,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningBatchDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningBatchDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningBatchDeploymentResource(ArmClient client, MachineLearningBatchDeploymentData data) : this(client, data.Id)

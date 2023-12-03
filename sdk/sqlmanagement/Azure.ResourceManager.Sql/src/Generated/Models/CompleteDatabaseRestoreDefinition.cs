@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform a complete database restore operation. </summary>
     public partial class CompleteDatabaseRestoreDefinition
     {
-        /// <summary> Initializes a new instance of CompleteDatabaseRestoreDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompleteDatabaseRestoreDefinition"/>. </summary>
         /// <param name="lastBackupName"> The last backup name to apply. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lastBackupName"/> is null. </exception>
         public CompleteDatabaseRestoreDefinition(string lastBackupName)

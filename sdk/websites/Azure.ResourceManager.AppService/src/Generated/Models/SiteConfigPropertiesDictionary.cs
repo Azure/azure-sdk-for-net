@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Site config properties dictionary. </summary>
     public partial class SiteConfigPropertiesDictionary
     {
-        /// <summary> Initializes a new instance of SiteConfigPropertiesDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigPropertiesDictionary"/>. </summary>
         internal SiteConfigPropertiesDictionary()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteConfigPropertiesDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigPropertiesDictionary"/>. </summary>
         /// <param name="use32BitWorkerProcess"> &lt;code&gt;true&lt;/code&gt; if use32BitWorkerProcess should be set to true for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="linuxFxVersion"> LinuxFxVersion configuration setting. </param>
         /// <param name="javaVersion"> JavaVersion configuration setting. </param>

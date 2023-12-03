@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningFeatureSetContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningFeatureSetContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningFeatureSetContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningFeatureSetContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningFeatureSetContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningFeatureSetContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningFeatureSetContainer method.
     /// </summary>
     public partial class MachineLearningFeatureSetContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningFeatureSetContainerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featuresets/{name}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningFeatureSetContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningFeatureSetContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningFeatureSetContainerResource(ArmClient client, MachineLearningFeatureSetContainerData data) : this(client, data.Id)
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An object representing collection of MachineLearningFeatureSetVersionResources and their operations over a MachineLearningFeatureSetVersionResource. </returns>
         public virtual MachineLearningFeatureSetVersionCollection GetMachineLearningFeatureSetVersions()
         {
-            return GetCachedClient(Client => new MachineLearningFeatureSetVersionCollection(Client, Id));
+            return GetCachedClient(client => new MachineLearningFeatureSetVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MachineLearningFeatureSetVersionResource>> GetMachineLearningFeatureSetVersionAsync(string version, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningFeatureSetVersionResource> GetMachineLearningFeatureSetVersion(string version, CancellationToken cancellationToken = default)
         {

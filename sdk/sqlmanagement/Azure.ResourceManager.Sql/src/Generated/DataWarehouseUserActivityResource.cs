@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a DataWarehouseUserActivity along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataWarehouseUserActivityResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataWarehouseUserActivityResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetDataWarehouseUserActivity method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataWarehouseUserActivityResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataWarehouseUserActivityResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetDataWarehouseUserActivity method.
     /// </summary>
     public partial class DataWarehouseUserActivityResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataWarehouseUserActivityResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="dataWarehouseUserActivityName"> The dataWarehouseUserActivityName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, DataWarehouseUserActivityName dataWarehouseUserActivityName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataWarehouseUserActivityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataWarehouseUserActivityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataWarehouseUserActivityResource(ArmClient client, DataWarehouseUserActivityData data) : this(client, data.Id)

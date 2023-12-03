@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Databox Heavy Device Job Details. </summary>
     public partial class DataBoxHeavyJobDetails : DataBoxBasicJobDetails
     {
-        /// <summary> Initializes a new instance of DataBoxHeavyJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxHeavyJobDetails"/>. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         public DataBoxHeavyJobDetails(DataBoxContactDetails contactDetails) : base(contactDetails)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Models
             JobDetailsType = DataBoxOrderType.DataBoxHeavy;
         }
 
-        /// <summary> Initializes a new instance of DataBoxHeavyJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxHeavyJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>

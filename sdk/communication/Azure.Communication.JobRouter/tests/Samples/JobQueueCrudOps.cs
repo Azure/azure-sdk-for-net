@@ -56,22 +56,21 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue
 
-            Response<RouterQueue> updatedJobQueue = routerAdministrationClient.UpdateQueue(
-                options: new UpdateQueueOptions(jobQueueId)
-                {
-                    Labels = { ["Additional-Queue-Label"] = new LabelValue("ChatQueue") }
-                });
+            Response<RouterQueue> updatedJobQueue = routerAdministrationClient.UpdateQueue(new RouterQueue(jobQueueId)
+            {
+                Labels = { ["Additional-Queue-Label"] = new RouterValue("ChatQueue") }
+            });
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueues
 
-            Pageable<RouterQueueItem> jobQueues = routerAdministrationClient.GetQueues();
-            foreach (Page<RouterQueueItem> asPage in jobQueues.AsPages(pageSizeHint: 10))
+            Pageable<RouterQueue> jobQueues = routerAdministrationClient.GetQueues(cancellationToken: default);
+            foreach (Page<RouterQueue> asPage in jobQueues.AsPages(pageSizeHint: 10))
             {
-                foreach (RouterQueueItem? policy in asPage.Values)
+                foreach (RouterQueue? policy in asPage.Values)
                 {
-                    Console.WriteLine($"Listing job queue with id: {policy.Queue.Id}");
+                    Console.WriteLine($"Listing job queue with id: {policy.Id}");
                 }
             }
 

@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary>
     /// A Class representing a SmartGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SmartGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSmartGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSmartGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SmartGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSmartGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSmartGroup method.
     /// </summary>
     public partial class SmartGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SmartGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="smartGroupId"> The smartGroupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Guid smartGroupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}";
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SmartGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SmartGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SmartGroupResource(ArmClient client, SmartGroupData data) : this(client, data.Id)

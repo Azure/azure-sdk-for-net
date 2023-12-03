@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Dc access security code. </summary>
     public partial class DataCenterAccessSecurityCode
     {
-        /// <summary> Initializes a new instance of DataCenterAccessSecurityCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterAccessSecurityCode"/>. </summary>
         internal DataCenterAccessSecurityCode()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCenterAccessSecurityCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterAccessSecurityCode"/>. </summary>
         /// <param name="reverseDataCenterAccessCode"> Reverse Dc access security code. </param>
         /// <param name="forwardDataCenterAccessCode"> Forward Dc access security code. </param>
         internal DataCenterAccessSecurityCode(string reverseDataCenterAccessCode, string forwardDataCenterAccessCode)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Trigger details. </summary>
     public partial class PeriodicTimerEventTrigger : DataBoxEdgeTriggerData
     {
-        /// <summary> Initializes a new instance of PeriodicTimerEventTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeriodicTimerEventTrigger"/>. </summary>
         /// <param name="sourceInfo"> Periodic timer details. </param>
         /// <param name="sinkInfo"> Role Sink information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceInfo"/> or <paramref name="sinkInfo"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Kind = TriggerEventType.PeriodicTimerEvent;
         }
 
-        /// <summary> Initializes a new instance of PeriodicTimerEventTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeriodicTimerEventTrigger"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

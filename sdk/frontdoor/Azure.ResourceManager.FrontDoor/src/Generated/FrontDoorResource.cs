@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
     /// A Class representing a FrontDoor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFrontDoor method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFrontDoor method.
     /// </summary>
     public partial class FrontDoorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontDoorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="frontDoorName"> The frontDoorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string frontDoorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}";
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorResource(ArmClient client, FrontDoorData data) : this(client, data.Id)
@@ -97,7 +100,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An object representing collection of FrontendEndpointResources and their operations over a FrontendEndpointResource. </returns>
         public virtual FrontendEndpointCollection GetFrontendEndpoints()
         {
-            return GetCachedClient(Client => new FrontendEndpointCollection(Client, Id));
+            return GetCachedClient(client => new FrontendEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +118,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontendEndpointResource>> GetFrontendEndpointAsync(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +141,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontendEndpointResource> GetFrontendEndpoint(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An object representing collection of FrontDoorRulesEngineResources and their operations over a FrontDoorRulesEngineResource. </returns>
         public virtual FrontDoorRulesEngineCollection GetFrontDoorRulesEngines()
         {
-            return GetCachedClient(Client => new FrontDoorRulesEngineCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorRulesEngineCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +171,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="rulesEngineName"> Name of the Rules Engine which is unique within the Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorRulesEngineResource>> GetFrontDoorRulesEngineAsync(string rulesEngineName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +194,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="rulesEngineName"> Name of the Rules Engine which is unique within the Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorRulesEngineResource> GetFrontDoorRulesEngine(string rulesEngineName, CancellationToken cancellationToken = default)
         {

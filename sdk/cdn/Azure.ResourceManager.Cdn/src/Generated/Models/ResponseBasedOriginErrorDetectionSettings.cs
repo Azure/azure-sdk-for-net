@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. </summary>
     public partial class ResponseBasedOriginErrorDetectionSettings
     {
-        /// <summary> Initializes a new instance of ResponseBasedOriginErrorDetectionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseBasedOriginErrorDetectionSettings"/>. </summary>
         public ResponseBasedOriginErrorDetectionSettings()
         {
             HttpErrorRanges = new ChangeTrackingList<HttpErrorRange>();
         }
 
-        /// <summary> Initializes a new instance of ResponseBasedOriginErrorDetectionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseBasedOriginErrorDetectionSettings"/>. </summary>
         /// <param name="responseBasedDetectedErrorType"> Type of response errors for real user requests for which origin will be deemed unhealthy. </param>
         /// <param name="responseBasedFailoverThresholdPercentage"> The percentage of failed requests in the sample where failover should trigger. </param>
         /// <param name="httpErrorRanges"> The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy. </param>

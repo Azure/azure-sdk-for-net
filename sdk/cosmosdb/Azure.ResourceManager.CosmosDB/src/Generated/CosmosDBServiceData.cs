@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceData"/>. </summary>
         public CosmosDBServiceData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

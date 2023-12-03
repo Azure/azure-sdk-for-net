@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ssis Package. </summary>
     public partial class SsisPackage : SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SsisPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisPackage"/>. </summary>
         internal SsisPackage()
         {
             Parameters = new ChangeTrackingList<SsisParameterInfo>();
             MetadataType = SsisObjectMetadataType.Package;
         }
 
-        /// <summary> Initializes a new instance of SsisPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisPackage"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

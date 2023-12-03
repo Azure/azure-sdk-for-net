@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// A Class representing a HealthcareApisService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthcareApisServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthcareApisServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHealthcareApisService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthcareApisServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHealthcareApisService method.
     /// </summary>
     public partial class HealthcareApisServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HealthcareApisServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthcareApisServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthcareApisServiceResource(ArmClient client, HealthcareApisServiceData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisServicePrivateEndpointConnectionResources and their operations over a HealthcareApisServicePrivateEndpointConnectionResource. </returns>
         public virtual HealthcareApisServicePrivateEndpointConnectionCollection GetHealthcareApisServicePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new HealthcareApisServicePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HealthcareApisServicePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthcareApisServicePrivateEndpointConnectionResource>> GetHealthcareApisServicePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HealthcareApisServicePrivateEndpointConnectionResource> GetHealthcareApisServicePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisServicePrivateLinkResources and their operations over a HealthcareApisServicePrivateLinkResource. </returns>
         public virtual HealthcareApisServicePrivateLinkResourceCollection GetHealthcareApisServicePrivateLinkResources()
         {
-            return GetCachedClient(Client => new HealthcareApisServicePrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new HealthcareApisServicePrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthcareApisServicePrivateLinkResource>> GetHealthcareApisServicePrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HealthcareApisServicePrivateLinkResource> GetHealthcareApisServicePrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {

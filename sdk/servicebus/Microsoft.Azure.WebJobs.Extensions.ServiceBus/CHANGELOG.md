@@ -8,7 +8,18 @@
 
 ### Bugs Fixed
 
+- Fixed cleanup behavior when targeting .NET Framework so that Service Bus clients are properly disposed.
+
 ### Other Changes
+
+- Updated the `Azure.Messaging.ServiceBus` dependency, which includes optimized defaults of the host platform to be used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  This update also enables support for TLS 1.3.
+
+## 5.13.4 (2023-11-09)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.
+  Identity`.
 
 ## 5.13.3 (2023-10-20)
 

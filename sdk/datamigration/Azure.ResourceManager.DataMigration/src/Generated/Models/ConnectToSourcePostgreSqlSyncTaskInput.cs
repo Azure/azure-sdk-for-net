@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to PostgreSQL and source server requirements. </summary>
     internal partial class ConnectToSourcePostgreSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToSourcePostgreSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourcePostgreSqlSyncTaskInput(PostgreSqlConnectionInfo sourceConnectionInfo)

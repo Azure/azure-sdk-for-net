@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AssociationResource" /> and their operations.
-    /// Each <see cref="AssociationResource" /> in the collection will belong to the same instance of <see cref="TrafficControllerResource" />.
-    /// To get an <see cref="AssociationCollection" /> instance call the GetAssociations method from an instance of <see cref="TrafficControllerResource" />.
+    /// A class representing a collection of <see cref="AssociationResource"/> and their operations.
+    /// Each <see cref="AssociationResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
+    /// To get an <see cref="AssociationCollection"/> instance call the GetAssociations method from an instance of <see cref="TrafficControllerResource"/>.
     /// </summary>
     public partial class AssociationCollection : ArmCollection, IEnumerable<AssociationResource>, IAsyncEnumerable<AssociationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AssociationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AssociationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

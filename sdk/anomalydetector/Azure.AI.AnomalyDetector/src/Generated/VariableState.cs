@@ -12,12 +12,12 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Variable status. </summary>
     public partial class VariableState
     {
-        /// <summary> Initializes a new instance of VariableState. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableState"/>. </summary>
         public VariableState()
         {
         }
 
-        /// <summary> Initializes a new instance of VariableState. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableState"/>. </summary>
         /// <param name="variable"> Variable name in variable states. </param>
         /// <param name="filledNARatio"> Proportion of missing values that need to be filled by fillNAMethod. </param>
         /// <param name="effectiveCount"> Number of effective data points before fillNAMethod is applied. </param>

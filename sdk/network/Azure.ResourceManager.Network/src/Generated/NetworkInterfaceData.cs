@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkInterfaceData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceData"/>. </summary>
         public NetworkInterfaceData()
         {
             IPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
             HostedWorkloads = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

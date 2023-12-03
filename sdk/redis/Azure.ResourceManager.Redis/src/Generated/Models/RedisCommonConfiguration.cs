@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc. </summary>
     public partial class RedisCommonConfiguration
     {
-        /// <summary> Initializes a new instance of RedisCommonConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCommonConfiguration"/>. </summary>
         public RedisCommonConfiguration()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RedisCommonConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCommonConfiguration"/>. </summary>
         /// <param name="isRdbBackupEnabled"> Specifies whether the rdb backup is enabled. </param>
         /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </param>
         /// <param name="rdbBackupMaxSnapshotCount"> Specifies the maximum number of snapshots for rdb backup. </param>

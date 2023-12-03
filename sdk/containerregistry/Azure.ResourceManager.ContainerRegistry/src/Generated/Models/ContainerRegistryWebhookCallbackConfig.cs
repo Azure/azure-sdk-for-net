@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The configuration of service URI and custom headers for the webhook. </summary>
     public partial class ContainerRegistryWebhookCallbackConfig
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookCallbackConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCallbackConfig"/>. </summary>
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceUri"/> is null. </exception>
         internal ContainerRegistryWebhookCallbackConfig(Uri serviceUri)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             CustomHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookCallbackConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCallbackConfig"/>. </summary>
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
         /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
         internal ContainerRegistryWebhookCallbackConfig(Uri serviceUri, IReadOnlyDictionary<string, string> customHeaders)

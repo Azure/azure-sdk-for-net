@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereDeviceInsight
     {
-        /// <summary> Initializes a new instance of SphereDeviceInsight. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/>. </summary>
         /// <param name="deviceId">
         /// Device ID
         /// Serialized Name: DeviceInsight.deviceId

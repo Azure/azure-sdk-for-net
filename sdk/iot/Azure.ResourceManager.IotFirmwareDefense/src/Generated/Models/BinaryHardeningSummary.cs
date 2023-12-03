@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Binary hardening summary percentages. </summary>
     public partial class BinaryHardeningSummary
     {
-        /// <summary> Initializes a new instance of BinaryHardeningSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummary"/>. </summary>
         internal BinaryHardeningSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of BinaryHardeningSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummary"/>. </summary>
         /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
         /// <param name="nx"> NX summary percentage. </param>
         /// <param name="pie"> PIE summary percentage. </param>

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing an AuthorizationPolicyResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AuthorizationPolicyResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAuthorizationPolicyResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetAuthorizationPolicyResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AuthorizationPolicyResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAuthorizationPolicyResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetAuthorizationPolicyResourceFormat method.
     /// </summary>
     public partial class AuthorizationPolicyResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AuthorizationPolicyResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="authorizationPolicyName"> The authorizationPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string authorizationPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/authorizationPolicies/{authorizationPolicyName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AuthorizationPolicyResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AuthorizationPolicyResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AuthorizationPolicyResourceFormatResource(ArmClient client, AuthorizationPolicyResourceFormatData data) : this(client, data.Id)

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
     /// A Class representing a DnsForwardingRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsForwardingRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDnsForwardingRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsForwardingRulesetResource" /> using the GetDnsForwardingRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsForwardingRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDnsForwardingRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsForwardingRulesetResource"/> using the GetDnsForwardingRule method.
     /// </summary>
     public partial class DnsForwardingRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DnsForwardingRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="rulesetName"> The rulesetName. </param>
+        /// <param name="forwardingRuleName"> The forwardingRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{rulesetName}/forwardingRules/{forwardingRuleName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DnsForwardingRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsForwardingRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DnsForwardingRuleResource(ArmClient client, DnsForwardingRuleData data) : this(client, data.Id)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Details related to the IPv6 address configuration. </summary>
     public partial class DataBoxEdgeIPv6Config
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeIPv6Config. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeIPv6Config"/>. </summary>
         internal DataBoxEdgeIPv6Config()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeIPv6Config. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeIPv6Config"/>. </summary>
         /// <param name="ipAddress"> The IPv6 address of the network adapter. </param>
         /// <param name="prefixLength"> The IPv6 prefix of the network adapter. </param>
         /// <param name="gateway"> The IPv6 gateway of the network adapter. </param>

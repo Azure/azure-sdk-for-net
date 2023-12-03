@@ -20,13 +20,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a ReplicationProtectedItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReplicationProtectedItemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReplicationProtectedItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource" /> using the GetReplicationProtectedItem method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReplicationProtectedItemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetReplicationProtectedItemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetReplicationProtectedItem method.
     /// </summary>
     public partial class ReplicationProtectedItemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReplicationProtectedItemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="protectionContainerName"> The protectionContainerName. </param>
+        /// <param name="replicatedProtectedItemName"> The replicatedProtectedItemName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectedItems/{replicatedProtectedItemName}";
@@ -44,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ReplicationProtectedItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReplicationProtectedItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReplicationProtectedItemResource(ArmClient client, ReplicationProtectedItemData data) : this(client, data.Id)
@@ -96,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryPointResources and their operations over a SiteRecoveryPointResource. </returns>
         public virtual SiteRecoveryPointCollection GetSiteRecoveryPoints()
         {
-            return GetCachedClient(Client => new SiteRecoveryPointCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryPointCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +120,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryPointResource>> GetSiteRecoveryPointAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +143,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryPointResource> GetSiteRecoveryPoint(string recoveryPointName, CancellationToken cancellationToken = default)
         {
@@ -1559,7 +1565,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TargetComputeSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TargetComputeSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TargetComputeSize> GetTargetComputeSizesByReplicationProtectedItemsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetComputeSizesRestClient.CreateListByReplicationProtectedItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -1581,7 +1587,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TargetComputeSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TargetComputeSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TargetComputeSize> GetTargetComputeSizesByReplicationProtectedItems(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetComputeSizesRestClient.CreateListByReplicationProtectedItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

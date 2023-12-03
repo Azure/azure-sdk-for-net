@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing a HybridComputePrivateLinkScope along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridComputePrivateLinkScopeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridComputePrivateLinkScopeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHybridComputePrivateLinkScope method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputePrivateLinkScopeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputePrivateLinkScopeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHybridComputePrivateLinkScope method.
     /// </summary>
     public partial class HybridComputePrivateLinkScopeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridComputePrivateLinkScopeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scopeName"> The scopeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scopeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridComputePrivateLinkScopeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridComputePrivateLinkScopeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputePrivateLinkScopeResource(ArmClient client, HybridComputePrivateLinkScopeData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An object representing collection of HybridComputePrivateLinkResources and their operations over a HybridComputePrivateLinkResource. </returns>
         public virtual HybridComputePrivateLinkResourceCollection GetHybridComputePrivateLinkResources()
         {
-            return GetCachedClient(Client => new HybridComputePrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new HybridComputePrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridComputePrivateLinkResource>> GetHybridComputePrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridComputePrivateLinkResource> GetHybridComputePrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An object representing collection of HybridComputePrivateEndpointConnectionResources and their operations over a HybridComputePrivateEndpointConnectionResource. </returns>
         public virtual HybridComputePrivateEndpointConnectionCollection GetHybridComputePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new HybridComputePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HybridComputePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridComputePrivateEndpointConnectionResource>> GetHybridComputePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridComputePrivateEndpointConnectionResource> GetHybridComputePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {

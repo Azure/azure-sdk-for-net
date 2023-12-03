@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SuppressionContractResource" /> and their operations.
-    /// Each <see cref="SuppressionContractResource" /> in the collection will belong to the same instance of <see cref="ResourceRecommendationBaseResource" />.
-    /// To get a <see cref="SuppressionContractCollection" /> instance call the GetSuppressionContracts method from an instance of <see cref="ResourceRecommendationBaseResource" />.
+    /// A class representing a collection of <see cref="SuppressionContractResource"/> and their operations.
+    /// Each <see cref="SuppressionContractResource"/> in the collection will belong to the same instance of <see cref="ResourceRecommendationBaseResource"/>.
+    /// To get a <see cref="SuppressionContractCollection"/> instance call the GetSuppressionContracts method from an instance of <see cref="ResourceRecommendationBaseResource"/>.
     /// </summary>
     public partial class SuppressionContractCollection : ArmCollection
     {

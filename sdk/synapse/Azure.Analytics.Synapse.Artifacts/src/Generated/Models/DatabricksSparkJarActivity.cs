@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> DatabricksSparkJar activity. </summary>
     public partial class DatabricksSparkJarActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DatabricksSparkJarActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkJarActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="mainClassName"> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mainClassName"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "DatabricksSparkJar";
         }
 
-        /// <summary> Initializes a new instance of DatabricksSparkJarActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkJarActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

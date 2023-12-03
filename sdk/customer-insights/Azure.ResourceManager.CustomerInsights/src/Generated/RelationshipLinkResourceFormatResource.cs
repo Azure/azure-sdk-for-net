@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a RelationshipLinkResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RelationshipLinkResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRelationshipLinkResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetRelationshipLinkResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelationshipLinkResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRelationshipLinkResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetRelationshipLinkResourceFormat method.
     /// </summary>
     public partial class RelationshipLinkResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RelationshipLinkResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="relationshipLinkName"> The relationshipLinkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string relationshipLinkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/relationshipLinks/{relationshipLinkName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RelationshipLinkResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RelationshipLinkResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RelationshipLinkResourceFormatResource(ArmClient client, RelationshipLinkResourceFormatData data) : this(client, data.Id)

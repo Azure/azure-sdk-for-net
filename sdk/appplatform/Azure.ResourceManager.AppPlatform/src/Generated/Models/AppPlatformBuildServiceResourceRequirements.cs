@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The runtime resource configuration of this build service. </summary>
     public partial class AppPlatformBuildServiceResourceRequirements
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceResourceRequirements"/>. </summary>
         public AppPlatformBuildServiceResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceResourceRequirements"/>. </summary>
         /// <param name="cpu"> vCPU allocated to the entire build service node pool. </param>
         /// <param name="memory"> Memory allocated to the entire build service node pool. </param>
         internal AppPlatformBuildServiceResourceRequirements(string cpu, string memory)

@@ -10,9 +10,24 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> AFDOrigin group properties needed for origin group creation or update. </summary>
     public partial class FrontDoorOriginGroupPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorOriginGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupPatch"/>. </summary>
         public FrontDoorOriginGroupPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupPatch"/>. </summary>
+        /// <param name="profileName"> The name of the profile which holds the origin group. </param>
+        /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
+        /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
+        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
+        /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
+        internal FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState)
+        {
+            ProfileName = profileName;
+            LoadBalancingSettings = loadBalancingSettings;
+            HealthProbeSettings = healthProbeSettings;
+            TrafficRestorationTimeInMinutes = trafficRestorationTimeInMinutes;
+            SessionAffinityState = sessionAffinityState;
         }
 
         /// <summary> The name of the profile which holds the origin group. </summary>

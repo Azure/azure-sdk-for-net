@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Peering
 {
     /// <summary>
     /// A Class representing a PeeringRegisteredPrefix along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PeeringRegisteredPrefixResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPeeringRegisteredPrefixResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PeeringResource" /> using the GetPeeringRegisteredPrefix method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeeringRegisteredPrefixResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPeeringRegisteredPrefixResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PeeringResource"/> using the GetPeeringRegisteredPrefix method.
     /// </summary>
     public partial class PeeringRegisteredPrefixResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PeeringRegisteredPrefixResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="peeringName"> The peeringName. </param>
+        /// <param name="registeredPrefixName"> The registeredPrefixName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Peering
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PeeringRegisteredPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeeringRegisteredPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PeeringRegisteredPrefixResource(ArmClient client, PeeringRegisteredPrefixData data) : this(client, data.Id)

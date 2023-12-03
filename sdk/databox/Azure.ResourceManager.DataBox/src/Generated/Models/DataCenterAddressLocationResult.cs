@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Datacenter address for given storage location. </summary>
     public partial class DataCenterAddressLocationResult : DataCenterAddressResult
     {
-        /// <summary> Initializes a new instance of DataCenterAddressLocationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressLocationResult"/>. </summary>
         internal DataCenterAddressLocationResult()
         {
             DataCenterAddressType = DataCenterAddressType.DataCenterAddressLocation;
         }
 
-        /// <summary> Initializes a new instance of DataCenterAddressLocationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressLocationResult"/>. </summary>
         /// <param name="dataCenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>

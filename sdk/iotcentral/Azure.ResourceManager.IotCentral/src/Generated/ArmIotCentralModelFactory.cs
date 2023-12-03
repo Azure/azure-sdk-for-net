@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmIotCentralModelFactory
     {
-        /// <summary> Initializes a new instance of IotCentralAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentral.IotCentralAppData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             return new IotCentralAppData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new IotCentralAppSkuInfo(skuName.Value) : null, identity, provisioningState, applicationId, displayName, subdomain, template, state, publicNetworkAccess, networkRuleSets, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentral.IotCentralPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             return new IotCentralPrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentral.IotCentralPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             return new IotCentralPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotCentralAppNameAvailabilityResponse"/>. </summary>
         /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
         /// <param name="iotCentralAppNameUnavailableReason"> The reason for unavailability. </param>
         /// <param name="message"> The detailed reason message. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             return new IotCentralAppNameAvailabilityResponse(isNameAvailable, iotCentralAppNameUnavailableReason, message);
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotCentralAppTemplate"/>. </summary>
         /// <param name="manifestId"> The ID of the template. </param>
         /// <param name="manifestVersion"> The version of the template. </param>
         /// <param name="name"> The name of the template. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             return new IotCentralAppTemplate(manifestId, manifestVersion, name, title, order, description, industry, locations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppTemplateLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotCentralAppTemplateLocation"/>. </summary>
         /// <param name="location"> The ID of the location. </param>
         /// <param name="displayName"> The display name of the location. </param>
         /// <returns> A new <see cref="Models.IotCentralAppTemplateLocation"/> instance for mocking. </returns>

@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing an ExtensionValue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExtensionValueResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExtensionValueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetExtensionValue method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExtensionValueResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExtensionValueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetExtensionValue method.
     /// </summary>
     public partial class ExtensionValueResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExtensionValueResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="publisher"> The publisher. </param>
+        /// <param name="extensionType"> The extensionType. </param>
+        /// <param name="version"> The version. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExtensionValueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExtensionValueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExtensionValueResource(ArmClient client, ExtensionValueData data) : this(client, data.Id)

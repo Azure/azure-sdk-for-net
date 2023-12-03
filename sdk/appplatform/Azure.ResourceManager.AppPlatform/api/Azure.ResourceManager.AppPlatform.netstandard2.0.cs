@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.AppPlatform
     }
     public partial class AppPlatformServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppPlatformServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AppPlatformServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformSku Sku { get { throw null; } set { } }
     }
@@ -970,6 +970,60 @@ namespace Azure.ResourceManager.AppPlatform
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string stackName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppPlatform.AppPlatformSupportedStackResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.AppPlatformSupportedStackResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.AppPlatform.Mocking
+{
+    public partial class MockableAppPlatformArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppPlatformArmClient() { }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformApiPortalCustomDomainResource GetAppPlatformApiPortalCustomDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformApiPortalResource GetAppPlatformApiPortalResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformAppResource GetAppPlatformAppResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformBindingResource GetAppPlatformBindingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformBuilderResource GetAppPlatformBuilderResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformBuildpackBindingResource GetAppPlatformBuildpackBindingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformBuildResource GetAppPlatformBuildResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformBuildResultResource GetAppPlatformBuildResultResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformBuildServiceAgentPoolResource GetAppPlatformBuildServiceAgentPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformBuildServiceResource GetAppPlatformBuildServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformCertificateResource GetAppPlatformCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformConfigServerResource GetAppPlatformConfigServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformConfigurationServiceResource GetAppPlatformConfigurationServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformCustomDomainResource GetAppPlatformCustomDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformDeploymentResource GetAppPlatformDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformGatewayCustomDomainResource GetAppPlatformGatewayCustomDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformGatewayResource GetAppPlatformGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformGatewayRouteConfigResource GetAppPlatformGatewayRouteConfigResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformMonitoringSettingResource GetAppPlatformMonitoringSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformServiceRegistryResource GetAppPlatformServiceRegistryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformServiceResource GetAppPlatformServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformStorageResource GetAppPlatformStorageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformSupportedBuildpackResource GetAppPlatformSupportedBuildpackResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformSupportedStackResource GetAppPlatformSupportedStackResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableAppPlatformResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppPlatformResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.AppPlatform.AppPlatformServiceResource> GetAppPlatformService(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.AppPlatformServiceResource>> GetAppPlatformServiceAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformServiceCollection GetAppPlatformServices() { throw null; }
+    }
+    public partial class MockableAppPlatformSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppPlatformSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.AppPlatform.Models.AppPlatformNameAvailabilityResult> CheckAppPlatformNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.AppPlatformNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.AppPlatformNameAvailabilityResult>> CheckAppPlatformNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.AppPlatformNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppPlatform.AppPlatformServiceResource> GetAppPlatformServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppPlatform.AppPlatformServiceResource> GetAppPlatformServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppPlatform.Models.AvailableAppPlatformSku> GetSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppPlatform.Models.AvailableAppPlatformSku> GetSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableAppPlatformTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppPlatformTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.AppPlatform.Models

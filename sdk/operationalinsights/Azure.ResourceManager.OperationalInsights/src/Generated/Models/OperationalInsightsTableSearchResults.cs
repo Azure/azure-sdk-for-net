@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Parameters of the search job that initiated this table. </summary>
     public partial class OperationalInsightsTableSearchResults
     {
-        /// <summary> Initializes a new instance of OperationalInsightsTableSearchResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableSearchResults"/>. </summary>
         public OperationalInsightsTableSearchResults()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableSearchResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableSearchResults"/>. </summary>
         /// <param name="query"> Search job query. </param>
         /// <param name="description"> Search job Description. </param>
         /// <param name="limit"> Limit the search job to return up to specified number of rows. </param>

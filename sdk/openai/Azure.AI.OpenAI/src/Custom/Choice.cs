@@ -20,7 +20,7 @@ namespace Azure.AI.OpenAI
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
         /// <param name="finishReason"> Reason for finishing. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="logProbabilityModel"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal Choice(string text, int index, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason finishReason)
         {
             Argument.AssertNotNull(text, nameof(text));

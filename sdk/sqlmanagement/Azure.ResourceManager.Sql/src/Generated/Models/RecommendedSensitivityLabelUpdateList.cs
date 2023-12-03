@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of recommended sensitivity label update operations. </summary>
     public partial class RecommendedSensitivityLabelUpdateList
     {
-        /// <summary> Initializes a new instance of RecommendedSensitivityLabelUpdateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedSensitivityLabelUpdateList"/>. </summary>
         public RecommendedSensitivityLabelUpdateList()
         {
             Operations = new ChangeTrackingList<RecommendedSensitivityLabelUpdate>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecommendedSensitivityLabelUpdateList"/>. </summary>
+        /// <param name="operations"></param>
+        internal RecommendedSensitivityLabelUpdateList(IList<RecommendedSensitivityLabelUpdate> operations)
+        {
+            Operations = operations;
         }
 
         /// <summary> Gets the operations. </summary>

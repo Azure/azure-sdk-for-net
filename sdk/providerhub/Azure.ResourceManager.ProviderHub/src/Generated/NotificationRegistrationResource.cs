@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
     /// A Class representing a NotificationRegistration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NotificationRegistrationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNotificationRegistrationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource" /> using the GetNotificationRegistration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NotificationRegistrationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNotificationRegistrationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource"/> using the GetNotificationRegistration method.
     /// </summary>
     public partial class NotificationRegistrationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NotificationRegistrationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
+        /// <param name="notificationRegistrationName"> The notificationRegistrationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string notificationRegistrationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NotificationRegistrationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NotificationRegistrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NotificationRegistrationResource(ArmClient client, NotificationRegistrationData data) : this(client, data.Id)

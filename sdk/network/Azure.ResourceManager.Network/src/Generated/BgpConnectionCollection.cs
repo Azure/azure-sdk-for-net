@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BgpConnectionResource" /> and their operations.
-    /// Each <see cref="BgpConnectionResource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
-    /// To get a <see cref="BgpConnectionCollection" /> instance call the GetBgpConnections method from an instance of <see cref="VirtualHubResource" />.
+    /// A class representing a collection of <see cref="BgpConnectionResource"/> and their operations.
+    /// Each <see cref="BgpConnectionResource"/> in the collection will belong to the same instance of <see cref="VirtualHubResource"/>.
+    /// To get a <see cref="BgpConnectionCollection"/> instance call the GetBgpConnections method from an instance of <see cref="VirtualHubResource"/>.
     /// </summary>
     public partial class BgpConnectionCollection : ArmCollection, IEnumerable<BgpConnectionResource>, IAsyncEnumerable<BgpConnectionResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BgpConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BgpConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BgpConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BgpConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BgpConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BgpConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

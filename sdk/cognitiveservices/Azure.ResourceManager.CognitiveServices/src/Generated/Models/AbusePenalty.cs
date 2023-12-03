@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The abuse penalty. </summary>
     public partial class AbusePenalty
     {
-        /// <summary> Initializes a new instance of AbusePenalty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbusePenalty"/>. </summary>
         internal AbusePenalty()
         {
         }
 
-        /// <summary> Initializes a new instance of AbusePenalty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbusePenalty"/>. </summary>
         /// <param name="action"> The action of AbusePenalty. </param>
         /// <param name="rateLimitPercentage"> The percentage of rate limit. </param>
         /// <param name="expiration"> The datetime of expiration of the AbusePenalty. </param>

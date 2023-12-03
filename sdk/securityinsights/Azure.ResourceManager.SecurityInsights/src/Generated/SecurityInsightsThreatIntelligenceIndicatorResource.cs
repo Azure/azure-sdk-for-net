@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A Class representing a SecurityInsightsThreatIntelligenceIndicator along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsThreatIntelligenceIndicatorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsThreatIntelligenceIndicator method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsThreatIntelligenceIndicatorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsThreatIntelligenceIndicator method.
     /// </summary>
     public partial class SecurityInsightsThreatIntelligenceIndicatorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsThreatIntelligenceIndicatorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsThreatIntelligenceIndicatorResource(ArmClient client, SecurityInsightsThreatIntelligenceIndicatorBaseData data) : this(client, data.Id)

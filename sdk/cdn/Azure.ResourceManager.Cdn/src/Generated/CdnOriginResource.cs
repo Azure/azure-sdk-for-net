@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a CdnOrigin along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CdnOriginResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCdnOriginResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CdnEndpointResource" /> using the GetCdnOrigin method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CdnOriginResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCdnOriginResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CdnEndpointResource"/> using the GetCdnOrigin method.
     /// </summary>
     public partial class CdnOriginResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CdnOriginResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
+        /// <param name="originName"> The originName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string originName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CdnOriginResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnOriginResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CdnOriginResource(ArmClient client, CdnOriginData data) : this(client, data.Id)

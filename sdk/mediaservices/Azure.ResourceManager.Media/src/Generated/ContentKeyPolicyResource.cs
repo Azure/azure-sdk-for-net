@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a ContentKeyPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContentKeyPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContentKeyPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetContentKeyPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContentKeyPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContentKeyPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource"/> using the GetContentKeyPolicy method.
     /// </summary>
     public partial class ContentKeyPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContentKeyPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="contentKeyPolicyName"> The contentKeyPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Media
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContentKeyPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContentKeyPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContentKeyPolicyResource(ArmClient client, ContentKeyPolicyData data) : this(client, data.Id)

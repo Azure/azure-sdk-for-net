@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The IP filter rules for the IoT hub. </summary>
     public partial class IotHubIPFilterRule
     {
-        /// <summary> Initializes a new instance of IotHubIPFilterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubIPFilterRule"/>. </summary>
         /// <param name="filterName"> The name of the IP filter rule. </param>
         /// <param name="action"> The desired action for requests captured by this rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>

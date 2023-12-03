@@ -755,13 +755,17 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // was passed.  In the event that initialization is run and encounters an
                 // exception, it takes responsibility for firing the error handler.
 
-                var (startingPosition, checkpointUsed) = startingPositionOverride switch
+                var (startingPosition, checkpoint) = startingPositionOverride switch
                 {
-                    _ when startingPositionOverride.HasValue => (startingPositionOverride.Value, false),
+                    _ when startingPositionOverride.HasValue => (startingPositionOverride.Value, null),
                     _ => await InitializePartitionForProcessingAsync(partition, cancellationSource.Token).ConfigureAwait(false)
                 };
 
-                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed);
+                var checkpointUsed = (checkpoint != null);
+                var checkpointLastModified = checkpointUsed ? checkpoint.LastModified : null;
+                var checkpointAuthor = checkpointUsed ? checkpoint.ClientIdentifier : null;
+
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed, checkpointLastModified, checkpointAuthor);
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -1071,9 +1075,22 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
+                                                     CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken);
+
+        /// <summary>
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
+        /// </summary>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        protected virtual Task UpdateCheckpointAsync(string partitionId,
+                                                     CheckpointPosition checkpointStartingPosition,
                                                      CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
@@ -1112,16 +1129,15 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
         /// <remarks>
-        ///   The number of events in the <paramref name="events"/> batch may vary.  The batch will contain a number of events between zero and batch size that was
-        ///   requested when the processor was created, depending on the availability of events in the partition within the requested <see cref="EventProcessorOptions.MaximumWaitTime"/>
-        ///   interval.
+        ///   The number of events in the <paramref name="events"/> batch may vary, with the batch containing between zero and maximum batch size that was specified when the processor was created.
+        ///   The actual number of events in a batch depends on the number events available in the processor's prefetch queue at the time when a read takes place.
         ///
-        ///   When events are available in the prefetch queue, they will be used to form the batch as quickly as possible without waiting for additional events from the Event Hub partition
-        ///   to be read.  When no events are available in prefetch the processor will wait until at least one event is available or the requested <see cref="EventProcessorOptions.MaximumWaitTime"/>
-        ///   has elapsed.
+        ///   When at least one event is available in the prefetch queue, they will be used to form the batch as close to the requested maximum batch size as possible without waiting for additional
+        ///   events from the Event Hub partition to be read.  When no events are available in prefetch the processor will wait until at least one event is available or the requested
+        ///   <see cref="EventProcessorOptions.MaximumWaitTime"/> has elapsed, after which the batch will be dispatched for processing.
         ///
-        ///   If <see cref="EventProcessorOptions.MaximumWaitTime"/> is <c>null</c>, the event processor will continue reading from the Event Hub
-        ///   partition until a batch with at least one event could be formed and will not dispatch any empty batches to this method.
+        ///   If <see cref="EventProcessorOptions.MaximumWaitTime"/> is <c>null</c>, the processor will continue trying to read from the Event Hub partition until a batch with at least one event could
+        ///   be formed and will not dispatch any empty batches to this method.
         ///
         ///   This method will be invoked concurrently, limited to one call per partition. The processor will await each invocation to ensure
         ///   that the events from the same partition are processed in the order that they were read from the partition.  No time limit is
@@ -1814,8 +1830,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   exception will then be bubbled to callers.
         /// </remarks>
         ///
-        private async Task<(EventPosition Position, bool CheckpointUsed)> InitializePartitionForProcessingAsync(TPartition partition,
-                                                                                                                CancellationToken cancellationToken)
+        private async Task<(EventPosition Position, EventProcessorCheckpoint CheckpointUsed)> InitializePartitionForProcessingAsync(TPartition partition,
+                                                                                                                                    CancellationToken cancellationToken)
         {
             var operationDescription = Resources.OperationClaimOwnership;
 
@@ -1836,10 +1852,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if (checkpoint != null)
                 {
-                    return (checkpoint.StartingPosition, true);
+                    return (checkpoint.StartingPosition, checkpoint);
                 }
 
-                return (Options.DefaultStartingPosition, false);
+                return (Options.DefaultStartingPosition, null);
             }
             catch (Exception ex)
             {
@@ -2193,17 +2209,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
             /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-            /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-            /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+            /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+            /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
             ///
             public async override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
                                                              string eventHubName,
                                                              string consumerGroup,
                                                              string partitionId,
-                                                             long offset,
-                                                             long? sequenceNumber,
-                                                             CancellationToken cancellationToken) => await Processor.UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken).ConfigureAwait(false);
+                                                             string clientIdentifier,
+                                                             CheckpointPosition checkpointStartingPosition,
+                                                             CancellationToken cancellationToken) => await Processor.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ReplicationProtectionIntentResource" /> and their operations.
-    /// Each <see cref="ReplicationProtectionIntentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ReplicationProtectionIntentCollection" /> instance call the GetReplicationProtectionIntents method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ReplicationProtectionIntentResource"/> and their operations.
+    /// Each <see cref="ReplicationProtectionIntentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ReplicationProtectionIntentCollection"/> instance call the GetReplicationProtectionIntents method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ReplicationProtectionIntentCollection : ArmCollection, IEnumerable<ReplicationProtectionIntentResource>, IAsyncEnumerable<ReplicationProtectionIntentResource>
     {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="skipToken"> The pagination token. </param>
         /// <param name="takeToken"> The page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReplicationProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReplicationProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationProtectionIntentResource> GetAllAsync(string skipToken = null, string takeToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="skipToken"> The pagination token. </param>
         /// <param name="takeToken"> The page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReplicationProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReplicationProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationProtectionIntentResource> GetAll(string skipToken = null, string takeToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);

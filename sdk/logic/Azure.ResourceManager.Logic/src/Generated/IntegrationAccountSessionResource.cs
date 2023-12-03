@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationAccountSession along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationAccountSessionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationAccountSessionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource" /> using the GetIntegrationAccountSession method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationAccountSessionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationAccountSessionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource"/> using the GetIntegrationAccountSession method.
     /// </summary>
     public partial class IntegrationAccountSessionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IntegrationAccountSessionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="integrationAccountName"> The integrationAccountName. </param>
+        /// <param name="sessionName"> The sessionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string integrationAccountName, string sessionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/sessions/{sessionName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountSessionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationAccountSessionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationAccountSessionResource(ArmClient client, IntegrationAccountSessionData data) : this(client, data.Id)

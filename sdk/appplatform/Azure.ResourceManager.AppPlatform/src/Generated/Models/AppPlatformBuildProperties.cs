@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Build resource properties payload. </summary>
     public partial class AppPlatformBuildProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildProperties"/>. </summary>
         public AppPlatformBuildProperties()
         {
             Env = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildProperties"/>. </summary>
         /// <param name="relativePath"> The relative path of source code. </param>
         /// <param name="builder"> The resource id of builder to build the source code. </param>
         /// <param name="agentPool"> The resource id of agent pool. </param>

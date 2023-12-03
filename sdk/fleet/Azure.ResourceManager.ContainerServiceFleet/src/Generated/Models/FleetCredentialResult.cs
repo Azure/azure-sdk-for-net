@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> One credential result item. </summary>
     public partial class FleetCredentialResult
     {
-        /// <summary> Initializes a new instance of FleetCredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetCredentialResult"/>. </summary>
         internal FleetCredentialResult()
         {
         }
 
-        /// <summary> Initializes a new instance of FleetCredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetCredentialResult"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         internal FleetCredentialResult(string name, byte[] value)

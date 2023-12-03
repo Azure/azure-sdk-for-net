@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkServiceResource" /> using the GetNetworkPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkServiceResource"/> using the GetNetworkPrivateEndpointConnection method.
     /// </summary>
     public partial class NetworkPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="peConnectionName"> The peConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkPrivateEndpointConnectionResource(ArmClient client, NetworkPrivateEndpointConnectionData data) : this(client, data.Id)

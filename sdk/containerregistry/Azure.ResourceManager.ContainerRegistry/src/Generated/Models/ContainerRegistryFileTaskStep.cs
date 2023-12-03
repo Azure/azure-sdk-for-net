@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a task step. </summary>
     public partial class ContainerRegistryFileTaskStep : ContainerRegistryTaskStepProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryFileTaskStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryFileTaskStep"/>. </summary>
         /// <param name="taskFilePath"> The task template/definition file path relative to the source context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskFilePath"/> is null. </exception>
         public ContainerRegistryFileTaskStep(string taskFilePath)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryTaskStepType = ContainerRegistryTaskStepType.FileTask;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryFileTaskStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryFileTaskStep"/>. </summary>
         /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>

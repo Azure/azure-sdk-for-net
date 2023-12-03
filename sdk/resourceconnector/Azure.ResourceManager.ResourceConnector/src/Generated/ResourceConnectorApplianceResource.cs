@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ResourceConnector
 {
     /// <summary>
     /// A Class representing a ResourceConnectorAppliance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceConnectorApplianceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceConnectorApplianceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceConnectorAppliance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceConnectorApplianceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceConnectorApplianceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetResourceConnectorAppliance method.
     /// </summary>
     public partial class ResourceConnectorApplianceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceConnectorApplianceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ResourceConnector
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceConnectorApplianceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceConnectorApplianceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceConnectorApplianceResource(ArmClient client, ResourceConnectorApplianceData data) : this(client, data.Id)

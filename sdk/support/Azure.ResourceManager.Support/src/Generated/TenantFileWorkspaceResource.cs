@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a TenantFileWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantFileWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantFileWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantFileWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantFileWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantFileWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantFileWorkspace method.
     /// </summary>
     public partial class TenantFileWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantFileWorkspaceResource"/> instance. </summary>
+        /// <param name="fileWorkspaceName"> The fileWorkspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string fileWorkspaceName)
         {
             var resourceId = $"/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}";
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Support
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantFileWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantFileWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantFileWorkspaceResource(ArmClient client, FileWorkspaceDetailData data) : this(client, data.Id)
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketNoSubFileResources and their operations over a SupportTicketNoSubFileResource. </returns>
         public virtual SupportTicketNoSubFileCollection GetSupportTicketNoSubFiles()
         {
-            return GetCachedClient(Client => new SupportTicketNoSubFileCollection(Client, Id));
+            return GetCachedClient(client => new SupportTicketNoSubFileCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +110,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="fileName"> File Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SupportTicketNoSubFileResource>> GetSupportTicketNoSubFileAsync(string fileName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +133,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="fileName"> File Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SupportTicketNoSubFileResource> GetSupportTicketNoSubFile(string fileName, CancellationToken cancellationToken = default)
         {

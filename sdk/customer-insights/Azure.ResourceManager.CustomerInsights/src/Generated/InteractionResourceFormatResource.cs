@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing an InteractionResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="InteractionResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetInteractionResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetInteractionResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="InteractionResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetInteractionResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetInteractionResourceFormat method.
     /// </summary>
     public partial class InteractionResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="InteractionResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="interactionName"> The interactionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string interactionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "InteractionResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InteractionResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal InteractionResourceFormatResource(ArmClient client, InteractionResourceFormatData data) : this(client, data.Id)

@@ -21,13 +21,18 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteInstanceProcess along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteInstanceProcessResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteInstanceProcessResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteInstanceResource" /> using the GetSiteInstanceProcess method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteInstanceProcessResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteInstanceProcessResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteInstanceResource"/> using the GetSiteInstanceProcess method.
     /// </summary>
     public partial class SiteInstanceProcessResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteInstanceProcessResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="instanceId"> The instanceId. </param>
+        /// <param name="processId"> The processId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}";
@@ -43,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteInstanceProcessResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteInstanceProcessResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteInstanceProcessResource(ArmClient client, ProcessInfoData data) : this(client, data.Id)
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteInstanceProcessModuleResources and their operations over a SiteInstanceProcessModuleResource. </returns>
         public virtual SiteInstanceProcessModuleCollection GetSiteInstanceProcessModules()
         {
-            return GetCachedClient(Client => new SiteInstanceProcessModuleCollection(Client, Id));
+            return GetCachedClient(client => new SiteInstanceProcessModuleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +116,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteInstanceProcessModuleResource>> GetSiteInstanceProcessModuleAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
@@ -134,8 +139,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteInstanceProcessModuleResource> GetSiteInstanceProcessModule(string baseAddress, CancellationToken cancellationToken = default)
         {
@@ -348,7 +353,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProcessThreadInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProcessThreadInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProcessThreadInfo> GetInstanceProcessThreadsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -370,7 +375,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProcessThreadInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProcessThreadInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProcessThreadInfo> GetInstanceProcessThreads(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Information about a specific sku. </summary>
     public partial class SkuDescription
     {
-        /// <summary> Initializes a new instance of SkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDescription"/>. </summary>
         internal SkuDescription()
         {
             Targets = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Quantum.Models
             PricingDetails = new ChangeTrackingList<PricingDetail>();
         }
 
-        /// <summary> Initializes a new instance of SkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDescription"/>. </summary>
         /// <param name="id"> Unique sku id. </param>
         /// <param name="name"> Display name of this sku. </param>
         /// <param name="version"> Display name of this sku. </param>

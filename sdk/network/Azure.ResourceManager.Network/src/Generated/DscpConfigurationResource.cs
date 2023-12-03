@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a DscpConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DscpConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDscpConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDscpConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DscpConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDscpConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDscpConfiguration method.
     /// </summary>
     public partial class DscpConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DscpConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="dscpConfigurationName"> The dscpConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dscpConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}";
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DscpConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DscpConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DscpConfigurationResource(ArmClient client, DscpConfigurationData data) : this(client, data.Id)

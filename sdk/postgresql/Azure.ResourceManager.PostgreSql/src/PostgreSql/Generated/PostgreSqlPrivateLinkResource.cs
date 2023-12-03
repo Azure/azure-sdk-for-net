@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
     /// A Class representing a PostgreSqlPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource" /> using the GetPostgreSqlPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource"/> using the GetPostgreSqlPrivateLinkResource method.
     /// </summary>
     public partial class PostgreSqlPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostgreSqlPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="groupName"> The groupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/privateLinkResources/{groupName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlPrivateLinkResource(ArmClient client, PostgreSqlPrivateLinkResourceData data) : this(client, data.Id)

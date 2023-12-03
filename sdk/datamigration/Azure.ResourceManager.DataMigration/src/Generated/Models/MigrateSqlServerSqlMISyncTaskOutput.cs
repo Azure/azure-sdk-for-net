@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// </summary>
     public abstract partial class MigrateSqlServerSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
         protected MigrateSqlServerSqlMISyncTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal MigrateSqlServerSqlMISyncTaskOutput(string id, string resultType)

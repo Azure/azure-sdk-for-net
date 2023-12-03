@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class ApplicationInsightsComponentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResourceContent>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

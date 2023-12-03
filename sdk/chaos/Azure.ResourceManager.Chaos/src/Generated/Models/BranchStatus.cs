@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the a list of actions and action statuses. </summary>
     public partial class BranchStatus
     {
-        /// <summary> Initializes a new instance of BranchStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="BranchStatus"/>. </summary>
         internal BranchStatus()
         {
             Actions = new ChangeTrackingList<ActionStatus>();
         }
 
-        /// <summary> Initializes a new instance of BranchStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="BranchStatus"/>. </summary>
         /// <param name="branchName"> The name of the branch status. </param>
         /// <param name="branchId"> The id of the branch status. </param>
         /// <param name="status"> The status of the branch. </param>

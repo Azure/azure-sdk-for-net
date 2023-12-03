@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a BlobContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BlobContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBlobContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BlobServiceResource" /> using the GetBlobContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BlobContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBlobContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BlobServiceResource"/> using the GetBlobContainer method.
     /// </summary>
     public partial class BlobContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BlobContainerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="containerName"> The containerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string containerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BlobContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BlobContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BlobContainerResource(ArmClient client, BlobContainerData data) : this(client, data.Id)
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets an object representing a ImmutabilityPolicyResource along with the instance operations that can be performed on it in the BlobContainer. </summary>
-        /// <returns> Returns a <see cref="ImmutabilityPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ImmutabilityPolicyResource"/> object. </returns>
         public virtual ImmutabilityPolicyResource GetImmutabilityPolicy()
         {
             return new ImmutabilityPolicyResource(Client, Id.AppendChildResource("immutabilityPolicies", "default"));

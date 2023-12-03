@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a DatabaseMigrationSqlDB along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatabaseMigrationSqlDBResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDatabaseMigrationSqlDBResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDatabaseMigrationSqlDB method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseMigrationSqlDBResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDatabaseMigrationSqlDBResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDatabaseMigrationSqlDB method.
     /// </summary>
     public partial class DatabaseMigrationSqlDBResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DatabaseMigrationSqlDBResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sqlDBInstanceName"> The sqlDBInstanceName. </param>
+        /// <param name="targetDBName"> The targetDBName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDBName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatabaseMigrationSqlDBResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlDBResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatabaseMigrationSqlDBResource(ArmClient client, DatabaseMigrationSqlDBData data) : this(client, data.Id)

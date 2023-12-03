@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.ExportRDBCompleted event. </summary>
     public partial class RedisExportRdbCompletedEventData
     {
-        /// <summary> Initializes a new instance of RedisExportRdbCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisExportRdbCompletedEventData"/>. </summary>
         internal RedisExportRdbCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisExportRdbCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisExportRdbCompletedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="name"> The name of this event. </param>
         /// <param name="status"> The status of this event. Failed or  succeeded. </param>

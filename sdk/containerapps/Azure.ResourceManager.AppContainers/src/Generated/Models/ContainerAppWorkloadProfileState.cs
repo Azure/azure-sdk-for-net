@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Collection of all the workload Profile States for a Managed Environment.. </summary>
     public partial class ContainerAppWorkloadProfileState : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfileState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfileState"/>. </summary>
         public ContainerAppWorkloadProfileState()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfileState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfileState"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

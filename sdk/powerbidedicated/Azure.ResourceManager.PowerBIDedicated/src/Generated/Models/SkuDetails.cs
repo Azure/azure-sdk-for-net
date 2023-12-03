@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> An object that represents SKU details for existing resources. </summary>
     public partial class SkuDetails
     {
-        /// <summary> Initializes a new instance of SkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDetails"/>. </summary>
         internal SkuDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDetails"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         internal SkuDetails(string resourceType, CapacitySku sku)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines reference to subnet. </summary>
     public partial class SubnetReferenceInfo : ProxyResourceReferenceInfo
     {
-        /// <summary> Initializes a new instance of SubnetReferenceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetReferenceInfo"/>. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         public SubnetReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
         }
 
-        /// <summary> Initializes a new instance of SubnetReferenceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetReferenceInfo"/>. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <param name="name"> Gets the name of the proxy resource on the target side. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>

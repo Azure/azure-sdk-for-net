@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusSubscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusSubscriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusTopicResource" /> using the GetServiceBusSubscription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusSubscriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusTopicResource"/> using the GetServiceBusSubscription method.
     /// </summary>
     public partial class ServiceBusSubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceBusSubscriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="topicName"> The topicName. </param>
+        /// <param name="subscriptionName"> The subscriptionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string topicName, string subscriptionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusSubscriptionResource(ArmClient client, ServiceBusSubscriptionData data) : this(client, data.Id)
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusRuleResources and their operations over a ServiceBusRuleResource. </returns>
         public virtual ServiceBusRuleCollection GetServiceBusRules()
         {
-            return GetCachedClient(Client => new ServiceBusRuleCollection(Client, Id));
+            return GetCachedClient(client => new ServiceBusRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +113,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusRuleResource>> GetServiceBusRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +136,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceBusRuleResource> GetServiceBusRule(string ruleName, CancellationToken cancellationToken = default)
         {

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSparkConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSparkConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSparkConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseSparkConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSparkConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSparkConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseSparkConfiguration method.
     /// </summary>
     public partial class SynapseSparkConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseSparkConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sparkConfigurationName"> The sparkConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sparkConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSparkConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSparkConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSparkConfigurationResource(ArmClient client, SynapseSparkConfigurationData data) : this(client, data.Id)

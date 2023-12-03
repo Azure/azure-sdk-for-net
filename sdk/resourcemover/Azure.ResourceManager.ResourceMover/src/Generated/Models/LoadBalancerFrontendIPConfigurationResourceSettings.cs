@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines load balancer frontend IP configuration properties. </summary>
     public partial class LoadBalancerFrontendIPConfigurationResourceSettings
     {
-        /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationResourceSettings"/>. </summary>
         public LoadBalancerFrontendIPConfigurationResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the frontend IP configuration name. </param>
         /// <param name="privateIPAddress">
         /// Gets or sets the IP address of the Load Balancer.This is only specified if a specific

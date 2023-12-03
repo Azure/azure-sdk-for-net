@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A Class representing a BillingPaymentMethodLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingPaymentMethodLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingPaymentMethodLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingPaymentMethodLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingPaymentMethodLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingPaymentMethodLink method.
     /// </summary>
     public partial class BillingPaymentMethodLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingPaymentMethodLinkResource"/> instance. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="billingProfileName"> The billingProfileName. </param>
+        /// <param name="paymentMethodName"> The paymentMethodName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string paymentMethodName)
         {
             var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}";
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Billing
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingPaymentMethodLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingPaymentMethodLinkResource(ArmClient client, BillingPaymentMethodLinkData data) : this(client, data.Id)

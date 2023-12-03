@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Resume replication input. </summary>
     public partial class ResumeReplicationContent
     {
-        /// <summary> Initializes a new instance of ResumeReplicationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResumeReplicationContent"/>. </summary>
         /// <param name="properties"> Resume replication input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ResumeReplicationContent(ResumeReplicationProperties properties)

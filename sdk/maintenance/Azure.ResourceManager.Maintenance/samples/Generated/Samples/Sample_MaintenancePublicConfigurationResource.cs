@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PublicMaintenanceConfigurationsGetForResource()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/PublicMaintenanceConfigurations_GetForResource.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-09-01-preview/examples/PublicMaintenanceConfigurations_GetForResource.json
             // this example is just showing the usage of "PublicMaintenanceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

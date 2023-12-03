@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class DeviceListResult
     {
-        /// <summary> Initializes a new instance of DeviceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceListResult"/>. </summary>
         /// <param name="value">
         /// The Device items on this page
         /// Serialized Name: DeviceListResult.value
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DeviceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceListResult"/>. </summary>
         /// <param name="value">
         /// The Device items on this page
         /// Serialized Name: DeviceListResult.value

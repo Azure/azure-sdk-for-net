@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Loaded certificate payload. </summary>
     public partial class AppLoadedCertificate
     {
-        /// <summary> Initializes a new instance of AppLoadedCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLoadedCertificate"/>. </summary>
         /// <param name="resourceId"> Resource Id of loaded certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public AppLoadedCertificate(ResourceIdentifier resourceId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of AppLoadedCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLoadedCertificate"/>. </summary>
         /// <param name="resourceId"> Resource Id of loaded certificate. </param>
         /// <param name="loadTrustStore"> Indicate whether the certificate will be loaded into default trust store, only work for Java runtime. </param>
         internal AppLoadedCertificate(ResourceIdentifier resourceId, bool? loadTrustStore)

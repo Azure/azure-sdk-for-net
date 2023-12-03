@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Result of the network health check list operation. </summary>
     internal partial class HealthCheckStatusDetailsListResult
     {
-        /// <summary> Initializes a new instance of HealthCheckStatusDetailsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStatusDetailsListResult"/>. </summary>
         internal HealthCheckStatusDetailsListResult()
         {
             Value = new ChangeTrackingList<HealthCheckStatusDetailData>();
         }
 
-        /// <summary> Initializes a new instance of HealthCheckStatusDetailsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStatusDetailsListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
         internal HealthCheckStatusDetailsListResult(IReadOnlyList<HealthCheckStatusDetailData> value, string nextLink)

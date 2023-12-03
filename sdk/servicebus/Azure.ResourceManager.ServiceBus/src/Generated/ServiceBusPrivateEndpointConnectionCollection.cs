@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceBusPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="ServiceBusPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource" />.
-    /// To get a <see cref="ServiceBusPrivateEndpointConnectionCollection" /> instance call the GetServiceBusPrivateEndpointConnections method from an instance of <see cref="ServiceBusNamespaceResource" />.
+    /// A class representing a collection of <see cref="ServiceBusPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="ServiceBusPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource"/>.
+    /// To get a <see cref="ServiceBusPrivateEndpointConnectionCollection"/> instance call the GetServiceBusPrivateEndpointConnections method from an instance of <see cref="ServiceBusNamespaceResource"/>.
     /// </summary>
     public partial class ServiceBusPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ServiceBusPrivateEndpointConnectionResource>, IAsyncEnumerable<ServiceBusPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceBusPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

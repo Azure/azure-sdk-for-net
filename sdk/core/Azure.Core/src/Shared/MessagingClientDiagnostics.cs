@@ -23,9 +23,8 @@ namespace Azure.Core.Shared
         #region OTel-specific messaging attributes
         public const string MessagingSystem = "messaging.system";
         public const string DestinationName = "messaging.destination.name";
-        public const string SourceName = "messaging.source.name";
         public const string MessagingOperation = "messaging.operation";
-        public const string NetPeerName = "net.peer.name";
+        public const string ServerAddress = "server.address";
         public const string BatchCount = "messaging.batch.message_count";
         public const string TraceParent = "traceparent";
         public const string TraceState = "tracestate";
@@ -48,7 +47,7 @@ namespace Azure.Core.Shared
             _messagingSystem = messagingSystem;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
             _entityPath = entityPath;
-            _scopeFactory = new DiagnosticScopeFactory(clientNamespace, resourceProviderNamespace, true, false);
+            _scopeFactory = new DiagnosticScopeFactory(clientNamespace, resourceProviderNamespace, true, false, false);
         }
 
         /// <summary>
@@ -70,11 +69,11 @@ namespace Azure.Core.Shared
                 scope.AddAttribute(MessagingSystem, _messagingSystem);
                 if (operation != default)
                 {
-                    scope.AddAttribute(MessagingOperation, operation.ToString());
+                    scope.AddAttribute(MessagingOperation, operation, operation => operation.ToString());
                 }
 
-                scope.AddAttribute(NetPeerName, _fullyQualifiedNamespace);
-                scope.AddAttribute(operation == MessagingDiagnosticOperation.Receive || operation == MessagingDiagnosticOperation.Process ? SourceName : DestinationName, _entityPath);
+                scope.AddAttribute(ServerAddress, _fullyQualifiedNamespace);
+                scope.AddAttribute(DestinationName, _entityPath);
             }
             else
             {

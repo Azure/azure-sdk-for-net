@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityContact along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityContactResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityContactResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSecurityContact method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityContactResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityContactResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecurityContact method.
     /// </summary>
     public partial class SecurityContactResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityContactResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="securityContactName"> The securityContactName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string securityContactName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityContactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityContactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityContactResource(ArmClient client, SecurityContactData data) : this(client, data.Id)

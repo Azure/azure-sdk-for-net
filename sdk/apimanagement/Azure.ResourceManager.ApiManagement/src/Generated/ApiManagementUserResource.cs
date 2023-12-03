@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementUser along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementUserResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementUserResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementUser method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementUserResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementUserResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementUser method.
     /// </summary>
     public partial class ApiManagementUserResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementUserResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="userId"> The userId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string userId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}";
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementUserResource(ArmClient client, UserContractData data) : this(client, data.Id)
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementUserSubscriptionResources and their operations over a ApiManagementUserSubscriptionResource. </returns>
         public virtual ApiManagementUserSubscriptionCollection GetApiManagementUserSubscriptions()
         {
-            return GetCachedClient(Client => new ApiManagementUserSubscriptionCollection(Client, Id));
+            return GetCachedClient(client => new ApiManagementUserSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -122,8 +126,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiManagementUserSubscriptionResource>> GetApiManagementUserSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
         {
@@ -145,8 +149,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiManagementUserSubscriptionResource> GetApiManagementUserSubscription(string sid, CancellationToken cancellationToken = default)
         {
@@ -508,7 +512,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementGroupResource> GetUserGroupsAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -533,7 +537,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementGroupResource> GetUserGroups(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -555,7 +559,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserIdentityContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="UserIdentityContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UserIdentityContract> GetUserIdentitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -577,7 +581,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserIdentityContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="UserIdentityContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UserIdentityContract> GetUserIdentities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

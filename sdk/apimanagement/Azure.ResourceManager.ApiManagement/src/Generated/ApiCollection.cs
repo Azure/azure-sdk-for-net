@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiResource" /> and their operations.
-    /// Each <see cref="ApiResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get an <see cref="ApiCollection" /> instance call the GetApis method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// A class representing a collection of <see cref="ApiResource"/> and their operations.
+    /// Each <see cref="ApiResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiCollection"/> instance call the GetApis method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiCollection : ArmCollection, IEnumerable<ApiResource>, IAsyncEnumerable<ApiResource>
     {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tags"> Include tags in the response. </param>
         /// <param name="expandApiVersionSet"> Include full ApiVersionSet resource in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string tags = null, bool? expandApiVersionSet = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tags"> Include tags in the response. </param>
         /// <param name="expandApiVersionSet"> Include full ApiVersionSet resource in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiResource> GetAll(string filter = null, int? top = null, int? skip = null, string tags = null, bool? expandApiVersionSet = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet);

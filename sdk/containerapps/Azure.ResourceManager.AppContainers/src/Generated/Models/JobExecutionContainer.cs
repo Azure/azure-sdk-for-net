@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container Apps Jobs execution container definition. </summary>
     public partial class JobExecutionContainer
     {
-        /// <summary> Initializes a new instance of JobExecutionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobExecutionContainer"/>. </summary>
         public JobExecutionContainer()
         {
             Command = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Env = new ChangeTrackingList<ContainerAppEnvironmentVariable>();
         }
 
-        /// <summary> Initializes a new instance of JobExecutionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobExecutionContainer"/>. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of an IoT hub shared access policy. </summary>
     public partial class SharedAccessSignatureAuthorizationRule
     {
-        /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureAuthorizationRule"/>. </summary>
         /// <param name="keyName"> The name of the shared access policy. </param>
         /// <param name="rights"> The permissions assigned to the shared access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Rights = rights;
         }
 
-        /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureAuthorizationRule"/>. </summary>
         /// <param name="keyName"> The name of the shared access policy. </param>
         /// <param name="primaryKey"> The primary key. </param>
         /// <param name="secondaryKey"> The secondary key. </param>

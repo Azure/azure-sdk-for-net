@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlPrivateLinkResource method.
     /// </summary>
     public partial class SqlPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="groupName"> The groupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/privateLinkResources/{groupName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlPrivateLinkResource(ArmClient client, SqlPrivateLinkResourceData data) : this(client, data.Id)

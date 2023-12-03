@@ -31,14 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionOption);
-#else
-                using (JsonDocument document = JsonDocument.Parse(PartitionOption))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, PartitionOption);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
@@ -102,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             Optional<DataFactoryElement<string>> oracleReaderQuery = default;
             Optional<DataFactoryElement<string>> queryTimeout = default;
-            Optional<BinaryData> partitionOption = default;
+            Optional<DataFactoryElement<string>> partitionOption = default;
             Optional<OraclePartitionSettings> partitionSettings = default;
             Optional<BinaryData> additionalColumns = default;
             string type = default;
@@ -138,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionOption = BinaryData.FromString(property.Value.GetRawText());
+                    partitionOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionSettings"u8))

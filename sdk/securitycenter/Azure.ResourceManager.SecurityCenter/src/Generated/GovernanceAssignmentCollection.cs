@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GovernanceAssignmentResource" /> and their operations.
-    /// Each <see cref="GovernanceAssignmentResource" /> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource" />.
-    /// To get a <see cref="GovernanceAssignmentCollection" /> instance call the GetGovernanceAssignments method from an instance of <see cref="SecurityAssessmentResource" />.
+    /// A class representing a collection of <see cref="GovernanceAssignmentResource"/> and their operations.
+    /// Each <see cref="GovernanceAssignmentResource"/> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource"/>.
+    /// To get a <see cref="GovernanceAssignmentCollection"/> instance call the GetGovernanceAssignments method from an instance of <see cref="SecurityAssessmentResource"/>.
     /// </summary>
     public partial class GovernanceAssignmentCollection : ArmCollection, IEnumerable<GovernanceAssignmentResource>, IAsyncEnumerable<GovernanceAssignmentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GovernanceAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GovernanceAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GovernanceAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GovernanceAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GovernanceAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GovernanceAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);

@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a BlobService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BlobServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBlobServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetBlobService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BlobServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBlobServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetBlobService method.
     /// </summary>
     public partial class BlobServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BlobServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default";
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BlobServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BlobServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BlobServiceResource(ArmClient client, BlobServiceData data) : this(client, data.Id)
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of BlobContainerResources and their operations over a BlobContainerResource. </returns>
         public virtual BlobContainerCollection GetBlobContainers()
         {
-            return GetCachedClient(Client => new BlobContainerCollection(Client, Id));
+            return GetCachedClient(client => new BlobContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +111,8 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContainerResource>> GetBlobContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +134,8 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BlobContainerResource> GetBlobContainer(string containerName, CancellationToken cancellationToken = default)
         {

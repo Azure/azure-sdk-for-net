@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
     /// A Class representing a Frontend along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontendResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontendResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TrafficControllerResource" /> using the GetFrontend method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontendResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontendResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TrafficControllerResource"/> using the GetFrontend method.
     /// </summary>
     public partial class FrontendResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontendResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="trafficControllerName"> The trafficControllerName. </param>
+        /// <param name="frontendName"> The frontendName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontendResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontendResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontendResource(ArmClient client, FrontendData data) : this(client, data.Id)

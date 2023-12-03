@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a GalleryImage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GalleryImageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGalleryImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GalleryResource" /> using the GetGalleryImage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GalleryImageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGalleryImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GalleryResource"/> using the GetGalleryImage method.
     /// </summary>
     public partial class GalleryImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GalleryImageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="galleryName"> The galleryName. </param>
+        /// <param name="galleryImageName"> The galleryImageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}";
@@ -42,7 +46,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GalleryImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GalleryImageResource(ArmClient client, GalleryImageData data) : this(client, data.Id)
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of GalleryImageVersionResources and their operations over a GalleryImageVersionResource. </returns>
         public virtual GalleryImageVersionCollection GetGalleryImageVersions()
         {
-            return GetCachedClient(Client => new GalleryImageVersionCollection(Client, Id));
+            return GetCachedClient(client => new GalleryImageVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +115,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GalleryImageVersionResource>> GetGalleryImageVersionAsync(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -135,8 +139,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GalleryImageVersionResource> GetGalleryImageVersion(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {

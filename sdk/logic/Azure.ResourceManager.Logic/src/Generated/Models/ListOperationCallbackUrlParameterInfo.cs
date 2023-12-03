@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The callback url parameters. </summary>
     public partial class ListOperationCallbackUrlParameterInfo
     {
-        /// <summary> Initializes a new instance of ListOperationCallbackUrlParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListOperationCallbackUrlParameterInfo"/>. </summary>
         public ListOperationCallbackUrlParameterInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListOperationCallbackUrlParameterInfo"/>. </summary>
+        /// <param name="notAfter"> The expiry time. </param>
+        /// <param name="keyType"> The key type. </param>
+        internal ListOperationCallbackUrlParameterInfo(DateTimeOffset? notAfter, LogicKeyType? keyType)
+        {
+            NotAfter = notAfter;
+            KeyType = keyType;
         }
 
         /// <summary> The expiry time. </summary>

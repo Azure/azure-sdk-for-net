@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The list of cognitive services accounts operation response. </summary>
     internal partial class CommitmentTierListResult
     {
-        /// <summary> Initializes a new instance of CommitmentTierListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentTierListResult"/>. </summary>
         internal CommitmentTierListResult()
         {
             Value = new ChangeTrackingList<CommitmentTier>();
         }
 
-        /// <summary> Initializes a new instance of CommitmentTierListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentTierListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of CommitmentTier. </param>
         /// <param name="value"> Gets the list of Cognitive Services accounts CommitmentTier and their properties. </param>
         internal CommitmentTierListResult(string nextLink, IReadOnlyList<CommitmentTier> value)

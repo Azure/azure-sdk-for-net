@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the DSC Meta Configuration. </summary>
     public partial class DscMetaConfiguration
     {
-        /// <summary> Initializes a new instance of DscMetaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscMetaConfiguration"/>. </summary>
         internal DscMetaConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DscMetaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscMetaConfiguration"/>. </summary>
         /// <param name="configurationModeFrequencyMins"> Gets or sets the ConfigurationModeFrequencyMins value of the meta configuration. </param>
         /// <param name="rebootNodeIfNeeded"> Gets or sets the RebootNodeIfNeeded value of the meta configuration. </param>
         /// <param name="configurationMode"> Gets or sets the ConfigurationMode value of the meta configuration. </param>

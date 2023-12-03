@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRouteCrossConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteCrossConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteCrossConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetExpressRouteCrossConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteCrossConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteCrossConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetExpressRouteCrossConnection method.
     /// </summary>
     public partial class ExpressRouteCrossConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteCrossConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="crossConnectionName"> The crossConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string crossConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCrossConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteCrossConnectionResource(ArmClient client, ExpressRouteCrossConnectionData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCrossConnectionPeeringResources and their operations over a ExpressRouteCrossConnectionPeeringResource. </returns>
         public virtual ExpressRouteCrossConnectionPeeringCollection GetExpressRouteCrossConnectionPeerings()
         {
-            return GetCachedClient(Client => new ExpressRouteCrossConnectionPeeringCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteCrossConnectionPeeringCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCrossConnectionPeeringResource>> GetExpressRouteCrossConnectionPeeringAsync(string peeringName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteCrossConnectionPeeringResource> GetExpressRouteCrossConnectionPeering(string peeringName, CancellationToken cancellationToken = default)
         {

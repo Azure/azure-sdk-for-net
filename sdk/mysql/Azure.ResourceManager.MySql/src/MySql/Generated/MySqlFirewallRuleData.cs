@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFirewallRuleData"/>. </summary>
         /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MySql
             EndIPAddress = endIPAddress;
         }
 
-        /// <summary> Initializes a new instance of MySqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

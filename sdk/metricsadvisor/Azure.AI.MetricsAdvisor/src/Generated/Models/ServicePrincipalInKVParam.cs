@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ServicePrincipalInKVParam. </summary>
     internal partial class ServicePrincipalInKVParam
     {
-        /// <summary> Initializes a new instance of ServicePrincipalInKVParam. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalInKVParam"/>. </summary>
         /// <param name="keyVaultEndpoint"> The Key Vault endpoint that storing the service principal. </param>
         /// <param name="keyVaultClientId"> The Client Id to access the Key Vault. </param>
         /// <param name="servicePrincipalIdNameInKV"> The secret name of the service principal's client Id in the Key Vault. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             TenantId = tenantId;
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalInKVParam. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalInKVParam"/>. </summary>
         /// <param name="keyVaultEndpoint"> The Key Vault endpoint that storing the service principal. </param>
         /// <param name="keyVaultClientId"> The Client Id to access the Key Vault. </param>
         /// <param name="keyVaultClientSecret"> The Client Secret to access the Key Vault. </param>

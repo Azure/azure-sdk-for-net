@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkInterfaceIPConfigurationData : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationData"/>. </summary>
         public NetworkInterfaceIPConfigurationData()
         {
             VirtualNetworkTaps = new ChangeTrackingList<VirtualNetworkTapData>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

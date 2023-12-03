@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of ItemLevelRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ItemLevelRestoreCriteria"/>. </summary>
         protected ItemLevelRestoreCriteria()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ItemLevelRestoreCriteria"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        internal ItemLevelRestoreCriteria(string objectType)
+        {
+            ObjectType = objectType;
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>

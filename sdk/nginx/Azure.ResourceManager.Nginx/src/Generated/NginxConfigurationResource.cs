@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Nginx
 {
     /// <summary>
     /// A Class representing a NginxConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NginxConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNginxConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NginxDeploymentResource" /> using the GetNginxConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NginxConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNginxConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NginxDeploymentResource"/> using the GetNginxConfiguration method.
     /// </summary>
     public partial class NginxConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NginxConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName, string configurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/configurations/{configurationName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Nginx
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NginxConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NginxConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NginxConfigurationResource(ArmClient client, NginxConfigurationData data) : this(client, data.Id)

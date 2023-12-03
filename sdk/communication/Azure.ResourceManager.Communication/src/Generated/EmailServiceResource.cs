@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Communication
 {
     /// <summary>
     /// A Class representing an EmailServiceResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EmailServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEmailServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEmailServiceResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EmailServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEmailServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEmailServiceResource method.
     /// </summary>
     public partial class EmailServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EmailServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="emailServiceName"> The emailServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Communication
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EmailServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EmailServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EmailServiceResource(ArmClient client, EmailServiceResourceData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An object representing collection of CommunicationDomainResources and their operations over a CommunicationDomainResource. </returns>
         public virtual CommunicationDomainResourceCollection GetCommunicationDomainResources()
         {
-            return GetCachedClient(Client => new CommunicationDomainResourceCollection(Client, Id));
+            return GetCachedClient(client => new CommunicationDomainResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CommunicationDomainResource>> GetCommunicationDomainResourceAsync(string domainName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CommunicationDomainResource> GetCommunicationDomainResource(string domainName, CancellationToken cancellationToken = default)
         {

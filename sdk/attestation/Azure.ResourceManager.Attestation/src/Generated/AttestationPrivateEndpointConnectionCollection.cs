@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Attestation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AttestationPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="AttestationPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="AttestationProviderResource" />.
-    /// To get an <see cref="AttestationPrivateEndpointConnectionCollection" /> instance call the GetAttestationPrivateEndpointConnections method from an instance of <see cref="AttestationProviderResource" />.
+    /// A class representing a collection of <see cref="AttestationPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="AttestationPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="AttestationProviderResource"/>.
+    /// To get an <see cref="AttestationPrivateEndpointConnectionCollection"/> instance call the GetAttestationPrivateEndpointConnections method from an instance of <see cref="AttestationProviderResource"/>.
     /// </summary>
     public partial class AttestationPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<AttestationPrivateEndpointConnectionResource>, IAsyncEnumerable<AttestationPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttestationPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AttestationPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attestationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttestationPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AttestationPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attestationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The TopologyList. </summary>
     internal partial class TopologyList
     {
-        /// <summary> Initializes a new instance of TopologyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologyList"/>. </summary>
         internal TopologyList()
         {
             Value = new ChangeTrackingList<SecurityTopologyResource>();
         }
 
-        /// <summary> Initializes a new instance of TopologyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologyList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal TopologyList(IReadOnlyList<SecurityTopologyResource> value, string nextLink)

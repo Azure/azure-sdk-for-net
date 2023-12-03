@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseServerSecurityAlertPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseServerSecurityAlertPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseServerSecurityAlertPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseServerSecurityAlertPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseServerSecurityAlertPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseServerSecurityAlertPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseServerSecurityAlertPolicy method.
     /// </summary>
     public partial class SynapseServerSecurityAlertPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseServerSecurityAlertPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="securityAlertPolicyName"> The securityAlertPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, SqlServerSecurityAlertPolicyName securityAlertPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/securityAlertPolicies/{securityAlertPolicyName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseServerSecurityAlertPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseServerSecurityAlertPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseServerSecurityAlertPolicyResource(ArmClient client, SynapseServerSecurityAlertPolicyData data) : this(client, data.Id)

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmIotHubModelFactory
     {
-        /// <summary> Initializes a new instance of IotHubDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHub.IotHubDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubDescriptionData(id, name, resourceType, systemData, tags, location, etag, properties, sku, identity);
         }
 
-        /// <summary> Initializes a new instance of IotHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubProperties"/>. </summary>
         /// <param name="authorizationPolicies"> The shared access policies you can use to secure a connection to the IoT hub. </param>
         /// <param name="disableLocalAuth"> If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication. </param>
         /// <param name="disableDeviceSas"> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubProperties(authorizationPolicies?.ToList(), disableLocalAuth, disableDeviceSas, disableModuleSas, restrictOutboundNetworkAccess, allowedFqdns?.ToList(), publicNetworkAccess, ipFilterRules?.ToList(), networkRuleSets, minTlsVersion, privateEndpointConnections?.ToList(), provisioningState, state, hostName, eventHubEndpoints, routing, storageEndpoints, messagingEndpoints, enableFileUploadNotifications, cloudToDevice, comments, features, locations?.ToList(), enableDataResidency);
         }
 
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHub.IotHubPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubPrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of EventHubCompatibleEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EventHubCompatibleEndpointProperties"/>. </summary>
         /// <param name="retentionTimeInDays"> The retention time for device-to-cloud messages in days. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
         /// <param name="partitionCount"> The number of partitions for receiving device-to-cloud messages in the Event Hub-compatible endpoint. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
         /// <param name="partitionIds"> The partition ids in the Event Hub-compatible endpoint. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new EventHubCompatibleEndpointProperties(retentionTimeInDays, partitionCount, partitionIds?.ToList(), eventHubCompatibleName, endpoint);
         }
 
-        /// <summary> Initializes a new instance of RoutingCosmosDBSqlApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoutingCosmosDBSqlApiProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <param name="id"> Id of the cosmos DB sql container endpoint. </param>
         /// <param name="subscriptionId"> The subscription identifier of the cosmos DB account. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new RoutingCosmosDBSqlApiProperties(name, id, subscriptionId, resourceGroup, endpointUri, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null, primaryKey, secondaryKey, databaseName, containerName, partitionKeyName, partitionKeyTemplate);
         }
 
-        /// <summary> Initializes a new instance of IotHubLocationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubLocationDescription"/>. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="role"> The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to. </param>
         /// <returns> A new <see cref="Models.IotHubLocationDescription"/> instance for mocking. </returns>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubLocationDescription(location, role);
         }
 
-        /// <summary> Initializes a new instance of IotHubSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubSkuInfo"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The billing tier for the IoT hub. </param>
         /// <param name="capacity"> The number of provisioned IoT Hub units. See: https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits. </param>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubSkuInfo(name, tier, capacity);
         }
 
-        /// <summary> Initializes a new instance of IotHubRegistryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubRegistryStatistics"/>. </summary>
         /// <param name="totalDeviceCount"> The total count of devices in the identity registry. </param>
         /// <param name="enabledDeviceCount"> The count of enabled devices in the identity registry. </param>
         /// <param name="disabledDeviceCount"> The count of disabled devices in the identity registry. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubRegistryStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount);
         }
 
-        /// <summary> Initializes a new instance of IotHubSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubSkuDescription"/>. </summary>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="sku"> The type of the resource. </param>
         /// <param name="capacity"> IotHub capacity. </param>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubSkuDescription(resourceType, sku, capacity);
         }
 
-        /// <summary> Initializes a new instance of IotHubCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubCapacity"/>. </summary>
         /// <param name="minimum"> The minimum number of units. </param>
         /// <param name="maximum"> The maximum number of units. </param>
         /// <param name="default"> The default number of units. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubCapacity(minimum, maximum, @default, scaleType);
         }
 
-        /// <summary> Initializes a new instance of EventHubConsumerGroupInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHub.EventHubConsumerGroupInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new EventHubConsumerGroupInfoData(id, name, resourceType, systemData, properties, etag);
         }
 
-        /// <summary> Initializes a new instance of IotHubJobInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubJobInfo"/>. </summary>
         /// <param name="jobId"> The job identifier. </param>
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="endOn"> The time the job stopped processing. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubJobInfo(jobId, startOn, endOn, jobType, status, failureReason, statusMessage, parentJobId);
         }
 
-        /// <summary> Initializes a new instance of IotHubQuotaMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubQuotaMetricInfo"/>. </summary>
         /// <param name="name"> The name of the quota metric. </param>
         /// <param name="currentValue"> The current value for the quota metric. </param>
         /// <param name="maxValue"> The maximum value of the quota metric. </param>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubQuotaMetricInfo(name, currentValue, maxValue);
         }
 
-        /// <summary> Initializes a new instance of IotHubEndpointHealthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubEndpointHealthInfo"/>. </summary>
         /// <param name="endpointId"> Id of the endpoint. </param>
         /// <param name="healthStatus"> Health statuses have following meanings. The 'healthy' status shows that the endpoint is accepting messages as expected. The 'unhealthy' status shows that the endpoint is not accepting messages as expected and IoT Hub is retrying to send data to this endpoint. The status of an unhealthy endpoint will be updated to healthy when IoT Hub has established an eventually consistent state of health. The 'dead' status shows that the endpoint is not accepting messages, after IoT Hub retried sending messages for the retrial period. See IoT Hub metrics to identify errors and monitor issues with endpoints. The 'unknown' status shows that the IoT Hub has not established a connection with the endpoint. No messages have been delivered to or rejected from this endpoint. </param>
         /// <param name="lastKnownError"> Last error obtained when a message failed to be delivered to iot hub. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubEndpointHealthInfo(endpointId, healthStatus, lastKnownError, lastKnownErrorOn, lastSuccessfulSendAttemptOn, lastSendAttemptOn);
         }
 
-        /// <summary> Initializes a new instance of IotHubNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubNameAvailabilityResponse"/>. </summary>
         /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
         /// <param name="reason"> The reason for unavailability. </param>
         /// <param name="message"> The detailed reason message. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubNameAvailabilityResponse(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of IotHubUserSubscriptionQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubUserSubscriptionQuota"/>. </summary>
         /// <param name="iotHubTypeId"> IotHub type id. </param>
         /// <param name="userSubscriptionQuotaType"> Response type. </param>
         /// <param name="unit"> Unit of IotHub type. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubUserSubscriptionQuota(iotHubTypeId, userSubscriptionQuotaType, unit, currentValue, limit, name);
         }
 
-        /// <summary> Initializes a new instance of IotHubTypeName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubTypeName"/>. </summary>
         /// <param name="value"> IotHub type. </param>
         /// <param name="localizedValue"> Localized value of name. </param>
         /// <returns> A new <see cref="Models.IotHubTypeName"/> instance for mocking. </returns>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubTypeName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubTestAllRoutesResult"/>. </summary>
         /// <param name="routes"> JSON-serialized array of matched routes. </param>
         /// <returns> A new <see cref="Models.IotHubTestAllRoutesResult"/> instance for mocking. </returns>
         public static IotHubTestAllRoutesResult IotHubTestAllRoutesResult(IEnumerable<IotHubMatchedRoute> routes = null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubTestAllRoutesResult(routes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IotHubMatchedRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubMatchedRoute"/>. </summary>
         /// <param name="properties"> Properties of routes that matched. </param>
         /// <returns> A new <see cref="Models.IotHubMatchedRoute"/> instance for mocking. </returns>
         public static IotHubMatchedRoute IotHubMatchedRoute(RoutingRuleProperties properties = null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubMatchedRoute(properties);
         }
 
-        /// <summary> Initializes a new instance of IotHubTestRouteResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubTestRouteResult"/>. </summary>
         /// <param name="result"> Result of testing route. </param>
         /// <param name="detailsCompilationErrors"> Detailed result of testing route. </param>
         /// <returns> A new <see cref="Models.IotHubTestRouteResult"/> instance for mocking. </returns>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubTestRouteResult(result, detailsCompilationErrors != null ? new IotHubTestRouteResultDetails(detailsCompilationErrors?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of RouteCompilationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RouteCompilationError"/>. </summary>
         /// <param name="message"> Route error message. </param>
         /// <param name="severity"> Severity of the route error. </param>
         /// <param name="location"> Location where the route error happened. </param>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new RouteCompilationError(message, severity, location);
         }
 
-        /// <summary> Initializes a new instance of RouteErrorRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RouteErrorRange"/>. </summary>
         /// <param name="start"> Start where the route error happened. </param>
         /// <param name="end"> End where the route error happened. </param>
         /// <returns> A new <see cref="Models.RouteErrorRange"/> instance for mocking. </returns>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new RouteErrorRange(start, end);
         }
 
-        /// <summary> Initializes a new instance of RouteErrorPosition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RouteErrorPosition"/>. </summary>
         /// <param name="line"> Line where the route error happened. </param>
         /// <param name="column"> Column where the route error happened. </param>
         /// <returns> A new <see cref="Models.RouteErrorPosition"/> instance for mocking. </returns>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new RouteErrorPosition(line, column);
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHub.IotHubCertificateDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubCertificateDescriptionData(id, name, resourceType, systemData, properties, etag);
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificateProperties"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprintString"> The certificate's thumbprint. </param>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubCertificateProperties(subject, expireOn, thumbprintString, isVerified, createdOn, updatedOn, certificate);
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateWithNonceDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificateWithNonceDescription"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubCertificateWithNonceDescription(id, name, resourceType, systemData, properties, etag);
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificatePropertiesWithNonce"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprintString"> The certificate's thumbprint. </param>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubCertificatePropertiesWithNonce(subject, expireOn, thumbprintString, isVerified, createdOn, updatedOn, verificationCode, certificate);
         }
 
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHub.IotHubPrivateEndpointGroupInformationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubPrivateEndpointGroupInformationData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubPrivateEndpointGroupInformationProperties"/>. </summary>
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
         /// <param name="requiredDnsZoneNames"> The required DNS zones for a specific group id. </param>

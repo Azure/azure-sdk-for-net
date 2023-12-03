@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseDataConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseDataConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseDataConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseDatabaseResource" /> using the GetSynapseDataConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseDataConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseDataConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseDatabaseResource"/> using the GetSynapseDataConnection method.
     /// </summary>
     public partial class SynapseDataConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseDataConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="kustoPoolName"> The kustoPoolName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="dataConnectionName"> The dataConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string dataConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}/dataConnections/{dataConnectionName}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseDataConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseDataConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseDataConnectionResource(ArmClient client, SynapseDataConnectionData data) : this(client, data.Id)

@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Storage mapping input properties. </summary>
     internal partial class StorageMappingProperties
     {
-        /// <summary> Initializes a new instance of StorageMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMappingProperties"/>. </summary>
         public StorageMappingProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMappingProperties"/>. </summary>
+        /// <param name="targetStorageClassificationId"> The ID of the storage object. </param>
+        internal StorageMappingProperties(ResourceIdentifier targetStorageClassificationId)
+        {
+            TargetStorageClassificationId = targetStorageClassificationId;
         }
 
         /// <summary> The ID of the storage object. </summary>

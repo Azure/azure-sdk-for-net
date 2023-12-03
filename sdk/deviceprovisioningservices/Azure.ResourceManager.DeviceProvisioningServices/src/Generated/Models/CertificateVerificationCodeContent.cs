@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The JSON-serialized leaf certificate. </summary>
     public partial class CertificateVerificationCodeContent
     {
-        /// <summary> Initializes a new instance of CertificateVerificationCodeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeContent"/>. </summary>
         public CertificateVerificationCodeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeContent"/>. </summary>
+        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
+        internal CertificateVerificationCodeContent(string certificate)
+        {
+            Certificate = certificate;
         }
 
         /// <summary> base-64 representation of X509 certificate .cer file or just .pem file content. </summary>

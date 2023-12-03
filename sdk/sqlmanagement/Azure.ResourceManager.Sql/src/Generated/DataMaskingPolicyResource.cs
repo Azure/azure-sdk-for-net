@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a DataMaskingPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataMaskingPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataMaskingPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetDataMaskingPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataMaskingPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataMaskingPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetDataMaskingPolicy method.
     /// </summary>
     public partial class DataMaskingPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataMaskingPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default";
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataMaskingPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataMaskingPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataMaskingPolicyResource(ArmClient client, DataMaskingPolicyData data) : this(client, data.Id)
@@ -320,7 +324,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataMaskingRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
@@ -341,7 +345,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataMaskingRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMaskingRule> GetDataMaskingRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);

@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
     /// A Class representing a JobRun along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JobRunResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetJobRunResource method.
-    /// Otherwise you can get one from its parent resource <see cref="JobDefinitionResource" /> using the GetJobRun method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JobRunResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetJobRunResource method.
+    /// Otherwise you can get one from its parent resource <see cref="JobDefinitionResource"/> using the GetJobRun method.
     /// </summary>
     public partial class JobRunResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="JobRunResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageMoverName"> The storageMoverName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="jobDefinitionName"> The jobDefinitionName. </param>
+        /// <param name="jobRunName"> The jobRunName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, string jobRunName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/jobRuns/{jobRunName}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.StorageMover
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "JobRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal JobRunResource(ArmClient client, JobRunData data) : this(client, data.Id)

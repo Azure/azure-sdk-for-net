@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class EncryptionScopeData : ResourceData
     {
-        /// <summary> Initializes a new instance of EncryptionScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeData"/>. </summary>
         public EncryptionScopeData()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

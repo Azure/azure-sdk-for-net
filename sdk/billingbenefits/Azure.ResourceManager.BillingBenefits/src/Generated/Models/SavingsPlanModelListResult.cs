@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The SavingsPlanModelListResult. </summary>
     internal partial class SavingsPlanModelListResult
     {
-        /// <summary> Initializes a new instance of SavingsPlanModelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
         internal SavingsPlanModelListResult()
         {
             Value = new ChangeTrackingList<BillingBenefitsSavingsPlanData>();
             AdditionalProperties = new ChangeTrackingList<SavingsPlanSummary>();
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanModelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
         /// <param name="value"> The list of savings plans. </param>
         /// <param name="nextLink"> Url to get the next page. </param>
         /// <param name="additionalProperties"> The roll out count summary of the savings plans. </param>

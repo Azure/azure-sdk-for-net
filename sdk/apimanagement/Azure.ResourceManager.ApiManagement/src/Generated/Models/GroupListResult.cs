@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Group list representation. </summary>
     internal partial class GroupListResult
     {
-        /// <summary> Initializes a new instance of GroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupListResult"/>. </summary>
         internal GroupListResult()
         {
             Value = new ChangeTrackingList<ApiManagementGroupData>();
         }
 
-        /// <summary> Initializes a new instance of GroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

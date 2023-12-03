@@ -43,10 +43,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (ShareFileClient client in PathScanner.ScanFilesAsync(
+            await foreach ((ShareDirectoryClient dir, ShareFileClient file) in PathScanner.ScanAsync(
                 ShareDirectoryClient, cancellationToken).ConfigureAwait(false))
             {
-                yield return new ShareFileStorageResource(client, ResourceOptions);
+                if (file != default)
+                {
+                    yield return new ShareFileStorageResource(file, ResourceOptions);
+                }
+                else
+                {
+                    yield return new ShareDirectoryStorageResourceContainer(dir, ResourceOptions);
+                }
             }
         }
 
@@ -57,7 +64,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return new ShareFileDestinationCheckpointData();
+            return new ShareFileDestinationCheckpointData(null, null, null, null);
         }
+
+        protected override async Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+        {
+            await ShareDirectoryClient.CreateIfNotExistsAsync(
+                metadata: default,
+                smbProperties: default,
+                filePermission: default,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override StorageResourceContainer GetChildStorageResourceContainer(string path)
+            => new ShareDirectoryStorageResourceContainer(ShareDirectoryClient.GetSubdirectoryClient(path), ResourceOptions);
     }
 }

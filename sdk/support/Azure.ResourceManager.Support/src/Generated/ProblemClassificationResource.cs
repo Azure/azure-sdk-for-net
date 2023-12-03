@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a ProblemClassification along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProblemClassificationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProblemClassificationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SupportAzureServiceResource" /> using the GetProblemClassification method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProblemClassificationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProblemClassificationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SupportAzureServiceResource"/> using the GetProblemClassification method.
     /// </summary>
     public partial class ProblemClassificationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProblemClassificationResource"/> instance. </summary>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="problemClassificationName"> The problemClassificationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string serviceName, string problemClassificationName)
         {
             var resourceId = $"/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Support
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProblemClassificationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProblemClassificationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProblemClassificationResource(ArmClient client, ProblemClassificationData data) : this(client, data.Id)

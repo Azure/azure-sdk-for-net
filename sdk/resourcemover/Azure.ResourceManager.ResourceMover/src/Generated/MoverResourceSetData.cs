@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ResourceMover
     /// </summary>
     public partial class MoverResourceSetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MoverResourceSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MoverResourceSetData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

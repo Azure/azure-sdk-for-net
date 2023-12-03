@@ -10,23 +10,12 @@ namespace Azure.Communication.JobRouter
     /// <summary> An action that marks a job as cancelled. </summary>
     public partial class CancelExceptionAction : ExceptionAction
     {
-        /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
-        internal CancelExceptionAction()
-        {
-            Kind = "cancel";
-        }
-
-        /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        /// <param name="note">
-        /// (Optional) A note that will be appended to the jobs' Notes collection with the
-        /// current timestamp.
-        /// </param>
-        /// <param name="dispositionCode">
-        /// (Optional) Indicates the outcome of the job, populate this field with your own
-        /// custom values.
-        /// </param>
-        internal CancelExceptionAction(string kind, string note, string dispositionCode) : base(kind)
+        /// <summary> Initializes a new instance of <see cref="CancelExceptionAction"/>. </summary>
+        /// <param name="id"> Unique Id of the exception action. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
+        /// <param name="note"> A note that will be appended to a job's notes collection with the current timestamp. </param>
+        /// <param name="dispositionCode"> Indicates the outcome of a job, populate this field with your own custom values. </param>
+        internal CancelExceptionAction(string id, ExceptionActionKind kind, string note, string dispositionCode) : base(id, kind)
         {
             Note = note;
             DispositionCode = dispositionCode;

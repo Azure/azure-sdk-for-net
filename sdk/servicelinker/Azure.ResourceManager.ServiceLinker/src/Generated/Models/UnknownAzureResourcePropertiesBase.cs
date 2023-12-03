@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The UnknownAzureResourcePropertiesBase. </summary>
     internal partial class UnknownAzureResourcePropertiesBase : AzureResourceBaseProperties
     {
-        /// <summary> Initializes a new instance of UnknownAzureResourcePropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAzureResourcePropertiesBase"/>. </summary>
         /// <param name="azureResourceType"> The azure resource type. </param>
         internal UnknownAzureResourcePropertiesBase(AzureResourceType azureResourceType) : base(azureResourceType)
         {

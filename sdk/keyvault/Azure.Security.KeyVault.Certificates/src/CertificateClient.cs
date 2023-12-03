@@ -24,6 +24,9 @@ namespace Azure.Security.KeyVault.Certificates
     {
         internal const string CertificatesPath = "/certificates/";
         internal const string DeletedCertificatesPath = "/deletedcertificates/";
+        private const string OTelCertificateNameKey = "az.keyvault.certificate.name";
+        private const string OTelCertificateVersionKey = "az.keyvault.certificate.version";
+        private const string OTelCertificateIssuerNameKey = "az.keyvault.certificate.issuer.name";
         private const string IssuersPath = "/certificates/issuers/";
         private const string ContactsPath = "/certificates/contacts/";
 
@@ -102,7 +105,7 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateCreateParameters(policy, enabled, tags);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -141,7 +144,7 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateCreateParameters(policy, enabled, tags);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -206,8 +209,8 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
-            scope.AddAttribute("certificate", options.CertificateName);
-            scope.AddAttribute("version", options.Version);
+            scope.AddAttribute(OTelCertificateNameKey, options.CertificateName);
+            scope.AddAttribute(OTelCertificateVersionKey, options.Version);
             scope.Start();
 
             try
@@ -293,8 +296,8 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
-            scope.AddAttribute("certificate", options.CertificateName);
-            scope.AddAttribute("version", options.Version);
+            scope.AddAttribute(OTelCertificateNameKey, options.CertificateName);
+            scope.AddAttribute(OTelCertificateVersionKey, options.Version);
             scope.Start();
 
             try
@@ -346,7 +349,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -373,7 +376,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -401,8 +404,8 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
-            scope.AddAttribute("certificate", certificateName);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
+            scope.AddAttribute(OTelCertificateVersionKey, version);
             scope.Start();
 
             try
@@ -431,8 +434,8 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
-            scope.AddAttribute("certificate", certificateName);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
+            scope.AddAttribute(OTelCertificateVersionKey, version);
             scope.Start();
 
             try
@@ -460,8 +463,8 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateUpdateParameters(properties);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
-            scope.AddAttribute("certificate", properties.Name);
-            scope.AddAttribute("version", properties.Version);
+            scope.AddAttribute(OTelCertificateNameKey, properties.Name);
+            scope.AddAttribute(OTelCertificateVersionKey, properties.Version);
             scope.Start();
 
             try
@@ -489,8 +492,8 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateUpdateParameters(properties);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
-            scope.AddAttribute("certificate", properties.Name);
-            scope.AddAttribute("version", properties.Version);
+            scope.AddAttribute(OTelCertificateNameKey, properties.Name);
+            scope.AddAttribute(OTelCertificateVersionKey, properties.Version);
             scope.Start();
 
             try
@@ -522,7 +525,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -555,7 +558,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -584,7 +587,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -612,7 +615,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -640,7 +643,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -669,7 +672,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -698,7 +701,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -726,7 +729,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -754,7 +757,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -784,7 +787,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -867,7 +870,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(importCertificateOptions.Name, nameof(importCertificateOptions.Name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
-            scope.AddAttribute("certificate", importCertificateOptions.Name);
+            scope.AddAttribute(OTelCertificateNameKey, importCertificateOptions.Name);
             scope.Start();
 
             try
@@ -896,7 +899,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(importCertificateOptions.Name, nameof(importCertificateOptions.Name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
-            scope.AddAttribute("certificate", importCertificateOptions.Name);
+            scope.AddAttribute(OTelCertificateNameKey, importCertificateOptions.Name);
             scope.Start();
 
             try
@@ -1013,7 +1016,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1040,7 +1043,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1068,7 +1071,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1096,7 +1099,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1133,7 +1136,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
-            scope.AddAttribute("issuer", issuer.Name);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
 
             try
@@ -1170,7 +1173,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
-            scope.AddAttribute("issuer", issuer.Name);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
 
             try
@@ -1197,7 +1200,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
-            scope.AddAttribute("issuer", issuerName);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
 
             try
@@ -1224,7 +1227,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
-            scope.AddAttribute("issuer", issuerName);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
 
             try
@@ -1256,7 +1259,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
-            scope.AddAttribute("issuer", issuer.Name);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
 
             try
@@ -1288,7 +1291,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
-            scope.AddAttribute("issuer", issuer.Name);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
 
             try
@@ -1315,7 +1318,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
-            scope.AddAttribute("issuer", issuerName);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
 
             try
@@ -1342,7 +1345,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
-            scope.AddAttribute("issuer", issuerName);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
 
             try
@@ -1395,7 +1398,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1424,7 +1427,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1598,7 +1601,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNull(mergeCertificateOptions, nameof(mergeCertificateOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
-            scope.AddAttribute("certificate", mergeCertificateOptions.Name);
+            scope.AddAttribute(OTelCertificateNameKey, mergeCertificateOptions.Name);
             scope.Start();
 
             try
@@ -1626,7 +1629,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNull(mergeCertificateOptions, nameof(mergeCertificateOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
-            scope.AddAttribute("certificate", mergeCertificateOptions.Name);
+            scope.AddAttribute(OTelCertificateNameKey, mergeCertificateOptions.Name);
             scope.Start();
 
             try
@@ -1647,7 +1650,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1678,7 +1681,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1711,7 +1714,7 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateOperationUpdateParameters(true);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1732,7 +1735,7 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateOperationUpdateParameters(true);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1751,7 +1754,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1770,7 +1773,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try

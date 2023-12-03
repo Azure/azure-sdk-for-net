@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Reverse Shipping Address and contact details for a job. </summary>
     public partial class ReverseShippingDetails
     {
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseShippingDetails"/>. </summary>
         public ReverseShippingDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseShippingDetails"/>. </summary>
         /// <param name="contactDetails"> Contact Info. </param>
         /// <param name="shippingAddress"> Shipping address where customer wishes to receive the device. </param>
         /// <param name="isUpdated">

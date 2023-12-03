@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Hubspot Service linked service. </summary>
     public partial class HubspotLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of HubspotLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubspotLinkedService"/>. </summary>
         /// <param name="clientId"> The client ID associated with your Hubspot application. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         public HubspotLinkedService(object clientId)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Hubspot";
         }
 
-        /// <summary> Initializes a new instance of HubspotLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubspotLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

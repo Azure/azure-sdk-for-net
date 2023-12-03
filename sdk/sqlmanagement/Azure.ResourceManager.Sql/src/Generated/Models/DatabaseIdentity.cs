@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Azure Active Directory identity configuration for a resource. </summary>
     public partial class DatabaseIdentity
     {
-        /// <summary> Initializes a new instance of DatabaseIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseIdentity"/>. </summary>
         public DatabaseIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseIdentity"/>. </summary>
         /// <param name="identityType"> The identity type. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant id. </param>
         /// <param name="userAssignedIdentities"> The resource ids of the user assigned identities to use. </param>

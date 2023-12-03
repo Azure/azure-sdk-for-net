@@ -12,12 +12,12 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The SAS definition management attributes. </summary>
     public partial class SasDefinitionAttributes
     {
-        /// <summary> Initializes a new instance of SasDefinitionAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionAttributes"/>. </summary>
         public SasDefinitionAttributes()
         {
         }
 
-        /// <summary> Initializes a new instance of SasDefinitionAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionAttributes"/>. </summary>
         /// <param name="enabled"> the enabled state of the object. </param>
         /// <param name="created"> Creation time in UTC. </param>
         /// <param name="updated"> Last updated time in UTC. </param>

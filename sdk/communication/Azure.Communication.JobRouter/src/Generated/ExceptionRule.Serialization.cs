@@ -19,10 +19,16 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
+            string id = default;
             ExceptionTrigger trigger = default;
-            IDictionary<string, ExceptionAction> actions = default;
+            IList<ExceptionAction> actions = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("trigger"u8))
                 {
                     trigger = ExceptionTrigger.DeserializeExceptionTrigger(property.Value);
@@ -30,16 +36,16 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("actions"u8))
                 {
-                    Dictionary<string, ExceptionAction> dictionary = new Dictionary<string, ExceptionAction>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    List<ExceptionAction> array = new List<ExceptionAction>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        dictionary.Add(property0.Name, ExceptionAction.DeserializeExceptionAction(property0.Value));
+                        array.Add(ExceptionAction.DeserializeExceptionAction(item));
                     }
-                    actions = dictionary;
+                    actions = array;
                     continue;
                 }
             }
-            return new ExceptionRule(trigger, actions);
+            return new ExceptionRule(id, trigger, actions);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

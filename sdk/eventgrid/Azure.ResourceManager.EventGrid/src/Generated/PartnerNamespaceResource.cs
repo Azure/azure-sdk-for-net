@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing a PartnerNamespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PartnerNamespaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPartnerNamespaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPartnerNamespace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PartnerNamespaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPartnerNamespaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPartnerNamespace method.
     /// </summary>
     public partial class PartnerNamespaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PartnerNamespaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="partnerNamespaceName"> The partnerNamespaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string partnerNamespaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PartnerNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PartnerNamespaceResource(ArmClient client, PartnerNamespaceData data) : this(client, data.Id)
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of PartnerNamespaceChannelResources and their operations over a PartnerNamespaceChannelResource. </returns>
         public virtual PartnerNamespaceChannelCollection GetPartnerNamespaceChannels()
         {
-            return GetCachedClient(Client => new PartnerNamespaceChannelCollection(Client, Id));
+            return GetCachedClient(client => new PartnerNamespaceChannelCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespaceChannelResource>> GetPartnerNamespaceChannelAsync(string channelName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PartnerNamespaceChannelResource> GetPartnerNamespaceChannel(string channelName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of EventGridPartnerNamespacePrivateEndpointConnectionResources and their operations over a EventGridPartnerNamespacePrivateEndpointConnectionResource. </returns>
         public virtual EventGridPartnerNamespacePrivateEndpointConnectionCollection GetEventGridPartnerNamespacePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new EventGridPartnerNamespacePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new EventGridPartnerNamespacePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridPartnerNamespacePrivateEndpointConnectionResource>> GetEventGridPartnerNamespacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventGridPartnerNamespacePrivateEndpointConnectionResource> GetEventGridPartnerNamespacePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +202,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of PartnerNamespacePrivateLinkResources and their operations over a PartnerNamespacePrivateLinkResource. </returns>
         public virtual PartnerNamespacePrivateLinkResourceCollection GetPartnerNamespacePrivateLinkResources()
         {
-            return GetCachedClient(Client => new PartnerNamespacePrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new PartnerNamespacePrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +220,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespacePrivateLinkResource>> GetPartnerNamespacePrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +243,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PartnerNamespacePrivateLinkResource> GetPartnerNamespacePrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {

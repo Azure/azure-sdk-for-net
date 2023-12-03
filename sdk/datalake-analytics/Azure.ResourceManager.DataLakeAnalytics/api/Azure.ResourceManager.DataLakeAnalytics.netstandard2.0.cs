@@ -288,6 +288,38 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
+{
+    public partial class MockableDataLakeAnalyticsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataLakeAnalyticsArmClient() { }
+        public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource GetDataLakeAnalyticsAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyResource GetDataLakeAnalyticsComputePolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleResource GetDataLakeAnalyticsFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource GetDataLakeAnalyticsStorageAccountInformationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerResource GetDataLakeAnalyticsStorageContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource GetDataLakeStoreAccountInformationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDataLakeAnalyticsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataLakeAnalyticsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource> GetDataLakeAnalyticsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource>> GetDataLakeAnalyticsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountCollection GetDataLakeAnalyticsAccounts() { throw null; }
+    }
+    public partial class MockableDataLakeAnalyticsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataLakeAnalyticsSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAccounts(Azure.ResourceManager.DataLakeAnalytics.Models.SubscriptionResourceGetAccountsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAccounts(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAccountsAsync(Azure.ResourceManager.DataLakeAnalytics.Models.SubscriptionResourceGetAccountsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAccountsAsync(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCapabilityInformation> GetCapabilityLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCapabilityInformation>> GetCapabilityLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

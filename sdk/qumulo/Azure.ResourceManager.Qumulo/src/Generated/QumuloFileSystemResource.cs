@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
     /// A Class representing a QumuloFileSystemResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="QumuloFileSystemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetQumuloFileSystemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetQumuloFileSystemResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="QumuloFileSystemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetQumuloFileSystemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetQumuloFileSystemResource method.
     /// </summary>
     public partial class QumuloFileSystemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="QumuloFileSystemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="fileSystemName"> The fileSystemName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fileSystemName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Qumulo
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "QumuloFileSystemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="QumuloFileSystemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal QumuloFileSystemResource(ArmClient client, QumuloFileSystemResourceData data) : this(client, data.Id)

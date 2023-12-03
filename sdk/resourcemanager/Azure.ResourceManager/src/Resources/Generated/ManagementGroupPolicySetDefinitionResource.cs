@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a ManagementGroupPolicySetDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagementGroupPolicySetDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagementGroupPolicySetDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource" /> using the GetManagementGroupPolicySetDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagementGroupPolicySetDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagementGroupPolicySetDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetManagementGroupPolicySetDefinition method.
     /// </summary>
     public partial class ManagementGroupPolicySetDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicySetDefinitionResource"/> instance. </summary>
+        /// <param name="managementGroupId"> The managementGroupId. </param>
+        /// <param name="policySetDefinitionName"> The policySetDefinitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string policySetDefinitionName)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementGroupPolicySetDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicySetDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagementGroupPolicySetDefinitionResource(ArmClient client, PolicySetDefinitionData data) : this(client, data.Id)

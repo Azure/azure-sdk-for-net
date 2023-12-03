@@ -19,13 +19,19 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotDiagnosticDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotDiagnosticDetectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotDiagnosticDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotDiagnosticResource" /> using the GetSiteSlotDiagnosticDetector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotDiagnosticDetectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotDiagnosticDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotDiagnosticResource"/> using the GetSiteSlotDiagnosticDetector method.
     /// </summary>
     public partial class SiteSlotDiagnosticDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotDiagnosticDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="siteName"> The siteName. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="diagnosticCategory"> The diagnosticCategory. </param>
+        /// <param name="detectorName"> The detectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string slot, string diagnosticCategory, string detectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}";
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotDiagnosticDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotDiagnosticDetectorResource(ArmClient client, DetectorDefinitionResourceData data) : this(client, data.Id)

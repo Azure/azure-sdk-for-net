@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto data connections operation response. </summary>
     internal partial class DataConnectionListResult
     {
-        /// <summary> Initializes a new instance of DataConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionListResult"/>. </summary>
         internal DataConnectionListResult()
         {
             Value = new ChangeTrackingList<KustoDataConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of DataConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionListResult"/>. </summary>
         /// <param name="value">
         /// The list of Kusto data connections.
         /// Please note <see cref="KustoDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

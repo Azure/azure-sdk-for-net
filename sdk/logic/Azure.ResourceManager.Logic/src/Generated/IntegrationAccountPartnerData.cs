@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationAccountPartnerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationAccountPartnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountPartnerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="partnerType"> The partner type. </param>
         /// <param name="content"> The partner content. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountPartnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountPartnerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

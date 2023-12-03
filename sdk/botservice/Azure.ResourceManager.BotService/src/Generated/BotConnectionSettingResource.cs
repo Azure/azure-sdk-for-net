@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.BotService
 {
     /// <summary>
     /// A Class representing a BotConnectionSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BotConnectionSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBotConnectionSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BotResource" /> using the GetBotConnectionSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BotConnectionSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBotConnectionSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BotResource"/> using the GetBotConnectionSetting method.
     /// </summary>
     public partial class BotConnectionSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BotConnectionSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="connectionName"> The connectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string connectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.BotService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BotConnectionSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BotConnectionSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BotConnectionSettingResource(ArmClient client, BotConnectionSettingData data) : this(client, data.Id)

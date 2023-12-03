@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of BuildpackBinding resources and a possible link for next set. </summary>
     internal partial class BuildpackBindingResourceList
     {
-        /// <summary> Initializes a new instance of BuildpackBindingResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpackBindingResourceList"/>. </summary>
         internal BuildpackBindingResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformBuildpackBindingData>();
         }
 
-        /// <summary> Initializes a new instance of BuildpackBindingResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpackBindingResourceList"/>. </summary>
         /// <param name="value"> Collection of BuildpackBinding resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

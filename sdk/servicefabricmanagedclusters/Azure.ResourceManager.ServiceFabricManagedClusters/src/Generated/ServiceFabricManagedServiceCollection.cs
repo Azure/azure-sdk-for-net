@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceFabricManagedServiceResource" /> and their operations.
-    /// Each <see cref="ServiceFabricManagedServiceResource" /> in the collection will belong to the same instance of <see cref="ServiceFabricManagedApplicationResource" />.
-    /// To get a <see cref="ServiceFabricManagedServiceCollection" /> instance call the GetServiceFabricManagedServices method from an instance of <see cref="ServiceFabricManagedApplicationResource" />.
+    /// A class representing a collection of <see cref="ServiceFabricManagedServiceResource"/> and their operations.
+    /// Each <see cref="ServiceFabricManagedServiceResource"/> in the collection will belong to the same instance of <see cref="ServiceFabricManagedApplicationResource"/>.
+    /// To get a <see cref="ServiceFabricManagedServiceCollection"/> instance call the GetServiceFabricManagedServices method from an instance of <see cref="ServiceFabricManagedApplicationResource"/>.
     /// </summary>
     public partial class ServiceFabricManagedServiceCollection : ArmCollection, IEnumerable<ServiceFabricManagedServiceResource>, IAsyncEnumerable<ServiceFabricManagedServiceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricManagedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricManagedServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedServiceServicesRestClient.CreateListByApplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricManagedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricManagedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricManagedServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedServiceServicesRestClient.CreateListByApplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

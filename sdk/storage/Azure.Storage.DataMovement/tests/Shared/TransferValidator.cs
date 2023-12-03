@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal partial class TransferValidator
+    public partial class TransferValidator
     {
         public interface IResourceEnumerationItem
         {

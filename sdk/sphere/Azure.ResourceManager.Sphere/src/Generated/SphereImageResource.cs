@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
     /// A Class representing a SphereImage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SphereImageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSphereImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource" /> using the GetSphereImage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereImageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSphereImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource"/> using the GetSphereImage method.
     /// </summary>
     public partial class SphereImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SphereImageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="catalogName"> The catalogName. </param>
+        /// <param name="imageName"> The imageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string imageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/images/{imageName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Sphere
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SphereImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SphereImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SphereImageResource(ArmClient client, SphereImageData data) : this(client, data.Id)

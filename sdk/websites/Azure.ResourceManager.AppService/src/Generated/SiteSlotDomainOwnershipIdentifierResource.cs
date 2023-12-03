@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotDomainOwnershipIdentifier along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotDomainOwnershipIdentifierResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotDomainOwnershipIdentifierResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetSiteSlotDomainOwnershipIdentifier method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotDomainOwnershipIdentifierResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotDomainOwnershipIdentifierResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetSiteSlotDomainOwnershipIdentifier method.
     /// </summary>
     public partial class SiteSlotDomainOwnershipIdentifierResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotDomainOwnershipIdentifierResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="domainOwnershipIdentifierName"> The domainOwnershipIdentifierName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotDomainOwnershipIdentifierResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotDomainOwnershipIdentifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotDomainOwnershipIdentifierResource(ArmClient client, AppServiceIdentifierData data) : this(client, data.Id)

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppAuthConfigData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppAuthConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAuthConfigData"/>. </summary>
         public ContainerAppAuthConfigData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAuthConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAuthConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

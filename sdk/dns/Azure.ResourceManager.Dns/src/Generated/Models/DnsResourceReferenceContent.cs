@@ -14,10 +14,17 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Represents the properties of the Dns Resource Reference Request. </summary>
     public partial class DnsResourceReferenceContent
     {
-        /// <summary> Initializes a new instance of DnsResourceReferenceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResourceReferenceContent"/>. </summary>
         public DnsResourceReferenceContent()
         {
             TargetResources = new ChangeTrackingList<WritableSubResource>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResourceReferenceContent"/>. </summary>
+        /// <param name="targetResources"> A list of references to azure resources for which referencing dns records need to be queried. </param>
+        internal DnsResourceReferenceContent(IList<WritableSubResource> targetResources)
+        {
+            TargetResources = targetResources;
         }
 
         /// <summary> A list of references to azure resources for which referencing dns records need to be queried. </summary>

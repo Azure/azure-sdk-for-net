@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing a HybridComputePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridComputePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridComputePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HybridComputePrivateLinkScopeResource" /> using the GetHybridComputePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridComputePrivateLinkScopeResource"/> using the GetHybridComputePrivateEndpointConnection method.
     /// </summary>
     public partial class HybridComputePrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridComputePrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scopeName"> The scopeName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridComputePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridComputePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputePrivateEndpointConnectionResource(ArmClient client, HybridComputePrivateEndpointConnectionData data) : this(client, data.Id)
@@ -232,7 +236,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The HybridComputePrivateEndpointConnection to use. </param>
+        /// <param name="data"> The <see cref="HybridComputePrivateEndpointConnectionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridComputePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HybridComputePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
@@ -270,7 +274,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The HybridComputePrivateEndpointConnection to use. </param>
+        /// <param name="data"> The <see cref="HybridComputePrivateEndpointConnectionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridComputePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HybridComputePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)

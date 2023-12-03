@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
     public partial class SessionHostAgentUpdateProperties
     {
-        /// <summary> Initializes a new instance of SessionHostAgentUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostAgentUpdateProperties"/>. </summary>
         public SessionHostAgentUpdateProperties()
         {
             MaintenanceWindows = new ChangeTrackingList<SessionHostMaintenanceWindowProperties>();
         }
 
-        /// <summary> Initializes a new instance of SessionHostAgentUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostAgentUpdateProperties"/>. </summary>
         /// <param name="updateType"> The type of maintenance for session host components. </param>
         /// <param name="doesUseSessionHostLocalTime"> Whether to use localTime of the virtual machine. </param>
         /// <param name="maintenanceWindowTimeZone"> Time zone for maintenance as defined in https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.findsystemtimezonebyid?view=net-5.0. Must be set if useLocalTime is true. </param>

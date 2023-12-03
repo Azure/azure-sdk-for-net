@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     internal partial class DataLakeAnalyticsSasTokenInformationListResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsSasTokenInformationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsSasTokenInformationListResult"/>. </summary>
         internal DataLakeAnalyticsSasTokenInformationListResult()
         {
             Value = new ChangeTrackingList<DataLakeAnalyticsSasTokenInformation>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsSasTokenInformationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsSasTokenInformationListResult"/>. </summary>
         /// <param name="value">
         /// The results of the list operation.
         /// Serialized Name: SasTokenInformationListResult.value

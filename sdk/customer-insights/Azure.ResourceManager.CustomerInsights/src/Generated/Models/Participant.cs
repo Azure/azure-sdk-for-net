@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Describes a profile type participating in an interaction. </summary>
     public partial class Participant
     {
-        /// <summary> Initializes a new instance of Participant. </summary>
+        /// <summary> Initializes a new instance of <see cref="Participant"/>. </summary>
         /// <param name="profileTypeName"> Profile type name. </param>
         /// <param name="participantPropertyReferences"> The property references. </param>
         /// <param name="participantName"> Participant name. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Description = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of Participant. </summary>
+        /// <summary> Initializes a new instance of <see cref="Participant"/>. </summary>
         /// <param name="profileTypeName"> Profile type name. </param>
         /// <param name="participantPropertyReferences"> The property references. </param>
         /// <param name="participantName"> Participant name. </param>

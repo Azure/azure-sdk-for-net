@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudClusterManager along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudClusterManagerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudClusterManagerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudClusterManager method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudClusterManagerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudClusterManagerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudClusterManager method.
     /// </summary>
     public partial class NetworkCloudClusterManagerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudClusterManagerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterManagerName"> The clusterManagerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterManagerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}";
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudClusterManagerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterManagerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudClusterManagerResource(ArmClient client, NetworkCloudClusterManagerData data) : this(client, data.Id)

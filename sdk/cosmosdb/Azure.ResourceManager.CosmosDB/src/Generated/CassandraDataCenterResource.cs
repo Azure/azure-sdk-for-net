@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CassandraDataCenter along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CassandraDataCenterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCassandraDataCenterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CassandraClusterResource" /> using the GetCassandraDataCenter method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CassandraDataCenterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCassandraDataCenterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CassandraClusterResource"/> using the GetCassandraDataCenter method.
     /// </summary>
     public partial class CassandraDataCenterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CassandraDataCenterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="dataCenterName"> The dataCenterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string dataCenterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CassandraDataCenterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraDataCenterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CassandraDataCenterResource(ArmClient client, CassandraDataCenterData data) : this(client, data.Id)

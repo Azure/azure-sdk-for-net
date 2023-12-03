@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseWorkloadClassifier along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseWorkloadClassifierResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseWorkloadClassifierResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkloadGroupResource" /> using the GetSynapseWorkloadClassifier method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseWorkloadClassifierResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseWorkloadClassifierResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkloadGroupResource"/> using the GetSynapseWorkloadClassifier method.
     /// </summary>
     public partial class SynapseWorkloadClassifierResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseWorkloadClassifierResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
+        /// <param name="workloadGroupName"> The workloadGroupName. </param>
+        /// <param name="workloadClassifierName"> The workloadClassifierName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/workloadGroups/{workloadGroupName}/workloadClassifiers/{workloadClassifierName}";
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseWorkloadClassifierResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseWorkloadClassifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseWorkloadClassifierResource(ArmClient client, SynapseWorkloadClassifierData data) : this(client, data.Id)

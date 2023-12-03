@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SubscriptionLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionLongTermRetentionManagedInstanceBackupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionLongTermRetentionManagedInstanceBackup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionLongTermRetentionManagedInstanceBackupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionLongTermRetentionManagedInstanceBackup method.
     /// </summary>
     public partial class SubscriptionLongTermRetentionManagedInstanceBackupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="backupName"> The backupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}";
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionLongTermRetentionManagedInstanceBackupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionLongTermRetentionManagedInstanceBackupResource(ArmClient client, ManagedInstanceLongTermRetentionBackupData data) : this(client, data.Id)

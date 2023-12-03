@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Input text in the default script of the source language. </summary>
     public partial class SourceText
     {
-        /// <summary> Initializes a new instance of SourceText. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceText"/>. </summary>
         /// <param name="text"> Input text in the default script of the source language. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal SourceText(string text)

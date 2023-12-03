@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StorageQueueResource" /> and their operations.
-    /// Each <see cref="StorageQueueResource" /> in the collection will belong to the same instance of <see cref="QueueServiceResource" />.
-    /// To get a <see cref="StorageQueueCollection" /> instance call the GetStorageQueues method from an instance of <see cref="QueueServiceResource" />.
+    /// A class representing a collection of <see cref="StorageQueueResource"/> and their operations.
+    /// Each <see cref="StorageQueueResource"/> in the collection will belong to the same instance of <see cref="QueueServiceResource"/>.
+    /// To get a <see cref="StorageQueueCollection"/> instance call the GetStorageQueues method from an instance of <see cref="QueueServiceResource"/>.
     /// </summary>
     public partial class StorageQueueCollection : ArmCollection, IEnumerable<StorageQueueResource>, IAsyncEnumerable<StorageQueueResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageQueueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageQueueResource> GetAllAsync(string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageQueueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageQueueResource> GetAll(string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);

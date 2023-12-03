@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Summary of alerts based on the input filters and 'groupby' parameters. </summary>
     public partial class ServiceAlertSummary : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceAlertSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummary"/>. </summary>
         public ServiceAlertSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

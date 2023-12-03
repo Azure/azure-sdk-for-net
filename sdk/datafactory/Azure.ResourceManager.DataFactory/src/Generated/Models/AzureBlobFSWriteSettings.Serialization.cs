@@ -38,14 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CopyBehavior);
-#else
-                using (JsonDocument document = JsonDocument.Parse(CopyBehavior))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, CopyBehavior);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -72,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
             Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
-            Optional<BinaryData> copyBehavior = default;
+            Optional<DataFactoryElement<string>> copyBehavior = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyBehavior = BinaryData.FromString(property.Value.GetRawText());
+                    copyBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A Class representing a SecurityInsightsIncidentComment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsIncidentCommentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsIncidentCommentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityInsightsIncidentResource" /> using the GetSecurityInsightsIncidentComment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsIncidentCommentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsIncidentCommentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityInsightsIncidentResource"/> using the GetSecurityInsightsIncidentComment method.
     /// </summary>
     public partial class SecurityInsightsIncidentCommentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsIncidentCommentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="incidentId"> The incidentId. </param>
+        /// <param name="incidentCommentId"> The incidentCommentId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}";
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsIncidentCommentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentCommentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsIncidentCommentResource(ArmClient client, SecurityInsightsIncidentCommentData data) : this(client, data.Id)

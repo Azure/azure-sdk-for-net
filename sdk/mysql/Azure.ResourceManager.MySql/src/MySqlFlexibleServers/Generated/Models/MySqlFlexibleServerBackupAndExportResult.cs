@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents BackupAndExport API Response. </summary>
     public partial class MySqlFlexibleServerBackupAndExportResult : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupAndExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportResult"/>. </summary>
         public MySqlFlexibleServerBackupAndExportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupAndExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="startOn"> Start time. </param>
         /// <param name="endOn"> End time. </param>
         /// <param name="percentComplete"> Operation progress (0-100). </param>
-        /// <param name="error"> The BackupAndExport operation error response. </param>
         /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
         /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
         /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
-        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata) : base(id, name, resourceType, systemData)
+        /// <param name="error"> The error object. </param>
+        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata, ResponseError error) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             PercentComplete = percentComplete;
-            Error = error;
             DatasourceSizeInBytes = datasourceSizeInBytes;
             DataTransferredInBytes = dataTransferredInBytes;
             BackupMetadata = backupMetadata;
+            Error = error;
         }
 
         /// <summary> The operation status. </summary>
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Operation progress (0-100). </summary>
         public double? PercentComplete { get; set; }
-        /// <summary> The BackupAndExport operation error response. </summary>
-        public ResponseError Error { get; set; }
         /// <summary> Size of datasource in bytes. </summary>
         public long? DatasourceSizeInBytes { get; set; }
         /// <summary> Data transferred in bytes. </summary>
         public long? DataTransferredInBytes { get; set; }
         /// <summary> Metadata related to backup to be stored for restoring resource in key-value pairs. </summary>
         public string BackupMetadata { get; set; }
+        /// <summary> The error object. </summary>
+        public ResponseError Error { get; set; }
     }
 }

@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A Class representing a SapVirtualInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SapVirtualInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSapVirtualInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSapVirtualInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapVirtualInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSapVirtualInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSapVirtualInstance method.
     /// </summary>
     public partial class SapVirtualInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SapVirtualInstanceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sapVirtualInstanceName"> The sapVirtualInstanceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}";
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Workloads
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SapVirtualInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapVirtualInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SapVirtualInstanceResource(ArmClient client, SapVirtualInstanceData data) : this(client, data.Id)
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapCentralServerInstanceResources and their operations over a SapCentralServerInstanceResource. </returns>
         public virtual SapCentralServerInstanceCollection GetSapCentralServerInstances()
         {
-            return GetCachedClient(Client => new SapCentralServerInstanceCollection(Client, Id));
+            return GetCachedClient(client => new SapCentralServerInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +115,8 @@ namespace Azure.ResourceManager.Workloads
         /// </summary>
         /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SapCentralServerInstanceResource>> GetSapCentralServerInstanceAsync(string centralInstanceName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.Workloads
         /// </summary>
         /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SapCentralServerInstanceResource> GetSapCentralServerInstance(string centralInstanceName, CancellationToken cancellationToken = default)
         {
@@ -147,7 +150,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapDatabaseInstanceResources and their operations over a SapDatabaseInstanceResource. </returns>
         public virtual SapDatabaseInstanceCollection GetSapDatabaseInstances()
         {
-            return GetCachedClient(Client => new SapDatabaseInstanceCollection(Client, Id));
+            return GetCachedClient(client => new SapDatabaseInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -165,8 +168,8 @@ namespace Azure.ResourceManager.Workloads
         /// </summary>
         /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SapDatabaseInstanceResource>> GetSapDatabaseInstanceAsync(string databaseInstanceName, CancellationToken cancellationToken = default)
         {
@@ -188,8 +191,8 @@ namespace Azure.ResourceManager.Workloads
         /// </summary>
         /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SapDatabaseInstanceResource> GetSapDatabaseInstance(string databaseInstanceName, CancellationToken cancellationToken = default)
         {
@@ -200,7 +203,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapApplicationServerInstanceResources and their operations over a SapApplicationServerInstanceResource. </returns>
         public virtual SapApplicationServerInstanceCollection GetSapApplicationServerInstances()
         {
-            return GetCachedClient(Client => new SapApplicationServerInstanceCollection(Client, Id));
+            return GetCachedClient(client => new SapApplicationServerInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -218,8 +221,8 @@ namespace Azure.ResourceManager.Workloads
         /// </summary>
         /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SapApplicationServerInstanceResource>> GetSapApplicationServerInstanceAsync(string applicationInstanceName, CancellationToken cancellationToken = default)
         {
@@ -241,8 +244,8 @@ namespace Azure.ResourceManager.Workloads
         /// </summary>
         /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SapApplicationServerInstanceResource> GetSapApplicationServerInstance(string applicationInstanceName, CancellationToken cancellationToken = default)
         {

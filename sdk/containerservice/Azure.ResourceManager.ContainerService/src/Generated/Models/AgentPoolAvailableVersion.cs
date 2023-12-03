@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The AgentPoolAvailableVersion. </summary>
     public partial class AgentPoolAvailableVersion
     {
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersion"/>. </summary>
         internal AgentPoolAvailableVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersion"/>. </summary>
         /// <param name="isDefault"> Whether this version is the default agent pool version. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether Kubernetes version is currently in preview. </param>

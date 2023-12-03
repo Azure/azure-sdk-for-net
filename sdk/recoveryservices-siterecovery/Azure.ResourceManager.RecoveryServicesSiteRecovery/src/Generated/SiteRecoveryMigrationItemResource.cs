@@ -19,13 +19,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryMigrationItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryMigrationItemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryMigrationItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource" /> using the GetSiteRecoveryMigrationItem method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryMigrationItemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryMigrationItemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetSiteRecoveryMigrationItem method.
     /// </summary>
     public partial class SiteRecoveryMigrationItemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryMigrationItemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="protectionContainerName"> The protectionContainerName. </param>
+        /// <param name="migrationItemName"> The migrationItemName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}";
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryMigrationItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryMigrationItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryMigrationItemResource(ArmClient client, SiteRecoveryMigrationItemData data) : this(client, data.Id)
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of MigrationRecoveryPointResources and their operations over a MigrationRecoveryPointResource. </returns>
         public virtual MigrationRecoveryPointCollection GetMigrationRecoveryPoints()
         {
-            return GetCachedClient(Client => new MigrationRecoveryPointCollection(Client, Id));
+            return GetCachedClient(client => new MigrationRecoveryPointCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +115,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MigrationRecoveryPointResource>> GetMigrationRecoveryPointAsync(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +138,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MigrationRecoveryPointResource> GetMigrationRecoveryPoint(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {

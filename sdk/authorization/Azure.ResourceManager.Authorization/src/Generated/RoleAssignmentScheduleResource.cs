@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing a RoleAssignmentSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RoleAssignmentScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRoleAssignmentScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetRoleAssignmentSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleAssignmentScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRoleAssignmentScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleAssignmentSchedule method.
     /// </summary>
     public partial class RoleAssignmentScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RoleAssignmentScheduleResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="roleAssignmentScheduleName"> The roleAssignmentScheduleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleAssignmentScheduleName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}";
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Authorization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RoleAssignmentScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoleAssignmentScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleAssignmentScheduleResource(ArmClient client, RoleAssignmentScheduleData data) : this(client, data.Id)

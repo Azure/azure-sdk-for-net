@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
     /// A Class representing a MetadataEntity along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MetadataEntityResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMetadataEntityResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetMetadataEntity method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MetadataEntityResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMetadataEntityResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetMetadataEntity method.
     /// </summary>
     public partial class MetadataEntityResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MetadataEntityResource"/> instance. </summary>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string name)
         {
             var resourceId = $"/providers/Microsoft.Advisor/metadata/{name}";
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Advisor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MetadataEntityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MetadataEntityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MetadataEntityResource(ArmClient client, MetadataEntityData data) : this(client, data.Id)

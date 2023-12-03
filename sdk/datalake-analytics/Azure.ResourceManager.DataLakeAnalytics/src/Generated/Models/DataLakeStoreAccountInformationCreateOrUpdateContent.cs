@@ -13,9 +13,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeStoreAccountInformationCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountInformationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountInformationCreateOrUpdateContent"/>. </summary>
         public DataLakeStoreAccountInformationCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountInformationCreateOrUpdateContent"/>. </summary>
+        /// <param name="suffix">
+        /// The optional suffix for the Data Lake Store account.
+        /// Serialized Name: AddDataLakeStoreParameters.properties.suffix
+        /// </param>
+        internal DataLakeStoreAccountInformationCreateOrUpdateContent(string suffix)
+        {
+            Suffix = suffix;
         }
 
         /// <summary>

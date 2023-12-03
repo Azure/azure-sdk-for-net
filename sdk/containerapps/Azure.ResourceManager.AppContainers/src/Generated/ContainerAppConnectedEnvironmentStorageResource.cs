@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppConnectedEnvironmentStorage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppConnectedEnvironmentStorageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppConnectedEnvironmentStorageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppConnectedEnvironmentResource" /> using the GetContainerAppConnectedEnvironmentStorage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppConnectedEnvironmentStorageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppConnectedEnvironmentStorageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppConnectedEnvironmentResource"/> using the GetContainerAppConnectedEnvironmentStorage method.
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentStorageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="connectedEnvironmentName"> The connectedEnvironmentName. </param>
+        /// <param name="storageName"> The storageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string storageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}";
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppConnectedEnvironmentStorageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentStorageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppConnectedEnvironmentStorageResource(ArmClient client, ContainerAppConnectedEnvironmentStorageData data) : this(client, data.Id)

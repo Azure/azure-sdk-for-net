@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.PolicyInsights.PolicyStateChanged event. </summary>
     public partial class PolicyInsightsPolicyStateChangedEventData
     {
-        /// <summary> Initializes a new instance of PolicyInsightsPolicyStateChangedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateChangedEventData"/>. </summary>
         internal PolicyInsightsPolicyStateChangedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyInsightsPolicyStateChangedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateChangedEventData"/>. </summary>
         /// <param name="timestamp"> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>

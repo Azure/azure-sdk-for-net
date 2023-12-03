@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
     /// A Class representing a StreamingJobInput along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingJobInputResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamingJobInputResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StreamingJobResource" /> using the GetStreamingJobInput method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamingJobInputResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamingJobInputResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StreamingJobResource"/> using the GetStreamingJobInput method.
     /// </summary>
     public partial class StreamingJobInputResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StreamingJobInputResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="jobName"> The jobName. </param>
+        /// <param name="inputName"> The inputName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName, string inputName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/inputs/{inputName}";
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamingJobInputResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamingJobInputResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamingJobInputResource(ArmClient client, StreamingJobInputData data) : this(client, data.Id)

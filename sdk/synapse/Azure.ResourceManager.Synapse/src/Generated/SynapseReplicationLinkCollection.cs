@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseReplicationLinkResource" /> and their operations.
-    /// Each <see cref="SynapseReplicationLinkResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource" />.
-    /// To get a <see cref="SynapseReplicationLinkCollection" /> instance call the GetSynapseReplicationLinks method from an instance of <see cref="SynapseSqlPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseReplicationLinkResource"/> and their operations.
+    /// Each <see cref="SynapseReplicationLinkResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource"/>.
+    /// To get a <see cref="SynapseReplicationLinkCollection"/> instance call the GetSynapseReplicationLinks method from an instance of <see cref="SynapseSqlPoolResource"/>.
     /// </summary>
     public partial class SynapseReplicationLinkCollection : ArmCollection, IEnumerable<SynapseReplicationLinkResource>, IAsyncEnumerable<SynapseReplicationLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseReplicationLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseReplicationLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

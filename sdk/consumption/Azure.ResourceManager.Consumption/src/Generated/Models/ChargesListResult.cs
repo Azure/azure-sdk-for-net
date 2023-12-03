@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing charge summary. </summary>
     internal partial class ChargesListResult
     {
-        /// <summary> Initializes a new instance of ChargesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChargesListResult"/>. </summary>
         internal ChargesListResult()
         {
             Value = new ChangeTrackingList<ConsumptionChargeSummary>();
         }
 
-        /// <summary> Initializes a new instance of ChargesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChargesListResult"/>. </summary>
         /// <param name="value">
         /// The list of charge summary
         /// Please note <see cref="ConsumptionChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

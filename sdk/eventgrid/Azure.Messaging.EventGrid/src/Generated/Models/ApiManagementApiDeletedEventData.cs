@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.APIDeleted event. </summary>
     public partial class ApiManagementApiDeletedEventData
     {
-        /// <summary> Initializes a new instance of ApiManagementApiDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementApiDeletedEventData"/>. </summary>
         internal ApiManagementApiDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementApiDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementApiDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         internal ApiManagementApiDeletedEventData(string resourceUri)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Information about a Linux OS. </summary>
     internal partial class LinuxOSInfo
     {
-        /// <summary> Initializes a new instance of LinuxOSInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxOSInfo"/>. </summary>
         public LinuxOSInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LinuxOSInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxOSInfo"/>. </summary>
         /// <param name="linuxOSState"> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </param>
         internal LinuxOSInfo(DevTestLabLinuxOSState? linuxOSState)
         {
