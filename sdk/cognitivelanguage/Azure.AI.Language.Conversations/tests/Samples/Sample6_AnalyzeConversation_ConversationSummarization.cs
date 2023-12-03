@@ -124,8 +124,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     Console.WriteLine("Errors:");
                     foreach (dynamic error in results.Errors)
                     {
-                        Console.WriteLine($"Error: {error}");    
-                    } 
+                        Console.WriteLine($"Error: {error}");
+                    }
                 }
             }
             #endregion
