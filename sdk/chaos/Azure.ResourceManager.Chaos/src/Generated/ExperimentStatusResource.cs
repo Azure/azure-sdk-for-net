@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Chaos
         private readonly ExperimentsRestOperations _experimentStatusExperimentsRestClient;
         private readonly ExperimentStatusData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Chaos/experiments/statuses";
+
         /// <summary> Initializes a new instance of the <see cref="ExperimentStatusResource"/> class for mocking. </summary>
         protected ExperimentStatusResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Chaos
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Chaos/experiments/statuses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

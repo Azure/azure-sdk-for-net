@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly PrivateEndpointConnectionsRestOperations _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly SynapsePrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="SynapsePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected SynapsePrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly LinkedStorageAccountsRestOperations _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient;
         private readonly OperationalInsightsLinkedStorageAccountsData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsLinkedStorageAccountsResource"/> class for mocking. </summary>
         protected OperationalInsightsLinkedStorageAccountsResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Network
         private readonly PacketCapturesRestOperations _packetCaptureRestClient;
         private readonly PacketCaptureData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkWatchers/packetCaptures";
+
         /// <summary> Initializes a new instance of the <see cref="PacketCaptureResource"/> class for mocking. </summary>
         protected PacketCaptureResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkWatchers/packetCaptures";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DigitalTwins
         private readonly DigitalTwinsEndpointRestOperations _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient;
         private readonly DigitalTwinsEndpointResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/endpoints";
+
         /// <summary> Initializes a new instance of the <see cref="DigitalTwinsEndpointResource"/> class for mocking. </summary>
         protected DigitalTwinsEndpointResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DigitalTwins
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/endpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

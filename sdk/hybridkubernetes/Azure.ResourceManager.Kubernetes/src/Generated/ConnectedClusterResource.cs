@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Kubernetes
         private readonly ConnectedClusterRestOperations _connectedClusterRestClient;
         private readonly ConnectedClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kubernetes/connectedClusters";
+
         /// <summary> Initializes a new instance of the <see cref="ConnectedClusterResource"/> class for mocking. </summary>
         protected ConnectedClusterResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Kubernetes
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kubernetes/connectedClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Dynatrace
         private readonly MonitorsRestOperations _dynatraceMonitorMonitorsRestClient;
         private readonly DynatraceMonitorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="DynatraceMonitorResource"/> class for mocking. </summary>
         protected DynatraceMonitorResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Dynatrace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

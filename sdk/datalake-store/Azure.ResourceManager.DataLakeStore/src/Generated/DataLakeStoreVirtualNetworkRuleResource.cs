@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataLakeStore
         private readonly VirtualNetworkRulesRestOperations _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient;
         private readonly DataLakeStoreVirtualNetworkRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataLakeStore/accounts/virtualNetworkRules";
+
         /// <summary> Initializes a new instance of the <see cref="DataLakeStoreVirtualNetworkRuleResource"/> class for mocking. </summary>
         protected DataLakeStoreVirtualNetworkRuleResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataLakeStore
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataLakeStore/accounts/virtualNetworkRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

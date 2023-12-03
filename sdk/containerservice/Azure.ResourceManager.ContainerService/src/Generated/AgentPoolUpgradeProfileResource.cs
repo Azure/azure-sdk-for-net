@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ContainerService
         private readonly AgentPoolsRestOperations _agentPoolUpgradeProfileAgentPoolsRestClient;
         private readonly AgentPoolUpgradeProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles";
+
         /// <summary> Initializes a new instance of the <see cref="AgentPoolUpgradeProfileResource"/> class for mocking. </summary>
         protected AgentPoolUpgradeProfileResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

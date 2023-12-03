@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly LocationBasedCapabilitySetRestOperations _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetRestClient;
         private readonly MySqlFlexibleServersCapabilityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/locations/capabilitySets";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersCapabilityResource"/> class for mocking. </summary>
         protected MySqlFlexibleServersCapabilityResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/locations/capabilitySets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

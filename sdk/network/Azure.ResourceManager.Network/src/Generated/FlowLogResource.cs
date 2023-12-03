@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network
         private readonly FlowLogsRestOperations _flowLogRestClient;
         private readonly FlowLogData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkWatchers/flowLogs";
+
         /// <summary> Initializes a new instance of the <see cref="FlowLogResource"/> class for mocking. </summary>
         protected FlowLogResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkWatchers/flowLogs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Orbital
         private readonly ContactsRestOperations _orbitalContactContactsRestClient;
         private readonly OrbitalContactData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Orbital/spacecrafts/contacts";
+
         /// <summary> Initializes a new instance of the <see cref="OrbitalContactResource"/> class for mocking. </summary>
         protected OrbitalContactResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Orbital
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Orbital/spacecrafts/contacts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

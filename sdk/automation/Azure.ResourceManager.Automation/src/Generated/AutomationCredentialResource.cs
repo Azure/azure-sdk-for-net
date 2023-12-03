@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Automation
         private readonly CredentialRestOperations _automationCredentialCredentialRestClient;
         private readonly AutomationCredentialData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/credentials";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationCredentialResource"/> class for mocking. </summary>
         protected AutomationCredentialResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/credentials";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

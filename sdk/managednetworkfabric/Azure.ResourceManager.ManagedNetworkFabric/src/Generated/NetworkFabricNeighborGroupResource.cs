@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly NeighborGroupsRestOperations _networkFabricNeighborGroupNeighborGroupsRestClient;
         private readonly NetworkFabricNeighborGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/neighborGroups";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricNeighborGroupResource"/> class for mocking. </summary>
         protected NetworkFabricNeighborGroupResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/neighborGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

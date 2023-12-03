@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AlertsManagement
         private readonly AlertsRestOperations _serviceAlertAlertsRestClient;
         private readonly ServiceAlertData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AlertsManagement/alerts";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceAlertResource"/> class for mocking. </summary>
         protected ServiceAlertResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AlertsManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AlertsManagement/alerts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly ResourcePoolsRestOperations _vMwareResourcePoolResourcePoolsRestClient;
         private readonly VMwareResourcePoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/resourcePools";
+
         /// <summary> Initializes a new instance of the <see cref="VMwareResourcePoolResource"/> class for mocking. </summary>
         protected VMwareResourcePoolResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/resourcePools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

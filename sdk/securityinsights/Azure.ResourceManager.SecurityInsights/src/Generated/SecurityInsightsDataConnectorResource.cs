@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly DataConnectorsRestOperations _securityInsightsDataConnectorDataConnectorsRestClient;
         private readonly SecurityInsightsDataConnectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/dataConnectors";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsDataConnectorResource"/> class for mocking. </summary>
         protected SecurityInsightsDataConnectorResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/dataConnectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

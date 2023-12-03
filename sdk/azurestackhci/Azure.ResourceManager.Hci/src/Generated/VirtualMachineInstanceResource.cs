@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Hci
         private readonly VirtualMachineInstancesRestOperations _virtualMachineInstanceRestClient;
         private readonly VirtualMachineInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/virtualMachineInstances";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineInstanceResource"/> class for mocking. </summary>
         protected VirtualMachineInstanceResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/virtualMachineInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

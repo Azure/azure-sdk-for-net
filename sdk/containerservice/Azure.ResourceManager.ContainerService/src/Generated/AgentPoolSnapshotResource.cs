@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ContainerService
         private readonly SnapshotsRestOperations _agentPoolSnapshotSnapshotsRestClient;
         private readonly AgentPoolSnapshotData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/snapshots";
+
         /// <summary> Initializes a new instance of the <see cref="AgentPoolSnapshotResource"/> class for mocking. </summary>
         protected AgentPoolSnapshotResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/snapshots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

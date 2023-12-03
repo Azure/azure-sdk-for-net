@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private readonly ManagedAzResiliencyStatusRestOperations _managedAzResiliencyStatusRestClient;
         private readonly ServiceFabricManagedClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedClusters";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedClusterResource"/> class for mocking. </summary>
         protected ServiceFabricManagedClusterResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

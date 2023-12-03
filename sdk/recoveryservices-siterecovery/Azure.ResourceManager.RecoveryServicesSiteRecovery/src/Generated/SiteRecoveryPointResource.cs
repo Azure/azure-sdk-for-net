@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly RecoveryPointsRestOperations _siteRecoveryPointRecoveryPointsRestClient;
         private readonly SiteRecoveryPointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems/recoveryPoints";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryPointResource"/> class for mocking. </summary>
         protected SiteRecoveryPointResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems/recoveryPoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

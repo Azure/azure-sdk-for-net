@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Compute
         private readonly RestorePointsRestOperations _restorePointRestClient;
         private readonly RestorePointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections/restorePoints";
+
         /// <summary> Initializes a new instance of the <see cref="RestorePointResource"/> class for mocking. </summary>
         protected RestorePointResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections/restorePoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

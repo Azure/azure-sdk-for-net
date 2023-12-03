@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Authorization
         private readonly RoleManagementPolicyAssignmentsRestOperations _roleManagementPolicyAssignmentRestClient;
         private readonly RoleManagementPolicyAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementPolicyAssignment";
+
         /// <summary> Initializes a new instance of the <see cref="RoleManagementPolicyAssignmentResource"/> class for mocking. </summary>
         protected RoleManagementPolicyAssignmentResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Authorization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementPolicyAssignment";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

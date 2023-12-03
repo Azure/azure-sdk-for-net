@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Chaos
         private readonly TargetsRestOperations _targetRestClient;
         private readonly TargetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Chaos/targets";
+
         /// <summary> Initializes a new instance of the <see cref="TargetResource"/> class for mocking. </summary>
         protected TargetResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.Chaos
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Chaos/targets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

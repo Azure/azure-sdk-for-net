@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly BuildServiceAgentPoolRestOperations _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient;
         private readonly AppPlatformBuildServiceAgentPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/agentPools";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildServiceAgentPoolResource"/> class for mocking. </summary>
         protected AppPlatformBuildServiceAgentPoolResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/agentPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
