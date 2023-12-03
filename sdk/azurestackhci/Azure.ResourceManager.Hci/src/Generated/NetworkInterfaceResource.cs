@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Hci
         private readonly NetworkInterfacesRestOperations _networkInterfaceRestClient;
         private readonly NetworkInterfaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/networkInterfaces";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceResource"/> class for mocking. </summary>
         protected NetworkInterfaceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/networkInterfaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

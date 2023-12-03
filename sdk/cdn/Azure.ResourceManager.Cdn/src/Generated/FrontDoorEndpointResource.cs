@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Cdn
         private readonly FrontDoorEndpointsRestOperations _frontDoorEndpointRestClient;
         private readonly FrontDoorEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/afdEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorEndpointResource"/> class for mocking. </summary>
         protected FrontDoorEndpointResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/afdEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

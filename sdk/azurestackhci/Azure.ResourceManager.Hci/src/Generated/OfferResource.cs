@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Hci
         private readonly OffersRestOperations _offerRestClient;
         private readonly OfferData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers/offers";
+
         /// <summary> Initializes a new instance of the <see cref="OfferResource"/> class for mocking. </summary>
         protected OfferResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers/offers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AlertsManagement
         private readonly AlertProcessingRulesRestOperations _alertProcessingRuleRestClient;
         private readonly AlertProcessingRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AlertsManagement/actionRules";
+
         /// <summary> Initializes a new instance of the <see cref="AlertProcessingRuleResource"/> class for mocking. </summary>
         protected AlertProcessingRuleResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AlertsManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AlertsManagement/actionRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

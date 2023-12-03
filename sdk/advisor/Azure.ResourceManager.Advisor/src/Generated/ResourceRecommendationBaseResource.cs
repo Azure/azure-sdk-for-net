@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Advisor
         private readonly RecommendationsRestOperations _resourceRecommendationBaseRecommendationsRestClient;
         private readonly ResourceRecommendationBaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Advisor/recommendations";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceRecommendationBaseResource"/> class for mocking. </summary>
         protected ResourceRecommendationBaseResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Advisor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Advisor/recommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
