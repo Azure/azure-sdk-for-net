@@ -108,7 +108,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         aspects.Add(summary.Aspect);
 #endif
                     }
-                    if (results.Warnings.Any())
+                    if (results.Warnings != null)
                     {
                         Console.WriteLine("Warnings:");
                         foreach (dynamic warning in conversation.Warnings)
@@ -119,7 +119,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                     Console.WriteLine();
                 }
-                if (results.Errors.Any())
+                if (results.Errors != null)
                 {
                     Console.WriteLine("Errors:");
                     foreach (dynamic error in results.Errors)

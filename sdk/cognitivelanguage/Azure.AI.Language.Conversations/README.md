@@ -415,7 +415,7 @@ foreach (dynamic task in jobResults.Tasks.Items)
             Console.WriteLine($"Text: {summary.Text}");
             Console.WriteLine($"Aspect: {summary.Aspect}");
         }
-        if (results.Warnings.Any())
+        if (results.Warnings != null)
         {
             Console.WriteLine("Warnings:");
             foreach (dynamic warning in conversation.Warnings)
@@ -426,7 +426,7 @@ foreach (dynamic task in jobResults.Tasks.Items)
         }
         Console.WriteLine();
     }
-    if (results.Errors.Any())
+    if (results.Errors != null)
     {
         Console.WriteLine("Errors:");
         foreach (dynamic error in results.Errors)
