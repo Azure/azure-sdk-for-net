@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -55,6 +56,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="featureSettings"> Feature Settings. </param>
         /// <param name="secureScore"> Secure Score of Backup Vault. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupVaultProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures = null, DataProtectionBackupProvisioningState? provisioningState = null, BackupVaultResourceMoveState? resourceMoveState = null, BackupVaultResourceMoveDetails resourceMoveDetails = null, BackupVaultSecuritySettings securitySettings = null, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = null, BackupVaultFeatureSettings featureSettings = null, BackupVaultSecureScoreLevel? secureScore = null)
         {
             return DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings, isVaultProtectedByResourceGuard, featureSettings, secureScore, null);

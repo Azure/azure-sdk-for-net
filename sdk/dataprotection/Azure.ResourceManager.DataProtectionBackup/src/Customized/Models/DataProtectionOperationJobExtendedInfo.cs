@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public Guid? JobId { get; }
 
         /// <summary> Arm Id of the job created for this operation. </summary>
-        public ResourceIdentifier JobResourceId { get => ResourceIdentifier.TryParse(JobIdentifier, out ResourceIdentifier  _jobResourceId) ? _jobResourceId : null; }
+        public ResourceIdentifier JobResourceId { get => ResourceIdentifier.TryParse(JobIdentifier, out ResourceIdentifier _jobResourceId) ? _jobResourceId : null; }
 
         /// <summary> Name of the job created for this operation. </summary>
-        public string JobName { get => JobResourceId != null ? JobResourceId.Name :JobIdentifier; }
+        public string JobName { get => JobResourceId != null ? JobResourceId.Name : JobIdentifier; }
     }
 }
