@@ -1,10 +1,6 @@
 # Release History
 
-## 7.18.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 7.17.1 (2023-12-04)
 
 ### Bugs Fixed
 
@@ -12,8 +8,6 @@
 - Updated the `ServiceBusMessage` constructor that takes a `ServiceBusReceivedMessage` to no longer copy over the 
   `x-opt-partition-id` key as this is meant to apply only to the original message.
 - Drain excess credits when attempting to receive using sessions to ensure FIFO ordering.
-
-### Other Changes
 
 ## 7.17.0 (2023-11-14)
 
