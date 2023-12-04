@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningDefaultScaleSettings. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningDefaultScaleSettings"/>. </summary>
         /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
-        internal MachineLearningDefaultScaleSettings(ScaleType scaleType) : base(scaleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDefaultScaleSettings(ScaleType scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(scaleType, serializedAdditionalRawData)
         {
             ScaleType = scaleType;
         }

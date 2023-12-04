@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,6 +18,15 @@ namespace Azure.Maps.Search.Models
         internal SearchAddressBatchResult()
         {
             BatchItems = new ChangeTrackingList<SearchAddressBatchItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchAddressBatchResult"/>. </summary>
+        /// <param name="batchSummary"> Summary of the results for the batch request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="batchItems"> Array containing the batch results. </param>
+        internal SearchAddressBatchResult(BatchResultSummary batchSummary, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<SearchAddressBatchItem> batchItems) : base(batchSummary, serializedAdditionalRawData)
+        {
+            BatchItems = batchItems;
         }
     }
 }

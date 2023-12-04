@@ -5,28 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class CommentFeedbackValue : IUtf8JsonSerializable
+    internal partial class CommentFeedbackValue : IUtf8JsonSerializable, IJsonModel<CommentFeedbackValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommentFeedbackValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CommentFeedbackValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommentFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CommentFeedbackValue)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("commentValue"u8);
             writer.WriteStringValue(CommentValue);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommentFeedbackValue DeserializeCommentFeedbackValue(JsonElement element)
+        CommentFeedbackValue IJsonModel<CommentFeedbackValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommentFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CommentFeedbackValue)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommentFeedbackValue(document.RootElement, options);
+        }
+
+        internal static CommentFeedbackValue DeserializeCommentFeedbackValue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string commentValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commentValue"u8))
@@ -34,8 +77,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     commentValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommentFeedbackValue(commentValue);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CommentFeedbackValue(commentValue, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CommentFeedbackValue>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommentFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CommentFeedbackValue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CommentFeedbackValue IPersistableModel<CommentFeedbackValue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommentFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCommentFeedbackValue(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CommentFeedbackValue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommentFeedbackValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

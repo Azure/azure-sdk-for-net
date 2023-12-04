@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "MockableManagementPartnerTenantResource.GetOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OperationResponse.DeserializeOperationResponse(e), OperationClientDiagnostics, Pipeline, "MockableManagementPartnerTenantResource.GetOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "MockableManagementPartnerTenantResource.GetOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OperationResponse.DeserializeOperationResponse(e), OperationClientDiagnostics, Pipeline, "MockableManagementPartnerTenantResource.GetOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

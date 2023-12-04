@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DetectionIncidentFilterCondition : IUtf8JsonSerializable
+    internal partial class DetectionIncidentFilterCondition : IUtf8JsonSerializable, IJsonModel<DetectionIncidentFilterCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectionIncidentFilterCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DetectionIncidentFilterCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DetectionIncidentFilterCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DetectionIncidentFilterCondition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DimensionFilter))
             {
@@ -25,7 +37,101 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DetectionIncidentFilterCondition IJsonModel<DetectionIncidentFilterCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DetectionIncidentFilterCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DetectionIncidentFilterCondition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDetectionIncidentFilterCondition(document.RootElement, options);
+        }
+
+        internal static DetectionIncidentFilterCondition DeserializeDetectionIncidentFilterCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<DimensionKey>> dimensionFilter = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("dimensionFilter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DimensionKey> array = new List<DimensionKey>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DimensionKey.DeserializeDimensionKey(item));
+                    }
+                    dimensionFilter = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DetectionIncidentFilterCondition(Optional.ToList(dimensionFilter), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DetectionIncidentFilterCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DetectionIncidentFilterCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DetectionIncidentFilterCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DetectionIncidentFilterCondition IPersistableModel<DetectionIncidentFilterCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DetectionIncidentFilterCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDetectionIncidentFilterCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DetectionIncidentFilterCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DetectionIncidentFilterCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

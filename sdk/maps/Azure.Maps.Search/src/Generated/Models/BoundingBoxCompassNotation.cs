@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The bounding box of the location. </summary>
     internal partial class BoundingBoxCompassNotation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BoundingBoxCompassNotation"/>. </summary>
         internal BoundingBoxCompassNotation()
         {
@@ -19,11 +54,13 @@ namespace Azure.Maps.Search.Models
         /// <param name="northEast"> North-east latitude,longitude coordinate of the bounding box as comma-separated floats. </param>
         /// <param name="southWest"> South-west latitude,longitude coordinate of the bounding box as comma-separated floats. </param>
         /// <param name="entity"> Entity type source of the bounding box. For reverse-geocoding this is always equal to position. </param>
-        internal BoundingBoxCompassNotation(string northEast, string southWest, MapsEntityType? entity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BoundingBoxCompassNotation(string northEast, string southWest, MapsEntityType? entity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NorthEast = northEast;
             SouthWest = southWest;
             Entity = entity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> North-east latitude,longitude coordinate of the bounding box as comma-separated floats. </summary>

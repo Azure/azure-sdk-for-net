@@ -5,12 +5,161 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureDataLakeStorageGen2ParameterPatch : IUtf8JsonSerializable
+    internal partial class AzureDataLakeStorageGen2ParameterPatch : IUtf8JsonSerializable, IJsonModel<AzureDataLakeStorageGen2ParameterPatch>
     {
+        void IJsonModel<AzureDataLakeStorageGen2ParameterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStorageGen2ParameterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureDataLakeStorageGen2ParameterPatch)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AccountName))
+            {
+                writer.WritePropertyName("accountName"u8);
+                writer.WriteStringValue(AccountName);
+            }
+            if (Optional.IsDefined(AccountKey))
+            {
+                writer.WritePropertyName("accountKey"u8);
+                writer.WriteStringValue(AccountKey);
+            }
+            if (Optional.IsDefined(FileSystemName))
+            {
+                writer.WritePropertyName("fileSystemName"u8);
+                writer.WriteStringValue(FileSystemName);
+            }
+            if (Optional.IsDefined(DirectoryTemplate))
+            {
+                writer.WritePropertyName("directoryTemplate"u8);
+                writer.WriteStringValue(DirectoryTemplate);
+            }
+            if (Optional.IsDefined(FileTemplate))
+            {
+                writer.WritePropertyName("fileTemplate"u8);
+                writer.WriteStringValue(FileTemplate);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AzureDataLakeStorageGen2ParameterPatch IJsonModel<AzureDataLakeStorageGen2ParameterPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStorageGen2ParameterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureDataLakeStorageGen2ParameterPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataLakeStorageGen2ParameterPatch(document.RootElement, options);
+        }
+
+        internal static AzureDataLakeStorageGen2ParameterPatch DeserializeAzureDataLakeStorageGen2ParameterPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> accountName = default;
+            Optional<string> accountKey = default;
+            Optional<string> fileSystemName = default;
+            Optional<string> directoryTemplate = default;
+            Optional<string> fileTemplate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("accountName"u8))
+                {
+                    accountName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("accountKey"u8))
+                {
+                    accountKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileSystemName"u8))
+                {
+                    fileSystemName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("directoryTemplate"u8))
+                {
+                    directoryTemplate = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileTemplate"u8))
+                {
+                    fileTemplate = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureDataLakeStorageGen2ParameterPatch(accountName.Value, accountKey.Value, fileSystemName.Value, directoryTemplate.Value, fileTemplate.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AzureDataLakeStorageGen2ParameterPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStorageGen2ParameterPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureDataLakeStorageGen2ParameterPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureDataLakeStorageGen2ParameterPatch IPersistableModel<AzureDataLakeStorageGen2ParameterPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStorageGen2ParameterPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDataLakeStorageGen2ParameterPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureDataLakeStorageGen2ParameterPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDataLakeStorageGen2ParameterPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

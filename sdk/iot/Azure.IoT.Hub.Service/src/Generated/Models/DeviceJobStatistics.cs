@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The job statistics regarding execution status. </summary>
     public partial class DeviceJobStatistics
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DeviceJobStatistics"/>. </summary>
         internal DeviceJobStatistics()
         {
@@ -21,13 +56,15 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="succeededCount"> The number of succeeded jobs. </param>
         /// <param name="runningCount"> The number of running jobs. </param>
         /// <param name="pendingCount"> The number of pending (scheduled) jobs. </param>
-        internal DeviceJobStatistics(int? deviceCount, int? failedCount, int? succeededCount, int? runningCount, int? pendingCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceJobStatistics(int? deviceCount, int? failedCount, int? succeededCount, int? runningCount, int? pendingCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceCount = deviceCount;
             FailedCount = failedCount;
             SucceededCount = succeededCount;
             RunningCount = runningCount;
             PendingCount = pendingCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of devices targeted by the job. </summary>

@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListSbomComponentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListSbomComponentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SbomComponent.DeserializeSbomComponent, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SbomComponent.DeserializeSbomComponent(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListSbomComponentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListSbomComponentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SbomComponent.DeserializeSbomComponent, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SbomComponent.DeserializeSbomComponent(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListBinaryHardeningResultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListBinaryHardeningResultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BinaryHardening.DeserializeBinaryHardening, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryHardening.DeserializeBinaryHardening(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListBinaryHardeningResultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListBinaryHardeningResultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BinaryHardening.DeserializeBinaryHardening, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryHardening.DeserializeBinaryHardening(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListPasswordHashesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListPasswordHashesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PasswordHash.DeserializePasswordHash, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PasswordHash.DeserializePasswordHash(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListPasswordHashesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListPasswordHashesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PasswordHash.DeserializePasswordHash, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PasswordHash.DeserializePasswordHash(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCvesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCvesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FirmwareCve.DeserializeFirmwareCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCve.DeserializeFirmwareCve(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCvesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCvesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FirmwareCve.DeserializeFirmwareCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCve.DeserializeFirmwareCve(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FirmwareCryptoKey.DeserializeFirmwareCryptoKey, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKey.DeserializeFirmwareCryptoKey(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FirmwareCryptoKey.DeserializeFirmwareCryptoKey, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKey.DeserializeFirmwareCryptoKey(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class EnvironmentVariable : IUtf8JsonSerializable
+    public partial class EnvironmentVariable : IUtf8JsonSerializable, IJsonModel<EnvironmentVariable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnvironmentVariable>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EnvironmentVariable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EnvironmentVariable)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VariableType))
             {
@@ -42,8 +52,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static EnvironmentVariable DeserializeEnvironmentVariable(JsonElement element)
+        EnvironmentVariable IJsonModel<EnvironmentVariable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EnvironmentVariable)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEnvironmentVariable(document.RootElement, options);
+        }
+
+        internal static EnvironmentVariable DeserializeEnvironmentVariable(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,5 +97,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             additionalProperties = additionalPropertiesDictionary;
             return new EnvironmentVariable(Optional.ToNullable(type), value.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<EnvironmentVariable>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EnvironmentVariable)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EnvironmentVariable IPersistableModel<EnvironmentVariable>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEnvironmentVariable(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EnvironmentVariable)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EnvironmentVariable>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

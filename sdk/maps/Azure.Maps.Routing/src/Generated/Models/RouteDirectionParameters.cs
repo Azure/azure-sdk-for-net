@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Maps.Routing.Models;
@@ -14,6 +15,38 @@ namespace Azure.Maps.Routing
     /// <summary> Post body parameters for Route directions. </summary>
     public partial class RouteDirectionParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouteDirectionParameters"/>. </summary>
         /// <param name="geoJsonSupportingPoints">
         /// A GeoJSON Geometry collection representing sequence of coordinates used as input for route reconstruction and for calculating zero or more alternative routes to this reference route.
@@ -29,12 +62,14 @@ namespace Azure.Maps.Routing
         /// <param name="avoidVignette"> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which all toll roads with vignettes are to be avoided, e.g. "AUS,CHE". Toll roads with vignettes in countries not in the list are unaffected. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </param>
         /// <param name="allowVignette"> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which toll roads with vignettes are allowed, e.g. "AUS,CHE". Specifying **allowVignette** with some countries X is equivalent to specifying **avoidVignette** with all countries but X. Specifying **allowVignette** with an empty list is the same as avoiding all toll roads with vignettes. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </param>
         /// <param name="geoJsonAvoidAreas"> A GeoJSON MultiPolygon representing list of areas to avoid. Only rectangle polygons are supported. The maximum size of a rectangle is about 160x160 km. Maximum number of avoided areas is **10**. It cannot cross the 180th meridian. It must be between -80 and +80 degrees of latitude. </param>
-        internal RouteDirectionParameters(GeoJsonGeometryCollection geoJsonSupportingPoints, IList<string> avoidVignette, IList<string> allowVignette, GeoJsonMultiPolygon geoJsonAvoidAreas)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteDirectionParameters(GeoJsonGeometryCollection geoJsonSupportingPoints, IList<string> avoidVignette, IList<string> allowVignette, GeoJsonMultiPolygon geoJsonAvoidAreas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             _GeoJsonSupportingPoints = geoJsonSupportingPoints;
             AvoidVignette = avoidVignette;
             AllowVignette = allowVignette;
             _GeoJsonAvoidAreas = geoJsonAvoidAreas;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which all toll roads with vignettes are to be avoided, e.g. "AUS,CHE". Toll roads with vignettes in countries not in the list are unaffected. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </summary>
         public IList<string> AvoidVignette { get; }

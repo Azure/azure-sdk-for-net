@@ -14,6 +14,38 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The state information for a device or module. This is implicitly created and deleted when the corresponding device/ module identity is created or deleted in the IoT Hub. </summary>
     public partial class TwinData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TwinData"/>. </summary>
         public TwinData()
         {
@@ -38,7 +70,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="x509Thumbprint"> The X509 thumbprint of the device. </param>
         /// <param name="capabilities"> The status of capabilities enabled on the device. </param>
         /// <param name="deviceScope"> The scope of the device. </param>
-        internal TwinData(string deviceId, string moduleId, IDictionary<string, object> tags, TwinProperties properties, string etag, long? version, string deviceEtag, TwinStatus? status, string statusReason, DateTimeOffset? statusUpdateTime, TwinConnectionState? connectionState, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, TwinAuthenticationType? authenticationType, X509Thumbprint x509Thumbprint, DeviceCapabilities capabilities, string deviceScope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TwinData(string deviceId, string moduleId, IDictionary<string, object> tags, TwinProperties properties, string etag, long? version, string deviceEtag, TwinStatus? status, string statusReason, DateTimeOffset? statusUpdateTime, TwinConnectionState? connectionState, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, TwinAuthenticationType? authenticationType, X509Thumbprint x509Thumbprint, DeviceCapabilities capabilities, string deviceScope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceId = deviceId;
             ModuleId = moduleId;
@@ -57,6 +90,7 @@ namespace Azure.IoT.Hub.Service.Models
             X509Thumbprint = x509Thumbprint;
             Capabilities = capabilities;
             DeviceScope = deviceScope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the device in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>
     public partial class LinuxParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LinuxParameters"/>. </summary>
         public LinuxParameters()
         {
@@ -25,11 +58,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="classificationsToInclude"> The update classifications to select when installing patches for Linux. </param>
         /// <param name="packageNameMasksToInclude"> packages to include in the patch operation. Format: packageName_packageVersion. </param>
         /// <param name="packageNameMasksToExclude"> packages to exclude in the patch operation. Format: packageName_packageVersion. </param>
-        internal LinuxParameters(IList<VmGuestPatchClassificationLinux> classificationsToInclude, IList<string> packageNameMasksToInclude, IList<string> packageNameMasksToExclude)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxParameters(IList<VmGuestPatchClassificationLinux> classificationsToInclude, IList<string> packageNameMasksToInclude, IList<string> packageNameMasksToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClassificationsToInclude = classificationsToInclude;
             PackageNameMasksToInclude = packageNameMasksToInclude;
             PackageNameMasksToExclude = packageNameMasksToExclude;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The update classifications to select when installing patches for Linux. </summary>

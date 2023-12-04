@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class WindowsProfileResponse : IUtf8JsonSerializable
+    public partial class WindowsProfileResponse : IUtf8JsonSerializable, IJsonModel<WindowsProfileResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsProfileResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WindowsProfileResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsProfileResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WindowsProfileResponse)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AdminUsername))
             {
@@ -30,11 +42,40 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WindowsProfileResponse DeserializeWindowsProfileResponse(JsonElement element)
+        WindowsProfileResponse IJsonModel<WindowsProfileResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsProfileResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WindowsProfileResponse)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWindowsProfileResponse(document.RootElement, options);
+        }
+
+        internal static WindowsProfileResponse DeserializeWindowsProfileResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +83,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> adminUsername = default;
             Optional<bool> enableCsiProxy = default;
             Optional<LicenseType> licenseType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))
@@ -67,8 +110,44 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     licenseType = new LicenseType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WindowsProfileResponse(adminUsername.Value, Optional.ToNullable(enableCsiProxy), Optional.ToNullable(licenseType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WindowsProfileResponse(adminUsername.Value, Optional.ToNullable(enableCsiProxy), Optional.ToNullable(licenseType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WindowsProfileResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsProfileResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WindowsProfileResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WindowsProfileResponse IPersistableModel<WindowsProfileResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsProfileResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWindowsProfileResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WindowsProfileResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WindowsProfileResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

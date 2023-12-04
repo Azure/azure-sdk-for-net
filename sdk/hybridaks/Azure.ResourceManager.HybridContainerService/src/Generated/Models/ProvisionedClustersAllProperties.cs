@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="aadProfile"> AAD profile for the provisioned cluster. </param>
         /// <param name="windowsProfile"> WindowsProfile - Profile for Windows VMs in the Provisioned Cluster. </param>
         /// <param name="httpProxyConfig"> HttpProxyConfig - Configurations for provisioning the cluster with HTTP proxy servers. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="enableRbac"> EnableRBAC - Whether to enable Kubernetes Role-Based Access Control. </param>
         /// <param name="linuxProfile"> LinuxProfile - The profile for Linux VMs in the Provisioned Cluster. </param>
         /// <param name="features"> Additional features specs like Arc Agent Onboarding. </param>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
         /// <param name="provisioningState"></param>
         /// <param name="status"> HybridAKSClusterStatus defines the observed state of HybridAKSCluster. </param>
-        internal ProvisionedClustersAllProperties(AADProfile aadProfile, WindowsProfile windowsProfile, HttpProxyConfig httpProxyConfig, bool? enableRbac, LinuxProfileProperties linuxProfile, ProvisionedClustersCommonPropertiesFeatures features, IDictionary<string, AddonProfiles> addonProfiles, ControlPlaneProfile controlPlane, string kubernetesVersion, NetworkProfile networkProfile, string nodeResourceGroup, IList<NamedAgentPoolProfile> agentPoolProfiles, CloudProviderProfile cloudProviderProfile, ProvisioningState? provisioningState, ProvisionedClustersCommonPropertiesStatus status) : base(aadProfile, windowsProfile, httpProxyConfig)
+        internal ProvisionedClustersAllProperties(AADProfile aadProfile, WindowsProfile windowsProfile, HttpProxyConfig httpProxyConfig, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? enableRbac, LinuxProfileProperties linuxProfile, ProvisionedClustersCommonPropertiesFeatures features, IDictionary<string, AddonProfiles> addonProfiles, ControlPlaneProfile controlPlane, string kubernetesVersion, NetworkProfile networkProfile, string nodeResourceGroup, IList<NamedAgentPoolProfile> agentPoolProfiles, CloudProviderProfile cloudProviderProfile, ProvisioningState? provisioningState, ProvisionedClustersCommonPropertiesStatus status) : base(aadProfile, windowsProfile, httpProxyConfig, serializedAdditionalRawData)
         {
             EnableRbac = enableRbac;
             LinuxProfile = linuxProfile;

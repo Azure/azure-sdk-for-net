@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -22,10 +23,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="smartDetectionCondition"></param>
         /// <param name="hardThresholdCondition"></param>
         /// <param name="changeThresholdCondition"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="seriesGroupKey"></param>
-        internal MetricSeriesGroupDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, DimensionKey seriesGroupKey) : base(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
+        internal MetricSeriesGroupDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, IDictionary<string, BinaryData> serializedAdditionalRawData, DimensionKey seriesGroupKey) : base(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition, serializedAdditionalRawData)
         {
             SeriesGroupKey = seriesGroupKey;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesGroupDetectionCondition"/> for deserialization. </summary>
+        internal MetricSeriesGroupDetectionCondition()
+        {
         }
     }
 }

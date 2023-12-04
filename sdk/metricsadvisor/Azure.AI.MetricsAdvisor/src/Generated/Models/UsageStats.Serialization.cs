@@ -6,15 +6,86 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class UsageStats
+    internal partial class UsageStats : IUtf8JsonSerializable, IJsonModel<UsageStats>
     {
-        internal static UsageStats DeserializeUsageStats(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsageStats>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UsageStats>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UsageStats>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(UsageStats)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActiveSeriesCount))
+            {
+                writer.WritePropertyName("activeSeriesCount"u8);
+                writer.WriteNumberValue(ActiveSeriesCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AllSeriesCount))
+            {
+                writer.WritePropertyName("allSeriesCount"u8);
+                writer.WriteNumberValue(AllSeriesCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MetricsCount))
+            {
+                writer.WritePropertyName("metricsCount"u8);
+                writer.WriteNumberValue(MetricsCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataFeedCount))
+            {
+                writer.WritePropertyName("dataFeedCount"u8);
+                writer.WriteNumberValue(DataFeedCount.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UsageStats IJsonModel<UsageStats>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UsageStats>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(UsageStats)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUsageStats(document.RootElement, options);
+        }
+
+        internal static UsageStats DeserializeUsageStats(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +95,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<int> allSeriesCount = default;
             Optional<int> metricsCount = default;
             Optional<int> dataFeedCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -71,8 +144,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dataFeedCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UsageStats(Optional.ToNullable(timestamp), Optional.ToNullable(activeSeriesCount), Optional.ToNullable(allSeriesCount), Optional.ToNullable(metricsCount), Optional.ToNullable(dataFeedCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UsageStats(Optional.ToNullable(timestamp), Optional.ToNullable(activeSeriesCount), Optional.ToNullable(allSeriesCount), Optional.ToNullable(metricsCount), Optional.ToNullable(dataFeedCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UsageStats>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UsageStats>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(UsageStats)} does not support '{options.Format}' format.");
+            }
+        }
+
+        UsageStats IPersistableModel<UsageStats>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UsageStats>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUsageStats(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(UsageStats)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UsageStats>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The UnknownTrackDescriptor. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.Media.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTrackDescriptor"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownTrackDescriptor(string odataType) : base(odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTrackDescriptor(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
         }

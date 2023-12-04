@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
@@ -13,6 +14,38 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The secret restore parameters. </summary>
     internal partial class StorageRestoreParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StorageRestoreParameters"/>. </summary>
         /// <param name="storageBundleBackup"> The backup blob associated with a storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageBundleBackup"/> is null. </exception>
@@ -21,6 +54,20 @@ namespace Azure.Security.KeyVault.Storage.Models
             Argument.AssertNotNull(storageBundleBackup, nameof(storageBundleBackup));
 
             StorageBundleBackup = storageBundleBackup;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageRestoreParameters"/>. </summary>
+        /// <param name="storageBundleBackup"> The backup blob associated with a storage account. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageRestoreParameters(byte[] storageBundleBackup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StorageBundleBackup = storageBundleBackup;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageRestoreParameters"/> for deserialization. </summary>
+        internal StorageRestoreParameters()
+        {
         }
 
         /// <summary> The backup blob associated with a storage account. </summary>

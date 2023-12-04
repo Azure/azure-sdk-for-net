@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> NetworkProfile - Profile of network configuration. </summary>
     public partial class NetworkProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         public NetworkProfile()
         {
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="podCidrs"> The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidr"> ServiceCidr - A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </param>
         /// <param name="serviceCidrs"> The CIDR notation IP ranges from which to assign service cluster IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </param>
-        internal NetworkProfile(LoadBalancerProfile loadBalancerProfile, LoadBalancerSku? loadBalancerSku, string dnsServiceIP, NetworkPolicy? networkPolicy, string podCidr, IList<string> podCidrs, string serviceCidr, IList<string> serviceCidrs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkProfile(LoadBalancerProfile loadBalancerProfile, LoadBalancerSku? loadBalancerSku, string dnsServiceIP, NetworkPolicy? networkPolicy, string podCidr, IList<string> podCidrs, string serviceCidr, IList<string> serviceCidrs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoadBalancerProfile = loadBalancerProfile;
             LoadBalancerSku = loadBalancerSku;
@@ -39,6 +73,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             PodCidrs = podCidrs;
             ServiceCidr = serviceCidr;
             ServiceCidrs = serviceCidrs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> LoadBalancerProfile - Profile of the cluster load balancer. </summary>

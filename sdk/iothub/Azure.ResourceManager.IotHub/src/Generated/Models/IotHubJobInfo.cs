@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The properties of the Job Response object. </summary>
     public partial class IotHubJobInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotHubJobInfo"/>. </summary>
         internal IotHubJobInfo()
         {
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="failureReason"> If status == failed, this string containing the reason for the failure. </param>
         /// <param name="statusMessage"> The status message for the job. </param>
         /// <param name="parentJobId"> The job identifier of the parent job, if any. </param>
-        internal IotHubJobInfo(string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, IotHubJobType? jobType, IotHubJobStatus? status, string failureReason, string statusMessage, string parentJobId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubJobInfo(string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, IotHubJobType? jobType, IotHubJobStatus? status, string failureReason, string statusMessage, string parentJobId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             StartOn = startOn;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.IotHub.Models
             FailureReason = failureReason;
             StatusMessage = statusMessage;
             ParentJobId = parentJobId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The job identifier. </summary>

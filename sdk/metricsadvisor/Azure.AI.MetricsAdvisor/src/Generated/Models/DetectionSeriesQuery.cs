@@ -15,6 +15,38 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DetectionSeriesQuery. </summary>
     internal partial class DetectionSeriesQuery
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DetectionSeriesQuery"/>. </summary>
         /// <param name="startTime"> This is inclusive. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="endTime"> This is exclusive. The maximum number of data points (series number * time range) is 10000. </param>
@@ -33,11 +65,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="startTime"> This is inclusive. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="endTime"> This is exclusive. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="series"> The series to be queried. The identity must be able to define one single time series instead of a group of time series. The maximum number of series is 100. </param>
-        internal DetectionSeriesQuery(DateTimeOffset startTime, DateTimeOffset endTime, IList<SeriesIdentity> series)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectionSeriesQuery(DateTimeOffset startTime, DateTimeOffset endTime, IList<SeriesIdentity> series, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartTime = startTime;
             EndTime = endTime;
             Series = series;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectionSeriesQuery"/> for deserialization. </summary>
+        internal DetectionSeriesQuery()
+        {
         }
 
         /// <summary> This is inclusive. The maximum number of data points (series number * time range) is 10000. </summary>

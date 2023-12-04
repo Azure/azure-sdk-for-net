@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Media
         public virtual AsyncPageable<StreamingLocatorContentKey> GetContentKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListContentKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey, _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorResource.GetContentKeys", "contentKeys", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(e), _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorResource.GetContentKeys", "contentKeys", null, cancellationToken);
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Media
         public virtual Pageable<StreamingLocatorContentKey> GetContentKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListContentKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey, _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorResource.GetContentKeys", "contentKeys", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(e), _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorResource.GetContentKeys", "contentKeys", null, cancellationToken);
         }
 
         /// <summary>

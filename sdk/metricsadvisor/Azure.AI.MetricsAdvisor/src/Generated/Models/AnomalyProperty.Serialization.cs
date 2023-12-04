@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AnomalyProperty
+    internal partial class AnomalyProperty : IUtf8JsonSerializable, IJsonModel<AnomalyProperty>
     {
-        internal static AnomalyProperty DeserializeAnomalyProperty(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnomalyProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnomalyProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnomalyProperty>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnomalyProperty)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("anomalySeverity"u8);
+            writer.WriteStringValue(AnomalySeverity.ToString());
+            if (options.Format != "W" && Optional.IsDefined(AnomalyStatus))
+            {
+                writer.WritePropertyName("anomalyStatus"u8);
+                writer.WriteStringValue(AnomalyStatus.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteNumberValue(Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpectedValue))
+            {
+                if (ExpectedValue != null)
+                {
+                    writer.WritePropertyName("expectedValue"u8);
+                    writer.WriteNumberValue(ExpectedValue.Value);
+                }
+                else
+                {
+                    writer.WriteNull("expectedValue");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnomalyProperty IJsonModel<AnomalyProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnomalyProperty>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnomalyProperty)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalyProperty(document.RootElement, options);
+        }
+
+        internal static AnomalyProperty DeserializeAnomalyProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +93,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<AnomalyStatus> anomalyStatus = default;
             double value = default;
             Optional<double?> expectedValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalySeverity"u8))
@@ -53,8 +126,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     expectedValue = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnomalyProperty(anomalySeverity, Optional.ToNullable(anomalyStatus), value, Optional.ToNullable(expectedValue));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnomalyProperty(anomalySeverity, Optional.ToNullable(anomalyStatus), value, Optional.ToNullable(expectedValue), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnomalyProperty>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnomalyProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnomalyProperty)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnomalyProperty IPersistableModel<AnomalyProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnomalyProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnomalyProperty(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnomalyProperty)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnomalyProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

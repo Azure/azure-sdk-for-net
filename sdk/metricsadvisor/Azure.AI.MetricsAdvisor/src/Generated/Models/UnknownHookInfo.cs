@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Administration;
 
@@ -20,9 +21,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="description"> hook description. </param>
         /// <param name="internalExternalLink"> hook external link. </param>
         /// <param name="administrators"> hook administrators. </param>
-        internal UnknownHookInfo(NotificationHookKind hookKind, string id, string name, string description, string internalExternalLink, IList<string> administrators) : base(hookKind, id, name, description, internalExternalLink, administrators)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownHookInfo(NotificationHookKind hookKind, string id, string name, string description, string internalExternalLink, IList<string> administrators, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(hookKind, id, name, description, internalExternalLink, administrators, serializedAdditionalRawData)
         {
             HookKind = hookKind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownHookInfo"/> for deserialization. </summary>
+        internal UnknownHookInfo()
+        {
         }
     }
 }

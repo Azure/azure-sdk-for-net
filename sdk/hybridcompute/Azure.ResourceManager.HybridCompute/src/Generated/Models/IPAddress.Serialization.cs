@@ -5,15 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class IPAddress
+    public partial class IPAddress : IUtf8JsonSerializable, IJsonModel<IPAddress>
     {
-        internal static IPAddress DeserializeIPAddress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPAddress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IPAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(IPAddress)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteStringValue(Address);
+            }
+            if (Optional.IsDefined(IPAddressVersion))
+            {
+                writer.WritePropertyName("ipAddressVersion"u8);
+                writer.WriteStringValue(IPAddressVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Subnet))
+            {
+                writer.WritePropertyName("subnet"u8);
+                writer.WriteObjectValue(Subnet);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IPAddress IJsonModel<IPAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(IPAddress)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPAddress(document.RootElement, options);
+        }
+
+        internal static IPAddress DeserializeIPAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +83,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> address = default;
             Optional<string> ipAddressVersion = default;
             Optional<Subnet> subnet = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -42,8 +106,44 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     subnet = Subnet.DeserializeSubnet(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IPAddress(address.Value, ipAddressVersion.Value, subnet.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IPAddress(address.Value, ipAddressVersion.Value, subnet.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IPAddress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(IPAddress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IPAddress IPersistableModel<IPAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIPAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(IPAddress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IPAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

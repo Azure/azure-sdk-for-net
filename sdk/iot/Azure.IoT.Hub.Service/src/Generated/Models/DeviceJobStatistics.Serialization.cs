@@ -5,15 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class DeviceJobStatistics
+    public partial class DeviceJobStatistics : IUtf8JsonSerializable, IJsonModel<DeviceJobStatistics>
     {
-        internal static DeviceJobStatistics DeserializeDeviceJobStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceJobStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeviceJobStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceJobStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DeviceJobStatistics)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeviceCount))
+            {
+                writer.WritePropertyName("deviceCount"u8);
+                writer.WriteNumberValue(DeviceCount.Value);
+            }
+            if (Optional.IsDefined(FailedCount))
+            {
+                writer.WritePropertyName("failedCount"u8);
+                writer.WriteNumberValue(FailedCount.Value);
+            }
+            if (Optional.IsDefined(SucceededCount))
+            {
+                writer.WritePropertyName("succeededCount"u8);
+                writer.WriteNumberValue(SucceededCount.Value);
+            }
+            if (Optional.IsDefined(RunningCount))
+            {
+                writer.WritePropertyName("runningCount"u8);
+                writer.WriteNumberValue(RunningCount.Value);
+            }
+            if (Optional.IsDefined(PendingCount))
+            {
+                writer.WritePropertyName("pendingCount"u8);
+                writer.WriteNumberValue(PendingCount.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DeviceJobStatistics IJsonModel<DeviceJobStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceJobStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DeviceJobStatistics)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceJobStatistics(document.RootElement, options);
+        }
+
+        internal static DeviceJobStatistics DeserializeDeviceJobStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +95,8 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<int> succeededCount = default;
             Optional<int> runningCount = default;
             Optional<int> pendingCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceCount"u8))
@@ -70,8 +144,44 @@ namespace Azure.IoT.Hub.Service.Models
                     pendingCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceJobStatistics(Optional.ToNullable(deviceCount), Optional.ToNullable(failedCount), Optional.ToNullable(succeededCount), Optional.ToNullable(runningCount), Optional.ToNullable(pendingCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeviceJobStatistics(Optional.ToNullable(deviceCount), Optional.ToNullable(failedCount), Optional.ToNullable(succeededCount), Optional.ToNullable(runningCount), Optional.ToNullable(pendingCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceJobStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceJobStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DeviceJobStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DeviceJobStatistics IPersistableModel<DeviceJobStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceJobStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeviceJobStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DeviceJobStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeviceJobStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

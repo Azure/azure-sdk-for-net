@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
         {
             polygons ??= new List<PolygonObject>();
 
-            return new PolygonResult(polygons?.ToList());
+            return new PolygonResult(polygons?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PolygonObject"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Maps.Search.Models
         /// <returns> A new <see cref="Models.PolygonObject"/> instance for mocking. </returns>
         public static PolygonObject PolygonObject(string providerId = null, GeoObject geometryData = null)
         {
-            return new PolygonObject(providerId, geometryData);
+            return new PolygonObject(providerId, geometryData, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestCategorySet"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.Maps.Search.Models
         /// <returns> A new <see cref="Models.PointOfInterestCategorySet"/> instance for mocking. </returns>
         public static PointOfInterestCategorySet PointOfInterestCategorySet(int? id = null)
         {
-            return new PointOfInterestCategorySet(id);
+            return new PointOfInterestCategorySet(id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestClassification"/>. </summary>
@@ -50,7 +50,7 @@ namespace Azure.Maps.Search.Models
         {
             names ??= new List<ClassificationName>();
 
-            return new PointOfInterestClassification(code, names?.ToList());
+            return new PointOfInterestClassification(code, names?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClassificationName"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.Maps.Search.Models
         /// <returns> A new <see cref="Models.ClassificationName"/> instance for mocking. </returns>
         public static ClassificationName ClassificationName(string nameLocale = null, string name = null)
         {
-            return new ClassificationName(nameLocale, name);
+            return new ClassificationName(nameLocale, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BrandName"/>. </summary>
@@ -67,7 +67,7 @@ namespace Azure.Maps.Search.Models
         /// <returns> A new <see cref="Models.BrandName"/> instance for mocking. </returns>
         public static BrandName BrandName(string name = null)
         {
-            return new BrandName(name);
+            return new BrandName(name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperatingHours"/>. </summary>
@@ -78,7 +78,7 @@ namespace Azure.Maps.Search.Models
         {
             timeRanges ??= new List<OperatingHoursTimeRange>();
 
-            return new OperatingHours(mode, timeRanges?.ToList());
+            return new OperatingHours(mode, timeRanges?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MapsDataSource"/>. </summary>
@@ -86,7 +86,7 @@ namespace Azure.Maps.Search.Models
         /// <returns> A new <see cref="Models.MapsDataSource"/> instance for mocking. </returns>
         public static MapsDataSource MapsDataSource(GeometryIdentifier geometry = null)
         {
-            return new MapsDataSource(geometry);
+            return new MapsDataSource(geometry, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeometryIdentifier"/>. </summary>
@@ -94,7 +94,7 @@ namespace Azure.Maps.Search.Models
         /// <returns> A new <see cref="Models.GeometryIdentifier"/> instance for mocking. </returns>
         public static GeometryIdentifier GeometryIdentifier(string id = null)
         {
-            return new GeometryIdentifier(id);
+            return new GeometryIdentifier(id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestCategoryTreeResult"/>. </summary>
@@ -104,7 +104,7 @@ namespace Azure.Maps.Search.Models
         {
             categories ??= new List<PointOfInterestCategory>();
 
-            return new PointOfInterestCategoryTreeResult(categories?.ToList());
+            return new PointOfInterestCategoryTreeResult(categories?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestCategory"/>. </summary>
@@ -118,7 +118,7 @@ namespace Azure.Maps.Search.Models
             childIds ??= new List<int>();
             synonyms ??= new List<string>();
 
-            return new PointOfInterestCategory(id, name, childIds?.ToList(), synonyms?.ToList());
+            return new PointOfInterestCategory(id, name, childIds?.ToList(), synonyms?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReverseSearchAddressItem"/>. </summary>
@@ -138,7 +138,7 @@ namespace Azure.Maps.Search.Models
         {
             roadUse ??= new List<RoadKind>();
 
-            return new ReverseSearchAddressItem(address, position, roadUse?.ToList(), matchType);
+            return new ReverseSearchAddressItem(address, position, roadUse?.ToList(), matchType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReverseSearchCrossStreetAddressResultItem"/>. </summary>
@@ -147,7 +147,7 @@ namespace Azure.Maps.Search.Models
         /// <returns> A new <see cref="Models.ReverseSearchCrossStreetAddressResultItem"/> instance for mocking. </returns>
         public static ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(MapsAddress address = null, string position = null)
         {
-            return new ReverseSearchCrossStreetAddressResultItem(address, position);
+            return new ReverseSearchCrossStreetAddressResultItem(address, position, serializedAdditionalRawData: null);
         }
     }
 }

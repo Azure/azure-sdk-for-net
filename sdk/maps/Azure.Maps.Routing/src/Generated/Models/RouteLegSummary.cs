@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Summary object for route section. </summary>
     public partial class RouteLegSummary
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouteLegSummary"/>. </summary>
         internal RouteLegSummary()
         {
@@ -28,7 +61,8 @@ namespace Azure.Maps.Routing.Models
         /// <param name="liveTrafficIncidentsTravelTimeInSeconds"> Estimated travel time calculated using real-time speed data. Included only if computeTravelTimeFor = all is used in the query. </param>
         /// <param name="fuelConsumptionInLiters"> Estimated fuel consumption in liters using the Combustion Consumption Model. Included if vehicleEngineType is set to _combustion_ and constantSpeedConsumptionInLitersPerHundredkm is specified. The value will be non-negative. </param>
         /// <param name="batteryConsumptionInKwH"> Estimated electric energy consumption in kilowatt hours (kWh) using the Electric Consumption Model. Included if vehicleEngineType is set to electric and constantSpeedConsumptionInkWhPerHundredkm is specified. The value of batteryConsumptionInkWh includes the recuperated electric energy and can therefore be negative (which indicates gaining energy). If both maxChargeInkWh and currentChargeInkWh are specified, recuperation will be capped to ensure that the battery charge level never exceeds maxChargeInkWh. If neither maxChargeInkWh nor currentChargeInkWh are specified, unconstrained recuperation is assumed in the consumption calculation. </param>
-        internal RouteLegSummary(int? lengthInMeters, int? travelTimeInSeconds, int? trafficDelayInSeconds, DateTimeOffset? departureTime, DateTimeOffset? arrivalTime, int? noTrafficTravelTimeInSeconds, int? historicTrafficTravelTimeInSeconds, int? liveTrafficIncidentsTravelTimeInSeconds, double? fuelConsumptionInLiters, double? batteryConsumptionInKwH)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteLegSummary(int? lengthInMeters, int? travelTimeInSeconds, int? trafficDelayInSeconds, DateTimeOffset? departureTime, DateTimeOffset? arrivalTime, int? noTrafficTravelTimeInSeconds, int? historicTrafficTravelTimeInSeconds, int? liveTrafficIncidentsTravelTimeInSeconds, double? fuelConsumptionInLiters, double? batteryConsumptionInKwH, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LengthInMeters = lengthInMeters;
             TravelTimeInSeconds = travelTimeInSeconds;
@@ -40,6 +74,7 @@ namespace Azure.Maps.Routing.Models
             LiveTrafficIncidentsTravelTimeInSeconds = liveTrafficIncidentsTravelTimeInSeconds;
             FuelConsumptionInLiters = fuelConsumptionInLiters;
             BatteryConsumptionInKwH = batteryConsumptionInKwH;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Length In Meters property. </summary>

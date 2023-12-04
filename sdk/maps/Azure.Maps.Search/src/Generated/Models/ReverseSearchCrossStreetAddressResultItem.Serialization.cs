@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class ReverseSearchCrossStreetAddressResultItem
+    public partial class ReverseSearchCrossStreetAddressResultItem : IUtf8JsonSerializable, IJsonModel<ReverseSearchCrossStreetAddressResultItem>
     {
-        internal static ReverseSearchCrossStreetAddressResultItem DeserializeReverseSearchCrossStreetAddressResultItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReverseSearchCrossStreetAddressResultItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReverseSearchCrossStreetAddressResultItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReverseSearchCrossStreetAddressResultItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ReverseSearchCrossStreetAddressResultItem)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteObjectValue(Address);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Position))
+            {
+                writer.WritePropertyName("position"u8);
+                writer.WriteStringValue(Position);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReverseSearchCrossStreetAddressResultItem IJsonModel<ReverseSearchCrossStreetAddressResultItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReverseSearchCrossStreetAddressResultItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ReverseSearchCrossStreetAddressResultItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReverseSearchCrossStreetAddressResultItem(document.RootElement, options);
+        }
+
+        internal static ReverseSearchCrossStreetAddressResultItem DeserializeReverseSearchCrossStreetAddressResultItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<MapsAddress> address = default;
             Optional<string> position = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -36,8 +95,44 @@ namespace Azure.Maps.Search.Models
                     position = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReverseSearchCrossStreetAddressResultItem(address.Value, position.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReverseSearchCrossStreetAddressResultItem(address.Value, position.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReverseSearchCrossStreetAddressResultItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReverseSearchCrossStreetAddressResultItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ReverseSearchCrossStreetAddressResultItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ReverseSearchCrossStreetAddressResultItem IPersistableModel<ReverseSearchCrossStreetAddressResultItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReverseSearchCrossStreetAddressResultItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReverseSearchCrossStreetAddressResultItem(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ReverseSearchCrossStreetAddressResultItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReverseSearchCrossStreetAddressResultItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

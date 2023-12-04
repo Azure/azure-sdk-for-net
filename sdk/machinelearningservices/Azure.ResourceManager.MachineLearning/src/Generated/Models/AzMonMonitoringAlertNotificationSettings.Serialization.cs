@@ -5,28 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AzMonMonitoringAlertNotificationSettings : IUtf8JsonSerializable
+    public partial class AzMonMonitoringAlertNotificationSettings : IUtf8JsonSerializable, IJsonModel<AzMonMonitoringAlertNotificationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzMonMonitoringAlertNotificationSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzMonMonitoringAlertNotificationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzMonMonitoringAlertNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzMonMonitoringAlertNotificationSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("alertNotificationType"u8);
             writer.WriteStringValue(AlertNotificationType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzMonMonitoringAlertNotificationSettings DeserializeAzMonMonitoringAlertNotificationSettings(JsonElement element)
+        AzMonMonitoringAlertNotificationSettings IJsonModel<AzMonMonitoringAlertNotificationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzMonMonitoringAlertNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzMonMonitoringAlertNotificationSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzMonMonitoringAlertNotificationSettings(document.RootElement, options);
+        }
+
+        internal static AzMonMonitoringAlertNotificationSettings DeserializeAzMonMonitoringAlertNotificationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MonitoringAlertNotificationType alertNotificationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertNotificationType"u8))
@@ -34,8 +77,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     alertNotificationType = new MonitoringAlertNotificationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzMonMonitoringAlertNotificationSettings(alertNotificationType);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzMonMonitoringAlertNotificationSettings(alertNotificationType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzMonMonitoringAlertNotificationSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzMonMonitoringAlertNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzMonMonitoringAlertNotificationSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzMonMonitoringAlertNotificationSettings IPersistableModel<AzMonMonitoringAlertNotificationSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzMonMonitoringAlertNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzMonMonitoringAlertNotificationSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzMonMonitoringAlertNotificationSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzMonMonitoringAlertNotificationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

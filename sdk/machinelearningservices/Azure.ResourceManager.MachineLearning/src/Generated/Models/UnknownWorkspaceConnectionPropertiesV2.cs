@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -18,7 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="expiryOn"></param>
         /// <param name="metadata"> Any object. </param>
         /// <param name="target"></param>
-        internal UnknownWorkspaceConnectionPropertiesV2(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target) : base(authType, category, expiryOn, metadata, target)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownWorkspaceConnectionPropertiesV2(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, category, expiryOn, metadata, target, serializedAdditionalRawData)
         {
             AuthType = authType;
         }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownPackageInputPathBase. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPackageInputPathBase"/>. </summary>
         /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
-        internal UnknownPackageInputPathBase(InputPathType inputPathType) : base(inputPathType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownPackageInputPathBase(InputPathType inputPathType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(inputPathType, serializedAdditionalRawData)
         {
             InputPathType = inputPathType;
         }

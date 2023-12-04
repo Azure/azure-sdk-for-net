@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,6 +14,38 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ServicePrincipalParam. </summary>
     internal partial class ServicePrincipalParam
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalParam"/>. </summary>
         /// <param name="clientId"> The client id of the service principal. </param>
         /// <param name="tenantId"> The tenant id of the service principal. </param>
@@ -30,11 +63,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="clientId"> The client id of the service principal. </param>
         /// <param name="clientSecret"> The client secret of the service principal. </param>
         /// <param name="tenantId"> The tenant id of the service principal. </param>
-        internal ServicePrincipalParam(string clientId, string clientSecret, string tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServicePrincipalParam(string clientId, string clientSecret, string tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalParam"/> for deserialization. </summary>
+        internal ServicePrincipalParam()
+        {
         }
 
         /// <summary> The client id of the service principal. </summary>

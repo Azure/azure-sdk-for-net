@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> An item returned from Route Directions Batch service call. </summary>
@@ -17,8 +20,9 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary> Initializes a new instance of <see cref="RouteDirectionsBatchItem"/>. </summary>
         /// <param name="statusCode"> HTTP request status code. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"> The result of the query. RouteDirections if the query completed successfully, ErrorResponse otherwise. </param>
-        internal RouteDirectionsBatchItem(int? statusCode, RouteDirectionsBatchItemResponse response) : base(statusCode)
+        internal RouteDirectionsBatchItem(int? statusCode, IDictionary<string, BinaryData> serializedAdditionalRawData, RouteDirectionsBatchItemResponse response) : base(statusCode, serializedAdditionalRawData)
         {
             Response = response;
         }

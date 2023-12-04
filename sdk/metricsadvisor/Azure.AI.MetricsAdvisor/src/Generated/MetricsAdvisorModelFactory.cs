@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <returns> A new <see cref="Administration.DataSourceCredentialEntity"/> instance for mocking. </returns>
         public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = "Unknown", string id = null, string name = null, string description = null)
         {
-            return new UnknownDataSourceCredential(credentialKind, id, name, description);
+            return new UnknownDataSourceCredential(credentialKind, id, name, description, serializedAdditionalRawData: null);
         }
     }
 }

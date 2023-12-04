@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,5 +14,61 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ChangeThresholdCondition. </summary>
     public partial class ChangeThresholdCondition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChangeThresholdCondition"/>. </summary>
+        /// <param name="changePercentage"> change percentage, value range : [0, +∞). </param>
+        /// <param name="shiftPoint"> shift point, value range : [1, +∞). </param>
+        /// <param name="withinRange">
+        /// if the withinRange = true, detected data is abnormal when the value falls in the range, in this case anomalyDetectorDirection must be Both
+        /// if the withinRange = false, detected data is abnormal when the value falls out of the range
+        /// </param>
+        /// <param name="anomalyDetectorDirection"> detection direction. </param>
+        /// <param name="suppressCondition"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChangeThresholdCondition(double changePercentage, int shiftPoint, bool withinRange, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ChangePercentage = changePercentage;
+            ShiftPoint = shiftPoint;
+            WithinRange = withinRange;
+            AnomalyDetectorDirection = anomalyDetectorDirection;
+            SuppressCondition = suppressCondition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChangeThresholdCondition"/> for deserialization. </summary>
+        internal ChangeThresholdCondition()
+        {
+        }
     }
 }

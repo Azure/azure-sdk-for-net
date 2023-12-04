@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureCosmosDBParameter. </summary>
     internal partial class AzureCosmosDBParameter
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureCosmosDBParameter"/>. </summary>
         /// <param name="sqlQuery"> The statement to query this collection. </param>
         /// <param name="database"> A database name in this Azure CosmosDB. </param>
@@ -26,12 +61,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="sqlQuery"> The statement to query this collection. </param>
         /// <param name="database"> A database name in this Azure CosmosDB. </param>
         /// <param name="collectionId"> A collection id in this database. </param>
-        internal AzureCosmosDBParameter(string connectionString, string sqlQuery, string database, string collectionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureCosmosDBParameter(string connectionString, string sqlQuery, string database, string collectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
             SqlQuery = sqlQuery;
             Database = database;
             CollectionId = collectionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBParameter"/> for deserialization. </summary>
+        internal AzureCosmosDBParameter()
+        {
         }
 
         /// <summary> The connection string of this Azure CosmosDB. </summary>

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Properties of provisioned clusters that contain secrets. </summary>
     public partial class ProvisionedClustersPropertiesWithSecrets
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProvisionedClustersPropertiesWithSecrets"/>. </summary>
         public ProvisionedClustersPropertiesWithSecrets()
         {
@@ -19,11 +54,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="aadProfile"> AAD profile for the provisioned cluster. </param>
         /// <param name="windowsProfile"> WindowsProfile - Profile for Windows VMs in the Provisioned Cluster. </param>
         /// <param name="httpProxyConfig"> HttpProxyConfig - Configurations for provisioning the cluster with HTTP proxy servers. </param>
-        internal ProvisionedClustersPropertiesWithSecrets(AADProfile aadProfile, WindowsProfile windowsProfile, HttpProxyConfig httpProxyConfig)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClustersPropertiesWithSecrets(AADProfile aadProfile, WindowsProfile windowsProfile, HttpProxyConfig httpProxyConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AadProfile = aadProfile;
             WindowsProfile = windowsProfile;
             HttpProxyConfig = httpProxyConfig;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> AAD profile for the provisioned cluster. </summary>

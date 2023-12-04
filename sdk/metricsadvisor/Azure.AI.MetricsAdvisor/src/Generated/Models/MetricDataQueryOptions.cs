@@ -15,6 +15,38 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricDataQueryOptions. </summary>
     internal partial class MetricDataQueryOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricDataQueryOptions"/>. </summary>
         /// <param name="startTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="endTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
@@ -33,11 +65,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="startTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="endTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="series"> query specific series. The maximum number of series is 100. </param>
-        internal MetricDataQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime, IList<IDictionary<string, string>> series)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDataQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime, IList<IDictionary<string, string>> series, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartTime = startTime;
             EndTime = endTime;
             Series = series;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDataQueryOptions"/> for deserialization. </summary>
+        internal MetricDataQueryOptions()
+        {
         }
 
         /// <summary> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </summary>

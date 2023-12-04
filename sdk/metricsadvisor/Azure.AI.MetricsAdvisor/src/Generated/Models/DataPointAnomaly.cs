@@ -14,5 +14,84 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyResult. </summary>
     public partial class DataPointAnomaly
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataPointAnomaly"/>. </summary>
+        /// <param name="dataFeedId">
+        /// data feed unique id
+        ///
+        /// only return for alerting anomaly result
+        /// </param>
+        /// <param name="metricId">
+        /// metric unique id
+        ///
+        /// only return for alerting anomaly result
+        /// </param>
+        /// <param name="detectionConfigurationId">
+        /// anomaly detection configuration unique id
+        ///
+        /// only return for alerting anomaly result
+        /// </param>
+        /// <param name="timestamp"> anomaly time. </param>
+        /// <param name="createdOn">
+        /// created time
+        ///
+        /// only return for alerting result
+        /// </param>
+        /// <param name="lastModified">
+        /// modified time
+        ///
+        /// only return for alerting result
+        /// </param>
+        /// <param name="dimension"> dimension specified for series. </param>
+        /// <param name="property"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataPointAnomaly(string dataFeedId, string metricId, string detectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdOn, DateTimeOffset? lastModified, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DataFeedId = dataFeedId;
+            MetricId = metricId;
+            DetectionConfigurationId = detectionConfigurationId;
+            Timestamp = timestamp;
+            CreatedOn = createdOn;
+            LastModified = lastModified;
+            Dimension = dimension;
+            Property = property;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataPointAnomaly"/> for deserialization. </summary>
+        internal DataPointAnomaly()
+        {
+        }
     }
 }

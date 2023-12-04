@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteOptimizedWaypoint
+    public partial class RouteOptimizedWaypoint : IUtf8JsonSerializable, IJsonModel<RouteOptimizedWaypoint>
     {
-        internal static RouteOptimizedWaypoint DeserializeRouteOptimizedWaypoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteOptimizedWaypoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteOptimizedWaypoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteOptimizedWaypoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteOptimizedWaypoint)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvidedIndex))
+            {
+                writer.WritePropertyName("providedIndex"u8);
+                writer.WriteNumberValue(ProvidedIndex.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OptimizedIndex))
+            {
+                writer.WritePropertyName("optimizedIndex"u8);
+                writer.WriteNumberValue(OptimizedIndex.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteOptimizedWaypoint IJsonModel<RouteOptimizedWaypoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteOptimizedWaypoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteOptimizedWaypoint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteOptimizedWaypoint(document.RootElement, options);
+        }
+
+        internal static RouteOptimizedWaypoint DeserializeRouteOptimizedWaypoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> providedIndex = default;
             Optional<int> optimizedIndex = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providedIndex"u8))
@@ -40,8 +99,44 @@ namespace Azure.Maps.Routing.Models
                     optimizedIndex = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteOptimizedWaypoint(Optional.ToNullable(providedIndex), Optional.ToNullable(optimizedIndex));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteOptimizedWaypoint(Optional.ToNullable(providedIndex), Optional.ToNullable(optimizedIndex), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteOptimizedWaypoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteOptimizedWaypoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteOptimizedWaypoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouteOptimizedWaypoint IPersistableModel<RouteOptimizedWaypoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteOptimizedWaypoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteOptimizedWaypoint(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteOptimizedWaypoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteOptimizedWaypoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

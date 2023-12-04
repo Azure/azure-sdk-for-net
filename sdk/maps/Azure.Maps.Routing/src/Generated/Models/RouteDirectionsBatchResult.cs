@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,6 +18,15 @@ namespace Azure.Maps.Routing.Models
         internal RouteDirectionsBatchResult()
         {
             BatchItems = new ChangeTrackingList<RouteDirectionsBatchItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouteDirectionsBatchResult"/>. </summary>
+        /// <param name="batchSummary"> Summary of the results for the batch request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="batchItems"> Array containing the batch results. </param>
+        internal RouteDirectionsBatchResult(BatchResultSummary batchSummary, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<RouteDirectionsBatchItem> batchItems) : base(batchSummary, serializedAdditionalRawData)
+        {
+            BatchItems = batchItems;
         }
     }
 }

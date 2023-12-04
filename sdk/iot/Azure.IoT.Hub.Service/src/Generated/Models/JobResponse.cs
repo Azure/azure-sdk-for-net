@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The JobResponse. </summary>
     public partial class JobResponse
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JobResponse"/>. </summary>
         internal JobResponse()
         {
@@ -31,7 +64,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="failureReason"> The reason for the failure, if a failure occurred. </param>
         /// <param name="statusMessage"> The status message of the job. </param>
         /// <param name="deviceJobStatistics"> The details regarding job execution status. </param>
-        internal JobResponse(string jobId, string queryCondition, DateTimeOffset? createdTime, DateTimeOffset? startTime, DateTimeOffset? endTime, long? maxExecutionTimeInSeconds, JobResponseType? type, CloudToDeviceMethodRequest cloudToDeviceMethod, TwinData updateTwin, JobResponseStatus? status, string failureReason, string statusMessage, DeviceJobStatistics deviceJobStatistics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobResponse(string jobId, string queryCondition, DateTimeOffset? createdTime, DateTimeOffset? startTime, DateTimeOffset? endTime, long? maxExecutionTimeInSeconds, JobResponseType? type, CloudToDeviceMethodRequest cloudToDeviceMethod, TwinData updateTwin, JobResponseStatus? status, string failureReason, string statusMessage, DeviceJobStatistics deviceJobStatistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             QueryCondition = queryCondition;
@@ -46,6 +80,7 @@ namespace Azure.IoT.Hub.Service.Models
             FailureReason = failureReason;
             StatusMessage = statusMessage;
             DeviceJobStatistics = deviceJobStatistics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> System generated.  Ignored at creation. The unique identifier of the job. </summary>

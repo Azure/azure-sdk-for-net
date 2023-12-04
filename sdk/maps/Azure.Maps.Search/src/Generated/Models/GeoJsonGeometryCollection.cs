@@ -32,15 +32,21 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonGeometryCollection"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="geometries">
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
-        internal GeoJsonGeometryCollection(GeoJsonObjectType type, IList<GeoJsonGeometry> geometries) : base(type)
+        internal GeoJsonGeometryCollection(GeoJsonObjectType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<GeoJsonGeometry> geometries) : base(type, serializedAdditionalRawData)
         {
             Geometries = geometries;
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonGeometryCollection"/> for deserialization. </summary>
+        internal GeoJsonGeometryCollection()
+        {
         }
 
         /// <summary>
