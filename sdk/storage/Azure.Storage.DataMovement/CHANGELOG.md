@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-beta.4 (12-5-2023)
+## 12.0.0-beta.4 (2023-12-05)
 
 ### Features Added
 - Added support for `TransferManager.ResumeAllTransfersAsync` to resume all transfers that can be resumed.
@@ -70,7 +70,7 @@
 - [BREAKING CHANGE] Removed `DataTransferProperties.SourcePath`. Instead use `DataTransferProperties.SourceUri`.
 - [BREAKING CHANGE] Removed `DataTransferProperties.DestinationPath`. Instead use `DataTransferProperties.DestinationUri`.
 - [BREAKING CHANGE] Changed `StorageResourceCheckpointData.Serialize()` from `public` to `protected internal`
-- [BREAKING CHANGE] Made the following from `public` to `internal` (Use `LocalStorageResourceProvider` instead to create `StorageResource`s :
+- [BREAKING CHANGE] Made the following from `public` to `internal` (Use `LocalStorageResourceProvider` instead to create `StorageResource`s) :
     - `LocalDirectoryStorageResourceContainer`
     - `LocalFileStorageResource`
 
