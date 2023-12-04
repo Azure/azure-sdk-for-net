@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly TokensRestOperations _containerRegistryTokenTokensRestClient;
         private readonly ContainerRegistryTokenData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/tokens";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryTokenResource"/> class for mocking. </summary>
         protected ContainerRegistryTokenResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/tokens";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

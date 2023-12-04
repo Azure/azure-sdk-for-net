@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ContainerInstance
         private readonly ContainersRestOperations _containersRestClient;
         private readonly ContainerGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerInstance/containerGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerGroupResource"/> class for mocking. </summary>
         protected ContainerGroupResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.ContainerInstance
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerInstance/containerGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

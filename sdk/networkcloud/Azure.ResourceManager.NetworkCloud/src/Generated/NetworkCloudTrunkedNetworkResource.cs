@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly TrunkedNetworksRestOperations _networkCloudTrunkedNetworkTrunkedNetworksRestClient;
         private readonly NetworkCloudTrunkedNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/trunkedNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudTrunkedNetworkResource"/> class for mocking. </summary>
         protected NetworkCloudTrunkedNetworkResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/trunkedNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

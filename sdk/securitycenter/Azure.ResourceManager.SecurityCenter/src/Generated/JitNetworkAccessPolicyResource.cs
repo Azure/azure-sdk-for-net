@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly JitNetworkAccessPoliciesRestOperations _jitNetworkAccessPolicyRestClient;
         private readonly JitNetworkAccessPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/jitNetworkAccessPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="JitNetworkAccessPolicyResource"/> class for mocking. </summary>
         protected JitNetworkAccessPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/jitNetworkAccessPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

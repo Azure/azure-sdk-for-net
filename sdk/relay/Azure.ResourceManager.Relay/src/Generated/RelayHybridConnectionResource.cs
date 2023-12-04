@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Relay
         private readonly HybridConnectionsRestOperations _relayHybridConnectionHybridConnectionsRestClient;
         private readonly RelayHybridConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/hybridConnections";
+
         /// <summary> Initializes a new instance of the <see cref="RelayHybridConnectionResource"/> class for mocking. </summary>
         protected RelayHybridConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/hybridConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

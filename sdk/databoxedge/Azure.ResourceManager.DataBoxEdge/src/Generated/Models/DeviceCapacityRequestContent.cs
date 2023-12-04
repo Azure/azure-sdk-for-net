@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             VmPlacementResults = new ChangeTrackingList<VmPlacementRequestResult>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeviceCapacityRequestContent"/>. </summary>
+        /// <param name="vmPlacementQuery"> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </param>
+        /// <param name="vmPlacementResults"> Array of the VMs of the sizes in VmSizes can be provisioned on the appliance. </param>
+        internal DeviceCapacityRequestContent(IList<IList<string>> vmPlacementQuery, IList<VmPlacementRequestResult> vmPlacementResults)
+        {
+            VmPlacementQuery = vmPlacementQuery;
+            VmPlacementResults = vmPlacementResults;
+        }
+
         /// <summary> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </summary>
         public IList<IList<string>> VmPlacementQuery { get; }
         /// <summary> Array of the VMs of the sizes in VmSizes can be provisioned on the appliance. </summary>

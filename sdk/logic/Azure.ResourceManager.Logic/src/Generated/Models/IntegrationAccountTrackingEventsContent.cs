@@ -28,6 +28,17 @@ namespace Azure.ResourceManager.Logic.Models
             Events = events.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEventsContent"/>. </summary>
+        /// <param name="sourceType"> The source type. </param>
+        /// <param name="trackEventsOptions"> The track events options. </param>
+        /// <param name="events"> The events. </param>
+        internal IntegrationAccountTrackingEventsContent(string sourceType, IntegrationAccountTrackEventOperationOption? trackEventsOptions, IList<IntegrationAccountTrackingEvent> events)
+        {
+            SourceType = sourceType;
+            TrackEventsOptions = trackEventsOptions;
+            Events = events;
+        }
+
         /// <summary> The source type. </summary>
         public string SourceType { get; }
         /// <summary> The track events options. </summary>

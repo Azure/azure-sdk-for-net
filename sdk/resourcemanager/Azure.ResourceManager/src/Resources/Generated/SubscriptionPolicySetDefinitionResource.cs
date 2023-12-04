@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicySetDefinitionsRestOperations _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient;
         private readonly PolicySetDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policySetDefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionResource"/> class for mocking. </summary>
         protected SubscriptionPolicySetDefinitionResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policySetDefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly CommitmentPlansRestOperations _cognitiveServicesCommitmentPlanCommitmentPlansRestClient;
         private readonly CommitmentPlanData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/commitmentPlans";
+
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesCommitmentPlanResource"/> class for mocking. </summary>
         protected CognitiveServicesCommitmentPlanResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.CognitiveServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/commitmentPlans";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

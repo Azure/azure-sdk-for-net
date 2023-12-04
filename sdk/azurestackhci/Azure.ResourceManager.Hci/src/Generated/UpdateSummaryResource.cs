@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Hci
         private readonly UpdateSummariesRestOperations _updateSummaryRestClient;
         private readonly UpdateSummaryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/updateSummaries";
+
         /// <summary> Initializes a new instance of the <see cref="UpdateSummaryResource"/> class for mocking. </summary>
         protected UpdateSummaryResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/updateSummaries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

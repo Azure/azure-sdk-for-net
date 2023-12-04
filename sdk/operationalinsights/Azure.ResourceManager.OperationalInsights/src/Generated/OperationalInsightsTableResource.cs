@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly TablesRestOperations _operationalInsightsTableTablesRestClient;
         private readonly OperationalInsightsTableData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/tables";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsTableResource"/> class for mocking. </summary>
         protected OperationalInsightsTableResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/tables";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

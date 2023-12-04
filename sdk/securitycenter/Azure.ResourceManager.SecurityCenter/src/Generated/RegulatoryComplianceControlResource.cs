@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly RegulatoryComplianceControlsRestOperations _regulatoryComplianceControlRestClient;
         private readonly RegulatoryComplianceControlData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards/regulatoryComplianceControls";
+
         /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceControlResource"/> class for mocking. </summary>
         protected RegulatoryComplianceControlResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards/regulatoryComplianceControls";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

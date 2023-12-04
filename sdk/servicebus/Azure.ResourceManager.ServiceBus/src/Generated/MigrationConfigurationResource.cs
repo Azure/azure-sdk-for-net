@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly MigrationConfigsRestOperations _migrationConfigurationMigrationConfigsRestClient;
         private readonly MigrationConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/migrationConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="MigrationConfigurationResource"/> class for mocking. </summary>
         protected MigrationConfigurationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/migrationConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

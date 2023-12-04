@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Media
         private readonly AssetsRestOperations _mediaAssetAssetsRestClient;
         private readonly MediaAssetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/assets";
+
         /// <summary> Initializes a new instance of the <see cref="MediaAssetResource"/> class for mocking. </summary>
         protected MediaAssetResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/assets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

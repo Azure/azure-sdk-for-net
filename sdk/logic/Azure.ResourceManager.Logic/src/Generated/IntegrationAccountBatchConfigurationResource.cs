@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Logic
         private readonly IntegrationAccountBatchConfigurationsRestOperations _integrationAccountBatchConfigurationRestClient;
         private readonly IntegrationAccountBatchConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/batchConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="IntegrationAccountBatchConfigurationResource"/> class for mocking. </summary>
         protected IntegrationAccountBatchConfigurationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/batchConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

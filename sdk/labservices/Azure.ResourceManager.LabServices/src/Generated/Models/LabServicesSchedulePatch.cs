@@ -17,6 +17,21 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="LabServicesSchedulePatch"/>. </summary>
+        /// <param name="startOn"> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </param>
+        /// <param name="stopOn"> When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead. </param>
+        /// <param name="recurrencePattern"> The recurrence pattern of the scheduled actions. </param>
+        /// <param name="timeZoneId"> The IANA timezone id for the schedule. </param>
+        /// <param name="notes"> Notes for this schedule. </param>
+        internal LabServicesSchedulePatch(DateTimeOffset? startOn, DateTimeOffset? stopOn, LabServicesRecurrencePattern recurrencePattern, string timeZoneId, BinaryData notes)
+        {
+            StartOn = startOn;
+            StopOn = stopOn;
+            RecurrencePattern = recurrencePattern;
+            TimeZoneId = timeZoneId;
+            Notes = notes;
+        }
+
         /// <summary> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>

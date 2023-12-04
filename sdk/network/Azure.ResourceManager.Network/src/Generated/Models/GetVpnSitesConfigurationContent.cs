@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.Network.Models
             OutputBlobSasUri = outputBlobSasUri;
         }
 
+        /// <summary> Initializes a new instance of <see cref="GetVpnSitesConfigurationContent"/>. </summary>
+        /// <param name="vpnSites"> List of resource-ids of the vpn-sites for which config is to be downloaded. </param>
+        /// <param name="outputBlobSasUri"> The sas-url to download the configurations for vpn-sites. </param>
+        internal GetVpnSitesConfigurationContent(IList<string> vpnSites, Uri outputBlobSasUri)
+        {
+            VpnSites = vpnSites;
+            OutputBlobSasUri = outputBlobSasUri;
+        }
+
         /// <summary> List of resource-ids of the vpn-sites for which config is to be downloaded. </summary>
         public IList<string> VpnSites { get; }
         /// <summary> The sas-url to download the configurations for vpn-sites. </summary>

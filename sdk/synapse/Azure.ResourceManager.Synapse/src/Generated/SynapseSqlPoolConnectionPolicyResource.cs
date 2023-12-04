@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolConnectionPoliciesRestOperations _synapseSqlPoolConnectionPolicySqlPoolConnectionPoliciesRestClient;
         private readonly SynapseSqlPoolConnectionPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/connectionPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolConnectionPolicyResource"/> class for mocking. </summary>
         protected SynapseSqlPoolConnectionPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/connectionPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

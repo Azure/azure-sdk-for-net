@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly GraphResourcesRestOperations _graphResourceGetResultGraphResourcesRestClient;
         private readonly GraphResourceGetResultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/graphs";
+
         /// <summary> Initializes a new instance of the <see cref="GraphResourceGetResultResource"/> class for mocking. </summary>
         protected GraphResourceGetResultResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/graphs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

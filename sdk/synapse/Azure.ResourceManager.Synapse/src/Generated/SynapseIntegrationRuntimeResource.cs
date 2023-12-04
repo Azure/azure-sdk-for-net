@@ -57,6 +57,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly IntegrationRuntimeStatusRestOperations _integrationRuntimeStatusRestClient;
         private readonly SynapseIntegrationRuntimeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/integrationRuntimes";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseIntegrationRuntimeResource"/> class for mocking. </summary>
         protected SynapseIntegrationRuntimeResource()
         {
@@ -99,9 +102,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/integrationRuntimes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

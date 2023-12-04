@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly VirtualNetworkRulesRestOperations _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient;
         private readonly PostgreSqlVirtualNetworkRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlVirtualNetworkRuleResource"/> class for mocking. </summary>
         protected PostgreSqlVirtualNetworkRuleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

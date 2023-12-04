@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         private readonly FrontendsInterfaceRestOperations _frontendFrontendsInterfaceRestClient;
         private readonly FrontendData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceNetworking/trafficControllers/frontends";
+
         /// <summary> Initializes a new instance of the <see cref="FrontendResource"/> class for mocking. </summary>
         protected FrontendResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ServiceNetworking
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceNetworking/trafficControllers/frontends";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

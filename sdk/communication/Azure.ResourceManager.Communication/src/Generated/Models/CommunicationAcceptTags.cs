@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Communication.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CommunicationAcceptTags"/>. </summary>
+        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
+        internal CommunicationAcceptTags(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Tags of the service which is a list of key value pairs that describe the resource. </summary>
         public IDictionary<string, string> Tags { get; }
     }

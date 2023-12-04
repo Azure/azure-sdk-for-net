@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly ConfigurationsRestOperations _postgreSqlConfigurationConfigurationsRestClient;
         private readonly PostgreSqlConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/configurations";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlConfigurationResource"/> class for mocking. </summary>
         protected PostgreSqlConfigurationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/configurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

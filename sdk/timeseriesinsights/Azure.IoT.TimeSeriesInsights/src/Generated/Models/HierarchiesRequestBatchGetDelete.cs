@@ -20,6 +20,15 @@ namespace Azure.IoT.TimeSeriesInsights
             Names = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="HierarchiesRequestBatchGetDelete"/>. </summary>
+        /// <param name="hierarchyIds"> List of hierarchy IDs. </param>
+        /// <param name="names"> List of hierarchy names. </param>
+        internal HierarchiesRequestBatchGetDelete(IList<string> hierarchyIds, IList<string> names)
+        {
+            HierarchyIds = hierarchyIds;
+            Names = names;
+        }
+
         /// <summary> List of hierarchy IDs. </summary>
         public IList<string> HierarchyIds { get; }
         /// <summary> List of hierarchy names. </summary>

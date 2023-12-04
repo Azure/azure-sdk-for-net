@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.SelfHelp
         private readonly DiagnosticsRestOperations _selfHelpDiagnosticDiagnosticsRestClient;
         private readonly SelfHelpDiagnosticData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Help/diagnostics";
+
         /// <summary> Initializes a new instance of the <see cref="SelfHelpDiagnosticResource"/> class for mocking. </summary>
         protected SelfHelpDiagnosticResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.SelfHelp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Help/diagnostics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

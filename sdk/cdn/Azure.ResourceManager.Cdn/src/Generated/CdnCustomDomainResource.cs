@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn
         private readonly CdnCustomDomainsRestOperations _cdnCustomDomainRestClient;
         private readonly CdnCustomDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/customDomains";
+
         /// <summary> Initializes a new instance of the <see cref="CdnCustomDomainResource"/> class for mocking. </summary>
         protected CdnCustomDomainResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/customDomains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

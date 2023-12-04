@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly ImagesRestOperations _imagesRestClient;
         private readonly HubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs";
+
         /// <summary> Initializes a new instance of the <see cref="HubResource"/> class for mocking. </summary>
         protected HubResource()
         {
@@ -76,9 +79,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

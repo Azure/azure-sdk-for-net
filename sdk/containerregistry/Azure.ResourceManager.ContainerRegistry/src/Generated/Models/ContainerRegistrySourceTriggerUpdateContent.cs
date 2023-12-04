@@ -25,6 +25,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerUpdateContent"/>. </summary>
+        /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
+        /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        internal ContainerRegistrySourceTriggerUpdateContent(SourceCodeRepoUpdateContent sourceRepository, IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents, ContainerRegistryTriggerStatus? status, string name)
+        {
+            SourceRepository = sourceRepository;
+            SourceTriggerEvents = sourceTriggerEvents;
+            Status = status;
+            Name = name;
+        }
+
         /// <summary> The properties that describes the source(code) for the task. </summary>
         public SourceCodeRepoUpdateContent SourceRepository { get; set; }
         /// <summary> The source event corresponding to the trigger. </summary>

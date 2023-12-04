@@ -26,6 +26,19 @@ namespace Azure.Monitor.Query.Models
             DisplayName = displayName;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataCategory"/>. </summary>
+        /// <param name="id"> The ID of the category. </param>
+        /// <param name="displayName"> The display name of the category. </param>
+        /// <param name="description"> The description of the category. </param>
+        /// <param name="related"> The related metadata items for the category. </param>
+        internal MetadataCategory(string id, string displayName, string description, MetadataCategoryRelated related)
+        {
+            Id = id;
+            DisplayName = displayName;
+            Description = description;
+            Related = related;
+        }
+
         /// <summary> The ID of the category. </summary>
         public string Id { get; }
         /// <summary> The display name of the category. </summary>

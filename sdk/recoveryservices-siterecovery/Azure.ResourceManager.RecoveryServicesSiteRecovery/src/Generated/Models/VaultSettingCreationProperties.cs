@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VaultSettingCreationProperties"/>. </summary>
+        /// <param name="migrationSolutionId"> The migration solution Id. </param>
+        /// <param name="vmwareToAzureProviderType"> VMware to Azure provider type. </param>
+        internal VaultSettingCreationProperties(ResourceIdentifier migrationSolutionId, string vmwareToAzureProviderType)
+        {
+            MigrationSolutionId = migrationSolutionId;
+            VMwareToAzureProviderType = vmwareToAzureProviderType;
+        }
+
         /// <summary> The migration solution Id. </summary>
         public ResourceIdentifier MigrationSolutionId { get; set; }
         /// <summary> VMware to Azure provider type. </summary>

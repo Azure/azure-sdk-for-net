@@ -16,6 +16,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanA2AContent"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="primaryZone"> The primary zone. </param>
+        /// <param name="recoveryZone"> The recovery zone. </param>
+        /// <param name="primaryExtendedLocation"> The primary extended location. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
+        internal RecoveryPlanA2AContent(string instanceType, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation) : base(instanceType)
+        {
+            PrimaryZone = primaryZone;
+            RecoveryZone = recoveryZone;
+            PrimaryExtendedLocation = primaryExtendedLocation;
+            RecoveryExtendedLocation = recoveryExtendedLocation;
+            InstanceType = instanceType ?? "A2A";
+        }
+
         /// <summary> The primary zone. </summary>
         public string PrimaryZone { get; set; }
         /// <summary> The recovery zone. </summary>

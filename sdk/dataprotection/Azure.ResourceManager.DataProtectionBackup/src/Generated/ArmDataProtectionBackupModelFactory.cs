@@ -46,12 +46,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
         /// <param name="secureScore"> Secure Score of Backup Vault. </param>
+        /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupVaultProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures = null, DataProtectionBackupProvisioningState? provisioningState = null, BackupVaultResourceMoveState? resourceMoveState = null, BackupVaultResourceMoveDetails resourceMoveDetails = null, BackupVaultSecuritySettings securitySettings = null, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = null, BackupVaultFeatureSettings featureSettings = null, BackupVaultSecureScoreLevel? secureScore = null)
+        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures = null, DataProtectionBackupProvisioningState? provisioningState = null, BackupVaultResourceMoveState? resourceMoveState = null, BackupVaultResourceMoveDetails resourceMoveDetails = null, BackupVaultSecuritySettings securitySettings = null, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = null, BackupVaultFeatureSettings featureSettings = null, BackupVaultSecureScoreLevel? secureScore = null, IEnumerable<AzureLocation> replicatedRegions = null)
         {
             storageSettings ??= new List<DataProtectionBackupStorageSetting>();
+            replicatedRegions ??= new List<AzureLocation>();
 
-            return new DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures)) : null, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings?.ToList(), isVaultProtectedByResourceGuard, featureSettings, secureScore);
+            return new DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures)) : null, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings?.ToList(), isVaultProtectedByResourceGuard, featureSettings, secureScore, replicatedRegions?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupVaultResourceMoveDetails"/>. </summary>
@@ -153,11 +155,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionOperationJobExtendedInfo"/>. </summary>
-        /// <param name="jobResourceId"> Arm Id of the job created for this operation. </param>
+        /// <param name="jobIdentifier"> Name or Arm Id of the job created for this operation. </param>
         /// <returns> A new <see cref="Models.DataProtectionOperationJobExtendedInfo"/> instance for mocking. </returns>
-        public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(ResourceIdentifier jobResourceId = null)
+        public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(string jobIdentifier = null)
         {
-            return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", jobResourceId);
+            return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", jobIdentifier);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackup.DataProtectionBackupRecoveryPointData"/>. </summary>
@@ -237,13 +239,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceRecoverPoint"> Details of the Source Recovery Point. </param>
         /// <param name="subTasks"> List of Sub Tasks of the job. </param>
         /// <param name="targetRecoverPoint"> Details of the Target Recovery Point. </param>
+        /// <param name="warningDetails"> A List, detailing the warnings related to the job. </param>
         /// <returns> A new <see cref="Models.BackupJobExtendedInfo"/> instance for mocking. </returns>
-        public static BackupJobExtendedInfo BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails = null, string backupInstanceState = null, double? dataTransferredInBytes = null, string recoveryDestination = null, RestoreJobRecoveryPointDetails sourceRecoverPoint = null, IEnumerable<BackupJobSubTask> subTasks = null, RestoreJobRecoveryPointDetails targetRecoverPoint = null)
+        public static BackupJobExtendedInfo BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails = null, string backupInstanceState = null, double? dataTransferredInBytes = null, string recoveryDestination = null, RestoreJobRecoveryPointDetails sourceRecoverPoint = null, IEnumerable<BackupJobSubTask> subTasks = null, RestoreJobRecoveryPointDetails targetRecoverPoint = null, IEnumerable<UserFacingWarningDetail> warningDetails = null)
         {
             additionalDetails ??= new Dictionary<string, string>();
             subTasks ??= new List<BackupJobSubTask>();
+            warningDetails ??= new List<UserFacingWarningDetail>();
 
-            return new BackupJobExtendedInfo(additionalDetails, backupInstanceState, dataTransferredInBytes, recoveryDestination, sourceRecoverPoint, subTasks?.ToList(), targetRecoverPoint);
+            return new BackupJobExtendedInfo(additionalDetails, backupInstanceState, dataTransferredInBytes, recoveryDestination, sourceRecoverPoint, subTasks?.ToList(), targetRecoverPoint, warningDetails?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestoreJobRecoveryPointDetails"/>. </summary>
@@ -267,6 +271,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             additionalDetails ??= new Dictionary<string, string>();
 
             return new BackupJobSubTask(additionalDetails, taskId, taskName, taskProgress, taskStatus);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UserFacingWarningDetail"/>. </summary>
+        /// <param name="resourceName"> Name of resource for which warning is raised. </param>
+        /// <param name="warning"> Error details for the warning. </param>
+        /// <returns> A new <see cref="Models.UserFacingWarningDetail"/> instance for mocking. </returns>
+        public static UserFacingWarningDetail UserFacingWarningDetail(string resourceName = null, ResponseError warning = null)
+        {
+            return new UserFacingWarningDetail(resourceName, warning);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupFindRestorableTimeRangeResult"/>. </summary>
@@ -424,12 +437,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="retentionTagName"></param>
         /// <param name="retentionTagVersion"></param>
         /// <param name="expireOn"></param>
+        /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = null, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = null, DateTimeOffset recoverOn = default, string policyName = null, string policyVersion = null, string recoveryPointId = null, string recoveryPointType = null, string retentionTagName = null, string retentionTagVersion = null, DateTimeOffset? expireOn = null)
+        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = null, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = null, DateTimeOffset recoverOn = default, string policyName = null, string policyVersion = null, string recoveryPointId = null, string recoveryPointType = null, string retentionTagName = null, string retentionTagVersion = null, DateTimeOffset? expireOn = null, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = null)
         {
             recoveryPointDataStoresDetails ??= new List<RecoveryPointDataStoreDetail>();
 
-            return new DataProtectionBackupDiscreteRecoveryPointProperties("AzureBackupDiscreteRecoveryPoint", friendlyName, recoveryPointDataStoresDetails?.ToList(), recoverOn, policyName, policyVersion, recoveryPointId, recoveryPointType, retentionTagName, retentionTagVersion, expireOn);
+            return new DataProtectionBackupDiscreteRecoveryPointProperties("AzureBackupDiscreteRecoveryPoint", friendlyName, recoveryPointDataStoresDetails?.ToList(), recoverOn, policyName, policyVersion, recoveryPointId, recoveryPointType, retentionTagName, retentionTagVersion, expireOn, recoveryPointState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryPointDataStoreDetail"/>. </summary>

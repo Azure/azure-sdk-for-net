@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.TrafficManager
         private readonly EndpointsRestOperations _trafficManagerEndpointEndpointsRestClient;
         private readonly TrafficManagerEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/{endpointType}";
+
         /// <summary> Initializes a new instance of the <see cref="TrafficManagerEndpointResource"/> class for mocking. </summary>
         protected TrafficManagerEndpointResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.TrafficManager
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/{endpointType}";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

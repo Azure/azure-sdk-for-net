@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
+        /// <param name="tags"> The resource tags. </param>
+        internal HDInsightClusterPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; set; }
     }

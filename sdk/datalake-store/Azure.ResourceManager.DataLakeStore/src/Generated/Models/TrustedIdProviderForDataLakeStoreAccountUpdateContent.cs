@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TrustedIdProviderForDataLakeStoreAccountUpdateContent"/>. </summary>
+        /// <param name="name"> The unique name of the trusted identity provider to update. </param>
+        /// <param name="idProvider"> The URL of this trusted identity provider. </param>
+        internal TrustedIdProviderForDataLakeStoreAccountUpdateContent(string name, Uri idProvider)
+        {
+            Name = name;
+            IdProvider = idProvider;
+        }
+
         /// <summary> The unique name of the trusted identity provider to update. </summary>
         public string Name { get; }
         /// <summary> The URL of this trusted identity provider. </summary>

@@ -15,6 +15,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDBParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this MongoDB. </param>
+        /// <param name="database"> A database name in this MongoDB. </param>
+        /// <param name="command"> The script to query this database. </param>
+        internal MongoDBParameterPatch(string connectionString, string database, string command)
+        {
+            ConnectionString = connectionString;
+            Database = database;
+            Command = command;
+        }
+
         /// <summary> The connection string of this MongoDB. </summary>
         public string ConnectionString { get; set; }
         /// <summary> A database name in this MongoDB. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Monitor
         private readonly ActivityLogAlertsRestOperations _activityLogAlertRestClient;
         private readonly ActivityLogAlertData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/activityLogAlerts";
+
         /// <summary> Initializes a new instance of the <see cref="ActivityLogAlertResource"/> class for mocking. </summary>
         protected ActivityLogAlertResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/activityLogAlerts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

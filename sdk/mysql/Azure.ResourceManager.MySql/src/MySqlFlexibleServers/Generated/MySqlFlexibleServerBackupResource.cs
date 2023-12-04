@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly BackupsRestOperations _mySqlFlexibleServerBackupBackupsRestClient;
         private readonly MySqlFlexibleServerBackupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/backups";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerBackupResource"/> class for mocking. </summary>
         protected MySqlFlexibleServerBackupResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/backups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

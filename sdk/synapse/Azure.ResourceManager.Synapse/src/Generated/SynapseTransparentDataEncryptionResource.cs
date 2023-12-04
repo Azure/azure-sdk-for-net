@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolTransparentDataEncryptionsRestOperations _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient;
         private readonly SynapseTransparentDataEncryptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/transparentDataEncryption";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseTransparentDataEncryptionResource"/> class for mocking. </summary>
         protected SynapseTransparentDataEncryptionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/transparentDataEncryption";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

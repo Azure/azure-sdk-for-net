@@ -23,6 +23,17 @@ namespace Azure.Communication.Email
             Subject = subject;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EmailContent"/>. </summary>
+        /// <param name="subject"> Subject of the email message. </param>
+        /// <param name="plainText"> Plain text version of the email message. </param>
+        /// <param name="html"> Html version of the email message. </param>
+        internal EmailContent(string subject, string plainText, string html)
+        {
+            Subject = subject;
+            PlainText = plainText;
+            Html = html;
+        }
+
         /// <summary> Subject of the email message. </summary>
         public string Subject { get; }
         /// <summary> Plain text version of the email message. </summary>

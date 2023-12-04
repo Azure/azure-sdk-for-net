@@ -80,8 +80,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 EventHubName,
                 ConsumerGroup,
                 partitionId,
-                checkpointEvent.Offset,
-                checkpointEvent.SequenceNumber,
+                Identifier,
+                CheckpointPosition.FromEvent(checkpointEvent),
                 cancellationToken).ConfigureAwait(false);
         }
 

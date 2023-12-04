@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.DataShare
         private readonly ConsumerSourceDataSetsRestOperations _consumerSourceDataSetsRestClient;
         private readonly ShareSubscriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="ShareSubscriptionResource"/> class for mocking. </summary>
         protected ShareSubscriptionResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

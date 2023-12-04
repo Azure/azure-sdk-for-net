@@ -17,6 +17,15 @@ namespace Azure.Communication.CallAutomation
             StorageType = storageType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
+        /// <param name="storageType"> Defines the type of external storage. </param>
+        /// <param name="blobStorage"> Defines the blob storage location where the recording will be stored. </param>
+        internal ExternalStorageInternal(RecordingStorageType storageType, BlobStorageInternal blobStorage)
+        {
+            StorageType = storageType;
+            BlobStorage = blobStorage;
+        }
+
         /// <summary> Defines the type of external storage. </summary>
         public RecordingStorageType StorageType { get; }
         /// <summary> Defines the blob storage location where the recording will be stored. </summary>

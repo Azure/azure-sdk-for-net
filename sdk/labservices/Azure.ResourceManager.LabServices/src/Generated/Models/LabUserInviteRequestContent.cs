@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="LabUserInviteRequestContent"/>. </summary>
+        /// <param name="text"> Custom text for the invite email. </param>
+        internal LabUserInviteRequestContent(BinaryData text)
+        {
+            Text = text;
+        }
+
         /// <summary>
         /// Custom text for the invite email.
         /// <para>

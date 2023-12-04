@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServices
         private readonly VaultExtendedInfoRestOperations _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient;
         private readonly RecoveryServicesVaultExtendedInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/extendedInformation";
+
         /// <summary> Initializes a new instance of the <see cref="RecoveryServicesVaultExtendedInfoResource"/> class for mocking. </summary>
         protected RecoveryServicesVaultExtendedInfoResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.RecoveryServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/extendedInformation";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
