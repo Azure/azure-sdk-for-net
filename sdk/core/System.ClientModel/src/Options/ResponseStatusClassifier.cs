@@ -9,7 +9,7 @@ namespace System.ClientModel.Primitives
     {
         // We need 10 ulongs to represent status codes 100 - 599.
         private const int Length = 10;
-        private ulong[] _successCodes;
+        private readonly ulong[] _successCodes;
 
         /// <summary>
         /// Creates a new instance of <see cref="ResponseStatusClassifier"/>
@@ -26,10 +26,8 @@ namespace System.ClientModel.Primitives
             }
         }
 
-        public override bool IsErrorResponse(PipelineMessage message)
-        {
-            return base.IsErrorResponse(message);
-        }
+        public sealed override bool IsErrorResponse(PipelineMessage message)
+            => base.IsErrorResponse(message);
 
         private void AddClassifier(int statusCode, bool isError)
         {
