@@ -119,12 +119,6 @@ public class ClientPipelineTests
         {
             public TransportRequest() { }
 
-            public override InputContent? Content
-            {
-                get => throw new NotImplementedException();
-                set => throw new NotImplementedException();
-            }
-
             public override void Dispose()
             {
                 throw new NotImplementedException();
@@ -141,6 +135,11 @@ public class ClientPipelineTests
             {
                 get => null;
                 set => throw new NotImplementedException();
+            }
+
+            protected override MessageHeaders GetHeadersCore()
+            {
+                throw new NotImplementedException();
             }
 
             public override void Dispose()
