@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
 namespace Azure
 {
@@ -10,9 +9,11 @@ namespace Azure
     internal sealed class NoValueResponse<T> : NullableResponse<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
-        public NoValueResponse(Response response) : base(default, response)
+        private readonly Response _response;
+
+        public NoValueResponse(Response response)
         {
-            Argument.AssertNotNull(response, nameof(response));
+            _response = response ?? throw new ArgumentNullException(nameof(response));
         }
 
         /// <inheritdoc />
@@ -25,6 +26,8 @@ namespace Azure
                 throw new InvalidOperationException(GetStatusMessage());
             }
         }
+
+        public override Response GetRawResponse() => _response;
 
         public override string ToString()
         {

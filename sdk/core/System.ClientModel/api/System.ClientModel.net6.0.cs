@@ -186,7 +186,6 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineProcessor
     {
         protected PipelineProcessor() { }
-        public abstract int Length { get; }
         public abstract bool ProcessNext();
         public abstract System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
     }

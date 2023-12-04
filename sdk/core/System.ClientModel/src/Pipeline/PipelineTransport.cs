@@ -70,15 +70,15 @@ public abstract class PipelineTransport : PipelinePolicy
     // of the line", i.e. they stop the invocation of the policy chain.
     public sealed override void Process(PipelineMessage message, PipelineProcessor pipeline)
     {
-        Debug.Assert(pipeline.Length == 0);
-
         Process(message);
+
+        Debug.Assert(pipeline.ProcessNext() == false);
     }
 
     public sealed override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
     {
-        Debug.Assert(pipeline.Length == 0);
-
         await ProcessAsync(message).ConfigureAwait(false);
+
+        Debug.Assert(await pipeline.ProcessNextAsync().ConfigureAwait(false) == false);
     }
 }
