@@ -30,6 +30,8 @@ public abstract class OutputMessage
 
     public static OutputMessage<T> FromValue<T>(T value, PipelineResponse response)
     {
+        // TODO: Add test to validate that the only way to create this prevents null
+
         // Null values must use OptionalOutputMessage<T>
         if (value is null)
         {

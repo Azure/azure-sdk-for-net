@@ -50,7 +50,7 @@ namespace System.ClientModel
             base.GetObjectData(info, context);
         }
 
-        public virtual PipelineResponse? GetRawResponse() => _response;
+        public PipelineResponse? GetRawResponse() => _response;
 
         private static string GetMessageFromResponse(PipelineResponse response)
         {

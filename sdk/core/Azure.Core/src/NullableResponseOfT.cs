@@ -35,9 +35,12 @@ namespace Azure
         /// <param name="value"></param>
         /// <param name="response"></param>
         protected NullableResponse(T? value, Response response)
-            : base(value, response)
+            : base(value, ReplaceWithDefaultIfNull(response))
         {
         }
+
+        private static Response ReplaceWithDefaultIfNull(Response? response)
+            => response ?? DefaultResponse;
 
         /// <summary>
         /// Returns the HTTP response returned by the service.

@@ -25,7 +25,7 @@ public abstract class PipelineRequest : IDisposable
         set => _method = value;
     }
 
-    public virtual Uri Uri
+    public Uri Uri
     {
         get => GetUriCore();
 
@@ -42,7 +42,7 @@ public abstract class PipelineRequest : IDisposable
         return _uri;
     }
 
-    public virtual InputContent? Content { get; set; }
+    public InputContent? Content { get; set; }
 
     public MessageHeaders Headers => _headers;
 

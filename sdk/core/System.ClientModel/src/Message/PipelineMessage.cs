@@ -20,9 +20,9 @@ public class PipelineMessage : IDisposable
         _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
     }
 
-    public virtual PipelineRequest Request { get; }
+    public PipelineRequest Request { get; }
 
-    public virtual PipelineResponse Response
+    public PipelineResponse Response
     {
         get
         {
@@ -46,7 +46,7 @@ public class PipelineMessage : IDisposable
 
     #region Pipeline invocation options
 
-    public virtual CancellationToken CancellationToken { get; set; }
+    public CancellationToken CancellationToken { get; set; }
 
     public MessageClassifier? MessageClassifier { get; protected internal set; }
 
@@ -102,7 +102,7 @@ public class PipelineMessage : IDisposable
         }
     }
 
-    public virtual void Dispose()
+    public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);

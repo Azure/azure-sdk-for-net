@@ -23,11 +23,11 @@ public class RequestOptions
         RequestHeaders = new PipelineRequestHeaders();
     }
 
-    public virtual CancellationToken CancellationToken { get; set; }
+    public CancellationToken CancellationToken { get; set; }
 
-    public virtual ErrorBehavior ErrorBehavior { get; set; }
+    public ErrorBehavior ErrorBehavior { get; set; }
 
-    public virtual MessageHeaders RequestHeaders { get; }
+    public MessageHeaders RequestHeaders { get; }
 
     // Set options on the message before sending it through the pipeline.
     protected internal void Apply(PipelineMessage message, MessageClassifier? messageClassifier = default)

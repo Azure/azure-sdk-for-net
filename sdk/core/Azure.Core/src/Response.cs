@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Core;
@@ -27,6 +28,18 @@ namespace Azure
         /// </summary>
         // TODO: is is possible to not new-slot this?
         public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override MessageHeaders GetHeadersCore()
+        {
+            // TODO: we'll need to add an adapter in case someone were to override this.
+            throw new NotImplementedException();
+        }
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
@@ -120,6 +133,11 @@ namespace Azure
             {
                 get => throw new NotSupportedException(DefaultMessage);
                 set => throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected override MessageHeaders GetHeadersCore()
+            {
+                throw new NotSupportedException(DefaultMessage);
             }
 
             public override void Dispose()
