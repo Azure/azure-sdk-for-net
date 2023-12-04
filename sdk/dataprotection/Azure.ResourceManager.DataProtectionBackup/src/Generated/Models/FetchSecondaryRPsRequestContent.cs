@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FetchSecondaryRPsRequestContent"/>. </summary>
+        /// <param name="sourceRegion"> Source region in which BackupInstance is located. </param>
+        /// <param name="sourceBackupInstanceId"> ARM Path of BackupInstance. </param>
+        internal FetchSecondaryRPsRequestContent(AzureLocation? sourceRegion, ResourceIdentifier sourceBackupInstanceId)
+        {
+            SourceRegion = sourceRegion;
+            SourceBackupInstanceId = sourceBackupInstanceId;
+        }
+
         /// <summary> Source region in which BackupInstance is located. </summary>
         public AzureLocation? SourceRegion { get; set; }
         /// <summary> ARM Path of BackupInstance. </summary>
