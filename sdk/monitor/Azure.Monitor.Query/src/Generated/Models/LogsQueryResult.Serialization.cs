@@ -5,16 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class LogsQueryResult
+    public partial class LogsQueryResult : IUtf8JsonSerializable, IJsonModel<LogsQueryResult>
     {
-        internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogsQueryResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LogsQueryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LogsQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LogsQueryResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("tables"u8);
+            writer.WriteStartArray();
+            foreach (var item in AllTables)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(_statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                _statistics.WriteTo(writer);
+            }
+            if (Optional.IsDefined(_visualization))
+            {
+                writer.WritePropertyName("render"u8);
+                _visualization.WriteTo(writer);
+            }
+            if (Optional.IsDefined(_error))
+            {
+                writer.WritePropertyName("error"u8);
+                _error.WriteTo(writer);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LogsQueryResult IJsonModel<LogsQueryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogsQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LogsQueryResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogsQueryResult(document.RootElement, options);
+        }
+
+        internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +91,8 @@ namespace Azure.Monitor.Query.Models
             Optional<JsonElement> statistics = default;
             Optional<JsonElement> render = default;
             Optional<JsonElement> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"u8))
@@ -50,8 +120,44 @@ namespace Azure.Monitor.Query.Models
                     error = property.Value.Clone();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogsQueryResult(tables, statistics, render, error);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogsQueryResult(tables, statistics, render, error, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogsQueryResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogsQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LogsQueryResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LogsQueryResult IPersistableModel<LogsQueryResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogsQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogsQueryResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LogsQueryResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogsQueryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

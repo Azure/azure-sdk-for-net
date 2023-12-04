@@ -40,6 +40,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = measurements;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TelemetryEventData"/> for deserialization. </summary>
+        internal TelemetryEventData()
+        {
+        }
+
         /// <summary> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </summary>
         public string Name { get; }
         /// <summary> Collection of custom properties. </summary>

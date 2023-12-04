@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
@@ -21,11 +22,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
         /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
         /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the command initiated with this dependency call, e.g., GET /username. </param>
         /// <param name="commandName"> URL of the dependency call to the target, with all query string parameters. </param>
         /// <param name="resultCode"> Result code of a dependency call. Examples are SQL error code and HTTP status code. </param>
         /// <param name="duration"> Request duration in ISO 8601 duration format, i.e., P[n]Y[n]M[n]DT[n]H[n]M[n]S or P[n]W. </param>
-        internal RemoteDependencyDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name, string commandName, string resultCode, string duration) : base(documentType, documentStreamIds, properties)
+        internal RemoteDependencyDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string commandName, string resultCode, string duration) : base(documentType, documentStreamIds, properties, serializedAdditionalRawData)
         {
             Name = name;
             CommandName = commandName;

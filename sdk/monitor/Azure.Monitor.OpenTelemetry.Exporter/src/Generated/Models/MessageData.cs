@@ -42,6 +42,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = measurements;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MessageData"/> for deserialization. </summary>
+        internal MessageData()
+        {
+        }
+
         /// <summary> Trace message. </summary>
         public string Message { get; }
         /// <summary> Trace severity level. </summary>

@@ -18,16 +18,10 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of <see cref="Models.LogsTableColumn"/>. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
         public static LogsTableColumn LogsTableColumn(string name = null, LogsColumnType type = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            return new LogsTableColumn(name, type);
+            return new LogsTableColumn(name, type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricResultsResponse"/>. </summary>
@@ -37,7 +31,7 @@ namespace Azure.Monitor.Query.Models
         {
             values ??= new List<MetricResultsResponseValuesItem>();
 
-            return new MetricResultsResponse(values?.ToList());
+            return new MetricResultsResponse(values?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricResultsResponseValuesItem"/>. </summary>
@@ -53,7 +47,7 @@ namespace Azure.Monitor.Query.Models
         {
             value ??= new List<MetricResult>();
 
-            return new MetricResultsResponseValuesItem(startTime, endTime, interval, @namespace, resourceRegion, resourceId, value?.ToList());
+            return new MetricResultsResponseValuesItem(startTime, endTime, interval, @namespace, resourceRegion, resourceId, value?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>
@@ -62,7 +56,7 @@ namespace Azure.Monitor.Query.Models
         /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
         public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
         {
-            return new MetricAvailability(granularity, retention);
+            return new MetricAvailability(granularity, retention, serializedAdditionalRawData: null);
         }
     }
 }

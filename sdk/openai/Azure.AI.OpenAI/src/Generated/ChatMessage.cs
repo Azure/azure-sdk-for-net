@@ -5,11 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> A single, role-attributed message within a chat completion interaction. </summary>
     public partial class ChatMessage
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ChatMessage"/>. </summary>
         /// <param name="role"> The role associated with this message payload. </param>
         /// <param name="content"> The text associated with this message payload. </param>
@@ -17,6 +53,7 @@ namespace Azure.AI.OpenAI
         {
             Role = role;
             Content = content;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatMessage"/>. </summary>
@@ -34,13 +71,15 @@ namespace Azure.AI.OpenAI
         ///   request.
         ///   This context information is only populated when using Azure OpenAI with chat extensions capabilities configured.
         /// </param>
-        internal ChatMessage(ChatRole role, string content, string name, FunctionCall functionCall, AzureChatExtensionsMessageContext azureExtensionsContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatMessage(ChatRole role, string content, string name, FunctionCall functionCall, AzureChatExtensionsMessageContext azureExtensionsContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
             Content = content;
             Name = name;
             FunctionCall = functionCall;
             AzureExtensionsContext = azureExtensionsContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role associated with this message payload. </summary>

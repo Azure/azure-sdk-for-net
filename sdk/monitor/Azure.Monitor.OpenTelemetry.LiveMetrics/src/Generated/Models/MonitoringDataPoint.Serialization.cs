@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    internal partial class MonitoringDataPoint : IUtf8JsonSerializable
+    internal partial class MonitoringDataPoint : IUtf8JsonSerializable, IJsonModel<MonitoringDataPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringDataPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitoringDataPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringDataPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MonitoringDataPoint)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Version))
             {
@@ -105,7 +117,226 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MonitoringDataPoint IJsonModel<MonitoringDataPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringDataPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MonitoringDataPoint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitoringDataPoint(document.RootElement, options);
+        }
+
+        internal static MonitoringDataPoint DeserializeMonitoringDataPoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> version = default;
+            Optional<int> invariantVersion = default;
+            Optional<string> instance = default;
+            Optional<string> roleName = default;
+            Optional<string> machineName = default;
+            Optional<string> streamId = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<DateTimeOffset> transmissionTime = default;
+            Optional<bool> isWebApp = default;
+            Optional<bool> performanceCollectionSupported = default;
+            Optional<IList<MetricPoint>> metrics = default;
+            Optional<IList<DocumentIngress>> documents = default;
+            Optional<IList<ProcessCpuData>> topCpuProcesses = default;
+            Optional<IList<CollectionConfigurationError>> collectionConfigurationErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("Version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("InvariantVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invariantVersion = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("Instance"u8))
+                {
+                    instance = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("RoleName"u8))
+                {
+                    roleName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("MachineName"u8))
+                {
+                    machineName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("StreamId"u8))
+                {
+                    streamId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("Timestamp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timestamp = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("TransmissionTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transmissionTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("IsWebApp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isWebApp = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("PerformanceCollectionSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    performanceCollectionSupported = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("Metrics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MetricPoint> array = new List<MetricPoint>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MetricPoint.DeserializeMetricPoint(item));
+                    }
+                    metrics = array;
+                    continue;
+                }
+                if (property.NameEquals("Documents"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentIngress> array = new List<DocumentIngress>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentIngress.DeserializeDocumentIngress(item));
+                    }
+                    documents = array;
+                    continue;
+                }
+                if (property.NameEquals("TopCpuProcesses"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ProcessCpuData> array = new List<ProcessCpuData>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ProcessCpuData.DeserializeProcessCpuData(item));
+                    }
+                    topCpuProcesses = array;
+                    continue;
+                }
+                if (property.NameEquals("CollectionConfigurationErrors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CollectionConfigurationError> array = new List<CollectionConfigurationError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CollectionConfigurationError.DeserializeCollectionConfigurationError(item));
+                    }
+                    collectionConfigurationErrors = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonitoringDataPoint(version.Value, Optional.ToNullable(invariantVersion), instance.Value, roleName.Value, machineName.Value, streamId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(transmissionTime), Optional.ToNullable(isWebApp), Optional.ToNullable(performanceCollectionSupported), Optional.ToList(metrics), Optional.ToList(documents), Optional.ToList(topCpuProcesses), Optional.ToList(collectionConfigurationErrors), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<MonitoringDataPoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringDataPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MonitoringDataPoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MonitoringDataPoint IPersistableModel<MonitoringDataPoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringDataPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitoringDataPoint(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MonitoringDataPoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitoringDataPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

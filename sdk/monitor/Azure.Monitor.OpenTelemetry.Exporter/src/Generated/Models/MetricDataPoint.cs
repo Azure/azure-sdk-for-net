@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -13,6 +14,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Metric data single measurement. </summary>
     internal partial class MetricDataPoint
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/>. </summary>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="value"> Single value for measurement. Sum of individual measurements for the aggregation. </param>
@@ -34,7 +67,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="min"> Minimum value of the aggregated metric. Should not be set for a measurement. </param>
         /// <param name="max"> Maximum value of the aggregated metric. Should not be set for a measurement. </param>
         /// <param name="stdDev"> Standard deviation of the aggregated metric. Should not be set for a measurement. </param>
-        internal MetricDataPoint(string @namespace, string name, DataPointType? dataPointType, double value, int? count, double? min, double? max, double? stdDev)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDataPoint(string @namespace, string name, DataPointType? dataPointType, double value, int? count, double? min, double? max, double? stdDev, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Namespace = @namespace;
             Name = name;
@@ -44,6 +78,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Min = min;
             Max = max;
             StdDev = stdDev;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/> for deserialization. </summary>
+        internal MetricDataPoint()
+        {
         }
 
         /// <summary> Namespace of the metric. </summary>

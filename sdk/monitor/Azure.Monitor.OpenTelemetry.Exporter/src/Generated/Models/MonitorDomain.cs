@@ -30,6 +30,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MonitorDomain"/> for deserialization. </summary>
+        internal MonitorDomain()
+        {
+        }
+
         /// <summary> Schema version. </summary>
         public int Version { get; }
         /// <summary> Additional Properties. </summary>
