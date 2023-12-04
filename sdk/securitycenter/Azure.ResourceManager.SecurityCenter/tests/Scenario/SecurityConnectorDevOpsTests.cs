@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         private async Task CleanupSecurityConnectorsByPrefix(string prefix)
         {
             var connectors = await _resourceGroup.GetSecurityConnectors().GetAllAsync().ToEnumerableAsync();
-            await Parallel.ForEachAsync(connectors, async (securityConnector, ct) =>
+            var deleteConnectorTasks = connectors.Select(async securityConnector =>
             {
                 try
                 {
@@ -254,6 +254,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 {
                 }
             });
+            await Task.WhenAll(deleteConnectorTasks);
         }
     }
 }
