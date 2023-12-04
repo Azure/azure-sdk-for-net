@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,6 +15,38 @@ namespace Azure.Messaging.EventGrid.Models
     /// <summary> Properties of an event published to an Event Grid topic using the EventGrid Schema. </summary>
     internal partial class EventGridEventInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EventGridEventInternal"/>. </summary>
         /// <param name="id"> An unique identifier for the event. </param>
         /// <param name="subject"> A resource path relative to the topic path. </param>
@@ -46,7 +79,8 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="eventTime"> The time (in UTC) the event was generated. </param>
         /// <param name="metadataVersion"> The schema version of the event metadata. </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
-        internal EventGridEventInternal(string id, string topic, string subject, JsonElement data, string eventType, DateTimeOffset eventTime, string metadataVersion, string dataVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridEventInternal(string id, string topic, string subject, JsonElement data, string eventType, DateTimeOffset eventTime, string metadataVersion, string dataVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Topic = topic;
@@ -56,6 +90,12 @@ namespace Azure.Messaging.EventGrid.Models
             EventTime = eventTime;
             MetadataVersion = metadataVersion;
             DataVersion = dataVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventGridEventInternal"/> for deserialization. </summary>
+        internal EventGridEventInternal()
+        {
         }
 
         /// <summary> An unique identifier for the event. </summary>

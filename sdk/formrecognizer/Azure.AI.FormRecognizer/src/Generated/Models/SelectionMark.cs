@@ -15,6 +15,38 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Information about the extracted selection mark. </summary>
     internal partial class SelectionMark
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SelectionMark"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
@@ -33,11 +65,18 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>
-        internal SelectionMark(IReadOnlyList<float> boundingBox, float confidence, SelectionMarkState state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelectionMark(IReadOnlyList<float> boundingBox, float confidence, SelectionMarkState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BoundingBox = boundingBox;
             Confidence = confidence;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelectionMark"/> for deserialization. </summary>
+        internal SelectionMark()
+        {
         }
 
         /// <summary> Bounding box of the selection mark. </summary>

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema for all properties of  Recording Chunk Information. </summary>
     public partial class AcsRecordingChunkInfoProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AcsRecordingChunkInfoProperties"/>. </summary>
         internal AcsRecordingChunkInfoProperties()
         {
@@ -22,7 +57,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadataLocation"> The location of the metadata for this chunk. </param>
         /// <param name="contentLocation"> The location of the content for this chunk. </param>
         /// <param name="deleteLocation"> The location to delete all chunk storage. </param>
-        internal AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation, string deleteLocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation, string deleteLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DocumentId = documentId;
             Index = index;
@@ -30,6 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             MetadataLocation = metadataLocation;
             ContentLocation = contentLocation;
             DeleteLocation = deleteLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The documentId of the recording chunk. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingSucceeded event. </summary>
@@ -17,7 +20,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingSucceededEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
-        internal ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName) : base(nodePoolName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(nodePoolName, serializedAdditionalRawData)
         {
         }
     }

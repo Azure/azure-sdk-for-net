@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -23,6 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
@@ -30,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="attachedWorkerSelectors"> Router Job Attached Worker Selector. </param>
-        internal AcsRouterJobClassifiedEventData(string jobId, string channelReference, string channelId, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors) : base(jobId, channelReference, channelId, queueId, labels, tags)
+        internal AcsRouterJobClassifiedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
         {
             QueueDetails = queueDetails;
             ClassificationPolicyId = classificationPolicyId;

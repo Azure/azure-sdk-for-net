@@ -14,6 +14,38 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Information about the extracted key or value in a key-value pair. </summary>
     internal partial class KeyValueElement
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="KeyValueElement"/>. </summary>
         /// <param name="text"> The text content of the key or value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
@@ -31,12 +63,19 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text"> The text content of the key or value. </param>
         /// <param name="boundingBox"> Bounding box of the key or value. </param>
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this key or value. </param>
-        internal KeyValueElement(KeyValueType? type, string text, IReadOnlyList<float> boundingBox, IReadOnlyList<string> elements)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyValueElement(KeyValueType? type, string text, IReadOnlyList<float> boundingBox, IReadOnlyList<string> elements, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Text = text;
             BoundingBox = boundingBox;
             Elements = elements;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyValueElement"/> for deserialization. </summary>
+        internal KeyValueElement()
+        {
         }
 
         /// <summary> Semantic data type of the key value element. </summary>

@@ -5,15 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class WebAppServicePlanUpdatedEventDataSku
+    public partial class WebAppServicePlanUpdatedEventDataSku : IUtf8JsonSerializable, IJsonModel<WebAppServicePlanUpdatedEventDataSku>
     {
-        internal static WebAppServicePlanUpdatedEventDataSku DeserializeWebAppServicePlanUpdatedEventDataSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppServicePlanUpdatedEventDataSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebAppServicePlanUpdatedEventDataSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppServicePlanUpdatedEventDataSku>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WebAppServicePlanUpdatedEventDataSku)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("Tier"u8);
+                writer.WriteStringValue(Tier);
+            }
+            if (Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("Size"u8);
+                writer.WriteStringValue(Size);
+            }
+            if (Optional.IsDefined(Family))
+            {
+                writer.WritePropertyName("Family"u8);
+                writer.WriteStringValue(Family);
+            }
+            if (Optional.IsDefined(Capacity))
+            {
+                writer.WritePropertyName("Capacity"u8);
+                writer.WriteStringValue(Capacity);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WebAppServicePlanUpdatedEventDataSku IJsonModel<WebAppServicePlanUpdatedEventDataSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppServicePlanUpdatedEventDataSku>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(WebAppServicePlanUpdatedEventDataSku)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebAppServicePlanUpdatedEventDataSku(document.RootElement, options);
+        }
+
+        internal static WebAppServicePlanUpdatedEventDataSku DeserializeWebAppServicePlanUpdatedEventDataSku(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +95,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<string> capacity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -50,8 +124,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     capacity = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebAppServicePlanUpdatedEventDataSku(name.Value, tier.Value, size.Value, family.Value, capacity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebAppServicePlanUpdatedEventDataSku(name.Value, tier.Value, size.Value, family.Value, capacity.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebAppServicePlanUpdatedEventDataSku>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppServicePlanUpdatedEventDataSku>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WebAppServicePlanUpdatedEventDataSku)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebAppServicePlanUpdatedEventDataSku IPersistableModel<WebAppServicePlanUpdatedEventDataSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppServicePlanUpdatedEventDataSku>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebAppServicePlanUpdatedEventDataSku(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(WebAppServicePlanUpdatedEventDataSku)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebAppServicePlanUpdatedEventDataSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

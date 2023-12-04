@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,73 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(StorageLifecyclePolicyCompletedEventDataConverter))]
-    public partial class StorageLifecyclePolicyCompletedEventData
+    public partial class StorageLifecyclePolicyCompletedEventData : IUtf8JsonSerializable, IJsonModel<StorageLifecyclePolicyCompletedEventData>
     {
-        internal static StorageLifecyclePolicyCompletedEventData DeserializeStorageLifecyclePolicyCompletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageLifecyclePolicyCompletedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageLifecyclePolicyCompletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageLifecyclePolicyCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageLifecyclePolicyCompletedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ScheduleTime))
+            {
+                writer.WritePropertyName("scheduleTime"u8);
+                writer.WriteStringValue(ScheduleTime);
+            }
+            if (Optional.IsDefined(DeleteSummary))
+            {
+                writer.WritePropertyName("deleteSummary"u8);
+                writer.WriteObjectValue(DeleteSummary);
+            }
+            if (Optional.IsDefined(TierToCoolSummary))
+            {
+                writer.WritePropertyName("tierToCoolSummary"u8);
+                writer.WriteObjectValue(TierToCoolSummary);
+            }
+            if (Optional.IsDefined(TierToArchiveSummary))
+            {
+                writer.WritePropertyName("tierToArchiveSummary"u8);
+                writer.WriteObjectValue(TierToArchiveSummary);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageLifecyclePolicyCompletedEventData IJsonModel<StorageLifecyclePolicyCompletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageLifecyclePolicyCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageLifecyclePolicyCompletedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageLifecyclePolicyCompletedEventData(document.RootElement, options);
+        }
+
+        internal static StorageLifecyclePolicyCompletedEventData DeserializeStorageLifecyclePolicyCompletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +91,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<StorageLifecyclePolicyActionSummaryDetail> deleteSummary = default;
             Optional<StorageLifecyclePolicyActionSummaryDetail> tierToCoolSummary = default;
             Optional<StorageLifecyclePolicyActionSummaryDetail> tierToArchiveSummary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleTime"u8))
@@ -59,15 +127,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     tierToArchiveSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageLifecyclePolicyCompletedEventData(scheduleTime.Value, deleteSummary.Value, tierToCoolSummary.Value, tierToArchiveSummary.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageLifecyclePolicyCompletedEventData(scheduleTime.Value, deleteSummary.Value, tierToCoolSummary.Value, tierToArchiveSummary.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageLifecyclePolicyCompletedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageLifecyclePolicyCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageLifecyclePolicyCompletedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageLifecyclePolicyCompletedEventData IPersistableModel<StorageLifecyclePolicyCompletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageLifecyclePolicyCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageLifecyclePolicyCompletedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageLifecyclePolicyCompletedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageLifecyclePolicyCompletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class StorageLifecyclePolicyCompletedEventDataConverter : JsonConverter<StorageLifecyclePolicyCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageLifecyclePolicyCompletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override StorageLifecyclePolicyCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

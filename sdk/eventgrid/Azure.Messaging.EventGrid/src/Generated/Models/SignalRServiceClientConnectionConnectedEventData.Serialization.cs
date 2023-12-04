@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,73 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(SignalRServiceClientConnectionConnectedEventDataConverter))]
-    public partial class SignalRServiceClientConnectionConnectedEventData
+    public partial class SignalRServiceClientConnectionConnectedEventData : IUtf8JsonSerializable, IJsonModel<SignalRServiceClientConnectionConnectedEventData>
     {
-        internal static SignalRServiceClientConnectionConnectedEventData DeserializeSignalRServiceClientConnectionConnectedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRServiceClientConnectionConnectedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SignalRServiceClientConnectionConnectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRServiceClientConnectionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SignalRServiceClientConnectionConnectedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(HubName))
+            {
+                writer.WritePropertyName("hubName"u8);
+                writer.WriteStringValue(HubName);
+            }
+            if (Optional.IsDefined(ConnectionId))
+            {
+                writer.WritePropertyName("connectionId"u8);
+                writer.WriteStringValue(ConnectionId);
+            }
+            if (Optional.IsDefined(UserId))
+            {
+                writer.WritePropertyName("userId"u8);
+                writer.WriteStringValue(UserId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SignalRServiceClientConnectionConnectedEventData IJsonModel<SignalRServiceClientConnectionConnectedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRServiceClientConnectionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SignalRServiceClientConnectionConnectedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalRServiceClientConnectionConnectedEventData(document.RootElement, options);
+        }
+
+        internal static SignalRServiceClientConnectionConnectedEventData DeserializeSignalRServiceClientConnectionConnectedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +91,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> hubName = default;
             Optional<string> connectionId = default;
             Optional<string> userId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -51,15 +119,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     userId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SignalRServiceClientConnectionConnectedEventData(Optional.ToNullable(timestamp), hubName.Value, connectionId.Value, userId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SignalRServiceClientConnectionConnectedEventData(Optional.ToNullable(timestamp), hubName.Value, connectionId.Value, userId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SignalRServiceClientConnectionConnectedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRServiceClientConnectionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SignalRServiceClientConnectionConnectedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SignalRServiceClientConnectionConnectedEventData IPersistableModel<SignalRServiceClientConnectionConnectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRServiceClientConnectionConnectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSignalRServiceClientConnectionConnectedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SignalRServiceClientConnectionConnectedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SignalRServiceClientConnectionConnectedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SignalRServiceClientConnectionConnectedEventDataConverter : JsonConverter<SignalRServiceClientConnectionConnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, SignalRServiceClientConnectionConnectedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override SignalRServiceClientConnectionConnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,6 +15,38 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A job which contains a reference to the operations to perform, results, and execution metadata. </summary>
     public partial class ImportJob
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ImportJob"/>. </summary>
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
         /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>
@@ -37,7 +70,8 @@ namespace Azure.DigitalTwins.Core
         /// <param name="finishedDateTime"> End time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
-        internal ImportJob(string id, Uri inputBlobUri, Uri outputBlobUri, ImportJobStatus? status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImportJob(string id, Uri inputBlobUri, Uri outputBlobUri, ImportJobStatus? status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             InputBlobUri = inputBlobUri;
@@ -48,6 +82,12 @@ namespace Azure.DigitalTwins.Core
             FinishedDateTime = finishedDateTime;
             PurgeDateTime = purgeDateTime;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportJob"/> for deserialization. </summary>
+        internal ImportJob()
+        {
         }
 
         /// <summary> The identifier of the import job. </summary>

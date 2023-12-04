@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotModified event. </summary>
@@ -19,7 +22,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        internal AppConfigurationSnapshotModifiedEventData(string name, string eTag, string syncToken) : base(name, eTag, syncToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationSnapshotModifiedEventData(string name, string eTag, string syncToken, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, eTag, syncToken, serializedAdditionalRawData)
         {
         }
     }

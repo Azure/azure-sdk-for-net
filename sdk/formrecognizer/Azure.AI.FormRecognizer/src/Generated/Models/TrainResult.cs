@@ -16,6 +16,38 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Custom model training result. </summary>
     internal partial class TrainResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TrainResult"/>. </summary>
         /// <param name="trainingDocuments"> List of the documents used to train the model and any errors reported in each document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingDocuments"/> is null. </exception>
@@ -34,13 +66,20 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="averageModelAccuracy"> Average accuracy. </param>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="errors"> Errors returned during the training operation. </param>
-        internal TrainResult(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<CustomFormModelField> fields, float? averageModelAccuracy, string modelId, IReadOnlyList<FormRecognizerError> errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrainResult(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<CustomFormModelField> fields, float? averageModelAccuracy, string modelId, IReadOnlyList<FormRecognizerError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TrainingDocuments = trainingDocuments;
             Fields = fields;
             AverageModelAccuracy = averageModelAccuracy;
             ModelId = modelId;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrainResult"/> for deserialization. </summary>
+        internal TrainResult()
+        {
         }
 
         /// <summary> List of the documents used to train the model and any errors reported in each document. </summary>

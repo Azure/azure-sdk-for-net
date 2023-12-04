@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,15 +16,65 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ApiManagementApiReleaseCreatedEventDataConverter))]
-    public partial class ApiManagementApiReleaseCreatedEventData
+    public partial class ApiManagementApiReleaseCreatedEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementApiReleaseCreatedEventData>
     {
-        internal static ApiManagementApiReleaseCreatedEventData DeserializeApiManagementApiReleaseCreatedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementApiReleaseCreatedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApiManagementApiReleaseCreatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementApiReleaseCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ApiManagementApiReleaseCreatedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceUri))
+            {
+                writer.WritePropertyName("resourceUri"u8);
+                writer.WriteStringValue(ResourceUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApiManagementApiReleaseCreatedEventData IJsonModel<ApiManagementApiReleaseCreatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementApiReleaseCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ApiManagementApiReleaseCreatedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementApiReleaseCreatedEventData(document.RootElement, options);
+        }
+
+        internal static ApiManagementApiReleaseCreatedEventData DeserializeApiManagementApiReleaseCreatedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> resourceUri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUri"u8))
@@ -29,15 +82,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     resourceUri = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiManagementApiReleaseCreatedEventData(resourceUri.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiManagementApiReleaseCreatedEventData(resourceUri.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApiManagementApiReleaseCreatedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementApiReleaseCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ApiManagementApiReleaseCreatedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApiManagementApiReleaseCreatedEventData IPersistableModel<ApiManagementApiReleaseCreatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementApiReleaseCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiManagementApiReleaseCreatedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ApiManagementApiReleaseCreatedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiManagementApiReleaseCreatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ApiManagementApiReleaseCreatedEventDataConverter : JsonConverter<ApiManagementApiReleaseCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ApiManagementApiReleaseCreatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ApiManagementApiReleaseCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

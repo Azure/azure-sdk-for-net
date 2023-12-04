@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> The UnknownMeterDetails. </summary>
@@ -14,7 +17,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
-        internal UnknownMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType) : base(billingType, multiplier, chargingType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(billingType, multiplier, chargingType, serializedAdditionalRawData)
         {
             BillingType = billingType;
         }

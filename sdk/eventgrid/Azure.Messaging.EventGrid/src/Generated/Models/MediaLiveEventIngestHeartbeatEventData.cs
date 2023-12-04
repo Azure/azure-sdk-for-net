@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Ingest heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIngestHeartbeat event. </summary>
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MediaLiveEventIngestHeartbeatEventData"/>. </summary>
         internal MediaLiveEventIngestHeartbeatEventData()
         {
@@ -34,7 +67,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
         /// <param name="state"> Gets the state of the live event. </param>
         /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
-        internal MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, string transcriptionLanguage, string transcriptionState, long? bitrate, long? incomingBitrate, string ingestDriftValueInternal, DateTimeOffset? lastFragmentArrivalTime, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, string transcriptionLanguage, string transcriptionState, long? bitrate, long? incomingBitrate, string ingestDriftValueInternal, DateTimeOffset? lastFragmentArrivalTime, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TrackType = trackType;
             TrackName = trackName;
@@ -52,6 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             UnexpectedBitrate = unexpectedBitrate;
             State = state;
             Healthy = healthy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the type of the track (Audio / Video). </summary>

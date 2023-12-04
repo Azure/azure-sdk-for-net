@@ -5,16 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-    public partial class TrainingDocumentInfo
+    public partial class TrainingDocumentInfo : IUtf8JsonSerializable, IJsonModel<TrainingDocumentInfo>
     {
-        internal static TrainingDocumentInfo DeserializeTrainingDocumentInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrainingDocumentInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TrainingDocumentInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TrainingDocumentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TrainingDocumentInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("documentName"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("pages"u8);
+            writer.WriteNumberValue(PageCount);
+            writer.WritePropertyName("errors"u8);
+            writer.WriteStartArray();
+            foreach (var item in Errors)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TrainingDocumentInfo IJsonModel<TrainingDocumentInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrainingDocumentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TrainingDocumentInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrainingDocumentInfo(document.RootElement, options);
+        }
+
+        internal static TrainingDocumentInfo DeserializeTrainingDocumentInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +83,8 @@ namespace Azure.AI.FormRecognizer.Training
             int pages = default;
             IReadOnlyList<FormRecognizerError> errors = default;
             TrainingStatus status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentName"u8))
@@ -50,8 +112,44 @@ namespace Azure.AI.FormRecognizer.Training
                     status = property.Value.GetString().ToTrainingStatus();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TrainingDocumentInfo(documentName, pages, errors, status);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TrainingDocumentInfo(documentName, pages, errors, status, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TrainingDocumentInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrainingDocumentInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TrainingDocumentInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TrainingDocumentInfo IPersistableModel<TrainingDocumentInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrainingDocumentInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTrainingDocumentInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TrainingDocumentInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TrainingDocumentInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,88 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaLiveEventTrackDiscontinuityDetectedEventDataConverter))]
-    public partial class MediaLiveEventTrackDiscontinuityDetectedEventData
+    public partial class MediaLiveEventTrackDiscontinuityDetectedEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventTrackDiscontinuityDetectedEventData>
     {
-        internal static MediaLiveEventTrackDiscontinuityDetectedEventData DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventTrackDiscontinuityDetectedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaLiveEventTrackDiscontinuityDetectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaLiveEventTrackDiscontinuityDetectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaLiveEventTrackDiscontinuityDetectedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TrackType))
+            {
+                writer.WritePropertyName("trackType"u8);
+                writer.WriteStringValue(TrackType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TrackName))
+            {
+                writer.WritePropertyName("trackName"u8);
+                writer.WriteStringValue(TrackName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Bitrate))
+            {
+                writer.WritePropertyName("bitrate"u8);
+                writer.WriteNumberValue(Bitrate.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousTimestamp))
+            {
+                writer.WritePropertyName("previousTimestamp"u8);
+                writer.WriteStringValue(PreviousTimestamp);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NewTimestamp))
+            {
+                writer.WritePropertyName("newTimestamp"u8);
+                writer.WriteStringValue(NewTimestamp);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Timescale))
+            {
+                writer.WritePropertyName("timescale"u8);
+                writer.WriteStringValue(Timescale);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DiscontinuityGap))
+            {
+                writer.WritePropertyName("discontinuityGap"u8);
+                writer.WriteStringValue(DiscontinuityGap);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaLiveEventTrackDiscontinuityDetectedEventData IJsonModel<MediaLiveEventTrackDiscontinuityDetectedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaLiveEventTrackDiscontinuityDetectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaLiveEventTrackDiscontinuityDetectedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData(document.RootElement, options);
+        }
+
+        internal static MediaLiveEventTrackDiscontinuityDetectedEventData DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +109,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> newTimestamp = default;
             Optional<string> timescale = default;
             Optional<string> discontinuityGap = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackType"u8))
@@ -69,15 +152,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     discontinuityGap = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaLiveEventTrackDiscontinuityDetectedEventData(trackType.Value, trackName.Value, Optional.ToNullable(bitrate), previousTimestamp.Value, newTimestamp.Value, timescale.Value, discontinuityGap.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaLiveEventTrackDiscontinuityDetectedEventData(trackType.Value, trackName.Value, Optional.ToNullable(bitrate), previousTimestamp.Value, newTimestamp.Value, timescale.Value, discontinuityGap.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaLiveEventTrackDiscontinuityDetectedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaLiveEventTrackDiscontinuityDetectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaLiveEventTrackDiscontinuityDetectedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MediaLiveEventTrackDiscontinuityDetectedEventData IPersistableModel<MediaLiveEventTrackDiscontinuityDetectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaLiveEventTrackDiscontinuityDetectedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaLiveEventTrackDiscontinuityDetectedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaLiveEventTrackDiscontinuityDetectedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class MediaLiveEventTrackDiscontinuityDetectedEventDataConverter : JsonConverter<MediaLiveEventTrackDiscontinuityDetectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventTrackDiscontinuityDetectedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MediaLiveEventTrackDiscontinuityDetectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

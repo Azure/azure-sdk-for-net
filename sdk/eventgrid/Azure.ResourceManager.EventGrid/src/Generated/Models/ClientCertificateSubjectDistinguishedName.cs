@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -13,6 +16,38 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public partial class ClientCertificateSubjectDistinguishedName
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ClientCertificateSubjectDistinguishedName"/>. </summary>
         public ClientCertificateSubjectDistinguishedName()
         {
@@ -23,12 +58,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="organization"> The organization field in the subject name. If present, the allowed limit is 64 characters. </param>
         /// <param name="organizationUnit"> The organization unit field in the subject name. If present, the allowed limit is 32 characters. </param>
         /// <param name="countryCode"> The country code field in the subject name. If present, the country code should be represented by two-letter code defined in ISO 2166-1 (alpha-2). For example: 'US'. </param>
-        internal ClientCertificateSubjectDistinguishedName(string commonName, string organization, string organizationUnit, string countryCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClientCertificateSubjectDistinguishedName(string commonName, string organization, string organizationUnit, string countryCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommonName = commonName;
             Organization = organization;
             OrganizationUnit = organizationUnit;
             CountryCode = countryCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The common name field in the subject name. The allowed limit is 64 characters and it should be specified. </summary>

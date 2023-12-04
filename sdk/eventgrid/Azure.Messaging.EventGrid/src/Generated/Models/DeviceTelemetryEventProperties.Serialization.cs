@@ -5,16 +5,89 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class DeviceTelemetryEventProperties
+    public partial class DeviceTelemetryEventProperties : IUtf8JsonSerializable, IJsonModel<DeviceTelemetryEventProperties>
     {
-        internal static DeviceTelemetryEventProperties DeserializeDeviceTelemetryEventProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceTelemetryEventProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeviceTelemetryEventProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceTelemetryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DeviceTelemetryEventProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Body))
+            {
+                writer.WritePropertyName("body"u8);
+                writer.WriteObjectValue(Body);
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(SystemProperties))
+            {
+                writer.WritePropertyName("systemProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in SystemProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DeviceTelemetryEventProperties IJsonModel<DeviceTelemetryEventProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceTelemetryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DeviceTelemetryEventProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceTelemetryEventProperties(document.RootElement, options);
+        }
+
+        internal static DeviceTelemetryEventProperties DeserializeDeviceTelemetryEventProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +95,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<object> body = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             Optional<IReadOnlyDictionary<string, string>> systemProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("body"u8))
@@ -61,8 +136,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     systemProperties = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceTelemetryEventProperties(body.Value, Optional.ToDictionary(properties), Optional.ToDictionary(systemProperties));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeviceTelemetryEventProperties(body.Value, Optional.ToDictionary(properties), Optional.ToDictionary(systemProperties), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceTelemetryEventProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceTelemetryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DeviceTelemetryEventProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DeviceTelemetryEventProperties IPersistableModel<DeviceTelemetryEventProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceTelemetryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeviceTelemetryEventProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DeviceTelemetryEventProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeviceTelemetryEventProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

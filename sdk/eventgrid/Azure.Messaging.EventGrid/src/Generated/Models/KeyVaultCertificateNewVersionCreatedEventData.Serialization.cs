@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,88 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(KeyVaultCertificateNewVersionCreatedEventDataConverter))]
-    public partial class KeyVaultCertificateNewVersionCreatedEventData
+    public partial class KeyVaultCertificateNewVersionCreatedEventData : IUtf8JsonSerializable, IJsonModel<KeyVaultCertificateNewVersionCreatedEventData>
     {
-        internal static KeyVaultCertificateNewVersionCreatedEventData DeserializeKeyVaultCertificateNewVersionCreatedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultCertificateNewVersionCreatedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KeyVaultCertificateNewVersionCreatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateNewVersionCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(KeyVaultCertificateNewVersionCreatedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("Id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(VaultName))
+            {
+                writer.WritePropertyName("VaultName"u8);
+                writer.WriteStringValue(VaultName);
+            }
+            if (Optional.IsDefined(ObjectType))
+            {
+                writer.WritePropertyName("ObjectType"u8);
+                writer.WriteStringValue(ObjectType);
+            }
+            if (Optional.IsDefined(ObjectName))
+            {
+                writer.WritePropertyName("ObjectName"u8);
+                writer.WriteStringValue(ObjectName);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("Version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(Nbf))
+            {
+                writer.WritePropertyName("NBF"u8);
+                writer.WriteNumberValue(Nbf.Value);
+            }
+            if (Optional.IsDefined(Exp))
+            {
+                writer.WritePropertyName("EXP"u8);
+                writer.WriteNumberValue(Exp.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        KeyVaultCertificateNewVersionCreatedEventData IJsonModel<KeyVaultCertificateNewVersionCreatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateNewVersionCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(KeyVaultCertificateNewVersionCreatedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultCertificateNewVersionCreatedEventData(document.RootElement, options);
+        }
+
+        internal static KeyVaultCertificateNewVersionCreatedEventData DeserializeKeyVaultCertificateNewVersionCreatedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +109,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> version = default;
             Optional<float> nbf = default;
             Optional<float> exp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -73,15 +156,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     exp = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeyVaultCertificateNewVersionCreatedEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KeyVaultCertificateNewVersionCreatedEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KeyVaultCertificateNewVersionCreatedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateNewVersionCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(KeyVaultCertificateNewVersionCreatedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KeyVaultCertificateNewVersionCreatedEventData IPersistableModel<KeyVaultCertificateNewVersionCreatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateNewVersionCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKeyVaultCertificateNewVersionCreatedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(KeyVaultCertificateNewVersionCreatedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KeyVaultCertificateNewVersionCreatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class KeyVaultCertificateNewVersionCreatedEventDataConverter : JsonConverter<KeyVaultCertificateNewVersionCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, KeyVaultCertificateNewVersionCreatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override KeyVaultCertificateNewVersionCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
