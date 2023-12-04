@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly PrivateLinkResourcesRestOperations _cosmosDBPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly CosmosDBPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBPrivateLinkResource"/> class for mocking. </summary>
         protected CosmosDBPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

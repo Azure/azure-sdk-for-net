@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly VirtualWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualWorkspaceResource"/> class for mocking. </summary>
         protected VirtualWorkspaceResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

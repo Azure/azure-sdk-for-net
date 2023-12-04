@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualWanVpnProfileContent"/>. </summary>
+        /// <param name="vpnServerConfigurationResourceId"> VpnServerConfiguration partial resource uri with which VirtualWan is associated to. </param>
+        /// <param name="authenticationMethod"> VPN client authentication method. </param>
+        internal VirtualWanVpnProfileContent(ResourceIdentifier vpnServerConfigurationResourceId, NetworkAuthenticationMethod? authenticationMethod)
+        {
+            VpnServerConfigurationResourceId = vpnServerConfigurationResourceId;
+            AuthenticationMethod = authenticationMethod;
+        }
+
         /// <summary> VpnServerConfiguration partial resource uri with which VirtualWan is associated to. </summary>
         public ResourceIdentifier VpnServerConfigurationResourceId { get; set; }
         /// <summary> VPN client authentication method. </summary>

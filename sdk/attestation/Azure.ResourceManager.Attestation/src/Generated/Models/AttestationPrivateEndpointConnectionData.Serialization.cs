@@ -9,7 +9,6 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Attestation.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Attestation
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Attestation
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                writer.WriteObjectValue(PrivateEndpoint);
             }
             if (Optional.IsDefined(ConnectionState))
             {
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.Attestation
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
+            Optional<PrivateEndpoint> privateEndpoint = default;
             Optional<AttestationPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<AttestationPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Attestation
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.Attestation
                     continue;
                 }
             }
-            return new AttestationPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new AttestationPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

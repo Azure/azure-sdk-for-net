@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Confluent.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationPatch"/>. </summary>
+        /// <param name="tags"> ARM resource tags. </param>
+        internal ConfluentOrganizationPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> ARM resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

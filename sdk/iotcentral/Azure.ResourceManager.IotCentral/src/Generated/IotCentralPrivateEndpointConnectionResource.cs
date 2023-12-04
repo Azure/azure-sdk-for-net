@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.IotCentral
         private readonly PrivateEndpointConnectionsRestOperations _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly IotCentralPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.IoTCentral/iotApps/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="IotCentralPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected IotCentralPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.IotCentral
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.IoTCentral/iotApps/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

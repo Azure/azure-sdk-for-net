@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Network
         private readonly ExpressRouteCircuitsRestOperations _expressRouteCircuitRestClient;
         private readonly ExpressRouteCircuitPeeringData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/peerings";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitPeeringResource"/> class for mocking. </summary>
         protected ExpressRouteCircuitPeeringResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/peerings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

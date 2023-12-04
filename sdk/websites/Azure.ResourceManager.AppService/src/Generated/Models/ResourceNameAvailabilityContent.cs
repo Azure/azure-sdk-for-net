@@ -25,6 +25,17 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceType = resourceType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        internal ResourceNameAvailabilityContent(string name, CheckNameResourceType resourceType, bool? isFqdn)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            IsFqdn = isFqdn;
+        }
+
         /// <summary> Resource name to verify. </summary>
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>

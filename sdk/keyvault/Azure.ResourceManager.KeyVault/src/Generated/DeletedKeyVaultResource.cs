@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.KeyVault
         private readonly VaultsRestOperations _deletedKeyVaultVaultsRestClient;
         private readonly DeletedKeyVaultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/locations/deletedVaults";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedKeyVaultResource"/> class for mocking. </summary>
         protected DeletedKeyVaultResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.KeyVault
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/locations/deletedVaults";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

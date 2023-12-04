@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         private readonly ComputePoliciesRestOperations _dataLakeAnalyticsComputePolicyComputePoliciesRestClient;
         private readonly DataLakeAnalyticsComputePolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts/computePolicies";
+
         /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsComputePolicyResource"/> class for mocking. </summary>
         protected DataLakeAnalyticsComputePolicyResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts/computePolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

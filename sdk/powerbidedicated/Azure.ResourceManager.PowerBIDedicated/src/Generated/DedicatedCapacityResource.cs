@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         private readonly CapacitiesRestOperations _dedicatedCapacityCapacitiesRestClient;
         private readonly DedicatedCapacityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.PowerBIDedicated/capacities";
+
         /// <summary> Initializes a new instance of the <see cref="DedicatedCapacityResource"/> class for mocking. </summary>
         protected DedicatedCapacityResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.PowerBIDedicated/capacities";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

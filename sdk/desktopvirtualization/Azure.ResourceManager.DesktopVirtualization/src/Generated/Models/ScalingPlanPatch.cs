@@ -21,6 +21,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             HostPoolReferences = new ChangeTrackingList<ScalingHostPoolReference>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanPatch"/>. </summary>
+        /// <param name="tags"> tags to be updated. </param>
+        /// <param name="description"> Description of scaling plan. </param>
+        /// <param name="friendlyName"> User friendly name of scaling plan. </param>
+        /// <param name="timeZone"> Timezone of the scaling plan. </param>
+        /// <param name="exclusionTag"> Exclusion tag for scaling plan. </param>
+        /// <param name="schedules"> List of ScalingSchedule definitions. </param>
+        /// <param name="hostPoolReferences"> List of ScalingHostPoolReference definitions. </param>
+        internal ScalingPlanPatch(IDictionary<string, string> tags, string description, string friendlyName, string timeZone, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences)
+        {
+            Tags = tags;
+            Description = description;
+            FriendlyName = friendlyName;
+            TimeZone = timeZone;
+            ExclusionTag = exclusionTag;
+            Schedules = schedules;
+            HostPoolReferences = hostPoolReferences;
+        }
+
         /// <summary> tags to be updated. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Description of scaling plan. </summary>

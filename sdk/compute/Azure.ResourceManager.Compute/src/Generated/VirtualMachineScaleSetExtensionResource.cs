@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Compute
         private readonly VirtualMachineScaleSetExtensionsRestOperations _virtualMachineScaleSetExtensionRestClient;
         private readonly VirtualMachineScaleSetExtensionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetExtensionResource"/> class for mocking. </summary>
         protected VirtualMachineScaleSetExtensionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Grafana
         private readonly ManagedPrivateEndpointsRestOperations _managedPrivateEndpointModelManagedPrivateEndpointsRestClient;
         private readonly ManagedPrivateEndpointModelData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/managedPrivateEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedPrivateEndpointModelResource"/> class for mocking. </summary>
         protected ManagedPrivateEndpointModelResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Grafana
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/managedPrivateEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

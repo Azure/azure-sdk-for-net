@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.DnsResolver.Models
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulePatch"/>. </summary>
+        /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
+        /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
+        /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
+        internal DnsForwardingRulePatch(IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, DnsForwardingRuleState? dnsForwardingRuleState)
+        {
+            TargetDnsServers = targetDnsServers;
+            Metadata = metadata;
+            DnsForwardingRuleState = dnsForwardingRuleState;
+        }
+
         /// <summary> DNS servers to forward the DNS query to. </summary>
         public IList<TargetDnsServer> TargetDnsServers { get; }
         /// <summary> Metadata attached to the forwarding rule. </summary>

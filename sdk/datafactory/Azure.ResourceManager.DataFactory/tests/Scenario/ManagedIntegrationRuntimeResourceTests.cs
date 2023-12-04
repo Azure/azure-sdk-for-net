@@ -12,30 +12,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class ManagedIntegrationRuntimeResourceTests : DataFactoryManagementTestBase
     {
-        private ResourceIdentifier _dataFactoryIdentifier;
-        private DataFactoryResource _dataFactory;
         public ManagedIntegrationRuntimeResourceTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
-            _dataFactoryIdentifier = dataFactoryLro.Id;
-            await StopSessionRecordingAsync();
-        }
-
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
-        }
-
-        private async Task<DataFactoryIntegrationRuntimeResource> CreateDefaultManagedIntegrationRuntime(string integrationRuntimeName)
+        private async Task<DataFactoryIntegrationRuntimeResource> CreateDefaultManagedIntegrationRuntime(DataFactoryResource dataFactory, string integrationRuntimeName)
         {
             ManagedIntegrationRuntime properties = new ManagedIntegrationRuntime()
             {
@@ -51,67 +32,51 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 }
             };
             DataFactoryIntegrationRuntimeData data = new DataFactoryIntegrationRuntimeData(properties);
-            var integrationRuntime = await _dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
+            var integrationRuntime = await dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
             return integrationRuntime.Value;
         }
 
         [Test]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task ManagedIntegraionRuntime_Create_Exists_Get_List_Delete()
         {
+            // Get the resource group
+            string rgName = Recording.GenerateAssetName("adf-rg-");
+            var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
+            // Create a DataFactory
+            string dataFactoryName = Recording.GenerateAssetName("adf-");
+            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+            // Create a ManagedIntegrationRuntime
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            var integrationRuntime = await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
+            var integrationRuntime = await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
             Assert.IsNotNull(integrationRuntime);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Exist()
-        {
-            string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
-            bool flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
+            // Exists
+            bool flag = await dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.IsTrue(flag);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Get()
-        {
-            string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
-            var integrationRuntime = await _dataFactory.GetDataFactoryIntegrationRuntimes().GetAsync(integrationRuntimeName);
+            // Get
+            var integrationRuntimeGet = await dataFactory.GetDataFactoryIntegrationRuntimes().GetAsync(integrationRuntimeName);
             Assert.IsNotNull(integrationRuntime);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
-            var list = await _dataFactory.GetDataFactoryIntegrationRuntimes().GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(integrationRuntimeName, integrationRuntimeGet.Value.Data.Name);
+            // GetAll
+            var list = await dataFactory.GetDataFactoryIntegrationRuntimes().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(list);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Delete()
-        {
-            string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            var integrationRuntime = await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
-            bool flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
-            Assert.IsTrue(flag);
-
+            // Delete
             await integrationRuntime.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
+            flag = await dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.IsFalse(flag);
         }
 
         [Test]
         [RecordedTest]
-        public async Task IntegrationRuntime_Managed()
+        public async Task IntegrationRuntime_Managed_Create()
         {
+            // Get the resource group
+            string rgName = Recording.GenerateAssetName("adf-rg-");
+            var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
+            // Create a DataFactory
+            string dataFactoryName = Recording.GenerateAssetName("adf-");
+            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+
             string integrationRuntimeName = Recording.GenerateAssetName("integraionRuntime-");
             DataFactoryIntegrationRuntimeData data = new DataFactoryIntegrationRuntimeData(new ManagedIntegrationRuntime()
             {
@@ -130,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 }
             });
 
-            var result = await _dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
+            var result = await dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
             Assert.IsNotNull(result.Value.Id);
         }
     }

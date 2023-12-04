@@ -19,6 +19,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
+        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IList<IPCommunityRule> ipCommunityRules) : base(tags)
+        {
+            IPCommunityRules = ipCommunityRules;
+        }
+
         /// <summary> List of IP Community Rules. </summary>
         public IList<IPCommunityRule> IPCommunityRules { get; }
     }

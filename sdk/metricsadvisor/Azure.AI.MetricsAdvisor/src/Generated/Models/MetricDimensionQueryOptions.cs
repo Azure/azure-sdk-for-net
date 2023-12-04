@@ -23,6 +23,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionName = dimensionName;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetricDimensionQueryOptions"/>. </summary>
+        /// <param name="dimensionName"> dimension name. </param>
+        /// <param name="dimensionValueFilter"> dimension value to be filtered. </param>
+        internal MetricDimensionQueryOptions(string dimensionName, string dimensionValueFilter)
+        {
+            DimensionName = dimensionName;
+            DimensionValueFilter = dimensionValueFilter;
+        }
+
         /// <summary> dimension name. </summary>
         public string DimensionName { get; }
         /// <summary> dimension value to be filtered. </summary>

@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoPatch"/>. </summary>
+        /// <param name="size"> Truncate subvolume to the provided size in bytes. </param>
+        /// <param name="path"> path to the subvolume. </param>
+        internal NetAppSubvolumeInfoPatch(long? size, string path)
+        {
+            Size = size;
+            Path = path;
+        }
+
         /// <summary> Truncate subvolume to the provided size in bytes. </summary>
         public long? Size { get; set; }
         /// <summary> path to the subvolume. </summary>

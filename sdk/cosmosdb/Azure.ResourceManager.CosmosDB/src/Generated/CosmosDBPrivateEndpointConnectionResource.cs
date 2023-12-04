@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly PrivateEndpointConnectionsRestOperations _cosmosDBPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly CosmosDBPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected CosmosDBPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

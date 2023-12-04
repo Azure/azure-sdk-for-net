@@ -20,6 +20,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Gets or sets the resource tags. </param>
+        /// <param name="properties"> Vault properties. </param>
+        internal DataReplicationVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, DataReplicationVaultProperties properties) : base(id, name, resourceType, systemData)
+        {
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary> Gets or sets the resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Vault properties. </summary>

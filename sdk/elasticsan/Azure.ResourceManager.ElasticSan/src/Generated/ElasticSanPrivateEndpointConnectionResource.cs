@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly PrivateEndpointConnectionsRestOperations _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly ElasticSanPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected ElasticSanPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

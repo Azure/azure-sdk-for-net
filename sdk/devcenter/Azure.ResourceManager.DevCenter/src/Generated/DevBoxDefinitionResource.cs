@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevCenter
         private readonly DevBoxDefinitionsRestOperations _devBoxDefinitionRestClient;
         private readonly DevBoxDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/devboxdefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="DevBoxDefinitionResource"/> class for mocking. </summary>
         protected DevBoxDefinitionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/devboxdefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

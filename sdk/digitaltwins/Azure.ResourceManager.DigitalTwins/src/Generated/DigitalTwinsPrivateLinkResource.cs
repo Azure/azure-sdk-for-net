@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DigitalTwins
         private readonly PrivateLinkResourcesRestOperations _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly DigitalTwinsPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="DigitalTwinsPrivateLinkResource"/> class for mocking. </summary>
         protected DigitalTwinsPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DigitalTwins
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

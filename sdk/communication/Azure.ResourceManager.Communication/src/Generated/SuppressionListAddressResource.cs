@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Communication
         private readonly SuppressionListAddressesRestOperations _suppressionListAddressResourceSuppressionListAddressesRestClient;
         private readonly SuppressionListAddressResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains/suppressionLists/suppressionListAddresses";
+
         /// <summary> Initializes a new instance of the <see cref="SuppressionListAddressResource"/> class for mocking. </summary>
         protected SuppressionListAddressResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Communication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains/suppressionLists/suppressionListAddresses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

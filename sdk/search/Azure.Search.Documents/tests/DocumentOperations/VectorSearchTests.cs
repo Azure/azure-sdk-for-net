@@ -153,31 +153,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
-        public async Task SemanticMaxWaitOutOfRangeThrows()
-        {
-            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
-
-            RequestFailedException ex = await CatchAsync<RequestFailedException>(
-                async () => await resources.GetSearchClient().SearchAsync<Hotel>(
-                    "Is there any luxury hotel in New York?",
-                    new SearchOptions
-                    {
-                        SemanticSearch = new()
-                        {
-                            SemanticConfigurationName = "my-semantic-config",
-                            QueryCaption = new(QueryCaptionType.Extractive),
-                            QueryAnswer = new(QueryAnswerType.Extractive),
-                            MaxWait = TimeSpan.FromMilliseconds(700),
-                        },
-                        QueryType = SearchQueryType.Semantic,
-                    }));
-
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
-        }
-
-        [Test]
         public async Task UpdateExistingIndexToAddVectorFields()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -295,6 +270,52 @@ namespace Azure.Search.Documents.Tests
                 async () => await indexClient.CreateOrUpdateIndexAsync(createdIndex));
             Assert.AreEqual(400, ex.Status);
             Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
+        }
+
+        [Test]
+        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
+        public async Task CanContinueWithNextPage()
+        {
+            const int size = 150;
+
+            await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size, true);
+            SearchClient client = resources.GetQueryClient();
+
+            ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.DefaultVectorizeDescription;
+            SearchResults<SearchDocument> response = await client.SearchAsync<SearchDocument>("Suggest some hotels",
+                    new SearchOptions
+                    {
+                        VectorSearch = new()
+                        {
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 50, Fields = { "descriptionVector" } } }
+                        },
+                        SemanticSearch = new()
+                        {
+                            SemanticConfigurationName = "my-semantic-config",
+                            QueryCaption = new(QueryCaptionType.Extractive),
+                            QueryAnswer = new(QueryAnswerType.Extractive)
+                        },
+                        QueryType = SearchQueryType.Semantic,
+                        Select = new[] { "hotelId" }
+                    });
+
+            int totalDocsCount = 0;
+            int pageCount = 0;
+
+            await foreach (Page<SearchResult<SearchDocument>> page in response.GetResultsAsync().AsPages())
+            {
+                pageCount++;
+                int docsPerPageCount = 0;
+                foreach (SearchResult<SearchDocument> result in page.Values)
+                {
+                    docsPerPageCount++;
+                    totalDocsCount++;
+                }
+                Assert.LessOrEqual(docsPerPageCount, 50);
+            }
+
+            Assert.LessOrEqual(totalDocsCount, 150);
+            Assert.GreaterOrEqual(pageCount, 2);
         }
 
         [Test]

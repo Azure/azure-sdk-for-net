@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Billing.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMoveContent"/>. </summary>
+        /// <param name="destinationEnrollmentAccountId"> The destination enrollment account id. </param>
+        /// <param name="destinationInvoiceSectionId"> The destination invoice section id. </param>
+        internal BillingSubscriptionMoveContent(string destinationEnrollmentAccountId, ResourceIdentifier destinationInvoiceSectionId)
+        {
+            DestinationEnrollmentAccountId = destinationEnrollmentAccountId;
+            DestinationInvoiceSectionId = destinationInvoiceSectionId;
+        }
+
         /// <summary> The destination enrollment account id. </summary>
         public string DestinationEnrollmentAccountId { get; set; }
         /// <summary> The destination invoice section id. </summary>

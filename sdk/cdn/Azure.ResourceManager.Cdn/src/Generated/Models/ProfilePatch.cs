@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Cdn.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ProfilePatch"/>. </summary>
+        /// <param name="tags"> Profile tags. </param>
+        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
+        internal ProfilePatch(IDictionary<string, string> tags, int? originResponseTimeoutSeconds)
+        {
+            Tags = tags;
+            OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
+        }
+
         /// <summary> Profile tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>

@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServicePatch"/>. </summary>
+        /// <param name="tags"> Instance tags. </param>
+        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
+        internal HealthcareApisServicePatch(IDictionary<string, string> tags, HealthcareApisPublicNetworkAccess? publicNetworkAccess)
+        {
+            Tags = tags;
+            PublicNetworkAccess = publicNetworkAccess;
+        }
+
         /// <summary> Instance tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>

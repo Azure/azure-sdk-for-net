@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebSiteManagementRestOperations _publishingUserRestClient;
         private readonly PublishingUserData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/publishingUsers";
+
         /// <summary> Initializes a new instance of the <see cref="PublishingUserResource"/> class for mocking. </summary>
         protected PublishingUserResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/publishingUsers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

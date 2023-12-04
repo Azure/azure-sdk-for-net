@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly SubscriptionUsagesRestOperations _subscriptionUsageRestClient;
         private readonly SubscriptionUsageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/usages";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionUsageResource"/> class for mocking. </summary>
         protected SubscriptionUsageResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/usages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly ProxyArtifactRestOperations _proxyArtifactRestClient;
         private readonly ArtifactStoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/artifactStores";
+
         /// <summary> Initializes a new instance of the <see cref="ArtifactStoreResource"/> class for mocking. </summary>
         protected ArtifactStoreResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/artifactStores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
