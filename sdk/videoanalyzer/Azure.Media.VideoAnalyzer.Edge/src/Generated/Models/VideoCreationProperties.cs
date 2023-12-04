@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Optional video properties to be used in case a new video resource needs to be created on the service. These will not take effect if the video already exists. </summary>
     public partial class VideoCreationProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VideoCreationProperties"/>. </summary>
         public VideoCreationProperties()
         {
@@ -20,12 +55,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="description"> Optional video description provided by the user. Value can be up to 2048 characters long. </param>
         /// <param name="segmentLength"> Video segment length indicates the length of individual video files (segments) which are persisted to storage. Smaller segments provide lower archive playback latency but generate larger volume of storage transactions. Larger segments reduce the amount of storage transactions while increasing the archive playback latency. Value must be specified in ISO8601 duration format (i.e. "PT30S" equals 30 seconds) and can vary between 30 seconds to 5 minutes, in 30 seconds increments. Changing this value after the video is initially created can lead to errors when uploading media to the archive. Default value is 30 seconds. </param>
         /// <param name="retentionPeriod"> Video retention period indicates how long the video is kept in storage, and must be a multiple of 1 day. For example, if this is set to 30 days, then content older than 30 days will be deleted. </param>
-        internal VideoCreationProperties(string title, string description, string segmentLength, string retentionPeriod)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VideoCreationProperties(string title, string description, string segmentLength, string retentionPeriod, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Description = description;
             SegmentLength = segmentLength;
             RetentionPeriod = retentionPeriod;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Optional video title provided by the user. Value can be up to 256 characters long. </summary>

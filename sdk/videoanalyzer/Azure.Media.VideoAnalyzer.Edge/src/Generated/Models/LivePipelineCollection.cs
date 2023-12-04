@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A collection of live pipelines. </summary>
     public partial class LivePipelineCollection
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LivePipelineCollection"/>. </summary>
         public LivePipelineCollection()
         {
@@ -22,10 +55,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="LivePipelineCollection"/>. </summary>
         /// <param name="value"> List of live pipelines. </param>
         /// <param name="continuationToken"> A continuation token to be used in subsequent calls when enumerating through the collection. This is returned when the collection results won't fit in a single response. </param>
-        internal LivePipelineCollection(IList<LivePipeline> value, string continuationToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LivePipelineCollection(IList<LivePipeline> value, string continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of live pipelines. </summary>

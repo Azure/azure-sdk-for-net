@@ -33,14 +33,20 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal AbstractiveSummarizationResult(IList<AbstractiveSummaryDocumentResult> documents, IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion) : base(documents)
+        internal AbstractiveSummarizationResult(IList<AbstractiveSummaryDocumentResult> documents, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion) : base(documents, serializedAdditionalRawData)
         {
             Errors = errors;
             Statistics = statistics;
             ModelVersion = modelVersion;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationResult"/> for deserialization. </summary>
+        internal AbstractiveSummarizationResult()
+        {
         }
 
         /// <summary> Errors by document id. </summary>

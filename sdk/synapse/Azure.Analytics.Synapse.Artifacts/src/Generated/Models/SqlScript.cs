@@ -40,6 +40,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SqlScript"/> for deserialization. </summary>
+        internal SqlScript()
+        {
+        }
+
         /// <summary> The description of the SQL script. </summary>
         public string Description { get; set; }
         /// <summary> The type of the SQL script. </summary>

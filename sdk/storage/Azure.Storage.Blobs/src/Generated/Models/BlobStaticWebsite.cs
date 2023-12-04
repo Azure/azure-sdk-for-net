@@ -5,22 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The properties that enable an account to host a static website. </summary>
     public partial class BlobStaticWebsite
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BlobStaticWebsite"/>. </summary>
         /// <param name="enabled"> Indicates whether this account is hosting a static website. </param>
         /// <param name="indexDocument"> The default name of the index page under each directory. </param>
         /// <param name="errorDocument404Path"> The absolute path of the custom 404 page. </param>
         /// <param name="defaultIndexDocumentPath"> Absolute path of the default index page. </param>
-        internal BlobStaticWebsite(bool enabled, string indexDocument, string errorDocument404Path, string defaultIndexDocumentPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobStaticWebsite(bool enabled, string indexDocument, string errorDocument404Path, string defaultIndexDocumentPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             IndexDocument = indexDocument;
             ErrorDocument404Path = errorDocument404Path;
             DefaultIndexDocumentPath = defaultIndexDocumentPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether this account is hosting a static website. </summary>

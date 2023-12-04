@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "MongoDbAtlasCollection";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDbAtlasCollectionDataset"/> for deserialization. </summary>
+        internal MongoDbAtlasCollectionDataset()
+        {
+        }
+
         /// <summary> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </summary>
         public object Collection { get; set; }
     }

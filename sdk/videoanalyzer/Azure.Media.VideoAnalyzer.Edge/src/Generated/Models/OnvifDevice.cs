@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The ONVIF device properties. </summary>
     public partial class OnvifDevice
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OnvifDevice"/>. </summary>
         public OnvifDevice()
         {
@@ -24,12 +57,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="systemDateTime"> The system date and time of the ONVIF device. </param>
         /// <param name="dns"> The ONVIF device DNS properties. </param>
         /// <param name="mediaProfiles"> An array of of ONVIF media profiles supported by the ONVIF device. </param>
-        internal OnvifDevice(OnvifHostName hostname, OnvifSystemDateTime systemDateTime, OnvifDns dns, IList<MediaProfile> mediaProfiles)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OnvifDevice(OnvifHostName hostname, OnvifSystemDateTime systemDateTime, OnvifDns dns, IList<MediaProfile> mediaProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hostname = hostname;
             SystemDateTime = systemDateTime;
             Dns = dns;
             MediaProfiles = mediaProfiles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The hostname of the ONVIF device. </summary>

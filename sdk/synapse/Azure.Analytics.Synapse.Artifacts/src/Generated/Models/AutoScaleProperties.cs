@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Auto-scaling properties of a Big Data pool powered by Apache Spark. </summary>
     public partial class AutoScaleProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AutoScaleProperties"/>. </summary>
         public AutoScaleProperties()
         {
@@ -19,11 +54,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="minNodeCount"> The minimum number of nodes the Big Data pool can support. </param>
         /// <param name="enabled"> Whether automatic scaling is enabled for the Big Data pool. </param>
         /// <param name="maxNodeCount"> The maximum number of nodes the Big Data pool can support. </param>
-        internal AutoScaleProperties(int? minNodeCount, bool? enabled, int? maxNodeCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoScaleProperties(int? minNodeCount, bool? enabled, int? maxNodeCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinNodeCount = minNodeCount;
             Enabled = enabled;
             MaxNodeCount = maxNodeCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The minimum number of nodes the Big Data pool can support. </summary>

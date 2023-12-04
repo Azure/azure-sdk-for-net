@@ -51,6 +51,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DatabricksSparkPython";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/> for deserialization. </summary>
+        internal DatabricksSparkPythonActivity()
+        {
+        }
+
         /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>
         public object PythonFile { get; set; }
         /// <summary> Command line parameters that will be passed to the Python file. </summary>

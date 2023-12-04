@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasks. </summary>
     internal partial class TasksStateTasks
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TasksStateTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
@@ -41,7 +74,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         /// <param name="keyPhraseExtractionTasks"></param>
         /// <param name="entityLinkingTasks"></param>
         /// <param name="sentimentAnalysisTasks"></param>
-        internal TasksStateTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<TasksStateTasksEntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> sentimentAnalysisTasks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TasksStateTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<TasksStateTasksEntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> sentimentAnalysisTasks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Completed = completed;
             Failed = failed;
@@ -52,6 +86,12 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             KeyPhraseExtractionTasks = keyPhraseExtractionTasks;
             EntityLinkingTasks = entityLinkingTasks;
             SentimentAnalysisTasks = sentimentAnalysisTasks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasks"/> for deserialization. </summary>
+        internal TasksStateTasks()
+        {
         }
 
         /// <summary> Gets the completed. </summary>

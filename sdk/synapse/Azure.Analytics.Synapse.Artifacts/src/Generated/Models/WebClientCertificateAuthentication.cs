@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -40,6 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/>. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -50,11 +52,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
-        internal WebClientCertificateAuthentication(object url, WebAuthenticationType authenticationType, SecretBase pfx, SecretBase password) : base(url, authenticationType)
+        internal WebClientCertificateAuthentication(object url, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, SecretBase pfx, SecretBase password) : base(url, authenticationType, serializedAdditionalRawData)
         {
             Pfx = pfx;
             Password = password;
             AuthenticationType = authenticationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/> for deserialization. </summary>
+        internal WebClientCertificateAuthentication()
+        {
         }
 
         /// <summary>

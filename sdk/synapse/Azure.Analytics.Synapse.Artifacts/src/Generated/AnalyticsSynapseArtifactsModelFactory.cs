@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             details ??= new List<CloudError>();
 
-            return new CloudError(code, message, target, details?.ToList());
+            return new CloudError(code, message, target, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkConnectionDetailedStatus"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkConnectionDetailedStatus"/> instance for mocking. </returns>
         public static LinkConnectionDetailedStatus LinkConnectionDetailedStatus(string id = null, string name = null, bool? isApplyingChanges = null, bool? isPartiallyFailed = null, object startTime = null, object stopTime = null, string status = null, string continuousRunId = null, object error = null, LinkConnectionRefreshStatus refreshStatus = null, DateTimeOffset? landingZoneCredentialExpireTime = null)
         {
-            return new LinkConnectionDetailedStatus(id, name, isApplyingChanges, isPartiallyFailed, startTime, stopTime, status, continuousRunId, error, refreshStatus, landingZoneCredentialExpireTime);
+            return new LinkConnectionDetailedStatus(id, name, isApplyingChanges, isPartiallyFailed, startTime, stopTime, status, continuousRunId, error, refreshStatus, landingZoneCredentialExpireTime, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkConnectionRefreshStatus"/>. </summary>
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkConnectionRefreshStatus"/> instance for mocking. </returns>
         public static LinkConnectionRefreshStatus LinkConnectionRefreshStatus(string refreshStatus = null, string errorMessage = null)
         {
-            return new LinkConnectionRefreshStatus(refreshStatus, errorMessage);
+            return new LinkConnectionRefreshStatus(refreshStatus, errorMessage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkTableListResponse"/>. </summary>
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             value ??= new List<LinkTableResource>();
 
-            return new LinkTableListResponse(value?.ToList());
+            return new LinkTableListResponse(value?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkTableResource"/>. </summary>
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkTableResource"/> instance for mocking. </returns>
         public static LinkTableResource LinkTableResource(string id = null, string name = null, LinkTableRequestSource source = null, LinkTableRequestTarget target = null)
         {
-            return new LinkTableResource(id, name, source, target);
+            return new LinkTableResource(id, name, source, target, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkConnectionQueryTableStatus"/>. </summary>
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             value ??= new List<LinkTableStatus>();
 
-            return new LinkConnectionQueryTableStatus(value?.ToList(), continuationToken);
+            return new LinkConnectionQueryTableStatus(value?.ToList(), continuationToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkTableStatus"/>. </summary>
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkTableStatus"/> instance for mocking. </returns>
         public static LinkTableStatus LinkTableStatus(string id = null, string status = null, string errorMessage = null, object startTime = null, object stopTime = null, string linkTableId = null, string errorCode = null, DateTimeOffset? lastProcessedData = null, DateTimeOffset? lastTransactionCommitTime = null)
         {
-            return new LinkTableStatus(id, status, errorMessage, startTime, stopTime, linkTableId, errorCode, lastProcessedData, lastTransactionCommitTime);
+            return new LinkTableStatus(id, status, errorMessage, startTime, stopTime, linkTableId, errorCode, lastProcessedData, lastTransactionCommitTime, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookResponse"/>. </summary>
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.RunNotebookResponse"/> instance for mocking. </returns>
         public static RunNotebookResponse RunNotebookResponse(string message = null, RunNotebookResult result = null)
         {
-            return new RunNotebookResponse(message, result);
+            return new RunNotebookResponse(message, result, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookResult"/>. </summary>
@@ -123,7 +123,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.RunNotebookResult"/> instance for mocking. </returns>
         public static RunNotebookResult RunNotebookResult(string runId = null, string runStatus = null, string lastCheckedOn = null, string sessionId = null, string sparkPool = null, object sessionDetail = null, string exitValue = null, RunNotebookError error = null)
         {
-            return new RunNotebookResult(runId, runStatus, lastCheckedOn, sessionId, sparkPool, sessionDetail, exitValue, error);
+            return new RunNotebookResult(runId, runStatus, lastCheckedOn, sessionId, sparkPool, sessionDetail, exitValue, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookError"/>. </summary>
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             traceback ??= new List<string>();
 
-            return new RunNotebookError(ename, evalue, traceback?.ToList());
+            return new RunNotebookError(ename, evalue, traceback?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookSnapshotResponse"/>. </summary>
@@ -144,7 +144,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.RunNotebookSnapshotResponse"/> instance for mocking. </returns>
         public static RunNotebookSnapshotResponse RunNotebookSnapshotResponse(string message = null, RunNotebookSnapshotResult result = null)
         {
-            return new RunNotebookSnapshotResponse(message, result);
+            return new RunNotebookSnapshotResponse(message, result, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookSnapshotResult"/>. </summary>
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.RunNotebookSnapshotResult"/> instance for mocking. </returns>
         public static RunNotebookSnapshotResult RunNotebookSnapshotResult(RunNotebookSnapshot snapshot = null, RunNotebookError error = null, string runId = null, string runStatus = null, string lastCheckedOn = null, string sessionId = null, string sparkPool = null)
         {
-            return new RunNotebookSnapshotResult(snapshot, error, runId, runStatus, lastCheckedOn, sessionId, sparkPool);
+            return new RunNotebookSnapshotResult(snapshot, error, runId, runStatus, lastCheckedOn, sessionId, sparkPool, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookSnapshot"/>. </summary>
@@ -176,7 +176,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             parameters ??= new Dictionary<string, RunNotebookParameter>();
 
-            return new RunNotebookSnapshot(exitValue, id, notebook, sessionOptions, honorSessionTimeToLive, sessionId, sparkPool, parameters, notebookContent);
+            return new RunNotebookSnapshot(exitValue, id, notebook, sessionOptions, honorSessionTimeToLive, sessionId, sparkPool, parameters, notebookContent, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotebookResource"/>. </summary>
@@ -188,7 +188,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.NotebookResource"/> instance for mocking. </returns>
         public static NotebookResource NotebookResource(string id = null, string name = null, string type = null, string etag = null, Notebook properties = null)
         {
-            return new NotebookResource(id, name, type, etag, properties);
+            return new NotebookResource(id, name, type, etag, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetastoreRegistrationResponse"/>. </summary>
@@ -196,7 +196,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.MetastoreRegistrationResponse"/> instance for mocking. </returns>
         public static MetastoreRegistrationResponse MetastoreRegistrationResponse(RequestStatus? status = null)
         {
-            return new MetastoreRegistrationResponse(status);
+            return new MetastoreRegistrationResponse(status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetastoreRequestSuccessResponse"/>. </summary>
@@ -204,7 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.MetastoreRequestSuccessResponse"/> instance for mocking. </returns>
         public static MetastoreRequestSuccessResponse MetastoreRequestSuccessResponse(ResourceStatus? status = null)
         {
-            return new MetastoreRequestSuccessResponse(status);
+            return new MetastoreRequestSuccessResponse(status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetastoreUpdationResponse"/>. </summary>
@@ -212,7 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.MetastoreUpdationResponse"/> instance for mocking. </returns>
         public static MetastoreUpdationResponse MetastoreUpdationResponse(RequestStatus? status = null)
         {
-            return new MetastoreUpdationResponse(status);
+            return new MetastoreUpdationResponse(status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkConfigurationResource"/>. </summary>
@@ -224,7 +224,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkConfigurationResource"/> instance for mocking. </returns>
         public static SparkConfigurationResource SparkConfigurationResource(string id = null, string name = null, string type = null, string etag = null, SparkConfiguration properties = null)
         {
-            return new SparkConfigurationResource(id, name, type, etag, properties);
+            return new SparkConfigurationResource(id, name, type, serializedAdditionalRawData: null, etag, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SubResource"/>. </summary>
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SubResource"/> instance for mocking. </returns>
         public static SubResource SubResource(string id = null, string name = null, string type = null, string etag = null)
         {
-            return new SubResource(id, name, type, etag);
+            return new SubResource(id, name, type, serializedAdditionalRawData: null, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureEntityResource"/>. </summary>
@@ -246,7 +246,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.AzureEntityResource"/> instance for mocking. </returns>
         public static AzureEntityResource AzureEntityResource(string id = null, string name = null, string type = null, string etag = null)
         {
-            return new AzureEntityResource(id, name, type, etag);
+            return new AzureEntityResource(id, name, type, serializedAdditionalRawData: null, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Resource"/>. </summary>
@@ -256,7 +256,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
         public static Resource Resource(string id = null, string name = null, string type = null)
         {
-            return new Resource(id, name, type);
+            return new Resource(id, name, type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BigDataPoolResourceInfoListResult"/>. </summary>
@@ -267,7 +267,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             value ??= new List<BigDataPoolResourceInfo>();
 
-            return new BigDataPoolResourceInfoListResult(nextLink, value?.ToList());
+            return new BigDataPoolResourceInfoListResult(nextLink, value?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BigDataPoolResourceInfo"/>. </summary>
@@ -300,7 +300,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             tags ??= new Dictionary<string, string>();
             customLibraries ??= new List<LibraryInfo>();
 
-            return new BigDataPoolResourceInfo(id, name, type, tags, location, provisioningState, autoScale, creationDate, autoPause, isComputeIsolationEnabled, sessionLevelPackagesEnabled, cacheSize, dynamicExecutorAllocation, sparkEventsFolder, nodeCount, libraryRequirements, customLibraries?.ToList(), sparkConfigProperties, sparkVersion, defaultSparkLogFolder, nodeSize, nodeSizeFamily, lastSucceededTimestamp);
+            return new BigDataPoolResourceInfo(id, name, type, serializedAdditionalRawData: null, tags, location, provisioningState, autoScale, creationDate, autoPause, isComputeIsolationEnabled, sessionLevelPackagesEnabled, cacheSize, dynamicExecutorAllocation, sparkEventsFolder, nodeCount, libraryRequirements, customLibraries?.ToList(), sparkConfigProperties, sparkVersion, defaultSparkLogFolder, nodeSize, nodeSizeFamily, lastSucceededTimestamp);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LibraryRequirements"/>. </summary>
@@ -310,7 +310,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryRequirements"/> instance for mocking. </returns>
         public static LibraryRequirements LibraryRequirements(DateTimeOffset? time = null, string content = null, string filename = null)
         {
-            return new LibraryRequirements(time, content, filename);
+            return new LibraryRequirements(time, content, filename, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LibraryInfo"/>. </summary>
@@ -324,7 +324,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryInfo"/> instance for mocking. </returns>
         public static LibraryInfo LibraryInfo(string name = null, string path = null, string containerName = null, DateTimeOffset? uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
         {
-            return new LibraryInfo(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
+            return new LibraryInfo(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TrackedResource"/>. </summary>
@@ -338,7 +338,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TrackedResource(id, name, type, tags, location);
+            return new TrackedResource(id, name, type, serializedAdditionalRawData: null, tags, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataFlowResource"/>. </summary>
@@ -354,7 +354,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.DataFlowResource"/> instance for mocking. </returns>
         public static DataFlowResource DataFlowResource(string id = null, string name = null, string type = null, string etag = null, DataFlow properties = null)
         {
-            return new DataFlowResource(id, name, type, etag, properties);
+            return new DataFlowResource(id, name, type, serializedAdditionalRawData: null, etag, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateDataFlowDebugSessionResponse"/>. </summary>
@@ -362,7 +362,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.CreateDataFlowDebugSessionResponse"/> instance for mocking. </returns>
         public static CreateDataFlowDebugSessionResponse CreateDataFlowDebugSessionResponse(string sessionId = null)
         {
-            return new CreateDataFlowDebugSessionResponse(sessionId);
+            return new CreateDataFlowDebugSessionResponse(sessionId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataFlowDebugSessionInfo"/>. </summary>
@@ -389,7 +389,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.AddDataFlowToDebugSessionResponse"/> instance for mocking. </returns>
         public static AddDataFlowToDebugSessionResponse AddDataFlowToDebugSessionResponse(string jobVersion = null)
         {
-            return new AddDataFlowToDebugSessionResponse(jobVersion);
+            return new AddDataFlowToDebugSessionResponse(jobVersion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataFlowDebugCommandPayload"/>. </summary>
+        /// <param name="streamName"> The stream name which is used for preview. </param>
+        /// <param name="rowLimits"> Row limits for preview response. </param>
+        /// <param name="columns"> Array of column names. </param>
+        /// <param name="expression"> The expression which is used for preview. </param>
+        /// <returns> A new <see cref="Models.DataFlowDebugCommandPayload"/> instance for mocking. </returns>
+        public static DataFlowDebugCommandPayload DataFlowDebugCommandPayload(string streamName = null, int? rowLimits = null, IEnumerable<string> columns = null, string expression = null)
+        {
+            columns ??= new List<string>();
+
+            return new DataFlowDebugCommandPayload(streamName, rowLimits, columns?.ToList(), expression, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataFlowDebugCommandResponse"/>. </summary>
@@ -398,7 +411,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.DataFlowDebugCommandResponse"/> instance for mocking. </returns>
         public static DataFlowDebugCommandResponse DataFlowDebugCommandResponse(string status = null, string data = null)
         {
-            return new DataFlowDebugCommandResponse(status, data);
+            return new DataFlowDebugCommandResponse(status, data, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatasetResource"/>. </summary>
@@ -414,7 +427,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.DatasetResource"/> instance for mocking. </returns>
         public static DatasetResource DatasetResource(string id = null, string name = null, string type = null, string etag = null, Dataset properties = null)
         {
-            return new DatasetResource(id, name, type, etag, properties);
+            return new DatasetResource(id, name, type, serializedAdditionalRawData: null, etag, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GitHubAccessTokenResponse"/>. </summary>
@@ -422,7 +435,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.GitHubAccessTokenResponse"/> instance for mocking. </returns>
         public static GitHubAccessTokenResponse GitHubAccessTokenResponse(string gitHubAccessToken = null)
         {
-            return new GitHubAccessTokenResponse(gitHubAccessToken);
+            return new GitHubAccessTokenResponse(gitHubAccessToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationRuntimeListResponse"/>. </summary>
@@ -433,7 +446,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             value ??= new List<IntegrationRuntimeResource>();
 
-            return new IntegrationRuntimeListResponse(value?.ToList(), nextLink);
+            return new IntegrationRuntimeListResponse(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationRuntimeResource"/>. </summary>
@@ -449,7 +462,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.IntegrationRuntimeResource"/> instance for mocking. </returns>
         public static IntegrationRuntimeResource IntegrationRuntimeResource(string id = null, string name = null, string type = null, string etag = null, IntegrationRuntime properties = null)
         {
-            return new IntegrationRuntimeResource(id, name, type, etag, properties);
+            return new IntegrationRuntimeResource(id, name, type, serializedAdditionalRawData: null, etag, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LibraryResource"/>. </summary>
@@ -461,7 +474,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryResource"/> instance for mocking. </returns>
         public static LibraryResource LibraryResource(string id = null, string name = null, string type = null, string etag = null, LibraryResourceProperties properties = null)
         {
-            return new LibraryResource(id, name, type, etag, properties);
+            return new LibraryResource(id, name, type, serializedAdditionalRawData: null, etag, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LibraryResourceProperties"/>. </summary>
@@ -475,7 +488,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryResourceProperties"/> instance for mocking. </returns>
         public static LibraryResourceProperties LibraryResourceProperties(string name = null, string path = null, string containerName = null, string uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
         {
-            return new LibraryResourceProperties(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
+            return new LibraryResourceProperties(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LibraryResourceInfo"/>. </summary>
@@ -491,7 +504,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryResourceInfo"/> instance for mocking. </returns>
         public static LibraryResourceInfo LibraryResourceInfo(string id = null, int? recordId = null, string state = null, string created = null, string changed = null, string type = null, string name = null, string operationId = null, string artifactId = null)
         {
-            return new LibraryResourceInfo(id, recordId, state, created, changed, type, name, operationId, artifactId);
+            return new LibraryResourceInfo(id, recordId, state, created, changed, type, name, operationId, artifactId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationResult"/>. </summary>
@@ -505,7 +518,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             details ??= new List<CloudError>();
 
-            return new OperationResult(status, code, message, target, details?.ToList());
+            return new OperationResult(status, code, message, target, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkedServiceResource"/>. </summary>
@@ -521,7 +534,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkedServiceResource"/> instance for mocking. </returns>
         public static LinkedServiceResource LinkedServiceResource(string id = null, string name = null, string type = null, string etag = null, LinkedService properties = null)
         {
-            return new LinkedServiceResource(id, name, type, etag, properties);
+            return new LinkedServiceResource(id, name, type, serializedAdditionalRawData: null, etag, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PipelineResource"/>. </summary>
@@ -557,16 +570,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateRunResponse"/>. </summary>
         /// <param name="runId"> Identifier of a run. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <returns> A new <see cref="Models.CreateRunResponse"/> instance for mocking. </returns>
         public static CreateRunResponse CreateRunResponse(string runId = null)
         {
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
+            return new CreateRunResponse(runId, serializedAdditionalRawData: null);
+        }
 
-            return new CreateRunResponse(runId);
+        /// <summary> Initializes a new instance of <see cref="Models.RunFilterParameters"/>. </summary>
+        /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
+        /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
+        /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
+        /// <param name="filters"> List of filters. </param>
+        /// <param name="orderBy"> List of OrderBy option. </param>
+        /// <returns> A new <see cref="Models.RunFilterParameters"/> instance for mocking. </returns>
+        public static RunFilterParameters RunFilterParameters(string continuationToken = null, DateTimeOffset lastUpdatedAfter = default, DateTimeOffset lastUpdatedBefore = default, IEnumerable<RunQueryFilter> filters = null, IEnumerable<RunQueryOrderBy> orderBy = null)
+        {
+            filters ??= new List<RunQueryFilter>();
+            orderBy ??= new List<RunQueryOrderBy>();
+
+            return new RunFilterParameters(continuationToken, lastUpdatedAfter, lastUpdatedBefore, filters?.ToList(), orderBy?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PipelineRunsQueryResponse"/>. </summary>
@@ -577,7 +599,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             value ??= new List<PipelineRun>();
 
-            return new PipelineRunsQueryResponse(value?.ToList(), continuationToken);
+            return new PipelineRunsQueryResponse(value?.ToList(), continuationToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PipelineRun"/>. </summary>
@@ -610,7 +632,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.PipelineRunInvokedBy"/> instance for mocking. </returns>
         public static PipelineRunInvokedBy PipelineRunInvokedBy(string name = null, string id = null, string invokedByType = null)
         {
-            return new PipelineRunInvokedBy(name, id, invokedByType);
+            return new PipelineRunInvokedBy(name, id, invokedByType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ActivityRunsQueryResponse"/>. </summary>
@@ -621,7 +643,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             value ??= new List<ActivityRun>();
 
-            return new ActivityRunsQueryResponse(value?.ToList(), continuationToken);
+            return new ActivityRunsQueryResponse(value?.ToList(), continuationToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ActivityRun"/>. </summary>
@@ -656,7 +678,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkJobDefinitionResource"/> instance for mocking. </returns>
         public static SparkJobDefinitionResource SparkJobDefinitionResource(string id = null, string name = null, string type = null, string etag = null, SparkJobDefinition properties = null)
         {
-            return new SparkJobDefinitionResource(id, name, type, etag, properties);
+            return new SparkJobDefinitionResource(id, name, type, serializedAdditionalRawData: null, etag, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJob"/>. </summary>
@@ -686,7 +708,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             appInfo ??= new Dictionary<string, string>();
             logLines ??= new List<string>();
 
-            return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
+            return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJobState"/>. </summary>
@@ -702,7 +724,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkBatchJobState"/> instance for mocking. </returns>
         public static SparkBatchJobState SparkBatchJobState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? runningAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? successAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
-            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest);
+            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkRequest"/>. </summary>
@@ -730,7 +752,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             archives ??= new List<string>();
             configuration ??= new Dictionary<string, string>();
 
-            return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
+            return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkScheduler"/>. </summary>
@@ -742,7 +764,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkScheduler"/> instance for mocking. </returns>
         public static SparkScheduler SparkScheduler(DateTimeOffset? submittedAt = null, DateTimeOffset? scheduledAt = null, DateTimeOffset? endedAt = null, DateTimeOffset? cancellationRequestedAt = null, SchedulerCurrentState? currentState = null)
         {
-            return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
+            return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkServicePlugin"/>. </summary>
@@ -755,7 +777,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkServicePlugin"/> instance for mocking. </returns>
         public static SparkServicePlugin SparkServicePlugin(DateTimeOffset? preparationStartedAt = null, DateTimeOffset? resourceAcquisitionStartedAt = null, DateTimeOffset? submissionStartedAt = null, DateTimeOffset? monitoringStartedAt = null, DateTimeOffset? cleanupStartedAt = null, PluginCurrentState? currentState = null)
         {
-            return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState);
+            return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkServiceError"/>. </summary>
@@ -765,7 +787,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkServiceError"/> instance for mocking. </returns>
         public static SparkServiceError SparkServiceError(string message = null, string errorCode = null, SparkErrorSource? source = null)
         {
-            return new SparkServiceError(message, errorCode, source);
+            return new SparkServiceError(message, errorCode, source, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlPoolInfoListResult"/>. </summary>
@@ -776,7 +798,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             value ??= new List<SqlPool>();
 
-            return new SqlPoolInfoListResult(nextLink, value?.ToList());
+            return new SqlPoolInfoListResult(nextLink, value?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlPool"/>. </summary>
@@ -810,7 +832,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SqlPool(id, name, type, tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, creationDate);
+            return new SqlPool(id, name, type, serializedAdditionalRawData: null, tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, creationDate);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlScriptResource"/>. </summary>
@@ -822,7 +844,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SqlScriptResource"/> instance for mocking. </returns>
         public static SqlScriptResource SqlScriptResource(string id = null, string name = null, string type = null, string etag = null, SqlScript properties = null)
         {
-            return new SqlScriptResource(id, name, type, etag, properties);
+            return new SqlScriptResource(id, name, type, etag, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerResource"/>. </summary>
@@ -838,7 +860,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.TriggerResource"/> instance for mocking. </returns>
         public static TriggerResource TriggerResource(string id = null, string name = null, string type = null, string etag = null, Trigger properties = null)
         {
-            return new TriggerResource(id, name, type, etag, properties);
+            return new TriggerResource(id, name, type, serializedAdditionalRawData: null, etag, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Trigger"/>. </summary>
@@ -862,7 +884,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.TriggerSubscriptionOperationStatus"/> instance for mocking. </returns>
         public static TriggerSubscriptionOperationStatus TriggerSubscriptionOperationStatus(string triggerName = null, EventSubscriptionStatus? status = null)
         {
-            return new TriggerSubscriptionOperationStatus(triggerName, status);
+            return new TriggerSubscriptionOperationStatus(triggerName, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerRunsQueryResponse"/>. </summary>
@@ -873,7 +895,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             value ??= new List<TriggerRun>();
 
-            return new TriggerRunsQueryResponse(value?.ToList(), continuationToken);
+            return new TriggerRunsQueryResponse(value?.ToList(), continuationToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerRun"/>. </summary>
@@ -927,7 +949,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             privateEndpointConnections ??= new List<PrivateEndpointConnection>();
             extraProperties ??= new Dictionary<string, object>();
 
-            return new Workspace(id, name, type, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, virtualNetworkProfile, connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUID, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewConfiguration, adlaResourceId);
+            return new Workspace(id, name, type, serializedAdditionalRawData: null, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, virtualNetworkProfile, connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUID, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewConfiguration, adlaResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnection"/>. </summary>
@@ -940,7 +962,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.PrivateEndpointConnection"/> instance for mocking. </returns>
         public static PrivateEndpointConnection PrivateEndpointConnection(string id = null, string name = null, string type = null, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new PrivateEndpointConnection(id, name, type, privateEndpoint, connectionState, provisioningState);
+            return new PrivateEndpointConnection(id, name, type, serializedAdditionalRawData: null, privateEndpoint, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpoint"/>. </summary>
@@ -948,7 +970,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.PrivateEndpoint"/> instance for mocking. </returns>
         public static PrivateEndpoint PrivateEndpoint(string id = null)
         {
-            return new PrivateEndpoint(id);
+            return new PrivateEndpoint(id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkServiceConnectionState"/>. </summary>
@@ -958,7 +980,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.PrivateLinkServiceConnectionState"/> instance for mocking. </returns>
         public static PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState(string status = null, string description = null, string actionsRequired = null)
         {
-            return new PrivateLinkServiceConnectionState(status, description, actionsRequired);
+            return new PrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProxyResource"/>. </summary>
@@ -968,7 +990,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.ProxyResource"/> instance for mocking. </returns>
         public static ProxyResource ProxyResource(string id = null, string name = null, string type = null)
         {
-            return new ProxyResource(id, name, type);
+            return new ProxyResource(id, name, type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EncryptionDetails"/>. </summary>
@@ -977,7 +999,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.EncryptionDetails"/> instance for mocking. </returns>
         public static EncryptionDetails EncryptionDetails(bool? doubleEncryptionEnabled = null, CustomerManagedKeyDetails cmk = null)
         {
-            return new EncryptionDetails(doubleEncryptionEnabled, cmk);
+            return new EncryptionDetails(doubleEncryptionEnabled, cmk, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomerManagedKeyDetails"/>. </summary>
@@ -986,7 +1008,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.CustomerManagedKeyDetails"/> instance for mocking. </returns>
         public static CustomerManagedKeyDetails CustomerManagedKeyDetails(string status = null, WorkspaceKeyDetails key = null)
         {
-            return new CustomerManagedKeyDetails(status, key);
+            return new CustomerManagedKeyDetails(status, key, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedIdentity"/>. </summary>
@@ -996,7 +1018,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.ManagedIdentity"/> instance for mocking. </returns>
         public static ManagedIdentity ManagedIdentity(string principalId = null, Guid? tenantId = null, ResourceIdentityType? type = null)
         {
-            return new ManagedIdentity(principalId, tenantId, type);
+            return new ManagedIdentity(principalId, tenantId, type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkspaceIdentity"/>. </summary>
@@ -1006,7 +1028,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.WorkspaceIdentity"/> instance for mocking. </returns>
         public static WorkspaceIdentity WorkspaceIdentity(WorkspaceIdentityType type = default, string principalId = null, string tenantId = null)
         {
-            return new WorkspaceIdentity(type, principalId, tenantId);
+            return new WorkspaceIdentity(type, principalId, tenantId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExposureControlResponse"/>. </summary>
@@ -1015,7 +1037,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.ExposureControlResponse"/> instance for mocking. </returns>
         public static ExposureControlResponse ExposureControlResponse(string featureName = null, string value = null)
         {
-            return new ExposureControlResponse(featureName, value);
+            return new ExposureControlResponse(featureName, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RerunTriggerListResponse"/>. </summary>
@@ -1026,7 +1048,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             value ??= new List<RerunTriggerResource>();
 
-            return new RerunTriggerListResponse(value?.ToList(), nextLink);
+            return new RerunTriggerListResponse(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RerunTriggerResource"/>. </summary>
@@ -1038,7 +1060,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.RerunTriggerResource"/> instance for mocking. </returns>
         public static RerunTriggerResource RerunTriggerResource(string id = null, string name = null, string type = null, string etag = null, RerunTumblingWindowTrigger properties = null)
         {
-            return new RerunTriggerResource(id, name, type, etag, properties);
+            return new RerunTriggerResource(id, name, type, serializedAdditionalRawData: null, etag, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RerunTumblingWindowTrigger"/>. </summary>
@@ -1222,7 +1244,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.ManagedVirtualNetworkReference"/> instance for mocking. </returns>
         public static ManagedVirtualNetworkReference ManagedVirtualNetworkReference(ManagedVirtualNetworkReferenceType type = default, string referenceName = null)
         {
-            return new ManagedVirtualNetworkReference(type, referenceName);
+            return new ManagedVirtualNetworkReference(type, referenceName, serializedAdditionalRawData: null);
         }
     }
 }

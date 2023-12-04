@@ -45,6 +45,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "GoogleBigQueryObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryObjectDataset"/> for deserialization. </summary>
+        internal GoogleBigQueryObjectDataset()
+        {
+        }
+
         /// <summary> This property will be retired. Please consider using database + table properties instead. </summary>
         public object TableName { get; set; }
         /// <summary> The table name of the Google BigQuery. Type: string (or Expression with resultType string). </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
@@ -24,10 +25,16 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"></param>
-        internal TasksStateTasksEntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, State status, PiiResult results) : base(lastUpdateDateTime, taskName, status)
+        internal TasksStateTasksEntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, State status, IDictionary<string, BinaryData> serializedAdditionalRawData, PiiResult results) : base(lastUpdateDateTime, taskName, status, serializedAdditionalRawData)
         {
             Results = results;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksEntityRecognitionPiiTasksItem"/> for deserialization. </summary>
+        internal TasksStateTasksEntityRecognitionPiiTasksItem()
+        {
         }
 
         /// <summary> Gets the results. </summary>

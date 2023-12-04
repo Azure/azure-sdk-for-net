@@ -58,6 +58,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Sybase";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SybaseLinkedService"/> for deserialization. </summary>
+        internal SybaseLinkedService()
+        {
+        }
+
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
         public object Server { get; set; }
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>

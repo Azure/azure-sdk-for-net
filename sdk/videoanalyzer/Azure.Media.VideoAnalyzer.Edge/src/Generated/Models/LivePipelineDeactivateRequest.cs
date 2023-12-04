@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -26,10 +27,16 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="LivePipelineDeactivateRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
-        internal LivePipelineDeactivateRequest(string methodName, string apiVersion, string name) : base(methodName, apiVersion, name)
+        internal LivePipelineDeactivateRequest(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(methodName, apiVersion, serializedAdditionalRawData, name)
         {
             MethodName = methodName ?? "livePipelineDeactivate";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LivePipelineDeactivateRequest"/> for deserialization. </summary>
+        internal LivePipelineDeactivateRequest()
+        {
         }
     }
 }

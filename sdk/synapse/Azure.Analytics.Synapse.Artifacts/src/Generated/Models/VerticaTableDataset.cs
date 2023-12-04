@@ -45,6 +45,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "VerticaTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="VerticaTableDataset"/> for deserialization. </summary>
+        internal VerticaTableDataset()
+        {
+        }
+
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
         public object TableName { get; set; }
         /// <summary> The table name of the Vertica. Type: string (or Expression with resultType string). </summary>

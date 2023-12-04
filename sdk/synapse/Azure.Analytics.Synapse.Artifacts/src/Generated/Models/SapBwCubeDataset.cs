@@ -38,5 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Type = type ?? "SapBwCube";
         }
+
+        /// <summary> Initializes a new instance of <see cref="SapBwCubeDataset"/> for deserialization. </summary>
+        internal SapBwCubeDataset()
+        {
+        }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for starting data flow debug session. </summary>
     public partial class StartDataFlowDebugSessionRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StartDataFlowDebugSessionRequest"/>. </summary>
         public StartDataFlowDebugSessionRequest()
         {
@@ -30,7 +63,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="staging"> Staging info for debug session. </param>
         /// <param name="debugSettings"> Data flow debug settings. </param>
         /// <param name="incrementalDebug"> The type of new Databricks cluster. </param>
-        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IList<DataFlowResource> dataFlows, IList<DatasetResource> datasets, IList<LinkedServiceResource> linkedServices, object staging, object debugSettings, bool? incrementalDebug)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IList<DataFlowResource> dataFlows, IList<DatasetResource> datasets, IList<LinkedServiceResource> linkedServices, object staging, object debugSettings, bool? incrementalDebug, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             DataFlow = dataFlow;
@@ -40,6 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Staging = staging;
             DebugSettings = debugSettings;
             IncrementalDebug = incrementalDebug;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

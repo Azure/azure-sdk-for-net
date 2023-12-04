@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "CouchbaseTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CouchbaseTableDataset"/> for deserialization. </summary>
+        internal CouchbaseTableDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

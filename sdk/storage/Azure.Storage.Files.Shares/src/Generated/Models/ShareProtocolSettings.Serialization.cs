@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareProtocolSettings : IXmlSerializable
+    public partial class ShareProtocolSettings : IXmlSerializable, IPersistableModel<ShareProtocolSettings>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "ProtocolSettings");
             if (Optional.IsDefined(Smb))
@@ -23,14 +27,57 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element, ModelReaderWriterOptions options = null)
         {
             ShareSmbSettings smb = default;
             if (element.Element("SMB") is XElement smbElement)
             {
                 smb = ShareSmbSettings.DeserializeShareSmbSettings(smbElement);
             }
-            return new ShareProtocolSettings(smb);
+            return new ShareProtocolSettings(smb, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<ShareProtocolSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareProtocolSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ShareProtocolSettings IPersistableModel<ShareProtocolSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeShareProtocolSettings(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareProtocolSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ShareProtocolSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

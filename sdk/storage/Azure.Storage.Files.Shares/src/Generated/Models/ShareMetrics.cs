@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
@@ -13,17 +14,51 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Storage Analytics metrics for file service. </summary>
     public partial class ShareMetrics
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ShareMetrics"/>. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the File service. </param>
         /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> The retention policy. </param>
-        internal ShareMetrics(string version, bool enabled, bool? includeApis, ShareRetentionPolicy retentionPolicy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareMetrics(string version, bool enabled, bool? includeApis, ShareRetentionPolicy retentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             Enabled = enabled;
             IncludeApis = includeApis;
             RetentionPolicy = retentionPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The version of Storage Analytics to configure. </summary>

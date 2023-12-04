@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ZipDeflateReadSettingsConverter))]
-    public partial class ZipDeflateReadSettings : IUtf8JsonSerializable
+    public partial class ZipDeflateReadSettings : IUtf8JsonSerializable, IJsonModel<ZipDeflateReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ZipDeflateReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ZipDeflateReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ZipDeflateReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ZipDeflateReadSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreserveZipFileNameAsFolder))
             {
@@ -34,8 +44,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ZipDeflateReadSettings DeserializeZipDeflateReadSettings(JsonElement element)
+        ZipDeflateReadSettings IJsonModel<ZipDeflateReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ZipDeflateReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ZipDeflateReadSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeZipDeflateReadSettings(document.RootElement, options);
+        }
+
+        internal static ZipDeflateReadSettings DeserializeZipDeflateReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +89,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ZipDeflateReadSettings(type, additionalProperties, preserveZipFileNameAsFolder.Value);
         }
+
+        BinaryData IPersistableModel<ZipDeflateReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ZipDeflateReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ZipDeflateReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ZipDeflateReadSettings IPersistableModel<ZipDeflateReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ZipDeflateReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeZipDeflateReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ZipDeflateReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ZipDeflateReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ZipDeflateReadSettingsConverter : JsonConverter<ZipDeflateReadSettings>
         {

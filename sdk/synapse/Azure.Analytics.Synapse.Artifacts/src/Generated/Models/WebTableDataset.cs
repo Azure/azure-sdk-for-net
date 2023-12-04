@@ -46,6 +46,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "WebTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WebTableDataset"/> for deserialization. </summary>
+        internal WebTableDataset()
+        {
+        }
+
         /// <summary> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
         public object Index { get; set; }
         /// <summary> The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType string). </summary>

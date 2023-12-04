@@ -5,14 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ListSharesResponse
+    internal partial class ListSharesResponse : IXmlSerializable, IPersistableModel<ListSharesResponse>
     {
-        internal static ListSharesResponse DeserializeListSharesResponse(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            if (Optional.IsDefined(Prefix))
+            {
+                writer.WriteStartElement("Prefix");
+                writer.WriteValue(Prefix);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Marker))
+            {
+                writer.WriteStartElement("Marker");
+                writer.WriteValue(Marker);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MaxResults))
+            {
+                writer.WriteStartElement("MaxResults");
+                writer.WriteValue(MaxResults.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("NextMarker");
+            writer.WriteValue(NextMarker);
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(ShareItems))
+            {
+                writer.WriteStartElement("Shares");
+                foreach (var item in ShareItems)
+                {
+                    writer.WriteObjectValue(item, "Share");
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ListSharesResponse DeserializeListSharesResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string prefix = default;
@@ -49,7 +96,48 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 shareItems = array;
             }
-            return new ListSharesResponse(serviceEndpoint, prefix, marker, maxResults, shareItems, nextMarker);
+            return new ListSharesResponse(serviceEndpoint, prefix, marker, maxResults, shareItems, nextMarker, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<ListSharesResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListSharesResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ListSharesResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ListSharesResponse IPersistableModel<ListSharesResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListSharesResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeListSharesResponse(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ListSharesResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ListSharesResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

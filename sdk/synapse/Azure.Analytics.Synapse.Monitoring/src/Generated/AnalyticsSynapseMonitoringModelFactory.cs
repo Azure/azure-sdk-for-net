@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         {
             sparkJobs ??= new List<SparkJob>();
 
-            return new SparkJobListViewResponse(nJobs, sparkJobs?.ToList());
+            return new SparkJobListViewResponse(nJobs, sparkJobs?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkJob"/>. </summary>
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             timing ??= new List<string>();
             pipeline ??= new List<SparkJob>();
 
-            return new SparkJob(state, name, submitter, compute, sparkApplicationId, livyId, timing?.ToList(), sparkJobDefinition, pipeline?.ToList(), jobType, submitTime, endTime, queuedDuration, runningDuration, totalDuration);
+            return new SparkJob(state, name, submitter, compute, sparkApplicationId, livyId, timing?.ToList(), sparkJobDefinition, pipeline?.ToList(), jobType, submitTime, endTime, queuedDuration, runningDuration, totalDuration, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlQueryStringDataModel"/>. </summary>
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         /// <returns> A new <see cref="Models.SqlQueryStringDataModel"/> instance for mocking. </returns>
         public static SqlQueryStringDataModel SqlQueryStringDataModel(string query = null)
         {
-            return new SqlQueryStringDataModel(query);
+            return new SqlQueryStringDataModel(query, serializedAdditionalRawData: null);
         }
     }
 }

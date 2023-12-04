@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Data.Tables.Models
 {
     /// <summary> An Access policy. </summary>
     public partial class TableAccessPolicy
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TableAccessPolicy"/>. </summary>
         /// <param name="startsOn"> The start datetime from which the policy is active. </param>
         /// <param name="expiresOn"> The datetime that the policy expires. </param>
@@ -21,6 +54,24 @@ namespace Azure.Data.Tables.Models
             StartsOn = startsOn;
             ExpiresOn = expiresOn;
             Permission = permission;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableAccessPolicy"/>. </summary>
+        /// <param name="startsOn"> The start datetime from which the policy is active. </param>
+        /// <param name="expiresOn"> The datetime that the policy expires. </param>
+        /// <param name="permission"> The permissions for the acl policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permission, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartsOn = startsOn;
+            ExpiresOn = expiresOn;
+            Permission = permission;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableAccessPolicy"/> for deserialization. </summary>
+        internal TableAccessPolicy()
+        {
         }
         /// <summary> The permissions for the acl policy. </summary>
         public string Permission { get; set; }

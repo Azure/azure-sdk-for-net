@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Library/package properties. </summary>
     public partial class LibraryResourceProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LibraryResourceProperties"/>. </summary>
         public LibraryResourceProperties()
         {
@@ -23,7 +58,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Type of the library/package. </param>
         /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
         /// <param name="creatorId"> Creator Id of the library/package. </param>
-        internal LibraryResourceProperties(string name, string path, string containerName, string uploadedTimestamp, string type, string provisioningStatus, string creatorId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LibraryResourceProperties(string name, string path, string containerName, string uploadedTimestamp, string type, string provisioningStatus, string creatorId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Path = path;
@@ -32,6 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type;
             ProvisioningStatus = provisioningStatus;
             CreatorId = creatorId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the library/package. </summary>

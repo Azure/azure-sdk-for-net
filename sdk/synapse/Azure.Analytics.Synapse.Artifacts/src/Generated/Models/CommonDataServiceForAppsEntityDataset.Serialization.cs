@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CommonDataServiceForAppsEntityDatasetConverter))]
-    public partial class CommonDataServiceForAppsEntityDataset : IUtf8JsonSerializable
+    public partial class CommonDataServiceForAppsEntityDataset : IUtf8JsonSerializable, IJsonModel<CommonDataServiceForAppsEntityDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonDataServiceForAppsEntityDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CommonDataServiceForAppsEntityDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonDataServiceForAppsEntityDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CommonDataServiceForAppsEntityDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -85,8 +95,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CommonDataServiceForAppsEntityDataset DeserializeCommonDataServiceForAppsEntityDataset(JsonElement element)
+        CommonDataServiceForAppsEntityDataset IJsonModel<CommonDataServiceForAppsEntityDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonDataServiceForAppsEntityDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CommonDataServiceForAppsEntityDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonDataServiceForAppsEntityDataset(document.RootElement, options);
+        }
+
+        internal static CommonDataServiceForAppsEntityDataset DeserializeCommonDataServiceForAppsEntityDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -207,6 +231,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CommonDataServiceForAppsEntityDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, entityName.Value);
         }
+
+        BinaryData IPersistableModel<CommonDataServiceForAppsEntityDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonDataServiceForAppsEntityDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CommonDataServiceForAppsEntityDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CommonDataServiceForAppsEntityDataset IPersistableModel<CommonDataServiceForAppsEntityDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonDataServiceForAppsEntityDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCommonDataServiceForAppsEntityDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CommonDataServiceForAppsEntityDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommonDataServiceForAppsEntityDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class CommonDataServiceForAppsEntityDatasetConverter : JsonConverter<CommonDataServiceForAppsEntityDataset>
         {

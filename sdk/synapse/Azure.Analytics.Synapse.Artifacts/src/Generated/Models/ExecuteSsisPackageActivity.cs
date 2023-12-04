@@ -75,6 +75,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "ExecuteSSISPackage";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/> for deserialization. </summary>
+        internal ExecuteSsisPackageActivity()
+        {
+        }
+
         /// <summary> SSIS package location. </summary>
         public SsisPackageLocation PackageLocation { get; set; }
         /// <summary> Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string). </summary>

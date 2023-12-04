@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Models
         /// <returns> A new <see cref="Models.TableServiceStatistics"/> instance for mocking. </returns>
         public static TableServiceStatistics TableServiceStatistics(TableGeoReplicationInfo geoReplication = null)
         {
-            return new TableServiceStatistics(geoReplication);
+            return new TableServiceStatistics(geoReplication, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TableGeoReplicationInfo"/>. </summary>
@@ -26,7 +26,7 @@ namespace Azure.Data.Tables.Models
         /// <returns> A new <see cref="Models.TableGeoReplicationInfo"/> instance for mocking. </returns>
         public static TableGeoReplicationInfo TableGeoReplicationInfo(TableGeoReplicationStatus status = default, DateTimeOffset lastSyncedOn = default)
         {
-            return new TableGeoReplicationInfo(status, lastSyncedOn);
+            return new TableGeoReplicationInfo(status, lastSyncedOn, serializedAdditionalRawData: null);
         }
     }
 }

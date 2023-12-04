@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -26,11 +27,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="IotHubMessageSource"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hubInputName"> Name of the IoT Edge Hub input from which messages will be consumed. </param>
-        internal IotHubMessageSource(string type, string name, string hubInputName) : base(type, name)
+        internal IotHubMessageSource(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string hubInputName) : base(type, name, serializedAdditionalRawData)
         {
             HubInputName = hubInputName;
             Type = type ?? "#Microsoft.VideoAnalyzer.IotHubMessageSource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSource"/> for deserialization. </summary>
+        internal IotHubMessageSource()
+        {
         }
 
         /// <summary> Name of the IoT Edge Hub input from which messages will be consumed. </summary>

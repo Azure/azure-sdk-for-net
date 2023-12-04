@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Property of an event that is either stored or computed. Properties are identified by both name and type. Different events can have properties with same name, but different type. </summary>
     public partial class TimeSeriesInsightsEventProperty
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TimeSeriesInsightsEventProperty"/>. </summary>
         public TimeSeriesInsightsEventProperty()
         {
@@ -18,10 +53,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of <see cref="TimeSeriesInsightsEventProperty"/>. </summary>
         /// <param name="name"> The name of the property. </param>
         /// <param name="propertyValueType"> The type of the property. </param>
-        internal TimeSeriesInsightsEventProperty(string name, TimeSeriesPropertyType? propertyValueType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesInsightsEventProperty(string name, TimeSeriesPropertyType? propertyValueType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PropertyValueType = propertyValueType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the property. </summary>

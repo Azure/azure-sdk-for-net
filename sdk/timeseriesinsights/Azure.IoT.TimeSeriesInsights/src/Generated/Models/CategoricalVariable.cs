@@ -32,17 +32,23 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of <see cref="CategoricalVariable"/>. </summary>
         /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> Value time series expression is used to represent the value of the signal that is going to be categorized. It can evaluate to only 'String' or 'Long' type for categorical variables. </param>
         /// <param name="interpolation"> Categorical variable supports only 'step' interpolation. </param>
         /// <param name="categories"> &lt;This property needs a description&gt;. </param>
         /// <param name="defaultCategory"> Represents the default category. </param>
-        internal CategoricalVariable(string kind, TimeSeriesExpression filter, TimeSeriesExpression value, TimeSeriesInterpolation interpolation, IList<TimeSeriesAggregateCategory> categories, TimeSeriesDefaultCategory defaultCategory) : base(kind, filter)
+        internal CategoricalVariable(string kind, TimeSeriesExpression filter, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSeriesExpression value, TimeSeriesInterpolation interpolation, IList<TimeSeriesAggregateCategory> categories, TimeSeriesDefaultCategory defaultCategory) : base(kind, filter, serializedAdditionalRawData)
         {
             Value = value;
             Interpolation = interpolation;
             Categories = categories;
             DefaultCategory = defaultCategory;
             Kind = kind ?? "categorical";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CategoricalVariable"/> for deserialization. </summary>
+        internal CategoricalVariable()
+        {
         }
 
         /// <summary> Value time series expression is used to represent the value of the signal that is going to be categorized. It can evaluate to only 'String' or 'Long' type for categorical variables. </summary>

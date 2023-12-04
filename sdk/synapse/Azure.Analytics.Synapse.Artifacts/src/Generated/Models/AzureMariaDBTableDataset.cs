@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureMariaDBTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMariaDBTableDataset"/> for deserialization. </summary>
+        internal AzureMariaDBTableDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

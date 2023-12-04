@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Defines a Spatial Analysis person count operation eventing configuration. </summary>
@@ -18,9 +21,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonCountEvent"/>. </summary>
         /// <param name="threshold"> The event threshold. </param>
         /// <param name="focus"> The operation focus type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="trigger"> The event trigger type. </param>
         /// <param name="outputFrequency"> The event or interval output frequency. </param>
-        internal SpatialAnalysisPersonCountEvent(string threshold, SpatialAnalysisOperationFocus? focus, SpatialAnalysisPersonCountEventTrigger? trigger, string outputFrequency) : base(threshold, focus)
+        internal SpatialAnalysisPersonCountEvent(string threshold, SpatialAnalysisOperationFocus? focus, IDictionary<string, BinaryData> serializedAdditionalRawData, SpatialAnalysisPersonCountEventTrigger? trigger, string outputFrequency) : base(threshold, focus, serializedAdditionalRawData)
         {
             Trigger = trigger;
             OutputFrequency = outputFrequency;

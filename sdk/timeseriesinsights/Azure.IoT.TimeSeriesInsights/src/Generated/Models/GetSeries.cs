@@ -15,6 +15,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Get Series query. Allows to retrieve time series of calculated variable values from events for a given Time Series ID and search span. </summary>
     internal partial class GetSeries
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GetSeries"/>. </summary>
         /// <param name="timeSeriesIdInternal"> A single Time Series ID value that uniquely identifies a single time series instance (e.g. a device). Note that a single Time Series ID can be composite if multiple properties are specified as Time Series ID at environment creation time. The position and type of values must match Time Series ID properties specified on the environment and returned by Get Model Setting API. Cannot be null. </param>
         /// <param name="searchSpan"> The range of time on which the query is executed. Cannot be null. </param>
@@ -26,7 +58,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The available derived classes include <see cref="AggregateVariable"/>, <see cref="CategoricalVariable"/> and <see cref="NumericVariable"/>.
         /// </param>
         /// <param name="take"> Maximum number of property values in the whole response set, not the maximum number of property values per page. Defaults to 10,000 when not set. Maximum value of take can be 250,000. </param>
-        internal GetSeries(IList<object> timeSeriesIdInternal, DateTimeRange searchSpan, TimeSeriesExpression filter, IList<string> projectedVariables, IDictionary<string, TimeSeriesVariable> inlineVariables, int? take)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetSeries(IList<object> timeSeriesIdInternal, DateTimeRange searchSpan, TimeSeriesExpression filter, IList<string> projectedVariables, IDictionary<string, TimeSeriesVariable> inlineVariables, int? take, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeSeriesIdInternal = timeSeriesIdInternal;
             SearchSpan = searchSpan;
@@ -34,6 +67,12 @@ namespace Azure.IoT.TimeSeriesInsights
             ProjectedVariables = projectedVariables;
             InlineVariables = inlineVariables;
             Take = take;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetSeries"/> for deserialization. </summary>
+        internal GetSeries()
+        {
         }
         /// <summary> The range of time on which the query is executed. Cannot be null. </summary>
         public DateTimeRange SearchSpan { get; }

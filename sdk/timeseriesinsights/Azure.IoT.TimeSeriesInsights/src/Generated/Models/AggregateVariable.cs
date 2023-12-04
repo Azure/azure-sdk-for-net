@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -27,11 +28,17 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of <see cref="AggregateVariable"/>. </summary>
         /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="aggregation"> Aggregation time series expression when kind is "aggregate" is used to represent the aggregation that needs to be performed directly using event properties like "$event.Temperature". For example, aggregation for calculating range of temperature changes can be written as: "max($event.Temperature)-min($event.Temperature)". </param>
-        internal AggregateVariable(string kind, TimeSeriesExpression filter, TimeSeriesExpression aggregation) : base(kind, filter)
+        internal AggregateVariable(string kind, TimeSeriesExpression filter, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSeriesExpression aggregation) : base(kind, filter, serializedAdditionalRawData)
         {
             Aggregation = aggregation;
             Kind = kind ?? "aggregate";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AggregateVariable"/> for deserialization. </summary>
+        internal AggregateVariable()
+        {
         }
 
         /// <summary> Aggregation time series expression when kind is "aggregate" is used to represent the aggregation that needs to be performed directly using event properties like "$event.Temperature". For example, aggregation for calculating range of temperature changes can be written as: "max($event.Temperature)-min($event.Temperature)". </summary>

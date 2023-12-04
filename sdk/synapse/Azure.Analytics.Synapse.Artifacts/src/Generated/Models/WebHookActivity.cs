@@ -57,6 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "WebHook";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WebHookActivity"/> for deserialization. </summary>
+        internal WebHookActivity()
+        {
+        }
+
         /// <summary> Rest API method for target endpoint. </summary>
         public WebHookActivityMethod Method { get; set; }
         /// <summary> WebHook activity target endpoint and path. Type: string (or Expression with resultType string). </summary>

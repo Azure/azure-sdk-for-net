@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SapHanaTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapHanaTableDataset"/> for deserialization. </summary>
+        internal SapHanaTableDataset()
+        {
+        }
+
         /// <summary> The schema name of SAP HANA. Type: string (or Expression with resultType string). </summary>
         public object SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of SAP HANA. Type: string (or Expression with resultType string). </summary>

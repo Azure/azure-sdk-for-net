@@ -39,12 +39,18 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="status"></param>
         /// <param name="errors"></param>
         /// <param name="nextLink"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tasks"></param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink, AnalyzeTasks tasks, TextDocumentBatchStatistics statistics) : base(displayName, createdDateTime, expirationDateTime, jobId, lastUpdatedDateTime, status, errors, nextLink)
+        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTasks tasks, TextDocumentBatchStatistics statistics) : base(displayName, createdDateTime, expirationDateTime, jobId, lastUpdatedDateTime, status, errors, nextLink, serializedAdditionalRawData)
         {
             Tasks = tasks;
             Statistics = statistics;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/> for deserialization. </summary>
+        internal AnalyzeTextJobState()
+        {
         }
 
         /// <summary> Gets the tasks. </summary>

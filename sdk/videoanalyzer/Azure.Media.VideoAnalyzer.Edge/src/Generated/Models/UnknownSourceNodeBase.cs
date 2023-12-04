@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownSourceNodeBase. </summary>
@@ -13,9 +16,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="UnknownSourceNodeBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
-        internal UnknownSourceNodeBase(string type, string name) : base(type, name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSourceNodeBase(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, name, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSourceNodeBase"/> for deserialization. </summary>
+        internal UnknownSourceNodeBase()
+        {
         }
     }
 }

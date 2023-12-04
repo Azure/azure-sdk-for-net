@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -25,12 +26,18 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal CustomEntitiesTaskParameters(bool? loggingOptOut, string projectName, string deploymentName, StringIndexType? stringIndexType) : base(loggingOptOut, projectName, deploymentName)
+        internal CustomEntitiesTaskParameters(bool? loggingOptOut, IDictionary<string, BinaryData> serializedAdditionalRawData, string projectName, string deploymentName, StringIndexType? stringIndexType) : base(loggingOptOut, serializedAdditionalRawData, projectName, deploymentName)
         {
             StringIndexType = stringIndexType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskParameters"/> for deserialization. </summary>
+        internal CustomEntitiesTaskParameters()
+        {
         }
 
         /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>

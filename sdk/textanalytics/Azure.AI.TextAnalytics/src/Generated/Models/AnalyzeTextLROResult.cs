@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -27,12 +28,18 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>
         /// <param name="taskName"></param>
-        internal AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, AnalyzeTextLROResultsKind kind, string taskName) : base(lastUpdateDateTime, status)
+        internal AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROResultsKind kind, string taskName) : base(lastUpdateDateTime, status, serializedAdditionalRawData)
         {
             Kind = kind;
             TaskName = taskName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROResult"/> for deserialization. </summary>
+        internal AnalyzeTextLROResult()
+        {
         }
 
         /// <summary> Enumeration of supported Text Analysis long-running operation task results. </summary>

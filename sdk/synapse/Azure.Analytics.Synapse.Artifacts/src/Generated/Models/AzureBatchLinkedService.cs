@@ -64,6 +64,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureBatch";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/> for deserialization. </summary>
+        internal AzureBatchLinkedService()
+        {
+        }
+
         /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
         public object AccountName { get; set; }
         /// <summary>

@@ -5,13 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ClearRange
+    internal partial class ClearRange : IXmlSerializable, IPersistableModel<ClearRange>
     {
-        internal static ClearRange DeserializeClearRange(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "ClearRange");
+            writer.WriteStartElement("Start");
+            writer.WriteValue(Start);
+            writer.WriteEndElement();
+            writer.WriteStartElement("End");
+            writer.WriteValue(End);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ClearRange DeserializeClearRange(XElement element, ModelReaderWriterOptions options = null)
         {
             long start = default;
             long end = default;
@@ -23,7 +43,48 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 end = (long)endElement;
             }
-            return new ClearRange(start, end);
+            return new ClearRange(start, end, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<ClearRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClearRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ClearRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ClearRange IPersistableModel<ClearRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClearRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeClearRange(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ClearRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClearRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

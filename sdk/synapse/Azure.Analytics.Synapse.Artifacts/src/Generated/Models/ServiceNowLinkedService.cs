@@ -67,6 +67,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "ServiceNow";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServiceNowLinkedService"/> for deserialization. </summary>
+        internal ServiceNowLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the ServiceNow server. (i.e. &lt;instance&gt;.service-now.com). </summary>
         public object Endpoint { get; set; }
         /// <summary> The authentication type to use. </summary>

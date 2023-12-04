@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -20,8 +21,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="RawOutputDatasource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="payloadUri"> The SAS URL to a blob where the output should be written. If this property is not set, output data will be written into a temporary storage, and a SAS URL to that temporary storage will be included in the result. </param>
-        internal RawOutputDatasource(string outputDataSourceType, Uri payloadUri) : base(outputDataSourceType)
+        internal RawOutputDatasource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri payloadUri) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             PayloadUri = payloadUri;
             OutputDataSourceType = outputDataSourceType ?? "Raw";

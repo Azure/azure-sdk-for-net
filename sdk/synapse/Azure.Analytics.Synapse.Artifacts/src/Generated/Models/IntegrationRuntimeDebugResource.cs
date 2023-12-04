@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -29,14 +30,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDebugResource"/>. </summary>
         /// <param name="name"> The resource name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties">
         /// Integration runtime properties.
         /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
-        internal IntegrationRuntimeDebugResource(string name, IntegrationRuntime properties) : base(name)
+        internal IntegrationRuntimeDebugResource(string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IntegrationRuntime properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDebugResource"/> for deserialization. </summary>
+        internal IntegrationRuntimeDebugResource()
+        {
         }
 
         /// <summary>

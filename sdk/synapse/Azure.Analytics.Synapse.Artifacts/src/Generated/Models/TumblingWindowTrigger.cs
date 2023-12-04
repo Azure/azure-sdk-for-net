@@ -67,6 +67,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "TumblingWindowTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTrigger"/> for deserialization. </summary>
+        internal TumblingWindowTrigger()
+        {
+        }
+
         /// <summary> Pipeline for which runs are created when an event is fired for trigger window that is ready. </summary>
         public TriggerPipelineReference Pipeline { get; set; }
         /// <summary> The frequency of the time windows. </summary>

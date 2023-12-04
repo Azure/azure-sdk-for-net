@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueMessage : IXmlSerializable
+    public partial class QueueMessage : IXmlSerializable, IPersistableModel<QueueMessage>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "QueueMessage");
             writer.WriteStartElement("MessageText");
@@ -20,5 +25,58 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static QueueMessage DeserializeQueueMessage(XElement element, ModelReaderWriterOptions options = null)
+        {
+            string messageText = default;
+            if (element.Element("MessageText") is XElement messageTextElement)
+            {
+                messageText = (string)messageTextElement;
+            }
+            return new QueueMessage(messageText, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<QueueMessage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueMessage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueMessage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueueMessage IPersistableModel<QueueMessage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueMessage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeQueueMessage(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueMessage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueueMessage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

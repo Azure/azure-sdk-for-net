@@ -50,6 +50,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "RerunTumblingWindowTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/> for deserialization. </summary>
+        internal RerunTumblingWindowTrigger()
+        {
+        }
+
         /// <summary> The parent trigger reference. </summary>
         public object ParentTrigger { get; set; }
         /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>

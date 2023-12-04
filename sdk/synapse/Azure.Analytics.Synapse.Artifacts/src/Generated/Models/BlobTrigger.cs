@@ -48,6 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "BlobTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="BlobTrigger"/> for deserialization. </summary>
+        internal BlobTrigger()
+        {
+        }
+
         /// <summary> The path of the container/folder that will trigger the pipeline. </summary>
         public string FolderPath { get; set; }
         /// <summary> The max number of parallel files to handle when it is triggered. </summary>

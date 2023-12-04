@@ -58,6 +58,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Custom";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/> for deserialization. </summary>
+        internal CustomActivity()
+        {
+        }
+
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>
         public object Command { get; set; }
         /// <summary> Resource linked service reference. </summary>

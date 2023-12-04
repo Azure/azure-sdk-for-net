@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The UnknownOutputDataSource. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        internal UnknownOutputDataSource(string outputDataSourceType) : base(outputDataSourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             OutputDataSourceType = outputDataSourceType ?? "Unknown";
         }

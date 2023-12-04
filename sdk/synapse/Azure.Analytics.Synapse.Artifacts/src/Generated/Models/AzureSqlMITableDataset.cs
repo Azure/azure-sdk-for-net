@@ -45,6 +45,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureSqlMITable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSqlMITableDataset"/> for deserialization. </summary>
+        internal AzureSqlMITableDataset()
+        {
+        }
+
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
         public object TableName { get; set; }
         /// <summary> The schema name of the Azure SQL Managed Instance. Type: string (or Expression with resultType string). </summary>

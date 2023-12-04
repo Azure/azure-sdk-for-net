@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ScheduleTriggerRecurrenceConverter))]
-    public partial class ScheduleTriggerRecurrence : IUtf8JsonSerializable
+    public partial class ScheduleTriggerRecurrence : IUtf8JsonSerializable, IJsonModel<ScheduleTriggerRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleTriggerRecurrence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScheduleTriggerRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTriggerRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ScheduleTriggerRecurrence)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Frequency))
             {
@@ -57,8 +67,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ScheduleTriggerRecurrence DeserializeScheduleTriggerRecurrence(JsonElement element)
+        ScheduleTriggerRecurrence IJsonModel<ScheduleTriggerRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTriggerRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ScheduleTriggerRecurrence)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduleTriggerRecurrence(document.RootElement, options);
+        }
+
+        internal static ScheduleTriggerRecurrence DeserializeScheduleTriggerRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -128,6 +152,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ScheduleTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<ScheduleTriggerRecurrence>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTriggerRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ScheduleTriggerRecurrence)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ScheduleTriggerRecurrence IPersistableModel<ScheduleTriggerRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTriggerRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScheduleTriggerRecurrence(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ScheduleTriggerRecurrence)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScheduleTriggerRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ScheduleTriggerRecurrenceConverter : JsonConverter<ScheduleTriggerRecurrence>
         {

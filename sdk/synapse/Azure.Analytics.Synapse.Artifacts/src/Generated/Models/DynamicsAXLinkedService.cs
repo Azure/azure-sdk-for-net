@@ -69,6 +69,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DynamicsAX";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedService"/> for deserialization. </summary>
+        internal DynamicsAXLinkedService()
+        {
+        }
+
         /// <summary> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </summary>
         public object Url { get; set; }
         /// <summary> Specify the application's client ID. Type: string (or Expression with resultType string). </summary>

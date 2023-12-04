@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueCorsRule : IXmlSerializable
+    public partial class QueueCorsRule : IXmlSerializable, IPersistableModel<QueueCorsRule>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "CorsRule");
             writer.WriteStartElement("AllowedOrigins");
@@ -34,7 +38,9 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueCorsRule DeserializeQueueCorsRule(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static QueueCorsRule DeserializeQueueCorsRule(XElement element, ModelReaderWriterOptions options = null)
         {
             string allowedOrigins = default;
             string allowedMethods = default;
@@ -61,7 +67,48 @@ namespace Azure.Storage.Queues.Models
             {
                 maxAgeInSeconds = (int)maxAgeInSecondsElement;
             }
-            return new QueueCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+            return new QueueCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<QueueCorsRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueCorsRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueCorsRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueueCorsRule IPersistableModel<QueueCorsRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueCorsRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeQueueCorsRule(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueCorsRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueueCorsRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

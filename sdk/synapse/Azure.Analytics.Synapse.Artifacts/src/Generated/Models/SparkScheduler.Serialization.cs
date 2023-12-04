@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,106 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkSchedulerConverter))]
-    public partial class SparkScheduler
+    public partial class SparkScheduler : IUtf8JsonSerializable, IJsonModel<SparkScheduler>
     {
-        internal static SparkScheduler DeserializeSparkScheduler(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkScheduler>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SparkScheduler>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkScheduler>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkScheduler)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SubmittedAt))
+            {
+                if (SubmittedAt != null)
+                {
+                    writer.WritePropertyName("submittedAt"u8);
+                    writer.WriteStringValue(SubmittedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("submittedAt");
+                }
+            }
+            if (Optional.IsDefined(ScheduledAt))
+            {
+                if (ScheduledAt != null)
+                {
+                    writer.WritePropertyName("scheduledAt"u8);
+                    writer.WriteStringValue(ScheduledAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("scheduledAt");
+                }
+            }
+            if (Optional.IsDefined(EndedAt))
+            {
+                if (EndedAt != null)
+                {
+                    writer.WritePropertyName("endedAt"u8);
+                    writer.WriteStringValue(EndedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endedAt");
+                }
+            }
+            if (Optional.IsDefined(CancellationRequestedAt))
+            {
+                if (CancellationRequestedAt != null)
+                {
+                    writer.WritePropertyName("cancellationRequestedAt"u8);
+                    writer.WriteStringValue(CancellationRequestedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("cancellationRequestedAt");
+                }
+            }
+            if (Optional.IsDefined(CurrentState))
+            {
+                writer.WritePropertyName("currentState"u8);
+                writer.WriteStringValue(CurrentState.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SparkScheduler IJsonModel<SparkScheduler>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkScheduler>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkScheduler)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkScheduler(document.RootElement, options);
+        }
+
+        internal static SparkScheduler DeserializeSparkScheduler(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +125,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset?> endedAt = default;
             Optional<DateTimeOffset?> cancellationRequestedAt = default;
             Optional<SchedulerCurrentState> currentState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("submittedAt"u8))
@@ -77,15 +178,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     currentState = new SchedulerCurrentState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SparkScheduler(Optional.ToNullable(submittedAt), Optional.ToNullable(scheduledAt), Optional.ToNullable(endedAt), Optional.ToNullable(cancellationRequestedAt), Optional.ToNullable(currentState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SparkScheduler(Optional.ToNullable(submittedAt), Optional.ToNullable(scheduledAt), Optional.ToNullable(endedAt), Optional.ToNullable(cancellationRequestedAt), Optional.ToNullable(currentState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SparkScheduler>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkScheduler>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkScheduler)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SparkScheduler IPersistableModel<SparkScheduler>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkScheduler>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSparkScheduler(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkScheduler)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SparkScheduler>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SparkSchedulerConverter : JsonConverter<SparkScheduler>
         {
             public override void Write(Utf8JsonWriter writer, SparkScheduler model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override SparkScheduler Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

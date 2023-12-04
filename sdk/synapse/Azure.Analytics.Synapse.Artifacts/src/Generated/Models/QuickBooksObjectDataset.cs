@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "QuickBooksObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="QuickBooksObjectDataset"/> for deserialization. </summary>
+        internal QuickBooksObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

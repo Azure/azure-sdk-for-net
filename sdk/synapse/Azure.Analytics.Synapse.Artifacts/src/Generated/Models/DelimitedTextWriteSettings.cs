@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DelimitedTextWriteSettings";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextWriteSettings"/> for deserialization. </summary>
+        internal DelimitedTextWriteSettings()
+        {
+        }
+
         /// <summary> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </summary>
         public object QuoteAllText { get; set; }
         /// <summary> The file extension used to create the files. Type: string (or Expression with resultType string). </summary>

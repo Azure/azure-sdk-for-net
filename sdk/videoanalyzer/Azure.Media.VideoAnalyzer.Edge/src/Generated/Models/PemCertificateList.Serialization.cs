@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class PemCertificateList : IUtf8JsonSerializable
+    public partial class PemCertificateList : IUtf8JsonSerializable, IJsonModel<PemCertificateList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PemCertificateList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PemCertificateList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PemCertificateList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PemCertificateList)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("certificates"u8);
             writer.WriteStartArray();
@@ -25,17 +36,48 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteEndArray();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PemCertificateList DeserializePemCertificateList(JsonElement element)
+        PemCertificateList IJsonModel<PemCertificateList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PemCertificateList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PemCertificateList)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePemCertificateList(document.RootElement, options);
+        }
+
+        internal static PemCertificateList DeserializePemCertificateList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> certificates = default;
             string type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificates"u8))
@@ -53,8 +95,44 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PemCertificateList(type, certificates);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PemCertificateList(type, serializedAdditionalRawData, certificates);
         }
+
+        BinaryData IPersistableModel<PemCertificateList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PemCertificateList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PemCertificateList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PemCertificateList IPersistableModel<PemCertificateList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PemCertificateList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePemCertificateList(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PemCertificateList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PemCertificateList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

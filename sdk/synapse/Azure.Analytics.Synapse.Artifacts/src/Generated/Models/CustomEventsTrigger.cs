@@ -49,6 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "CustomEventsTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/> for deserialization. </summary>
+        internal CustomEventsTrigger()
+        {
+        }
+
         /// <summary> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>
         public string SubjectBeginsWith { get; set; }
         /// <summary> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>

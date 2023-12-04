@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
 
@@ -30,13 +31,19 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>
         /// <param name="taskName"></param>
         /// <param name="results"> An object representing the pre-build summarization results of each document. </param>
-        internal AbstractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, AnalyzeTextLROResultsKind kind, string taskName, AbstractiveSummarizationResult results) : base(lastUpdateDateTime, status, kind, taskName)
+        internal AbstractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROResultsKind kind, string taskName, AbstractiveSummarizationResult results) : base(lastUpdateDateTime, status, serializedAdditionalRawData, kind, taskName)
         {
             Results = results;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROResult"/> for deserialization. </summary>
+        internal AbstractiveSummarizationLROResult()
+        {
         }
 
         /// <summary> An object representing the pre-build summarization results of each document. </summary>

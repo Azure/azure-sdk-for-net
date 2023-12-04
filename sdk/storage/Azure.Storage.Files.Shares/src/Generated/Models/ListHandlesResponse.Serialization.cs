@@ -5,14 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ListHandlesResponse
+    internal partial class ListHandlesResponse : IXmlSerializable, IPersistableModel<ListHandlesResponse>
     {
-        internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartElement("NextMarker");
+            writer.WriteValue(NextMarker);
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(HandleList))
+            {
+                writer.WriteStartElement("Entries");
+                foreach (var item in HandleList)
+                {
+                    writer.WriteObjectValue(item, "Handle");
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string nextMarker = default;
             IReadOnlyList<HandleItem> handleList = default;
@@ -29,7 +55,48 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 handleList = array;
             }
-            return new ListHandlesResponse(handleList, nextMarker);
+            return new ListHandlesResponse(handleList, nextMarker, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<ListHandlesResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListHandlesResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ListHandlesResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ListHandlesResponse IPersistableModel<ListHandlesResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListHandlesResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeListHandlesResponse(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ListHandlesResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ListHandlesResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

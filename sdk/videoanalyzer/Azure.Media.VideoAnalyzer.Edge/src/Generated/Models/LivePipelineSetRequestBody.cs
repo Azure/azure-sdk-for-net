@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -27,15 +28,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="LivePipelineSetRequestBody"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Live pipeline unique identifier. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Live pipeline properties. </param>
-        internal LivePipelineSetRequestBody(string methodName, string apiVersion, string name, SystemData systemData, LivePipelineProperties properties) : base(methodName, apiVersion)
+        internal LivePipelineSetRequestBody(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, SystemData systemData, LivePipelineProperties properties) : base(methodName, apiVersion, serializedAdditionalRawData)
         {
             Name = name;
             SystemData = systemData;
             Properties = properties;
             MethodName = methodName ?? "LivePipelineSetRequestBody";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LivePipelineSetRequestBody"/> for deserialization. </summary>
+        internal LivePipelineSetRequestBody()
+        {
         }
 
         /// <summary> Live pipeline unique identifier. </summary>

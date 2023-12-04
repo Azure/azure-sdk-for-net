@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Rerun tumbling window trigger Parameters. </summary>
     internal partial class RerunTumblingWindowTriggerActionParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTriggerActionParameters"/>. </summary>
         /// <param name="startTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="endTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
@@ -21,6 +54,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             StartTime = startTime;
             EndTime = endTime;
             MaxConcurrency = maxConcurrency;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTriggerActionParameters"/>. </summary>
+        /// <param name="startTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="endTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RerunTumblingWindowTriggerActionParameters(DateTimeOffset startTime, DateTimeOffset endTime, int maxConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            MaxConcurrency = maxConcurrency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTriggerActionParameters"/> for deserialization. </summary>
+        internal RerunTumblingWindowTriggerActionParameters()
+        {
         }
 
         /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>

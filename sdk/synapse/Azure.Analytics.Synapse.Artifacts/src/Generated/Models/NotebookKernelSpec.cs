@@ -39,6 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NotebookKernelSpec"/> for deserialization. </summary>
+        internal NotebookKernelSpec()
+        {
+        }
+
         /// <summary> Name of the kernel specification. </summary>
         public string Name { get; set; }
         /// <summary> Name to display in UI. </summary>

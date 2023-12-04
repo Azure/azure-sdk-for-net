@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -13,6 +14,38 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The TaskState. </summary>
     internal partial class TaskState
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TaskState"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
@@ -26,11 +59,18 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>
-        internal TaskState(DateTimeOffset lastUpdateDateTime, string taskName, State status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TaskState(DateTimeOffset lastUpdateDateTime, string taskName, State status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             TaskName = taskName;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TaskState"/> for deserialization. </summary>
+        internal TaskState()
+        {
         }
 
         /// <summary> Gets the last update date time. </summary>

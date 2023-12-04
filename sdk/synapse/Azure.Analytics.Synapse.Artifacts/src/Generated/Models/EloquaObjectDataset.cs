@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "EloquaObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="EloquaObjectDataset"/> for deserialization. </summary>
+        internal EloquaObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

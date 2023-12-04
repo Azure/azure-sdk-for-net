@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series instance that is returned by instances search call. Returned instance matched the search request and contains highlighted text to be displayed to the user if it is set to 'true'. </summary>
     internal partial class InstanceHit
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InstanceHit"/>. </summary>
         internal InstanceHit()
         {
@@ -26,13 +59,15 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="typeId"> Represents the type that time series instance which matched the search request belongs to. Never null. </param>
         /// <param name="hierarchyIds"> List of time series hierarchy IDs that time series instance which matched the search request belongs to. Cannot be used to lookup hierarchies. May be null. </param>
         /// <param name="highlights"> Highlighted text of time series instance to be displayed to the user. Highlighting inserts &lt;hit&gt; and &lt;/hit&gt; tags in the portions of text that matched the search string. Do not use any of the highlighted properties to do further API calls. </param>
-        internal InstanceHit(IReadOnlyList<object> timeSeriesId, string name, string typeId, IReadOnlyList<string> hierarchyIds, InstanceHitHighlights highlights)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstanceHit(IReadOnlyList<object> timeSeriesId, string name, string typeId, IReadOnlyList<string> hierarchyIds, InstanceHitHighlights highlights, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeSeriesId = timeSeriesId;
             Name = name;
             TypeId = typeId;
             HierarchyIds = hierarchyIds;
             Highlights = highlights;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Time series ID of the time series instance that matched the search request. </summary>

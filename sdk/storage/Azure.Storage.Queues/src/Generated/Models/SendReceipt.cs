@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
@@ -13,6 +14,38 @@ namespace Azure.Storage.Queues.Models
     /// <summary> The object returned in the QueueMessageList array when calling Put Message on a Queue. </summary>
     public partial class SendReceipt
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SendReceipt"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
@@ -30,6 +63,23 @@ namespace Azure.Storage.Queues.Models
             ExpirationTime = expirationTime;
             PopReceipt = popReceipt;
             TimeNextVisible = timeNextVisible;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendReceipt"/>. </summary>
+        /// <param name="messageId"> The Id of the Message. </param>
+        /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
+        /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>
+        /// <param name="popReceipt"> This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client. </param>
+        /// <param name="timeNextVisible"> The time that the message will again become visible in the Queue. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SendReceipt(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, string popReceipt, DateTimeOffset timeNextVisible, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MessageId = messageId;
+            InsertionTime = insertionTime;
+            ExpirationTime = expirationTime;
+            PopReceipt = popReceipt;
+            TimeNextVisible = timeNextVisible;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

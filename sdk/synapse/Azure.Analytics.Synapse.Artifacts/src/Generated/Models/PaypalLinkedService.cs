@@ -58,6 +58,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Paypal";
         }
 
+        /// <summary> Initializes a new instance of <see cref="PaypalLinkedService"/> for deserialization. </summary>
+        internal PaypalLinkedService()
+        {
+        }
+
         /// <summary> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </summary>
         public object Host { get; set; }
         /// <summary> The client ID associated with your PayPal application. </summary>

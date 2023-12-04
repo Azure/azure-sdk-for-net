@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
@@ -13,6 +14,38 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Properties of a share. </summary>
     internal partial class SharePropertiesInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
@@ -46,7 +79,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="leaseDuration"> When a share is leased, specifies whether the lease is of infinite or fixed duration. </param>
         /// <param name="enabledProtocols"></param>
         /// <param name="rootSquash"></param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -66,6 +100,12 @@ namespace Azure.Storage.Files.Shares.Models
             LeaseDuration = leaseDuration;
             EnabledProtocols = enabledProtocols;
             RootSquash = rootSquash;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/> for deserialization. </summary>
+        internal SharePropertiesInternal()
+        {
         }
 
         /// <summary> Gets the last modified. </summary>

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,13 +16,51 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class ObjectReplicationPolicyData : IUtf8JsonSerializable
+    public partial class ObjectReplicationPolicyData : IUtf8JsonSerializable, IJsonModel<ObjectReplicationPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ObjectReplicationPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ObjectReplicationPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PolicyId))
+            {
+                writer.WritePropertyName("policyId"u8);
+                writer.WriteStringValue(PolicyId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EnabledOn))
+            {
+                writer.WritePropertyName("enabledTime"u8);
+                writer.WriteStringValue(EnabledOn.Value, "O");
+            }
             if (Optional.IsDefined(SourceAccount))
             {
                 writer.WritePropertyName("sourceAccount"u8);
@@ -42,11 +82,40 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ObjectReplicationPolicyData DeserializeObjectReplicationPolicyData(JsonElement element)
+        ObjectReplicationPolicyData IJsonModel<ObjectReplicationPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeObjectReplicationPolicyData(document.RootElement, options);
+        }
+
+        internal static ObjectReplicationPolicyData DeserializeObjectReplicationPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +129,8 @@ namespace Azure.ResourceManager.Storage
             Optional<string> sourceAccount = default;
             Optional<string> destinationAccount = default;
             Optional<IList<ObjectReplicationPolicyRule>> rules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,8 +207,44 @@ namespace Azure.ResourceManager.Storage
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, Optional.ToList(rules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, Optional.ToList(rules), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ObjectReplicationPolicyData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ObjectReplicationPolicyData IPersistableModel<ObjectReplicationPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeObjectReplicationPolicyData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ObjectReplicationPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

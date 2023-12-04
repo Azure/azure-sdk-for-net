@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
@@ -22,6 +25,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Initializes a new instance of <see cref="SpatialAnalysisTypedOperationBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="debug"> If set to 'true', enables debugging mode for this operation. </param>
         /// <param name="calibrationConfiguration"> Advanced calibration configuration. </param>
         /// <param name="cameraConfiguration"> Advanced camera configuration. </param>
@@ -29,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="detectorNodeConfiguration"> Advanced detector node configuration. </param>
         /// <param name="trackerNodeConfiguration"> Advanced tracker node configuration. </param>
         /// <param name="enableFaceMaskClassifier"> If set to 'true', enables face mask detection for this operation. </param>
-        internal SpatialAnalysisTypedOperationBase(string type, string debug, string calibrationConfiguration, string cameraConfiguration, string cameraCalibratorNodeConfiguration, string detectorNodeConfiguration, string trackerNodeConfiguration, string enableFaceMaskClassifier) : base(type)
+        internal SpatialAnalysisTypedOperationBase(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string debug, string calibrationConfiguration, string cameraConfiguration, string cameraCalibratorNodeConfiguration, string detectorNodeConfiguration, string trackerNodeConfiguration, string enableFaceMaskClassifier) : base(type, serializedAdditionalRawData)
         {
             Debug = debug;
             CalibrationConfiguration = calibrationConfiguration;

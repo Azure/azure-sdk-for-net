@@ -38,6 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint">
         /// Endpoint details of the pipeline extension plugin.
         /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -45,9 +46,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// </param>
         /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
         /// <param name="samplingOptions"> Media sampling parameters that define how often media is submitted to the extension plugin. </param>
-        internal HttpExtension(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions) : base(type, name, inputs, endpoint, image, samplingOptions)
+        internal HttpExtension(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions) : base(type, name, inputs, serializedAdditionalRawData, endpoint, image, samplingOptions)
         {
             Type = type ?? "#Microsoft.VideoAnalyzer.HttpExtension";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HttpExtension"/> for deserialization. </summary>
+        internal HttpExtension()
+        {
         }
     }
 }

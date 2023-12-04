@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary>
@@ -21,8 +24,9 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROTask"/>. </summary>
         /// <param name="taskName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
-        internal AnalyzeTextLROTask(string taskName, AnalyzeTextLROTaskKind kind) : base(taskName)
+        internal AnalyzeTextLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind) : base(taskName, serializedAdditionalRawData)
         {
             Kind = kind;
         }

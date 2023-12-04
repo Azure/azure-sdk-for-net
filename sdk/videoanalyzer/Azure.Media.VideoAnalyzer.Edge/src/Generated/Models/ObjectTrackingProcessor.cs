@@ -30,11 +30,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accuracy"> Object tracker accuracy: low, medium, high. Higher accuracy leads to higher CPU consumption in average. </param>
-        internal ObjectTrackingProcessor(string type, string name, IList<NodeInput> inputs, ObjectTrackingAccuracy? accuracy) : base(type, name, inputs)
+        internal ObjectTrackingProcessor(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, ObjectTrackingAccuracy? accuracy) : base(type, name, inputs, serializedAdditionalRawData)
         {
             Accuracy = accuracy;
             Type = type ?? "#Microsoft.VideoAnalyzer.ObjectTrackingProcessor";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ObjectTrackingProcessor"/> for deserialization. </summary>
+        internal ObjectTrackingProcessor()
+        {
         }
 
         /// <summary> Object tracker accuracy: low, medium, high. Higher accuracy leads to higher CPU consumption in average. </summary>

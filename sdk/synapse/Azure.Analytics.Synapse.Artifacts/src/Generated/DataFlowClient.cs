@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetDataFlowsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetDataFlowsByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowResource.DeserializeDataFlowResource, _clientDiagnostics, _pipeline, "DataFlowClient.GetDataFlowsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataFlowResource.DeserializeDataFlowResource(e), _clientDiagnostics, _pipeline, "DataFlowClient.GetDataFlowsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists data flows. </summary>
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetDataFlowsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetDataFlowsByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowResource.DeserializeDataFlowResource, _clientDiagnostics, _pipeline, "DataFlowClient.GetDataFlowsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataFlowResource.DeserializeDataFlowResource(e), _clientDiagnostics, _pipeline, "DataFlowClient.GetDataFlowsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a data flow. </summary>

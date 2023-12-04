@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomTaskParameters : IUtf8JsonSerializable
+    internal partial class CustomTaskParameters : IUtf8JsonSerializable, IJsonModel<CustomTaskParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomTaskParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomTaskParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CustomTaskParameters)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -24,11 +36,40 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomTaskParameters DeserializeCustomTaskParameters(JsonElement element)
+        CustomTaskParameters IJsonModel<CustomTaskParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CustomTaskParameters)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomTaskParameters(document.RootElement, options);
+        }
+
+        internal static CustomTaskParameters DeserializeCustomTaskParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +77,8 @@ namespace Azure.AI.TextAnalytics.Models
             string projectName = default;
             string deploymentName = default;
             Optional<bool> loggingOptOut = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectName"u8))
@@ -57,8 +100,44 @@ namespace Azure.AI.TextAnalytics.Models
                     loggingOptOut = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomTaskParameters(Optional.ToNullable(loggingOptOut), serializedAdditionalRawData, projectName, deploymentName);
         }
+
+        BinaryData IPersistableModel<CustomTaskParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CustomTaskParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomTaskParameters IPersistableModel<CustomTaskParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomTaskParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CustomTaskParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomTaskParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

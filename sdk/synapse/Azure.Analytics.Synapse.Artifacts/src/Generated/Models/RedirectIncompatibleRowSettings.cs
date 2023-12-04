@@ -36,6 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RedirectIncompatibleRowSettings"/> for deserialization. </summary>
+        internal RedirectIncompatibleRowSettings()
+        {
+        }
+
         /// <summary> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </summary>
         public object LinkedServiceName { get; set; }
         /// <summary> The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string). </summary>

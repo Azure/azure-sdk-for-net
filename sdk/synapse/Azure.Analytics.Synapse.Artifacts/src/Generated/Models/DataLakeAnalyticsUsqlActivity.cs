@@ -61,6 +61,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DataLakeAnalyticsU-SQL";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUsqlActivity"/> for deserialization. </summary>
+        internal DataLakeAnalyticsUsqlActivity()
+        {
+        }
+
         /// <summary> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </summary>
         public object ScriptPath { get; set; }
         /// <summary> Script linked service reference. </summary>

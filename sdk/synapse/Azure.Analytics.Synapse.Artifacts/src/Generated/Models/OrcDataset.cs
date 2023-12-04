@@ -47,6 +47,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Orc";
         }
 
+        /// <summary> Initializes a new instance of <see cref="OrcDataset"/> for deserialization. </summary>
+        internal OrcDataset()
+        {
+        }
+
         /// <summary>
         /// The location of the ORC data storage.
         /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

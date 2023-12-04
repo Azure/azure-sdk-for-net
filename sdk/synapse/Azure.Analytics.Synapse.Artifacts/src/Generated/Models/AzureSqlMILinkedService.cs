@@ -59,6 +59,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureSqlMI";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSqlMILinkedService"/> for deserialization. </summary>
+        internal AzureSqlMILinkedService()
+        {
+        }
+
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>

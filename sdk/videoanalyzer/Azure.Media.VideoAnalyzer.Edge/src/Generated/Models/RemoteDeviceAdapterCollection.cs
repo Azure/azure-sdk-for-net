@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A list of remote device adapters. </summary>
     public partial class RemoteDeviceAdapterCollection
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterCollection"/>. </summary>
         public RemoteDeviceAdapterCollection()
         {
@@ -22,10 +55,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterCollection"/>. </summary>
         /// <param name="value"> An array of remote device adapters. </param>
         /// <param name="continuationToken"> A continuation token to use in subsequent calls to enumerate through the remote device adapter collection. This is used when the collection contains too many results to return in one response. </param>
-        internal RemoteDeviceAdapterCollection(IList<RemoteDeviceAdapter> value, string continuationToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoteDeviceAdapterCollection(IList<RemoteDeviceAdapter> value, string continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of remote device adapters. </summary>

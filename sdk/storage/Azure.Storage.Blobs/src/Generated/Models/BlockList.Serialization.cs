@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlockList
+    public partial class BlockList : IXmlSerializable, IPersistableModel<BlockList>
     {
-        internal static BlockList DeserializeBlockList(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "BlockList");
+            if (Optional.IsCollectionDefined(CommittedBlocks))
+            {
+                writer.WriteStartElement("CommittedBlocks");
+                foreach (var item in CommittedBlocks)
+                {
+                    writer.WriteObjectValue(item, "Block");
+                }
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(UncommittedBlocks))
+            {
+                writer.WriteStartElement("UncommittedBlocks");
+                foreach (var item in UncommittedBlocks)
+                {
+                    writer.WriteObjectValue(item, "Block");
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlockList DeserializeBlockList(XElement element, ModelReaderWriterOptions options = null)
         {
             IEnumerable<BlobBlock> committedBlocks = default;
             IEnumerable<BlobBlock> uncommittedBlocks = default;
@@ -34,7 +66,48 @@ namespace Azure.Storage.Blobs.Models
                 }
                 uncommittedBlocks = array;
             }
-            return new BlockList(committedBlocks, uncommittedBlocks);
+            return new BlockList(committedBlocks, uncommittedBlocks, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlockList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlockList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlockList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlockList IPersistableModel<BlockList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlockList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlockList(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlockList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlockList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

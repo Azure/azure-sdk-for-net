@@ -65,6 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "HBase";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HBaseLinkedService"/> for deserialization. </summary>
+        internal HBaseLinkedService()
+        {
+        }
+
         /// <summary> The IP address or host name of the HBase server. (i.e. 192.168.222.160). </summary>
         public object Host { get; set; }
         /// <summary> The TCP port that the HBase instance uses to listen for client connections. The default value is 9090. </summary>

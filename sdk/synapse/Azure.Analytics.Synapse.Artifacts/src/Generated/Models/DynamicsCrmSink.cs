@@ -39,6 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DynamicsCrmSink";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmSink"/> for deserialization. </summary>
+        internal DynamicsCrmSink()
+        {
+        }
+
         /// <summary> The write behavior for the operation. </summary>
         public DynamicsSinkWriteBehavior WriteBehavior { get; set; }
         /// <summary> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </summary>

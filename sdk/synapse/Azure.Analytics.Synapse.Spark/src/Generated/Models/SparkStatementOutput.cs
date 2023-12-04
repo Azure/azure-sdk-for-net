@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkStatementOutput. </summary>
     public partial class SparkStatementOutput
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SparkStatementOutput"/>. </summary>
         /// <param name="executionCount"></param>
         internal SparkStatementOutput(int executionCount)
@@ -28,7 +61,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="errorName"></param>
         /// <param name="errorValue"></param>
         /// <param name="traceback"></param>
-        internal SparkStatementOutput(string status, int executionCount, object data, string errorName, string errorValue, IReadOnlyList<string> traceback)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkStatementOutput(string status, int executionCount, object data, string errorName, string errorValue, IReadOnlyList<string> traceback, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             ExecutionCount = executionCount;
@@ -36,6 +70,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             ErrorName = errorName;
             ErrorValue = errorValue;
             Traceback = traceback;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOutput"/> for deserialization. </summary>
+        internal SparkStatementOutput()
+        {
         }
 
         /// <summary> Gets the status. </summary>

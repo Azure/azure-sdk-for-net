@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureMySqlTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMySqlTableDataset"/> for deserialization. </summary>
+        internal AzureMySqlTableDataset()
+        {
+        }
+
         /// <summary> The Azure MySQL database table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
         /// <summary> The name of Azure MySQL database table. Type: string (or Expression with resultType string). </summary>

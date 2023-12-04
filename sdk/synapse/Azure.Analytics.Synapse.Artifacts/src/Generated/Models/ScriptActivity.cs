@@ -47,6 +47,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Script";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ScriptActivity"/> for deserialization. </summary>
+        internal ScriptActivity()
+        {
+        }
+
         /// <summary> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public object ScriptBlockExecutionTimeout { get; set; }
         /// <summary> Array of script blocks. Type: array. </summary>

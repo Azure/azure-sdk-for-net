@@ -14,6 +14,38 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An Azure Storage blob. </summary>
     internal partial class BlobItemInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
@@ -45,7 +77,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="blobTags"> Blob tags. </param>
         /// <param name="hasVersionsOnly"></param>
         /// <param name="orMetadata"> Dictionary of &lt;string&gt;. </param>
-        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, bool? hasVersionsOnly, IReadOnlyDictionary<string, string> orMetadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, bool? hasVersionsOnly, IReadOnlyDictionary<string, string> orMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Deleted = deleted;
@@ -57,6 +90,12 @@ namespace Azure.Storage.Blobs.Models
             BlobTags = blobTags;
             HasVersionsOnly = hasVersionsOnly;
             OrMetadata = orMetadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/> for deserialization. </summary>
+        internal BlobItemInternal()
+        {
         }
 
         /// <summary> Gets the name. </summary>

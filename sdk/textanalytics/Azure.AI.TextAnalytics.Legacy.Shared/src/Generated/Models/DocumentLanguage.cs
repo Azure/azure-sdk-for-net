@@ -15,6 +15,38 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The DocumentLanguage. </summary>
     internal partial class DocumentLanguage
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DocumentLanguage"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="detectedLanguage"> Detected Language. </param>
@@ -36,12 +68,19 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="detectedLanguage"> Detected Language. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentLanguage(string id, DetectedLanguage detectedLanguage, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentLanguage(string id, DetectedLanguage detectedLanguage, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DetectedLanguage = detectedLanguage;
             Warnings = warnings;
             Statistics = statistics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentLanguage"/> for deserialization. </summary>
+        internal DocumentLanguage()
+        {
         }
 
         /// <summary> Unique, non-empty document identifier. </summary>

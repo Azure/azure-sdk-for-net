@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -29,11 +30,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="NamedLineString"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="name"> Line name. Must be unique within the node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="line"> Point coordinates for the line start and end, respectively. Example: '[[0.3, 0.2],[0.9, 0.8]]'. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </param>
-        internal NamedLineString(string type, string name, string line) : base(type, name)
+        internal NamedLineString(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string line) : base(type, name, serializedAdditionalRawData)
         {
             Line = line;
             Type = type ?? "#Microsoft.VideoAnalyzer.NamedLineString";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NamedLineString"/> for deserialization. </summary>
+        internal NamedLineString()
+        {
         }
 
         /// <summary> Point coordinates for the line start and end, respectively. Example: '[[0.3, 0.2],[0.9, 0.8]]'. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </summary>

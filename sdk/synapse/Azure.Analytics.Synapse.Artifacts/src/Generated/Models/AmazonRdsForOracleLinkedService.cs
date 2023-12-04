@@ -47,6 +47,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AmazonRdsForOracle";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleLinkedService"/> for deserialization. </summary>
+        internal AmazonRdsForOracleLinkedService()
+        {
+        }
+
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary>

@@ -6,16 +6,174 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
-    public partial class SparkJob
+    public partial class SparkJob : IUtf8JsonSerializable, IJsonModel<SparkJob>
     {
-        internal static SparkJob DeserializeSparkJob(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SparkJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkJob)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Submitter))
+            {
+                writer.WritePropertyName("submitter"u8);
+                writer.WriteStringValue(Submitter);
+            }
+            if (Optional.IsDefined(Compute))
+            {
+                writer.WritePropertyName("compute"u8);
+                writer.WriteStringValue(Compute);
+            }
+            if (Optional.IsDefined(SparkApplicationId))
+            {
+                writer.WritePropertyName("sparkApplicationId"u8);
+                writer.WriteStringValue(SparkApplicationId);
+            }
+            if (Optional.IsDefined(LivyId))
+            {
+                writer.WritePropertyName("livyId"u8);
+                writer.WriteStringValue(LivyId);
+            }
+            if (Optional.IsCollectionDefined(Timing))
+            {
+                writer.WritePropertyName("timing"u8);
+                writer.WriteStartArray();
+                foreach (var item in Timing)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SparkJobDefinition))
+            {
+                if (SparkJobDefinition != null)
+                {
+                    writer.WritePropertyName("sparkJobDefinition"u8);
+                    writer.WriteStringValue(SparkJobDefinition);
+                }
+                else
+                {
+                    writer.WriteNull("sparkJobDefinition");
+                }
+            }
+            if (Optional.IsCollectionDefined(Pipeline))
+            {
+                if (Pipeline != null)
+                {
+                    writer.WritePropertyName("pipeline"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Pipeline)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("pipeline");
+                }
+            }
+            if (Optional.IsDefined(JobType))
+            {
+                writer.WritePropertyName("jobType"u8);
+                writer.WriteStringValue(JobType);
+            }
+            if (Optional.IsDefined(SubmitTime))
+            {
+                if (SubmitTime != null)
+                {
+                    writer.WritePropertyName("submitTime"u8);
+                    writer.WriteStringValue(SubmitTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("submitTime");
+                }
+            }
+            if (Optional.IsDefined(EndTime))
+            {
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
+            }
+            if (Optional.IsDefined(QueuedDuration))
+            {
+                writer.WritePropertyName("queuedDuration"u8);
+                writer.WriteStringValue(QueuedDuration);
+            }
+            if (Optional.IsDefined(RunningDuration))
+            {
+                writer.WritePropertyName("runningDuration"u8);
+                writer.WriteStringValue(RunningDuration);
+            }
+            if (Optional.IsDefined(TotalDuration))
+            {
+                writer.WritePropertyName("totalDuration"u8);
+                writer.WriteStringValue(TotalDuration);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SparkJob IJsonModel<SparkJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkJob)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkJob(document.RootElement, options);
+        }
+
+        internal static SparkJob DeserializeSparkJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +193,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             Optional<string> queuedDuration = default;
             Optional<string> runningDuration = default;
             Optional<string> totalDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -145,8 +305,44 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     totalDuration = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, Optional.ToList(timing), sparkJobDefinition.Value, Optional.ToList(pipeline), jobType.Value, Optional.ToNullable(submitTime), Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, Optional.ToList(timing), sparkJobDefinition.Value, Optional.ToList(pipeline), jobType.Value, Optional.ToNullable(submitTime), Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SparkJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkJob)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SparkJob IPersistableModel<SparkJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSparkJob(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkJob)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SparkJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

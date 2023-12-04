@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Parameters object for a text analysis task using pre-built models. </summary>
@@ -17,8 +20,9 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="PreBuiltTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="modelVersion"></param>
-        internal PreBuiltTaskParameters(bool? loggingOptOut, string modelVersion) : base(loggingOptOut)
+        internal PreBuiltTaskParameters(bool? loggingOptOut, IDictionary<string, BinaryData> serializedAdditionalRawData, string modelVersion) : base(loggingOptOut, serializedAdditionalRawData)
         {
             ModelVersion = modelVersion;
         }

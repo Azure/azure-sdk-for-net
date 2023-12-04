@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "JiraObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="JiraObjectDataset"/> for deserialization. </summary>
+        internal JiraObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

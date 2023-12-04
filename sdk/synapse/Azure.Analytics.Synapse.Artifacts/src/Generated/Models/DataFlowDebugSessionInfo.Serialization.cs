@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,88 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowDebugSessionInfoConverter))]
-    public partial class DataFlowDebugSessionInfo
+    public partial class DataFlowDebugSessionInfo : IUtf8JsonSerializable, IJsonModel<DataFlowDebugSessionInfo>
     {
-        internal static DataFlowDebugSessionInfo DeserializeDataFlowDebugSessionInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowDebugSessionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFlowDebugSessionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFlowDebugSessionInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DataFlowName))
+            {
+                writer.WritePropertyName("dataFlowName"u8);
+                writer.WriteStringValue(DataFlowName);
+            }
+            if (Optional.IsDefined(ComputeType))
+            {
+                writer.WritePropertyName("computeType"u8);
+                writer.WriteStringValue(ComputeType);
+            }
+            if (Optional.IsDefined(CoreCount))
+            {
+                writer.WritePropertyName("coreCount"u8);
+                writer.WriteNumberValue(CoreCount.Value);
+            }
+            if (Optional.IsDefined(NodeCount))
+            {
+                writer.WritePropertyName("nodeCount"u8);
+                writer.WriteNumberValue(NodeCount.Value);
+            }
+            if (Optional.IsDefined(IntegrationRuntimeName))
+            {
+                writer.WritePropertyName("integrationRuntimeName"u8);
+                writer.WriteStringValue(IntegrationRuntimeName);
+            }
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId);
+            }
+            if (Optional.IsDefined(StartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartTime);
+            }
+            if (Optional.IsDefined(TimeToLiveInMinutes))
+            {
+                writer.WritePropertyName("timeToLiveInMinutes"u8);
+                writer.WriteNumberValue(TimeToLiveInMinutes.Value);
+            }
+            if (Optional.IsDefined(LastActivityTime))
+            {
+                writer.WritePropertyName("lastActivityTime"u8);
+                writer.WriteStringValue(LastActivityTime);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        DataFlowDebugSessionInfo IJsonModel<DataFlowDebugSessionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFlowDebugSessionInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowDebugSessionInfo(document.RootElement, options);
+        }
+
+        internal static DataFlowDebugSessionInfo DeserializeDataFlowDebugSessionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,11 +178,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, sessionId.Value, startTime.Value, Optional.ToNullable(timeToLiveInMinutes), lastActivityTime.Value, additionalProperties);
         }
 
+        BinaryData IPersistableModel<DataFlowDebugSessionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFlowDebugSessionInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFlowDebugSessionInfo IPersistableModel<DataFlowDebugSessionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFlowDebugSessionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFlowDebugSessionInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFlowDebugSessionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         internal partial class DataFlowDebugSessionInfoConverter : JsonConverter<DataFlowDebugSessionInfo>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugSessionInfo model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override DataFlowDebugSessionInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

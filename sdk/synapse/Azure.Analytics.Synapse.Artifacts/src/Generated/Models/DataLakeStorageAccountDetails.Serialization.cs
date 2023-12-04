@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataLakeStorageAccountDetailsConverter))]
-    public partial class DataLakeStorageAccountDetails : IUtf8JsonSerializable
+    public partial class DataLakeStorageAccountDetails : IUtf8JsonSerializable, IJsonModel<DataLakeStorageAccountDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStorageAccountDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataLakeStorageAccountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataLakeStorageAccountDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountUrl))
             {
@@ -28,17 +39,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataLakeStorageAccountDetails DeserializeDataLakeStorageAccountDetails(JsonElement element)
+        DataLakeStorageAccountDetails IJsonModel<DataLakeStorageAccountDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataLakeStorageAccountDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeStorageAccountDetails(document.RootElement, options);
+        }
+
+        internal static DataLakeStorageAccountDetails DeserializeDataLakeStorageAccountDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> accountUrl = default;
             Optional<string> filesystem = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountUrl"u8))
@@ -51,9 +93,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     filesystem = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataLakeStorageAccountDetails(accountUrl.Value, filesystem.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataLakeStorageAccountDetails(accountUrl.Value, filesystem.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataLakeStorageAccountDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataLakeStorageAccountDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataLakeStorageAccountDetails IPersistableModel<DataLakeStorageAccountDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataLakeStorageAccountDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataLakeStorageAccountDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataLakeStorageAccountDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class DataLakeStorageAccountDetailsConverter : JsonConverter<DataLakeStorageAccountDetails>
         {

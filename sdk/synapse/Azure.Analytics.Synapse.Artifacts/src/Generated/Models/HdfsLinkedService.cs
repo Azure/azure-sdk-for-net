@@ -51,6 +51,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Hdfs";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HdfsLinkedService"/> for deserialization. </summary>
+        internal HdfsLinkedService()
+        {
+        }
+
         /// <summary> The URL of the HDFS service endpoint, e.g. http://myhostname:50070/webhdfs/v1 . Type: string (or Expression with resultType string). </summary>
         public object Url { get; set; }
         /// <summary> Type of authentication used to connect to the HDFS. Possible values are: Anonymous and Windows. Type: string (or Expression with resultType string). </summary>

@@ -15,6 +15,38 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The SentimentResponse. </summary>
     internal partial class SentimentResponse
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SentimentResponse"/>. </summary>
         /// <param name="documents"> Sentiment analysis per document. </param>
         /// <param name="errors"> Errors by document id. </param>
@@ -36,12 +68,19 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal SentimentResponse(IReadOnlyList<DocumentSentiment> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentimentResponse(IReadOnlyList<DocumentSentiment> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Documents = documents;
             Errors = errors;
             Statistics = statistics;
             ModelVersion = modelVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentResponse"/> for deserialization. </summary>
+        internal SentimentResponse()
+        {
         }
 
         /// <summary> Sentiment analysis per document. </summary>

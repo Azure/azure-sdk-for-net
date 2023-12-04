@@ -5,11 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareStatistics
+    public partial class ShareStatistics : IXmlSerializable, IPersistableModel<ShareStatistics>
     {
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "ShareStats");
+            writer.WriteStartElement("ShareUsageBytes");
+            writer.WriteValue(ShareUsageBytes);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ShareStatistics DeserializeShareStatistics(XElement element, ModelReaderWriterOptions options = null)
+        {
+            int shareUsageBytes = default;
+            if (element.Element("ShareUsageBytes") is XElement shareUsageBytesElement)
+            {
+                shareUsageBytes = (int)shareUsageBytesElement;
+            }
+            return new ShareStatistics(shareUsageBytes, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<ShareStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ShareStatistics IPersistableModel<ShareStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeShareStatistics(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ShareStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ShareStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

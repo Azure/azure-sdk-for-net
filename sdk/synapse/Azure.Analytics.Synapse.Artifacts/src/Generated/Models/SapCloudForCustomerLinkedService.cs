@@ -49,6 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SapCloudForCustomer";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerLinkedService"/> for deserialization. </summary>
+        internal SapCloudForCustomerLinkedService()
+        {
+        }
+
         /// <summary> The URL of SAP Cloud for Customer OData API. For example, '[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]'. Type: string (or Expression with resultType string). </summary>
         public object Url { get; set; }
         /// <summary> The username for Basic authentication. Type: string (or Expression with resultType string). </summary>

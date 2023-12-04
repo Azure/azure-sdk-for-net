@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Lists all the discoverable ONVIF devices on the same subnet as the Edge Module. </summary>
@@ -19,8 +22,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="OnvifDeviceDiscoverRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="discoveryDuration"> The amount of time that the ONVIF device discovery will wait for supported device responses. </param>
-        internal OnvifDeviceDiscoverRequest(string methodName, string apiVersion, string discoveryDuration) : base(methodName, apiVersion)
+        internal OnvifDeviceDiscoverRequest(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string discoveryDuration) : base(methodName, apiVersion, serializedAdditionalRawData)
         {
             DiscoveryDuration = discoveryDuration;
             MethodName = methodName ?? "onvifDeviceDiscover";

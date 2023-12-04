@@ -15,6 +15,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service reference type. </summary>
     public partial class LinkedServiceReference
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LinkedServiceReference"/>. </summary>
         /// <param name="type"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
@@ -32,11 +64,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <param name="parameters"> Arguments for LinkedService. </param>
-        internal LinkedServiceReference(LinkedServiceReferenceType type, string referenceName, IDictionary<string, object> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedServiceReference(LinkedServiceReferenceType type, string referenceName, IDictionary<string, object> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             ReferenceName = referenceName;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceReference"/> for deserialization. </summary>
+        internal LinkedServiceReference()
+        {
         }
 
         /// <summary> Linked service reference type. </summary>

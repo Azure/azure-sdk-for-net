@@ -80,6 +80,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SparkJob";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/> for deserialization. </summary>
+        internal SynapseSparkJobDefinitionActivity()
+        {
+        }
+
         /// <summary> Synapse spark job reference. </summary>
         public SynapseSparkJobReference SparkJob { get; set; }
         /// <summary> User specified arguments to SynapseSparkJobDefinitionActivity. </summary>

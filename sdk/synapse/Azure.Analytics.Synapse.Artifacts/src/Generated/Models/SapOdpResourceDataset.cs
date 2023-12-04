@@ -49,6 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SapOdpResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapOdpResourceDataset"/> for deserialization. </summary>
+        internal SapOdpResourceDataset()
+        {
+        }
+
         /// <summary> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>
         public object Context { get; set; }
         /// <summary> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>

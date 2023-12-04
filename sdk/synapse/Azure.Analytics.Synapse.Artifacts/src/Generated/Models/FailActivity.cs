@@ -48,6 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Fail";
         }
 
+        /// <summary> Initializes a new instance of <see cref="FailActivity"/> for deserialization. </summary>
+        internal FailActivity()
+        {
+        }
+
         /// <summary> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
         public object Message { get; set; }
         /// <summary> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>

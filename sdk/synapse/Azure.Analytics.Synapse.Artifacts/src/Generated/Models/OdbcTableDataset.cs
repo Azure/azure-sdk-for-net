@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "OdbcTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="OdbcTableDataset"/> for deserialization. </summary>
+        internal OdbcTableDataset()
+        {
+        }
+
         /// <summary> The ODBC table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SnowflakeTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SnowflakeDataset"/> for deserialization. </summary>
+        internal SnowflakeDataset()
+        {
+        }
+
         /// <summary> The schema name of the Snowflake database. Type: string (or Expression with resultType string). </summary>
         public object SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the Snowflake database. Type: string (or Expression with resultType string). </summary>

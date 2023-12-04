@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDataLakeStoreLocationConverter))]
-    public partial class AzureDataLakeStoreLocation : IUtf8JsonSerializable
+    public partial class AzureDataLakeStoreLocation : IUtf8JsonSerializable, IJsonModel<AzureDataLakeStoreLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataLakeStoreLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureDataLakeStoreLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStoreLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureDataLakeStoreLocation)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -39,8 +49,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataLakeStoreLocation DeserializeAzureDataLakeStoreLocation(JsonElement element)
+        AzureDataLakeStoreLocation IJsonModel<AzureDataLakeStoreLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStoreLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureDataLakeStoreLocation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataLakeStoreLocation(document.RootElement, options);
+        }
+
+        internal static AzureDataLakeStoreLocation DeserializeAzureDataLakeStoreLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +104,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataLakeStoreLocation(type, folderPath.Value, fileName.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<AzureDataLakeStoreLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStoreLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureDataLakeStoreLocation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureDataLakeStoreLocation IPersistableModel<AzureDataLakeStoreLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStoreLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDataLakeStoreLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureDataLakeStoreLocation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDataLakeStoreLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureDataLakeStoreLocationConverter : JsonConverter<AzureDataLakeStoreLocation>
         {

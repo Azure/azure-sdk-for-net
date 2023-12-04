@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureMLUpdateResourceActivityConverter))]
-    public partial class AzureMLUpdateResourceActivity : IUtf8JsonSerializable
+    public partial class AzureMLUpdateResourceActivity : IUtf8JsonSerializable, IJsonModel<AzureMLUpdateResourceActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLUpdateResourceActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureMLUpdateResourceActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLUpdateResourceActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureMLUpdateResourceActivity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -85,8 +95,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureMLUpdateResourceActivity DeserializeAzureMLUpdateResourceActivity(JsonElement element)
+        AzureMLUpdateResourceActivity IJsonModel<AzureMLUpdateResourceActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLUpdateResourceActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureMLUpdateResourceActivity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMLUpdateResourceActivity(document.RootElement, options);
+        }
+
+        internal static AzureMLUpdateResourceActivity DeserializeAzureMLUpdateResourceActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -218,6 +242,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMLUpdateResourceActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, trainedModelName, trainedModelLinkedServiceName, trainedModelFilePath);
         }
+
+        BinaryData IPersistableModel<AzureMLUpdateResourceActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLUpdateResourceActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureMLUpdateResourceActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureMLUpdateResourceActivity IPersistableModel<AzureMLUpdateResourceActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLUpdateResourceActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureMLUpdateResourceActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureMLUpdateResourceActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureMLUpdateResourceActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureMLUpdateResourceActivityConverter : JsonConverter<AzureMLUpdateResourceActivity>
         {

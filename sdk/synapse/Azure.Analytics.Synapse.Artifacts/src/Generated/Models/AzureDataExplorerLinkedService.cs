@@ -56,6 +56,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureDataExplorer";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerLinkedService"/> for deserialization. </summary>
+        internal AzureDataExplorerLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of Azure Data Explorer (the engine's endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </summary>
         public object Endpoint { get; set; }
         /// <summary> The ID of the service principal used to authenticate against Azure Data Explorer. Type: string (or Expression with resultType string). </summary>

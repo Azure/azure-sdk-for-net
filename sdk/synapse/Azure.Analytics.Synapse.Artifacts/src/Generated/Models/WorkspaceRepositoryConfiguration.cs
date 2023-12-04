@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Git integration settings. </summary>
     public partial class WorkspaceRepositoryConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="WorkspaceRepositoryConfiguration"/>. </summary>
         public WorkspaceRepositoryConfiguration()
         {
@@ -29,7 +62,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="tenantId"> The VSTS tenant ID. </param>
         /// <param name="clientId"> GitHub bring your own app client id. </param>
         /// <param name="clientSecret"> GitHub bring your own app client secret information. </param>
-        internal WorkspaceRepositoryConfiguration(string type, string hostName, string accountName, string projectName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, Guid? tenantId, string clientId, GitHubClientSecret clientSecret)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceRepositoryConfiguration(string type, string hostName, string accountName, string projectName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, Guid? tenantId, string clientId, GitHubClientSecret clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             HostName = hostName;
@@ -42,6 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             TenantId = tenantId;
             ClientId = clientId;
             ClientSecret = clientSecret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Session properties. </summary>
     public partial class NotebookSessionProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NotebookSessionProperties"/>. </summary>
         /// <param name="driverMemory"> Amount of memory to use for the driver process. </param>
         /// <param name="driverCores"> Number of cores to use for the driver. </param>
@@ -30,6 +63,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ExecutorMemory = executorMemory;
             ExecutorCores = executorCores;
             NumExecutors = numExecutors;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotebookSessionProperties"/>. </summary>
+        /// <param name="driverMemory"> Amount of memory to use for the driver process. </param>
+        /// <param name="driverCores"> Number of cores to use for the driver. </param>
+        /// <param name="executorMemory"> Amount of memory to use per executor process. </param>
+        /// <param name="executorCores"> Number of cores to use for each executor. </param>
+        /// <param name="numExecutors"> Number of executors to launch for this session. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotebookSessionProperties(string driverMemory, int driverCores, string executorMemory, int executorCores, int numExecutors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DriverMemory = driverMemory;
+            DriverCores = driverCores;
+            ExecutorMemory = executorMemory;
+            ExecutorCores = executorCores;
+            NumExecutors = numExecutors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotebookSessionProperties"/> for deserialization. </summary>
+        internal NotebookSessionProperties()
+        {
         }
 
         /// <summary> Amount of memory to use for the driver process. </summary>

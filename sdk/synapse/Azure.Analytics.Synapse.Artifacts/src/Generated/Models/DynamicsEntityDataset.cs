@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DynamicsEntity";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicsEntityDataset"/> for deserialization. </summary>
+        internal DynamicsEntityDataset()
+        {
+        }
+
         /// <summary> The logical name of the entity. Type: string (or Expression with resultType string). </summary>
         public object EntityName { get; set; }
     }

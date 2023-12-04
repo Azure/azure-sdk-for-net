@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureDataExplorerSource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerSource"/> for deserialization. </summary>
+        internal AzureDataExplorerSource()
+        {
+        }
+
         /// <summary> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </summary>
         public object Query { get; set; }
         /// <summary> The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit. </summary>

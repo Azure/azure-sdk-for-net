@@ -51,6 +51,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DatabricksSparkJar";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkJarActivity"/> for deserialization. </summary>
+        internal DatabricksSparkJarActivity()
+        {
+        }
+
         /// <summary> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </summary>
         public object MainClassName { get; set; }
         /// <summary> Parameters that will be passed to the main method. </summary>

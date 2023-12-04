@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The UnknownVariable. </summary>
@@ -13,7 +16,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of <see cref="UnknownVariable"/>. </summary>
         /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
-        internal UnknownVariable(string kind, TimeSeriesExpression filter) : base(kind, filter)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownVariable(string kind, TimeSeriesExpression filter, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, filter, serializedAdditionalRawData)
         {
             Kind = kind ?? "Unknown";
         }

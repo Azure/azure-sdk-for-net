@@ -57,6 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "HDInsight";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/> for deserialization. </summary>
+        internal HDInsightLinkedService()
+        {
+        }
+
         /// <summary> HDInsight cluster URI. Type: string (or Expression with resultType string). </summary>
         public object ClusterUri { get; set; }
         /// <summary> HDInsight cluster user name. Type: string (or Expression with resultType string). </summary>

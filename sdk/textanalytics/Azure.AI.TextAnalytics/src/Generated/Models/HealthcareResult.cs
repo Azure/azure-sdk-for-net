@@ -34,10 +34,16 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="documents"></param>
-        internal HealthcareResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<HealthcareResultDocumentsItem> documents) : base(errors, statistics, modelVersion)
+        internal HealthcareResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<HealthcareResultDocumentsItem> documents) : base(errors, statistics, modelVersion, serializedAdditionalRawData)
         {
             Documents = documents;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareResult"/> for deserialization. </summary>
+        internal HealthcareResult()
+        {
         }
 
         /// <summary> Gets the documents. </summary>

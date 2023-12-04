@@ -59,6 +59,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "HttpFile";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HttpDataset"/> for deserialization. </summary>
+        internal HttpDataset()
+        {
+        }
+
         /// <summary> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </summary>
         public object RelativeUrl { get; set; }
         /// <summary> The HTTP method for the HTTP request. Type: string (or Expression with resultType string). </summary>

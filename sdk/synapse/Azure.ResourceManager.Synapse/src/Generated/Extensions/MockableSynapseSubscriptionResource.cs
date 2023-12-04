@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Synapse.Mocking
         public virtual AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseKustoPoolKustoPoolsRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "MockableSynapseSubscriptionResource.GetSkusKustoPools", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription(e), SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "MockableSynapseSubscriptionResource.GetSkusKustoPools", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Synapse.Mocking
         public virtual Pageable<KustoPoolSkuDescription> GetSkusKustoPools(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseKustoPoolKustoPoolsRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "MockableSynapseSubscriptionResource.GetSkusKustoPools", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription(e), SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "MockableSynapseSubscriptionResource.GetSkusKustoPools", "value", null, cancellationToken);
         }
 
         /// <summary>

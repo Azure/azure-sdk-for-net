@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -29,11 +30,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="NamedPolygonString"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="name"> Polygon name. Must be unique within the node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="polygon"> Point coordinates for the polygon. Example: '[[0.3, 0.2],[0.9, 0.8],[0.7, 0.6]]'. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </param>
-        internal NamedPolygonString(string type, string name, string polygon) : base(type, name)
+        internal NamedPolygonString(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string polygon) : base(type, name, serializedAdditionalRawData)
         {
             Polygon = polygon;
             Type = type ?? "#Microsoft.VideoAnalyzer.NamedPolygonString";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NamedPolygonString"/> for deserialization. </summary>
+        internal NamedPolygonString()
+        {
         }
 
         /// <summary> Point coordinates for the polygon. Example: '[[0.3, 0.2],[0.9, 0.8],[0.7, 0.6]]'. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </summary>

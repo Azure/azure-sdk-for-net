@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,6 +14,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Single topology parameter declaration. Declared parameters can and must be referenced throughout the topology and can optionally have default values to be used when they are not defined in the pipeline instances. </summary>
     public partial class ParameterDeclaration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ParameterDeclaration"/>. </summary>
         /// <param name="name"> Name of the parameter. </param>
         /// <param name="type"> Type of the parameter. </param>
@@ -30,12 +63,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
         /// <param name="default"> The default value for the parameter to be used if the live pipeline does not specify a value. </param>
-        internal ParameterDeclaration(string name, ParameterType type, string description, string @default)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParameterDeclaration(string name, ParameterType type, string description, string @default, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Type = type;
             Description = description;
             Default = @default;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParameterDeclaration"/> for deserialization. </summary>
+        internal ParameterDeclaration()
+        {
         }
 
         /// <summary> Name of the parameter. </summary>

@@ -45,6 +45,11 @@ namespace Azure.AI.TextAnalytics.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="Error"/> for deserialization. </summary>
+        internal Error()
+        {
+        }
+
         /// <summary> One of a server-defined set of error codes. </summary>
         public ErrorCode Code { get; set; }
         /// <summary> A human-readable representation of the error. </summary>

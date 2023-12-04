@@ -66,6 +66,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "HDInsightMapReduce";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightMapReduceActivity"/> for deserialization. </summary>
+        internal HDInsightMapReduceActivity()
+        {
+        }
+
         /// <summary> Storage linked service references. </summary>
         public IList<LinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. </summary>

@@ -51,6 +51,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AmazonRdsForSqlServer";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerLinkedService"/> for deserialization. </summary>
+        internal AmazonRdsForSqlServerLinkedService()
+        {
+        }
+
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary> The on-premises Windows authentication user name. Type: string (or Expression with resultType string). </summary>

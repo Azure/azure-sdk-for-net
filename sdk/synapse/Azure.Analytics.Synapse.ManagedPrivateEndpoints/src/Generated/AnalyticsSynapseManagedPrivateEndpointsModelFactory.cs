@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <returns> A new <see cref="Models.ManagedPrivateEndpoint"/> instance for mocking. </returns>
         public static ManagedPrivateEndpoint ManagedPrivateEndpoint(string id = null, string name = null, string type = null, ManagedPrivateEndpointProperties properties = null)
         {
-            return new ManagedPrivateEndpoint(id, name, type, properties);
+            return new ManagedPrivateEndpoint(id, name, type, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpointProperties"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         {
             fqdns ??= new List<string>();
 
-            return new ManagedPrivateEndpointProperties(name, privateLinkResourceId, groupId, provisioningState, connectionState, isReserved, fqdns?.ToList(), isCompliant);
+            return new ManagedPrivateEndpointProperties(name, privateLinkResourceId, groupId, provisioningState, connectionState, isReserved, fqdns?.ToList(), isCompliant, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpointConnectionState"/>. </summary>
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <returns> A new <see cref="Models.ManagedPrivateEndpointConnectionState"/> instance for mocking. </returns>
         public static ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(string status = null, string description = null, string actionsRequired = null)
         {
-            return new ManagedPrivateEndpointConnectionState(status, description, actionsRequired);
+            return new ManagedPrivateEndpointConnectionState(status, description, actionsRequired, serializedAdditionalRawData: null);
         }
     }
 }

@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonDistanceOperation : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonDistanceOperation : IUtf8JsonSerializable, IJsonModel<SpatialAnalysisPersonDistanceOperation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialAnalysisPersonDistanceOperation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SpatialAnalysisPersonDistanceOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonDistanceOperation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonDistanceOperation)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("zones"u8);
             writer.WriteStartArray();
@@ -60,11 +71,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpatialAnalysisPersonDistanceOperation DeserializeSpatialAnalysisPersonDistanceOperation(JsonElement element)
+        SpatialAnalysisPersonDistanceOperation IJsonModel<SpatialAnalysisPersonDistanceOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonDistanceOperation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonDistanceOperation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpatialAnalysisPersonDistanceOperation(document.RootElement, options);
+        }
+
+        internal static SpatialAnalysisPersonDistanceOperation DeserializeSpatialAnalysisPersonDistanceOperation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +118,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> trackerNodeConfiguration = default;
             Optional<string> enableFaceMaskClassifier = default;
             string type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -130,8 +172,44 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SpatialAnalysisPersonDistanceOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, zones);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SpatialAnalysisPersonDistanceOperation(type, serializedAdditionalRawData, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, zones);
         }
+
+        BinaryData IPersistableModel<SpatialAnalysisPersonDistanceOperation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonDistanceOperation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonDistanceOperation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SpatialAnalysisPersonDistanceOperation IPersistableModel<SpatialAnalysisPersonDistanceOperation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpatialAnalysisPersonDistanceOperation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSpatialAnalysisPersonDistanceOperation(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SpatialAnalysisPersonDistanceOperation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SpatialAnalysisPersonDistanceOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

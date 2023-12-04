@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Class representing the MPEG4 Configuration. </summary>
     public partial class VideoEncoderConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VideoEncoderConfiguration"/>. </summary>
         public VideoEncoderConfiguration()
         {
@@ -22,7 +57,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="rateControl"> The Video's rate control. </param>
         /// <param name="h264"> The H264 Configuration. </param>
         /// <param name="mpeg4"> The H264 Configuration. </param>
-        internal VideoEncoderConfiguration(VideoEncoding? encoding, float? quality, VideoResolution resolution, RateControl rateControl, H264Configuration h264, Mpeg4Configuration mpeg4)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VideoEncoderConfiguration(VideoEncoding? encoding, float? quality, VideoResolution resolution, RateControl rateControl, H264Configuration h264, Mpeg4Configuration mpeg4, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Encoding = encoding;
             Quality = quality;
@@ -30,6 +66,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             RateControl = rateControl;
             H264 = h264;
             Mpeg4 = mpeg4;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The video codec used by the Media Profile. </summary>
