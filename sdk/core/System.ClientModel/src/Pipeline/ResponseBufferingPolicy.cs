@@ -88,11 +88,10 @@ public class ResponseBufferingPolicy : PipelinePolicy
         }
 
         Stream? responseContentStream = message.Response.ContentStream;
-        if (responseContentStream == null || responseContentStream.CanSeek)
+        if (responseContentStream == null || PipelineResponse.ContentIsBuffered(responseContentStream))
         {
             // There is either no content on the response, or the content has already
             // been buffered.
-            // TODO: there is a bug here if a user overrides the default transport.
             return;
         }
 

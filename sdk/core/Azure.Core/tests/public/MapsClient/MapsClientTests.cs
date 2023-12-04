@@ -14,6 +14,7 @@ public class MapsClientTests
     // It's here now for quick manual validation of client functionality, but we can revisit
     // this story going forward.
     [Test]
+    [Ignore("For illustrative purposes only.")]
     public void TestClientSync()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;

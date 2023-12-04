@@ -83,5 +83,10 @@ public abstract class PipelineResponse : IDisposable
         return false;
     }
 
+    internal static bool ContentIsBuffered(Stream stream)
+    {
+        return stream is MemoryStream;
+    }
+
     public abstract void Dispose();
 }
