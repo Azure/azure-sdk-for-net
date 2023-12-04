@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure
 {
@@ -11,6 +12,7 @@ namespace Azure
     {
         public NoValueResponse(Response response) : base(default, response)
         {
+            Argument.AssertNotNull(response, nameof(response));
         }
 
         /// <inheritdoc />

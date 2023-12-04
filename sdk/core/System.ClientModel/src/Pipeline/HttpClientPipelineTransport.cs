@@ -191,6 +191,12 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     #region IDisposable
 
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         if (disposing && !_disposed)
@@ -203,12 +209,6 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
             _disposed = true;
         }
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     #endregion
