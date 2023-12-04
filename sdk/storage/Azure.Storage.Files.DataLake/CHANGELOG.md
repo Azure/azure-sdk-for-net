@@ -1,6 +1,6 @@
 # Release History
 
-## 12.18.0-beta.1 (Unreleased)
+## 12.18.0-beta.1 (2023-12-05)
 - Added support for service version 2024-02-04.
 - Fixed bug where SAS Directory Depth ("sdd") value 10 or over will add 6 to the sdd value
 
