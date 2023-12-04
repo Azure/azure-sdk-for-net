@@ -19,6 +19,23 @@ namespace Azure.Core
     internal class CallerShouldAuditAttribute : Attribute
     {
         /// <summary>
+        /// Creates a new instance of <see cref="CallerShouldAuditAttribute"/>.
+        /// </summary>
+        public CallerShouldAuditAttribute()
+            : this(reason: null)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="CallerShouldAuditAttribute"/>.
+        /// </summary>
+        /// <param name="reason"> Sets a description or link to the rationale for potentially auditing this operation </param>
+        public CallerShouldAuditAttribute(string? reason)
+        {
+            Reason = reason;
+        }
+
+        /// <summary>
         /// Gets or sets a description or link to the rationale for potentially
         /// auditing this operation.
         /// </summary>
