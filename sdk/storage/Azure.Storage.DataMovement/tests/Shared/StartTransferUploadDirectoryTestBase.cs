@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -124,7 +123,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the directory
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         private async Task UploadDirectoryAndVerifyAsync(
@@ -162,8 +161,8 @@ namespace Azure.Storage.DataMovement.Tests
         #endregion
 
         [RecordedTest]
-        [TestCase(Constants.KB, 2)]
-        [TestCase(12345, 2)]
+        [TestCase(Constants.KB, 10)]
+        [TestCase(12345, 10)]
         public async Task Upload(long objectSize, int waitTimeInSec)
         {
             // Arrange
@@ -351,9 +350,9 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase(Constants.KB, Constants.KB/4, 2)]
-        [TestCase(10 * Constants.KB, 4 * Constants.KB, 5)]
-        [TestCase(Constants.KB, 97, 2)]
+        [TestCase(Constants.KB, Constants.KB/4, 10)]
+        [TestCase(10 * Constants.KB, 4 * Constants.KB, 15)]
+        [TestCase(Constants.KB, 97, 10)]
         public async Task UploadSmallChunks(long objectSize, long chunkSize, int waitTimeInSec)
         {
             // Arrange
