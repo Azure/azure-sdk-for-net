@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Models
         {
             children ??= new List<ManagementGroupChildInfo>();
 
-            return new ManagementGroupData(id, name, resourceType, systemData, tenantId, displayName, details, children?.ToList());
+            return new ManagementGroupData(id, name, resourceType, systemData, tenantId, displayName, details, children?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupInfo"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Models
             managementGroupAncestors ??= new List<string>();
             managementGroupAncestorChain ??= new List<ManagementGroupPathElement>();
 
-            return new ManagementGroupInfo(version, updatedOn, updatedBy, parent, path?.ToList(), managementGroupAncestors?.ToList(), managementGroupAncestorChain?.ToList());
+            return new ManagementGroupInfo(version, updatedOn, updatedBy, parent, path?.ToList(), managementGroupAncestors?.ToList(), managementGroupAncestorChain?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ParentManagementGroupInfo"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="ManagementGroups.Models.ParentManagementGroupInfo"/> instance for mocking. </returns>
         public static ParentManagementGroupInfo ParentManagementGroupInfo(string id = null, string name = null, string displayName = null)
         {
-            return new ParentManagementGroupInfo(id, name, displayName);
+            return new ParentManagementGroupInfo(id, name, displayName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupPathElement"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupPathElement"/> instance for mocking. </returns>
         public static ManagementGroupPathElement ManagementGroupPathElement(string name = null, string displayName = null)
         {
-            return new ManagementGroupPathElement(name, displayName);
+            return new ManagementGroupPathElement(name, displayName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupChildInfo"/>. </summary>
@@ -82,7 +82,58 @@ namespace Azure.ResourceManager.Models
         {
             children ??= new List<ManagementGroupChildInfo>();
 
-            return new ManagementGroupChildInfo(childType, id, name, displayName, children?.ToList());
+            return new ManagementGroupChildInfo(childType, id, name, displayName, children?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="resourceType"> The type of the resource.  For example, Microsoft.Management/managementGroups. </param>
+        /// <param name="name"> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="tenantId"> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the management group. If no value is passed then this  field will be set to the groupId. </param>
+        /// <param name="details"> The details of a management group used during creation. </param>
+        /// <param name="children"> The list of children. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static ManagementGroupCreateOrUpdateContent ManagementGroupCreateOrUpdateContent(string id = null, ResourceType? resourceType = null, string name = null, Guid? tenantId = null, string displayName = null, CreateManagementGroupDetails details = null, IEnumerable<ManagementGroupChildOptions> children = null)
+        {
+            children ??= new List<ManagementGroupChildOptions>();
+
+            return new ManagementGroupCreateOrUpdateContent(id, resourceType, name, tenantId, displayName, details, children?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.CreateManagementGroupDetails"/>. </summary>
+        /// <param name="version"> The version number of the object. </param>
+        /// <param name="updatedOn"> The date and time when this object was last updated. </param>
+        /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
+        /// <param name="parent"> (Optional) The ID of the parent management group used during creation. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.CreateManagementGroupDetails"/> instance for mocking. </returns>
+        public static CreateManagementGroupDetails CreateManagementGroupDetails(int? version = null, DateTimeOffset? updatedOn = null, string updatedBy = null, ManagementGroupParentCreateOptions parent = null)
+        {
+            return new CreateManagementGroupDetails(version, updatedOn, updatedBy, parent, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupParentCreateOptions"/>. </summary>
+        /// <param name="id"> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="name"> The name of the parent management group. </param>
+        /// <param name="displayName"> The friendly name of the parent management group. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupParentCreateOptions"/> instance for mocking. </returns>
+        public static ManagementGroupParentCreateOptions ManagementGroupParentCreateOptions(string id = null, string name = null, string displayName = null)
+        {
+            return new ManagementGroupParentCreateOptions(id, name, displayName, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupChildOptions"/>. </summary>
+        /// <param name="childType"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
+        /// <param name="id"> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="name"> The name of the child entity. </param>
+        /// <param name="displayName"> The friendly name of the child resource. </param>
+        /// <param name="children"> The list of children. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupChildOptions"/> instance for mocking. </returns>
+        public static ManagementGroupChildOptions ManagementGroupChildOptions(ManagementGroupChildType? childType = null, string id = null, string name = null, string displayName = null, IEnumerable<ManagementGroupChildOptions> children = null)
+        {
+            children ??= new List<ManagementGroupChildOptions>();
+
+            return new ManagementGroupChildOptions(childType, id, name, displayName, children?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.DescendantData"/>. </summary>
@@ -95,7 +146,7 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="ManagementGroups.Models.DescendantData"/> instance for mocking. </returns>
         public static DescendantData DescendantData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, ResourceIdentifier parentId = null)
         {
-            return new DescendantData(id, name, resourceType, systemData, displayName, parentId != null ? new DescendantParentGroupInfo(parentId) : null);
+            return new DescendantData(id, name, resourceType, systemData, displayName, parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/>. </summary>
@@ -105,7 +156,7 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/> instance for mocking. </returns>
         public static ManagementGroupNameAvailabilityResult ManagementGroupNameAvailabilityResult(bool? nameAvailable = null, ManagementGroupNameUnavailableReason? reason = null, string message = null)
         {
-            return new ManagementGroupNameAvailabilityResult(nameAvailable, reason, message);
+            return new ManagementGroupNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
     }
 }

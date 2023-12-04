@@ -5,16 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    public partial class ProviderStatus
+    public partial class ProviderStatus : IUtf8JsonSerializable, IJsonModel<ProviderStatus>
     {
-        internal static ProviderStatus DeserializeProviderStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProviderStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProviderStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentAvailability))
+            {
+                writer.WritePropertyName("currentAvailability"u8);
+                writer.WriteStringValue(CurrentAvailability.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Targets))
+            {
+                writer.WritePropertyName("targets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Targets)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProviderStatus IJsonModel<ProviderStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProviderStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderStatus(document.RootElement, options);
+        }
+
+        internal static ProviderStatus DeserializeProviderStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.Quantum.Jobs.Models
             Optional<string> id = default;
             Optional<ProviderAvailability> currentAvailability = default;
             Optional<IReadOnlyList<TargetStatus>> targets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -52,8 +120,44 @@ namespace Azure.Quantum.Jobs.Models
                     targets = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProviderStatus(id.Value, Optional.ToNullable(currentAvailability), Optional.ToList(targets));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProviderStatus(id.Value, Optional.ToNullable(currentAvailability), Optional.ToList(targets), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProviderStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProviderStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ProviderStatus IPersistableModel<ProviderStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProviderStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProviderStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProviderStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

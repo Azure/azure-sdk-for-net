@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual AsyncPageable<AzureDevOpsConnectorStats> GetAzureDevOpsConnectorStatsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats, _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats(e), _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Pageable<AzureDevOpsConnectorStats> GetAzureDevOpsConnectorStats(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats, _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats(e), _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>

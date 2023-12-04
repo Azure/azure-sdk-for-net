@@ -5,12 +5,299 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisCommonConfiguration : IUtf8JsonSerializable
+    public partial class RedisCommonConfiguration : IUtf8JsonSerializable, IJsonModel<RedisCommonConfiguration>
     {
+        void IJsonModel<RedisCommonConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCommonConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RedisCommonConfiguration)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsRdbBackupEnabled))
+            {
+                writer.WritePropertyName("rdb-backup-enabled"u8);
+                writer.WriteBooleanValue(IsRdbBackupEnabled.Value);
+            }
+            if (Optional.IsDefined(RdbBackupFrequency))
+            {
+                writer.WritePropertyName("rdb-backup-frequency"u8);
+                writer.WriteStringValue(RdbBackupFrequency);
+            }
+            if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
+            {
+                writer.WritePropertyName("rdb-backup-max-snapshot-count"u8);
+                writer.WriteNumberValue(RdbBackupMaxSnapshotCount.Value);
+            }
+            if (Optional.IsDefined(RdbStorageConnectionString))
+            {
+                writer.WritePropertyName("rdb-storage-connection-string"u8);
+                writer.WriteStringValue(RdbStorageConnectionString);
+            }
+            if (Optional.IsDefined(IsAofBackupEnabled))
+            {
+                writer.WritePropertyName("aof-backup-enabled"u8);
+                writer.WriteBooleanValue(IsAofBackupEnabled.Value);
+            }
+            if (Optional.IsDefined(AofStorageConnectionString0))
+            {
+                writer.WritePropertyName("aof-storage-connection-string-0"u8);
+                writer.WriteStringValue(AofStorageConnectionString0);
+            }
+            if (Optional.IsDefined(AofStorageConnectionString1))
+            {
+                writer.WritePropertyName("aof-storage-connection-string-1"u8);
+                writer.WriteStringValue(AofStorageConnectionString1);
+            }
+            if (Optional.IsDefined(MaxFragmentationMemoryReserved))
+            {
+                writer.WritePropertyName("maxfragmentationmemory-reserved"u8);
+                writer.WriteStringValue(MaxFragmentationMemoryReserved);
+            }
+            if (Optional.IsDefined(MaxMemoryPolicy))
+            {
+                writer.WritePropertyName("maxmemory-policy"u8);
+                writer.WriteStringValue(MaxMemoryPolicy);
+            }
+            if (Optional.IsDefined(MaxMemoryReserved))
+            {
+                writer.WritePropertyName("maxmemory-reserved"u8);
+                writer.WriteStringValue(MaxMemoryReserved);
+            }
+            if (Optional.IsDefined(MaxMemoryDelta))
+            {
+                writer.WritePropertyName("maxmemory-delta"u8);
+                writer.WriteStringValue(MaxMemoryDelta);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxClients))
+            {
+                writer.WritePropertyName("maxclients"u8);
+                writer.WriteStringValue(MaxClients);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreferredDataArchiveAuthMethod))
+            {
+                writer.WritePropertyName("preferred-data-archive-auth-method"u8);
+                writer.WriteStringValue(PreferredDataArchiveAuthMethod);
+            }
+            if (Optional.IsDefined(PreferredDataPersistenceAuthMethod))
+            {
+                writer.WritePropertyName("preferred-data-persistence-auth-method"u8);
+                writer.WriteStringValue(PreferredDataPersistenceAuthMethod);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ZonalConfiguration))
+            {
+                writer.WritePropertyName("zonal-configuration"u8);
+                writer.WriteStringValue(ZonalConfiguration);
+            }
+            if (Optional.IsDefined(AuthNotRequired))
+            {
+                writer.WritePropertyName("authnotrequired"u8);
+                writer.WriteStringValue(AuthNotRequired);
+            }
+            if (Optional.IsDefined(StorageSubscriptionId))
+            {
+                writer.WritePropertyName("storage-subscription-id"u8);
+                writer.WriteStringValue(StorageSubscriptionId);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        RedisCommonConfiguration IJsonModel<RedisCommonConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCommonConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RedisCommonConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisCommonConfiguration(document.RootElement, options);
+        }
+
+        internal static RedisCommonConfiguration DeserializeRedisCommonConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> rdbBackupEnabled = default;
+            Optional<string> rdbBackupFrequency = default;
+            Optional<int> rdbBackupMaxSnapshotCount = default;
+            Optional<string> rdbStorageConnectionString = default;
+            Optional<bool> aofBackupEnabled = default;
+            Optional<string> aofStorageConnectionString0 = default;
+            Optional<string> aofStorageConnectionString1 = default;
+            Optional<string> maxfragmentationmemoryReserved = default;
+            Optional<string> maxmemoryPolicy = default;
+            Optional<string> maxmemoryReserved = default;
+            Optional<string> maxmemoryDelta = default;
+            Optional<string> maxclients = default;
+            Optional<string> preferredDataArchiveAuthMethod = default;
+            Optional<string> preferredDataPersistenceAuthMethod = default;
+            Optional<string> zonalConfiguration = default;
+            Optional<string> authnotrequired = default;
+            Optional<string> storageSubscriptionId = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("rdb-backup-enabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rdbBackupEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("rdb-backup-frequency"u8))
+                {
+                    rdbBackupFrequency = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("rdb-backup-max-snapshot-count"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rdbBackupMaxSnapshotCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("rdb-storage-connection-string"u8))
+                {
+                    rdbStorageConnectionString = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("aof-backup-enabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aofBackupEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("aof-storage-connection-string-0"u8))
+                {
+                    aofStorageConnectionString0 = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("aof-storage-connection-string-1"u8))
+                {
+                    aofStorageConnectionString1 = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxfragmentationmemory-reserved"u8))
+                {
+                    maxfragmentationmemoryReserved = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxmemory-policy"u8))
+                {
+                    maxmemoryPolicy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxmemory-reserved"u8))
+                {
+                    maxmemoryReserved = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxmemory-delta"u8))
+                {
+                    maxmemoryDelta = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxclients"u8))
+                {
+                    maxclients = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("preferred-data-archive-auth-method"u8))
+                {
+                    preferredDataArchiveAuthMethod = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("preferred-data-persistence-auth-method"u8))
+                {
+                    preferredDataPersistenceAuthMethod = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("zonal-configuration"u8))
+                {
+                    zonalConfiguration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authnotrequired"u8))
+                {
+                    authnotrequired = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storage-subscription-id"u8))
+                {
+                    storageSubscriptionId = property.Value.GetString();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new RedisCommonConfiguration(Optional.ToNullable(rdbBackupEnabled), rdbBackupFrequency.Value, Optional.ToNullable(rdbBackupMaxSnapshotCount), rdbStorageConnectionString.Value, Optional.ToNullable(aofBackupEnabled), aofStorageConnectionString0.Value, aofStorageConnectionString1.Value, maxfragmentationmemoryReserved.Value, maxmemoryPolicy.Value, maxmemoryReserved.Value, maxmemoryDelta.Value, maxclients.Value, preferredDataArchiveAuthMethod.Value, preferredDataPersistenceAuthMethod.Value, zonalConfiguration.Value, authnotrequired.Value, storageSubscriptionId.Value, additionalProperties);
+        }
+
+        BinaryData IPersistableModel<RedisCommonConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCommonConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RedisCommonConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RedisCommonConfiguration IPersistableModel<RedisCommonConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCommonConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRedisCommonConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RedisCommonConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RedisCommonConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

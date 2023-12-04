@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecurityAlertData.DeserializeSecurityAlertData, AlertsClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetAlertsByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SecurityAlertData.DeserializeSecurityAlertData(e), AlertsClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetAlertsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1129,7 +1129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityAlertData.DeserializeSecurityAlertData, AlertsClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetAlertsByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SecurityAlertData.DeserializeSecurityAlertData(e), AlertsClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetAlertsByResourceGroup", "value", "nextLink", cancellationToken);
         }
     }
 }

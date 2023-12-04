@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Quota properties for the resource. </summary>
     public partial class QuotaProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         public QuotaProperties()
         {
@@ -25,7 +58,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="resourceTypeName"> The name of the resource type. </param>
         /// <param name="quotaPeriod"> The time period over which the quota usage values are summarized. For example, P1D (per one day), PT1M (per one minute), and PT1S (per one second). This parameter is optional because, for some resources such as compute, the time period is irrelevant. </param>
         /// <param name="properties"> Additional properties for the specified resource provider. </param>
-        internal QuotaProperties(int? limit, int? currentValue, string unit, ReservationResourceName resourceName, ResourceTypeName? resourceTypeName, string quotaPeriod, BinaryData properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaProperties(int? limit, int? currentValue, string unit, ReservationResourceName resourceName, ResourceTypeName? resourceTypeName, string quotaPeriod, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Limit = limit;
             CurrentValue = currentValue;
@@ -34,6 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ResourceTypeName = resourceTypeName;
             QuotaPeriod = quotaPeriod;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Quota properties. </summary>

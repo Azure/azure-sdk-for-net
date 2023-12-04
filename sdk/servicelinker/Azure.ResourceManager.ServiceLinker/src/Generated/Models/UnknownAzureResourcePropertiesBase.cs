@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The UnknownAzureResourcePropertiesBase. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureResourcePropertiesBase"/>. </summary>
         /// <param name="azureResourceType"> The azure resource type. </param>
-        internal UnknownAzureResourcePropertiesBase(AzureResourceType azureResourceType) : base(azureResourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAzureResourcePropertiesBase(AzureResourceType azureResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(azureResourceType, serializedAdditionalRawData)
         {
             AzureResourceType = azureResourceType;
         }

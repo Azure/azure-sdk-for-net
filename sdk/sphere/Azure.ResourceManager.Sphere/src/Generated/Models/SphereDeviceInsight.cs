@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
@@ -16,6 +17,38 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereDeviceInsight
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/>. </summary>
         /// <param name="deviceId">
         /// Device ID
@@ -66,6 +99,58 @@ namespace Azure.ResourceManager.Sphere.Models
             EventClass = eventClass;
             EventType = eventType;
             EventCount = eventCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/>. </summary>
+        /// <param name="deviceId">
+        /// Device ID
+        /// Serialized Name: DeviceInsight.deviceId
+        /// </param>
+        /// <param name="description">
+        /// Event description
+        /// Serialized Name: DeviceInsight.description
+        /// </param>
+        /// <param name="startTimestampUtc">
+        /// Event start timestamp
+        /// Serialized Name: DeviceInsight.startTimestampUtc
+        /// </param>
+        /// <param name="endTimestampUtc">
+        /// Event end timestamp
+        /// Serialized Name: DeviceInsight.endTimestampUtc
+        /// </param>
+        /// <param name="eventCategory">
+        /// Event category
+        /// Serialized Name: DeviceInsight.eventCategory
+        /// </param>
+        /// <param name="eventClass">
+        /// Event class
+        /// Serialized Name: DeviceInsight.eventClass
+        /// </param>
+        /// <param name="eventType">
+        /// Event type
+        /// Serialized Name: DeviceInsight.eventType
+        /// </param>
+        /// <param name="eventCount">
+        /// Event count
+        /// Serialized Name: DeviceInsight.eventCount
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereDeviceInsight(string deviceId, string description, DateTimeOffset startTimestampUtc, DateTimeOffset endTimestampUtc, string eventCategory, string eventClass, string eventType, int eventCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DeviceId = deviceId;
+            Description = description;
+            StartTimestampUtc = startTimestampUtc;
+            EndTimestampUtc = endTimestampUtc;
+            EventCategory = eventCategory;
+            EventClass = eventClass;
+            EventType = eventType;
+            EventCount = eventCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/> for deserialization. </summary>
+        internal SphereDeviceInsight()
+        {
         }
 
         /// <summary>

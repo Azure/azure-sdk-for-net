@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteRecoveryReplicationAppliance.DeserializeSiteRecoveryReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationAppliances", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SiteRecoveryReplicationAppliance.DeserializeSiteRecoveryReplicationAppliance(e), ReplicationAppliancesClientDiagnostics, Pipeline, "MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteRecoveryReplicationAppliance.DeserializeSiteRecoveryReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationAppliances", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SiteRecoveryReplicationAppliance.DeserializeSiteRecoveryReplicationAppliance(e), ReplicationAppliancesClientDiagnostics, Pipeline, "MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

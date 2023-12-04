@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workLoadType"> Type of workload for the backup management. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
-        internal FileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        internal FileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupWorkloadType? workLoadType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
         {
             WorkLoadType = workLoadType;
             SchedulePolicy = schedulePolicy;

@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _allowedConnectionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allowedConnectionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection, _allowedConnectionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection(e), _allowedConnectionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _allowedConnectionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allowedConnectionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection, _allowedConnectionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection(e), _allowedConnectionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topologyRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topologyRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecurityTopologyResource.DeserializeSecurityTopologyResource, _topologyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetTopologiesByHomeRegion", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SecurityTopologyResource.DeserializeSecurityTopologyResource(e), _topologyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetTopologiesByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topologyRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topologyRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityTopologyResource.DeserializeSecurityTopologyResource, _topologyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetTopologiesByHomeRegion", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SecurityTopologyResource.DeserializeSecurityTopologyResource(e), _topologyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetTopologiesByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _discoveredSecuritySolutionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _discoveredSecuritySolutionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution, _discoveredSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution(e), _discoveredSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _discoveredSecuritySolutionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _discoveredSecuritySolutionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution, _discoveredSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution(e), _discoveredSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual AsyncPageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySolutionsReferenceDataRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData, _securitySolutionsReferenceDataClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllSecuritySolutionsReferenceDataByHomeRegion", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData(e), _securitySolutionsReferenceDataClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllSecuritySolutionsReferenceDataByHomeRegion", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Pageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataByHomeRegion(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySolutionsReferenceDataRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData, _securitySolutionsReferenceDataClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllSecuritySolutionsReferenceDataByHomeRegion", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData(e), _securitySolutionsReferenceDataClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllSecuritySolutionsReferenceDataByHomeRegion", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _externalSecuritySolutionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _externalSecuritySolutionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ExternalSecuritySolution.DeserializeExternalSecuritySolution, _externalSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExternalSecuritySolution.DeserializeExternalSecuritySolution(e), _externalSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _externalSecuritySolutionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _externalSecuritySolutionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ExternalSecuritySolution.DeserializeExternalSecuritySolution, _externalSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExternalSecuritySolution.DeserializeExternalSecuritySolution(e), _externalSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
     }
 }

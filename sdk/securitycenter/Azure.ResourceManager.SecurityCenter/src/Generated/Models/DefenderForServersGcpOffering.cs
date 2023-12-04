@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Servers GCP offering configurations. </summary>
@@ -19,12 +22,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
         /// <param name="vulnerabilityAssessmentAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
         /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
         /// <param name="subPlan"> configuration for the servers offering subPlan. </param>
-        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, GcpDefenderForServersInfo defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan) : base(offeringType, description)
+        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, GcpDefenderForServersInfo defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan) : base(offeringType, description, serializedAdditionalRawData)
         {
             DefenderForServers = defenderForServers;
             ArcAutoProvisioning = arcAutoProvisioning;

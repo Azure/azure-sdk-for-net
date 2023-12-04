@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
@@ -13,6 +14,38 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> The properties of a rendering session. </summary>
     public partial class RenderingSession
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RenderingSession"/>. </summary>
         /// <param name="sessionId"> The ID of the session supplied when the session was created. </param>
         /// <param name="size"> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </param>
@@ -39,7 +72,8 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="teraflops"> The computational power of the rendering session GPU measured in teraflops. </param>
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="createdOn"> The time when the rendering session was created. Date and time in ISO 8601 format. </param>
-        internal RenderingSession(string sessionId, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string host, int? maxLeaseTimeMinutes, RenderingServerSize size, RenderingSessionStatus status, float? teraflops, RemoteRenderingServiceError error, DateTimeOffset? createdOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RenderingSession(string sessionId, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string host, int? maxLeaseTimeMinutes, RenderingServerSize size, RenderingSessionStatus status, float? teraflops, RemoteRenderingServiceError error, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             ArrInspectorPort = arrInspectorPort;
@@ -52,6 +86,12 @@ namespace Azure.MixedReality.RemoteRendering
             Teraflops = teraflops;
             Error = error;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RenderingSession"/> for deserialization. </summary>
+        internal RenderingSession()
+        {
         }
         /// <summary> The TCP port at which the Azure Remote Rendering Inspector tool is hosted. </summary>
         public int? ArrInspectorPort { get; }

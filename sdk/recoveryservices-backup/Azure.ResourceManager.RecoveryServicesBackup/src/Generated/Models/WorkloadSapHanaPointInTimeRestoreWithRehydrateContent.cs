@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
         /// <param name="propertyBag"> Workload specific property bag. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="pointInTime"> PointInTime value. </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
-        internal WorkloadSapHanaPointInTimeRestoreWithRehydrateContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, DateTimeOffset? pointInTime, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, pointInTime)
+        internal WorkloadSapHanaPointInTimeRestoreWithRehydrateContent(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, DateTimeOffset? pointInTime, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo) : base(objectType, serializedAdditionalRawData, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, pointInTime)
         {
             RecoveryPointRehydrationInfo = recoveryPointRehydrationInfo;
             ObjectType = objectType ?? "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest";

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProviderDescription.DeserializeProviderDescription(e), OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProviderDescription.DeserializeProviderDescription(e), OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

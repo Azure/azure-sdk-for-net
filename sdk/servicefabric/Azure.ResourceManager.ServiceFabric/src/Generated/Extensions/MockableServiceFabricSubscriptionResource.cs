@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetByEnvironmentRequest(Id.SubscriptionId, location, environment, clusterVersion);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetByEnvironmentRequest(Id.SubscriptionId, location, environment, clusterVersion);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sphere.Models
 {
     /// <summary>
@@ -19,6 +22,21 @@ namespace Azure.ResourceManager.Sphere.Models
         /// Serialized Name: CountElementsResponse.value
         /// </param>
         internal CountDeviceResult(int value) : base(value)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CountDeviceResult"/>. </summary>
+        /// <param name="value">
+        /// Number of children resources in parent resource.
+        /// Serialized Name: CountElementsResponse.value
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CountDeviceResult(int value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(value, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CountDeviceResult"/> for deserialization. </summary>
+        internal CountDeviceResult()
         {
         }
     }
