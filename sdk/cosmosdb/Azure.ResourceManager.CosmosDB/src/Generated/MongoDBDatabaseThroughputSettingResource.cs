@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly MongoDBResourcesRestOperations _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient;
         private readonly ThroughputSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings";
+
         /// <summary> Initializes a new instance of the <see cref="MongoDBDatabaseThroughputSettingResource"/> class for mocking. </summary>
         protected MongoDBDatabaseThroughputSettingResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

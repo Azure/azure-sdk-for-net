@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Compute
         private readonly CloudServiceRolesRestOperations _cloudServiceRoleRestClient;
         private readonly CloudServiceRoleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/cloudServices/roles";
+
         /// <summary> Initializes a new instance of the <see cref="CloudServiceRoleResource"/> class for mocking. </summary>
         protected CloudServiceRoleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/cloudServices/roles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

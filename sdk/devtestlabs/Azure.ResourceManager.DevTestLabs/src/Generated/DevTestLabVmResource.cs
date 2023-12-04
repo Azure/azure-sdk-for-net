@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly VirtualMachinesRestOperations _devTestLabVmVirtualMachinesRestClient;
         private readonly DevTestLabVmData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/virtualmachines";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabVmResource"/> class for mocking. </summary>
         protected DevTestLabVmResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/virtualmachines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         private readonly SystemAssignedIdentitiesRestOperations _systemAssignedIdentityRestClient;
         private readonly SystemAssignedIdentityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedIdentity/identities";
+
         /// <summary> Initializes a new instance of the <see cref="SystemAssignedIdentityResource"/> class for mocking. </summary>
         protected SystemAssignedIdentityResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedIdentity/identities";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.Hci
         private readonly GuestAgentRestOperations _guestAgentRestClient;
         private readonly GuestAgentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/virtualMachineInstances/guestAgents";
+
         /// <summary> Initializes a new instance of the <see cref="GuestAgentResource"/> class for mocking. </summary>
         protected GuestAgentResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/virtualMachineInstances/guestAgents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

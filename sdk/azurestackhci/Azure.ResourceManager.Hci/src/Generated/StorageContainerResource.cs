@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Hci
         private readonly StorageContainersRestOperations _storageContainerRestClient;
         private readonly StorageContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/storageContainers";
+
         /// <summary> Initializes a new instance of the <see cref="StorageContainerResource"/> class for mocking. </summary>
         protected StorageContainerResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/storageContainers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

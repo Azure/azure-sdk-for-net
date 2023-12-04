@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Subscription
         private readonly BillingAccountRestOperations _billingAccountPolicyBillingAccountRestClient;
         private readonly BillingAccountPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
+
         /// <summary> Initializes a new instance of the <see cref="BillingAccountPolicyResource"/> class for mocking. </summary>
         protected BillingAccountPolicyResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Subscription
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

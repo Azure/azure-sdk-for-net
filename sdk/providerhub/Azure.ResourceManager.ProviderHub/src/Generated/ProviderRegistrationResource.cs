@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly ProviderHubRestOperations _defaultRestClient;
         private readonly ProviderRegistrationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations";
+
         /// <summary> Initializes a new instance of the <see cref="ProviderRegistrationResource"/> class for mocking. </summary>
         protected ProviderRegistrationResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.ProviderHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

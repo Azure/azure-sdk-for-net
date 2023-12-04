@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly FirewallsRestOperations _paloAltoNetworksFirewallFirewallsRestClient;
         private readonly PaloAltoNetworksFirewallData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls";
+
         /// <summary> Initializes a new instance of the <see cref="PaloAltoNetworksFirewallResource"/> class for mocking. </summary>
         protected PaloAltoNetworksFirewallResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

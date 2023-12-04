@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         private readonly AvailabilityGroupListenersRestOperations _availabilityGroupListenerRestClient;
         private readonly AvailabilityGroupListenerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/availabilityGroupListeners";
+
         /// <summary> Initializes a new instance of the <see cref="AvailabilityGroupListenerResource"/> class for mocking. </summary>
         protected AvailabilityGroupListenerResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/availabilityGroupListeners";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

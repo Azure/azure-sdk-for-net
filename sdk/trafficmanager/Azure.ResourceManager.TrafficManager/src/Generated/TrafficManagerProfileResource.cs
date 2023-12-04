@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.TrafficManager
         private readonly ProfilesRestOperations _trafficManagerProfileProfilesRestClient;
         private readonly TrafficManagerProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles";
+
         /// <summary> Initializes a new instance of the <see cref="TrafficManagerProfileResource"/> class for mocking. </summary>
         protected TrafficManagerProfileResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.TrafficManager
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

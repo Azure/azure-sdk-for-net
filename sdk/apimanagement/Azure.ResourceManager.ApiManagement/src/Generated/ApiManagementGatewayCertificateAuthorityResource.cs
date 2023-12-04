@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly GatewayCertificateAuthorityRestOperations _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient;
         private readonly ApiManagementGatewayCertificateAuthorityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/gateways/certificateAuthorities";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementGatewayCertificateAuthorityResource"/> class for mocking. </summary>
         protected ApiManagementGatewayCertificateAuthorityResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/gateways/certificateAuthorities";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

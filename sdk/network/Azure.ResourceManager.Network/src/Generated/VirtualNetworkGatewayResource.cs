@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualNetworkGatewaysRestOperations _virtualNetworkGatewayRestClient;
         private readonly VirtualNetworkGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworkGateways";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGatewayResource"/> class for mocking. </summary>
         protected VirtualNetworkGatewayResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworkGateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

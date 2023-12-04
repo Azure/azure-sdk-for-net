@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedInstanceAzureADOnlyAuthenticationsRestOperations _managedInstanceAzureADOnlyAuthenticationRestClient;
         private readonly ManagedInstanceAzureADOnlyAuthenticationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/azureADOnlyAuthentications";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceAzureADOnlyAuthenticationResource"/> class for mocking. </summary>
         protected ManagedInstanceAzureADOnlyAuthenticationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/azureADOnlyAuthentications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

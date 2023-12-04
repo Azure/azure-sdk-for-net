@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Kusto
         private readonly ScriptsRestOperations _kustoScriptScriptsRestClient;
         private readonly KustoScriptData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/scripts";
+
         /// <summary> Initializes a new instance of the <see cref="KustoScriptResource"/> class for mocking. </summary>
         protected KustoScriptResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/scripts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

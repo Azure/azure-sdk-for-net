@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Resources
         private readonly TemplateSpecVersionsRestOperations _templateSpecVersionRestClient;
         private readonly TemplateSpecVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/templateSpecs/versions";
+
         /// <summary> Initializes a new instance of the <see cref="TemplateSpecVersionResource"/> class for mocking. </summary>
         protected TemplateSpecVersionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/templateSpecs/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

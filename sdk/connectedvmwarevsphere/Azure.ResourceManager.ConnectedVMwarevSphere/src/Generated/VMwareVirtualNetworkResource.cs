@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly VirtualNetworksRestOperations _vMwareVirtualNetworkVirtualNetworksRestClient;
         private readonly VMwareVirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="VMwareVirtualNetworkResource"/> class for mocking. </summary>
         protected VMwareVirtualNetworkResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

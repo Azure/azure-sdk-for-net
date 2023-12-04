@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly MaintenanceWindowsRestOperations _maintenanceWindowsMaintenanceWindowsRestClient;
         private readonly MaintenanceWindowsData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/maintenanceWindows";
+
         /// <summary> Initializes a new instance of the <see cref="MaintenanceWindowsResource"/> class for mocking. </summary>
         protected MaintenanceWindowsResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/maintenanceWindows";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

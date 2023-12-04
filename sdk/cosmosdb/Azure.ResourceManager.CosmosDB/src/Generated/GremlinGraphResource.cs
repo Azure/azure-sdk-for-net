@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly GremlinResourcesRestOperations _gremlinGraphGremlinResourcesRestClient;
         private readonly GremlinGraphData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs";
+
         /// <summary> Initializes a new instance of the <see cref="GremlinGraphResource"/> class for mocking. </summary>
         protected GremlinGraphResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

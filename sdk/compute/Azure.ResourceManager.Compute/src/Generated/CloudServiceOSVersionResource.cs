@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Compute
         private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient;
         private readonly CloudServiceOSVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/cloudServiceOsVersions";
+
         /// <summary> Initializes a new instance of the <see cref="CloudServiceOSVersionResource"/> class for mocking. </summary>
         protected CloudServiceOSVersionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/cloudServiceOsVersions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

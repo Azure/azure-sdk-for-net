@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Advisor
         private readonly RecommendationMetadataRestOperations _metadataEntityRecommendationMetadataRestClient;
         private readonly MetadataEntityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Advisor/metadata";
+
         /// <summary> Initializes a new instance of the <see cref="MetadataEntityResource"/> class for mocking. </summary>
         protected MetadataEntityResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Advisor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Advisor/metadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Network
         private readonly LoadBalancersRestOperations _loadBalancerRestClient;
         private readonly BackendAddressPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers/backendAddressPools";
+
         /// <summary> Initializes a new instance of the <see cref="BackendAddressPoolResource"/> class for mocking. </summary>
         protected BackendAddressPoolResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers/backendAddressPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

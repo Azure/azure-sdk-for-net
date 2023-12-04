@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Logic
         private readonly WorkflowVersionTriggersRestOperations _workflowVersionTriggersRestClient;
         private readonly LogicWorkflowVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/versions";
+
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowVersionResource"/> class for mocking. </summary>
         protected LogicWorkflowVersionResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
