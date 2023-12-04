@@ -21,9 +21,32 @@ namespace Azure.Analytics.Purview.DataMap.Tests
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
         [RecordedTest]
-        public void TestOperation()
+        public void Search()
         {
-            Assert.IsTrue(true);
+            PurviewDataMapClient client = GetDataMapClient();
+            var data = new
+            {
+                keywords = "myPurview"
+            };
+            Response fetchResponse = await client.SearchAsync(RequestContent.Create(data));
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
+            JsonElement fetchBodyJson = jsonDocument.RootElement;
+            Assert.AreEqual(0, fetchBodyJson.GetProperty("@search.count").GetInt16());
+        }
+
+        [RecordedTest]
+        public async Task Suggest()
+        {
+            PurviewDataMapClient client = GetDataMapClient();
+            var data = new
+            {
+                keywords = "sampledata.csv",
+            };
+            Response fetchResponse = await client.SuggestAsync(RequestContent.Create(data));
+            Assert.AreEqual(fetchResponse.Status, 200);
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
+            JsonElement fetchBodyJson = jsonDocument.RootElement;
+            Assert.AreEqual("s3://testpurview/sampledata.csv", fetchBodyJson.GetProperty("value")[0].GetProperty("qualifiedName").GetString());
         }
 
         #region Helpers
