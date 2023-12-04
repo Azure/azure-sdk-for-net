@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -50,7 +49,7 @@ namespace Azure.AI.OpenAI
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageGenerationOptions.ToRequestContent();
             Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchImageGenerationsFromBatchImageGenerationOperationResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
+            return ProtocolOperationHelpers.Convert(response, ImageGenerations.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
         /// <summary> Starts the generation of a batch of images from a text caption. </summary>
@@ -65,7 +64,7 @@ namespace Azure.AI.OpenAI
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageGenerationOptions.ToRequestContent();
             Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchImageGenerationsFromBatchImageGenerationOperationResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
+            return ProtocolOperationHelpers.Convert(response, ImageGenerations.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
         /// <summary>
@@ -178,11 +177,5 @@ namespace Azure.AI.OpenAI
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-
-        private ImageGenerations FetchImageGenerationsFromBatchImageGenerationOperationResponse(Response response)
-        {
-            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
-            return ImageGenerations.DeserializeImageGenerations(resultJsonElement);
-        }
     }
 }
