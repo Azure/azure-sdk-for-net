@@ -53,8 +53,6 @@ public partial class ClientPipeline
             _length = _fixedPolicies.Length + _customPerCallPolicies.Length + _customPerTryPolicies.Length;
         }
 
-        public override int Length => _length - _current;
-
         public override bool ProcessNext()
         {
             if (TryGetNextPolicy(out PipelinePolicy next))

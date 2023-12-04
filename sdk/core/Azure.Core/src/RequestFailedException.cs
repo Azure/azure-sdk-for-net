@@ -290,13 +290,18 @@ namespace Azure
 
             public override Stream? ContentStream
             {
-                get => throw new NotImplementedException();
-                set => throw new NotImplementedException();
+                get => throw new NotSupportedException();
+                set => throw new NotSupportedException();
             }
 
             public override string ReasonPhrase => throw new NotSupportedException();
 
             public override void Dispose() => throw new NotSupportedException();
+
+            protected override MessageHeaders GetHeadersCore()
+            {
+                throw new NotSupportedException();
+            }
         }
     }
 }

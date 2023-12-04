@@ -75,20 +75,16 @@ internal static class PipelineProtocolExtensions
 
     private class ErrorOutputMessage<T> : OptionalOutputMessage<T>
     {
-        private readonly PipelineResponse _response;
         private readonly ClientRequestException _exception;
 
         public ErrorOutputMessage(PipelineResponse response, ClientRequestException exception)
             : base(default, response)
         {
-            _response = response;
             _exception = exception;
         }
 
         public override T? Value { get => throw _exception; }
 
         public override bool HasValue => false;
-
-        public override PipelineResponse GetRawResponse() => _response;
     }
 }
