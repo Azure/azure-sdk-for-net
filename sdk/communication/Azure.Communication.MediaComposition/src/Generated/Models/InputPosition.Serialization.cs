@@ -5,31 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    public partial class InputPosition : IUtf8JsonSerializable
+    public partial class InputPosition : IUtf8JsonSerializable, IJsonModel<InputPosition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InputPosition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InputPosition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InputPosition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(InputPosition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("x"u8);
             writer.WriteNumberValue(X);
             writer.WritePropertyName("y"u8);
             writer.WriteNumberValue(Y);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InputPosition DeserializeInputPosition(JsonElement element)
+        InputPosition IJsonModel<InputPosition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InputPosition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(InputPosition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInputPosition(document.RootElement, options);
+        }
+
+        internal static InputPosition DeserializeInputPosition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int x = default;
             int y = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x"u8))
@@ -42,8 +85,44 @@ namespace Azure.Communication.MediaComposition.Models
                     y = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InputPosition(x, y);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InputPosition(x, y, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InputPosition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InputPosition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(InputPosition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InputPosition IPersistableModel<InputPosition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InputPosition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInputPosition(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(InputPosition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InputPosition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

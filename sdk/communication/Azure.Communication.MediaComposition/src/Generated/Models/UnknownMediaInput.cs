@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
@@ -15,7 +17,8 @@ namespace Azure.Communication.MediaComposition
         /// <summary> Initializes a new instance of <see cref="UnknownMediaInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
-        internal UnknownMediaInput(MediaInputType kind, string placeholderImageUri) : base(kind, placeholderImageUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMediaInput(MediaInputType kind, string placeholderImageUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, placeholderImageUri, serializedAdditionalRawData)
         {
             Kind = kind;
         }

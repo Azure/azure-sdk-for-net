@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightStreaming";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightStreamingActivity"/> for deserialization. </summary>
+        internal HDInsightStreamingActivity()
+        {
+        }
+
         /// <summary> Storage linked service references. </summary>
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>

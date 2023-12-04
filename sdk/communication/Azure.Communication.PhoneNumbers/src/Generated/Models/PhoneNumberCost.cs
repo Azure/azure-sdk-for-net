@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,6 +14,38 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> The incurred cost for a single phone number. </summary>
     public partial class PhoneNumberCost
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PhoneNumberCost"/>. </summary>
         /// <param name="amount"> The cost amount. </param>
         /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
@@ -25,6 +58,24 @@ namespace Azure.Communication.PhoneNumbers
             Amount = amount;
             IsoCurrencySymbol = isoCurrencySymbol;
             BillingFrequency = billingFrequency;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCost"/>. </summary>
+        /// <param name="amount"> The cost amount. </param>
+        /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
+        /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberCost(double amount, string isoCurrencySymbol, BillingFrequency billingFrequency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Amount = amount;
+            IsoCurrencySymbol = isoCurrencySymbol;
+            BillingFrequency = billingFrequency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCost"/> for deserialization. </summary>
+        internal PhoneNumberCost()
+        {
         }
 
         /// <summary> The cost amount. </summary>

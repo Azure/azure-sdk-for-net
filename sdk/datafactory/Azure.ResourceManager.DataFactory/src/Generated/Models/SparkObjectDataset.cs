@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SparkObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SparkObjectDataset"/> for deserialization. </summary>
+        internal SparkObjectDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>

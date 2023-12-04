@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The metadata related to each access key for the given Cosmos DB database account. </summary>
     public partial class DatabaseAccountKeysMetadata
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountKeysMetadata"/>. </summary>
         internal DatabaseAccountKeysMetadata()
         {
@@ -22,12 +55,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="secondaryMasterKey"> The metadata related to the Secondary Read-Write Key for the given Cosmos DB database account. </param>
         /// <param name="primaryReadonlyMasterKey"> The metadata related to the Primary Read-Only Key for the given Cosmos DB database account. </param>
         /// <param name="secondaryReadonlyMasterKey"> The metadata related to the Secondary Read-Only Key for the given Cosmos DB database account. </param>
-        internal DatabaseAccountKeysMetadata(AccountKeyMetadata primaryMasterKey, AccountKeyMetadata secondaryMasterKey, AccountKeyMetadata primaryReadonlyMasterKey, AccountKeyMetadata secondaryReadonlyMasterKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseAccountKeysMetadata(AccountKeyMetadata primaryMasterKey, AccountKeyMetadata secondaryMasterKey, AccountKeyMetadata primaryReadonlyMasterKey, AccountKeyMetadata secondaryReadonlyMasterKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryMasterKey = primaryMasterKey;
             SecondaryMasterKey = secondaryMasterKey;
             PrimaryReadonlyMasterKey = primaryReadonlyMasterKey;
             SecondaryReadonlyMasterKey = secondaryReadonlyMasterKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The metadata related to the Primary Read-Write Key for the given Cosmos DB database account. </summary>

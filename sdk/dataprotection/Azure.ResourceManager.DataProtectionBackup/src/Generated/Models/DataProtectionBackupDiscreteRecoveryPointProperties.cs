@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
         /// <param name="objectType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"></param>
         /// <param name="recoveryPointDataStoresDetails"></param>
         /// <param name="recoverOn"></param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="retentionTagName"></param>
         /// <param name="retentionTagVersion"></param>
         /// <param name="expireOn"></param>
-        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn) : base(objectType)
+        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn) : base(objectType, serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             RecoveryPointDataStoresDetails = recoveryPointDataStoresDetails;
@@ -48,6 +49,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RetentionTagVersion = retentionTagVersion;
             ExpireOn = expireOn;
             ObjectType = objectType ?? "AzureBackupDiscreteRecoveryPoint";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/> for deserialization. </summary>
+        internal DataProtectionBackupDiscreteRecoveryPointProperties()
+        {
         }
 
         /// <summary> Gets or sets the friendly name. </summary>

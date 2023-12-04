@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial class EmailMessage : IUtf8JsonSerializable
+    public partial class EmailMessage : IUtf8JsonSerializable, IJsonModel<EmailMessage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmailMessage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EmailMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EmailMessage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EmailMessage)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Headers))
             {
@@ -57,7 +69,159 @@ namespace Azure.Communication.Email
                 writer.WritePropertyName("userEngagementTrackingDisabled"u8);
                 writer.WriteBooleanValue(UserEngagementTrackingDisabled.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        EmailMessage IJsonModel<EmailMessage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmailMessage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EmailMessage)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmailMessage(document.RootElement, options);
+        }
+
+        internal static EmailMessage DeserializeEmailMessage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> headers = default;
+            string senderAddress = default;
+            EmailContent content = default;
+            EmailRecipients recipients = default;
+            Optional<IList<EmailAttachment>> attachments = default;
+            Optional<IList<EmailAddress>> replyTo = default;
+            Optional<bool> userEngagementTrackingDisabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("headers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    headers = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("senderAddress"u8))
+                {
+                    senderAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("content"u8))
+                {
+                    content = EmailContent.DeserializeEmailContent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recipients"u8))
+                {
+                    recipients = EmailRecipients.DeserializeEmailRecipients(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("attachments"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EmailAttachment> array = new List<EmailAttachment>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EmailAttachment.DeserializeEmailAttachment(item));
+                    }
+                    attachments = array;
+                    continue;
+                }
+                if (property.NameEquals("replyTo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EmailAddress> array = new List<EmailAddress>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EmailAddress.DeserializeEmailAddress(item));
+                    }
+                    replyTo = array;
+                    continue;
+                }
+                if (property.NameEquals("userEngagementTrackingDisabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userEngagementTrackingDisabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EmailMessage(Optional.ToDictionary(headers), senderAddress, content, recipients, Optional.ToList(attachments), Optional.ToList(replyTo), Optional.ToNullable(userEngagementTrackingDisabled), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EmailMessage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmailMessage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EmailMessage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EmailMessage IPersistableModel<EmailMessage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmailMessage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEmailMessage(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EmailMessage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EmailMessage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

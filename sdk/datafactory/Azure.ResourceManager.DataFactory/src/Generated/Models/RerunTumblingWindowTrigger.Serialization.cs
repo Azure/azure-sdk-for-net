@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RerunTumblingWindowTrigger : IUtf8JsonSerializable
+    public partial class RerunTumblingWindowTrigger : IUtf8JsonSerializable, IJsonModel<RerunTumblingWindowTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RerunTumblingWindowTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RerunTumblingWindowTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RerunTumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RerunTumblingWindowTrigger)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
@@ -23,6 +33,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
+            {
+                writer.WritePropertyName("runtimeState"u8);
+                writer.WriteStringValue(RuntimeState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
@@ -79,8 +94,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static RerunTumblingWindowTrigger DeserializeRerunTumblingWindowTrigger(JsonElement element)
+        RerunTumblingWindowTrigger IJsonModel<RerunTumblingWindowTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RerunTumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RerunTumblingWindowTrigger)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRerunTumblingWindowTrigger(document.RootElement, options);
+        }
+
+        internal static RerunTumblingWindowTrigger DeserializeRerunTumblingWindowTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -174,5 +203,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new RerunTumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
         }
+
+        BinaryData IPersistableModel<RerunTumblingWindowTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RerunTumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RerunTumblingWindowTrigger)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RerunTumblingWindowTrigger IPersistableModel<RerunTumblingWindowTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RerunTumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRerunTumblingWindowTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RerunTumblingWindowTrigger)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RerunTumblingWindowTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

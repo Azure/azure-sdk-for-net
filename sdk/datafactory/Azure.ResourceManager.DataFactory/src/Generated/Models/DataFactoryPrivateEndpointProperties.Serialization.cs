@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryPrivateEndpointProperties : IUtf8JsonSerializable
+    public partial class DataFactoryPrivateEndpointProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryPrivateEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryPrivateEndpointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryPrivateEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPrivateEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFactoryPrivateEndpointProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionState))
             {
@@ -37,10 +47,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsReserved))
+            {
+                writer.WritePropertyName("isReserved"u8);
+                writer.WriteBooleanValue(IsReserved.Value);
+            }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -57,8 +77,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryPrivateEndpointProperties DeserializeDataFactoryPrivateEndpointProperties(JsonElement element)
+        DataFactoryPrivateEndpointProperties IJsonModel<DataFactoryPrivateEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPrivateEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFactoryPrivateEndpointProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryPrivateEndpointProperties(document.RootElement, options);
+        }
+
+        internal static DataFactoryPrivateEndpointProperties DeserializeDataFactoryPrivateEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,5 +163,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryPrivateEndpointProperties(connectionState.Value, Optional.ToList(fqdns), groupId.Value, Optional.ToNullable(isReserved), privateLinkResourceId.Value, provisioningState.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<DataFactoryPrivateEndpointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPrivateEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFactoryPrivateEndpointProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryPrivateEndpointProperties IPersistableModel<DataFactoryPrivateEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPrivateEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryPrivateEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFactoryPrivateEndpointProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryPrivateEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

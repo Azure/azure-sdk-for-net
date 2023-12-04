@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DynamicsCrmSink : IUtf8JsonSerializable
+    public partial class DynamicsCrmSink : IUtf8JsonSerializable, IJsonModel<DynamicsCrmSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicsCrmSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DynamicsCrmSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsCrmSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DynamicsCrmSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("writeBehavior"u8);
             writer.WriteStringValue(WriteBehavior.ToString());
@@ -77,8 +87,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DynamicsCrmSink DeserializeDynamicsCrmSink(JsonElement element)
+        DynamicsCrmSink IJsonModel<DynamicsCrmSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsCrmSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DynamicsCrmSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicsCrmSink(document.RootElement, options);
+        }
+
+        internal static DynamicsCrmSink DeserializeDynamicsCrmSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -184,5 +208,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DynamicsCrmSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, writeBehavior, ignoreNullValues.Value, alternateKeyName.Value);
         }
+
+        BinaryData IPersistableModel<DynamicsCrmSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsCrmSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DynamicsCrmSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DynamicsCrmSink IPersistableModel<DynamicsCrmSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsCrmSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDynamicsCrmSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DynamicsCrmSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DynamicsCrmSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

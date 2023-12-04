@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Profile of network configuration. </summary>
     public partial class ContainerServiceNetworkProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfile"/>. </summary>
         public ContainerServiceNetworkProfile()
         {
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="serviceCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </param>
         /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
         /// <param name="kubeProxyConfig"> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </param>
-        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, EbpfDataplane? ebpfDataplane, string podCidr, string serviceCidr, string dnsServiceIP, string dockerBridgeCidr, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, EbpfDataplane? ebpfDataplane, string podCidr, string serviceCidr, string dnsServiceIP, string dockerBridgeCidr, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;
@@ -58,6 +92,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ServiceCidrs = serviceCidrs;
             IPFamilies = ipFamilies;
             KubeProxyConfig = kubeProxyConfig;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Network plugin used for building the Kubernetes network. </summary>

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapCloudForCustomerSink : IUtf8JsonSerializable
+    public partial class SapCloudForCustomerSink : IUtf8JsonSerializable, IJsonModel<SapCloudForCustomerSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapCloudForCustomerSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SapCloudForCustomerSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapCloudForCustomerSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SapCloudForCustomerSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WriteBehavior))
             {
@@ -75,8 +85,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SapCloudForCustomerSink DeserializeSapCloudForCustomerSink(JsonElement element)
+        SapCloudForCustomerSink IJsonModel<SapCloudForCustomerSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapCloudForCustomerSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SapCloudForCustomerSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapCloudForCustomerSink(document.RootElement, options);
+        }
+
+        internal static SapCloudForCustomerSink DeserializeSapCloudForCustomerSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -176,5 +200,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SapCloudForCustomerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, Optional.ToNullable(writeBehavior), httpRequestTimeout.Value);
         }
+
+        BinaryData IPersistableModel<SapCloudForCustomerSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapCloudForCustomerSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SapCloudForCustomerSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SapCloudForCustomerSink IPersistableModel<SapCloudForCustomerSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapCloudForCustomerSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapCloudForCustomerSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SapCloudForCustomerSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapCloudForCustomerSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

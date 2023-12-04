@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class AgentPoolSnapshotData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AgentPoolSnapshotData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AgentPoolSnapshotData(AzureLocation location) : base(location)
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. If not specified, the default is Ubuntu if OSType=Linux or Windows2019 if OSType=Windows. And the default Windows OSSKU will be changed to Windows2022 after Windows2019 is deprecated. </param>
         /// <param name="vmSize"> The size of the VM. </param>
         /// <param name="enableFips"> Whether to use a FIPS-enabled OS. </param>
-        internal AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerServiceCreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, string vmSize, bool? enableFips) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerServiceCreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, string vmSize, bool? enableFips, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreationData = creationData;
             SnapshotType = snapshotType;
@@ -49,6 +83,12 @@ namespace Azure.ResourceManager.ContainerService
             OSSku = osSku;
             VmSize = vmSize;
             EnableFips = enableFips;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolSnapshotData"/> for deserialization. </summary>
+        internal AgentPoolSnapshotData()
+        {
         }
 
         /// <summary> CreationData to be used to specify the source agent pool resource ID to create this snapshot. </summary>

@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CassandraClusterBackupResourceInfo> GetBackupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo, _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetBackups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo(e), _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetBackups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CassandraClusterBackupResourceInfo> GetBackups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo, _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetBackups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo(e), _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetBackups", "value", null, cancellationToken);
         }
 
         /// <summary>

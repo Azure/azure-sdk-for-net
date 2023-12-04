@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual AsyncPageable<KpiDefinition> GetEnrichingKpisAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateGetEnrichingKpisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KpiDefinition.DeserializeKpiDefinition, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KpiDefinition.DeserializeKpiDefinition(e), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Pageable<KpiDefinition> GetEnrichingKpis(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateGetEnrichingKpisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KpiDefinition.DeserializeKpiDefinition, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KpiDefinition.DeserializeKpiDefinition(e), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
         }
     }
 }

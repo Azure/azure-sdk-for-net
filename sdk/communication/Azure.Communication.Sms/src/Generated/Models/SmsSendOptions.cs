@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Sms
 {
     /// <summary> Optional configuration for sending SMS messages. </summary>
     public partial class SmsSendOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SmsSendOptions"/>. </summary>
         /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
         public SmsSendOptions(bool enableDeliveryReport)
@@ -20,10 +55,17 @@ namespace Azure.Communication.Sms
         /// <summary> Initializes a new instance of <see cref="SmsSendOptions"/>. </summary>
         /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
         /// <param name="tag"> Use this field to provide metadata that will then be sent back in the corresponding Delivery Report. </param>
-        internal SmsSendOptions(bool enableDeliveryReport, string tag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmsSendOptions(bool enableDeliveryReport, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableDeliveryReport = enableDeliveryReport;
             Tag = tag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SmsSendOptions"/> for deserialization. </summary>
+        internal SmsSendOptions()
+        {
         }
 
         /// <summary> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </summary>

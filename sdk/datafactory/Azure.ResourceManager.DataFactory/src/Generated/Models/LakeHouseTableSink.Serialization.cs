@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LakeHouseTableSink : IUtf8JsonSerializable
+    public partial class LakeHouseTableSink : IUtf8JsonSerializable, IJsonModel<LakeHouseTableSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LakeHouseTableSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LakeHouseTableSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LakeHouseTableSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TableActionOption))
             {
@@ -87,8 +97,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static LakeHouseTableSink DeserializeLakeHouseTableSink(JsonElement element)
+        LakeHouseTableSink IJsonModel<LakeHouseTableSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LakeHouseTableSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLakeHouseTableSink(document.RootElement, options);
+        }
+
+        internal static LakeHouseTableSink DeserializeLakeHouseTableSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -198,5 +222,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new LakeHouseTableSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, tableActionOption.Value, partitionOption.Value, partitionNameList.Value);
         }
+
+        BinaryData IPersistableModel<LakeHouseTableSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LakeHouseTableSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LakeHouseTableSink IPersistableModel<LakeHouseTableSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLakeHouseTableSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LakeHouseTableSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LakeHouseTableSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

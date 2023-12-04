@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Security profile for the container service cluster. </summary>
     public partial class ManagedClusterSecurityProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfile"/>. </summary>
         public ManagedClusterSecurityProfile()
         {
@@ -27,7 +59,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="imageCleaner"> ImageCleaner settings for the security profile. </param>
         /// <param name="nodeRestriction"> [Node Restriction](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction) settings for the security profile. </param>
         /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on nodes with the Custom CA Trust feature enabled. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
-        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, ManagedClusterSecurityProfileNodeRestriction nodeRestriction, IList<byte[]> customCATrustCertificates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, ManagedClusterSecurityProfileNodeRestriction nodeRestriction, IList<byte[]> customCATrustCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Defender = defender;
             AzureKeyVaultKms = azureKeyVaultKms;
@@ -35,6 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ImageCleaner = imageCleaner;
             NodeRestriction = nodeRestriction;
             CustomCATrustCertificates = customCATrustCertificates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Microsoft Defender settings for the security profile. </summary>

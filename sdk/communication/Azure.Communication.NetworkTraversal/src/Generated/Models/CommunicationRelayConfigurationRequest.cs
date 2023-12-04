@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.NetworkTraversal
 {
     /// <summary> Request for a CommunicationRelayConfiguration. </summary>
     internal partial class CommunicationRelayConfigurationRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfigurationRequest"/>. </summary>
         public CommunicationRelayConfigurationRequest()
         {
@@ -19,11 +54,13 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="id"> An identity to be associated with telemetry for data relayed using the returned credentials. Must be an existing ACS user identity. If not provided, the telemetry will not contain an associated identity value. </param>
         /// <param name="routeType"> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </param>
         /// <param name="ttl"> The credential Time-To-Live (TTL), in seconds. The default value will be used if given value exceeds it. </param>
-        internal CommunicationRelayConfigurationRequest(string id, RouteType? routeType, int? ttl)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationRelayConfigurationRequest(string id, RouteType? routeType, int? ttl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             RouteType = routeType;
             Ttl = ttl;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An identity to be associated with telemetry for data relayed using the returned credentials. Must be an existing ACS user identity. If not provided, the telemetry will not contain an associated identity value. </summary>

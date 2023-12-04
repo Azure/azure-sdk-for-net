@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The UnknownCustomSetupBase. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomSetupBase"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
-        internal UnknownCustomSetupBase(string customSetupBaseType) : base(customSetupBaseType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCustomSetupBase(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(customSetupBaseType, serializedAdditionalRawData)
         {
             CustomSetupBaseType = customSetupBaseType ?? "Unknown";
         }

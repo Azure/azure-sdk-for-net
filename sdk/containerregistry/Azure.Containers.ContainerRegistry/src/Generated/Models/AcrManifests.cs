@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Manifest attributes. </summary>
     internal partial class AcrManifests
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AcrManifests"/>. </summary>
         internal AcrManifests()
         {
@@ -24,12 +57,14 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="repository"> Image name. </param>
         /// <param name="manifests"> List of manifests. </param>
         /// <param name="link"></param>
-        internal AcrManifests(string registryLoginServer, string repository, IReadOnlyList<ManifestAttributesBase> manifests, string link)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcrManifests(string registryLoginServer, string repository, IReadOnlyList<ManifestAttributesBase> manifests, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistryLoginServer = registryLoginServer;
             Repository = repository;
             Manifests = manifests;
             Link = link;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>

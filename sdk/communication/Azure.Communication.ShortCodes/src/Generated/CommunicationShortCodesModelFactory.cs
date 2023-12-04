@@ -25,7 +25,7 @@ namespace Azure.Communication.ShortCodes.Models
         {
             programBriefIds ??= new List<string>();
 
-            return new ShortCode(number, numberType, countryCode, programBriefIds?.ToList(), purchaseDate);
+            return new ShortCode(number, numberType, countryCode, programBriefIds?.ToList(), purchaseDate, serializedAdditionalRawData: null);
         }
     }
 }

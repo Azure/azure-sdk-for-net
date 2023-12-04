@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "Parquet";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ParquetDataset"/> for deserialization. </summary>
+        internal ParquetDataset()
+        {
+        }
+
         /// <summary>
         /// The location of the parquet storage.
         /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

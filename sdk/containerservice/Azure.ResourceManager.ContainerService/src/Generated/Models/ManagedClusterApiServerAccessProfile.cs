@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Access profile for managed cluster API server. </summary>
     public partial class ManagedClusterApiServerAccessProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagedClusterApiServerAccessProfile"/>. </summary>
         public ManagedClusterApiServerAccessProfile()
         {
@@ -27,7 +60,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="disableRunCommand"> Whether to disable run command for the cluster or not. </param>
         /// <param name="enableVnetIntegration"> Whether to enable apiserver vnet integration for the cluster or not. </param>
         /// <param name="subnetId"> It is required when: 1. creating a new cluster with BYO Vnet; 2. updating an existing cluster to enable apiserver vnet integration. </param>
-        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDnsZone, bool? enablePrivateClusterPublicFqdn, bool? disableRunCommand, bool? enableVnetIntegration, ResourceIdentifier subnetId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDnsZone, bool? enablePrivateClusterPublicFqdn, bool? disableRunCommand, bool? enableVnetIntegration, ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthorizedIPRanges = authorizedIPRanges;
             EnablePrivateCluster = enablePrivateCluster;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             DisableRunCommand = disableRunCommand;
             EnableVnetIntegration = enableVnetIntegration;
             SubnetId = subnetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with clusters that use Public IP Per Node, or clusters that are using a Basic Load Balancer. For more information see [API server authorized IP ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges). </summary>

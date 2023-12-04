@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -23,13 +24,14 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Initializes a new instance of <see cref="V1Manifest"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="tag"> Image tag. </param>
         /// <param name="fsLayers"> List of layer information. </param>
         /// <param name="history"> Image history. </param>
         /// <param name="signatures"> Image signature. </param>
-        internal V1Manifest(int? schemaVersion, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures) : base(schemaVersion)
+        internal V1Manifest(int? schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures) : base(schemaVersion, serializedAdditionalRawData)
         {
             Architecture = architecture;
             Name = name;

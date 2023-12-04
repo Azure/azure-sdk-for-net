@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "NetezzaTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetezzaTableDataset"/> for deserialization. </summary>
+        internal NetezzaTableDataset()
+        {
+        }
+
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> The table name of the Netezza. Type: string (or Expression with resultType string). </summary>

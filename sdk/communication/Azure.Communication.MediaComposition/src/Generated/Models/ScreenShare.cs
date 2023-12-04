@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -28,11 +29,17 @@ namespace Azure.Communication.MediaComposition
         /// <summary> Initializes a new instance of <see cref="ScreenShare"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="call"> The id of the teams meeting or call. </param>
-        internal ScreenShare(MediaInputType kind, string placeholderImageUri, string call) : base(kind, placeholderImageUri)
+        internal ScreenShare(MediaInputType kind, string placeholderImageUri, IDictionary<string, BinaryData> serializedAdditionalRawData, string call) : base(kind, placeholderImageUri, serializedAdditionalRawData)
         {
             Call = call;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScreenShare"/> for deserialization. </summary>
+        internal ScreenShare()
+        {
         }
 
         /// <summary> The id of the teams meeting or call. </summary>

@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SapTableResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapTableResourceDataset"/> for deserialization. </summary>
+        internal SapTableResourceDataset()
+        {
+        }
+
         /// <summary> The name of the SAP Table. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
     }

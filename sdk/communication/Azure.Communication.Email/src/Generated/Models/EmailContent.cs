@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Email
@@ -13,6 +14,38 @@ namespace Azure.Communication.Email
     /// <summary> Content of the email. </summary>
     public partial class EmailContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EmailContent"/>. </summary>
         /// <param name="subject"> Subject of the email message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subject"/> is null. </exception>
@@ -27,11 +60,18 @@ namespace Azure.Communication.Email
         /// <param name="subject"> Subject of the email message. </param>
         /// <param name="plainText"> Plain text version of the email message. </param>
         /// <param name="html"> Html version of the email message. </param>
-        internal EmailContent(string subject, string plainText, string html)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmailContent(string subject, string plainText, string html, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subject = subject;
             PlainText = plainText;
             Html = html;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmailContent"/> for deserialization. </summary>
+        internal EmailContent()
+        {
         }
 
         /// <summary> Subject of the email message. </summary>

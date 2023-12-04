@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties, MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties, MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

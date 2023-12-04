@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PipelineActivity"/> for deserialization. </summary>
+        internal PipelineActivity()
+        {
+        }
+
         /// <summary> Activity name. </summary>
         public string Name { get; set; }
         /// <summary> Type of activity. </summary>

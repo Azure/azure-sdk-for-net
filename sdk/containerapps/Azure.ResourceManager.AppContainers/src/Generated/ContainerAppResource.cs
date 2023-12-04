@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppSecret.DeserializeContainerAppSecret, _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerAppSecret.DeserializeContainerAppSecret(e), _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppSecret.DeserializeContainerAppSecret, _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerAppSecret.DeserializeContainerAppSecret(e), _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>

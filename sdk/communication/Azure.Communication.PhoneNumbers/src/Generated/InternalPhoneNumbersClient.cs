@@ -129,7 +129,7 @@ namespace Azure.Communication.PhoneNumbers
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumberAreaCode.DeserializePhoneNumberAreaCode, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAreaCodes", "areaCodes", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PhoneNumberAreaCode.DeserializePhoneNumberAreaCode(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAreaCodes", "areaCodes", "nextLink", cancellationToken);
         }
 
         /// <summary> Gets the list of available area codes. </summary>
@@ -149,7 +149,7 @@ namespace Azure.Communication.PhoneNumbers
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberAreaCode.DeserializePhoneNumberAreaCode, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAreaCodes", "areaCodes", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PhoneNumberAreaCode.DeserializePhoneNumberAreaCode(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAreaCodes", "areaCodes", "nextLink", cancellationToken);
         }
 
         /// <summary> Gets the list of supported countries. </summary>
@@ -161,7 +161,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableCountriesRequest(skip, maxPageSize, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableCountriesNextPageRequest(nextLink, skip, maxPageSize, acceptLanguage);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumberCountry.DeserializePhoneNumberCountry, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableCountries", "countries", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PhoneNumberCountry.DeserializePhoneNumberCountry(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableCountries", "countries", "nextLink", cancellationToken);
         }
 
         /// <summary> Gets the list of supported countries. </summary>
@@ -173,7 +173,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableCountriesRequest(skip, maxPageSize, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableCountriesNextPageRequest(nextLink, skip, maxPageSize, acceptLanguage);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberCountry.DeserializePhoneNumberCountry, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableCountries", "countries", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PhoneNumberCountry.DeserializePhoneNumberCountry(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableCountries", "countries", "nextLink", cancellationToken);
         }
 
         /// <summary> Gets the list of cities or towns with available phone numbers. </summary>
@@ -190,7 +190,7 @@ namespace Azure.Communication.PhoneNumbers
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumberLocality.DeserializePhoneNumberLocality, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableLocalities", "phoneNumberLocalities", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PhoneNumberLocality.DeserializePhoneNumberLocality(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableLocalities", "phoneNumberLocalities", "nextLink", cancellationToken);
         }
 
         /// <summary> Gets the list of cities or towns with available phone numbers. </summary>
@@ -207,7 +207,7 @@ namespace Azure.Communication.PhoneNumbers
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberLocality.DeserializePhoneNumberLocality, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableLocalities", "phoneNumberLocalities", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PhoneNumberLocality.DeserializePhoneNumberLocality(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableLocalities", "phoneNumberLocalities", "nextLink", cancellationToken);
         }
 
         /// <summary> List available offerings of capabilities with rates for the given country. </summary>
@@ -225,7 +225,7 @@ namespace Azure.Communication.PhoneNumbers
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumberOffering.DeserializePhoneNumberOffering, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListOfferings", "phoneNumberOfferings", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PhoneNumberOffering.DeserializePhoneNumberOffering(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListOfferings", "phoneNumberOfferings", "nextLink", cancellationToken);
         }
 
         /// <summary> List available offerings of capabilities with rates for the given country. </summary>
@@ -243,7 +243,7 @@ namespace Azure.Communication.PhoneNumbers
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberOffering.DeserializePhoneNumberOffering, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListOfferings", "phoneNumberOfferings", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PhoneNumberOffering.DeserializePhoneNumberOffering(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListOfferings", "phoneNumberOfferings", "nextLink", cancellationToken);
         }
 
         /// <summary> Gets the list of all purchased phone numbers. </summary>
@@ -254,7 +254,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListPhoneNumbersRequest(skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListPhoneNumbersNextPageRequest(nextLink, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PurchasedPhoneNumber.DeserializePurchasedPhoneNumber, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListPhoneNumbers", "phoneNumbers", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListPhoneNumbers", "phoneNumbers", "nextLink", cancellationToken);
         }
 
         /// <summary> Gets the list of all purchased phone numbers. </summary>
@@ -265,7 +265,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListPhoneNumbersRequest(skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListPhoneNumbersNextPageRequest(nextLink, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PurchasedPhoneNumber.DeserializePurchasedPhoneNumber, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListPhoneNumbers", "phoneNumbers", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(e), _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListPhoneNumbers", "phoneNumbers", "nextLink", cancellationToken);
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>

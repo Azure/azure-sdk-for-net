@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDisableSoftDeleteObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDisableSoftDeleteObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDisableSoftDeleteObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDisableSoftDeleteObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteResourceGuardProxyObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteResourceGuardProxyObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteResourceGuardProxyObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteResourceGuardProxyObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteProtectedItemObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteProtectedItemObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteProtectedItemObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteProtectedItemObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectionPolicyObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectionPolicyObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectionPolicyObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectionPolicyObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectedItemObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectedItemObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectedItemObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectedItemObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

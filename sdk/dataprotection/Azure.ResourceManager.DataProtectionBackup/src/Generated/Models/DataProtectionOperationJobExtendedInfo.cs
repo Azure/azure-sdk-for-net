@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -20,8 +22,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionOperationJobExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="jobResourceId"> Arm Id of the job created for this operation. </param>
-        internal DataProtectionOperationJobExtendedInfo(string objectType, ResourceIdentifier jobResourceId) : base(objectType)
+        internal DataProtectionOperationJobExtendedInfo(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier jobResourceId) : base(objectType, serializedAdditionalRawData)
         {
             JobResourceId = jobResourceId;
             ObjectType = objectType ?? "OperationJobExtendedInfo";

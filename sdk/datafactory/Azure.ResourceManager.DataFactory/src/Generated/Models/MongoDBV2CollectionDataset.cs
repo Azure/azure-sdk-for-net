@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "MongoDbV2Collection";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDBV2CollectionDataset"/> for deserialization. </summary>
+        internal MongoDBV2CollectionDataset()
+        {
+        }
+
         /// <summary> The collection name of the MongoDB database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Collection { get; set; }
     }
