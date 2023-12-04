@@ -6,15 +6,7 @@
 
 - Added `ChatAttachment` object that contains properties for inline images incoming from Teams Chat Threads.
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 1.2.0-beta.1 (2023-08-15)
 
 ## 1.1.2 (2023-06-19)
 
