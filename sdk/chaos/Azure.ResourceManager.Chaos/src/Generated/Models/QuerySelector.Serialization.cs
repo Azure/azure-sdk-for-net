@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class QuerySelector : IUtf8JsonSerializable
+    public partial class QuerySelector : IUtf8JsonSerializable, IJsonModel<QuerySelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuerySelector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QuerySelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QuerySelector>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(QuerySelector)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("queryString"u8);
             writer.WriteStringValue(QueryString);
@@ -50,8 +60,22 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteEndObject();
         }
 
-        internal static QuerySelector DeserializeQuerySelector(JsonElement element)
+        QuerySelector IJsonModel<QuerySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QuerySelector>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(QuerySelector)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuerySelector(document.RootElement, options);
+        }
+
+        internal static QuerySelector DeserializeQuerySelector(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,5 +128,36 @@ namespace Azure.ResourceManager.Chaos.Models
             additionalProperties = additionalPropertiesDictionary;
             return new QuerySelector(type, id, filter.Value, additionalProperties, queryString, subscriptionIds);
         }
+
+        BinaryData IPersistableModel<QuerySelector>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuerySelector>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QuerySelector)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QuerySelector IPersistableModel<QuerySelector>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuerySelector>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQuerySelector(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QuerySelector)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QuerySelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

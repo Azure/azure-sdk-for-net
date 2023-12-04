@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a reference to a Target in the selector. </summary>
     public partial class TargetReference
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TargetReference"/>. </summary>
         /// <param name="referenceType"> Enum of the Target reference type. </param>
         /// <param name="id"> String of the resource ID of a Target resource. </param>
@@ -23,6 +56,22 @@ namespace Azure.ResourceManager.Chaos.Models
 
             ReferenceType = referenceType;
             Id = id;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TargetReference"/>. </summary>
+        /// <param name="referenceType"> Enum of the Target reference type. </param>
+        /// <param name="id"> String of the resource ID of a Target resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetReference(TargetReferenceType referenceType, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ReferenceType = referenceType;
+            Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TargetReference"/> for deserialization. </summary>
+        internal TargetReference()
+        {
         }
 
         /// <summary> Enum of the Target reference type. </summary>

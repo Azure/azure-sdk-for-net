@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedVirtualMachineSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchSupportedSku.DeserializeBatchSupportedSku(e), LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedVirtualMachineSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchSupportedSku.DeserializeBatchSupportedSku(e), LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedCloudServiceSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedCloudServiceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchSupportedSku.DeserializeBatchSupportedSku(e), LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedCloudServiceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedCloudServiceSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedCloudServiceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchSupportedSku.DeserializeBatchSupportedSku(e), LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedCloudServiceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

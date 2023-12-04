@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class AnswerCallRequestInternal : IUtf8JsonSerializable
+    internal partial class AnswerCallRequestInternal : IUtf8JsonSerializable, IJsonModel<AnswerCallRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnswerCallRequestInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnswerCallRequestInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswerCallRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnswerCallRequestInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
@@ -24,7 +36,108 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
                 writer.WriteObjectValue(MediaStreamingConfiguration);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AnswerCallRequestInternal IJsonModel<AnswerCallRequestInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswerCallRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnswerCallRequestInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnswerCallRequestInternal(document.RootElement, options);
+        }
+
+        internal static AnswerCallRequestInternal DeserializeAnswerCallRequestInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string incomingCallContext = default;
+            string callbackUri = default;
+            Optional<MediaStreamingOptionsInternal> mediaStreamingConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("incomingCallContext"u8))
+                {
+                    incomingCallContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("callbackUri"u8))
+                {
+                    callbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("mediaStreamingConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mediaStreamingConfiguration = MediaStreamingOptionsInternal.DeserializeMediaStreamingOptionsInternal(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnswerCallRequestInternal(incomingCallContext, callbackUri, mediaStreamingConfiguration.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AnswerCallRequestInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswerCallRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnswerCallRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnswerCallRequestInternal IPersistableModel<AnswerCallRequestInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswerCallRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnswerCallRequestInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnswerCallRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnswerCallRequestInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

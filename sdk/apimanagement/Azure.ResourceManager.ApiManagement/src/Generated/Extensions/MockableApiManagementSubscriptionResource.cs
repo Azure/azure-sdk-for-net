@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiManagementSku.DeserializeApiManagementSku, ApiManagementSkusClientDiagnostics, Pipeline, "MockableApiManagementSubscriptionResource.GetApiManagementSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApiManagementSku.DeserializeApiManagementSku(e), ApiManagementSkusClientDiagnostics, Pipeline, "MockableApiManagementSubscriptionResource.GetApiManagementSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiManagementSku.DeserializeApiManagementSku, ApiManagementSkusClientDiagnostics, Pipeline, "MockableApiManagementSubscriptionResource.GetApiManagementSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApiManagementSku.DeserializeApiManagementSku(e), ApiManagementSkusClientDiagnostics, Pipeline, "MockableApiManagementSubscriptionResource.GetApiManagementSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

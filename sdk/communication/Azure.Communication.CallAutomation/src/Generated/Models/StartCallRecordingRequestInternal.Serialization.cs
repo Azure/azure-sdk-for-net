@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class StartCallRecordingRequestInternal : IUtf8JsonSerializable
+    internal partial class StartCallRecordingRequestInternal : IUtf8JsonSerializable, IJsonModel<StartCallRecordingRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StartCallRecordingRequestInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StartCallRecordingRequestInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StartCallRecordingRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StartCallRecordingRequestInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
             writer.WriteObjectValue(CallLocator);
@@ -67,7 +80,178 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("pauseOnStart"u8);
                 writer.WriteBooleanValue(PauseOnStart.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        StartCallRecordingRequestInternal IJsonModel<StartCallRecordingRequestInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StartCallRecordingRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StartCallRecordingRequestInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStartCallRecordingRequestInternal(document.RootElement, options);
+        }
+
+        internal static StartCallRecordingRequestInternal DeserializeStartCallRecordingRequestInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CallLocatorInternal callLocator = default;
+            Optional<string> recordingStateCallbackUri = default;
+            Optional<RecordingContent> recordingContentType = default;
+            Optional<RecordingChannel> recordingChannelType = default;
+            Optional<RecordingFormat> recordingFormatType = default;
+            Optional<IList<CommunicationIdentifierModel>> audioChannelParticipantOrdering = default;
+            Optional<IList<ChannelAffinityInternal>> channelAffinity = default;
+            Optional<ExternalStorageInternal> externalStorage = default;
+            Optional<bool> pauseOnStart = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("callLocator"u8))
+                {
+                    callLocator = CallLocatorInternal.DeserializeCallLocatorInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recordingStateCallbackUri"u8))
+                {
+                    recordingStateCallbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recordingContentType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingContentType = new RecordingContent(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recordingChannelType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingChannelType = new RecordingChannel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recordingFormatType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingFormatType = new RecordingFormat(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("audioChannelParticipantOrdering"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
+                    }
+                    audioChannelParticipantOrdering = array;
+                    continue;
+                }
+                if (property.NameEquals("channelAffinity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ChannelAffinityInternal> array = new List<ChannelAffinityInternal>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChannelAffinityInternal.DeserializeChannelAffinityInternal(item));
+                    }
+                    channelAffinity = array;
+                    continue;
+                }
+                if (property.NameEquals("externalStorage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    externalStorage = ExternalStorageInternal.DeserializeExternalStorageInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("pauseOnStart"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pauseOnStart = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StartCallRecordingRequestInternal(callLocator, recordingStateCallbackUri.Value, Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), Optional.ToList(audioChannelParticipantOrdering), Optional.ToList(channelAffinity), externalStorage.Value, Optional.ToNullable(pauseOnStart), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<StartCallRecordingRequestInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StartCallRecordingRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StartCallRecordingRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StartCallRecordingRequestInternal IPersistableModel<StartCallRecordingRequestInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StartCallRecordingRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStartCallRecordingRequestInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StartCallRecordingRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StartCallRecordingRequestInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

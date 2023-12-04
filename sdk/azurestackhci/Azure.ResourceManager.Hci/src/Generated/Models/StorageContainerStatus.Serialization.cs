@@ -5,15 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class StorageContainerStatus
+    public partial class StorageContainerStatus : IUtf8JsonSerializable, IJsonModel<StorageContainerStatus>
     {
-        internal static StorageContainerStatus DeserializeStorageContainerStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageContainerStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageContainerStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageContainerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageContainerStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode);
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(AvailableSizeMB))
+            {
+                writer.WritePropertyName("availableSizeMB"u8);
+                writer.WriteNumberValue(AvailableSizeMB.Value);
+            }
+            if (Optional.IsDefined(ContainerSizeMB))
+            {
+                writer.WritePropertyName("containerSizeMB"u8);
+                writer.WriteNumberValue(ContainerSizeMB.Value);
+            }
+            if (Optional.IsDefined(ProvisioningStatus))
+            {
+                writer.WritePropertyName("provisioningStatus"u8);
+                writer.WriteObjectValue(ProvisioningStatus);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageContainerStatus IJsonModel<StorageContainerStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageContainerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageContainerStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageContainerStatus(document.RootElement, options);
+        }
+
+        internal static StorageContainerStatus DeserializeStorageContainerStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +95,8 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<long> availableSizeMB = default;
             Optional<long> containerSizeMB = default;
             Optional<StorageContainerStatusProvisioningStatus> provisioningStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -62,8 +136,44 @@ namespace Azure.ResourceManager.Hci.Models
                     provisioningStatus = StorageContainerStatusProvisioningStatus.DeserializeStorageContainerStatusProvisioningStatus(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageContainerStatus(errorCode.Value, errorMessage.Value, Optional.ToNullable(availableSizeMB), Optional.ToNullable(containerSizeMB), provisioningStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageContainerStatus(errorCode.Value, errorMessage.Value, Optional.ToNullable(availableSizeMB), Optional.ToNullable(containerSizeMB), provisioningStatus.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageContainerStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageContainerStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageContainerStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageContainerStatus IPersistableModel<StorageContainerStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageContainerStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageContainerStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageContainerStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageContainerStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

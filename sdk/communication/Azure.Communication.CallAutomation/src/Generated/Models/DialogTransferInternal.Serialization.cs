@@ -5,15 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class DialogTransferInternal
+    internal partial class DialogTransferInternal : IUtf8JsonSerializable, IJsonModel<DialogTransferInternal>
     {
-        internal static DialogTransferInternal DeserializeDialogTransferInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DialogTransferInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DialogTransferInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DialogTransferInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DialogTransferInternal)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TransferType))
+            {
+                writer.WritePropertyName("transferType"u8);
+                writer.WriteStringValue(TransferType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TransferDestination))
+            {
+                writer.WritePropertyName("transferDestination"u8);
+                writer.WriteStringValue(TransferDestination);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResultInformation))
+            {
+                writer.WritePropertyName("resultInformation"u8);
+                writer.WriteObjectValue(ResultInformation);
+            }
+            if (Optional.IsDefined(DialogInputType))
+            {
+                writer.WritePropertyName("dialogInputType"u8);
+                writer.WriteStringValue(DialogInputType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DialogId))
+            {
+                writer.WritePropertyName("dialogId"u8);
+                writer.WriteStringValue(DialogId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IvrContext))
+            {
+                writer.WritePropertyName("ivrContext"u8);
+                writer.WriteObjectValue(IvrContext);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DialogTransferInternal IJsonModel<DialogTransferInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DialogTransferInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DialogTransferInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDialogTransferInternal(document.RootElement, options);
+        }
+
+        internal static DialogTransferInternal DeserializeDialogTransferInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +125,8 @@ namespace Azure.Communication.CallAutomation
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transferType"u8))
@@ -92,8 +191,44 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DialogTransferInternal(transferType.Value, transferDestination.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, ivrContext.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DialogTransferInternal(transferType.Value, transferDestination.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, ivrContext.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DialogTransferInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DialogTransferInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DialogTransferInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DialogTransferInternal IPersistableModel<DialogTransferInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DialogTransferInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDialogTransferInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DialogTransferInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DialogTransferInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

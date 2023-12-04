@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
@@ -12,5 +13,18 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The UnknownBaseDialog. </summary>
     internal partial class UnknownDialog : BaseDialog
     {
+        /// <summary> Initializes a new instance of <see cref="UnknownDialog"/>. </summary>
+        /// <param name="kind"> Determines the type of the dialog. </param>
+        /// <param name="context"> Dialog context. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDialog(DialogInputType kind, IDictionary<string, object> context, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, context, serializedAdditionalRawData)
+        {
+            Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDialog"/> for deserialization. </summary>
+        internal UnknownDialog()
+        {
+        }
     }
 }

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ContinuousDtmfRecognitionToneReceived. </summary>
     public partial class ContinuousDtmfRecognitionToneReceived
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneReceived"/>. </summary>
         internal ContinuousDtmfRecognitionToneReceived()
         {
@@ -23,7 +58,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal ContinuousDtmfRecognitionToneReceived(ResultInformation resultInformation, int? sequenceId, DtmfTone? tone, string operationContext, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinuousDtmfRecognitionToneReceived(ResultInformation resultInformation, int? sequenceId, DtmfTone? tone, string operationContext, string callConnectionId, string serverCallId, string correlationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResultInformation = resultInformation;
             SequenceId = sequenceId;
@@ -32,6 +68,7 @@ namespace Azure.Communication.CallAutomation
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </summary>
         public int? SequenceId { get; }

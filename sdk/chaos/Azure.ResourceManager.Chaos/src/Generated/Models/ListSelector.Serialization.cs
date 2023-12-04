@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class ListSelector : IUtf8JsonSerializable
+    public partial class ListSelector : IUtf8JsonSerializable, IJsonModel<ListSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListSelector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ListSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ListSelector>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ListSelector)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
@@ -48,8 +58,22 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteEndObject();
         }
 
-        internal static ListSelector DeserializeListSelector(JsonElement element)
+        ListSelector IJsonModel<ListSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ListSelector>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ListSelector)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeListSelector(document.RootElement, options);
+        }
+
+        internal static ListSelector DeserializeListSelector(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,5 +120,36 @@ namespace Azure.ResourceManager.Chaos.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ListSelector(type, id, filter.Value, additionalProperties, targets);
         }
+
+        BinaryData IPersistableModel<ListSelector>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListSelector>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ListSelector)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ListSelector IPersistableModel<ListSelector>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListSelector>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeListSelector(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ListSelector)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ListSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

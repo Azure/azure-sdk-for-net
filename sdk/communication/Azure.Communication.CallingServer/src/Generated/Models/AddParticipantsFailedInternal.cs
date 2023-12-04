@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
@@ -14,6 +15,38 @@ namespace Azure.Communication.CallingServer
     /// <summary> The AddParticipantsFailedEvent. </summary>
     internal partial class AddParticipantsFailedInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AddParticipantsFailedInternal"/>. </summary>
         internal AddParticipantsFailedInternal()
         {
@@ -30,7 +63,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the "type" property in the CloudEvent. </param>
-        internal AddParticipantsFailedInternal(string eventSource, string operationContext, ResultInformation resultInformation, IReadOnlyList<CommunicationIdentifierModel> participants, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddParticipantsFailedInternal(string eventSource, string operationContext, ResultInformation resultInformation, IReadOnlyList<CommunicationIdentifierModel> participants, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventSource = eventSource;
             OperationContext = operationContext;
@@ -41,6 +75,7 @@ namespace Azure.Communication.CallingServer
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             PublicEventType = publicEventType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the event source. </summary>

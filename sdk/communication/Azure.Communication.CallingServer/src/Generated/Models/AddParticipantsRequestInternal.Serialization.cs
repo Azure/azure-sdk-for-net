@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class AddParticipantsRequestInternal : IUtf8JsonSerializable
+    internal partial class AddParticipantsRequestInternal : IUtf8JsonSerializable, IJsonModel<AddParticipantsRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddParticipantsRequestInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AddParticipantsRequestInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantsRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AddParticipantsRequestInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceCallerId))
             {
@@ -37,7 +50,123 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AddParticipantsRequestInternal IJsonModel<AddParticipantsRequestInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantsRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AddParticipantsRequestInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddParticipantsRequestInternal(document.RootElement, options);
+        }
+
+        internal static AddParticipantsRequestInternal DeserializeAddParticipantsRequestInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<PhoneNumberIdentifierModel> sourceCallerId = default;
+            IList<CommunicationIdentifierModel> participantsToAdd = default;
+            Optional<int> invitationTimeoutInSeconds = default;
+            Optional<string> operationContext = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceCallerId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceCallerId = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("participantsToAdd"u8))
+                {
+                    List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
+                    }
+                    participantsToAdd = array;
+                    continue;
+                }
+                if (property.NameEquals("invitationTimeoutInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invitationTimeoutInSeconds = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AddParticipantsRequestInternal(sourceCallerId.Value, participantsToAdd, Optional.ToNullable(invitationTimeoutInSeconds), operationContext.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AddParticipantsRequestInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantsRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AddParticipantsRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AddParticipantsRequestInternal IPersistableModel<AddParticipantsRequestInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantsRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAddParticipantsRequestInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AddParticipantsRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AddParticipantsRequestInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

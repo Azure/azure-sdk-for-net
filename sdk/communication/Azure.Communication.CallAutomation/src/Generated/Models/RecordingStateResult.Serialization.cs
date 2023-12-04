@@ -5,15 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class RecordingStateResult
+    public partial class RecordingStateResult : IUtf8JsonSerializable, IJsonModel<RecordingStateResult>
     {
-        internal static RecordingStateResult DeserializeRecordingStateResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecordingStateResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecordingStateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecordingStateResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RecordingStateResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecordingId))
+            {
+                writer.WritePropertyName("recordingId"u8);
+                writer.WriteStringValue(RecordingId);
+            }
+            if (Optional.IsDefined(RecordingState))
+            {
+                writer.WritePropertyName("recordingState"u8);
+                writer.WriteStringValue(RecordingState.Value.ToString());
+            }
+            if (Optional.IsDefined(RecordingType))
+            {
+                writer.WritePropertyName("recordingType"u8);
+                writer.WriteStringValue(RecordingType.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RecordingStateResult IJsonModel<RecordingStateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecordingStateResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RecordingStateResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecordingStateResult(document.RootElement, options);
+        }
+
+        internal static RecordingStateResult DeserializeRecordingStateResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +83,8 @@ namespace Azure.Communication.CallAutomation
             Optional<string> recordingId = default;
             Optional<RecordingState> recordingState = default;
             Optional<RecordingType> recordingType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"u8))
@@ -46,8 +110,44 @@ namespace Azure.Communication.CallAutomation
                     recordingType = new RecordingType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState), Optional.ToNullable(recordingType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState), Optional.ToNullable(recordingType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecordingStateResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecordingStateResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RecordingStateResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RecordingStateResult IPersistableModel<RecordingStateResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecordingStateResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecordingStateResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RecordingStateResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecordingStateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

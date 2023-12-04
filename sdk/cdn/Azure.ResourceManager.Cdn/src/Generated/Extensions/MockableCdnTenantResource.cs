@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EdgeNode.DeserializeEdgeNode(e), EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EdgeNode.DeserializeEdgeNode(e), EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
     }
 }

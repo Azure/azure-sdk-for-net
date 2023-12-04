@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -12,10 +16,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class VirtualMachineInstanceData : IUtf8JsonSerializable
+    public partial class VirtualMachineInstanceData : IUtf8JsonSerializable, IJsonModel<VirtualMachineInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualMachineInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineInstanceData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -26,6 +38,26 @@ namespace Azure.ResourceManager.Hci
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -59,10 +91,30 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            {
+                writer.WritePropertyName("instanceView"u8);
+                writer.WriteObjectValue(InstanceView);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status);
+            }
             if (Optional.IsDefined(GuestAgentInstallStatus))
             {
                 writer.WritePropertyName("guestAgentInstallStatus"u8);
                 writer.WriteObjectValue(GuestAgentInstallStatus);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VmId))
+            {
+                writer.WritePropertyName("vmId"u8);
+                writer.WriteStringValue(VmId);
             }
             if (Optional.IsDefined(ResourceUid))
             {
@@ -70,11 +122,40 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStringValue(ResourceUid);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineInstanceData DeserializeVirtualMachineInstanceData(JsonElement element)
+        VirtualMachineInstanceData IJsonModel<VirtualMachineInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineInstanceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineInstanceData(document.RootElement, options);
+        }
+
+        internal static VirtualMachineInstanceData DeserializeVirtualMachineInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +178,8 @@ namespace Azure.ResourceManager.Hci
             Optional<GuestAgentInstallStatus> guestAgentInstallStatus = default;
             Optional<string> vmId = default;
             Optional<string> resourceUid = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -253,8 +336,44 @@ namespace Azure.ResourceManager.Hci
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineInstanceData(id, name, type, systemData.Value, extendedLocation.Value, identity, hardwareProfile.Value, networkProfile.Value, osProfile.Value, securityProfile.Value, storageProfile.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningState), instanceView.Value, status.Value, guestAgentInstallStatus.Value, vmId.Value, resourceUid.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineInstanceData(id, name, type, systemData.Value, extendedLocation.Value, identity, hardwareProfile.Value, networkProfile.Value, osProfile.Value, securityProfile.Value, storageProfile.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningState), instanceView.Value, status.Value, guestAgentInstallStatus.Value, vmId.Value, resourceUid.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineInstanceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineInstanceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineInstanceData IPersistableModel<VirtualMachineInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineInstanceData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineInstanceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

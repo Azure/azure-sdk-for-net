@@ -13,6 +13,15 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Model factory for models. </summary>
     public static partial class QuestionAnsweringModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerContext"/>. </summary>
+        /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
+        /// <param name="previousQuestion"> Previous user query. </param>
+        /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = null)
+        {
+            return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersResult"/>. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
         /// <returns> A new <see cref="QuestionAnswering.AnswersResult"/> instance for mocking. </returns>
@@ -20,7 +29,7 @@ namespace Azure.AI.Language.QuestionAnswering
         {
             answers ??= new List<KnowledgeBaseAnswer>();
 
-            return new AnswersResult(answers?.ToList());
+            return new AnswersResult(answers?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswer"/>. </summary>
@@ -38,7 +47,7 @@ namespace Azure.AI.Language.QuestionAnswering
             questions ??= new List<string>();
             metadata ??= new Dictionary<string, string>();
 
-            return new KnowledgeBaseAnswer(questions?.ToList(), answer, confidence, qnaId, source, metadata, dialog, shortAnswer);
+            return new KnowledgeBaseAnswer(questions?.ToList(), answer, confidence, qnaId, source, metadata, dialog, shortAnswer, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerDialog"/>. </summary>
@@ -49,7 +58,7 @@ namespace Azure.AI.Language.QuestionAnswering
         {
             prompts ??= new List<KnowledgeBaseAnswerPrompt>();
 
-            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts?.ToList());
+            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerPrompt"/>. </summary>
@@ -59,7 +68,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = null, int? qnaId = null, string displayText = null)
         {
-            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText);
+            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswerSpan"/>. </summary>
@@ -70,7 +79,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <returns> A new <see cref="QuestionAnswering.AnswerSpan"/> instance for mocking. </returns>
         public static AnswerSpan AnswerSpan(string text = null, double? confidence = null, int? offset = null, int? length = null)
         {
-            return new AnswerSpan(text, confidence, offset, length);
+            return new AnswerSpan(text, confidence, offset, length, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersFromTextResult"/>. </summary>
@@ -80,7 +89,7 @@ namespace Azure.AI.Language.QuestionAnswering
         {
             answers ??= new List<TextAnswer>();
 
-            return new AnswersFromTextResult(answers?.ToList());
+            return new AnswersFromTextResult(answers?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.TextAnswer"/>. </summary>
@@ -93,7 +102,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <returns> A new <see cref="QuestionAnswering.TextAnswer"/> instance for mocking. </returns>
         public static TextAnswer TextAnswer(string answer = null, double? confidence = null, string id = null, AnswerSpan shortAnswer = null, int? offset = null, int? length = null)
         {
-            return new TextAnswer(answer, confidence, id, shortAnswer, offset, length);
+            return new TextAnswer(answer, confidence, id, shortAnswer, offset, length, serializedAdditionalRawData: null);
         }
     }
 }

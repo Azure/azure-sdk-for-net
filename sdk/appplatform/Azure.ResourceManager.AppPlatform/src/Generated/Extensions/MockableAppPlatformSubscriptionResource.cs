@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku, SkusClientDiagnostics, Pipeline, "MockableAppPlatformSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku(e), SkusClientDiagnostics, Pipeline, "MockableAppPlatformSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku, SkusClientDiagnostics, Pipeline, "MockableAppPlatformSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku(e), SkusClientDiagnostics, Pipeline, "MockableAppPlatformSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
         }
     }
 }
