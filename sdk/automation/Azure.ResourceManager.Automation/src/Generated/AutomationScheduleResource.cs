@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Automation
         private readonly ScheduleRestOperations _automationScheduleScheduleRestClient;
         private readonly AutomationScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/schedules";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationScheduleResource"/> class for mocking. </summary>
         protected AutomationScheduleResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/schedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

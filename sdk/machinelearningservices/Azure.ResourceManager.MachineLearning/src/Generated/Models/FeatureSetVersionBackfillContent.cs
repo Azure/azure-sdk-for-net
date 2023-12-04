@@ -20,6 +20,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="FeatureSetVersionBackfillContent"/>. </summary>
+        /// <param name="description"> Specifies description. </param>
+        /// <param name="displayName"> Specifies description. </param>
+        /// <param name="featureWindow"> Specifies the backfill feature window to be materialized. </param>
+        /// <param name="resource"> Specifies the compute resource settings. </param>
+        /// <param name="sparkConfiguration"> Specifies the spark compute settings. </param>
+        /// <param name="tags"> Specifies the tags. </param>
+        internal FeatureSetVersionBackfillContent(string description, string displayName, FeatureWindow featureWindow, MaterializationComputeResource resource, IDictionary<string, string> sparkConfiguration, IDictionary<string, string> tags)
+        {
+            Description = description;
+            DisplayName = displayName;
+            FeatureWindow = featureWindow;
+            Resource = resource;
+            SparkConfiguration = sparkConfiguration;
+            Tags = tags;
+        }
+
         /// <summary> Specifies description. </summary>
         public string Description { get; set; }
         /// <summary> Specifies description. </summary>

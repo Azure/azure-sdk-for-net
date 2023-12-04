@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly DiagnosticsPackagesRestOperations _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient;
         private readonly MobileNetworkDiagnosticsPackageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes/diagnosticsPackages";
+
         /// <summary> Initializes a new instance of the <see cref="MobileNetworkDiagnosticsPackageResource"/> class for mocking. </summary>
         protected MobileNetworkDiagnosticsPackageResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes/diagnosticsPackages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

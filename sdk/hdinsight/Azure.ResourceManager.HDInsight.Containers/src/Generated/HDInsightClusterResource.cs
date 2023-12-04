@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         private readonly ClusterJobsRestOperations _clusterJobsRestClient;
         private readonly HDInsightClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusterpools/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="HDInsightClusterResource"/> class for mocking. </summary>
         protected HDInsightClusterResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.HDInsight.Containers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusterpools/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

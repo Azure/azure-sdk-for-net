@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly KubernetesClustersRestOperations _networkCloudKubernetesClusterKubernetesClustersRestClient;
         private readonly NetworkCloudKubernetesClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/kubernetesClusters";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudKubernetesClusterResource"/> class for mocking. </summary>
         protected NetworkCloudKubernetesClusterResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/kubernetesClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

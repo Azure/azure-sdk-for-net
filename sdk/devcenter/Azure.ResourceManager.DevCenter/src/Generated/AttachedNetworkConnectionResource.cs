@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DevCenter
         private readonly AttachedNetworksRestOperations _attachedNetworkConnectionAttachedNetworksRestClient;
         private readonly AttachedNetworkConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/attachednetworks";
+
         /// <summary> Initializes a new instance of the <see cref="AttachedNetworkConnectionResource"/> class for mocking. </summary>
         protected AttachedNetworkConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/attachednetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

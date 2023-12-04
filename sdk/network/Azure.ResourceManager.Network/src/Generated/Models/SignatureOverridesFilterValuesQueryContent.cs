@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SignatureOverridesFilterValuesQueryContent"/>. </summary>
+        /// <param name="filterName"> Describes the name of the column which values will be returned. </param>
+        internal SignatureOverridesFilterValuesQueryContent(string filterName)
+        {
+            FilterName = filterName;
+        }
+
         /// <summary> Describes the name of the column which values will be returned. </summary>
         public string FilterName { get; set; }
     }

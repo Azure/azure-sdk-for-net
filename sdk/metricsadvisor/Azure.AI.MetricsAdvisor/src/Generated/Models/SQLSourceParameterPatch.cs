@@ -15,6 +15,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SQLSourceParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this database. </param>
+        /// <param name="query"> The script to query this database. </param>
+        internal SQLSourceParameterPatch(string connectionString, string query)
+        {
+            ConnectionString = connectionString;
+            Query = query;
+        }
+
         /// <summary> The connection string of this database. </summary>
         public string ConnectionString { get; set; }
         /// <summary> The script to query this database. </summary>

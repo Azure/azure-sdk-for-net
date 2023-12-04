@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppService
         private readonly CertificateOrdersDiagnosticsRestOperations _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient;
         private readonly AppServiceDetectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CertificateRegistration/certificateOrders/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorResource"/> class for mocking. </summary>
         protected CertificateOrderDetectorResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CertificateRegistration/certificateOrders/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

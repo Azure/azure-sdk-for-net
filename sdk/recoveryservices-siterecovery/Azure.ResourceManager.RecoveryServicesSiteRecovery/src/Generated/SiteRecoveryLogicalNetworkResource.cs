@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationLogicalNetworksRestOperations _siteRecoveryLogicalNetworkReplicationLogicalNetworksRestClient;
         private readonly SiteRecoveryLogicalNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationLogicalNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryLogicalNetworkResource"/> class for mocking. </summary>
         protected SiteRecoveryLogicalNetworkResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationLogicalNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

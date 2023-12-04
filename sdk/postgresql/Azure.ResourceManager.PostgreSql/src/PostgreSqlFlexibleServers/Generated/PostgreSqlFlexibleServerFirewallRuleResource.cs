@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly FirewallRulesRestOperations _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient;
         private readonly PostgreSqlFlexibleServerFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerFirewallRuleResource"/> class for mocking. </summary>
         protected PostgreSqlFlexibleServerFirewallRuleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

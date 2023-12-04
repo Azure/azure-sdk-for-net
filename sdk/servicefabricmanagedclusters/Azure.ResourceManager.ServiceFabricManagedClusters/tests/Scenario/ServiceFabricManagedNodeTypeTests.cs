@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             var secondaryNodeType = await CreateServiceFabricManagedNodeType(_cluster, secondaryNodeTypeName, false);
             ValidatePurviewAccount(primaryNodeType.Data, primaryNodeTypeName);
             ValidatePurviewAccount(secondaryNodeType.Data, secondaryNodeTypeName);
-
             // Delete
             await secondaryNodeType.DeleteAsync(WaitUntil.Completed);
             var flag = await _nodeTypeCollection.ExistsAsync(secondaryNodeTypeName);

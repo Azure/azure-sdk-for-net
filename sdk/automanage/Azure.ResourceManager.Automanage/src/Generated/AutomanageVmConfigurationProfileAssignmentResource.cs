@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Automanage
         private readonly ConfigurationProfileAssignmentsRestOperations _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient;
         private readonly AutomanageConfigurationProfileAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> class for mocking. </summary>
         protected AutomanageVmConfigurationProfileAssignmentResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

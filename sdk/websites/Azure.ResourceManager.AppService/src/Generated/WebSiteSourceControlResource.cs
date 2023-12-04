@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteSourceControlWebAppsRestClient;
         private readonly SiteSourceControlData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/sourcecontrols";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteSourceControlResource"/> class for mocking. </summary>
         protected WebSiteSourceControlResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/sourcecontrols";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

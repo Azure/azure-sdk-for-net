@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly PacketCapturesRestOperations _mobileNetworkPacketCapturePacketCapturesRestClient;
         private readonly MobileNetworkPacketCaptureData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes/packetCaptures";
+
         /// <summary> Initializes a new instance of the <see cref="MobileNetworkPacketCaptureResource"/> class for mocking. </summary>
         protected MobileNetworkPacketCaptureResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes/packetCaptures";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

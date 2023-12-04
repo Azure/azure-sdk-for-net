@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Authorization
         private readonly RoleEligibilityScheduleRequestsRestOperations _roleEligibilityScheduleRequestRestClient;
         private readonly RoleEligibilityScheduleRequestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleEligibilityScheduleRequests";
+
         /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleRequestResource"/> class for mocking. </summary>
         protected RoleEligibilityScheduleRequestResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Authorization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleEligibilityScheduleRequests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

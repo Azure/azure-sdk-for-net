@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly NamespacesRestOperations _serviceBusNetworkRuleSetNamespacesRestClient;
         private readonly ServiceBusNetworkRuleSetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/networkRuleSets";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNetworkRuleSetResource"/> class for mocking. </summary>
         protected ServiceBusNetworkRuleSetResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/networkRuleSets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

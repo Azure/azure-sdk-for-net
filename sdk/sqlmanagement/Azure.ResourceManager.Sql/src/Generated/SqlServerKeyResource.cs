@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerKeysRestOperations _sqlServerKeyServerKeysRestClient;
         private readonly SqlServerKeyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/keys";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerKeyResource"/> class for mocking. </summary>
         protected SqlServerKeyResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/keys";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

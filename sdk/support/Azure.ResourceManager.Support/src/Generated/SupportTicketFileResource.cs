@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Support
         private readonly FilesRestOperations _supportTicketFileFilesRestClient;
         private readonly SupportFileDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
+
         /// <summary> Initializes a new instance of the <see cref="SupportTicketFileResource"/> class for mocking. </summary>
         protected SupportTicketFileResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

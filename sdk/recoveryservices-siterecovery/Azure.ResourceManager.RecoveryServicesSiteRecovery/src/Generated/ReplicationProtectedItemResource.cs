@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly TargetComputeSizesRestOperations _targetComputeSizesRestClient;
         private readonly ReplicationProtectedItemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems";
+
         /// <summary> Initializes a new instance of the <see cref="ReplicationProtectedItemResource"/> class for mocking. </summary>
         protected ReplicationProtectedItemResource()
         {
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

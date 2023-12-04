@@ -18,5 +18,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             ToList = new ChangeTrackingList<string>();
         }
+
+        /// <summary> Initializes a new instance of <see cref="EmailHookParameterPatch"/>. </summary>
+        /// <param name="toList"> Email TO: list. </param>
+        internal EmailHookParameterPatch(IList<string> toList)
+        {
+            ToList = toList;
+        }
     }
 }

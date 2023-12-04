@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly GatewaysRestOperations _appPlatformGatewayGatewaysRestClient;
         private readonly AppPlatformGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/gateways";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformGatewayResource"/> class for mocking. </summary>
         protected AppPlatformGatewayResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/gateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

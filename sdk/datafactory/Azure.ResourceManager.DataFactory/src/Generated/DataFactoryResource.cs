@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.DataFactory
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly DataFactoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryResource"/> class for mocking. </summary>
         protected DataFactoryResource()
         {
@@ -97,9 +100,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

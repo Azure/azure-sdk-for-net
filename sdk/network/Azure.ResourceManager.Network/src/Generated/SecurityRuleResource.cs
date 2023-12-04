@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Network
         private readonly SecurityRulesRestOperations _securityRuleRestClient;
         private readonly SecurityRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityGroups/securityRules";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityRuleResource"/> class for mocking. </summary>
         protected SecurityRuleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityGroups/securityRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

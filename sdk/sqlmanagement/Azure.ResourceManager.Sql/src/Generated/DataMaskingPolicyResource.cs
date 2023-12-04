@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Sql
         private readonly DataMaskingRulesRestOperations _dataMaskingRulesRestClient;
         private readonly DataMaskingPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/dataMaskingPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="DataMaskingPolicyResource"/> class for mocking. </summary>
         protected DataMaskingPolicyResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/dataMaskingPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

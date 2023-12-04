@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ActiveDeploymentNames = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ActiveAppPlatformDeploymentsContent"/>. </summary>
+        /// <param name="activeDeploymentNames"> Collection of Deployment name. </param>
+        internal ActiveAppPlatformDeploymentsContent(IList<string> activeDeploymentNames)
+        {
+            ActiveDeploymentNames = activeDeploymentNames;
+        }
+
         /// <summary> Collection of Deployment name. </summary>
         public IList<string> ActiveDeploymentNames { get; }
     }

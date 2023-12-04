@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.IotHub
         private readonly PrivateLinkResourcesRestOperations _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesRestClient;
         private readonly IotHubPrivateEndpointGroupInformationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/iotHubs/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="IotHubPrivateEndpointGroupInformationResource"/> class for mocking. </summary>
         protected IotHubPrivateEndpointGroupInformationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.IotHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/iotHubs/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

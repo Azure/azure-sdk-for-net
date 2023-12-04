@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.DevCenter.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevCenterTrackedResourceUpdate"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal DevCenterTrackedResourceUpdate(IDictionary<string, string> tags, AzureLocation? location)
+        {
+            Tags = tags;
+            Location = location;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedLedgerDigestUploadsRestOperations _managedLedgerDigestUploadRestClient;
         private readonly ManagedLedgerDigestUploadData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedLedgerDigestUploadResource"/> class for mocking. </summary>
         protected ManagedLedgerDigestUploadResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

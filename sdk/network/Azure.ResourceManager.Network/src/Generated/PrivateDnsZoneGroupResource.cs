@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Network
         private readonly PrivateDnsZoneGroupsRestOperations _privateDnsZoneGroupRestClient;
         private readonly PrivateDnsZoneGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/privateEndpoints/privateDnsZoneGroups";
+
         /// <summary> Initializes a new instance of the <see cref="PrivateDnsZoneGroupResource"/> class for mocking. </summary>
         protected PrivateDnsZoneGroupResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/privateEndpoints/privateDnsZoneGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

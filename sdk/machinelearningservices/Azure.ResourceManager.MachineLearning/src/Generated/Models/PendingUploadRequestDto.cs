@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PendingUploadRequestDto"/>. </summary>
+        /// <param name="pendingUploadId"> If PendingUploadId = null then random guid will be used. </param>
+        /// <param name="pendingUploadType"> TemporaryBlobReference is the only supported type. </param>
+        internal PendingUploadRequestDto(string pendingUploadId, PendingUploadType? pendingUploadType)
+        {
+            PendingUploadId = pendingUploadId;
+            PendingUploadType = pendingUploadType;
+        }
+
         /// <summary> If PendingUploadId = null then random guid will be used. </summary>
         public string PendingUploadId { get; set; }
         /// <summary> TemporaryBlobReference is the only supported type. </summary>

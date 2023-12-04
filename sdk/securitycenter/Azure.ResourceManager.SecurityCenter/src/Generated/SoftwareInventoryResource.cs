@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SoftwareInventoriesRestOperations _softwareInventoryRestClient;
         private readonly SoftwareInventoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/softwareInventories";
+
         /// <summary> Initializes a new instance of the <see cref="SoftwareInventoryResource"/> class for mocking. </summary>
         protected SoftwareInventoryResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/softwareInventories";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

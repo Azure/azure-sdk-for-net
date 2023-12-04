@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerTrustGroupsRestOperations _sqlServerTrustGroupServerTrustGroupsRestClient;
         private readonly SqlServerTrustGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/serverTrustGroups";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerTrustGroupResource"/> class for mocking. </summary>
         protected SqlServerTrustGroupResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/serverTrustGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.IotCentral.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the IoT Central application instance to check. </param>
+        /// <param name="resourceType"> The type of the IoT Central resource to query. </param>
+        internal IotCentralAppNameAvailabilityContent(string name, string resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The name of the IoT Central application instance to check. </summary>
         public string Name { get; }
         /// <summary> The type of the IoT Central resource to query. </summary>

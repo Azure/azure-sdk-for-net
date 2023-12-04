@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly InternalNetworksRestOperations _networkFabricInternalNetworkInternalNetworksRestClient;
         private readonly NetworkFabricInternalNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains/internalNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricInternalNetworkResource"/> class for mocking. </summary>
         protected NetworkFabricInternalNetworkResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains/internalNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

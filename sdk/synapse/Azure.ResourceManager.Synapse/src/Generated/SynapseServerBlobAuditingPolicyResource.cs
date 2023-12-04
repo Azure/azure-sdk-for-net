@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly WorkspaceManagedSqlServerBlobAuditingPoliciesRestOperations _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient;
         private readonly SynapseServerBlobAuditingPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/auditingSettings";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseServerBlobAuditingPolicyResource"/> class for mocking. </summary>
         protected SynapseServerBlobAuditingPolicyResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/auditingSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

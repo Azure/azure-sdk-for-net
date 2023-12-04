@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.Automation
         private readonly FieldsRestOperations _fieldsRestClient;
         private readonly AutomationModuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/modules";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationAccountModuleResource"/> class for mocking. </summary>
         protected AutomationAccountModuleResource()
         {
@@ -80,9 +83,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/modules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

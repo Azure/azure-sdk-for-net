@@ -20,6 +20,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             Properties = new ChangeTrackingList<KeyValuePairString>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DocumentIngress"/>. </summary>
+        /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
+        /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        internal DocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties)
+        {
+            DocumentType = documentType;
+            DocumentStreamIds = documentStreamIds;
+            Properties = properties;
+        }
+
         /// <summary> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </summary>
         public DocumentIngressDocumentType? DocumentType { get; set; }
         /// <summary> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </summary>

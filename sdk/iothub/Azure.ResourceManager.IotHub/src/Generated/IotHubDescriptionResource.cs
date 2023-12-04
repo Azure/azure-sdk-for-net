@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.IotHub
         private readonly IotHubRestOperations _iotHubRestClient;
         private readonly IotHubDescriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs";
+
         /// <summary> Initializes a new instance of the <see cref="IotHubDescriptionResource"/> class for mocking. </summary>
         protected IotHubDescriptionResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.IotHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -15,6 +15,15 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PiiTask"/>. </summary>
+        /// <param name="parameters"></param>
+        /// <param name="taskName"></param>
+        internal PiiTask(PiiTaskParameters parameters, string taskName)
+        {
+            Parameters = parameters;
+            TaskName = taskName;
+        }
+
         /// <summary> Gets or sets the parameters. </summary>
         public PiiTaskParameters Parameters { get; set; }
         /// <summary> Gets or sets the task name. </summary>

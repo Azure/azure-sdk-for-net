@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Storage
         private readonly BlobContainersRestOperations _immutabilityPolicyBlobContainersRestClient;
         private readonly ImmutabilityPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="ImmutabilityPolicyResource"/> class for mocking. </summary>
         protected ImmutabilityPolicyResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

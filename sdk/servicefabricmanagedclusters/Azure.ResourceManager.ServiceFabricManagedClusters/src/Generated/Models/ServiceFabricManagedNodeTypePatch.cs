@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypePatch"/>. </summary>
+        /// <param name="tags"> Node type update parameters. </param>
+        /// <param name="sku"> The node type sku. </param>
+        internal ServiceFabricManagedNodeTypePatch(IDictionary<string, string> tags, NodeTypeSku sku)
+        {
+            Tags = tags;
+            Sku = sku;
+        }
+
         /// <summary> Node type update parameters. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The node type sku. </summary>

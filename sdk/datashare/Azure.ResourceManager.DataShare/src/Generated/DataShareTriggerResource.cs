@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataShare
         private readonly TriggersRestOperations _dataShareTriggerTriggersRestClient;
         private readonly DataShareTriggerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions/triggers";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareTriggerResource"/> class for mocking. </summary>
         protected DataShareTriggerResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions/triggers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

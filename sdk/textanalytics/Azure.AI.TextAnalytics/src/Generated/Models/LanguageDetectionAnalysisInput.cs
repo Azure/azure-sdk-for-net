@@ -19,6 +19,13 @@ namespace Azure.AI.TextAnalytics.Models
             Documents = new ChangeTrackingList<LanguageInput>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionAnalysisInput"/>. </summary>
+        /// <param name="documents"></param>
+        internal LanguageDetectionAnalysisInput(IList<LanguageInput> documents)
+        {
+            Documents = documents;
+        }
+
         /// <summary> Gets the documents. </summary>
         public IList<LanguageInput> Documents { get; }
     }

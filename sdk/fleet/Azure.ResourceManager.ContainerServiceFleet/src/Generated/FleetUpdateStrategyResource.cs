@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private readonly FleetUpdateStrategiesRestOperations _fleetUpdateStrategyRestClient;
         private readonly FleetUpdateStrategyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets/updateStrategies";
+
         /// <summary> Initializes a new instance of the <see cref="FleetUpdateStrategyResource"/> class for mocking. </summary>
         protected FleetUpdateStrategyResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets/updateStrategies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteProcessWebAppsRestClient;
         private readonly ProcessInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/processes";
+
         /// <summary> Initializes a new instance of the <see cref="SiteProcessResource"/> class for mocking. </summary>
         protected SiteProcessResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/processes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

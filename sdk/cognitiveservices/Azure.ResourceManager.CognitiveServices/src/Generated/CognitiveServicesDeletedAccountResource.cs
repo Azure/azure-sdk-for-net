@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly DeletedAccountsRestOperations _cognitiveServicesDeletedAccountDeletedAccountsRestClient;
         private readonly CognitiveServicesAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesDeletedAccountResource"/> class for mocking. </summary>
         protected CognitiveServicesDeletedAccountResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.CognitiveServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

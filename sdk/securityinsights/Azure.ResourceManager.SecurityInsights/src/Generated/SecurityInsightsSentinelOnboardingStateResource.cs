@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly SentinelOnboardingStatesRestOperations _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient;
         private readonly SecurityInsightsSentinelOnboardingStateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/onboardingStates";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSentinelOnboardingStateResource"/> class for mocking. </summary>
         protected SecurityInsightsSentinelOnboardingStateResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/onboardingStates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

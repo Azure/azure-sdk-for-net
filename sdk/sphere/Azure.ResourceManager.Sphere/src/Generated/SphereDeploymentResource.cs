@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sphere
         private readonly DeploymentsRestOperations _sphereDeploymentDeploymentsRestClient;
         private readonly SphereDeploymentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/products/deviceGroups/deployments";
+
         /// <summary> Initializes a new instance of the <see cref="SphereDeploymentResource"/> class for mocking. </summary>
         protected SphereDeploymentResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/products/deviceGroups/deployments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

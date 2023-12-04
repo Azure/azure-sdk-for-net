@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly KustoPoolPrivateLinkResourcesRestOperations _kustoPoolPrivateLinkResourcesRestClient;
         private readonly SynapseKustoPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseKustoPoolResource"/> class for mocking. </summary>
         protected SynapseKustoPoolResource()
         {
@@ -81,9 +84,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

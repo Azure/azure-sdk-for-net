@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly AppsRestOperations _appPlatformAppAppsRestClient;
         private readonly AppPlatformAppData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformAppResource"/> class for mocking. </summary>
         protected AppPlatformAppResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

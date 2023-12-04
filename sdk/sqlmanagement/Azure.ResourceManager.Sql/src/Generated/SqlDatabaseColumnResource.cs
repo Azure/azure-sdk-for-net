@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.Sql
         private readonly SensitivityLabelsRestOperations _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient;
         private readonly DatabaseColumnData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/schemas/tables/columns";
+
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseColumnResource"/> class for mocking. </summary>
         protected SqlDatabaseColumnResource()
         {
@@ -74,9 +77,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/schemas/tables/columns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
