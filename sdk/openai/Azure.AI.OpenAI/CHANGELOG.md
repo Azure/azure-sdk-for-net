@@ -33,6 +33,10 @@ Dall-e-3:
 - Azure OpenAI now uses `dall-e-3` model deployments for its image generation API and such a valid deployment must
     be provided into the options for the `GetImageGenerations` method to receive results.
 
+### Other changes
+
+- Audio transcription and translation (via `GetAudioTranscription()` and `GetAudioTranslation()` now allow specification of an optional `Filename` in addition to the binary audio data. This is used purely as an identifier and does not functionally alter the transcription/translation behavior in any way.
+
 ## 1.0.0-beta.9 (2023-11-06)
 
 ### Breaking Changes

@@ -6,8 +6,11 @@ non-Azure OpenAI inference endpoint, making it a great choice for even non-Azure
 
 Use the client library for Azure OpenAI to:
 
-* [Create a completion for text][msdocs_openai_completion]
+* [Create chat completions using models like gpt-4 and gpt-35-turbo][msdocs_openai_chat_quickstart]
+* [Generate images with dall-e-3][msdocs_openai_dalle_quickstart]
+* [Transcribe or translate audio into text with whisper][msdocs_openai_whisper_quickstart]
 * [Create a text embedding for comparisons][msdocs_openai_embedding]
+* [Create a legacy completion for text using models like text-davinci-002][msdocs_openai_completion]
 
 Azure OpenAI is a managed service that allows developers to deploy, tune, and generate content from OpenAI models on Azure resources.
 
@@ -698,6 +701,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
+[msdocs_openai_chat_quickstart]: https://learn.microsoft.com/azure/ai-services/openai/chatgpt-quickstart?pivots=programming-language-csharp
+[msdocs_openai_dalle_quickstart]: https://learn.microsoft.com/azure/ai-services/openai/dall-e-quickstart?pivots=programming-language-csharp
+[msdocs_openai_whisper_quickstart]: https://learn.microsoft.com/azure/ai-services/openai/whisper-quickstart
 [msdocs_openai_completion]: https://learn.microsoft.com/azure/cognitive-services/openai/how-to/completions
 [msdocs_openai_embedding]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization

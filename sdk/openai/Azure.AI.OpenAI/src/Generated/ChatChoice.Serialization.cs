@@ -25,7 +25,7 @@ namespace Azure.AI.OpenAI
             Optional<ChatFinishDetails> finishDetails = default;
             Optional<ChatResponseMessage> delta = default;
             Optional<ContentFilterResultsForChoice> contentFilterResults = default;
-            AzureChatEnhancements enhancements = default;
+            Optional<AzureChatEnhancements> enhancements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -81,11 +81,15 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("enhancements"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     enhancements = AzureChatEnhancements.DeserializeAzureChatEnhancements(property.Value);
                     continue;
                 }
             }
-            return new ChatChoice(message.Value, index, finishReason, finishDetails.Value, delta.Value, contentFilterResults.Value, enhancements);
+            return new ChatChoice(message.Value, index, finishReason, finishDetails.Value, delta.Value, contentFilterResults.Value, enhancements.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

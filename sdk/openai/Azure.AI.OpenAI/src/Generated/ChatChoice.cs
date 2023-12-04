@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.OpenAI
 {
     /// <summary>
@@ -20,19 +17,10 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
-        /// <param name="enhancements">
-        /// Represents the output results of Azure OpenAI enhancements to chat completions, as configured via the matching input
-        /// provided in the request. This supplementary information is only available when using Azure OpenAI and only when the
-        /// request is configured to use enhancements.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enhancements"/> is null. </exception>
-        internal ChatChoice(int index, CompletionsFinishReason? finishReason, AzureChatEnhancements enhancements)
+        internal ChatChoice(int index, CompletionsFinishReason? finishReason)
         {
-            Argument.AssertNotNull(enhancements, nameof(enhancements));
-
             Index = index;
             FinishReason = finishReason;
-            Enhancements = enhancements;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
