@@ -10,6 +10,10 @@
 
 - Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
 
+- Fixed a race condition that could lead to a synchronization primitive being double-released if `IsRunning` was called concurrently while starting or stopping an event processor.
+
+- Fixed an issue with event processor validation where a exception for quota exceeded may inappropriately be surfaced when starting the processor.
+
 ### Other Changes
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
