@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly DaprComponentsRestOperations _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient;
         private readonly ContainerAppDaprComponentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/daprComponents";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> class for mocking. </summary>
         protected ContainerAppManagedEnvironmentDaprComponentResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/daprComponents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

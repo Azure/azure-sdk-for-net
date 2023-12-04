@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly ConfigServersRestOperations _appPlatformConfigServerConfigServersRestClient;
         private readonly AppPlatformConfigServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/configServers";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformConfigServerResource"/> class for mocking. </summary>
         protected AppPlatformConfigServerResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/configServers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

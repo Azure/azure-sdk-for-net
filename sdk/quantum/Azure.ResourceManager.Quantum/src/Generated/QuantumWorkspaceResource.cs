@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Quantum
         private readonly WorkspacesRestOperations _quantumWorkspaceWorkspacesRestClient;
         private readonly QuantumWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Quantum/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="QuantumWorkspaceResource"/> class for mocking. </summary>
         protected QuantumWorkspaceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Quantum
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Quantum/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

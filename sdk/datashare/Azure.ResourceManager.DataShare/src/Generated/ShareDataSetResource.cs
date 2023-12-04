@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataShare
         private readonly DataSetsRestOperations _shareDataSetDataSetsRestClient;
         private readonly ShareDataSetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares/dataSets";
+
         /// <summary> Initializes a new instance of the <see cref="ShareDataSetResource"/> class for mocking. </summary>
         protected ShareDataSetResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares/dataSets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

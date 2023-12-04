@@ -19,6 +19,17 @@ namespace Azure.IoT.TimeSeriesInsights
             Put = new ChangeTrackingList<TimeSeriesType>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="TypesBatchRequest"/>. </summary>
+        /// <param name="get"> Definition of what time series types to return. </param>
+        /// <param name="put"> Definition of what time series types to update or create. </param>
+        /// <param name="delete"> Definition of what time series types to delete. </param>
+        internal TypesBatchRequest(TypesRequestBatchGetOrDelete @get, IList<TimeSeriesType> put, TypesRequestBatchGetOrDelete delete)
+        {
+            Get = @get;
+            Put = put;
+            Delete = delete;
+        }
+
         /// <summary> Definition of what time series types to return. </summary>
         public TypesRequestBatchGetOrDelete Get { get; set; }
         /// <summary> Definition of what time series types to update or create. </summary>

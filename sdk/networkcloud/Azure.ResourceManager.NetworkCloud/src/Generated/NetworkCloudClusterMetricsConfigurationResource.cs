@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly MetricsConfigurationsRestOperations _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient;
         private readonly NetworkCloudClusterMetricsConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/clusters/metricsConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterMetricsConfigurationResource"/> class for mocking. </summary>
         protected NetworkCloudClusterMetricsConfigurationResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/clusters/metricsConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

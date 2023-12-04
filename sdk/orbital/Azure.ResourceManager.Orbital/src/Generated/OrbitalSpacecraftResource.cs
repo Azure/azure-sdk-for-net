@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Orbital
         private readonly SpacecraftsRestOperations _orbitalSpacecraftSpacecraftsRestClient;
         private readonly OrbitalSpacecraftData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Orbital/spacecrafts";
+
         /// <summary> Initializes a new instance of the <see cref="OrbitalSpacecraftResource"/> class for mocking. </summary>
         protected OrbitalSpacecraftResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Orbital
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Orbital/spacecrafts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

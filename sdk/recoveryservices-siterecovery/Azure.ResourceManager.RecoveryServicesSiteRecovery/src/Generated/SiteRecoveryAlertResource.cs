@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationAlertSettingsRestOperations _siteRecoveryAlertReplicationAlertSettingsRestClient;
         private readonly SiteRecoveryAlertData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationAlertSettings";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryAlertResource"/> class for mocking. </summary>
         protected SiteRecoveryAlertResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationAlertSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

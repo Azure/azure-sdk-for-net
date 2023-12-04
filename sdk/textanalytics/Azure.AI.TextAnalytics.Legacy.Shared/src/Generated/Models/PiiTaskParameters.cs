@@ -20,6 +20,21 @@ namespace Azure.AI.TextAnalytics.Legacy
             PiiCategories = new ChangeTrackingList<PiiEntityLegacyCategory>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PiiTaskParameters"/>. </summary>
+        /// <param name="domain"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="loggingOptOut"></param>
+        /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
+        /// <param name="stringIndexType"></param>
+        internal PiiTaskParameters(PiiTaskParametersDomain? domain, string modelVersion, bool? loggingOptOut, IList<PiiEntityLegacyCategory> piiCategories, StringIndexType? stringIndexType)
+        {
+            Domain = domain;
+            ModelVersion = modelVersion;
+            LoggingOptOut = loggingOptOut;
+            PiiCategories = piiCategories;
+            StringIndexType = stringIndexType;
+        }
+
         /// <summary> Gets or sets the domain. </summary>
         public PiiTaskParametersDomain? Domain { get; set; }
         /// <summary> Gets or sets the model version. </summary>

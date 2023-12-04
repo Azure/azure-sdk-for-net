@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.BotService
         private readonly PrivateEndpointConnectionsRestOperations _botServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly BotServicePrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="BotServicePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected BotServicePrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.BotService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

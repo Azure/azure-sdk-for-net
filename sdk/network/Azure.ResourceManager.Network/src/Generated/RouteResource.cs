@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Network
         private readonly RoutesRestOperations _routeRestClient;
         private readonly RouteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/routeTables/routes";
+
         /// <summary> Initializes a new instance of the <see cref="RouteResource"/> class for mocking. </summary>
         protected RouteResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/routeTables/routes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

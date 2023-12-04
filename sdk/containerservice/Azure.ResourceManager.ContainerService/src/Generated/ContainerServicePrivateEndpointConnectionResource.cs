@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ContainerService
         private readonly PrivateEndpointConnectionsRestOperations _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly ContainerServicePrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerServicePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected ContainerServicePrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

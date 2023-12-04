@@ -21,6 +21,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Solutions = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySearchRelatedMetadata"/>. </summary>
+        /// <param name="categories"> The related categories for the function. </param>
+        /// <param name="resourceTypes"> The related resource types for the function. </param>
+        /// <param name="solutions"> The related Log Analytics solutions for the function. </param>
+        internal LogAnalyticsQuerySearchRelatedMetadata(IList<string> categories, IList<string> resourceTypes, IList<string> solutions)
+        {
+            Categories = categories;
+            ResourceTypes = resourceTypes;
+            Solutions = solutions;
+        }
+
         /// <summary> The related categories for the function. </summary>
         public IList<string> Categories { get; }
         /// <summary> The related resource types for the function. </summary>

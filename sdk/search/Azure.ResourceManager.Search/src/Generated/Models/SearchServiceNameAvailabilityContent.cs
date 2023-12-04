@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Search.Models
             ResourceType = SearchServiceResourceType.SearchServices;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
+        internal SearchServiceNameAvailabilityContent(string name, SearchServiceResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </summary>
         public string Name { get; }
         /// <summary> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </summary>

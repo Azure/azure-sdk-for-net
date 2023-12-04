@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.MySql
         private readonly ServerSecurityAlertPoliciesRestOperations _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient;
         private readonly MySqlServerSecurityAlertPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/securityAlertPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlServerSecurityAlertPolicyResource"/> class for mocking. </summary>
         protected MySqlServerSecurityAlertPolicyResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/securityAlertPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

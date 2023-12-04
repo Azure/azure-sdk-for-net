@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql
         private readonly TransparentDataEncryptionsRestOperations _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient;
         private readonly LogicalDatabaseTransparentDataEncryptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/transparentDataEncryption";
+
         /// <summary> Initializes a new instance of the <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> class for mocking. </summary>
         protected LogicalDatabaseTransparentDataEncryptionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/transparentDataEncryption";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

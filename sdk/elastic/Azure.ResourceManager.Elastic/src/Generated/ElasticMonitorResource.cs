@@ -52,6 +52,9 @@ namespace Azure.ResourceManager.Elastic
         private readonly VMCollectionRestOperations _vmCollectionRestClient;
         private readonly ElasticMonitorResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticMonitorResource"/> class for mocking. </summary>
         protected ElasticMonitorResource()
         {
@@ -88,9 +91,6 @@ namespace Azure.ResourceManager.Elastic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

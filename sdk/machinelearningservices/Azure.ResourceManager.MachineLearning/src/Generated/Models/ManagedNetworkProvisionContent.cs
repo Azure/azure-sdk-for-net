@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionContent"/>. </summary>
+        /// <param name="includeSpark"></param>
+        internal ManagedNetworkProvisionContent(bool? includeSpark)
+        {
+            IncludeSpark = includeSpark;
+        }
+
         /// <summary> Gets or sets the include spark. </summary>
         public bool? IncludeSpark { get; set; }
     }

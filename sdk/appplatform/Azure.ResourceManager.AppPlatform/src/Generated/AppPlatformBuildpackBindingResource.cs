@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly BuildpackBindingRestOperations _appPlatformBuildpackBindingBuildpackBindingRestClient;
         private readonly AppPlatformBuildpackBindingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builders/buildpackBindings";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildpackBindingResource"/> class for mocking. </summary>
         protected AppPlatformBuildpackBindingResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builders/buildpackBindings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

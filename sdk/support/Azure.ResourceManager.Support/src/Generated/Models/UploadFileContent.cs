@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.Support.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UploadFileContent"/>. </summary>
+        /// <param name="content"> File Content in base64 encoded format. </param>
+        /// <param name="chunkIndex"> Index of the uploaded chunk (Index starts at 0). </param>
+        internal UploadFileContent(string content, float? chunkIndex)
+        {
+            Content = content;
+            ChunkIndex = chunkIndex;
+        }
+
         /// <summary> File Content in base64 encoded format. </summary>
         public string Content { get; set; }
         /// <summary> Index of the uploaded chunk (Index starts at 0). </summary>

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly IncidentRelationsRestOperations _securityInsightsIncidentRelationIncidentRelationsRestClient;
         private readonly SecurityInsightsIncidentRelationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/incidents/relations";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentRelationResource"/> class for mocking. </summary>
         protected SecurityInsightsIncidentRelationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/incidents/relations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

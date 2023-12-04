@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateInstancePatch"/>. </summary>
+        /// <param name="tags"> List of key value pairs that describe the resource. This will overwrite the existing tags. </param>
+        internal DeviceUpdateInstancePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> List of key value pairs that describe the resource. This will overwrite the existing tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

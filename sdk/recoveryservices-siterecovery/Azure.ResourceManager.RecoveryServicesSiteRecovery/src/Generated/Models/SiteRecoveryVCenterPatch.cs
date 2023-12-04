@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterPatch"/>. </summary>
+        /// <param name="properties"> The update VCenter Request Properties. </param>
+        internal SiteRecoveryVCenterPatch(SiteRecoveryUpdateVCenterProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> The update VCenter Request Properties. </summary>
         public SiteRecoveryUpdateVCenterProperties Properties { get; set; }
     }

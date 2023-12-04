@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly FormulasRestOperations _devTestLabFormulaFormulasRestClient;
         private readonly DevTestLabFormulaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/formulas";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabFormulaResource"/> class for mocking. </summary>
         protected DevTestLabFormulaResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/formulas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

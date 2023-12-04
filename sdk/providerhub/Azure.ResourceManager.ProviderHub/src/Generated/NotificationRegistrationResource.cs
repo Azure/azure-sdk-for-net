@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly NotificationRegistrationsRestOperations _notificationRegistrationRestClient;
         private readonly NotificationRegistrationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/notificationRegistrations";
+
         /// <summary> Initializes a new instance of the <see cref="NotificationRegistrationResource"/> class for mocking. </summary>
         protected NotificationRegistrationResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ProviderHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/notificationRegistrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

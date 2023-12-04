@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly MongoClustersRestOperations _cosmosDBFirewallRuleMongoClustersRestClient;
         private readonly CosmosDBFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBFirewallRuleResource"/> class for mocking. </summary>
         protected CosmosDBFirewallRuleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

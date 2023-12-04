@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.FrontDoor
         private readonly RulesEnginesRestOperations _frontDoorRulesEngineRulesEnginesRestClient;
         private readonly FrontDoorRulesEngineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/frontDoors/rulesEngines";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorRulesEngineResource"/> class for mocking. </summary>
         protected FrontDoorRulesEngineResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.FrontDoor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/frontDoors/rulesEngines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

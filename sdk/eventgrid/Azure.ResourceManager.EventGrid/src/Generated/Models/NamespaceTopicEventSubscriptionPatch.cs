@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionPatch"/>. </summary>
+        /// <param name="deliveryConfiguration"> Information about the delivery configuration of the event subscription. </param>
+        /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
+        /// <param name="filtersConfiguration"> Information about the filter for the event subscription. </param>
+        internal NamespaceTopicEventSubscriptionPatch(DeliveryConfiguration deliveryConfiguration, DeliverySchema? eventDeliverySchema, FiltersConfiguration filtersConfiguration)
+        {
+            DeliveryConfiguration = deliveryConfiguration;
+            EventDeliverySchema = eventDeliverySchema;
+            FiltersConfiguration = filtersConfiguration;
+        }
+
         /// <summary> Information about the delivery configuration of the event subscription. </summary>
         public DeliveryConfiguration DeliveryConfiguration { get; set; }
         /// <summary> The event delivery schema for the event subscription. </summary>

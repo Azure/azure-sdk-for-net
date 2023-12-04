@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly MongoClustersRestOperations _mongoClusterRestClient;
         private readonly MongoClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters";
+
         /// <summary> Initializes a new instance of the <see cref="MongoClusterResource"/> class for mocking. </summary>
         protected MongoClusterResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

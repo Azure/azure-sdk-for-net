@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly ExtendedSqlPoolBlobAuditingPoliciesRestOperations _synapseExtendedSqlPoolBlobAuditingPolicyExtendedSqlPoolBlobAuditingPoliciesRestClient;
         private readonly SynapseExtendedSqlPoolBlobAuditingPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> class for mocking. </summary>
         protected SynapseExtendedSqlPoolBlobAuditingPolicyResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Media
         private readonly AssetFiltersRestOperations _mediaAssetFilterAssetFiltersRestClient;
         private readonly MediaAssetFilterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/assets/assetFilters";
+
         /// <summary> Initializes a new instance of the <see cref="MediaAssetFilterResource"/> class for mocking. </summary>
         protected MediaAssetFilterResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/assets/assetFilters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

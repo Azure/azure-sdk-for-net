@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.Resources.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfContent"/>. </summary>
+        /// <param name="location"> The location to store the deployment data, only required at the tenant and management group scope. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        internal ArmDeploymentWhatIfContent(AzureLocation? location, ArmDeploymentWhatIfProperties properties)
+        {
+            Location = location;
+            Properties = properties;
+        }
+
         /// <summary> The location to store the deployment data, only required at the tenant and management group scope. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The deployment properties. </summary>

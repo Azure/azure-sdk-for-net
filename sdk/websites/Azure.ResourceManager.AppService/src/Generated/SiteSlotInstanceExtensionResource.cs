@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteSlotInstanceExtensionWebAppsRestClient;
         private readonly MSDeployStatusData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/instances/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="SiteSlotInstanceExtensionResource"/> class for mocking. </summary>
         protected SiteSlotInstanceExtensionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/instances/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

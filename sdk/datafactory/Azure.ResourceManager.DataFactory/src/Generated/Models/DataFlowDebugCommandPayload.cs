@@ -25,6 +25,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             Columns = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandPayload"/>. </summary>
+        /// <param name="streamName"> The stream name which is used for preview. </param>
+        /// <param name="rowLimits"> Row limits for preview response. </param>
+        /// <param name="columns"> Array of column names. </param>
+        /// <param name="expression"> The expression which is used for preview. </param>
+        internal DataFlowDebugCommandPayload(string streamName, int? rowLimits, IList<string> columns, string expression)
+        {
+            StreamName = streamName;
+            RowLimits = rowLimits;
+            Columns = columns;
+            Expression = expression;
+        }
+
         /// <summary> The stream name which is used for preview. </summary>
         public string StreamName { get; }
         /// <summary> Row limits for preview response. </summary>

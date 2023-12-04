@@ -18,6 +18,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryGenerateCredentialsContent"/>. </summary>
+        /// <param name="tokenId"> The resource ID of the token for which credentials have to be generated. </param>
+        /// <param name="expireOn"> The expiry date of the generated credentials after which the credentials become invalid. </param>
+        /// <param name="name"> Specifies name of the password which should be regenerated if any -- password1 or password2. </param>
+        internal ContainerRegistryGenerateCredentialsContent(ResourceIdentifier tokenId, DateTimeOffset? expireOn, ContainerRegistryTokenPasswordName? name)
+        {
+            TokenId = tokenId;
+            ExpireOn = expireOn;
+            Name = name;
+        }
+
         /// <summary> The resource ID of the token for which credentials have to be generated. </summary>
         public ResourceIdentifier TokenId { get; set; }
         /// <summary> The expiry date of the generated credentials after which the credentials become invalid. </summary>

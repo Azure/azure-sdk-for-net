@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly MsixImagesRestOperations _msixImagesRestClient;
         private readonly HostPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools";
+
         /// <summary> Initializes a new instance of the <see cref="HostPoolResource"/> class for mocking. </summary>
         protected HostPoolResource()
         {
@@ -86,9 +89,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

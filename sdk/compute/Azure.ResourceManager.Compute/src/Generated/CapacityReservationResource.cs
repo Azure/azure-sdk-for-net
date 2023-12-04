@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute
         private readonly CapacityReservationsRestOperations _capacityReservationRestClient;
         private readonly CapacityReservationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/capacityReservationGroups/capacityReservations";
+
         /// <summary> Initializes a new instance of the <see cref="CapacityReservationResource"/> class for mocking. </summary>
         protected CapacityReservationResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/capacityReservationGroups/capacityReservations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

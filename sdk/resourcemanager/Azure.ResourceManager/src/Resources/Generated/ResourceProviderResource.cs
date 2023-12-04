@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Resources
         private readonly ProviderResourceTypesRestOperations _providerResourceTypesRestClient;
         private readonly ResourceProviderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/providers";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceProviderResource"/> class for mocking. </summary>
         protected ResourceProviderResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/providers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

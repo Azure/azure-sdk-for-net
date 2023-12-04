@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Purview
         private readonly PrivateLinkResourcesRestOperations _purviewPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly PurviewPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="PurviewPrivateLinkResource"/> class for mocking. </summary>
         protected PurviewPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Purview
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

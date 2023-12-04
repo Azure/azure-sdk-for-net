@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly SavingsPlanOrderAliasRestOperations _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient;
         private readonly BillingBenefitsSavingsPlanOrderAliasData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrderAliases";
+
         /// <summary> Initializes a new instance of the <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> class for mocking. </summary>
         protected BillingBenefitsSavingsPlanOrderAliasResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.BillingBenefits
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrderAliases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

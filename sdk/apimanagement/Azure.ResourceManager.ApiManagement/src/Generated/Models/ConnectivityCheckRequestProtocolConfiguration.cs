@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestProtocolConfiguration"/>. </summary>
+        /// <param name="httpConfiguration"> Configuration for HTTP or HTTPS requests. </param>
+        internal ConnectivityCheckRequestProtocolConfiguration(ConnectivityCheckRequestHttpConfiguration httpConfiguration)
+        {
+            HttpConfiguration = httpConfiguration;
+        }
+
         /// <summary> Configuration for HTTP or HTTPS requests. </summary>
         public ConnectivityCheckRequestHttpConfiguration HttpConfiguration { get; set; }
     }

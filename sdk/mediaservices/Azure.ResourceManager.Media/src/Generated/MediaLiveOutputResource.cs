@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Media
         private readonly LiveOutputsRestOperations _mediaLiveOutputLiveOutputsRestClient;
         private readonly MediaLiveOutputData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/liveEvents/liveOutputs";
+
         /// <summary> Initializes a new instance of the <see cref="MediaLiveOutputResource"/> class for mocking. </summary>
         protected MediaLiveOutputResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/liveEvents/liveOutputs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

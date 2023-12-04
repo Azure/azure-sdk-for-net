@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationVaultSettingRestOperations _siteRecoveryVaultSettingReplicationVaultSettingRestClient;
         private readonly SiteRecoveryVaultSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationVaultSettings";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryVaultSettingResource"/> class for mocking. </summary>
         protected SiteRecoveryVaultSettingResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationVaultSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

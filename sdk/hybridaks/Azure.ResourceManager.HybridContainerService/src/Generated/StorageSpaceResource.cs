@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly StorageSpacesRestOperations _storageSpacestorageSpacesRestClient;
         private readonly StorageSpaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/storageSpaces";
+
         /// <summary> Initializes a new instance of the <see cref="StorageSpaceResource"/> class for mocking. </summary>
         protected StorageSpaceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/storageSpaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
