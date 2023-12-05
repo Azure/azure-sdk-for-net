@@ -5,7 +5,7 @@ parameters:
 steps:
 - ${{ each aotTestInput in parameters.AOTTestInputs }}:
   - task: Powershell@2
-    displayName: Check for AOT compatibility regressions
+    displayName: Check for AOT compatibility regressions in ${{ aotTestInput.ArtifactName }}
     inputs:
       targetType: filepath
       filePath: eng/common/aotcompatibility/Check-AOT-Compatibility.ps1

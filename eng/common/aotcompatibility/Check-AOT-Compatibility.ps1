@@ -4,6 +4,12 @@ param([string]$ServiceDirectory, [string]$PackageName, [string]$ExpectedWarnings
 
 Write-Host "Creating a test app to publish."
 
+$expectedWarningsFullPath = Join-Path -Path "..\..\..\..\sdk\$ServiceDirectory\" -ChildPath $ExpectedWarningsFilePath
+
+$folderPath = "\TempAotCompatFiles"
+New-Item -ItemType Directory -Path "./$folderPath" | Out-Null
+Set-Location "./$folderPath"
+
 $csprojFile = "aotcompatibility.csproj"
 
 $csprojContent = @"
@@ -16,7 +22,7 @@ $csprojContent = @"
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj" />
+    <ProjectReference Include="..\..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj" />
       <TrimmerRootAssembly Include="$PackageName" />
   </ItemGroup>
   <ItemGroup>
@@ -51,7 +57,7 @@ $programFileContent | Set-Content -Path $programFile
 
 Write-Host "Collecting the set of trimming warnings."
 
-$publishOutput = dotnet clean && dotnet restore && dotnet publish -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
+$publishOutput = dotnet clean aotcompatibility.csproj && dotnet restore aotcompatibility.csproj && dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
 
 if ($LASTEXITCODE -ne 0)
 {
@@ -61,8 +67,8 @@ if ($LASTEXITCODE -ne 0)
 
     Write-Host "Deleting test app files."
 
-    Remove-Item -Path $csprojFile
-    Remove-Item -Path $programFile
+    Set-Location -Path ..
+    Remove-Item -Path "./$folderPath" -Recurse -Force
 
     Exit 2
 }
@@ -83,16 +89,16 @@ Write-Host "There were $actualWarningCount warnings reported."
 
 Write-Host "Reading the list of patterns that represent the list of expected warnings."
 
-if (Test-Path $ExpectedWarningsFilePath -PathType Leaf) {
+if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     # Read the contents of the file and store each line in an array
-    $expectedWarnings = Get-Content -Path $ExpectedWarningsFilePath
+    $expectedWarnings = Get-Content -Path $expectedWarningsFullPath
 } else {
     Write-Host "The specified file does not exist."
 }
 
 ### Comparing expected warnings to the publish output ###
 
-$numExpectedWarnings = Measure-Object $expectedWarnings -Line
+$numExpectedWarnings = $expectedWarnings.Count
 
 Write-Host "Checking against the list of expected warnings. There are $numExpectedWarnings warnings expected."
 
@@ -105,7 +111,7 @@ if ($warnings.Count -gt 0) {
 
 Write-Host "Deleting test app files."
 
-Remove-Item -Path $csprojFile
-Remove-Item -Path $programFile
+Set-Location -Path ..
+Remove-Item -Path "./$folderPath" -Recurse -Force
 
 exit $warnings.Count
