@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(InformixSinkConverter))]
-    public partial class InformixSink : IUtf8JsonSerializable
+    public partial class InformixSink : IUtf8JsonSerializable, IJsonModel<InformixSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformixSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InformixSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InformixSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(InformixSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreCopyScript))
             {
@@ -59,8 +69,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static InformixSink DeserializeInformixSink(JsonElement element)
+        InformixSink IJsonModel<InformixSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InformixSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(InformixSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInformixSink(document.RootElement, options);
+        }
+
+        internal static InformixSink DeserializeInformixSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,6 +164,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new InformixSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, preCopyScript.Value);
         }
+
+        BinaryData IPersistableModel<InformixSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InformixSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(InformixSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InformixSink IPersistableModel<InformixSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InformixSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInformixSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(InformixSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InformixSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class InformixSinkConverter : JsonConverter<InformixSink>
         {

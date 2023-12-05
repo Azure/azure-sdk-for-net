@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureKeyVaultSecretReferenceConverter))]
-    public partial class AzureKeyVaultSecretReference : IUtf8JsonSerializable
+    public partial class AzureKeyVaultSecretReference : IUtf8JsonSerializable, IJsonModel<AzureKeyVaultSecretReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureKeyVaultSecretReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureKeyVaultSecretReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureKeyVaultSecretReference)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("store"u8);
             writer.WriteObjectValue(Store);
@@ -29,11 +40,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureKeyVaultSecretReference DeserializeAzureKeyVaultSecretReference(JsonElement element)
+        AzureKeyVaultSecretReference IJsonModel<AzureKeyVaultSecretReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureKeyVaultSecretReference)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureKeyVaultSecretReference(document.RootElement, options);
+        }
+
+        internal static AzureKeyVaultSecretReference DeserializeAzureKeyVaultSecretReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object secretName = default;
             Optional<object> secretVersion = default;
             string type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("store"u8))
@@ -68,9 +110,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureKeyVaultSecretReference(type, store, secretName, secretVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureKeyVaultSecretReference(type, serializedAdditionalRawData, store, secretName, secretVersion.Value);
         }
+
+        BinaryData IPersistableModel<AzureKeyVaultSecretReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureKeyVaultSecretReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureKeyVaultSecretReference IPersistableModel<AzureKeyVaultSecretReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureKeyVaultSecretReference(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureKeyVaultSecretReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureKeyVaultSecretReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureKeyVaultSecretReferenceConverter : JsonConverter<AzureKeyVaultSecretReference>
         {

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MongoDbLinkedServiceConverter))]
-    public partial class MongoDbLinkedService : IUtf8JsonSerializable
+    public partial class MongoDbLinkedService : IUtf8JsonSerializable, IJsonModel<MongoDbLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDbLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MongoDbLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDbLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MongoDbLinkedService)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -112,8 +122,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static MongoDbLinkedService DeserializeMongoDbLinkedService(JsonElement element)
+        MongoDbLinkedService IJsonModel<MongoDbLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDbLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MongoDbLinkedService)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDbLinkedService(document.RootElement, options);
+        }
+
+        internal static MongoDbLinkedService DeserializeMongoDbLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -290,6 +314,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new MongoDbLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, Optional.ToNullable(authenticationType), databaseName, username.Value, password.Value, authSource.Value, port.Value, enableSsl.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
         }
+
+        BinaryData IPersistableModel<MongoDbLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDbLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MongoDbLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MongoDbLinkedService IPersistableModel<MongoDbLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDbLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDbLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MongoDbLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDbLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class MongoDbLinkedServiceConverter : JsonConverter<MongoDbLinkedService>
         {

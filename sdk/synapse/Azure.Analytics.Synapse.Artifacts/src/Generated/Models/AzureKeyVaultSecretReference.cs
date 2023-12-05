@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -29,15 +30,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultSecretReference"/>. </summary>
         /// <param name="type"> Type of the secret. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="store"> The Azure Key Vault linked service reference. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>
         /// <param name="secretVersion"> The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string). </param>
-        internal AzureKeyVaultSecretReference(string type, LinkedServiceReference store, object secretName, object secretVersion) : base(type)
+        internal AzureKeyVaultSecretReference(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, LinkedServiceReference store, object secretName, object secretVersion) : base(type, serializedAdditionalRawData)
         {
             Store = store;
             SecretName = secretName;
             SecretVersion = secretVersion;
             Type = type ?? "AzureKeyVaultSecret";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultSecretReference"/> for deserialization. </summary>
+        internal AzureKeyVaultSecretReference()
+        {
         }
 
         /// <summary> The Azure Key Vault linked service reference. </summary>

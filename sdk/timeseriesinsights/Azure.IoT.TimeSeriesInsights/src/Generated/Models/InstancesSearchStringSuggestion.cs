@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Suggested search string to be used for further search for time series instances. </summary>
     internal partial class InstancesSearchStringSuggestion
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InstancesSearchStringSuggestion"/>. </summary>
         internal InstancesSearchStringSuggestion()
         {
@@ -18,10 +53,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of <see cref="InstancesSearchStringSuggestion"/>. </summary>
         /// <param name="searchString"> Suggested search string. Can be used for further search for time series instances. </param>
         /// <param name="highlightedSearchString"> Highlighted suggested search string to be displayed to the user. Highlighting inserts &lt;hit&gt; and &lt;/hit&gt; tags in the portions of text that matched the search string. Do not use highlighted search string to do further search calls. </param>
-        internal InstancesSearchStringSuggestion(string searchString, string highlightedSearchString)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancesSearchStringSuggestion(string searchString, string highlightedSearchString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SearchString = searchString;
             HighlightedSearchString = highlightedSearchString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Suggested search string. Can be used for further search for time series instances. </summary>

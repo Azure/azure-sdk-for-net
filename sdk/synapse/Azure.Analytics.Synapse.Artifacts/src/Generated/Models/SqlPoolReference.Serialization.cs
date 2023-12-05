@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,26 +16,65 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlPoolReferenceConverter))]
-    public partial class SqlPoolReference : IUtf8JsonSerializable
+    public partial class SqlPoolReference : IUtf8JsonSerializable, IJsonModel<SqlPoolReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlPoolReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlPoolReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SqlPoolReference)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlPoolReference DeserializeSqlPoolReference(JsonElement element)
+        SqlPoolReference IJsonModel<SqlPoolReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SqlPoolReference)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlPoolReference(document.RootElement, options);
+        }
+
+        internal static SqlPoolReference DeserializeSqlPoolReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SqlPoolReferenceType type = default;
             string referenceName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -45,9 +87,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     referenceName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlPoolReference(type, referenceName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlPoolReference(type, referenceName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlPoolReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SqlPoolReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlPoolReference IPersistableModel<SqlPoolReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlPoolReference(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SqlPoolReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlPoolReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SqlPoolReferenceConverter : JsonConverter<SqlPoolReference>
         {

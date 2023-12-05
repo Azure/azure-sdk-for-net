@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Response of a single operation on a batch of instances. Only one of "get", "put", "update" or "delete" will be set based on the request. </summary>
     internal partial class InstancesBatchResponse
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InstancesBatchResponse"/>. </summary>
         internal InstancesBatchResponse()
         {
@@ -27,12 +60,14 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="put"> List of error objects corresponding by position to the "put" array in the request. Error object is set when operation is unsuccessful. </param>
         /// <param name="update"> List of error objects corresponding by position to the "update" array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="delete"> List of error objects corresponding by position to the "delete" array in the request. Null means the instance has been deleted, or did not exist. Error object is set when operation is unsuccessful (e.g. when there are events associated with this time series instance). </param>
-        internal InstancesBatchResponse(IReadOnlyList<InstancesOperationResult> @get, IReadOnlyList<InstancesOperationResult> put, IReadOnlyList<InstancesOperationResult> update, IReadOnlyList<TimeSeriesOperationError> delete)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancesBatchResponse(IReadOnlyList<InstancesOperationResult> @get, IReadOnlyList<InstancesOperationResult> put, IReadOnlyList<InstancesOperationResult> update, IReadOnlyList<TimeSeriesOperationError> delete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Get = @get;
             Put = put;
             Update = update;
             Delete = delete;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of instance or error objects corresponding by position to the "get" array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </summary>

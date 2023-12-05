@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DocumentDbCollectionSinkConverter))]
-    public partial class DocumentDbCollectionSink : IUtf8JsonSerializable
+    public partial class DocumentDbCollectionSink : IUtf8JsonSerializable, IJsonModel<DocumentDbCollectionSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentDbCollectionSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentDbCollectionSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDbCollectionSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DocumentDbCollectionSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NestingSeparator))
             {
@@ -64,8 +74,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DocumentDbCollectionSink DeserializeDocumentDbCollectionSink(JsonElement element)
+        DocumentDbCollectionSink IJsonModel<DocumentDbCollectionSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDbCollectionSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DocumentDbCollectionSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentDbCollectionSink(document.RootElement, options);
+        }
+
+        internal static DocumentDbCollectionSink DeserializeDocumentDbCollectionSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +179,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DocumentDbCollectionSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, nestingSeparator.Value, writeBehavior.Value);
         }
+
+        BinaryData IPersistableModel<DocumentDbCollectionSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDbCollectionSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DocumentDbCollectionSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DocumentDbCollectionSink IPersistableModel<DocumentDbCollectionSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDbCollectionSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentDbCollectionSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DocumentDbCollectionSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentDbCollectionSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class DocumentDbCollectionSinkConverter : JsonConverter<DocumentDbCollectionSink>
         {

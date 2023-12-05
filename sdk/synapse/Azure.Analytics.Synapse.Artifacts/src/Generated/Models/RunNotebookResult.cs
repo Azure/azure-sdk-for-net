@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Result of run notebook. </summary>
     public partial class RunNotebookResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RunNotebookResult"/>. </summary>
         internal RunNotebookResult()
         {
@@ -24,7 +59,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sessionDetail"> Run notebook session details. </param>
         /// <param name="exitValue"> Output of exit command. </param>
         /// <param name="error"> Run notebook error. </param>
-        internal RunNotebookResult(string runId, string runStatus, string lastCheckedOn, string sessionId, string sparkPool, object sessionDetail, string exitValue, RunNotebookError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookResult(string runId, string runStatus, string lastCheckedOn, string sessionId, string sparkPool, object sessionDetail, string exitValue, RunNotebookError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RunId = runId;
             RunStatus = runStatus;
@@ -34,6 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SessionDetail = sessionDetail;
             ExitValue = exitValue;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Run id. </summary>

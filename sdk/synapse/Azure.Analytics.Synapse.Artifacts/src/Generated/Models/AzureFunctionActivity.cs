@@ -53,6 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureFunctionActivity";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionActivity"/> for deserialization. </summary>
+        internal AzureFunctionActivity()
+        {
+        }
+
         /// <summary> Rest API method for target endpoint. </summary>
         public AzureFunctionActivityMethod Method { get; set; }
         /// <summary> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </summary>

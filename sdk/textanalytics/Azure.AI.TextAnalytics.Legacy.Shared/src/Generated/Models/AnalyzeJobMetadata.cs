@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -28,10 +29,16 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="jobId"></param>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="displayName"></param>
-        internal AnalyzeJobMetadata(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, string displayName) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status)
+        internal AnalyzeJobMetadata(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, IDictionary<string, BinaryData> serializedAdditionalRawData, string displayName) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, serializedAdditionalRawData)
         {
             DisplayName = displayName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobMetadata"/> for deserialization. </summary>
+        internal AnalyzeJobMetadata()
+        {
         }
 
         /// <summary> Gets the display name. </summary>

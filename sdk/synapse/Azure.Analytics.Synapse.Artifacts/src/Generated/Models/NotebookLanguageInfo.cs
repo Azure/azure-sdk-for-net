@@ -36,6 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NotebookLanguageInfo"/> for deserialization. </summary>
+        internal NotebookLanguageInfo()
+        {
+        }
+
         /// <summary> The programming language which this kernel runs. </summary>
         public string Name { get; set; }
         /// <summary> The codemirror mode to use for code in this language. </summary>

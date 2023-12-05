@@ -65,6 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AppFigures";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/> for deserialization. </summary>
+        internal AppFiguresLinkedService()
+        {
+        }
+
         /// <summary> The username of the Appfigures source. </summary>
         public object UserName { get; set; }
         /// <summary>

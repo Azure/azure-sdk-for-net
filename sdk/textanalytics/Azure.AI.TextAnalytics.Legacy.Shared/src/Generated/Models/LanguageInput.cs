@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The LanguageInput. </summary>
     internal partial class LanguageInput
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LanguageInput"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="text"></param>
@@ -23,11 +58,18 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="text"></param>
         /// <param name="countryHint"></param>
-        internal LanguageInput(string id, string text, string countryHint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LanguageInput(string id, string text, string countryHint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Text = text;
             CountryHint = countryHint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LanguageInput"/> for deserialization. </summary>
+        internal LanguageInput()
+        {
         }
 
         /// <summary> Unique, non-empty document identifier. </summary>

@@ -5,20 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlobPrefix
+    internal partial class BlobPrefix : IXmlSerializable, IPersistableModel<BlobPrefix>
     {
-        internal static BlobPrefix DeserializeBlobPrefix(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "BlobPrefix");
+            writer.WriteObjectValue(Name, "Name");
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobPrefix DeserializeBlobPrefix(XElement element, ModelReaderWriterOptions options = null)
         {
             BlobName name = default;
             if (element.Element("Name") is XElement nameElement)
             {
                 name = BlobName.DeserializeBlobName(nameElement);
             }
-            return new BlobPrefix(name);
+            return new BlobPrefix(name, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobPrefix>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobPrefix>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobPrefix)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobPrefix IPersistableModel<BlobPrefix>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobPrefix>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobPrefix(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobPrefix)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobPrefix>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

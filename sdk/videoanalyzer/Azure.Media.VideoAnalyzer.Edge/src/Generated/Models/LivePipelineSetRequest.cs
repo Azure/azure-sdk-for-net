@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -27,11 +28,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="LivePipelineSetRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="livePipeline"> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </param>
-        internal LivePipelineSetRequest(string methodName, string apiVersion, LivePipeline livePipeline) : base(methodName, apiVersion)
+        internal LivePipelineSetRequest(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, LivePipeline livePipeline) : base(methodName, apiVersion, serializedAdditionalRawData)
         {
             LivePipeline = livePipeline;
             MethodName = methodName ?? "livePipelineSet";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LivePipelineSetRequest"/> for deserialization. </summary>
+        internal LivePipelineSetRequest()
+        {
         }
 
         /// <summary> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </summary>

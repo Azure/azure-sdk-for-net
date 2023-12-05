@@ -39,6 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "CustomDataSource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomDataSourceLinkedService"/> for deserialization. </summary>
+        internal CustomDataSourceLinkedService()
+        {
+        }
+
         /// <summary> Custom linked service properties. </summary>
         public object TypeProperties { get; set; }
     }

@@ -69,6 +69,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SapOpenHub";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubLinkedService"/> for deserialization. </summary>
+        internal SapOpenHubLinkedService()
+        {
+        }
+
         /// <summary> Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string). </summary>
         public object Server { get; set; }
         /// <summary> System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>

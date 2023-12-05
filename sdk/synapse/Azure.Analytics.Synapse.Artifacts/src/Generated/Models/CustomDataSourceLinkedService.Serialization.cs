@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CustomDataSourceLinkedServiceConverter))]
-    public partial class CustomDataSourceLinkedService : IUtf8JsonSerializable
+    public partial class CustomDataSourceLinkedService : IUtf8JsonSerializable, IJsonModel<CustomDataSourceLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomDataSourceLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomDataSourceLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDataSourceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CustomDataSourceLinkedService)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteObjectValue(TypeProperties);
@@ -67,8 +77,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomDataSourceLinkedService DeserializeCustomDataSourceLinkedService(JsonElement element)
+        CustomDataSourceLinkedService IJsonModel<CustomDataSourceLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDataSourceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CustomDataSourceLinkedService)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomDataSourceLinkedService(document.RootElement, options);
+        }
+
+        internal static CustomDataSourceLinkedService DeserializeCustomDataSourceLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -147,6 +171,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CustomDataSourceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, typeProperties);
         }
+
+        BinaryData IPersistableModel<CustomDataSourceLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDataSourceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CustomDataSourceLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomDataSourceLinkedService IPersistableModel<CustomDataSourceLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDataSourceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomDataSourceLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CustomDataSourceLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomDataSourceLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class CustomDataSourceLinkedServiceConverter : JsonConverter<CustomDataSourceLinkedService>
         {

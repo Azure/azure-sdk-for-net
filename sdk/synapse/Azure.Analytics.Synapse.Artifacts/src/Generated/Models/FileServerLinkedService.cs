@@ -49,6 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "FileServer";
         }
 
+        /// <summary> Initializes a new instance of <see cref="FileServerLinkedService"/> for deserialization. </summary>
+        internal FileServerLinkedService()
+        {
+        }
+
         /// <summary> Host name of the server. Type: string (or Expression with resultType string). </summary>
         public object Host { get; set; }
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>

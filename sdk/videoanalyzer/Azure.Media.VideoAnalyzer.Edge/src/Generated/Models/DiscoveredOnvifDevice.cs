@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The discovered properties of the ONVIF device that are returned during the discovery. </summary>
     public partial class DiscoveredOnvifDevice
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DiscoveredOnvifDevice"/>. </summary>
         public DiscoveredOnvifDevice()
         {
@@ -25,12 +58,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="remoteIPAddress"> The IP address of the ONVIF device that was discovered in the same subnet as the IoT Edge device. </param>
         /// <param name="scopes"> An array of hostnames for the ONVIF discovered devices that are in the same subnet as the IoT Edge device. </param>
         /// <param name="endpoints"> An array of media profile endpoints that the ONVIF discovered device supports. </param>
-        internal DiscoveredOnvifDevice(string serviceIdentifier, string remoteIPAddress, IList<string> scopes, IList<string> endpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiscoveredOnvifDevice(string serviceIdentifier, string remoteIPAddress, IList<string> scopes, IList<string> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceIdentifier = serviceIdentifier;
             RemoteIPAddress = remoteIPAddress;
             Scopes = scopes;
             Endpoints = endpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the ONVIF device that was discovered in the same subnet as the IoT Edge device. </summary>

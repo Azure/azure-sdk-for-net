@@ -28,6 +28,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingOperation"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="debug"> If set to 'true', enables debugging mode for this operation. </param>
         /// <param name="calibrationConfiguration"> Advanced calibration configuration. </param>
         /// <param name="cameraConfiguration"> Advanced camera configuration. </param>
@@ -36,10 +37,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="trackerNodeConfiguration"> Advanced tracker node configuration. </param>
         /// <param name="enableFaceMaskClassifier"> If set to 'true', enables face mask detection for this operation. </param>
         /// <param name="lines"> The list of lines with optional events. </param>
-        internal SpatialAnalysisPersonLineCrossingOperation(string type, string debug, string calibrationConfiguration, string cameraConfiguration, string cameraCalibratorNodeConfiguration, string detectorNodeConfiguration, string trackerNodeConfiguration, string enableFaceMaskClassifier, IList<SpatialAnalysisPersonLineCrossingLineEvents> lines) : base(type, debug, calibrationConfiguration, cameraConfiguration, cameraCalibratorNodeConfiguration, detectorNodeConfiguration, trackerNodeConfiguration, enableFaceMaskClassifier)
+        internal SpatialAnalysisPersonLineCrossingOperation(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string debug, string calibrationConfiguration, string cameraConfiguration, string cameraCalibratorNodeConfiguration, string detectorNodeConfiguration, string trackerNodeConfiguration, string enableFaceMaskClassifier, IList<SpatialAnalysisPersonLineCrossingLineEvents> lines) : base(type, serializedAdditionalRawData, debug, calibrationConfiguration, cameraConfiguration, cameraCalibratorNodeConfiguration, detectorNodeConfiguration, trackerNodeConfiguration, enableFaceMaskClassifier)
         {
             Lines = lines;
             Type = type ?? "#Microsoft.VideoAnalyzer.SpatialAnalysisPersonLineCrossingOperation";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingOperation"/> for deserialization. </summary>
+        internal SpatialAnalysisPersonLineCrossingOperation()
+        {
         }
 
         /// <summary> The list of lines with optional events. </summary>

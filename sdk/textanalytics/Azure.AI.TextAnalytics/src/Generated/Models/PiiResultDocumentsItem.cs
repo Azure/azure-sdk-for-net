@@ -33,9 +33,15 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
-        internal PiiResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, string redactedText, IList<Entity> entities) : base(id, warnings, statistics, redactedText, entities)
+        internal PiiResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, string redactedText, IList<Entity> entities) : base(id, warnings, statistics, serializedAdditionalRawData, redactedText, entities)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PiiResultDocumentsItem"/> for deserialization. </summary>
+        internal PiiResultDocumentsItem()
         {
         }
     }

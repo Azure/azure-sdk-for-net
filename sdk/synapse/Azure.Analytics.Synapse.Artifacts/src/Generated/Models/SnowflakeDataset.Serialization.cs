@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SnowflakeDatasetConverter))]
-    public partial class SnowflakeDataset : IUtf8JsonSerializable
+    public partial class SnowflakeDataset : IUtf8JsonSerializable, IJsonModel<SnowflakeDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SnowflakeDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SnowflakeDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SnowflakeDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -90,8 +100,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SnowflakeDataset DeserializeSnowflakeDataset(JsonElement element)
+        SnowflakeDataset IJsonModel<SnowflakeDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SnowflakeDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SnowflakeDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnowflakeDataset(document.RootElement, options);
+        }
+
+        internal static SnowflakeDataset DeserializeSnowflakeDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -222,6 +246,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SnowflakeDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, schema0.Value, table.Value);
         }
+
+        BinaryData IPersistableModel<SnowflakeDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SnowflakeDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SnowflakeDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SnowflakeDataset IPersistableModel<SnowflakeDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SnowflakeDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSnowflakeDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SnowflakeDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SnowflakeDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SnowflakeDatasetConverter : JsonConverter<SnowflakeDataset>
         {

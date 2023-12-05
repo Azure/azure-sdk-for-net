@@ -55,6 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Zoho";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ZohoLinkedService"/> for deserialization. </summary>
+        internal ZohoLinkedService()
+        {
+        }
+
         /// <summary> Properties used to connect to Zoho. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
         public object ConnectionProperties { get; set; }
         /// <summary> The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private). </summary>

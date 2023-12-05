@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "GoogleAdWordsObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="GoogleAdWordsObjectDataset"/> for deserialization. </summary>
+        internal GoogleAdWordsObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The QueryFormat. </summary>
     internal partial class QueryFormat
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="QueryFormat"/>. </summary>
         /// <param name="type"> The quick query format type. </param>
         public QueryFormat(QueryFormatType type)
@@ -23,13 +58,20 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="jsonTextConfiguration"> json text configuration. </param>
         /// <param name="arrowConfiguration"> Groups the settings used for formatting the response if the response should be Arrow formatted. </param>
         /// <param name="parquetTextConfiguration"> parquet configuration. </param>
-        internal QueryFormat(QueryFormatType type, DelimitedTextConfigurationInternal delimitedTextConfiguration, JsonTextConfigurationInternal jsonTextConfiguration, ArrowTextConfigurationInternal arrowConfiguration, object parquetTextConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryFormat(QueryFormatType type, DelimitedTextConfigurationInternal delimitedTextConfiguration, JsonTextConfigurationInternal jsonTextConfiguration, ArrowTextConfigurationInternal arrowConfiguration, object parquetTextConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             DelimitedTextConfiguration = delimitedTextConfiguration;
             JsonTextConfiguration = jsonTextConfiguration;
             ArrowConfiguration = arrowConfiguration;
             ParquetTextConfiguration = parquetTextConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryFormat"/> for deserialization. </summary>
+        internal QueryFormat()
+        {
         }
 
         /// <summary> The quick query format type. </summary>

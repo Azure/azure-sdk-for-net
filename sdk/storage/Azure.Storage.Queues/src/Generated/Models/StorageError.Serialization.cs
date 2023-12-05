@@ -5,20 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal partial class StorageError
+    internal partial class StorageError : IXmlSerializable, IPersistableModel<StorageError>
     {
-        internal static StorageError DeserializeStorageError(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "StorageError");
+            if (Optional.IsDefined(Message))
+            {
+                writer.WriteStartElement("Message");
+                writer.WriteValue(Message);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static StorageError DeserializeStorageError(XElement element, ModelReaderWriterOptions options = null)
         {
             string message = default;
             if (element.Element("Message") is XElement messageElement)
             {
                 message = (string)messageElement;
             }
-            return new StorageError(message);
+            return new StorageError(message, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<StorageError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageError IPersistableModel<StorageError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeStorageError(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

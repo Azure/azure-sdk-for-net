@@ -49,6 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "RestResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RestResourceDataset"/> for deserialization. </summary>
+        internal RestResourceDataset()
+        {
+        }
+
         /// <summary> The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string). </summary>
         public object RelativeUrl { get; set; }
         /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>

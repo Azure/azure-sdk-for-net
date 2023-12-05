@@ -61,6 +61,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureFileStorage";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureFileStorageLinkedService"/> for deserialization. </summary>
+        internal AzureFileStorageLinkedService()
+        {
+        }
+
         /// <summary> Host name of the server. Type: string (or Expression with resultType string). </summary>
         public object Host { get; set; }
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>

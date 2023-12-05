@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SharePointOnlineListResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListResourceDataset"/> for deserialization. </summary>
+        internal SharePointOnlineListResourceDataset()
+        {
+        }
+
         /// <summary> The name of the SharePoint Online list. Type: string (or Expression with resultType string). </summary>
         public object ListName { get; set; }
     }

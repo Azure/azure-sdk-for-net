@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -30,15 +31,21 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of <see cref="NumericVariable"/>. </summary>
         /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> Value time series expression is used to represent the value of the signal that is going to be aggregated or interpolated. For example, temperature values from the event is represented like this: "$event.Temperature.Double". </param>
         /// <param name="interpolation"> The interpolation operation to be performed on the raw data points. Currently, only sampling of interpolated time series is allowed. Allowed aggregate function - eg: left($value). Can be null if no interpolation needs to be applied. </param>
         /// <param name="aggregation"> Aggregation time series expression when kind is "numeric" is used to represent the aggregation that needs to be performed on the $value expression. This requires $value to be specified and can only use $value inside the aggregate functions. For example, aggregation for calculating minimum of the $value is written as: "min($value)". </param>
-        internal NumericVariable(string kind, TimeSeriesExpression filter, TimeSeriesExpression value, TimeSeriesInterpolation interpolation, TimeSeriesExpression aggregation) : base(kind, filter)
+        internal NumericVariable(string kind, TimeSeriesExpression filter, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSeriesExpression value, TimeSeriesInterpolation interpolation, TimeSeriesExpression aggregation) : base(kind, filter, serializedAdditionalRawData)
         {
             Value = value;
             Interpolation = interpolation;
             Aggregation = aggregation;
             Kind = kind ?? "numeric";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NumericVariable"/> for deserialization. </summary>
+        internal NumericVariable()
+        {
         }
 
         /// <summary> Value time series expression is used to represent the value of the signal that is going to be aggregated or interpolated. For example, temperature values from the event is represented like this: "$event.Temperature.Double". </summary>

@@ -16,6 +16,38 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Every relation is an entity graph of a certain relationType, where all entities are connected and have specific roles within the relation context. </summary>
     internal partial class HealthcareRelationInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HealthcareRelationInternal"/>. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
@@ -32,11 +64,18 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted relation. </param>
         /// <param name="entities"> The entities in the relation. </param>
-        internal HealthcareRelationInternal(HealthcareEntityRelationType relationType, double? confidenceScore, IList<HealthcareRelationEntity> entities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareRelationInternal(HealthcareEntityRelationType relationType, double? confidenceScore, IList<HealthcareRelationEntity> entities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RelationType = relationType;
             ConfidenceScore = confidenceScore;
             Entities = entities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelationInternal"/> for deserialization. </summary>
+        internal HealthcareRelationInternal()
+        {
         }
 
         /// <summary> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </summary>

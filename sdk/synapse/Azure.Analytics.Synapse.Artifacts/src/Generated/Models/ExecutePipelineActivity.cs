@@ -48,6 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "ExecutePipeline";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/> for deserialization. </summary>
+        internal ExecutePipelineActivity()
+        {
+        }
+
         /// <summary> Pipeline reference. </summary>
         public PipelineReference Pipeline { get; set; }
         /// <summary> Pipeline parameters. </summary>

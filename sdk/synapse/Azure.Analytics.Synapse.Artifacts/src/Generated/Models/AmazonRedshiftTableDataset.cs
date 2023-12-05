@@ -45,6 +45,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AmazonRedshiftTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftTableDataset"/> for deserialization. </summary>
+        internal AmazonRedshiftTableDataset()
+        {
+        }
+
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
         public object TableName { get; set; }
         /// <summary> The Amazon Redshift table name. Type: string (or Expression with resultType string). </summary>

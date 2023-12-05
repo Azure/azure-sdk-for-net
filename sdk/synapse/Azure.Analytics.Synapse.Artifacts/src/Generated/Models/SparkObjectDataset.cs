@@ -45,6 +45,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SparkObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SparkObjectDataset"/> for deserialization. </summary>
+        internal SparkObjectDataset()
+        {
+        }
+
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
         public object TableName { get; set; }
         /// <summary> The table name of the Spark. Type: string (or Expression with resultType string). </summary>

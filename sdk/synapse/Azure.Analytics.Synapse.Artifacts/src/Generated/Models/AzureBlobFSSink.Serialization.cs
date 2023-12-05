@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureBlobFSSinkConverter))]
-    public partial class AzureBlobFSSink : IUtf8JsonSerializable
+    public partial class AzureBlobFSSink : IUtf8JsonSerializable, IJsonModel<AzureBlobFSSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobFSSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureBlobFSSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureBlobFSSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CopyBehavior))
             {
@@ -59,8 +69,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureBlobFSSink DeserializeAzureBlobFSSink(JsonElement element)
+        AzureBlobFSSink IJsonModel<AzureBlobFSSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureBlobFSSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureBlobFSSink(document.RootElement, options);
+        }
+
+        internal static AzureBlobFSSink DeserializeAzureBlobFSSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,6 +164,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureBlobFSSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, copyBehavior.Value);
         }
+
+        BinaryData IPersistableModel<AzureBlobFSSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureBlobFSSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureBlobFSSink IPersistableModel<AzureBlobFSSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureBlobFSSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureBlobFSSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureBlobFSSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureBlobFSSinkConverter : JsonConverter<AzureBlobFSSink>
         {

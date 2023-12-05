@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,6 +14,38 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> A user delegation key. </summary>
     public partial class UserDelegationKey
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
         /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
         /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
@@ -37,6 +70,27 @@ namespace Azure.Storage.Blobs.Models
             SignedService = signedService;
             SignedVersion = signedVersion;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
+        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
+        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
+        /// <param name="signedStartsOn"> The date-time the key is active. </param>
+        /// <param name="signedExpiresOn"> The date-time the key expires. </param>
+        /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
+        /// <param name="signedVersion"> The service version that created the key. </param>
+        /// <param name="value"> The key as a base64 string. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SignedObjectId = signedObjectId;
+            SignedTenantId = signedTenantId;
+            SignedStartsOn = signedStartsOn;
+            SignedExpiresOn = signedExpiresOn;
+            SignedService = signedService;
+            SignedVersion = signedVersion;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

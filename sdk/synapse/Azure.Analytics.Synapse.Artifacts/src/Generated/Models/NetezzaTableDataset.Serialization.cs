@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NetezzaTableDatasetConverter))]
-    public partial class NetezzaTableDataset : IUtf8JsonSerializable
+    public partial class NetezzaTableDataset : IUtf8JsonSerializable, IJsonModel<NetezzaTableDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetezzaTableDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetezzaTableDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetezzaTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(NetezzaTableDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -95,8 +105,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static NetezzaTableDataset DeserializeNetezzaTableDataset(JsonElement element)
+        NetezzaTableDataset IJsonModel<NetezzaTableDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetezzaTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(NetezzaTableDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetezzaTableDataset(document.RootElement, options);
+        }
+
+        internal static NetezzaTableDataset DeserializeNetezzaTableDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -237,6 +261,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new NetezzaTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value, table.Value, schema0.Value);
         }
+
+        BinaryData IPersistableModel<NetezzaTableDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetezzaTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(NetezzaTableDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetezzaTableDataset IPersistableModel<NetezzaTableDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetezzaTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetezzaTableDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(NetezzaTableDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetezzaTableDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class NetezzaTableDatasetConverter : JsonConverter<NetezzaTableDataset>
         {

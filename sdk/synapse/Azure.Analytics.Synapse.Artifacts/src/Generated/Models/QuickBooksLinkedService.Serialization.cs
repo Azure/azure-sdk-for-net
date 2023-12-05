@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(QuickBooksLinkedServiceConverter))]
-    public partial class QuickBooksLinkedService : IUtf8JsonSerializable
+    public partial class QuickBooksLinkedService : IUtf8JsonSerializable, IJsonModel<QuickBooksLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuickBooksLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QuickBooksLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QuickBooksLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(QuickBooksLinkedService)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -95,8 +105,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static QuickBooksLinkedService DeserializeQuickBooksLinkedService(JsonElement element)
+        QuickBooksLinkedService IJsonModel<QuickBooksLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QuickBooksLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(QuickBooksLinkedService)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuickBooksLinkedService(document.RootElement, options);
+        }
+
+        internal static QuickBooksLinkedService DeserializeQuickBooksLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -247,6 +271,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new QuickBooksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionProperties.Value, endpoint, companyId, consumerKey, consumerSecret, accessToken, accessTokenSecret, useEncryptedEndpoints.Value, encryptedCredential.Value);
         }
+
+        BinaryData IPersistableModel<QuickBooksLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuickBooksLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QuickBooksLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QuickBooksLinkedService IPersistableModel<QuickBooksLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuickBooksLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQuickBooksLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QuickBooksLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QuickBooksLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class QuickBooksLinkedServiceConverter : JsonConverter<QuickBooksLinkedService>
         {

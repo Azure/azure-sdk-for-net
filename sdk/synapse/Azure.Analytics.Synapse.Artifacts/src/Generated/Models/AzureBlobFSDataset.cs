@@ -51,6 +51,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureBlobFSFile";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSDataset"/> for deserialization. </summary>
+        internal AzureBlobFSDataset()
+        {
+        }
+
         /// <summary> The path of the Azure Data Lake Storage Gen2 storage. Type: string (or Expression with resultType string). </summary>
         public object FolderPath { get; set; }
         /// <summary> The name of the Azure Data Lake Storage Gen2. Type: string (or Expression with resultType string). </summary>

@@ -84,6 +84,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "HDInsightStreaming";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightStreamingActivity"/> for deserialization. </summary>
+        internal HDInsightStreamingActivity()
+        {
+        }
+
         /// <summary> Storage linked service references. </summary>
         public IList<LinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. </summary>

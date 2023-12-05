@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -31,17 +32,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
         /// </param>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="trustedCertificates">
         /// List of trusted certificate authorities when authenticating a TLS connection. A null list designates that Azure Video Analyzer's list of trusted authorities should be used.
         /// Please note <see cref="CertificateSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PemCertificateList"/>.
         /// </param>
         /// <param name="validationOptions"> Validation options to use when authenticating a TLS connection. By default, strict validation is used. </param>
-        internal TlsEndpoint(string type, CredentialsBase credentials, string url, CertificateSource trustedCertificates, TlsValidationOptions validationOptions) : base(type, credentials, url)
+        internal TlsEndpoint(string type, CredentialsBase credentials, string url, IDictionary<string, BinaryData> serializedAdditionalRawData, CertificateSource trustedCertificates, TlsValidationOptions validationOptions) : base(type, credentials, url, serializedAdditionalRawData)
         {
             TrustedCertificates = trustedCertificates;
             ValidationOptions = validationOptions;
             Type = type ?? "#Microsoft.VideoAnalyzer.TlsEndpoint";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TlsEndpoint"/> for deserialization. </summary>
+        internal TlsEndpoint()
+        {
         }
 
         /// <summary>

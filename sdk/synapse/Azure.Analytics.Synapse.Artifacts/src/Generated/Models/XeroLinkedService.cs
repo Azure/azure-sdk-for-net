@@ -62,6 +62,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Xero";
         }
 
+        /// <summary> Initializes a new instance of <see cref="XeroLinkedService"/> for deserialization. </summary>
+        internal XeroLinkedService()
+        {
+        }
+
         /// <summary> Properties used to connect to Xero. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
         public object ConnectionProperties { get; set; }
         /// <summary> The endpoint of the Xero server. (i.e. api.xero.com). </summary>

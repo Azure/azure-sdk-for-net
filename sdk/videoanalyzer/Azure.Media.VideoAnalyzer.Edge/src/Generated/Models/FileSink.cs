@@ -39,15 +39,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="baseDirectoryPath"> Absolute directory path where media files will be stored. </param>
         /// <param name="fileNamePattern"> File name pattern for creating new files when performing event based recording. The pattern must include at least one system variable. </param>
         /// <param name="maximumSizeMiB"> Maximum amount of disk space that can be used for storing files from this sink. Once this limit is reached, the oldest files from this sink will be automatically deleted. </param>
-        internal FileSink(string type, string name, IList<NodeInput> inputs, string baseDirectoryPath, string fileNamePattern, string maximumSizeMiB) : base(type, name, inputs)
+        internal FileSink(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string baseDirectoryPath, string fileNamePattern, string maximumSizeMiB) : base(type, name, inputs, serializedAdditionalRawData)
         {
             BaseDirectoryPath = baseDirectoryPath;
             FileNamePattern = fileNamePattern;
             MaximumSizeMiB = maximumSizeMiB;
             Type = type ?? "#Microsoft.VideoAnalyzer.FileSink";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileSink"/> for deserialization. </summary>
+        internal FileSink()
+        {
         }
 
         /// <summary> Absolute directory path where media files will be stored. </summary>

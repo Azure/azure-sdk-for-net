@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueSignedIdentifier : IXmlSerializable
+    public partial class QueueSignedIdentifier : IXmlSerializable, IPersistableModel<QueueSignedIdentifier>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");
@@ -23,7 +27,9 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueSignedIdentifier DeserializeQueueSignedIdentifier(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static QueueSignedIdentifier DeserializeQueueSignedIdentifier(XElement element, ModelReaderWriterOptions options = null)
         {
             string id = default;
             QueueAccessPolicy accessPolicy = default;
@@ -35,7 +41,48 @@ namespace Azure.Storage.Queues.Models
             {
                 accessPolicy = QueueAccessPolicy.DeserializeQueueAccessPolicy(accessPolicyElement);
             }
-            return new QueueSignedIdentifier(id, accessPolicy);
+            return new QueueSignedIdentifier(id, accessPolicy, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<QueueSignedIdentifier>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueSignedIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueSignedIdentifier)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueueSignedIdentifier IPersistableModel<QueueSignedIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueSignedIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeQueueSignedIdentifier(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueueSignedIdentifier)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueueSignedIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

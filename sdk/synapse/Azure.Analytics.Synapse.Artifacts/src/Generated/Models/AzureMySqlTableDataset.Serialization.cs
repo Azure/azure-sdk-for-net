@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureMySqlTableDatasetConverter))]
-    public partial class AzureMySqlTableDataset : IUtf8JsonSerializable
+    public partial class AzureMySqlTableDataset : IUtf8JsonSerializable, IJsonModel<AzureMySqlTableDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMySqlTableDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureMySqlTableDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMySqlTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureMySqlTableDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -90,8 +100,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureMySqlTableDataset DeserializeAzureMySqlTableDataset(JsonElement element)
+        AzureMySqlTableDataset IJsonModel<AzureMySqlTableDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMySqlTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureMySqlTableDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMySqlTableDataset(document.RootElement, options);
+        }
+
+        internal static AzureMySqlTableDataset DeserializeAzureMySqlTableDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -222,6 +246,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMySqlTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value, table.Value);
         }
+
+        BinaryData IPersistableModel<AzureMySqlTableDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMySqlTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureMySqlTableDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureMySqlTableDataset IPersistableModel<AzureMySqlTableDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMySqlTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureMySqlTableDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureMySqlTableDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureMySqlTableDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureMySqlTableDatasetConverter : JsonConverter<AzureMySqlTableDataset>
         {

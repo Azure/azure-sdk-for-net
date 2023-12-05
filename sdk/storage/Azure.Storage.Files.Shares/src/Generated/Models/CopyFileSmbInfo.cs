@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Parameter group. </summary>
     internal partial class CopyFileSmbInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CopyFileSmbInfo"/>. </summary>
         public CopyFileSmbInfo()
         {
@@ -23,7 +58,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="filePermissionCopyMode"> Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key. </param>
         /// <param name="ignoreReadOnly"> Specifies the option to overwrite the target file if it already exists and has read-only attribute set. </param>
         /// <param name="setArchiveAttribute"> Specifies the option to set archive attribute on a target file. True means archive attribute will be set on a target file despite attribute overrides or a source file state. </param>
-        internal CopyFileSmbInfo(string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, PermissionCopyMode? filePermissionCopyMode, bool? ignoreReadOnly, bool? setArchiveAttribute)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyFileSmbInfo(string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, PermissionCopyMode? filePermissionCopyMode, bool? ignoreReadOnly, bool? setArchiveAttribute, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileAttributes = fileAttributes;
             FileCreationTime = fileCreationTime;
@@ -32,6 +68,7 @@ namespace Azure.Storage.Files.Shares.Models
             FilePermissionCopyMode = filePermissionCopyMode;
             IgnoreReadOnly = ignoreReadOnly;
             SetArchiveAttribute = setArchiveAttribute;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies either the option to copy file attributes from a source file(source) to a target file or a list of attributes to set on a target file. </summary>

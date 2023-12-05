@@ -38,6 +38,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CredentialReference"/> for deserialization. </summary>
+        internal CredentialReference()
+        {
+        }
+
         /// <summary> Credential reference type. </summary>
         public CredentialReferenceType Type { get; set; }
         /// <summary> Reference credential name. </summary>

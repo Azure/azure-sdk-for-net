@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureSqlDatabaseLinkedServiceConverter))]
-    public partial class AzureSqlDatabaseLinkedService : IUtf8JsonSerializable
+    public partial class AzureSqlDatabaseLinkedService : IUtf8JsonSerializable, IJsonModel<AzureSqlDatabaseLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlDatabaseLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureSqlDatabaseLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlDatabaseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureSqlDatabaseLinkedService)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -110,8 +120,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSqlDatabaseLinkedService DeserializeAzureSqlDatabaseLinkedService(JsonElement element)
+        AzureSqlDatabaseLinkedService IJsonModel<AzureSqlDatabaseLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlDatabaseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureSqlDatabaseLinkedService)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureSqlDatabaseLinkedService(document.RootElement, options);
+        }
+
+        internal static AzureSqlDatabaseLinkedService DeserializeAzureSqlDatabaseLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -282,6 +306,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureSqlDatabaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, alwaysEncryptedSettings.Value, encryptedCredential.Value, credential.Value);
         }
+
+        BinaryData IPersistableModel<AzureSqlDatabaseLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlDatabaseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureSqlDatabaseLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureSqlDatabaseLinkedService IPersistableModel<AzureSqlDatabaseLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlDatabaseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureSqlDatabaseLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureSqlDatabaseLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureSqlDatabaseLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureSqlDatabaseLinkedServiceConverter : JsonConverter<AzureSqlDatabaseLinkedService>
         {

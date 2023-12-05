@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownSpatialAnalysisOperationBase. </summary>
@@ -12,7 +15,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSpatialAnalysisOperationBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
-        internal UnknownSpatialAnalysisOperationBase(string type) : base(type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSpatialAnalysisOperationBase(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
         }

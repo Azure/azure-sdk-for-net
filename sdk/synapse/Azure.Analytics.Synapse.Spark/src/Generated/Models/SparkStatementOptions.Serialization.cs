@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    public partial class SparkStatementOptions : IUtf8JsonSerializable
+    public partial class SparkStatementOptions : IUtf8JsonSerializable, IJsonModel<SparkStatementOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkStatementOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SparkStatementOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkStatementOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkStatementOptions)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
@@ -25,7 +37,102 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SparkStatementOptions IJsonModel<SparkStatementOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkStatementOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkStatementOptions)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkStatementOptions(document.RootElement, options);
+        }
+
+        internal static SparkStatementOptions DeserializeSparkStatementOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> code = default;
+            Optional<SparkStatementLanguageType> kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("code"u8))
+                {
+                    code = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new SparkStatementLanguageType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SparkStatementOptions(code.Value, Optional.ToNullable(kind), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SparkStatementOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkStatementOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkStatementOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SparkStatementOptions IPersistableModel<SparkStatementOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkStatementOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSparkStatementOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkStatementOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SparkStatementOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

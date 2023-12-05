@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The SparkBatchJobState. </summary>
     public partial class SparkBatchJobState
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SparkBatchJobState"/>. </summary>
         internal SparkBatchJobState()
         {
@@ -27,7 +60,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="recoveringAt"> the time that at which "recovering" livy state was first seen. </param>
         /// <param name="currentState"> the Spark job state. </param>
         /// <param name="jobCreationRequest"></param>
-        internal SparkBatchJobState(DateTimeOffset? notStartedAt, DateTimeOffset? startingAt, DateTimeOffset? runningAt, DateTimeOffset? deadAt, DateTimeOffset? successAt, DateTimeOffset? terminatedAt, DateTimeOffset? recoveringAt, string currentState, SparkRequest jobCreationRequest)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkBatchJobState(DateTimeOffset? notStartedAt, DateTimeOffset? startingAt, DateTimeOffset? runningAt, DateTimeOffset? deadAt, DateTimeOffset? successAt, DateTimeOffset? terminatedAt, DateTimeOffset? recoveringAt, string currentState, SparkRequest jobCreationRequest, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NotStartedAt = notStartedAt;
             StartingAt = startingAt;
@@ -38,6 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RecoveringAt = recoveringAt;
             CurrentState = currentState;
             JobCreationRequest = jobCreationRequest;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the time that at which "not_started" livy state was first seen. </summary>

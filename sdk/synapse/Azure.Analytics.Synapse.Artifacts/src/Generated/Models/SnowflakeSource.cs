@@ -40,6 +40,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SnowflakeSource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SnowflakeSource"/> for deserialization. </summary>
+        internal SnowflakeSource()
+        {
+        }
+
         /// <summary> Snowflake Sql query. Type: string (or Expression with resultType string). </summary>
         public object Query { get; set; }
         /// <summary> Snowflake export settings. </summary>

@@ -60,6 +60,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Concur";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConcurLinkedService"/> for deserialization. </summary>
+        internal ConcurLinkedService()
+        {
+        }
+
         /// <summary> Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
         public object ConnectionProperties { get; set; }
         /// <summary> Application client_id supplied by Concur App Management. </summary>

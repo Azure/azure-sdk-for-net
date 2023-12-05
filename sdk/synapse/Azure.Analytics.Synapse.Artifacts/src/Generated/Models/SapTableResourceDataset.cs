@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SapTableResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapTableResourceDataset"/> for deserialization. </summary>
+        internal SapTableResourceDataset()
+        {
+        }
+
         /// <summary> The name of the SAP Table. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

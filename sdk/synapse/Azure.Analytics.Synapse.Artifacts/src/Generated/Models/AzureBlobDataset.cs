@@ -57,6 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureBlob";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureBlobDataset"/> for deserialization. </summary>
+        internal AzureBlobDataset()
+        {
+        }
+
         /// <summary> The path of the Azure Blob storage. Type: string (or Expression with resultType string). </summary>
         public object FolderPath { get; set; }
         /// <summary> The root of blob path. Type: string (or Expression with resultType string). </summary>

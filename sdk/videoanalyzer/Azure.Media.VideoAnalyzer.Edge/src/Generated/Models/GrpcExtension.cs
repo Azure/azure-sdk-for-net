@@ -41,6 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint">
         /// Endpoint details of the pipeline extension plugin.
         /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -50,11 +51,16 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="samplingOptions"> Media sampling parameters that define how often media is submitted to the extension plugin. </param>
         /// <param name="dataTransfer"> Specifies how media is transferred to the extension plugin. </param>
         /// <param name="extensionConfiguration"> An optional configuration string that is sent to the extension plugin. The configuration string is specific to each custom extension and it not understood neither validated by Video Analyzer. Please see https://aka.ms/ava-extension-grpc for details. </param>
-        internal GrpcExtension(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions, GrpcExtensionDataTransfer dataTransfer, string extensionConfiguration) : base(type, name, inputs, endpoint, image, samplingOptions)
+        internal GrpcExtension(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions, GrpcExtensionDataTransfer dataTransfer, string extensionConfiguration) : base(type, name, inputs, serializedAdditionalRawData, endpoint, image, samplingOptions)
         {
             DataTransfer = dataTransfer;
             ExtensionConfiguration = extensionConfiguration;
             Type = type ?? "#Microsoft.VideoAnalyzer.GrpcExtension";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GrpcExtension"/> for deserialization. </summary>
+        internal GrpcExtension()
+        {
         }
 
         /// <summary> Specifies how media is transferred to the extension plugin. </summary>

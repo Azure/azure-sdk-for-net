@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Supported parameters for an Abstractive Summarization task. </summary>
     internal partial class AbstractiveSummarizationTaskParametersBase
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskParametersBase"/>. </summary>
         public AbstractiveSummarizationTaskParametersBase()
         {
@@ -18,10 +53,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskParametersBase"/>. </summary>
         /// <param name="sentenceCount"> It controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal AbstractiveSummarizationTaskParametersBase(int? sentenceCount, StringIndexType? stringIndexType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AbstractiveSummarizationTaskParametersBase(int? sentenceCount, StringIndexType? stringIndexType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SentenceCount = sentenceCount;
             StringIndexType = stringIndexType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> It controls the approximate number of sentences in the output summaries. </summary>

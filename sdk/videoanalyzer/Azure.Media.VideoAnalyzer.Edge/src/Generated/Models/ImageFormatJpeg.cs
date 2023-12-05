@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> JPEG image encoding. </summary>
@@ -18,8 +21,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Initializes a new instance of <see cref="ImageFormatJpeg"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="quality"> Image quality value between 0 to 100 (best quality). </param>
-        internal ImageFormatJpeg(string type, string quality) : base(type)
+        internal ImageFormatJpeg(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string quality) : base(type, serializedAdditionalRawData)
         {
             Quality = quality;
             Type = type ?? "#Microsoft.VideoAnalyzer.ImageFormatJpeg";

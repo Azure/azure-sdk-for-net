@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "InformixTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InformixTableDataset"/> for deserialization. </summary>
+        internal InformixTableDataset()
+        {
+        }
+
         /// <summary> The Informix table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

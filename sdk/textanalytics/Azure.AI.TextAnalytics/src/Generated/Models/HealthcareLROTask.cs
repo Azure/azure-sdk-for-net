@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The HealthcareLROTask. </summary>
@@ -18,9 +21,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="HealthcareLROTask"/>. </summary>
         /// <param name="taskName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Healthcare task. </param>
-        internal HealthcareLROTask(string taskName, AnalyzeTextLROTaskKind kind, HealthcareTaskParameters parameters) : base(taskName, kind)
+        internal HealthcareLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, HealthcareTaskParameters parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
             Kind = kind;

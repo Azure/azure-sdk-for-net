@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Defines a Spatial Analysis person distance operation eventing configuration. </summary>
@@ -18,11 +21,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonDistanceEvent"/>. </summary>
         /// <param name="threshold"> The event threshold. </param>
         /// <param name="focus"> The operation focus type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="trigger"> The event trigger type. </param>
         /// <param name="outputFrequency"> The event or interval output frequency. </param>
         /// <param name="minimumDistanceThreshold"> The minimum distance threshold. </param>
         /// <param name="maximumDistanceThreshold"> The maximum distance threshold. </param>
-        internal SpatialAnalysisPersonDistanceEvent(string threshold, SpatialAnalysisOperationFocus? focus, SpatialAnalysisPersonDistanceEventTrigger? trigger, string outputFrequency, string minimumDistanceThreshold, string maximumDistanceThreshold) : base(threshold, focus)
+        internal SpatialAnalysisPersonDistanceEvent(string threshold, SpatialAnalysisOperationFocus? focus, IDictionary<string, BinaryData> serializedAdditionalRawData, SpatialAnalysisPersonDistanceEventTrigger? trigger, string outputFrequency, string minimumDistanceThreshold, string maximumDistanceThreshold) : base(threshold, focus, serializedAdditionalRawData)
         {
             Trigger = trigger;
             OutputFrequency = outputFrequency;

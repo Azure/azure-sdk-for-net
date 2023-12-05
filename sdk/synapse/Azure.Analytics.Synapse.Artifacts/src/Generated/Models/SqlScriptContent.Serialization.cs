@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlScriptContentConverter))]
-    public partial class SqlScriptContent : IUtf8JsonSerializable
+    public partial class SqlScriptContent : IUtf8JsonSerializable, IJsonModel<SqlScriptContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlScriptContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlScriptContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlScriptContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SqlScriptContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
@@ -44,8 +54,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SqlScriptContent DeserializeSqlScriptContent(JsonElement element)
+        SqlScriptContent IJsonModel<SqlScriptContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlScriptContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SqlScriptContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlScriptContent(document.RootElement, options);
+        }
+
+        internal static SqlScriptContent DeserializeSqlScriptContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +119,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SqlScriptContent(query, currentConnection.Value, Optional.ToNullable(resultLimit), metadata.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<SqlScriptContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlScriptContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SqlScriptContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlScriptContent IPersistableModel<SqlScriptContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlScriptContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlScriptContent(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SqlScriptContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlScriptContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SqlScriptContentConverter : JsonConverter<SqlScriptContent>
         {

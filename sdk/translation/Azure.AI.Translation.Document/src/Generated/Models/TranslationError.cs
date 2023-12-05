@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
@@ -13,6 +14,38 @@ namespace Azure.AI.Translation.Document.Models
     /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
     internal partial class TranslationError
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TranslationError"/>. </summary>
         /// <param name="code"> Enums containing high level error codes. </param>
         /// <param name="message"> Gets high level error message. </param>
@@ -36,12 +69,19 @@ namespace Azure.AI.Translation.Document.Models
         /// New Inner Error format which conforms to Cognitive Services API Guidelines which is available at https://microsoft.sharepoint.com/%3Aw%3A/t/CognitiveServicesPMO/EUoytcrjuJdKpeOKIK_QRC8BPtUYQpKBi8JsWyeDMRsWlQ?e=CPq8ow.
         /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
         /// </param>
-        internal TranslationError(TranslationErrorCode code, string message, string target, InnerTranslationError innerError)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranslationError(TranslationErrorCode code, string message, string target, InnerTranslationError innerError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
             InnerError = innerError;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationError"/> for deserialization. </summary>
+        internal TranslationError()
+        {
         }
 
         /// <summary> Enums containing high level error codes. </summary>

@@ -47,6 +47,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureSearch";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedService"/> for deserialization. </summary>
+        internal AzureSearchLinkedService()
+        {
+        }
+
         /// <summary> URL for Azure Search service. Type: string (or Expression with resultType string). </summary>
         public object Url { get; set; }
         /// <summary>

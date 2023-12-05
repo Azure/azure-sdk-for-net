@@ -51,6 +51,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Validation";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/> for deserialization. </summary>
+        internal ValidationActivity()
+        {
+        }
+
         /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public object Timeout { get; set; }
         /// <summary> A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer). </summary>

@@ -5,16 +5,192 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    public partial class SparkBatchJob
+    public partial class SparkBatchJob : IUtf8JsonSerializable, IJsonModel<SparkBatchJob>
     {
-        internal static SparkBatchJob DeserializeSparkBatchJob(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkBatchJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SparkBatchJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkBatchJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkBatchJob)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LivyInfo))
+            {
+                writer.WritePropertyName("livyInfo"u8);
+                writer.WriteObjectValue(LivyInfo);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(WorkspaceName))
+            {
+                writer.WritePropertyName("workspaceName"u8);
+                writer.WriteStringValue(WorkspaceName);
+            }
+            if (Optional.IsDefined(SparkPoolName))
+            {
+                writer.WritePropertyName("sparkPoolName"u8);
+                writer.WriteStringValue(SparkPoolName);
+            }
+            if (Optional.IsDefined(SubmitterName))
+            {
+                writer.WritePropertyName("submitterName"u8);
+                writer.WriteStringValue(SubmitterName);
+            }
+            if (Optional.IsDefined(SubmitterId))
+            {
+                writer.WritePropertyName("submitterId"u8);
+                writer.WriteStringValue(SubmitterId);
+            }
+            if (Optional.IsDefined(ArtifactId))
+            {
+                writer.WritePropertyName("artifactId"u8);
+                writer.WriteStringValue(ArtifactId);
+            }
+            if (Optional.IsDefined(JobType))
+            {
+                writer.WritePropertyName("jobType"u8);
+                writer.WriteStringValue(JobType.Value.ToString());
+            }
+            if (Optional.IsDefined(Result))
+            {
+                writer.WritePropertyName("result"u8);
+                writer.WriteStringValue(Result.Value.ToString());
+            }
+            if (Optional.IsDefined(Scheduler))
+            {
+                writer.WritePropertyName("schedulerInfo"u8);
+                writer.WriteObjectValue(Scheduler);
+            }
+            if (Optional.IsDefined(Plugin))
+            {
+                writer.WritePropertyName("pluginInfo"u8);
+                writer.WriteObjectValue(Plugin);
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errorInfo"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("id"u8);
+            writer.WriteNumberValue(Id);
+            if (Optional.IsDefined(AppId))
+            {
+                if (AppId != null)
+                {
+                    writer.WritePropertyName("appId"u8);
+                    writer.WriteStringValue(AppId);
+                }
+                else
+                {
+                    writer.WriteNull("appId");
+                }
+            }
+            if (Optional.IsCollectionDefined(AppInfo))
+            {
+                if (AppInfo != null)
+                {
+                    writer.WritePropertyName("appInfo"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in AppInfo)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("appInfo");
+                }
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(LogLines))
+            {
+                if (LogLines != null)
+                {
+                    writer.WritePropertyName("log"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in LogLines)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("log");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SparkBatchJob IJsonModel<SparkBatchJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkBatchJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkBatchJob)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkBatchJob(document.RootElement, options);
+        }
+
+        internal static SparkBatchJob DeserializeSparkBatchJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +213,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<IReadOnlyDictionary<string, string>> appInfo = default;
             Optional<LivyStates> state = default;
             Optional<IReadOnlyList<string>> log = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livyInfo"u8))
@@ -194,8 +372,44 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     log = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), Optional.ToNullable(state), Optional.ToList(log));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), Optional.ToNullable(state), Optional.ToList(log), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SparkBatchJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkBatchJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkBatchJob)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SparkBatchJob IPersistableModel<SparkBatchJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkBatchJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSparkBatchJob(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkBatchJob)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SparkBatchJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

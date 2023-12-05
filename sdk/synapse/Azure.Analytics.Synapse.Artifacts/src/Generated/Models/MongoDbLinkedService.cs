@@ -64,6 +64,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "MongoDb";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDbLinkedService"/> for deserialization. </summary>
+        internal MongoDbLinkedService()
+        {
+        }
+
         /// <summary> The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string). </summary>
         public object Server { get; set; }
         /// <summary> The authentication type to be used to connect to the MongoDB database. </summary>

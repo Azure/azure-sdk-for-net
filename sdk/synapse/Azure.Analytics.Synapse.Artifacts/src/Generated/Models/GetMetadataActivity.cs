@@ -60,6 +60,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "GetMetadata";
         }
 
+        /// <summary> Initializes a new instance of <see cref="GetMetadataActivity"/> for deserialization. </summary>
+        internal GetMetadataActivity()
+        {
+        }
+
         /// <summary> GetMetadata activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary> Fields of metadata to get from dataset. </summary>

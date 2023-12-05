@@ -54,6 +54,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "HDInsightPig";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/> for deserialization. </summary>
+        internal HDInsightPigActivity()
+        {
+        }
+
         /// <summary> Storage linked service references. </summary>
         public IList<LinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </summary>

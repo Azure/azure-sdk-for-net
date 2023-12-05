@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    public partial class SparkSessionOptions : IUtf8JsonSerializable
+    public partial class SparkSessionOptions : IUtf8JsonSerializable, IJsonModel<SparkSessionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkSessionOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SparkSessionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkSessionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkSessionOptions)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -129,7 +141,257 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 writer.WritePropertyName("numExecutors"u8);
                 writer.WriteNumberValue(ExecutorCount.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SparkSessionOptions IJsonModel<SparkSessionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkSessionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SparkSessionOptions)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkSessionOptions(document.RootElement, options);
+        }
+
+        internal static SparkSessionOptions DeserializeSparkSessionOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> artifactId = default;
+            string name = default;
+            Optional<string> file = default;
+            Optional<string> className = default;
+            Optional<IList<string>> args = default;
+            Optional<IList<string>> jars = default;
+            Optional<IList<string>> pyFiles = default;
+            Optional<IList<string>> files = default;
+            Optional<IList<string>> archives = default;
+            Optional<IDictionary<string, string>> conf = default;
+            Optional<string> driverMemory = default;
+            Optional<int> driverCores = default;
+            Optional<string> executorMemory = default;
+            Optional<int> executorCores = default;
+            Optional<int> numExecutors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("artifactId"u8))
+                {
+                    artifactId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("file"u8))
+                {
+                    file = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("className"u8))
+                {
+                    className = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("args"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    args = array;
+                    continue;
+                }
+                if (property.NameEquals("jars"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    jars = array;
+                    continue;
+                }
+                if (property.NameEquals("pyFiles"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    pyFiles = array;
+                    continue;
+                }
+                if (property.NameEquals("files"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    files = array;
+                    continue;
+                }
+                if (property.NameEquals("archives"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    archives = array;
+                    continue;
+                }
+                if (property.NameEquals("conf"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    conf = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("driverMemory"u8))
+                {
+                    driverMemory = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("driverCores"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    driverCores = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("executorMemory"u8))
+                {
+                    executorMemory = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("executorCores"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    executorCores = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("numExecutors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numExecutors = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SparkSessionOptions(Optional.ToDictionary(tags), artifactId.Value, name, file.Value, className.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SparkSessionOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkSessionOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkSessionOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SparkSessionOptions IPersistableModel<SparkSessionOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SparkSessionOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSparkSessionOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SparkSessionOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SparkSessionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

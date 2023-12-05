@@ -15,6 +15,61 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series instances are the time series themselves. In most cases, the deviceId or assetId is the unique identifier of the asset in the environment. Instances have descriptive information associated with them called instance fields. At a minimum, instance fields include hierarchy information. They can also include useful, descriptive data like the manufacturer, operator, or the last service date. </summary>
     public partial class TimeSeriesInstance
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesInstance"/>. </summary>
+        /// <param name="timeSeriesIdInternal"> Time Series ID that uniquely identifies the instance. It matches Time Series ID properties in an environment. Immutable, never null. </param>
+        /// <param name="timeSeriesTypeId"> This represents the type that this instance belongs to. Never null. </param>
+        /// <param name="name"> Optional name of the instance which is unique in an environment. Names acts as a mutable alias or display name of the time series instance. Mutable, may be null. </param>
+        /// <param name="description"> This optional field contains description about the instance. </param>
+        /// <param name="hierarchyIds"> Set of time series hierarchy IDs that the instance belong to. May be null. </param>
+        /// <param name="instanceFields"> Set of key-value pairs that contain user-defined instance properties. It may be null. Supported property value types are: bool, string, long, double and it cannot be nested or null. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesInstance(IList<object> timeSeriesIdInternal, string timeSeriesTypeId, string name, string description, IList<string> hierarchyIds, IDictionary<string, object> instanceFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TimeSeriesIdInternal = timeSeriesIdInternal;
+            TimeSeriesTypeId = timeSeriesTypeId;
+            Name = name;
+            Description = description;
+            HierarchyIds = hierarchyIds;
+            InstanceFields = instanceFields;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesInstance"/> for deserialization. </summary>
+        internal TimeSeriesInstance()
+        {
+        }
         /// <summary> Optional name of the instance which is unique in an environment. Names acts as a mutable alias or display name of the time series instance. Mutable, may be null. </summary>
         public string Name { get; set; }
         /// <summary> This optional field contains description about the instance. </summary>

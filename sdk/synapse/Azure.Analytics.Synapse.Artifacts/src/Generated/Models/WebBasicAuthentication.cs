@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -36,17 +37,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/>. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// The password for Basic authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
-        internal WebBasicAuthentication(object url, WebAuthenticationType authenticationType, object username, SecretBase password) : base(url, authenticationType)
+        internal WebBasicAuthentication(object url, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, object username, SecretBase password) : base(url, authenticationType, serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
             AuthenticationType = authenticationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/> for deserialization. </summary>
+        internal WebBasicAuthentication()
+        {
         }
 
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>

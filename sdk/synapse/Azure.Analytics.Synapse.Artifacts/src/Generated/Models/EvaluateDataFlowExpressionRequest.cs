@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for data flow expression preview. </summary>
     public partial class EvaluateDataFlowExpressionRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EvaluateDataFlowExpressionRequest"/>. </summary>
         public EvaluateDataFlowExpressionRequest()
         {
@@ -21,13 +56,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="streamName"> The output stream name. </param>
         /// <param name="rowLimits"> The row limit for preview request. </param>
         /// <param name="expression"> The expression for preview. </param>
-        internal EvaluateDataFlowExpressionRequest(string sessionId, string dataFlowName, string streamName, int? rowLimits, string expression)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EvaluateDataFlowExpressionRequest(string sessionId, string dataFlowName, string streamName, int? rowLimits, string expression, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             DataFlowName = dataFlowName;
             StreamName = streamName;
             RowLimits = rowLimits;
             Expression = expression;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

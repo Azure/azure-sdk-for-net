@@ -15,6 +15,38 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The SentenceTarget. </summary>
     internal partial class SentenceTarget
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SentenceTarget"/>. </summary>
         /// <param name="sentiment"> Targeted sentiment in the sentence. </param>
         /// <param name="confidenceScores"> Target sentiment confidence scores for the target in the sentence. </param>
@@ -45,7 +77,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
-        internal SentenceTarget(string sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IList<TargetRelation> relations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentenceTarget(string sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IList<TargetRelation> relations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;
@@ -53,6 +86,12 @@ namespace Azure.AI.TextAnalytics.Models
             Length = length;
             Text = text;
             Relations = relations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentenceTarget"/> for deserialization. </summary>
+        internal SentenceTarget()
+        {
         }
         /// <summary> Target sentiment confidence scores for the target in the sentence. </summary>
         public TargetConfidenceScoreLabel ConfidenceScores { get; set; }

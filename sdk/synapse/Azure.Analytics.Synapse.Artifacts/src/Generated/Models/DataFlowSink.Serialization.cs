@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowSinkConverter))]
-    public partial class DataFlowSink : IUtf8JsonSerializable
+    public partial class DataFlowSink : IUtf8JsonSerializable, IJsonModel<DataFlowSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFlowSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFlowSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SchemaLinkedService))
             {
@@ -50,11 +61,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFlowSink DeserializeDataFlowSink(JsonElement element)
+        DataFlowSink IJsonModel<DataFlowSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFlowSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowSink(document.RootElement, options);
+        }
+
+        internal static DataFlowSink DeserializeDataFlowSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +106,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DatasetReference> dataset = default;
             Optional<LinkedServiceReference> linkedService = default;
             Optional<DataFlowReference> flowlet = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaLinkedService"u8))
@@ -123,9 +165,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFlowSink(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value, schemaLinkedService.Value, rejectedDataLinkedService.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataFlowSink(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value, serializedAdditionalRawData, schemaLinkedService.Value, rejectedDataLinkedService.Value);
         }
+
+        BinaryData IPersistableModel<DataFlowSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFlowSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFlowSink IPersistableModel<DataFlowSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFlowSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFlowSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFlowSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class DataFlowSinkConverter : JsonConverter<DataFlowSink>
         {

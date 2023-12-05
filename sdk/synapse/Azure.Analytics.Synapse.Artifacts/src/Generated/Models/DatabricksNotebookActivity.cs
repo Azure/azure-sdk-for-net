@@ -51,6 +51,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DatabricksNotebook";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/> for deserialization. </summary>
+        internal DatabricksNotebookActivity()
+        {
+        }
+
         /// <summary> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </summary>
         public object NotebookPath { get; set; }
         /// <summary> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </summary>

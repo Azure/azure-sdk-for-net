@@ -50,6 +50,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SqlPoolStoredProcedure";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SqlPoolStoredProcedureActivity"/> for deserialization. </summary>
+        internal SqlPoolStoredProcedureActivity()
+        {
+        }
+
         /// <summary> SQL pool stored procedure reference. </summary>
         public SqlPoolReference SqlPool { get; set; }
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>

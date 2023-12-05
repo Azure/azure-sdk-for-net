@@ -5,16 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlobTags : IXmlSerializable
+    internal partial class BlobTags : IXmlSerializable, IPersistableModel<BlobTags>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Tags");
             writer.WriteStartElement("TagSet");
@@ -26,7 +30,9 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobTags DeserializeBlobTags(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobTags DeserializeBlobTags(XElement element, ModelReaderWriterOptions options = null)
         {
             IList<BlobTag> blobTagSet = default;
             if (element.Element("TagSet") is XElement tagSetElement)
@@ -38,7 +44,48 @@ namespace Azure.Storage.Blobs.Models
                 }
                 blobTagSet = array;
             }
-            return new BlobTags(blobTagSet);
+            return new BlobTags(blobTagSet, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobTags>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobTags>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobTags)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobTags IPersistableModel<BlobTags>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobTags>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobTags(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobTags)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobTags>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

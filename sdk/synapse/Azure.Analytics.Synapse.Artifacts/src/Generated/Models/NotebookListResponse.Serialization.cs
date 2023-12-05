@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,16 +16,73 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookListResponseConverter))]
-    internal partial class NotebookListResponse
+    internal partial class NotebookListResponse : IUtf8JsonSerializable, IJsonModel<NotebookListResponse>
     {
-        internal static NotebookListResponse DeserializeNotebookListResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotebookListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NotebookListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NotebookListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(NotebookListResponse)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NotebookListResponse IJsonModel<NotebookListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotebookListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(NotebookListResponse)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotebookListResponse(document.RootElement, options);
+        }
+
+        internal static NotebookListResponse DeserializeNotebookListResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<NotebookResource> value = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -41,15 +100,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NotebookListResponse(value, nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NotebookListResponse(value, nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NotebookListResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotebookListResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(NotebookListResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NotebookListResponse IPersistableModel<NotebookListResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotebookListResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNotebookListResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(NotebookListResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NotebookListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class NotebookListResponseConverter : JsonConverter<NotebookListResponse>
         {
             public override void Write(Utf8JsonWriter writer, NotebookListResponse model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override NotebookListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

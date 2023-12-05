@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSqlScriptsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSqlScriptsByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlScriptResource.DeserializeSqlScriptResource, _clientDiagnostics, _pipeline, "SqlScriptClient.GetSqlScriptsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SqlScriptResource.DeserializeSqlScriptResource(e), _clientDiagnostics, _pipeline, "SqlScriptClient.GetSqlScriptsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists sql scripts. </summary>
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSqlScriptsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSqlScriptsByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlScriptResource.DeserializeSqlScriptResource, _clientDiagnostics, _pipeline, "SqlScriptClient.GetSqlScriptsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SqlScriptResource.DeserializeSqlScriptResource(e), _clientDiagnostics, _pipeline, "SqlScriptClient.GetSqlScriptsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a Sql Script. </summary>

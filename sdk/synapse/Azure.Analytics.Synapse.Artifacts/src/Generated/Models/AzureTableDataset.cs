@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureTableDataset"/> for deserialization. </summary>
+        internal AzureTableDataset()
+        {
+        }
+
         /// <summary> The table name of the Azure Table storage. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "CosmosDbMongoDbApiCollection";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosDbMongoDbApiCollectionDataset"/> for deserialization. </summary>
+        internal CosmosDbMongoDbApiCollectionDataset()
+        {
+        }
+
         /// <summary> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </summary>
         public object Collection { get; set; }
     }

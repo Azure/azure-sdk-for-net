@@ -49,6 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SparkJobDefinition"/> for deserialization. </summary>
+        internal SparkJobDefinition()
+        {
+        }
+
         /// <summary> The description of the Spark job definition. </summary>
         public string Description { get; set; }
         /// <summary> Big data pool reference. </summary>

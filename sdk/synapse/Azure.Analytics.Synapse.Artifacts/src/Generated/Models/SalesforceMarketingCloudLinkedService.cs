@@ -55,6 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SalesforceMarketingCloud";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudLinkedService"/> for deserialization. </summary>
+        internal SalesforceMarketingCloudLinkedService()
+        {
+        }
+
         /// <summary> Properties used to connect to Salesforce Marketing Cloud. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
         public object ConnectionProperties { get; set; }
         /// <summary> The client ID associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string). </summary>

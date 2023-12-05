@@ -74,6 +74,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AmazonMWS";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonMWSLinkedService"/> for deserialization. </summary>
+        internal AmazonMWSLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </summary>
         public object Endpoint { get; set; }
         /// <summary> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </summary>

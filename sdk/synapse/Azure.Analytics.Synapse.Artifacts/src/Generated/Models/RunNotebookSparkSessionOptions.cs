@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The RunNotebookSparkSessionOptions. </summary>
     public partial class RunNotebookSparkSessionOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RunNotebookSparkSessionOptions"/>. </summary>
         public RunNotebookSparkSessionOptions()
         {
@@ -42,7 +75,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="executorCount"> Number of executors to launch for this session. </param>
         /// <param name="isQueueable"> Whether to queue session creation if Spark pool doesn't have enough capacity. Default value is true in notebook runs API. </param>
         /// <param name="heartbeatTimeoutInSecond"> Timeout in second to which session be orphaned. </param>
-        internal RunNotebookSparkSessionOptions(IDictionary<string, string> tags, string kind, string proxyUser, string name, IList<string> jars, IList<string> pythonFiles, IList<string> files, IList<string> archives, object queue, IDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount, bool? isQueueable, int? heartbeatTimeoutInSecond)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookSparkSessionOptions(IDictionary<string, string> tags, string kind, string proxyUser, string name, IList<string> jars, IList<string> pythonFiles, IList<string> files, IList<string> archives, object queue, IDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount, bool? isQueueable, int? heartbeatTimeoutInSecond, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Kind = kind;
@@ -61,6 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ExecutorCount = executorCount;
             IsQueueable = isQueueable;
             HeartbeatTimeoutInSecond = heartbeatTimeoutInSecond;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>

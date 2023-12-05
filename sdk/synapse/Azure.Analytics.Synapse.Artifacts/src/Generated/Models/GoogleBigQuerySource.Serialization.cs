@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GoogleBigQuerySourceConverter))]
-    public partial class GoogleBigQuerySource : IUtf8JsonSerializable
+    public partial class GoogleBigQuerySource : IUtf8JsonSerializable, IJsonModel<GoogleBigQuerySource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleBigQuerySource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GoogleBigQuerySource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleBigQuerySource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GoogleBigQuerySource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -59,8 +69,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static GoogleBigQuerySource DeserializeGoogleBigQuerySource(JsonElement element)
+        GoogleBigQuerySource IJsonModel<GoogleBigQuerySource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleBigQuerySource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GoogleBigQuerySource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleBigQuerySource(document.RootElement, options);
+        }
+
+        internal static GoogleBigQuerySource DeserializeGoogleBigQuerySource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,6 +164,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleBigQuerySource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
         }
+
+        BinaryData IPersistableModel<GoogleBigQuerySource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleBigQuerySource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GoogleBigQuerySource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GoogleBigQuerySource IPersistableModel<GoogleBigQuerySource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleBigQuerySource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGoogleBigQuerySource(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GoogleBigQuerySource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GoogleBigQuerySource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class GoogleBigQuerySourceConverter : JsonConverter<GoogleBigQuerySource>
         {

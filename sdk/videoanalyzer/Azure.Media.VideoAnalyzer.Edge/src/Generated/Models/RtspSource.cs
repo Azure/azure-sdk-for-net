@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -33,17 +34,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="RtspSource"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="transport"> Network transport utilized by the RTSP and RTP exchange: TCP or HTTP. When using TCP, the RTP packets are interleaved on the TCP RTSP connection. When using HTTP, the RTSP messages are exchanged through long lived HTTP connections, and the RTP packages are interleaved in the HTTP connections alongside the RTSP messages. </param>
         /// <param name="endpoint">
         /// RTSP endpoint information for Video Analyzer to connect to. This contains the required information for Video Analyzer to connect to RTSP cameras and/or generic RTSP servers.
         /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
         /// </param>
-        internal RtspSource(string type, string name, RtspTransport? transport, EndpointBase endpoint) : base(type, name)
+        internal RtspSource(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, RtspTransport? transport, EndpointBase endpoint) : base(type, name, serializedAdditionalRawData)
         {
             Transport = transport;
             Endpoint = endpoint;
             Type = type ?? "#Microsoft.VideoAnalyzer.RtspSource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RtspSource"/> for deserialization. </summary>
+        internal RtspSource()
+        {
         }
 
         /// <summary> Network transport utilized by the RTSP and RTP exchange: TCP or HTTP. When using TCP, the RTP packets are interleaved on the TCP RTSP connection. When using HTTP, the RTSP messages are exchanged through long lived HTTP connections, and the RTP packages are interleaved in the HTTP connections alongside the RTSP messages. </summary>

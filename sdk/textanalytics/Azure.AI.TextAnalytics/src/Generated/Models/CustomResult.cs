@@ -16,6 +16,38 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The CustomResult. </summary>
     internal partial class CustomResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CustomResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
@@ -37,12 +69,19 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        internal CustomResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             Statistics = statistics;
             ProjectName = projectName;
             DeploymentName = deploymentName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomResult"/> for deserialization. </summary>
+        internal CustomResult()
+        {
         }
 
         /// <summary> Errors by document id. </summary>

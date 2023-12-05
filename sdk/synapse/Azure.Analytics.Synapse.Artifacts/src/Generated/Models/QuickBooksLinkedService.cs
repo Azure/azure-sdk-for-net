@@ -94,6 +94,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "QuickBooks";
         }
 
+        /// <summary> Initializes a new instance of <see cref="QuickBooksLinkedService"/> for deserialization. </summary>
+        internal QuickBooksLinkedService()
+        {
+        }
+
         /// <summary> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
         public object ConnectionProperties { get; set; }
         /// <summary> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </summary>

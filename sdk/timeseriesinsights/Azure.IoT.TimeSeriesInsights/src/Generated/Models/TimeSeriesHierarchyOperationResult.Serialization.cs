@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesHierarchyOperationResult
+    public partial class TimeSeriesHierarchyOperationResult : IUtf8JsonSerializable, IJsonModel<TimeSeriesHierarchyOperationResult>
     {
-        internal static TimeSeriesHierarchyOperationResult DeserializeTimeSeriesHierarchyOperationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TimeSeriesHierarchyOperationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TimeSeriesHierarchyOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesHierarchyOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TimeSeriesHierarchyOperationResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Hierarchy))
+            {
+                writer.WritePropertyName("hierarchy"u8);
+                writer.WriteObjectValue(Hierarchy);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TimeSeriesHierarchyOperationResult IJsonModel<TimeSeriesHierarchyOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesHierarchyOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TimeSeriesHierarchyOperationResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTimeSeriesHierarchyOperationResult(document.RootElement, options);
+        }
+
+        internal static TimeSeriesHierarchyOperationResult DeserializeTimeSeriesHierarchyOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<TimeSeriesHierarchy> hierarchy = default;
             Optional<TimeSeriesOperationError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hierarchy"u8))
@@ -40,8 +99,44 @@ namespace Azure.IoT.TimeSeriesInsights
                     error = TimeSeriesOperationError.DeserializeTimeSeriesOperationError(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TimeSeriesHierarchyOperationResult(hierarchy.Value, error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TimeSeriesHierarchyOperationResult(hierarchy.Value, error.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TimeSeriesHierarchyOperationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesHierarchyOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TimeSeriesHierarchyOperationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TimeSeriesHierarchyOperationResult IPersistableModel<TimeSeriesHierarchyOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesHierarchyOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTimeSeriesHierarchyOperationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TimeSeriesHierarchyOperationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TimeSeriesHierarchyOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

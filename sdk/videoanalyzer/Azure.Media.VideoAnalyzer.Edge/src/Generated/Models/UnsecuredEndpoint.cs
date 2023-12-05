@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -31,9 +32,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
         /// </param>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
-        internal UnsecuredEndpoint(string type, CredentialsBase credentials, string url) : base(type, credentials, url)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnsecuredEndpoint(string type, CredentialsBase credentials, string url, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, credentials, url, serializedAdditionalRawData)
         {
             Type = type ?? "#Microsoft.VideoAnalyzer.UnsecuredEndpoint";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnsecuredEndpoint"/> for deserialization. </summary>
+        internal UnsecuredEndpoint()
+        {
         }
     }
 }

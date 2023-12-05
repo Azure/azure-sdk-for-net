@@ -74,6 +74,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Dynamics";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicsLinkedService"/> for deserialization. </summary>
+        internal DynamicsLinkedService()
+        {
+        }
+
         /// <summary> The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd' for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string). </summary>
         public object DeploymentType { get; set; }
         /// <summary> The host name of the on-premises Dynamics server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </summary>

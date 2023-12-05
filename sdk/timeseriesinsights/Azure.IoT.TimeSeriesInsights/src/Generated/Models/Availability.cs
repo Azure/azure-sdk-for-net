@@ -14,6 +14,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Event availability information when environment contains events. Contains time range of events and approximate distribution of events over time. </summary>
     internal partial class Availability
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="Availability"/>. </summary>
         internal Availability()
         {
@@ -24,11 +56,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="range"> Minimum and maximum values of event timestamp ($ts) property. </param>
         /// <param name="intervalSize"> Interval size for the returned distribution of the events. Returned interval is selected to return a reasonable number of points. All intervals are the same size. On the wire interval is specified in ISO-8601 duration format. One month is always converted to 30 days, and one year is always 365 days. Examples: 1 minute is "PT1M", 1 millisecond is "PT0.001S". For more information, see https://www.w3.org/TR/xmlschema-2/#duration. </param>
         /// <param name="distribution"> Dictionary of &lt;integer&gt;. </param>
-        internal Availability(DateTimeRange range, TimeSpan? intervalSize, IReadOnlyDictionary<string, int> distribution)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Availability(DateTimeRange range, TimeSpan? intervalSize, IReadOnlyDictionary<string, int> distribution, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Range = range;
             IntervalSize = intervalSize;
             Distribution = distribution;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Minimum and maximum values of event timestamp ($ts) property. </summary>

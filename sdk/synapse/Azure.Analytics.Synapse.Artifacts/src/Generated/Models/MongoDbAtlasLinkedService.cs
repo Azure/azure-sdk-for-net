@@ -46,6 +46,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "MongoDbAtlas";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDbAtlasLinkedService"/> for deserialization. </summary>
+        internal MongoDbAtlasLinkedService()
+        {
+        }
+
         /// <summary> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </summary>

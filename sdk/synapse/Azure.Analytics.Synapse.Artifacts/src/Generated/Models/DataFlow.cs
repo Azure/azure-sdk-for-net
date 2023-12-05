@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,6 +18,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class DataFlow
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataFlow"/>. </summary>
         public DataFlow()
         {
@@ -28,12 +61,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
-        internal DataFlow(string type, string description, IList<object> annotations, DataFlowFolder folder)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlow(string type, string description, IList<object> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Description = description;
             Annotations = annotations;
             Folder = folder;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of data flow. </summary>

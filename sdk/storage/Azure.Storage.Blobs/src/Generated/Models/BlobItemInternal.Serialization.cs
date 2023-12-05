@@ -5,14 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlobItemInternal
+    internal partial class BlobItemInternal : IXmlSerializable, IPersistableModel<BlobItemInternal>
     {
-        internal static BlobItemInternal DeserializeBlobItemInternal(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "Blob");
+            writer.WriteObjectValue(Name, "Name");
+            writer.WriteStartElement("Deleted");
+            writer.WriteValue(Deleted);
+            writer.WriteEndElement();
+            writer.WriteStartElement("Snapshot");
+            writer.WriteValue(Snapshot);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(VersionId))
+            {
+                writer.WriteStartElement("VersionId");
+                writer.WriteValue(VersionId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsCurrentVersion))
+            {
+                writer.WriteStartElement("IsCurrentVersion");
+                writer.WriteValue(IsCurrentVersion.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteObjectValue(Properties, "Properties");
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                foreach (var pair in Metadata)
+                {
+                    writer.WriteStartElement("String");
+                    writer.WriteValue(pair.Value);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsDefined(BlobTags))
+            {
+                writer.WriteObjectValue(BlobTags, "Tags");
+            }
+            if (Optional.IsDefined(HasVersionsOnly))
+            {
+                writer.WriteStartElement("HasVersionsOnly");
+                writer.WriteValue(HasVersionsOnly.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(OrMetadata))
+            {
+                foreach (var pair in OrMetadata)
+                {
+                    writer.WriteStartElement("String");
+                    writer.WriteValue(pair.Value);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobItemInternal DeserializeBlobItemInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             BlobName name = default;
             bool deleted = default;
@@ -74,7 +136,48 @@ namespace Azure.Storage.Blobs.Models
                 }
                 orMetadata = dictionary;
             }
-            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, metadata, blobTags, hasVersionsOnly, orMetadata);
+            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, metadata, blobTags, hasVersionsOnly, orMetadata, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobItemInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobItemInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobItemInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobItemInternal IPersistableModel<BlobItemInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobItemInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobItemInternal(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobItemInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobItemInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

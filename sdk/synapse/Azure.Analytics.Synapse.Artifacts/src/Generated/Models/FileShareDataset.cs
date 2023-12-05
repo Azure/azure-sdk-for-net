@@ -57,6 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "FileShare";
         }
 
+        /// <summary> Initializes a new instance of <see cref="FileShareDataset"/> for deserialization. </summary>
+        internal FileShareDataset()
+        {
+        }
+
         /// <summary> The path of the on-premises file system. Type: string (or Expression with resultType string). </summary>
         public object FolderPath { get; set; }
         /// <summary> The name of the on-premises file system. Type: string (or Expression with resultType string). </summary>

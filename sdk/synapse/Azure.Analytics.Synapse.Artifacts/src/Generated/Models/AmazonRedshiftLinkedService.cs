@@ -56,6 +56,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AmazonRedshift";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftLinkedService"/> for deserialization. </summary>
+        internal AmazonRedshiftLinkedService()
+        {
+        }
+
         /// <summary> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </summary>
         public object Server { get; set; }
         /// <summary> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>

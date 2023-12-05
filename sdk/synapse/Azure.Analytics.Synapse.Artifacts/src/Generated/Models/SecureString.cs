@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -26,11 +27,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="SecureString"/>. </summary>
         /// <param name="type"> Type of the secret. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> Value of secure string. </param>
-        internal SecureString(string type, string value) : base(type)
+        internal SecureString(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(type, serializedAdditionalRawData)
         {
             Value = value;
             Type = type ?? "SecureString";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecureString"/> for deserialization. </summary>
+        internal SecureString()
+        {
         }
 
         /// <summary> Value of secure string. </summary>

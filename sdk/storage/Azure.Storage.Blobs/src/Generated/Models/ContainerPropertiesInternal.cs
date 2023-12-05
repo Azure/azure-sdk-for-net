@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,6 +14,38 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Properties of a container. </summary>
     internal partial class ContainerPropertiesInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
@@ -39,7 +72,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="deletedTime"></param>
         /// <param name="remainingRetentionDays"></param>
         /// <param name="isImmutableStorageWithVersioningEnabled"> Indicates if version level worm is enabled on this container. </param>
-        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -54,6 +88,12 @@ namespace Azure.Storage.Blobs.Models
             DeletedTime = deletedTime;
             RemainingRetentionDays = remainingRetentionDays;
             IsImmutableStorageWithVersioningEnabled = isImmutableStorageWithVersioningEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/> for deserialization. </summary>
+        internal ContainerPropertiesInternal()
+        {
         }
 
         /// <summary> Gets the last modified. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Definition of how time series hierarchy tree levels are created. </summary>
     public partial class TimeSeriesHierarchySource
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchySource"/>. </summary>
         public TimeSeriesHierarchySource()
         {
@@ -21,9 +54,11 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchySource"/>. </summary>
         /// <param name="instanceFieldNames"> List of instance field names that must be set in all time series instances that belong to this hierarchy. The order of the instance fields defines the levels in the hierarchy. </param>
-        internal TimeSeriesHierarchySource(IList<string> instanceFieldNames)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesHierarchySource(IList<string> instanceFieldNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceFieldNames = instanceFieldNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of instance field names that must be set in all time series instances that belong to this hierarchy. The order of the instance fields defines the levels in the hierarchy. </summary>

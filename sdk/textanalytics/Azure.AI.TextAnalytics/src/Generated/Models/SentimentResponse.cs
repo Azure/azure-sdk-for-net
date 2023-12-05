@@ -34,10 +34,16 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="documents"> Sentiment analysis per document. </param>
-        internal SentimentResponse(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<SentimentResponseDocumentsItem> documents) : base(errors, statistics, modelVersion)
+        internal SentimentResponse(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<SentimentResponseDocumentsItem> documents) : base(errors, statistics, modelVersion, serializedAdditionalRawData)
         {
             Documents = documents;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentResponse"/> for deserialization. </summary>
+        internal SentimentResponse()
+        {
         }
 
         /// <summary> Sentiment analysis per document. </summary>

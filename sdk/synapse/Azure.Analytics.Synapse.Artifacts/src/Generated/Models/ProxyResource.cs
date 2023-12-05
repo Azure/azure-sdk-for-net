@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location. </summary>
@@ -19,7 +22,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        internal ProxyResource(string id, string name, string type) : base(id, name, type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProxyResource(string id, string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, type, serializedAdditionalRawData)
         {
         }
     }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,108 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ActivityRunConverter))]
-    public partial class ActivityRun
+    public partial class ActivityRun : IUtf8JsonSerializable, IJsonModel<ActivityRun>
     {
-        internal static ActivityRun DeserializeActivityRun(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActivityRun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ActivityRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityRun>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ActivityRun)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PipelineName))
+            {
+                writer.WritePropertyName("pipelineName"u8);
+                writer.WriteStringValue(PipelineName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PipelineRunId))
+            {
+                writer.WritePropertyName("pipelineRunId"u8);
+                writer.WriteStringValue(PipelineRunId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActivityName))
+            {
+                writer.WritePropertyName("activityName"u8);
+                writer.WriteStringValue(ActivityName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActivityType))
+            {
+                writer.WritePropertyName("activityType"u8);
+                writer.WriteStringValue(ActivityType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActivityRunId))
+            {
+                writer.WritePropertyName("activityRunId"u8);
+                writer.WriteStringValue(ActivityRunId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LinkedServiceName))
+            {
+                writer.WritePropertyName("linkedServiceName"u8);
+                writer.WriteStringValue(LinkedServiceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActivityRunStart))
+            {
+                writer.WritePropertyName("activityRunStart"u8);
+                writer.WriteStringValue(ActivityRunStart.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActivityRunEnd))
+            {
+                writer.WritePropertyName("activityRunEnd"u8);
+                writer.WriteStringValue(ActivityRunEnd.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(DurationInMs))
+            {
+                writer.WritePropertyName("durationInMs"u8);
+                writer.WriteNumberValue(DurationInMs.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Input))
+            {
+                writer.WritePropertyName("input"u8);
+                writer.WriteObjectValue(Input);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteObjectValue(Output);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        ActivityRun IJsonModel<ActivityRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityRun>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ActivityRun)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeActivityRun(document.RootElement, options);
+        }
+
+        internal static ActivityRun DeserializeActivityRun(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,11 +234,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ActivityRun(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
         }
 
+        BinaryData IPersistableModel<ActivityRun>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityRun>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ActivityRun)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ActivityRun IPersistableModel<ActivityRun>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityRun>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeActivityRun(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ActivityRun)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ActivityRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         internal partial class ActivityRunConverter : JsonConverter<ActivityRun>
         {
             public override void Write(Utf8JsonWriter writer, ActivityRun model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ActivityRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

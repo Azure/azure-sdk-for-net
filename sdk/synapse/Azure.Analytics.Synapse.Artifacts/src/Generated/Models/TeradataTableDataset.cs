@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "TeradataTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="TeradataTableDataset"/> for deserialization. </summary>
+        internal TeradataTableDataset()
+        {
+        }
+
         /// <summary> The database name of Teradata. Type: string (or Expression with resultType string). </summary>
         public object Database { get; set; }
         /// <summary> The table name of Teradata. Type: string (or Expression with resultType string). </summary>

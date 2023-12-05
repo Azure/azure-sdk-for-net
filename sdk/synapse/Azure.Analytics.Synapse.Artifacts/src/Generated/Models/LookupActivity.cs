@@ -60,6 +60,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Lookup";
         }
 
+        /// <summary> Initializes a new instance of <see cref="LookupActivity"/> for deserialization. </summary>
+        internal LookupActivity()
+        {
+        }
+
         /// <summary>
         /// Dataset-specific source properties, same as copy activity source.
         /// Please note <see cref="CopySource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

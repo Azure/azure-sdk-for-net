@@ -6,15 +6,18 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableAccessPolicy : IXmlSerializable
+    public partial class TableAccessPolicy : IXmlSerializable, IPersistableModel<TableAccessPolicy>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
             if (StartsOn != null)
@@ -38,7 +41,9 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableAccessPolicy DeserializeTableAccessPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static TableAccessPolicy DeserializeTableAccessPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset? startsOn = default;
             DateTimeOffset? expiresOn = default;
@@ -55,7 +60,48 @@ namespace Azure.Data.Tables.Models
             {
                 permission = (string)permissionElement;
             }
-            return new TableAccessPolicy(startsOn, expiresOn, permission);
+            return new TableAccessPolicy(startsOn, expiresOn, permission, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<TableAccessPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TableAccessPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TableAccessPolicy IPersistableModel<TableAccessPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeTableAccessPolicy(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TableAccessPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TableAccessPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

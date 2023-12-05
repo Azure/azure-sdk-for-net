@@ -57,6 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "FtpServer";
         }
 
+        /// <summary> Initializes a new instance of <see cref="FtpServerLinkedService"/> for deserialization. </summary>
+        internal FtpServerLinkedService()
+        {
+        }
+
         /// <summary> Host name of the FTP server. Type: string (or Expression with resultType string). </summary>
         public object Host { get; set; }
         /// <summary> The TCP port number that the FTP server uses to listen for client connections. Default value is 21. Type: integer (or Expression with resultType integer), minimum: 0. </summary>

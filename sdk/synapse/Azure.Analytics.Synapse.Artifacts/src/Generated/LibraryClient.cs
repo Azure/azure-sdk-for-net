@@ -181,7 +181,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LibraryResource.DeserializeLibraryResource(e), _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists Library. </summary>
@@ -190,7 +190,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LibraryResource.DeserializeLibraryResource(e), _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Flush Library. </summary>

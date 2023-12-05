@@ -54,6 +54,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="Dataset"/> for deserialization. </summary>
+        internal Dataset()
+        {
+        }
+
         /// <summary> Type of dataset. </summary>
         internal string Type { get; set; }
         /// <summary> Dataset description. </summary>

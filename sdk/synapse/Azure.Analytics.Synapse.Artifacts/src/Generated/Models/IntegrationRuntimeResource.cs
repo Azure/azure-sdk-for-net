@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -31,15 +32,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties">
         /// Integration runtime properties.
         /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
-        internal IntegrationRuntimeResource(string id, string name, string type, string etag, IntegrationRuntime properties) : base(id, name, type, etag)
+        internal IntegrationRuntimeResource(string id, string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string etag, IntegrationRuntime properties) : base(id, name, type, serializedAdditionalRawData, etag)
         {
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeResource"/> for deserialization. </summary>
+        internal IntegrationRuntimeResource()
+        {
         }
 
         /// <summary>

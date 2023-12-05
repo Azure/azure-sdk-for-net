@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AmazonMWSObjectDatasetConverter))]
-    public partial class AmazonMWSObjectDataset : IUtf8JsonSerializable
+    public partial class AmazonMWSObjectDataset : IUtf8JsonSerializable, IJsonModel<AmazonMWSObjectDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonMWSObjectDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AmazonMWSObjectDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonMWSObjectDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AmazonMWSObjectDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -85,8 +95,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AmazonMWSObjectDataset DeserializeAmazonMWSObjectDataset(JsonElement element)
+        AmazonMWSObjectDataset IJsonModel<AmazonMWSObjectDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonMWSObjectDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AmazonMWSObjectDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonMWSObjectDataset(document.RootElement, options);
+        }
+
+        internal static AmazonMWSObjectDataset DeserializeAmazonMWSObjectDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -207,6 +231,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonMWSObjectDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value);
         }
+
+        BinaryData IPersistableModel<AmazonMWSObjectDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonMWSObjectDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AmazonMWSObjectDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AmazonMWSObjectDataset IPersistableModel<AmazonMWSObjectDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonMWSObjectDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAmazonMWSObjectDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AmazonMWSObjectDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AmazonMWSObjectDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AmazonMWSObjectDatasetConverter : JsonConverter<AmazonMWSObjectDataset>
         {

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(HttpSourceConverter))]
-    public partial class HttpSource : IUtf8JsonSerializable
+    public partial class HttpSource : IUtf8JsonSerializable, IJsonModel<HttpSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HttpSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HttpSource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(HttpRequestTimeout))
             {
@@ -49,8 +59,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static HttpSource DeserializeHttpSource(JsonElement element)
+        HttpSource IJsonModel<HttpSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HttpSource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpSource(document.RootElement, options);
+        }
+
+        internal static HttpSource DeserializeHttpSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -110,6 +134,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HttpSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, httpRequestTimeout.Value);
         }
+
+        BinaryData IPersistableModel<HttpSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HttpSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HttpSource IPersistableModel<HttpSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHttpSource(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HttpSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HttpSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class HttpSourceConverter : JsonConverter<HttpSource>
         {

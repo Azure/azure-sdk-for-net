@@ -34,10 +34,16 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="class"></param>
-        internal ClassificationDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<ClassificationResult> @class) : base(id, warnings, statistics)
+        internal ClassificationDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ClassificationResult> @class) : base(id, warnings, statistics, serializedAdditionalRawData)
         {
             Class = @class;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationDocumentResult"/> for deserialization. </summary>
+        internal ClassificationDocumentResult()
+        {
         }
 
         /// <summary> Gets the class. </summary>

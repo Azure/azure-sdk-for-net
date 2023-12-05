@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobRetentionPolicy : IXmlSerializable
+    public partial class BlobRetentionPolicy : IXmlSerializable, IPersistableModel<BlobRetentionPolicy>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "RetentionPolicy");
             writer.WriteStartElement("Enabled");
@@ -34,7 +38,9 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobRetentionPolicy DeserializeBlobRetentionPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobRetentionPolicy DeserializeBlobRetentionPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             bool enabled = default;
             int? days = default;
@@ -51,7 +57,48 @@ namespace Azure.Storage.Blobs.Models
             {
                 allowPermanentDelete = (bool?)allowPermanentDeleteElement;
             }
-            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete);
+            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobRetentionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobRetentionPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobRetentionPolicy IPersistableModel<BlobRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobRetentionPolicy(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobRetentionPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobRetentionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -27,11 +28,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterSetRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="remoteDeviceAdapter"> The Video Analyzer edge module can act as a transparent gateway for video, enabling IoT devices to send video to the cloud from behind a firewall. A remote device adapter should be created for each such IoT device. Communication between the cloud and IoT device would then flow via the Video Analyzer edge module. </param>
-        internal RemoteDeviceAdapterSetRequest(string methodName, string apiVersion, RemoteDeviceAdapter remoteDeviceAdapter) : base(methodName, apiVersion)
+        internal RemoteDeviceAdapterSetRequest(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, RemoteDeviceAdapter remoteDeviceAdapter) : base(methodName, apiVersion, serializedAdditionalRawData)
         {
             RemoteDeviceAdapter = remoteDeviceAdapter;
             MethodName = methodName ?? "remoteDeviceAdapterSet";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterSetRequest"/> for deserialization. </summary>
+        internal RemoteDeviceAdapterSetRequest()
+        {
         }
 
         /// <summary> The Video Analyzer edge module can act as a transparent gateway for video, enabling IoT devices to send video to the cloud from behind a firewall. A remote device adapter should be created for each such IoT device. Communication between the cloud and IoT device would then flow via the Video Analyzer edge module. </summary>

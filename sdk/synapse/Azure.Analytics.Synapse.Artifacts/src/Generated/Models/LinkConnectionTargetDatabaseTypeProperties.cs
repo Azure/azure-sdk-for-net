@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkConnectionTargetDatabaseTypeProperties. </summary>
     public partial class LinkConnectionTargetDatabaseTypeProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LinkConnectionTargetDatabaseTypeProperties"/>. </summary>
         public LinkConnectionTargetDatabaseTypeProperties()
         {
@@ -19,11 +54,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="crossTableTransaction"> Enable cross table transaction consistency on target database. </param>
         /// <param name="dropExistingTargetTableOnStart"> Drop and recreate same existing target table on link connection target database. </param>
         /// <param name="actionOnExistingTargetTable"> Action on existing target table. If not specified, 'FailOnNonEmptyTable' action is used. </param>
-        internal LinkConnectionTargetDatabaseTypeProperties(bool? crossTableTransaction, bool? dropExistingTargetTableOnStart, ActionOnExistingTargetTable? actionOnExistingTargetTable)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkConnectionTargetDatabaseTypeProperties(bool? crossTableTransaction, bool? dropExistingTargetTableOnStart, ActionOnExistingTargetTable? actionOnExistingTargetTable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CrossTableTransaction = crossTableTransaction;
             DropExistingTargetTableOnStart = dropExistingTargetTableOnStart;
             ActionOnExistingTargetTable = actionOnExistingTargetTable;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable cross table transaction consistency on target database. </summary>

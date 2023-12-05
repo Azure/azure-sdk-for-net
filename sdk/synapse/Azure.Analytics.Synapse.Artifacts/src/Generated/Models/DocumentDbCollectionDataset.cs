@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DocumentDbCollection";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DocumentDbCollectionDataset"/> for deserialization. </summary>
+        internal DocumentDbCollectionDataset()
+        {
+        }
+
         /// <summary> Document Database collection name. Type: string (or Expression with resultType string). </summary>
         public object CollectionName { get; set; }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Response of a single operation on a batch of time series hierarchies. Only one of "get", "put" or "delete" will be set. </summary>
     internal partial class HierarchiesBatchResponse
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HierarchiesBatchResponse"/>. </summary>
         internal HierarchiesBatchResponse()
         {
@@ -25,11 +58,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="get"> List of hierarchy or error objects corresponding by position to the "get" array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="put"> List of hierarchy or error object corresponding by position to the "put" array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="delete"> List of error objects corresponding by position to the "delete" array in the request - null when the operation is successful. </param>
-        internal HierarchiesBatchResponse(IReadOnlyList<TimeSeriesHierarchyOperationResult> @get, IReadOnlyList<TimeSeriesHierarchyOperationResult> put, IReadOnlyList<TimeSeriesOperationError> delete)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HierarchiesBatchResponse(IReadOnlyList<TimeSeriesHierarchyOperationResult> @get, IReadOnlyList<TimeSeriesHierarchyOperationResult> put, IReadOnlyList<TimeSeriesOperationError> delete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Get = @get;
             Put = put;
             Delete = delete;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of hierarchy or error objects corresponding by position to the "get" array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -27,10 +28,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dataset"> Dataset reference. </param>
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
-        internal DataFlowSource(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
+        internal DataFlowSource(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData, LinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet, serializedAdditionalRawData)
         {
             SchemaLinkedService = schemaLinkedService;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowSource"/> for deserialization. </summary>
+        internal DataFlowSource()
+        {
         }
 
         /// <summary> Schema linked service reference. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -26,13 +27,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="SelfDependencyTumblingWindowTriggerReference"/>. </summary>
         /// <param name="type"> The type of dependency reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>
         /// <param name="size"> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </param>
-        internal SelfDependencyTumblingWindowTriggerReference(string type, string offset, string size) : base(type)
+        internal SelfDependencyTumblingWindowTriggerReference(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string offset, string size) : base(type, serializedAdditionalRawData)
         {
             Offset = offset;
             Size = size;
             Type = type ?? "SelfDependencyTumblingWindowTriggerReference";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelfDependencyTumblingWindowTriggerReference"/> for deserialization. </summary>
+        internal SelfDependencyTumblingWindowTriggerReference()
+        {
         }
 
         /// <summary> Timespan applied to the start time of a tumbling window when evaluating dependency. </summary>

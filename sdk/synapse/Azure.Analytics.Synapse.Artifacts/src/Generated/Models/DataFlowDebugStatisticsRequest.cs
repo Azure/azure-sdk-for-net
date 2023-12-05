@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for data flow statistics. </summary>
     public partial class DataFlowDebugStatisticsRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataFlowDebugStatisticsRequest"/>. </summary>
         public DataFlowDebugStatisticsRequest()
         {
@@ -24,12 +57,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dataFlowName"> The data flow which contains the debug session. </param>
         /// <param name="streamName"> The output stream name. </param>
         /// <param name="columns"> List of column names. </param>
-        internal DataFlowDebugStatisticsRequest(string sessionId, string dataFlowName, string streamName, IList<string> columns)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowDebugStatisticsRequest(string sessionId, string dataFlowName, string streamName, IList<string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             DataFlowName = dataFlowName;
             StreamName = streamName;
             Columns = columns;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

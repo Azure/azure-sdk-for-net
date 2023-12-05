@@ -42,6 +42,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AppendVariable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/> for deserialization. </summary>
+        internal AppendVariableActivity()
+        {
+        }
+
         /// <summary> Name of the variable whose value needs to be appended to. </summary>
         public string VariableName { get; set; }
         /// <summary> Value to be appended. Could be a static value or Expression. </summary>

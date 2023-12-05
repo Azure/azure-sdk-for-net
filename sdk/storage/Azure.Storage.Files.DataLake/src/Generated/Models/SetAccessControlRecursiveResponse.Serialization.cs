@@ -5,16 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class SetAccessControlRecursiveResponse
+    internal partial class SetAccessControlRecursiveResponse : IUtf8JsonSerializable, IJsonModel<SetAccessControlRecursiveResponse>
     {
-        internal static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SetAccessControlRecursiveResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SetAccessControlRecursiveResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SetAccessControlRecursiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SetAccessControlRecursiveResponse)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DirectoriesSuccessful))
+            {
+                writer.WritePropertyName("directoriesSuccessful"u8);
+                writer.WriteNumberValue(DirectoriesSuccessful.Value);
+            }
+            if (Optional.IsDefined(FilesSuccessful))
+            {
+                writer.WritePropertyName("filesSuccessful"u8);
+                writer.WriteNumberValue(FilesSuccessful.Value);
+            }
+            if (Optional.IsDefined(FailureCount))
+            {
+                writer.WritePropertyName("failureCount"u8);
+                writer.WriteNumberValue(FailureCount.Value);
+            }
+            if (Optional.IsCollectionDefined(FailedEntries))
+            {
+                writer.WritePropertyName("failedEntries"u8);
+                writer.WriteStartArray();
+                foreach (var item in FailedEntries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SetAccessControlRecursiveResponse IJsonModel<SetAccessControlRecursiveResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SetAccessControlRecursiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SetAccessControlRecursiveResponse)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSetAccessControlRecursiveResponse(document.RootElement, options);
+        }
+
+        internal static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.Storage.Files.DataLake.Models
             Optional<int> filesSuccessful = default;
             Optional<int> failureCount = default;
             Optional<IReadOnlyList<AclFailedEntry>> failedEntries = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoriesSuccessful"u8))
@@ -66,8 +139,44 @@ namespace Azure.Storage.Files.DataLake.Models
                     failedEntries = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SetAccessControlRecursiveResponse(Optional.ToNullable(directoriesSuccessful), Optional.ToNullable(filesSuccessful), Optional.ToNullable(failureCount), Optional.ToList(failedEntries));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SetAccessControlRecursiveResponse(Optional.ToNullable(directoriesSuccessful), Optional.ToNullable(filesSuccessful), Optional.ToNullable(failureCount), Optional.ToList(failedEntries), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SetAccessControlRecursiveResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SetAccessControlRecursiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SetAccessControlRecursiveResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SetAccessControlRecursiveResponse IPersistableModel<SetAccessControlRecursiveResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SetAccessControlRecursiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSetAccessControlRecursiveResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SetAccessControlRecursiveResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SetAccessControlRecursiveResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

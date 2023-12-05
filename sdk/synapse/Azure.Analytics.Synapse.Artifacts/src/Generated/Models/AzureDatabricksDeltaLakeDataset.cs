@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureDatabricksDeltaLakeDataset";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeDataset"/> for deserialization. </summary>
+        internal AzureDatabricksDeltaLakeDataset()
+        {
+        }
+
         /// <summary> The name of delta table. Type: string (or Expression with resultType string). </summary>
         public object Table { get; set; }
         /// <summary> The database name of delta table. Type: string (or Expression with resultType string). </summary>

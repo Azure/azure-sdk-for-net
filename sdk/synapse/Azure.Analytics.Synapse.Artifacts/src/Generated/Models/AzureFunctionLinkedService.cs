@@ -53,6 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureFunction";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionLinkedService"/> for deserialization. </summary>
+        internal AzureFunctionLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. </summary>
         public object FunctionAppUrl { get; set; }
         /// <summary>

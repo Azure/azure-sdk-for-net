@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "ServiceNowObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServiceNowObjectDataset"/> for deserialization. </summary>
+        internal ServiceNowObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -27,11 +28,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of the rerun trigger. </param>
-        internal RerunTriggerResource(string id, string name, string type, string etag, RerunTumblingWindowTrigger properties) : base(id, name, type, etag)
+        internal RerunTriggerResource(string id, string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string etag, RerunTumblingWindowTrigger properties) : base(id, name, type, serializedAdditionalRawData, etag)
         {
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RerunTriggerResource"/> for deserialization. </summary>
+        internal RerunTriggerResource()
+        {
         }
 
         /// <summary> Properties of the rerun trigger. </summary>

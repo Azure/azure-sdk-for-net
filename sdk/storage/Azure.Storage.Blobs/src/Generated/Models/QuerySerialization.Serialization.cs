@@ -5,18 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QuerySerialization : IXmlSerializable
+    internal partial class QuerySerialization : IXmlSerializable, IPersistableModel<QuerySerialization>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "QuerySerialization");
             writer.WriteObjectValue(Format, "Format");
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static QuerySerialization DeserializeQuerySerialization(XElement element, ModelReaderWriterOptions options = null)
+        {
+            QueryFormat format = default;
+            if (element.Element("Format") is XElement formatElement)
+            {
+                format = QueryFormat.DeserializeQueryFormat(formatElement);
+            }
+            return new QuerySerialization(format, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<QuerySerialization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuerySerialization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QuerySerialization)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QuerySerialization IPersistableModel<QuerySerialization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuerySerialization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeQuerySerialization(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QuerySerialization)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QuerySerialization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

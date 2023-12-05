@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Data.Tables;
 
@@ -14,6 +15,38 @@ namespace Azure.Data.Tables.Models
     /// <summary> Azure Analytics Logging settings. </summary>
     public partial class TableAnalyticsLoggingSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TableAnalyticsLoggingSettings"/>. </summary>
         /// <param name="version"> The version of Analytics to configure. </param>
         /// <param name="delete"> Indicates whether all delete requests should be logged. </param>
@@ -31,6 +64,28 @@ namespace Azure.Data.Tables.Models
             Read = read;
             Write = write;
             RetentionPolicy = retentionPolicy;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableAnalyticsLoggingSettings"/>. </summary>
+        /// <param name="version"> The version of Analytics to configure. </param>
+        /// <param name="delete"> Indicates whether all delete requests should be logged. </param>
+        /// <param name="read"> Indicates whether all read requests should be logged. </param>
+        /// <param name="write"> Indicates whether all write requests should be logged. </param>
+        /// <param name="retentionPolicy"> The retention policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableAnalyticsLoggingSettings(string version, bool delete, bool read, bool write, TableRetentionPolicy retentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Version = version;
+            Delete = delete;
+            Read = read;
+            Write = write;
+            RetentionPolicy = retentionPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableAnalyticsLoggingSettings"/> for deserialization. </summary>
+        internal TableAnalyticsLoggingSettings()
+        {
         }
 
         /// <summary> The version of Analytics to configure. </summary>

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Definition of how time series instances are sorted before being returned by search instances call. </summary>
     internal partial class InstancesSortParameter
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InstancesSortParameter"/>. </summary>
         public InstancesSortParameter()
         {
@@ -17,9 +52,11 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <summary> Initializes a new instance of <see cref="InstancesSortParameter"/>. </summary>
         /// <param name="by"> Value to use for sorting of the time series instances before being returned by search instances call. When it is set to 'Rank', the returned instances are sorted based on the relevance. When it is set to 'DisplayName', the returned results are sorted based on the display name. Display name is the name of the instance if it exists, otherwise, display name is the time series ID. Default is 'Rank'. </param>
-        internal InstancesSortParameter(InstancesSortBy? @by)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancesSortParameter(InstancesSortBy? @by, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             By = @by;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value to use for sorting of the time series instances before being returned by search instances call. When it is set to 'Rank', the returned instances are sorted based on the relevance. When it is set to 'DisplayName', the returned results are sorted based on the display name. Display name is the name of the instance if it exists, otherwise, display name is the time series ID. Default is 'Rank'. </summary>

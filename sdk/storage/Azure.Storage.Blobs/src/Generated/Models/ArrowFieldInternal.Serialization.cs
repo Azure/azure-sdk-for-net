@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ArrowFieldInternal : IXmlSerializable
+    internal partial class ArrowFieldInternal : IXmlSerializable, IPersistableModel<ArrowFieldInternal>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Field");
             writer.WriteStartElement("Type");
@@ -38,5 +43,73 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static ArrowFieldInternal DeserializeArrowFieldInternal(XElement element, ModelReaderWriterOptions options = null)
+        {
+            string type = default;
+            string name = default;
+            int? precision = default;
+            int? scale = default;
+            if (element.Element("Type") is XElement typeElement)
+            {
+                type = (string)typeElement;
+            }
+            if (element.Element("Name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("Precision") is XElement precisionElement)
+            {
+                precision = (int?)precisionElement;
+            }
+            if (element.Element("Scale") is XElement scaleElement)
+            {
+                scale = (int?)scaleElement;
+            }
+            return new ArrowFieldInternal(type, name, precision, scale, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<ArrowFieldInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArrowFieldInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArrowFieldInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArrowFieldInternal IPersistableModel<ArrowFieldInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArrowFieldInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeArrowFieldInternal(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArrowFieldInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArrowFieldInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

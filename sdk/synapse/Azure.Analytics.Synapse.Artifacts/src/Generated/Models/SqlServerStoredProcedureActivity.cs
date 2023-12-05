@@ -47,6 +47,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SqlServerStoredProcedure";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SqlServerStoredProcedureActivity"/> for deserialization. </summary>
+        internal SqlServerStoredProcedureActivity()
+        {
+        }
+
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
         public object StoredProcedureName { get; set; }
         /// <summary> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </summary>

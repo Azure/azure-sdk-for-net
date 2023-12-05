@@ -6,31 +6,73 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class DateTimeRange : IUtf8JsonSerializable
+    internal partial class DateTimeRange : IUtf8JsonSerializable, IJsonModel<DateTimeRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DateTimeRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DateTimeRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DateTimeRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DateTimeRange)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From, "O");
             writer.WritePropertyName("to"u8);
             writer.WriteStringValue(To, "O");
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DateTimeRange DeserializeDateTimeRange(JsonElement element)
+        DateTimeRange IJsonModel<DateTimeRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DateTimeRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DateTimeRange)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDateTimeRange(document.RootElement, options);
+        }
+
+        internal static DateTimeRange DeserializeDateTimeRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset @from = default;
             DateTimeOffset to = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("from"u8))
@@ -43,8 +85,44 @@ namespace Azure.IoT.TimeSeriesInsights
                     to = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DateTimeRange(@from, to);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DateTimeRange(@from, to, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DateTimeRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DateTimeRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DateTimeRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DateTimeRange IPersistableModel<DateTimeRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DateTimeRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDateTimeRange(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DateTimeRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DateTimeRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

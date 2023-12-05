@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Type conversion settings. </summary>
     public partial class TypeConversionSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TypeConversionSettings"/>. </summary>
         public TypeConversionSettings()
         {
@@ -22,7 +57,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dateTimeOffsetFormat"> The format for DateTimeOffset values. Type: string (or Expression with resultType string). </param>
         /// <param name="timeSpanFormat"> The format for TimeSpan values. Type: string (or Expression with resultType string). </param>
         /// <param name="culture"> The culture used to convert data from/to string. Type: string (or Expression with resultType string). </param>
-        internal TypeConversionSettings(object allowDataTruncation, object treatBooleanAsNumber, object dateTimeFormat, object dateTimeOffsetFormat, object timeSpanFormat, object culture)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TypeConversionSettings(object allowDataTruncation, object treatBooleanAsNumber, object dateTimeFormat, object dateTimeOffsetFormat, object timeSpanFormat, object culture, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowDataTruncation = allowDataTruncation;
             TreatBooleanAsNumber = treatBooleanAsNumber;
@@ -30,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DateTimeOffsetFormat = dateTimeOffsetFormat;
             TimeSpanFormat = timeSpanFormat;
             Culture = culture;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether to allow data truncation when converting the data. Type: boolean (or Expression with resultType boolean). </summary>

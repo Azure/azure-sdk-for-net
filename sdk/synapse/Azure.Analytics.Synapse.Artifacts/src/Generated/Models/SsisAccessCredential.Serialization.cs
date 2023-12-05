@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SsisAccessCredentialConverter))]
-    public partial class SsisAccessCredential : IUtf8JsonSerializable
+    public partial class SsisAccessCredential : IUtf8JsonSerializable, IJsonModel<SsisAccessCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisAccessCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SsisAccessCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisAccessCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SsisAccessCredential)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
             writer.WriteObjectValue(Domain);
@@ -24,11 +35,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(UserName);
             writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SsisAccessCredential DeserializeSsisAccessCredential(JsonElement element)
+        SsisAccessCredential IJsonModel<SsisAccessCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisAccessCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SsisAccessCredential)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisAccessCredential(document.RootElement, options);
+        }
+
+        internal static SsisAccessCredential DeserializeSsisAccessCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object domain = default;
             object userName = default;
             SecretBase password = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"u8))
@@ -53,9 +95,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     password = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SsisAccessCredential(domain, userName, password);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SsisAccessCredential(domain, userName, password, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SsisAccessCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisAccessCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SsisAccessCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SsisAccessCredential IPersistableModel<SsisAccessCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SsisAccessCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSsisAccessCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SsisAccessCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SsisAccessCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SsisAccessCredentialConverter : JsonConverter<SsisAccessCredential>
         {

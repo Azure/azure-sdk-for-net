@@ -14,6 +14,38 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkSessionOptions. </summary>
     public partial class SparkSessionOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SparkSessionOptions"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -48,7 +80,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="executorMemory"></param>
         /// <param name="executorCores"></param>
         /// <param name="executorCount"></param>
-        internal SparkSessionOptions(IDictionary<string, string> tags, string artifactId, string name, string file, string className, IList<string> arguments, IList<string> jars, IList<string> pythonFiles, IList<string> files, IList<string> archives, IDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkSessionOptions(IDictionary<string, string> tags, string artifactId, string name, string file, string className, IList<string> arguments, IList<string> jars, IList<string> pythonFiles, IList<string> files, IList<string> archives, IDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             ArtifactId = artifactId;
@@ -66,6 +99,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             ExecutorMemory = executorMemory;
             ExecutorCores = executorCores;
             ExecutorCount = executorCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkSessionOptions"/> for deserialization. </summary>
+        internal SparkSessionOptions()
+        {
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>

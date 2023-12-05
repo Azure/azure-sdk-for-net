@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -34,15 +35,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="PipelineTopologySetRequestBody"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Pipeline topology unique identifier. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Pipeline topology properties. </param>
-        internal PipelineTopologySetRequestBody(string methodName, string apiVersion, string name, SystemData systemData, PipelineTopologyProperties properties) : base(methodName, apiVersion)
+        internal PipelineTopologySetRequestBody(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, SystemData systemData, PipelineTopologyProperties properties) : base(methodName, apiVersion, serializedAdditionalRawData)
         {
             Name = name;
             SystemData = systemData;
             Properties = properties;
             MethodName = methodName ?? "PipelineTopologySetRequestBody";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologySetRequestBody"/> for deserialization. </summary>
+        internal PipelineTopologySetRequestBody()
+        {
         }
 
         /// <summary> Pipeline topology unique identifier. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The UnknownAnalyzeTextTaskResult. </summary>
@@ -12,7 +15,8 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextTaskResult"/>. </summary>
         /// <param name="kind"> Enumeration of supported Text Analysis task results. </param>
-        internal UnknownAnalyzeTextTaskResult(AnalyzeTextTaskResultsKind kind) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAnalyzeTextTaskResult(AnalyzeTextTaskResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             Kind = kind;
         }

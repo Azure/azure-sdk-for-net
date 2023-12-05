@@ -30,15 +30,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sensitivity"> Motion detection sensitivity: low, medium, high. </param>
         /// <param name="outputMotionRegion"> Indicates whether the processor should detect and output the regions within the video frame where motion was detected. Default is true. </param>
         /// <param name="eventAggregationWindow"> Time window duration on which events are aggregated before being emitted. Value must be specified in ISO8601 duration format (i.e. "PT2S" equals 2 seconds). Use 0 seconds for no aggregation. Default is 1 second. </param>
-        internal MotionDetectionProcessor(string type, string name, IList<NodeInput> inputs, MotionDetectionSensitivity? sensitivity, bool? outputMotionRegion, string eventAggregationWindow) : base(type, name, inputs)
+        internal MotionDetectionProcessor(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, MotionDetectionSensitivity? sensitivity, bool? outputMotionRegion, string eventAggregationWindow) : base(type, name, inputs, serializedAdditionalRawData)
         {
             Sensitivity = sensitivity;
             OutputMotionRegion = outputMotionRegion;
             EventAggregationWindow = eventAggregationWindow;
             Type = type ?? "#Microsoft.VideoAnalyzer.MotionDetectionProcessor";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MotionDetectionProcessor"/> for deserialization. </summary>
+        internal MotionDetectionProcessor()
+        {
         }
 
         /// <summary> Motion detection sensitivity: low, medium, high. </summary>

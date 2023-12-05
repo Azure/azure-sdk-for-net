@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to update model settings. One of "name" or "defaultTypeId" must be set. </summary>
     internal partial class UpdateModelSettingsRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="UpdateModelSettingsRequest"/>. </summary>
         public UpdateModelSettingsRequest()
         {
@@ -18,10 +53,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of <see cref="UpdateModelSettingsRequest"/>. </summary>
         /// <param name="name"> Model display name which is shown in the UX and mutable by the user. Initial value is "DefaultModel". </param>
         /// <param name="defaultTypeId"> Default type id of the model that new instances will automatically belong to. </param>
-        internal UpdateModelSettingsRequest(string name, string defaultTypeId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateModelSettingsRequest(string name, string defaultTypeId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DefaultTypeId = defaultTypeId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Model display name which is shown in the UX and mutable by the user. Initial value is "DefaultModel". </summary>

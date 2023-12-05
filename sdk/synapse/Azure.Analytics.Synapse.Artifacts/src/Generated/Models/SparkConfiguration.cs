@@ -14,6 +14,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SparkConfiguration Artifact information. </summary>
     public partial class SparkConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SparkConfiguration"/>. </summary>
         /// <param name="configs"> SparkConfiguration configs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configs"/> is null. </exception>
@@ -34,7 +66,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="createdBy"> The identity that created the resource. </param>
         /// <param name="created"> The timestamp of resource creation. </param>
         /// <param name="configMergeRule"> SparkConfiguration configMergeRule. </param>
-        internal SparkConfiguration(string description, IDictionary<string, string> configs, IList<string> annotations, string notes, string createdBy, DateTimeOffset? created, IDictionary<string, string> configMergeRule)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkConfiguration(string description, IDictionary<string, string> configs, IList<string> annotations, string notes, string createdBy, DateTimeOffset? created, IDictionary<string, string> configMergeRule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Configs = configs;
@@ -43,6 +76,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             CreatedBy = createdBy;
             Created = created;
             ConfigMergeRule = configMergeRule;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkConfiguration"/> for deserialization. </summary>
+        internal SparkConfiguration()
+        {
         }
 
         /// <summary> Description about the SparkConfiguration. </summary>

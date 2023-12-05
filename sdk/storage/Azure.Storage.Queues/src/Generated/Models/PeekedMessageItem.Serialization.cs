@@ -6,14 +6,41 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal partial class PeekedMessageItem
+    internal partial class PeekedMessageItem : IXmlSerializable, IPersistableModel<PeekedMessageItem>
     {
-        internal static PeekedMessageItem DeserializePeekedMessageItem(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "QueueMessage");
+            writer.WriteStartElement("MessageId");
+            writer.WriteValue(MessageId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("InsertionTime");
+            writer.WriteValue(InsertionTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("ExpirationTime");
+            writer.WriteValue(ExpirationTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("DequeueCount");
+            writer.WriteValue(DequeueCount);
+            writer.WriteEndElement();
+            writer.WriteStartElement("MessageText");
+            writer.WriteValue(MessageText);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static PeekedMessageItem DeserializePeekedMessageItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string messageId = default;
             DateTimeOffset insertionTime = default;
@@ -40,7 +67,48 @@ namespace Azure.Storage.Queues.Models
             {
                 messageText = (string)messageTextElement;
             }
-            return new PeekedMessageItem(messageId, insertionTime, expirationTime, dequeueCount, messageText);
+            return new PeekedMessageItem(messageId, insertionTime, expirationTime, dequeueCount, messageText, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<PeekedMessageItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeekedMessageItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PeekedMessageItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PeekedMessageItem IPersistableModel<PeekedMessageItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeekedMessageItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializePeekedMessageItem(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PeekedMessageItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PeekedMessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

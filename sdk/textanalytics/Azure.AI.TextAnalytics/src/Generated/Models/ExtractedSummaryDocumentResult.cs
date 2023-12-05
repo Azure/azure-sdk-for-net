@@ -34,10 +34,16 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sentences"> A ranked list of sentences representing the extracted summary. </param>
-        internal ExtractedSummaryDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<ExtractedSummarySentence> sentences) : base(id, warnings, statistics)
+        internal ExtractedSummaryDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ExtractedSummarySentence> sentences) : base(id, warnings, statistics, serializedAdditionalRawData)
         {
             Sentences = sentences;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtractedSummaryDocumentResult"/> for deserialization. </summary>
+        internal ExtractedSummaryDocumentResult()
+        {
         }
 
         /// <summary> A ranked list of sentences representing the extracted summary. </summary>

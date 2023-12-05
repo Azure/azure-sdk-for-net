@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownIntegrationRuntime : IUtf8JsonSerializable
+    internal partial class UnknownIntegrationRuntime : IUtf8JsonSerializable, IJsonModel<IntegrationRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationRuntime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(IntegrationRuntime)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -31,8 +42,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownIntegrationRuntime DeserializeUnknownIntegrationRuntime(JsonElement element)
+        IntegrationRuntime IJsonModel<IntegrationRuntime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(IntegrationRuntime)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownIntegrationRuntime(document.RootElement, options);
+        }
+
+        internal static UnknownIntegrationRuntime DeserializeUnknownIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,5 +83,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new UnknownIntegrationRuntime(type, description.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<IntegrationRuntime>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(IntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IntegrationRuntime IPersistableModel<IntegrationRuntime>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUnknownIntegrationRuntime(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(IntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationRuntime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

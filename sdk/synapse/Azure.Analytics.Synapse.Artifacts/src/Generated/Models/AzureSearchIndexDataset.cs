@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureSearchIndex";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/> for deserialization. </summary>
+        internal AzureSearchIndexDataset()
+        {
+        }
+
         /// <summary> The name of the Azure Search Index. Type: string (or Expression with resultType string). </summary>
         public object IndexName { get; set; }
     }

@@ -25,5 +25,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Type = type ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownActivity"/> for deserialization. </summary>
+        internal UnknownActivity()
+        {
+        }
     }
 }

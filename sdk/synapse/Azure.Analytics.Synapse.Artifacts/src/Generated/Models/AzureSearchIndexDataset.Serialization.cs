@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureSearchIndexDatasetConverter))]
-    public partial class AzureSearchIndexDataset : IUtf8JsonSerializable
+    public partial class AzureSearchIndexDataset : IUtf8JsonSerializable, IJsonModel<AzureSearchIndexDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSearchIndexDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureSearchIndexDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchIndexDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureSearchIndexDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -82,8 +92,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSearchIndexDataset DeserializeAzureSearchIndexDataset(JsonElement element)
+        AzureSearchIndexDataset IJsonModel<AzureSearchIndexDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchIndexDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureSearchIndexDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureSearchIndexDataset(document.RootElement, options);
+        }
+
+        internal static AzureSearchIndexDataset DeserializeAzureSearchIndexDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -200,6 +224,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureSearchIndexDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, indexName);
         }
+
+        BinaryData IPersistableModel<AzureSearchIndexDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchIndexDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureSearchIndexDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureSearchIndexDataset IPersistableModel<AzureSearchIndexDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchIndexDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureSearchIndexDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureSearchIndexDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureSearchIndexDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureSearchIndexDatasetConverter : JsonConverter<AzureSearchIndexDataset>
         {

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The ONVIF device DNS properties. </summary>
     public partial class OnvifHostName
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OnvifHostName"/>. </summary>
         public OnvifHostName()
         {
@@ -18,10 +53,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="OnvifHostName"/>. </summary>
         /// <param name="fromDhcp"> Result value showing if the ONVIF device is configured to use DHCP. </param>
         /// <param name="hostname"> The hostname of the ONVIF device. </param>
-        internal OnvifHostName(bool? fromDhcp, string hostname)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OnvifHostName(bool? fromDhcp, string hostname, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FromDhcp = fromDhcp;
             Hostname = hostname;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result value showing if the ONVIF device is configured to use DHCP. </summary>

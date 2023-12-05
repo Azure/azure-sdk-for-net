@@ -1411,7 +1411,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagedSqlServerUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SynapseServerUsage.DeserializeSynapseServerUsage(e), _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagedSqlServerUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SynapseServerUsage.DeserializeSynapseServerUsage(e), _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

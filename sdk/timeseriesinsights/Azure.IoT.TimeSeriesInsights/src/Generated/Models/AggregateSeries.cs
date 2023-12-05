@@ -15,6 +15,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Aggregate Series query. Allows to calculate an aggregated time series from events for a given Time Series ID and search span. </summary>
     internal partial class AggregateSeries
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AggregateSeries"/>. </summary>
         /// <param name="timeSeriesIdInternal"> A single Time Series ID value that uniquely identifies a single time series instance (e.g. a device). Note that a single Time Series ID can be composite if multiple properties are specified as Time Series ID at environment creation time. The position and type of values must match Time Series ID properties specified on the environment and returned by Get Model Setting API. Cannot be null. </param>
         /// <param name="searchSpan"> The range of time on which the query is executed. Cannot be null. </param>
@@ -26,7 +58,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Please note <see cref="TimeSeriesVariable"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AggregateVariable"/>, <see cref="CategoricalVariable"/> and <see cref="NumericVariable"/>.
         /// </param>
-        internal AggregateSeries(IList<object> timeSeriesIdInternal, DateTimeRange searchSpan, TimeSeriesExpression filter, TimeSpan interval, IList<string> projectedVariables, IDictionary<string, TimeSeriesVariable> inlineVariables)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AggregateSeries(IList<object> timeSeriesIdInternal, DateTimeRange searchSpan, TimeSeriesExpression filter, TimeSpan interval, IList<string> projectedVariables, IDictionary<string, TimeSeriesVariable> inlineVariables, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeSeriesIdInternal = timeSeriesIdInternal;
             SearchSpan = searchSpan;
@@ -34,6 +67,12 @@ namespace Azure.IoT.TimeSeriesInsights
             Interval = interval;
             ProjectedVariables = projectedVariables;
             InlineVariables = inlineVariables;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AggregateSeries"/> for deserialization. </summary>
+        internal AggregateSeries()
+        {
         }
         /// <summary> The range of time on which the query is executed. Cannot be null. </summary>
         public DateTimeRange SearchSpan { get; }
