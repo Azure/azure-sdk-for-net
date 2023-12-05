@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
-    public partial class MmsSendRequestAttachment : IUtf8JsonSerializable
+    public partial class MmsAttachment : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

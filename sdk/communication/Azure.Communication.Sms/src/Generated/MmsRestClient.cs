@@ -41,7 +41,7 @@ namespace Azure.Communication.Sms
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateSendRequest(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsSendRequestAttachment> attachments, string message, MmsSendOptions sendOptions)
+        internal HttpMessage CreateSendRequest(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsAttachment> attachments, string message, MmsSendOptions sendOptions)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -72,7 +72,7 @@ namespace Azure.Communication.Sms
         /// <param name="sendOptions"> Optional configuration for sending MMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="recipients"/> or <paramref name="attachments"/> is null. </exception>
-        public async Task<Response<MmsSendResponse>> SendAsync(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsSendRequestAttachment> attachments, string message = null, MmsSendOptions sendOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MmsSendResponse>> SendAsync(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsAttachment> attachments, string message = null, MmsSendOptions sendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -111,7 +111,7 @@ namespace Azure.Communication.Sms
         /// <param name="sendOptions"> Optional configuration for sending MMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="recipients"/> or <paramref name="attachments"/> is null. </exception>
-        public Response<MmsSendResponse> Send(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsSendRequestAttachment> attachments, string message = null, MmsSendOptions sendOptions = null, CancellationToken cancellationToken = default)
+        public Response<MmsSendResponse> Send(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsAttachment> attachments, string message = null, MmsSendOptions sendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {

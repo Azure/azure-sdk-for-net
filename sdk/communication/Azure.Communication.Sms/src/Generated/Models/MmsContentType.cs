@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.Sms
+namespace Azure.Communication.Sms.Models
 {
     /// <summary> MIME type of attachment. </summary>
     public readonly partial struct MmsContentType : IEquatable<MmsContentType>

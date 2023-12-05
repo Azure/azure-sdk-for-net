@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
-    [CodeGenModel("MmsSendRequestAttachment")]
-    public partial class MmsSendRequestAttachment
+    [CodeGenModel("MmsContentType")]
+    public readonly partial struct MmsContentType
     {
     }
 }

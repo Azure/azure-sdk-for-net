@@ -107,7 +107,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<MmsSendResult>> SendAsync(string from, string to, IEnumerable<MmsSendRequestAttachment> attachments, string message = null, MmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MmsSendResult>> SendAsync(string from, string to, IEnumerable<MmsAttachment> attachments, string message = null, MmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
@@ -128,7 +128,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<MmsSendResult> Send(string from, string to, IEnumerable<MmsSendRequestAttachment> attachments, string message = null, MmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<MmsSendResult> Send(string from, string to, IEnumerable<MmsAttachment> attachments, string message = null, MmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
@@ -147,7 +147,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<IReadOnlyList<MmsSendResult>>> SendAsync(string from, IEnumerable<string> to, IEnumerable<MmsSendRequestAttachment> attachments, string message = null, MmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<MmsSendResult>>> SendAsync(string from, IEnumerable<string> to, IEnumerable<MmsAttachment> attachments, string message = null, MmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MmsClient)}.{nameof(Send)}");
             scope.Start();
@@ -183,7 +183,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<IReadOnlyList<MmsSendResult>> Send(string from, IEnumerable<string> to, IEnumerable<MmsSendRequestAttachment> attachments, string message = null, MmsSendOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<MmsSendResult>> Send(string from, IEnumerable<string> to, IEnumerable<MmsAttachment> attachments, string message = null, MmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MmsClient)}.{nameof(Send)}");
             scope.Start();

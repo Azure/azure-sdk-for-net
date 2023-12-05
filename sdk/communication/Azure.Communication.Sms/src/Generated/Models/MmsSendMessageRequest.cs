@@ -21,7 +21,7 @@ namespace Azure.Communication.Sms.Models
         /// <param name="recipients"> The recipient phone numbers in E.164 format. </param>
         /// <param name="attachments"> A list of media attachments to include as part of the MMS. You can have maximum 10 attachments. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="recipients"/> or <paramref name="attachments"/> is null. </exception>
-        public MmsSendMessageRequest(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsSendRequestAttachment> attachments)
+        public MmsSendMessageRequest(string @from, IEnumerable<MmsRecipient> recipients, IEnumerable<MmsAttachment> attachments)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(recipients, nameof(recipients));
@@ -39,7 +39,7 @@ namespace Azure.Communication.Sms.Models
         /// <summary> The contents of the message that will be sent to the recipient. </summary>
         public string Message { get; set; }
         /// <summary> A list of media attachments to include as part of the MMS. You can have maximum 10 attachments. </summary>
-        public IList<MmsSendRequestAttachment> Attachments { get; }
+        public IList<MmsAttachment> Attachments { get; }
         /// <summary> Optional configuration for sending MMS messages. </summary>
         public MmsSendOptions SendOptions { get; set; }
     }
