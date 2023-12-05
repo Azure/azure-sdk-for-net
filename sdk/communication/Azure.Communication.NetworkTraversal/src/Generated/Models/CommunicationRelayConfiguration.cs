@@ -15,6 +15,38 @@ namespace Azure.Communication.NetworkTraversal
     /// <summary> A relay configuration containing the STUN/TURN URLs and credentials. </summary>
     public partial class CommunicationRelayConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfiguration"/>. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </param>
         /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
@@ -30,10 +62,17 @@ namespace Azure.Communication.NetworkTraversal
         /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfiguration"/>. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </param>
         /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
-        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IList<CommunicationIceServer> iceServers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IList<CommunicationIceServer> iceServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExpiresOn = expiresOn;
             IceServers = iceServers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfiguration"/> for deserialization. </summary>
+        internal CommunicationRelayConfiguration()
+        {
         }
 
         /// <summary> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </summary>

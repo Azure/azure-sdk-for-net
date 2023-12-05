@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> The CompanyInformation. </summary>
     public partial class CompanyInformation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CompanyInformation"/>. </summary>
         public CompanyInformation()
         {
@@ -23,13 +56,15 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="address"> Company's address for the customer submitting the Program Brief. </param>
         /// <param name="contactInformation"> Contact Information. </param>
         /// <param name="customerCareInformation"> Customer Care Information. </param>
-        internal CompanyInformation(string name, Uri url, string address, ContactInformation contactInformation, CustomerCareInformation customerCareInformation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompanyInformation(string name, Uri url, string address, ContactInformation contactInformation, CustomerCareInformation customerCareInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Url = url;
             Address = address;
             ContactInformation = contactInformation;
             CustomerCareInformation = customerCareInformation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Legal entity name for customer submitting Program Brief. </summary>

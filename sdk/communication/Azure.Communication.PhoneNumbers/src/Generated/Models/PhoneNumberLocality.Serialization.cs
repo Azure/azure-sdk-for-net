@@ -5,21 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberLocality
+    public partial class PhoneNumberLocality : IUtf8JsonSerializable, IJsonModel<PhoneNumberLocality>
     {
-        internal static PhoneNumberLocality DeserializePhoneNumberLocality(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhoneNumberLocality>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PhoneNumberLocality>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberLocality>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PhoneNumberLocality)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("localizedName"u8);
+            writer.WriteStringValue(LocalizedName);
+            if (Optional.IsDefined(AdministrativeDivision))
+            {
+                writer.WritePropertyName("administrativeDivision"u8);
+                writer.WriteObjectValue(AdministrativeDivision);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PhoneNumberLocality IJsonModel<PhoneNumberLocality>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberLocality>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PhoneNumberLocality)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePhoneNumberLocality(document.RootElement, options);
+        }
+
+        internal static PhoneNumberLocality DeserializePhoneNumberLocality(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string localizedName = default;
             Optional<PhoneNumberAdministrativeDivision> administrativeDivision = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localizedName"u8))
@@ -36,8 +92,44 @@ namespace Azure.Communication.PhoneNumbers
                     administrativeDivision = PhoneNumberAdministrativeDivision.DeserializePhoneNumberAdministrativeDivision(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PhoneNumberLocality(localizedName, administrativeDivision.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PhoneNumberLocality(localizedName, administrativeDivision.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PhoneNumberLocality>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberLocality>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PhoneNumberLocality)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PhoneNumberLocality IPersistableModel<PhoneNumberLocality>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberLocality>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePhoneNumberLocality(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PhoneNumberLocality)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PhoneNumberLocality>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class ArtifactManifestPlatform
+    public partial class ArtifactManifestPlatform : IUtf8JsonSerializable, IJsonModel<ArtifactManifestPlatform>
     {
-        internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactManifestPlatform>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArtifactManifestPlatform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactManifestPlatform>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArtifactManifestPlatform)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("digest"u8);
+                writer.WriteStringValue(Digest);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture"u8);
+                writer.WriteStringValue(Architecture.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperatingSystem))
+            {
+                writer.WritePropertyName("os"u8);
+                writer.WriteStringValue(OperatingSystem.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ArtifactManifestPlatform IJsonModel<ArtifactManifestPlatform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactManifestPlatform>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArtifactManifestPlatform)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArtifactManifestPlatform(document.RootElement, options);
+        }
+
+        internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +83,8 @@ namespace Azure.Containers.ContainerRegistry
             string digest = default;
             Optional<ArtifactArchitecture> architecture = default;
             Optional<ArtifactOperatingSystem> os = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"u8))
@@ -46,8 +110,44 @@ namespace Azure.Containers.ContainerRegistry
                     os = new ArtifactOperatingSystem(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArtifactManifestPlatform(digest, Optional.ToNullable(architecture), Optional.ToNullable(os));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArtifactManifestPlatform(digest, Optional.ToNullable(architecture), Optional.ToNullable(os), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArtifactManifestPlatform>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactManifestPlatform>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArtifactManifestPlatform)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArtifactManifestPlatform IPersistableModel<ArtifactManifestPlatform>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactManifestPlatform>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArtifactManifestPlatform(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArtifactManifestPlatform)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArtifactManifestPlatform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

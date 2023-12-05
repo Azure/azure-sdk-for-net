@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "FileShare";
         }
 
+        /// <summary> Initializes a new instance of <see cref="FileShareDataset"/> for deserialization. </summary>
+        internal FileShareDataset()
+        {
+        }
+
         /// <summary> The path of the on-premises file system. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FolderPath { get; set; }
         /// <summary> The name of the on-premises file system. Type: string (or Expression with resultType string). </summary>

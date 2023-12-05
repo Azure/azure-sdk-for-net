@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The UnknownMigrateSqlServerSqlDBSyncTaskOutput. </summary>
@@ -13,7 +16,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="UnknownMigrateSqlServerSqlDBSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        internal UnknownMigrateSqlServerSqlDBSyncTaskOutput(string id, string resultType) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMigrateSqlServerSqlDBSyncTaskOutput(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             ResultType = resultType ?? "Unknown";
         }

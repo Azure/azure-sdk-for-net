@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(scope, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter, orderby, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitRecommendationModel.DeserializeBenefitRecommendationModel(e), BenefitRecommendationsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(scope, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter, orderby, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitRecommendationModel.DeserializeBenefitRecommendationModel(e), BenefitRecommendationsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,6 +14,38 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a purchased phone number. </summary>
     public partial class PurchasedPhoneNumber
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>
         /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
         /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
@@ -39,6 +72,34 @@ namespace Azure.Communication.PhoneNumbers
             AssignmentType = assignmentType;
             PurchaseDate = purchaseDate;
             Cost = cost;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>
+        /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
+        /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
+        /// <param name="countryCode"> The ISO 3166-2 code of the phone number's country, e.g. US. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, tollFree. </param>
+        /// <param name="capabilities"> Capabilities of a phone number. </param>
+        /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
+        /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            PhoneNumber = phoneNumber;
+            CountryCode = countryCode;
+            PhoneNumberType = phoneNumberType;
+            Capabilities = capabilities;
+            AssignmentType = assignmentType;
+            PurchaseDate = purchaseDate;
+            Cost = cost;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/> for deserialization. </summary>
+        internal PurchasedPhoneNumber()
+        {
         }
 
         /// <summary> The id of the phone number, e.g. 11234567890. </summary>

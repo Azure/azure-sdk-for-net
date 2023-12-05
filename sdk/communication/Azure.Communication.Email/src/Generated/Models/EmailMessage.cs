@@ -14,6 +14,38 @@ namespace Azure.Communication.Email
     /// <summary> Message payload for sending an email. </summary>
     public partial class EmailMessage
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EmailMessage"/>. </summary>
         /// <param name="headers"> Custom email headers to be passed. </param>
         /// <param name="senderAddress"> Sender email address from a verified domain. </param>
@@ -22,7 +54,8 @@ namespace Azure.Communication.Email
         /// <param name="attachments"> List of attachments. Please note that we limit the total size of an email request (which includes attachments) to 10MB. </param>
         /// <param name="replyTo"> Email addresses where recipients' replies will be sent to. </param>
         /// <param name="userEngagementTrackingDisabled"> Indicates whether user engagement tracking should be disabled for this request if the resource-level user engagement tracking setting was already enabled in the control plane. </param>
-        internal EmailMessage(IDictionary<string, string> headers, string senderAddress, EmailContent content, EmailRecipients recipients, IList<EmailAttachment> attachments, IList<EmailAddress> replyTo, bool? userEngagementTrackingDisabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmailMessage(IDictionary<string, string> headers, string senderAddress, EmailContent content, EmailRecipients recipients, IList<EmailAttachment> attachments, IList<EmailAddress> replyTo, bool? userEngagementTrackingDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Headers = headers;
             SenderAddress = senderAddress;
@@ -31,6 +64,12 @@ namespace Azure.Communication.Email
             Attachments = attachments;
             ReplyTo = replyTo;
             UserEngagementTrackingDisabled = userEngagementTrackingDisabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmailMessage"/> for deserialization. </summary>
+        internal EmailMessage()
+        {
         }
 
         /// <summary> Custom email headers to be passed. </summary>

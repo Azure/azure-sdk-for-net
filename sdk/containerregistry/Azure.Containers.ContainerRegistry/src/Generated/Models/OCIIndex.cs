@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -21,9 +22,10 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Initializes a new instance of <see cref="OCIIndex"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="manifests"> List of OCI image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OCIIndex(int? schemaVersion, IReadOnlyList<ManifestListAttributes> manifests, OciAnnotations annotations) : base(schemaVersion)
+        internal OCIIndex(int? schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<ManifestListAttributes> manifests, OciAnnotations annotations) : base(schemaVersion, serializedAdditionalRawData)
         {
             Manifests = manifests;
             Annotations = annotations;

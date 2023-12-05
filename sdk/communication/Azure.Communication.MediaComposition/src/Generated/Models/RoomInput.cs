@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -28,11 +29,17 @@ namespace Azure.Communication.MediaComposition
         /// <summary> Initializes a new instance of <see cref="RoomInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Room identifier. </param>
-        internal RoomInput(MediaInputType kind, string placeholderImageUri, string id) : base(kind, placeholderImageUri)
+        internal RoomInput(MediaInputType kind, string placeholderImageUri, IDictionary<string, BinaryData> serializedAdditionalRawData, string id) : base(kind, placeholderImageUri, serializedAdditionalRawData)
         {
             Id = id;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoomInput"/> for deserialization. </summary>
+        internal RoomInput()
+        {
         }
 
         /// <summary> Room identifier. </summary>

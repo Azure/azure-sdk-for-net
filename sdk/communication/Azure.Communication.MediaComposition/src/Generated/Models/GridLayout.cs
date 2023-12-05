@@ -36,15 +36,21 @@ namespace Azure.Communication.MediaComposition
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
-        internal GridLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, int rows, int columns, IList<IList<string>> inputIds) : base(kind, resolution, placeholderImageUri, scalingMode)
+        internal GridLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, IDictionary<string, BinaryData> serializedAdditionalRawData, int rows, int columns, IList<IList<string>> inputIds) : base(kind, resolution, placeholderImageUri, scalingMode, serializedAdditionalRawData)
         {
             Rows = rows;
             Columns = columns;
             InputIds = inputIds;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GridLayout"/> for deserialization. </summary>
+        internal GridLayout()
+        {
         }
 
         /// <summary> Number of rows. </summary>

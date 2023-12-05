@@ -15,6 +15,38 @@ namespace Azure.Communication.NetworkTraversal
     /// <summary> An instance of a STUN/TURN server with credentials to be used for ICE negotiation. </summary>
     public partial class CommunicationIceServer
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CommunicationIceServer"/>. </summary>
         /// <param name="urls"> List of STUN/TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
@@ -38,12 +70,19 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
         /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. "any" will have higher reliability while "nearest" will have lower latency. It is recommended to default to use the "any" routing method unless there are specific scenarios which minimizing latency is critical. </param>
-        internal CommunicationIceServer(IList<string> urls, string username, string credential, RouteType routeType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationIceServer(IList<string> urls, string username, string credential, RouteType routeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Urls = urls;
             Username = username;
             Credential = credential;
             RouteType = routeType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIceServer"/> for deserialization. </summary>
+        internal CommunicationIceServer()
+        {
         }
 
         /// <summary> List of STUN/TURN server URLs. </summary>

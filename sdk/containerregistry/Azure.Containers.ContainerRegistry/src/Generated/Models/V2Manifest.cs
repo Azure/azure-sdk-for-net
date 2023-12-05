@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -21,10 +22,11 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Initializes a new instance of <see cref="V2Manifest"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
-        internal V2Manifest(int? schemaVersion, string mediaType, OciDescriptor config, IReadOnlyList<OciDescriptor> layers) : base(schemaVersion)
+        internal V2Manifest(int? schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string mediaType, OciDescriptor config, IReadOnlyList<OciDescriptor> layers) : base(schemaVersion, serializedAdditionalRawData)
         {
             MediaType = mediaType;
             Config = config;

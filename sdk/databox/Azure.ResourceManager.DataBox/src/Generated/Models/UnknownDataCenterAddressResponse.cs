@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,7 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataCenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
-        internal UnknownDataCenterAddressResponse(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation) : base(dataCenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataCenterAddressResponse(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataCenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, serializedAdditionalRawData)
         {
             DataCenterAddressType = dataCenterAddressType;
         }

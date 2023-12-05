@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineExternalComputeScaleProperties : IUtf8JsonSerializable
+    public partial class PipelineExternalComputeScaleProperties : IUtf8JsonSerializable, IJsonModel<PipelineExternalComputeScaleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineExternalComputeScaleProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PipelineExternalComputeScaleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineExternalComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PipelineExternalComputeScaleProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeToLive))
             {
@@ -47,8 +57,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static PipelineExternalComputeScaleProperties DeserializePipelineExternalComputeScaleProperties(JsonElement element)
+        PipelineExternalComputeScaleProperties IJsonModel<PipelineExternalComputeScaleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineExternalComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PipelineExternalComputeScaleProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineExternalComputeScaleProperties(document.RootElement, options);
+        }
+
+        internal static PipelineExternalComputeScaleProperties DeserializePipelineExternalComputeScaleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,5 +116,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new PipelineExternalComputeScaleProperties(Optional.ToNullable(timeToLive), Optional.ToNullable(numberOfPipelineNodes), Optional.ToNullable(numberOfExternalNodes), additionalProperties);
         }
+
+        BinaryData IPersistableModel<PipelineExternalComputeScaleProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineExternalComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PipelineExternalComputeScaleProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PipelineExternalComputeScaleProperties IPersistableModel<PipelineExternalComputeScaleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineExternalComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePipelineExternalComputeScaleProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PipelineExternalComputeScaleProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PipelineExternalComputeScaleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,6 +14,38 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> Represents a number, ShortCode or AlphaId, acquired in a given country. </summary>
     public partial class ShortCode
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ShortCode"/>. </summary>
         internal ShortCode()
         {
@@ -26,13 +58,15 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="countryCode"> ISO 3166 2-char code representing the country e.g. 'US'. </param>
         /// <param name="programBriefIds"> Program Brief Name. </param>
         /// <param name="purchaseDate"> Date in which number was purchased. </param>
-        internal ShortCode(string number, NumberType? numberType, string countryCode, IReadOnlyList<string> programBriefIds, DateTimeOffset? purchaseDate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShortCode(string number, NumberType? numberType, string countryCode, IReadOnlyList<string> programBriefIds, DateTimeOffset? purchaseDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Number = number;
             NumberType = numberType;
             CountryCode = countryCode;
             ProgramBriefIds = programBriefIds;
             PurchaseDate = purchaseDate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The value of the ShortCode or the alpha numeric e.g. '555555', 'CONTOSO', etc. </summary>

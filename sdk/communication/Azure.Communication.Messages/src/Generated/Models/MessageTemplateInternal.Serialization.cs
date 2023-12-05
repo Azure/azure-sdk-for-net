@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class MessageTemplateInternal : IUtf8JsonSerializable
+    internal partial class MessageTemplateInternal : IUtf8JsonSerializable, IJsonModel<MessageTemplateInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MessageTemplateInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MessageTemplateInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -35,7 +47,123 @@ namespace Azure.Communication.Messages
                 writer.WritePropertyName("bindings"u8);
                 writer.WriteObjectValue(Bindings);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MessageTemplateInternal IJsonModel<MessageTemplateInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MessageTemplateInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMessageTemplateInternal(document.RootElement, options);
+        }
+
+        internal static MessageTemplateInternal DeserializeMessageTemplateInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            string language = default;
+            Optional<IDictionary<string, MessageTemplateValueInternal>> values = default;
+            Optional<MessageTemplateBindingsInternal> bindings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("language"u8))
+                {
+                    language = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("values"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, MessageTemplateValueInternal> dictionary = new Dictionary<string, MessageTemplateValueInternal>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, MessageTemplateValueInternal.DeserializeMessageTemplateValueInternal(property0.Value));
+                    }
+                    values = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("bindings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bindings = MessageTemplateBindingsInternal.DeserializeMessageTemplateBindingsInternal(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MessageTemplateInternal(name, language, Optional.ToDictionary(values), bindings.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<MessageTemplateInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MessageTemplateInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MessageTemplateInternal IPersistableModel<MessageTemplateInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMessageTemplateInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MessageTemplateInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MessageTemplateInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

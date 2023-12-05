@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Zendesk";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ZendeskLinkedService"/> for deserialization. </summary>
+        internal ZendeskLinkedService()
+        {
+        }
+
         /// <summary> The authentication type to use. </summary>
         public ZendeskAuthenticationType AuthenticationType { get; set; }
         /// <summary> The url to connect Zendesk source. Type: string (or Expression with resultType string). </summary>

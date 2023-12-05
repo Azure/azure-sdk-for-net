@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -33,17 +34,23 @@ namespace Azure.Communication.MediaComposition
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="supportId"> Id of the support input. </param>
         /// <param name="supportPosition"> Position of the support stream. </param>
         /// <param name="supportAspectRatio"> Aspect ratio of the support stream. </param>
-        internal PresenterLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, string presenterId, string supportId, SupportPosition? supportPosition, double? supportAspectRatio) : base(kind, resolution, placeholderImageUri, scalingMode)
+        internal PresenterLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string presenterId, string supportId, SupportPosition? supportPosition, double? supportAspectRatio) : base(kind, resolution, placeholderImageUri, scalingMode, serializedAdditionalRawData)
         {
             PresenterId = presenterId;
             SupportId = supportId;
             SupportPosition = supportPosition;
             SupportAspectRatio = supportAspectRatio;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PresenterLayout"/> for deserialization. </summary>
+        internal PresenterLayout()
+        {
         }
 
         /// <summary> Id of the presenter input. </summary>

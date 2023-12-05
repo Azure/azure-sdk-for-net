@@ -5,20 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class AcrRefreshToken
+    internal partial class AcrRefreshToken : IUtf8JsonSerializable, IJsonModel<AcrRefreshToken>
     {
-        internal static AcrRefreshToken DeserializeAcrRefreshToken(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcrRefreshToken>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AcrRefreshToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AcrRefreshToken>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcrRefreshToken)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RefreshToken))
+            {
+                writer.WritePropertyName("refresh_token"u8);
+                writer.WriteStringValue(RefreshToken);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcrRefreshToken IJsonModel<AcrRefreshToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcrRefreshToken>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcrRefreshToken)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcrRefreshToken(document.RootElement, options);
+        }
+
+        internal static AcrRefreshToken DeserializeAcrRefreshToken(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> refreshToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("refresh_token"u8))
@@ -26,8 +80,44 @@ namespace Azure.Containers.ContainerRegistry
                     refreshToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcrRefreshToken(refreshToken.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcrRefreshToken(refreshToken.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcrRefreshToken>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcrRefreshToken>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcrRefreshToken)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AcrRefreshToken IPersistableModel<AcrRefreshToken>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcrRefreshToken>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAcrRefreshToken(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcrRefreshToken)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AcrRefreshToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

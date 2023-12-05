@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> The TrafficDetails. </summary>
     public partial class TrafficDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TrafficDetails"/>. </summary>
         public TrafficDetails()
         {
@@ -25,7 +60,8 @@ namespace Azure.Communication.ShortCodes.Models
         /// e.g. 'Higher traffic expected during holiday season and Black Friday.'.
         /// </param>
         /// <param name="estimatedRampUpTimeInDays"> Numbers of days in which is expected to start sending messages from the short code. </param>
-        internal TrafficDetails(int? totalMonthlyVolume, int? monthlyAverageMessagesFromUser, int? monthlyAverageMessagesToUser, bool? isSpiky, string spikeDetails, int? estimatedRampUpTimeInDays)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficDetails(int? totalMonthlyVolume, int? monthlyAverageMessagesFromUser, int? monthlyAverageMessagesToUser, bool? isSpiky, string spikeDetails, int? estimatedRampUpTimeInDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalMonthlyVolume = totalMonthlyVolume;
             MonthlyAverageMessagesFromUser = monthlyAverageMessagesFromUser;
@@ -33,6 +69,7 @@ namespace Azure.Communication.ShortCodes.Models
             IsSpiky = isSpiky;
             SpikeDetails = spikeDetails;
             EstimatedRampUpTimeInDays = estimatedRampUpTimeInDays;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Estimated total messages per month. </summary>
