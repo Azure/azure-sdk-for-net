@@ -4,6 +4,9 @@
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
@@ -11,6 +14,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     public class ModelReaderWriterTests
     {
         private static readonly ModelReaderWriterOptions _wireOptions = new ModelReaderWriterOptions("W");
+
+        private static List<object> EmptyCollections = new List<object>
+        {
+            new List<SubType>(),
+            new SubType[] { },
+            new Collection<SubType> { },
+            new ObservableCollection<SubType> { },
+            new HashSet<SubType> { },
+            new Queue<SubType> { },
+            new Stack<SubType> { },
+            new LinkedList<SubType> { },
+            new SortedSet<SubType> { },
+            new ArrayList { },
+        };
 
         [Test]
         public void ArgumentExceptions()
@@ -103,8 +120,54 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(new BinaryData(Array.Empty<byte>()), typeof(DoesntImplementInterface)));
             Assert.IsTrue(ex?.Message.Contains("does not implement"));
+            ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<DoesntImplementInterface>(new BinaryData(Array.Empty<byte>())));
+            Assert.IsTrue(ex?.Message.Contains("does not implement"));
             ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(new DoesntImplementInterface()));
             Assert.IsTrue(ex?.Message.Contains("does not implement"));
+        }
+
+        [Test]
+        public void EmptyEnumerableOfNoInterface()
+        {
+            List<DoesntImplementInterface> list = new List<DoesntImplementInterface>();
+            BinaryData data = ModelReaderWriter.Write(list);
+            Assert.AreEqual("[]", data.ToString());
+        }
+
+        [Test]
+        public void EmptyEnumerableOfNonJson()
+        {
+            List<SubType> list = new List<SubType>();
+            BinaryData data = ModelReaderWriter.Write(list, new ModelReaderWriterOptions("X"));
+            Assert.AreEqual("[]", data.ToString());
+        }
+
+        [Test]
+        public void EnumerableOfNoInterface()
+        {
+            List<DoesntImplementInterface> list = new List<DoesntImplementInterface>()
+            {
+                new DoesntImplementInterface(),
+            };
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list));
+        }
+
+        [Test]
+        public void EnumerableOfNonJson()
+        {
+            List<SubType> list = new List<SubType>()
+            {
+                new SubType(),
+            };
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("X")));
+        }
+
+        [TestCaseSource("EmptyCollections")]
+        public void WriteEmptyCollection(object collection)
+        {
+            BinaryData data = ModelReaderWriter.Write(collection);
+            Assert.IsNotNull(data);
+            Assert.AreEqual("[]", data.ToString());
         }
 
         private class DoesntImplementInterface { }

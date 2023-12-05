@@ -1,9 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics.CodeAnalysis;
-using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
+using System.ClientModel.Primitives;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace System.ClientModel
 {
@@ -21,7 +26,8 @@ namespace System.ClientModel
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-        public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+        public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default)
+            where T : IPersistableModel<T>
         {
             if (model is null)
             {
@@ -30,14 +36,9 @@ namespace System.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            if (options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
+            if (ShouldUseJsonInterface(model, options))
             {
-                if (model is not IJsonModel<T> jsonModel)
-                {
-                    throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
-                }
-
-                using (ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options))
+                using (ModelWriter<T> writer = new ModelWriter<T>(GetJsonInterface(model, options), options))
                 {
                     return writer.ToBinaryData();
                 }
@@ -66,27 +67,89 @@ namespace System.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            var iModel = model as IPersistableModel<object>;
-            if (iModel is null)
+            if (model is not IPersistableModel<object> iModel)
             {
-                throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
-            }
-
-            if (options.Format == "J" || (options.Format == "W" && iModel.GetFormatFromOptions(options) == "J"))
-            {
-                if (model is not IJsonModel<object> jsonModel)
+                if (model is not IEnumerable enumerable)
                 {
-                    throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
+                    throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)} or {nameof(IEnumerable<IPersistableModel<object>>)}");
                 }
 
-                using (ModelWriter<object> writer = new ModelWriter<object>(jsonModel, options))
-                {
-                    return writer.ToBinaryData();
-                }
+                return WriteEnumerable(options, enumerable);
             }
             else
             {
-                return iModel.Write(options);
+                if (ShouldUseJsonInterface(iModel, options))
+                {
+                    using (ModelWriter<object> writer = new ModelWriter<object>(GetJsonInterface(iModel, options), options))
+                    {
+                        return writer.ToBinaryData();
+                    }
+                }
+                else
+                {
+                    return iModel.Write(options);
+                }
+            }
+        }
+
+        private static BinaryData WriteEnumerable(ModelReaderWriterOptions options, IEnumerable enumerable)
+        {
+            bool checkedElementFormat = false;
+            using MemoryStream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            writer.WriteStartArray();
+            foreach (var item in enumerable)
+            {
+                if (!checkedElementFormat)
+                {
+                    if (item is not IPersistableModel<object> itemAsModel)
+                    {
+                        throw new InvalidOperationException($"{item.GetType().Name} does not implement {nameof(IPersistableModel<object>)} or {nameof(IEnumerable<IPersistableModel<object>>)}");
+                    }
+                    if (!ShouldUseJsonInterface(itemAsModel, options))
+                    {
+                        throw new InvalidOperationException($"Writing a collection is only supported for 'J' format");
+                    }
+                    checkedElementFormat = true;
+                }
+                BinaryData itemData = Write(item, options);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(itemData);
+#else
+                    using var doc = JsonDocument.Parse(itemData);
+                    JsonSerializer.Serialize(writer, doc.RootElement);
+#endif
+            }
+            writer.WriteEndArray();
+            writer.Flush();
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+        }
+
+        private static void ReadList(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type elementType, IList iList, ModelReaderWriterOptions options)
+        {
+            var converter = GetInstance(elementType);
+
+            if (ShouldUseJsonInterface(converter, options))
+            {
+                ReadJsonList(data, GetJsonInterface(converter, options), iList, options);
+            }
+            else
+            {
+                throw new InvalidOperationException($"Reading a collection is only supported for 'J' format");
+            }
+        }
+
+        private static void ReadJsonList<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, IJsonModel<T> converter, IList iList, ModelReaderWriterOptions options)
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(data);
+            reader.Read();
+            if (reader.TokenType != JsonTokenType.StartArray)
+            {
+                throw new FormatException("Expected start of array.");
+            }
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
+            {
+                iList.Add(converter.Create(ref reader, options));
             }
         }
 
@@ -100,7 +163,7 @@ namespace System.ClientModel
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
         /// <exception cref="MissingMethodException">If <typeparamref name="T"/> does not have a public or non public empty constructor.</exception>
-        public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+        public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterOptions? options = default)
         {
             if (data is null)
             {
@@ -109,7 +172,19 @@ namespace System.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            return GetInstance<T>().Create(data, options);
+            Type typeOfT = typeof(T);
+
+            if (typeOfT.IsGenericType && typeOfT.GetGenericTypeDefinition().Equals(typeof(List<>)))
+            {
+                var list = Activator.CreateInstance(typeOfT);
+                ReadList(data, typeOfT.GenericTypeArguments[0], (list as IList)!, options);
+                return (T)list!;
+            }
+            else
+            {
+                var converter = GetInstance(typeOfT) as IPersistableModel<T>;
+                return converter!.Create(data, options);
+            }
         }
 
         /// <summary>
@@ -138,7 +213,16 @@ namespace System.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            return GetInstance(returnType).Create(data, options);
+            if (returnType.IsGenericType && returnType.GetGenericTypeDefinition().Equals(typeof(List<>)))
+            {
+                var list = Activator.CreateInstance(returnType);
+                ReadList(data, returnType.GenericTypeArguments[0], (list as IList)!, options);
+                return list;
+            }
+            else
+            {
+                return GetInstance(returnType).Create(data, options);
+            }
         }
 
         private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
@@ -151,7 +235,8 @@ namespace System.ClientModel
             return model;
         }
 
-        private static IPersistableModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : IPersistableModel<T>
+        private static IPersistableModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
+            where T : IPersistableModel<T>
         {
             var model = GetObjectInstance(typeof(T)) as IPersistableModel<T>;
             if (model is null)
@@ -177,6 +262,23 @@ namespace System.ClientModel
                 throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
             }
             return obj;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool ShouldUseJsonInterface<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
+        {
+            return options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static IJsonModel<T> GetJsonInterface<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
+        {
+            if (model is not IJsonModel<T> jsonModel)
+            {
+                throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            return jsonModel;
         }
     }
 }
