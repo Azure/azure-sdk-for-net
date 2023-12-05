@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -16,6 +17,38 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureCognitiveSearchChatExtensionConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         /// The type label to use when configuring Azure OpenAI chat extensions. This should typically not be changed from its
@@ -31,7 +64,8 @@ namespace Azure.AI.OpenAI
         /// <param name="semanticConfiguration"> The additional semantic configuration for the query. </param>
         /// <param name="embeddingEndpoint"> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </param>
         /// <param name="embeddingKey"> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </param>
-        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, string searchKey, string indexName, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, int? documentCount, AzureCognitiveSearchQueryType? queryType, bool? shouldRestrictResultScope, string semanticConfiguration, Uri embeddingEndpoint, string embeddingKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, string searchKey, string indexName, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, int? documentCount, AzureCognitiveSearchQueryType? queryType, bool? shouldRestrictResultScope, string semanticConfiguration, Uri embeddingEndpoint, string embeddingKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             SearchEndpoint = searchEndpoint;
@@ -44,6 +78,7 @@ namespace Azure.AI.OpenAI
             SemanticConfiguration = semanticConfiguration;
             EmbeddingEndpoint = embeddingEndpoint;
             EmbeddingKey = embeddingKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
         public AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get; set; }

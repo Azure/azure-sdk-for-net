@@ -14,6 +14,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> System variables for a telemetry item. </summary>
     internal partial class TelemetryItem
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TelemetryItem"/>. </summary>
         /// <param name="name"> Type name of telemetry data item. </param>
         /// <param name="time"> Event date time when telemetry item was created. This is the wall clock time on the client when the event was generated. There is no guarantee that the client's time is accurate. This field must be formatted in UTC ISO 8601 format, with a trailing 'Z' character, as described publicly on https://en.wikipedia.org/wiki/ISO_8601#UTC. Note: the number of decimal seconds digits provided are variable (and unspecified). Consumers should handle this, i.e. managed code consumers should not use format 'O' for parsing as it specifies a fixed length. Example: 2009-06-15T13:45:30.0000000Z. </param>
@@ -36,7 +68,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="instrumentationKey"> The instrumentation key of the Application Insights resource. </param>
         /// <param name="tags"> Key/value collection of context properties. See ContextTagKeys for information on available properties. </param>
         /// <param name="data"> Telemetry data item. </param>
-        internal TelemetryItem(int? version, string name, DateTimeOffset time, float? sampleRate, string sequence, string instrumentationKey, IDictionary<string, string> tags, MonitorBase data)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TelemetryItem(int? version, string name, DateTimeOffset time, float? sampleRate, string sequence, string instrumentationKey, IDictionary<string, string> tags, MonitorBase data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             Name = name;
@@ -46,6 +79,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             InstrumentationKey = instrumentationKey;
             Tags = tags;
             Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TelemetryItem"/> for deserialization. </summary>
+        internal TelemetryItem()
+        {
         }
 
         /// <summary> Envelope version. For internal use only. By assigning this the default, it will not be serialized within the payload unless changed to a value other than #1. </summary>

@@ -45,6 +45,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = measurements;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionData"/> for deserialization. </summary>
+        internal TelemetryExceptionData()
+        {
+        }
+
         /// <summary> Exception chain - list of inner exceptions. </summary>
         public IList<TelemetryExceptionDetails> Exceptions { get; }
         /// <summary> Severity level. Mostly used to indicate exception severity level when it is reported by logging library. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
@@ -21,8 +22,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
         /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
         /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="message"> Trace message. </param>
-        internal TraceDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string message) : base(documentType, documentStreamIds, properties)
+        internal TraceDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, string message) : base(documentType, documentStreamIds, properties, serializedAdditionalRawData)
         {
             Message = message;
         }

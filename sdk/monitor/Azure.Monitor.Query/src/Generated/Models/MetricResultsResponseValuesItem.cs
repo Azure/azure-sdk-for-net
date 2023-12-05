@@ -15,6 +15,38 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The MetricResultsResponseValuesItem. </summary>
     public partial class MetricResultsResponseValuesItem
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricResultsResponseValuesItem"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
@@ -37,7 +69,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
         /// <param name="resourceId"> The resource that has been queried for metrics. </param>
         /// <param name="value"> The value of the collection. </param>
-        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, string resourceRegion, ResourceIdentifier resourceId, IReadOnlyList<MetricResult> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, string resourceRegion, ResourceIdentifier resourceId, IReadOnlyList<MetricResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -46,6 +79,12 @@ namespace Azure.Monitor.Query.Models
             ResourceRegion = resourceRegion;
             ResourceId = resourceId;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricResultsResponseValuesItem"/> for deserialization. </summary>
+        internal MetricResultsResponseValuesItem()
+        {
         }
         /// <summary> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
         public TimeSpan? Interval { get; }

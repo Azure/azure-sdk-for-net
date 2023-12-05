@@ -60,6 +60,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = measurements;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RequestData"/> for deserialization. </summary>
+        internal RequestData()
+        {
+        }
+
         /// <summary> Identifier of a request call instance. Used for correlation between request and other telemetry items. </summary>
         public string Id { get; }
         /// <summary> Name of the request. Represents code path taken to process request. Low cardinality value to allow better grouping of requests. For HTTP requests it represents the HTTP method and URL path template like 'GET /values/{id}'. </summary>

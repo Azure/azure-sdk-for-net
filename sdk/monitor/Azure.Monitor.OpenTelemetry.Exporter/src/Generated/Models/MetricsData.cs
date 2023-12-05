@@ -38,6 +38,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetricsData"/> for deserialization. </summary>
+        internal MetricsData()
+        {
+        }
+
         /// <summary> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </summary>
         public IList<MetricDataPoint> Metrics { get; }
         /// <summary> Collection of custom properties. </summary>

@@ -6,17 +6,53 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
-    public partial class AssetConversionProperties : IUtf8JsonSerializable
+    public partial class AssetConversionProperties : IUtf8JsonSerializable, IJsonModel<AssetConversionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetConversionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AssetConversionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssetConversionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AssetConversionProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ClientErrorDetails))
+            {
+                writer.WritePropertyName("clientErrorDetails"u8);
+                writer.WriteStringValue(ClientErrorDetails);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServerErrorDetails))
+            {
+                writer.WritePropertyName("serverErrorDetails"u8);
+                writer.WriteStringValue(ServerErrorDetails);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(JobIdInternal))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobIdInternal.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OutputModelUriString))
+            {
+                writer.WritePropertyName("outputModelUri"u8);
+                writer.WriteStringValue(OutputModelUriString);
+            }
             if (Optional.IsDefined(ConversionStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
@@ -32,16 +68,62 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 writer.WritePropertyName("inputAssetUri"u8);
                 writer.WriteStringValue(InputAssetUriString);
             }
+            if (options.Format != "W" && Optional.IsDefined(AccountIdInternal))
+            {
+                writer.WritePropertyName("accountId"u8);
+                writer.WriteStringValue(AccountIdInternal.Value);
+            }
             if (Optional.IsDefined(ConversionConfiguration))
             {
                 writer.WritePropertyName("ingestionConfiguration"u8);
                 writer.WriteObjectValue(ConversionConfiguration);
             }
+            if (options.Format != "W" && Optional.IsDefined(ScaledAssetDimensionsWrapper))
+            {
+                if (ScaledAssetDimensionsWrapper != null)
+                {
+                    writer.WritePropertyName("scaledAssetDimensions"u8);
+                    writer.WriteObjectValue(ScaledAssetDimensionsWrapper);
+                }
+                else
+                {
+                    writer.WriteNull("scaledAssetDimensions");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AssetConversionProperties DeserializeAssetConversionProperties(JsonElement element)
+        AssetConversionProperties IJsonModel<AssetConversionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssetConversionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AssetConversionProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssetConversionProperties(document.RootElement, options);
+        }
+
+        internal static AssetConversionProperties DeserializeAssetConversionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +139,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Optional<Guid> accountId = default;
             Optional<AssetConversionConfiguration> ingestionConfiguration = default;
             Optional<Vector3> scaledAssetDimensions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientErrorDetails"u8))
@@ -139,8 +223,44 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     scaledAssetDimensions = Vector3.DeserializeVector3(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AssetConversionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssetConversionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AssetConversionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AssetConversionProperties IPersistableModel<AssetConversionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssetConversionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAssetConversionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AssetConversionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AssetConversionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

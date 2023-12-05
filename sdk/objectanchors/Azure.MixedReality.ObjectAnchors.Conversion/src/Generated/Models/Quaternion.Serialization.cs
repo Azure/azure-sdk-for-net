@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    internal partial class Quaternion : IUtf8JsonSerializable
+    internal partial class Quaternion : IUtf8JsonSerializable, IJsonModel<Quaternion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Quaternion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<Quaternion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Quaternion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(Quaternion)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("x"u8);
             writer.WriteNumberValue(X);
@@ -23,11 +35,45 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             writer.WriteNumberValue(Z);
             writer.WritePropertyName("w"u8);
             writer.WriteNumberValue(W);
+            if (options.Format != "W" && Optional.IsDefined(IsIdentity))
+            {
+                writer.WritePropertyName("isIdentity"u8);
+                writer.WriteBooleanValue(IsIdentity);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Quaternion DeserializeQuaternion(JsonElement element)
+        Quaternion IJsonModel<Quaternion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Quaternion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(Quaternion)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuaternion(document.RootElement, options);
+        }
+
+        internal static Quaternion DeserializeQuaternion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +83,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             float z = default;
             float w = default;
             Optional<bool> isIdentity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x"u8))
@@ -68,8 +116,44 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     isIdentity = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Quaternion(x, y, z, w, isIdentity);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Quaternion(x, y, z, w, isIdentity, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Quaternion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Quaternion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(Quaternion)} does not support '{options.Format}' format.");
+            }
+        }
+
+        Quaternion IPersistableModel<Quaternion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Quaternion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQuaternion(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(Quaternion)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Quaternion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

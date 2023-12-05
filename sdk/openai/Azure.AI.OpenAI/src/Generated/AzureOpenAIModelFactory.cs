@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI
         {
             tokens ??= new List<int>();
 
-            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
+            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranslationSegment"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI
         {
             tokens ??= new List<int>();
 
-            return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
+            return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Completions"/>. </summary>
@@ -87,7 +87,7 @@ namespace Azure.AI.OpenAI
             promptFilterResults ??= new List<PromptFilterResult>();
             choices ??= new List<Choice>();
 
-            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
+            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.PromptFilterResult"/>. </summary>
@@ -96,7 +96,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.PromptFilterResult"/> instance for mocking. </returns>
         public static PromptFilterResult PromptFilterResult(int promptIndex = default, ContentFilterResults contentFilterResults = null)
         {
-            return new PromptFilterResult(promptIndex, contentFilterResults);
+            return new PromptFilterResult(promptIndex, contentFilterResults, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResults"/>. </summary>
@@ -128,7 +128,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ContentFilterResults"/> instance for mocking. </returns>
         public static ContentFilterResults ContentFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ResponseError error = null)
         {
-            return new ContentFilterResults(sexual, violence, hate, selfHarm, error);
+            return new ContentFilterResults(sexual, violence, hate, selfHarm, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResult"/>. </summary>
@@ -137,7 +137,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ContentFilterResult"/> instance for mocking. </returns>
         public static ContentFilterResult ContentFilterResult(ContentFilterSeverity severity = default, bool filtered = default)
         {
-            return new ContentFilterResult(severity, filtered);
+            return new ContentFilterResult(severity, filtered, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Choice"/>. </summary>
@@ -153,7 +153,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
         public static Choice Choice(string text = null, int index = default, ContentFilterResults contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
         {
-            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
+            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsLogProbabilityModel"/>. </summary>
@@ -169,7 +169,7 @@ namespace Azure.AI.OpenAI
             topLogProbabilities ??= new List<IDictionary<string, float?>>();
             textOffsets ??= new List<int>();
 
-            return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList());
+            return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsUsage"/>. </summary>
@@ -179,7 +179,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.CompletionsUsage"/> instance for mocking. </returns>
         public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
         {
-            return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletions"/>. </summary>
@@ -204,7 +204,7 @@ namespace Azure.AI.OpenAI
             choices ??= new List<ChatChoice>();
             promptFilterResults ??= new List<PromptFilterResult>();
 
-            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage);
+            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerations"/>. </summary>
@@ -215,21 +215,15 @@ namespace Azure.AI.OpenAI
         {
             data ??= new List<ImageLocation>();
 
-            return new ImageGenerations(created, data?.ToList());
+            return new ImageGenerations(created, data?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ImageLocation"/>. </summary>
         /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ImageLocation"/> instance for mocking. </returns>
         public static ImageLocation ImageLocation(Uri url = null)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-
-            return new ImageLocation(url);
+            return new ImageLocation(url, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>
@@ -240,7 +234,7 @@ namespace Azure.AI.OpenAI
         {
             data ??= new List<EmbeddingItem>();
 
-            return new Embeddings(data?.ToList(), usage);
+            return new Embeddings(data?.ToList(), usage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingItem"/>. </summary>
@@ -252,7 +246,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
         public static EmbeddingItem EmbeddingItem(ReadOnlyMemory<float> embedding = default, int index = default)
         {
-            return new EmbeddingItem(embedding, index);
+            return new EmbeddingItem(embedding, index, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingsUsage"/>. </summary>
@@ -261,7 +255,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
-            return new EmbeddingsUsage(promptTokens, totalTokens);
+            return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
     }
 }

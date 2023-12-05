@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogsRestClient.CreateListRequest(Id.SubscriptionId, filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, select);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, ActivityLogsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActivityLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EventDataInfo.DeserializeEventDataInfo(e), ActivityLogsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActivityLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogsRestClient.CreateListRequest(Id.SubscriptionId, filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, select);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, ActivityLogsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActivityLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EventDataInfo.DeserializeEventDataInfo(e), ActivityLogsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActivityLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, options.Region, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, options.Region, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopePostRequest(Id.SubscriptionId, options.Region, options.Content, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopePostRequest(Id.SubscriptionId, options.Region, options.Content, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost", "value", null, cancellationToken);
         }
 
         /// <summary>
