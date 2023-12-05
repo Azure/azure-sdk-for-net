@@ -3,6 +3,7 @@
 
 using Azure.Core.Pipeline;
 using Azure.Core;
+using Azure.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -116,6 +117,16 @@ namespace Azure.AI.Translation.Text
             {
                 this._endpoint = new Uri(endpoint, PLATFORM_PATH);
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
+        /// </summary>
+        /// <param name="credential">DefaultAzureCredential</param>
+        /// <param name="endpoint">Service Endpoint</param>
+        /// <param name="options">Translate Client Options</param>
+        public TextTranslationClient(DefaultAzureCredential credential, Uri endpoint, TextTranslationClientOptions options = default) : this(credential as TokenCredential, endpoint, options)
+        {
         }
 
         /// <summary> Translate Text. </summary>
