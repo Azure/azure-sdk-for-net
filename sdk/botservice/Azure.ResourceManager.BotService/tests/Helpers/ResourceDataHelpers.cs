@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         {
             var data = new BotData(new AzureLocation("global"))
             {
-                Properties = new BotProperties("TestBot", new Uri("https://mybot.coffee"), "E7C3FD33-6B3F-9FE8-490E-46FA9BAEF703")
+                Properties = new BotProperties("TestBot", new Uri("https://mybot.coffee"), "A2083202-8969-118D-5270-9C861668095C")
                 {
                     Description = "The description of the bot",
                 },
