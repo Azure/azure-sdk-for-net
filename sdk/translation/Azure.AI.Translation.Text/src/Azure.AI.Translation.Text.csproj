@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Text Translation client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation Text Translation for Azure Data Plane</AssemblyTitle>
@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
