@@ -20,7 +20,7 @@ parameters:
 - name: CheckAOTCompat
   type: boolean
   default: false
-- name: AotTestInputs
+- name: AOTTestInputs
   type: object
   default: []
 - name: TestSetupSteps
@@ -148,11 +148,10 @@ jobs:
           Artifacts: ${{ parameters.Artifacts }}
       
       - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
-        - template: /eng/common/pipelines/templates/steps/aot-compat.yml
+        - template: /eng/common/pipelines/templates/steps/aot-compatibility.yml
           parameters:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            PackageName: ${{ parameters.ArtifactName }}
-            NumAOTWarningsExpected: ${{ parameters.ExpectedNumberOfAotWarnings }}
+            AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
