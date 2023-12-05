@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Easm client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Azure SDK Code Generation Easm for Azure Data Plane</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure Easm</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <!--Suppress XML comments warnings-->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!--Suppress single word class name-->
+    <NoWarn>$(NoWarn);AZC0012</NoWarn>
+    <!--Suppress model names end with Data-->
+    <NoWarn>$(NoWarn);AZC0032</NoWarn>
+    <!--Suppress model names end with Request-->
+    <NoWarn>$(NoWarn);AZC0030</NoWarn>
+  </PropertyGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+</Project>
