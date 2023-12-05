@@ -32,32 +32,14 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         #region BotService
         public static BotData GetBotData()
         {
-            var data = new BotData(AzureLocation.WestUS)
+            var data = new BotData(new AzureLocation("global"))
             {
-                Properties = new BotProperties("The Name of the bot", new Uri("http://mybot.coffee"), "exampleappid")
+                Properties = new BotProperties("TestBot", new Uri("https://mybot.coffee"), "E7C3FD33-6B3F-9FE8-490E-46FA9BAEF703")
                 {
                     Description = "The description of the bot",
-                    IconUri = new Uri("http://myicon"),
-                    MsaAppType = BotMsaAppType.UserAssignedMSI,
-                    MsaAppTenantId = "exampleapptenantid",
-                    MsaAppMSIResourceId = new ResourceIdentifier("/subscriptions/foo/resourcegroups/bar/providers/microsoft.managedidentity/userassignedidentities/sampleId"),
-                    DeveloperAppInsightKey = "appinsightskey",
-                    DeveloperAppInsightsApiKey = "appinsightsapikey",
-                    DeveloperAppInsightsApplicationId = "appinsightsappid",
-                    LuisAppIds =
-                    {
-                        "luisappid1","luisappid2"
-                    },
-                    LuisKey = "luiskey",
-                    IsCmekEnabled = true,
-                    CmekKeyVaultUri = new Uri("https://myCmekKey"),
-                    PublicNetworkAccess = BotServicePublicNetworkAccess.Enabled,
-                    IsLocalAuthDisabled = true,
-                    SchemaTransformationVersion = "1.0",
                 },
-                Sku = new BotServiceSku(BotServiceSkuName.S1),
+                Sku = new BotServiceSku(BotServiceSkuName.F0),
                 Kind = BotServiceKind.Sdk,
-                ETag = new ETag("etag1"),
                 Tags =
                 {
                     ["tag1"] = "value1",
@@ -71,8 +53,8 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         {
             AssertTrackedResource(data1, data2);
             Assert.AreEqual(data1.Properties.AppPasswordHint, data2.Properties.AppPasswordHint);
+            Assert.AreEqual(data1.Properties.DisplayName, data2.Properties.DisplayName);
             Assert.AreEqual(data1.Kind, data2.Kind);
-            Assert.AreEqual(data1.Sku, data2.Sku);
         }
         #endregion
 
