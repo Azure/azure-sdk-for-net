@@ -27,6 +27,21 @@ namespace Azure.AI.Translation.Document
             LanguageCode = languageCode;
             Glossaries = new ChangeTrackingList<TranslationGlossary>();
         }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
+        /// <param name="targetUri"> Location of the folder / container with your documents. </param>
+        /// <param name="categoryId"> Category / custom system for translation request. </param>
+        /// <param name="languageCode"> Target Language. </param>
+        /// <param name="glossaries"> List of Glossary. </param>
+        /// <param name="storageSource"> Storage Source. </param>
+        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, string storageSource)
+        {
+            TargetUri = targetUri;
+            CategoryId = categoryId;
+            LanguageCode = languageCode;
+            Glossaries = glossaries;
+            StorageSource = storageSource;
+        }
         /// <summary> List of Glossary. </summary>
         public IList<TranslationGlossary> Glossaries { get; }
     }

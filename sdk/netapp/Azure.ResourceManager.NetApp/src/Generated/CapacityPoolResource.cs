@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetApp
         private readonly PoolsRestOperations _capacityPoolPoolsRestClient;
         private readonly CapacityPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools";
+
         /// <summary> Initializes a new instance of the <see cref="CapacityPoolResource"/> class for mocking. </summary>
         protected CapacityPoolResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

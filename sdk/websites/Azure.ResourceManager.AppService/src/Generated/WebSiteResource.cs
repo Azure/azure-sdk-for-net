@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.AppService
         private readonly RecommendationsRestOperations _siteRecommendationRecommendationsRestClient;
         private readonly WebSiteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteResource"/> class for mocking. </summary>
         protected WebSiteResource()
         {
@@ -78,9 +81,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

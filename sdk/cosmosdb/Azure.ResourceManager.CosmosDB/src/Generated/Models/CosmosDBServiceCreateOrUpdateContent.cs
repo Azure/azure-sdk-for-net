@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceCreateOrUpdateContent"/>. </summary>
+        /// <param name="instanceSize"> Instance type for the service. </param>
+        /// <param name="instanceCount"> Instance count for the service. </param>
+        /// <param name="serviceType"> ServiceType for the service. </param>
+        internal CosmosDBServiceCreateOrUpdateContent(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType? serviceType)
+        {
+            InstanceSize = instanceSize;
+            InstanceCount = instanceCount;
+            ServiceType = serviceType;
+        }
+
         /// <summary> Instance type for the service. </summary>
         public CosmosDBServiceSize? InstanceSize { get; set; }
         /// <summary> Instance count for the service. </summary>

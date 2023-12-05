@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="WebPubSubRegenerateKeyContent"/>. </summary>
+        /// <param name="keyType"> The type of access key. </param>
+        internal WebPubSubRegenerateKeyContent(WebPubSubKeyType? keyType)
+        {
+            KeyType = keyType;
+        }
+
         /// <summary> The type of access key. </summary>
         public WebPubSubKeyType? KeyType { get; set; }
     }

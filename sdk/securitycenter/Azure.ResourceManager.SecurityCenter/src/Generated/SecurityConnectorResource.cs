@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SecurityConnectorsRestOperations _securityConnectorRestClient;
         private readonly SecurityConnectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/securityConnectors";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityConnectorResource"/> class for mocking. </summary>
         protected SecurityConnectorResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/securityConnectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

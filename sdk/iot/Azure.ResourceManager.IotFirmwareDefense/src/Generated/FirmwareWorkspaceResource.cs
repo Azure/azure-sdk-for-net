@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         private readonly WorkspacesRestOperations _firmwareWorkspaceWorkspacesRestClient;
         private readonly FirmwareWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.IoTFirmwareDefense/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="FirmwareWorkspaceResource"/> class for mocking. </summary>
         protected FirmwareWorkspaceResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.IoTFirmwareDefense/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

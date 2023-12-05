@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly IotSecuritySolutionAnalyticsRestOperations _iotSecuritySolutionAnalyticsModelIotSecuritySolutionAnalyticsRestClient;
         private readonly IotSecuritySolutionAnalyticsModelData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels";
+
         /// <summary> Initializes a new instance of the <see cref="IotSecuritySolutionAnalyticsModelResource"/> class for mocking. </summary>
         protected IotSecuritySolutionAnalyticsModelResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

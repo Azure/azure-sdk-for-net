@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly KeyValuesRestOperations _appConfigurationKeyValueKeyValuesRestClient;
         private readonly AppConfigurationKeyValueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores/keyValues";
+
         /// <summary> Initializes a new instance of the <see cref="AppConfigurationKeyValueResource"/> class for mocking. </summary>
         protected AppConfigurationKeyValueResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores/keyValues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

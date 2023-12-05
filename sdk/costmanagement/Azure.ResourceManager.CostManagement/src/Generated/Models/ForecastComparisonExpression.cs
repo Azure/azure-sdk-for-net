@@ -30,6 +30,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             Values = values.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ForecastComparisonExpression"/>. </summary>
+        /// <param name="name"> The name of the column to use in comparison. </param>
+        /// <param name="operator"> The operator to use for comparison. </param>
+        /// <param name="values"> Array of values to use for comparison. </param>
+        internal ForecastComparisonExpression(string name, ForecastOperatorType @operator, IList<string> values)
+        {
+            Name = name;
+            Operator = @operator;
+            Values = values;
+        }
+
         /// <summary> The name of the column to use in comparison. </summary>
         public string Name { get; }
         /// <summary> The operator to use for comparison. </summary>

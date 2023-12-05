@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly RelationshipLinksRestOperations _relationshipLinkResourceFormatRelationshipLinksRestClient;
         private readonly RelationshipLinkResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/relationshipLinks";
+
         /// <summary> Initializes a new instance of the <see cref="RelationshipLinkResourceFormatResource"/> class for mocking. </summary>
         protected RelationshipLinkResourceFormatResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/relationshipLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

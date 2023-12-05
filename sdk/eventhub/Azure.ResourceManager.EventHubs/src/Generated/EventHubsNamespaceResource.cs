@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.EventHubs
         private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
         private readonly EventHubsNamespaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsNamespaceResource"/> class for mocking. </summary>
         protected EventHubsNamespaceResource()
         {
@@ -84,9 +87,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

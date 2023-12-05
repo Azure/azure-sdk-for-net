@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfacePatch"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        internal NetworkDeviceInterfacePatch(string annotation)
+        {
+            Annotation = annotation;
+        }
+
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
     }

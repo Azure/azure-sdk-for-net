@@ -17,6 +17,21 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateEndpointUpdate"/>. </summary>
+        /// <param name="id"> Remote endpoint resource ID. </param>
+        /// <param name="location"> ARM location of the remote private endpoint. </param>
+        /// <param name="immutableSubscriptionId"> Original subscription ID needed by Microsoft.Network. </param>
+        /// <param name="immutableResourceId"> Original resource ID needed by Microsoft.Network. </param>
+        /// <param name="vnetTrafficTag"> Virtual network traffic tag. </param>
+        internal DeviceUpdatePrivateEndpointUpdate(ResourceIdentifier id, AzureLocation? location, string immutableSubscriptionId, ResourceIdentifier immutableResourceId, string vnetTrafficTag)
+        {
+            Id = id;
+            Location = location;
+            ImmutableSubscriptionId = immutableSubscriptionId;
+            ImmutableResourceId = immutableResourceId;
+            VnetTrafficTag = vnetTrafficTag;
+        }
+
         /// <summary> Remote endpoint resource ID. </summary>
         public ResourceIdentifier Id { get; set; }
         /// <summary> ARM location of the remote private endpoint. </summary>

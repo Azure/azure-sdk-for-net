@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly ScopeMapsRestOperations _scopeMapRestClient;
         private readonly ScopeMapData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/scopeMaps";
+
         /// <summary> Initializes a new instance of the <see cref="ScopeMapResource"/> class for mocking. </summary>
         protected ScopeMapResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/scopeMaps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

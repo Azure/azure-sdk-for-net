@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly NetworkDeviceSkusRestOperations _networkDeviceSkuRestClient;
         private readonly NetworkDeviceSkuData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkDeviceSkus";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkDeviceSkuResource"/> class for mocking. </summary>
         protected NetworkDeviceSkuResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkDeviceSkus";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

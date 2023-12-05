@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private readonly FleetsRestOperations _containerServiceFleetFleetsRestClient;
         private readonly ContainerServiceFleetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetResource"/> class for mocking. </summary>
         protected ContainerServiceFleetResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

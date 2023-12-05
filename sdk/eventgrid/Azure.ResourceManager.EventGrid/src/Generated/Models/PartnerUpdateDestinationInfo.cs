@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PartnerUpdateDestinationInfo"/>. </summary>
+        /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
+        internal PartnerUpdateDestinationInfo(PartnerEndpointType endpointType)
+        {
+            EndpointType = endpointType;
+        }
+
         /// <summary> Type of the endpoint for the partner destination. </summary>
         internal PartnerEndpointType EndpointType { get; set; }
     }

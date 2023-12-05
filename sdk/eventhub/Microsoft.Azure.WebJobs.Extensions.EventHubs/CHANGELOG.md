@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated the `Azure.Messaging.EventHubs` dependency, which includes optimized defaults of the host platform to be used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  This update also enables support for TLS 1.3.
+
 ## 6.0.2 (2023-11-13)
 
 ### Other Changes

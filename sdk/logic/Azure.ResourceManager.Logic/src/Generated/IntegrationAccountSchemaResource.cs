@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Logic
         private readonly IntegrationAccountSchemasRestOperations _integrationAccountSchemaRestClient;
         private readonly IntegrationAccountSchemaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/schemas";
+
         /// <summary> Initializes a new instance of the <see cref="IntegrationAccountSchemaResource"/> class for mocking. </summary>
         protected IntegrationAccountSchemaResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/schemas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

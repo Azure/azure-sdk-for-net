@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.VoiceServices
         private readonly TestLinesRestOperations _voiceServicesTestLineTestLinesRestClient;
         private readonly VoiceServicesTestLineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.VoiceServices/communicationsGateways/testLines";
+
         /// <summary> Initializes a new instance of the <see cref="VoiceServicesTestLineResource"/> class for mocking. </summary>
         protected VoiceServicesTestLineResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.VoiceServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.VoiceServices/communicationsGateways/testLines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

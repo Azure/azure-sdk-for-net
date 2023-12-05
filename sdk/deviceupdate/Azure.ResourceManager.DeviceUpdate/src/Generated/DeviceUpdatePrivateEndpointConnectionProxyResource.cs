@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         private readonly PrivateEndpointConnectionProxiesRestOperations _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient;
         private readonly DeviceUpdatePrivateEndpointConnectionProxyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts/privateEndpointConnectionProxies";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/> class for mocking. </summary>
         protected DeviceUpdatePrivateEndpointConnectionProxyResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DeviceUpdate
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts/privateEndpointConnectionProxies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

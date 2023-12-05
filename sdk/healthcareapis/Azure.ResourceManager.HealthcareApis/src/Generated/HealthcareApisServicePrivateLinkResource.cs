@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly PrivateLinkResourcesRestOperations _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly HealthcareApisPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/services/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisServicePrivateLinkResource"/> class for mocking. </summary>
         protected HealthcareApisServicePrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/services/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

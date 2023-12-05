@@ -15,6 +15,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArtifactRenameRequest"/>. </summary>
+        /// <param name="newName"> New name of the artifact. </param>
+        internal ArtifactRenameRequest(string newName)
+        {
+            NewName = newName;
+        }
+
         /// <summary> New name of the artifact. </summary>
         public string NewName { get; set; }
     }

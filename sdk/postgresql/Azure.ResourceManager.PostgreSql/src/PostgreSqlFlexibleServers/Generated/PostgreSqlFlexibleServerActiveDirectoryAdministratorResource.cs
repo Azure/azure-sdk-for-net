@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly AdministratorsRestOperations _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient;
         private readonly PostgreSqlFlexibleServerActiveDirectoryAdministratorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/administrators";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> class for mocking. </summary>
         protected PostgreSqlFlexibleServerActiveDirectoryAdministratorResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/administrators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

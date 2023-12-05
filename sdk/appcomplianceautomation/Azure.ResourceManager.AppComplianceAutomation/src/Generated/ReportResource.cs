@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private readonly ReportRestOperations _reportResourceReportRestClient;
         private readonly ReportResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppComplianceAutomation/reports";
+
         /// <summary> Initializes a new instance of the <see cref="ReportResource"/> class for mocking. </summary>
         protected ReportResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppComplianceAutomation/reports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

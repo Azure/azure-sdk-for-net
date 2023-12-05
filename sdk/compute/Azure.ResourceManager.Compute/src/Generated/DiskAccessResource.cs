@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Compute
         private readonly DiskAccessesRestOperations _diskAccessRestClient;
         private readonly DiskAccessData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/diskAccesses";
+
         /// <summary> Initializes a new instance of the <see cref="DiskAccessResource"/> class for mocking. </summary>
         protected DiskAccessResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/diskAccesses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

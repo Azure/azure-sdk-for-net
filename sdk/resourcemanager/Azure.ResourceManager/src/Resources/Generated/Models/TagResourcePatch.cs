@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TagResourcePatch"/>. </summary>
+        /// <param name="patchMode"> The operation type for the patch API. </param>
+        /// <param name="properties"> The set of tags. </param>
+        internal TagResourcePatch(TagPatchMode? patchMode, Tag properties)
+        {
+            PatchMode = patchMode;
+            Properties = properties;
+        }
+
         /// <summary> The operation type for the patch API. </summary>
         public TagPatchMode? PatchMode { get; set; }
         /// <summary> The set of tags. </summary>

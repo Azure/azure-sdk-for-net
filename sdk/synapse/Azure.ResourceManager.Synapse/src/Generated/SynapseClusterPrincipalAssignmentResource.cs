@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly KustoPoolPrincipalAssignmentsRestOperations _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient;
         private readonly SynapseClusterPrincipalAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/principalAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseClusterPrincipalAssignmentResource"/> class for mocking. </summary>
         protected SynapseClusterPrincipalAssignmentResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/principalAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

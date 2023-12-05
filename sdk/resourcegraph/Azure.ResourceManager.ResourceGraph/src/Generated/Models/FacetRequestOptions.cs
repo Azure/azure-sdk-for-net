@@ -15,6 +15,19 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FacetRequestOptions"/>. </summary>
+        /// <param name="sortBy"> The column name or query expression to sort on. Defaults to count if not present. </param>
+        /// <param name="sortOrder"> The sorting order by the selected column (count by default). </param>
+        /// <param name="filter"> Specifies the filter condition for the 'where' clause which will be run on main query's result, just before the actual faceting. </param>
+        /// <param name="top"> The maximum number of facet rows that should be returned. </param>
+        internal FacetRequestOptions(string sortBy, FacetSortOrder? sortOrder, string filter, int? top)
+        {
+            SortBy = sortBy;
+            SortOrder = sortOrder;
+            Filter = filter;
+            Top = top;
+        }
+
         /// <summary> The column name or query expression to sort on. Defaults to count if not present. </summary>
         public string SortBy { get; set; }
         /// <summary> The sorting order by the selected column (count by default). </summary>

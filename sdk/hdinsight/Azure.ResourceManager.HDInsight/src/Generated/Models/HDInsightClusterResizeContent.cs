@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterResizeContent"/>. </summary>
+        /// <param name="targetInstanceCount"> The target instance count for the operation. </param>
+        internal HDInsightClusterResizeContent(int? targetInstanceCount)
+        {
+            TargetInstanceCount = targetInstanceCount;
+        }
+
         /// <summary> The target instance count for the operation. </summary>
         public int? TargetInstanceCount { get; set; }
     }

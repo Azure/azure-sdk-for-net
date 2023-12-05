@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PolicyInsights
         private readonly RemediationsRestOperations _policyRemediationRemediationsRestClient;
         private readonly PolicyRemediationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/remediations";
+
         /// <summary> Initializes a new instance of the <see cref="PolicyRemediationResource"/> class for mocking. </summary>
         protected PolicyRemediationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PolicyInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/remediations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

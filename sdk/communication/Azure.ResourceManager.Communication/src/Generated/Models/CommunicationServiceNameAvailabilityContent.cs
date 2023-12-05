@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
@@ -12,6 +14,13 @@ namespace Azure.ResourceManager.Communication.Models
     {
         /// <summary> Initializes a new instance of <see cref="CommunicationServiceNameAvailabilityContent"/>. </summary>
         public CommunicationServiceNameAvailabilityContent()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        internal CommunicationServiceNameAvailabilityContent(string name, ResourceType? resourceType) : base(name, resourceType)
         {
         }
     }

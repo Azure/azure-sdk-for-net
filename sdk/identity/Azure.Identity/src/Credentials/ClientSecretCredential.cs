@@ -37,6 +37,7 @@ namespace Azure.Identity
         /// Gets the client secret that was generated for the App Registration used to authenticate the client.
         /// </summary>
         internal string ClientSecret { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -98,6 +99,7 @@ namespace Azure.Identity
                          null,
                          options);
 
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 

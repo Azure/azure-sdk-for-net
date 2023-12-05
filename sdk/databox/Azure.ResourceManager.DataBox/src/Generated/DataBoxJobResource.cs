@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataBox
         private readonly DataBoxManagementRestOperations _defaultRestClient;
         private readonly DataBoxJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBox/jobs";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxJobResource"/> class for mocking. </summary>
         protected DataBoxJobResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.DataBox
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBox/jobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Subscription
         private readonly AliasRestOperations _subscriptionAliasAliasRestClient;
         private readonly SubscriptionAliasData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Subscription/aliases";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionAliasResource"/> class for mocking. </summary>
         protected SubscriptionAliasResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Subscription
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Subscription/aliases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

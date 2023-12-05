@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Compute
         private readonly VirtualMachineScaleSetVMRunCommandsRestOperations _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient;
         private readonly VirtualMachineRunCommandData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetVmRunCommandResource"/> class for mocking. </summary>
         protected VirtualMachineScaleSetVmRunCommandResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
