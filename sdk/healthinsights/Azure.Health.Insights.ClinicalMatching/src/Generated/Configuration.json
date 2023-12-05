@@ -1,0 +1,11 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Health.Insights.ClinicalMatching",
+  "library-name": "Azure.Health.Insights.ClinicalMatching",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/healthinsights.trialmatcher/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/healthinsights.trialmatcher/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "use-overloads-between-protocol-and-convenience": true,
+  "model-namespace": false
+}
