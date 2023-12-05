@@ -15,6 +15,38 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> The result of a list sessions request. </summary>
     internal partial class SessionsList
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SessionsList"/>. </summary>
         /// <param name="sessions"> The list of rendering sessions. Does not include sessions in 'Stopped' state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessions"/> is null. </exception>
@@ -28,10 +60,17 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary> Initializes a new instance of <see cref="SessionsList"/>. </summary>
         /// <param name="sessions"> The list of rendering sessions. Does not include sessions in 'Stopped' state. </param>
         /// <param name="nextLink"> If more rendering sessions are available this field will contain a URL where the next batch of sessions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </param>
-        internal SessionsList(IReadOnlyList<RenderingSession> sessions, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SessionsList(IReadOnlyList<RenderingSession> sessions, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sessions = sessions;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SessionsList"/> for deserialization. </summary>
+        internal SessionsList()
+        {
         }
 
         /// <summary> The list of rendering sessions. Does not include sessions in 'Stopped' state. </summary>

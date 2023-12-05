@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The GCP project connector environment data. </summary>
@@ -18,13 +21,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="GcpProjectEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="organizationalData">
         /// The Gcp project's organizational data
         /// Please note <see cref="GcpOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
         /// </param>
         /// <param name="projectDetails"> The Gcp project's details. </param>
-        internal GcpProjectEnvironment(EnvironmentType environmentType, GcpOrganizationalInfo organizationalData, GcpProjectDetails projectDetails) : base(environmentType)
+        internal GcpProjectEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData, GcpOrganizationalInfo organizationalData, GcpProjectDetails projectDetails) : base(environmentType, serializedAdditionalRawData)
         {
             OrganizationalData = organizationalData;
             ProjectDetails = projectDetails;

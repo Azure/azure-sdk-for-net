@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
@@ -13,6 +14,38 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> Conversion output settings describe the destination of conversion output. </summary>
     public partial class AssetConversionOutputOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AssetConversionOutputOptions"/>. </summary>
         /// <param name="storageContainerUri"> The URI of the Azure blob storage container where the result of the conversion should be written to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerUri"/> is null. </exception>
@@ -28,12 +61,19 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="storageContainerWriteSas"> An Azure blob storage container shared access signature giving write access to the storage container. Optional. If not provided, the Azure Remote Rendering account needs to be linked with the storage account containing the blob container. See https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account#link-storage-accounts for details. For security purposes this field will never be filled out in responses bodies. </param>
         /// <param name="blobPrefix"> A prefix which gets prepended in front of all files produced by the conversion process. Will be treated as a virtual folder. Optional. If not provided, output files will be stored at the container root. </param>
         /// <param name="outputAssetFilename"> The file name of the output asset. Must end in '.arrAsset'. Optional. If not provided, file name will the same name as the input asset, with '.arrAsset' extension. </param>
-        internal AssetConversionOutputOptions(Uri storageContainerUri, string storageContainerWriteSas, string blobPrefix, string outputAssetFilename)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssetConversionOutputOptions(Uri storageContainerUri, string storageContainerWriteSas, string blobPrefix, string outputAssetFilename, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageContainerUri = storageContainerUri;
             StorageContainerWriteSas = storageContainerWriteSas;
             BlobPrefix = blobPrefix;
             OutputAssetFilename = outputAssetFilename;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssetConversionOutputOptions"/> for deserialization. </summary>
+        internal AssetConversionOutputOptions()
+        {
         }
         /// <summary> An Azure blob storage container shared access signature giving write access to the storage container. Optional. If not provided, the Azure Remote Rendering account needs to be linked with the storage account containing the blob container. See https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account#link-storage-accounts for details. For security purposes this field will never be filled out in responses bodies. </summary>
         public string StorageContainerWriteSas { get; set; }

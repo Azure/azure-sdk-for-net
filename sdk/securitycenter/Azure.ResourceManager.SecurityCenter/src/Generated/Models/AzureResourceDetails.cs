@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Details of the Azure resource that was assessed. </summary>
@@ -18,8 +21,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Azure resource Id of the assessed resource. </param>
-        internal AzureResourceDetails(Source source, string id) : base(source)
+        internal AzureResourceDetails(Source source, IDictionary<string, BinaryData> serializedAdditionalRawData, string id) : base(source, serializedAdditionalRawData)
         {
             Id = id;
             Source = source;

@@ -40,7 +40,7 @@ namespace Azure.Quantum.Jobs.Models
             metadata ??= new Dictionary<string, string>();
             tags ??= new List<string>();
 
-            return new JobDetails(id, name, containerUri, inputDataUri, inputDataFormat, inputParams, providerId, target, metadata, outputDataUri, outputDataFormat, status, creationTime, beginExecutionTime, endExecutionTime, cancellationTime, costEstimate, errorData, tags?.ToList());
+            return new JobDetails(id, name, containerUri, inputDataUri, inputDataFormat, inputParams, providerId, target, metadata, outputDataUri, outputDataFormat, status, creationTime, beginExecutionTime, endExecutionTime, cancellationTime, costEstimate, errorData, tags?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CostEstimate"/>. </summary>
@@ -52,7 +52,7 @@ namespace Azure.Quantum.Jobs.Models
         {
             events ??= new List<UsageEvent>();
 
-            return new CostEstimate(currencyCode, events?.ToList(), estimatedTotal);
+            return new CostEstimate(currencyCode, events?.ToList(), estimatedTotal, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UsageEvent"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <returns> A new <see cref="Models.UsageEvent"/> instance for mocking. </returns>
         public static UsageEvent UsageEvent(string dimensionId = null, string dimensionName = null, string measureUnit = null, float? amountBilled = null, float? amountConsumed = null, float? unitPrice = null)
         {
-            return new UsageEvent(dimensionId, dimensionName, measureUnit, amountBilled, amountConsumed, unitPrice);
+            return new UsageEvent(dimensionId, dimensionName, measureUnit, amountBilled, amountConsumed, unitPrice, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ErrorData"/>. </summary>
@@ -74,7 +74,18 @@ namespace Azure.Quantum.Jobs.Models
         /// <returns> A new <see cref="Models.ErrorData"/> instance for mocking. </returns>
         public static ErrorData ErrorData(string code = null, string message = null)
         {
-            return new ErrorData(code, message);
+            return new ErrorData(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.JsonPatchDocument"/>. </summary>
+        /// <param name="op"> The operation to be performed. </param>
+        /// <param name="path"> A JSON-Pointer. </param>
+        /// <param name="value"> A value to be used in the operation on the path. </param>
+        /// <param name="from"> Optional field used in copy and move operations. </param>
+        /// <returns> A new <see cref="Models.JsonPatchDocument"/> instance for mocking. </returns>
+        public static JsonPatchDocument JsonPatchDocument(JsonPatchOperation op = default, string path = null, object value = null, string @from = null)
+        {
+            return new JsonPatchDocument(op, path, value, @from, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderStatus"/>. </summary>
@@ -86,7 +97,7 @@ namespace Azure.Quantum.Jobs.Models
         {
             targets ??= new List<TargetStatus>();
 
-            return new ProviderStatus(id, currentAvailability, targets?.ToList());
+            return new ProviderStatus(id, currentAvailability, targets?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TargetStatus"/>. </summary>
@@ -97,7 +108,16 @@ namespace Azure.Quantum.Jobs.Models
         /// <returns> A new <see cref="Models.TargetStatus"/> instance for mocking. </returns>
         public static TargetStatus TargetStatus(string id = null, TargetAvailability? currentAvailability = null, long? averageQueueTime = null, string statusPage = null)
         {
-            return new TargetStatus(id, currentAvailability, averageQueueTime, statusPage);
+            return new TargetStatus(id, currentAvailability, averageQueueTime, statusPage, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BlobDetails"/>. </summary>
+        /// <param name="containerName"> The container name. </param>
+        /// <param name="blobName"> The blob name. </param>
+        /// <returns> A new <see cref="Models.BlobDetails"/> instance for mocking. </returns>
+        public static BlobDetails BlobDetails(string containerName = null, string blobName = null)
+        {
+            return new BlobDetails(containerName, blobName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SasUriResponse"/>. </summary>
@@ -105,7 +125,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <returns> A new <see cref="Models.SasUriResponse"/> instance for mocking. </returns>
         public static SasUriResponse SasUriResponse(string sasUri = null)
         {
-            return new SasUriResponse(sasUri);
+            return new SasUriResponse(sasUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuantumJobQuotaList"/>. </summary>
@@ -116,7 +136,7 @@ namespace Azure.Quantum.Jobs.Models
         {
             value ??= new List<QuantumJobQuota>();
 
-            return new QuantumJobQuotaList(value?.ToList(), nextLink);
+            return new QuantumJobQuotaList(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuantumJobQuota"/>. </summary>
@@ -130,7 +150,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <returns> A new <see cref="Models.QuantumJobQuota"/> instance for mocking. </returns>
         public static QuantumJobQuota QuantumJobQuota(string dimension = null, DimensionScope? scope = null, string providerId = null, float? utilization = null, float? holds = null, float? limit = null, MeterPeriod? period = null)
         {
-            return new QuantumJobQuota(dimension, scope, providerId, utilization, holds, limit, period);
+            return new QuantumJobQuota(dimension, scope, providerId, utilization, holds, limit, period, serializedAdditionalRawData: null);
         }
     }
 }

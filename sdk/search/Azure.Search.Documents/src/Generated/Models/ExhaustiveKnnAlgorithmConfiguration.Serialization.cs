@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ExhaustiveKnnAlgorithmConfiguration : IUtf8JsonSerializable
+    public partial class ExhaustiveKnnAlgorithmConfiguration : IUtf8JsonSerializable, IJsonModel<ExhaustiveKnnAlgorithmConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExhaustiveKnnAlgorithmConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExhaustiveKnnAlgorithmConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ExhaustiveKnnAlgorithmConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Parameters))
             {
@@ -24,11 +36,40 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExhaustiveKnnAlgorithmConfiguration DeserializeExhaustiveKnnAlgorithmConfiguration(JsonElement element)
+        ExhaustiveKnnAlgorithmConfiguration IJsonModel<ExhaustiveKnnAlgorithmConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ExhaustiveKnnAlgorithmConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExhaustiveKnnAlgorithmConfiguration(document.RootElement, options);
+        }
+
+        internal static ExhaustiveKnnAlgorithmConfiguration DeserializeExhaustiveKnnAlgorithmConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +77,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<ExhaustiveKnnParameters> exhaustiveKnnParameters = default;
             string name = default;
             VectorSearchAlgorithmKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exhaustiveKnnParameters"u8))
@@ -57,8 +100,44 @@ namespace Azure.Search.Documents.Indexes.Models
                     kind = new VectorSearchAlgorithmKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, serializedAdditionalRawData, exhaustiveKnnParameters.Value);
         }
+
+        BinaryData IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ExhaustiveKnnAlgorithmConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExhaustiveKnnAlgorithmConfiguration IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExhaustiveKnnAlgorithmConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ExhaustiveKnnAlgorithmConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
@@ -13,6 +14,38 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> Conversion settings describe the origin of input files and destination of output files. </summary>
     public partial class AssetConversionOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AssetConversionOptions"/>. </summary>
         /// <param name="inputOptions"> Conversion input settings describe the origin of conversion input. </param>
         /// <param name="outputOptions"> Conversion output settings describe the destination of conversion output. </param>
@@ -24,6 +57,22 @@ namespace Azure.MixedReality.RemoteRendering
 
             InputOptions = inputOptions;
             OutputOptions = outputOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssetConversionOptions"/>. </summary>
+        /// <param name="inputOptions"> Conversion input settings describe the origin of conversion input. </param>
+        /// <param name="outputOptions"> Conversion output settings describe the destination of conversion output. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssetConversionOptions(AssetConversionInputOptions inputOptions, AssetConversionOutputOptions outputOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InputOptions = inputOptions;
+            OutputOptions = outputOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssetConversionOptions"/> for deserialization. </summary>
+        internal AssetConversionOptions()
+        {
         }
     }
 }

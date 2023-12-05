@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Quota information. </summary>
     public partial class QuantumJobQuota
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="QuantumJobQuota"/>. </summary>
         internal QuantumJobQuota()
         {
@@ -23,7 +58,8 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="holds"> The amount of the usage that has been reserved but not applied for the current period. </param>
         /// <param name="limit"> The maximum amount of usage allowed for the current period. </param>
         /// <param name="period"> The time period in which the quota's underlying meter is accumulated. Based on calendar year. 'None' is used for concurrent quotas. </param>
-        internal QuantumJobQuota(string dimension, DimensionScope? scope, string providerId, float? utilization, float? holds, float? limit, MeterPeriod? period)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuantumJobQuota(string dimension, DimensionScope? scope, string providerId, float? utilization, float? holds, float? limit, MeterPeriod? period, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Dimension = dimension;
             Scope = scope;
@@ -32,6 +68,7 @@ namespace Azure.Quantum.Jobs.Models
             Holds = holds;
             Limit = limit;
             Period = period;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the dimension associated with the quota. </summary>

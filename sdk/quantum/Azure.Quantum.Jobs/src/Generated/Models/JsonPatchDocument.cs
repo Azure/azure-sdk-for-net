@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
@@ -13,6 +14,38 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> A JSONPatch document as defined by RFC 6902. </summary>
     public partial class JsonPatchDocument
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JsonPatchDocument"/>. </summary>
         /// <param name="op"> The operation to be performed. </param>
         /// <param name="path"> A JSON-Pointer. </param>
@@ -30,12 +63,19 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="path"> A JSON-Pointer. </param>
         /// <param name="value"> A value to be used in the operation on the path. </param>
         /// <param name="from"> Optional field used in copy and move operations. </param>
-        internal JsonPatchDocument(JsonPatchOperation op, string path, object value, string @from)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JsonPatchDocument(JsonPatchOperation op, string path, object value, string @from, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Op = op;
             Path = path;
             Value = value;
             From = @from;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JsonPatchDocument"/> for deserialization. </summary>
+        internal JsonPatchDocument()
+        {
         }
 
         /// <summary> The operation to be performed. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -49,7 +50,8 @@ namespace Azure.ResourceManager.Sphere.Models
         /// The status of the last operation.
         /// Serialized Name: CertificateProperties.provisioningState
         /// </param>
-        internal ProofOfPossessionNonceResponse(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState) : base(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProofOfPossessionNonceResponse(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState, serializedAdditionalRawData)
         {
         }
     }

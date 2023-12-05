@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -22,9 +23,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="A2ARecoveryPointDetails"/>. </summary>
         /// <param name="instanceType"> Gets the provider type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointSyncType"> A value indicating whether the recovery point is multi VM consistent. </param>
         /// <param name="disks"> List of disk ids representing a recovery point. </param>
-        internal A2ARecoveryPointDetails(string instanceType, RecoveryPointSyncType? recoveryPointSyncType, IReadOnlyList<string> disks) : base(instanceType)
+        internal A2ARecoveryPointDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, RecoveryPointSyncType? recoveryPointSyncType, IReadOnlyList<string> disks) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryPointSyncType = recoveryPointSyncType;
             Disks = disks;
