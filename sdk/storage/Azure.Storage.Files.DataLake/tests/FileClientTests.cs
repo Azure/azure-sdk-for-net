@@ -3353,7 +3353,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task ReadAsync()
         {
-            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);
+            await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
