@@ -33,7 +33,11 @@ namespace Azure.Core.Pipeline
                 => _pipelineRequest.Method = method;
 
             protected override Uri GetUriCore()
-                => _pipelineRequest.Uri;
+            {
+                Uri uri = Uri.ToUri();
+                SetUriCore(uri);
+                return uri;
+            }
 
             protected override void SetUriCore(Uri uri)
                 => _pipelineRequest.Uri = uri;
