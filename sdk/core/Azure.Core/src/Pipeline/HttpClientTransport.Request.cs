@@ -18,6 +18,13 @@ namespace Azure.Core.Pipeline
     {
         private sealed class HttpClientTransportRequest : Request
         {
+            // In this implementation of the abstract Azure.Core.Request type,
+            // we have two fields for each of the public properties -- one on the
+            // Request implementation and one in the PipelineRequest implementation.
+            // The implication of this is that we need to keep both sets of fields
+            // in sync with each other when they are set from either property on
+            // Request or PipelineRequest.
+
             private readonly PipelineRequest _pipelineRequest;
 
             public HttpClientTransportRequest(PipelineRequest request)
@@ -32,16 +39,13 @@ namespace Azure.Core.Pipeline
             }
 
             #region Adapt PipelineResponse to inherit functional implementation from ClientModel
+
             protected override string GetMethodCore()
                 => _pipelineRequest.Method;
 
             protected override void SetMethodCore(string method)
             {
-                // In this implementation of the abstract Azure.Core.Request type,
-                // we have two "method" fields -- one on the Request implementation
-                // and one in the PipelineRequest implementation.  We need to keep
-                // them both in sync with each other.
-
+                // Update fields on both Request and PipelineRequest.
                 base.SetMethodCore(method);
                 _pipelineRequest.Method = method;
             }
@@ -49,19 +53,19 @@ namespace Azure.Core.Pipeline
             protected override Uri GetUriCore()
             {
                 Uri uri = Uri.ToUri();
+
+                // Lazily update the value on the adapted PipelineRequest.
                 SetUriCore(uri);
+
                 return uri;
             }
 
             protected override void SetUriCore(Uri uri)
             {
-                // Update Uri fields on both Request and PipelineRequest.
+                // Update fields on both Request and PipelineRequest.
                 base.SetUriCore(uri);
                 _pipelineRequest.Uri = uri;
             }
-
-            protected override MessageHeaders GetHeadersCore()
-                => _pipelineRequest.Headers;
 
             protected override InputContent? GetContentCore()
                 => _pipelineRequest.Content;
@@ -72,6 +76,10 @@ namespace Azure.Core.Pipeline
                 base.SetContentCore(content);
                 _pipelineRequest.Content = content;
             }
+
+            protected override MessageHeaders GetHeadersCore()
+                => _pipelineRequest.Headers;
+
             #endregion
 
             #region Implement Azure.Core Request abstract methods

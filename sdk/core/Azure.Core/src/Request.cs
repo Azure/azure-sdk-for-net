@@ -30,22 +30,8 @@ namespace Azure.Core
         public new virtual RequestMethod Method
         {
             get => _method;
-            set => _method = value;
+            set => SetMethodCore(value.Method);
         }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <returns></returns>
-        protected override string GetMethodCore()
-            => Method.Method;
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="method"></param>
-        protected override void SetMethodCore(string method)
-            => Method = RequestMethod.Parse(method);
 
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
@@ -62,20 +48,6 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <returns></returns>
-        protected override Uri GetUriCore()
-            => Uri.ToUri();
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="uri"></param>
-        protected override void SetUriCore(Uri uri)
-            => Uri.Reset(uri);
-
-        /// <summary>
         /// Gets or sets the request content.
         /// </summary>
         public new virtual RequestContent? Content
@@ -83,20 +55,6 @@ namespace Azure.Core
             get => (RequestContent?)GetContentCore();
             set => SetContentCore(value);
         }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <returns></returns>
-        protected override InputContent? GetContentCore()
-            => _content;
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="content"></param>
-        protected override void SetContentCore(InputContent? content)
-            => _content = (RequestContent?)content;
 
         /// <summary>
         /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
@@ -116,12 +74,58 @@ namespace Azure.Core
         /// </summary>
         public new RequestHeaders Headers => new(this);
 
+        #region Overrides for "Core" methods from the PipelineRequest Template pattern
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override string GetMethodCore()
+            => _method.Method;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="method"></param>
+        protected override void SetMethodCore(string method)
+            => _method = RequestMethod.Parse(method);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override Uri GetUriCore()
+            => Uri.ToUri();
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="uri"></param>
+        protected override void SetUriCore(Uri uri)
+            => Uri.Reset(uri);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override InputContent? GetContentCore()
+            => _content;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="content"></param>
+        protected override void SetContentCore(InputContent? content)
+            => _content = (RequestContent?)content;
+
         /// <summary>
         /// TBD.
         /// </summary>
         /// <returns></returns>
         protected override MessageHeaders GetHeadersCore()
             => new AzureCoreMessageHeaders(Headers);
+
+        #endregion
 
         /// <summary>
         /// Adds a header value to the header collection.
