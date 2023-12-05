@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The integration runtime authentication keys. </summary>
     public partial class IntegrationRuntimeAuthKeys
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeAuthKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeAuthKeys"/>. </summary>
         internal IntegrationRuntimeAuthKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeAuthKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeAuthKeys"/>. </summary>
         /// <param name="authKey1"> The primary integration runtime authentication key. </param>
         /// <param name="authKey2"> The secondary integration runtime authentication key. </param>
         internal IntegrationRuntimeAuthKeys(string authKey1, string authKey2)

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
     /// A Class representing a MySqlFlexibleServerAadAdministrator along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlFlexibleServerAadAdministratorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlFlexibleServerAadAdministratorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource" /> using the GetMySqlFlexibleServerAadAdministrator method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServerAadAdministratorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServerAadAdministratorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMySqlFlexibleServerAadAdministrator method.
     /// </summary>
     public partial class MySqlFlexibleServerAadAdministratorResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly AzureADAdministratorsRestOperations _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient;
         private readonly MySqlFlexibleServerAadAdministratorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/administrators";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerAadAdministratorResource"/> class for mocking. </summary>
         protected MySqlFlexibleServerAadAdministratorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlFlexibleServerAadAdministratorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerAadAdministratorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlFlexibleServerAadAdministratorResource(ArmClient client, MySqlFlexibleServerAadAdministratorData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/administrators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

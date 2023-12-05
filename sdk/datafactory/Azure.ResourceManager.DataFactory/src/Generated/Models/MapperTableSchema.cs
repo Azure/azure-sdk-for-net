@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Schema of a CDC table in terms of column names and their corresponding data types. </summary>
     public partial class MapperTableSchema
     {
-        /// <summary> Initializes a new instance of MapperTableSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperTableSchema"/>. </summary>
         public MapperTableSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of MapperTableSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperTableSchema"/>. </summary>
         /// <param name="name"> Name of the column. </param>
         /// <param name="dataType"> Data type of the column. </param>
         internal MapperTableSchema(string name, string dataType)

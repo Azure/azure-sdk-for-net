@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the app registration for providers that have client ids and client secrets. </summary>
     public partial class ClientRegistration
     {
-        /// <summary> Initializes a new instance of ClientRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientRegistration"/>. </summary>
         public ClientRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientRegistration"/>. </summary>
         /// <param name="clientId"> The Client ID of the app used for login. </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
         internal ClientRegistration(string clientId, string clientSecretSettingName)

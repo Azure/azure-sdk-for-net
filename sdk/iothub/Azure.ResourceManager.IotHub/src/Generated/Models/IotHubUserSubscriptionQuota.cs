@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> User subscription quota response. </summary>
     public partial class IotHubUserSubscriptionQuota
     {
-        /// <summary> Initializes a new instance of IotHubUserSubscriptionQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubUserSubscriptionQuota"/>. </summary>
         internal IotHubUserSubscriptionQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubUserSubscriptionQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubUserSubscriptionQuota"/>. </summary>
         /// <param name="iotHubTypeId"> IotHub type id. </param>
         /// <param name="userSubscriptionQuotaType"> Response type. </param>
         /// <param name="unit"> Unit of IotHub type. </param>

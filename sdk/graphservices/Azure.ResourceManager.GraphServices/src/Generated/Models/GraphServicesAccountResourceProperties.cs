@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.GraphServices.Models
     /// <summary> Property bag from billing account. </summary>
     public partial class GraphServicesAccountResourceProperties
     {
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceProperties"/>. </summary>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
         public GraphServicesAccountResourceProperties(string appId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.GraphServices.Models
             AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <param name="billingPlanId"> Billing Plan Id. </param>

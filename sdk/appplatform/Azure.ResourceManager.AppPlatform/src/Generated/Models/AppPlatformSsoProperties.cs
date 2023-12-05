@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Single sign-on related configuration. </summary>
     public partial class AppPlatformSsoProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformSsoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSsoProperties"/>. </summary>
         public AppPlatformSsoProperties()
         {
             Scope = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSsoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSsoProperties"/>. </summary>
         /// <param name="scope"> It defines the specific actions applications can be allowed to do on a user's behalf. </param>
         /// <param name="clientId"> The public identifier for the application. </param>
         /// <param name="clientSecret"> The secret known only to the application and the authorization server. </param>

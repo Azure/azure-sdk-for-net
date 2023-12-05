@@ -894,7 +894,7 @@ namespace Azure.Communication.JobRouter
     }
     public partial class ScoringRuleOptions
     {
-        internal ScoringRuleOptions() { }
+        public ScoringRuleOptions() { }
         public int? BatchSize { get { throw null; } set { } }
         public bool? DescendingOrder { get { throw null; } set { } }
         public bool? IsBatchScoringEnabled { get { throw null; } set { } }

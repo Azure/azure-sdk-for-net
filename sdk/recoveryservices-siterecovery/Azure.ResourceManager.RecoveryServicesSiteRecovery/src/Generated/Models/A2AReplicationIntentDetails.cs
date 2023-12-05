@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A provider specific settings. </summary>
     public partial class A2AReplicationIntentDetails : ReplicationProtectionIntentProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of A2AReplicationIntentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AReplicationIntentDetails"/>. </summary>
         /// <param name="recoveryAvailabilityType"> The recovery availability type of the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryAvailabilityType"/> is null. </exception>
         internal A2AReplicationIntentDetails(string recoveryAvailabilityType)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of A2AReplicationIntentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AReplicationIntentDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryLocation"> The primary location for the virtual machine. </param>

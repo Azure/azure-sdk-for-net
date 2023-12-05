@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaJobResource" /> and their operations.
-    /// Each <see cref="MediaJobResource" /> in the collection will belong to the same instance of <see cref="MediaTransformResource" />.
-    /// To get a <see cref="MediaJobCollection" /> instance call the GetMediaJobs method from an instance of <see cref="MediaTransformResource" />.
+    /// A class representing a collection of <see cref="MediaJobResource"/> and their operations.
+    /// Each <see cref="MediaJobResource"/> in the collection will belong to the same instance of <see cref="MediaTransformResource"/>.
+    /// To get a <see cref="MediaJobCollection"/> instance call the GetMediaJobs method from an instance of <see cref="MediaTransformResource"/>.
     /// </summary>
     public partial class MediaJobCollection : ArmCollection, IEnumerable<MediaJobResource>, IAsyncEnumerable<MediaJobResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaJobResource> GetAllAsync(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaJobResource> GetAll(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);

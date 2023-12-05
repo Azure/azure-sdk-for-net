@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The definition of a prediction grade. </summary>
     public partial class PredictionGradesItem
     {
-        /// <summary> Initializes a new instance of PredictionGradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionGradesItem"/>. </summary>
         public PredictionGradesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of PredictionGradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionGradesItem"/>. </summary>
         /// <param name="gradeName"> Name of the grade. </param>
         /// <param name="minScoreThreshold"> Minimum score threshold. </param>
         /// <param name="maxScoreThreshold"> Maximum score threshold. </param>

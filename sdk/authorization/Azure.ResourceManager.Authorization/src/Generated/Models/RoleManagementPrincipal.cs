@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The name of the entity last modified it. </summary>
     public partial class RoleManagementPrincipal
     {
-        /// <summary> Initializes a new instance of RoleManagementPrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPrincipal"/>. </summary>
         internal RoleManagementPrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPrincipal"/>. </summary>
         /// <param name="id"> The id of the principal made changes. </param>
         /// <param name="displayName"> The name of the principal made changes. </param>
         /// <param name="principalType"> Type of the principal. </param>

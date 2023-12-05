@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownActivity. </summary>
     internal partial class UnknownActivity : Activity
     {
-        /// <summary> Initializes a new instance of UnknownActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

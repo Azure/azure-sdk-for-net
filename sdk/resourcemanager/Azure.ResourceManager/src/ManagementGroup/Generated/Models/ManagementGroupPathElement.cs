@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> A path element of a management group ancestors. </summary>
     public partial class ManagementGroupPathElement
     {
-        /// <summary> Initializes a new instance of ManagementGroupPathElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupPathElement"/>. </summary>
         internal ManagementGroupPathElement()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupPathElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupPathElement"/>. </summary>
         /// <param name="name"> The name of the group. </param>
         /// <param name="displayName"> The friendly name of the group. </param>
         internal ManagementGroupPathElement(string name, string displayName)

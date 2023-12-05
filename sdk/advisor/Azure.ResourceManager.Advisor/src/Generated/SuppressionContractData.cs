@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Advisor
     /// </summary>
     public partial class SuppressionContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of SuppressionContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionContractData"/>. </summary>
         public SuppressionContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of SuppressionContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

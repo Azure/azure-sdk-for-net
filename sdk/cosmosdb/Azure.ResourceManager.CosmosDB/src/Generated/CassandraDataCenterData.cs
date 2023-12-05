@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CassandraDataCenterData : ResourceData
     {
-        /// <summary> Initializes a new instance of CassandraDataCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterData"/>. </summary>
         public CassandraDataCenterData()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraDataCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

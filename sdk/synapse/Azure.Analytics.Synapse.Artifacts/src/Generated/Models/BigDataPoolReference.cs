@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Big data pool reference. </summary>
     public partial class BigDataPoolReference
     {
-        /// <summary> Initializes a new instance of BigDataPoolReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolReference"/>. </summary>
         /// <param name="type"> Big data pool reference type. </param>
         /// <param name="referenceName"> Reference big data pool name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>

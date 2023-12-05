@@ -15,13 +15,13 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The response for the Trial Matcher request. </summary>
     public partial class TrialMatcherResult
     {
-        /// <summary> Initializes a new instance of TrialMatcherResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherResult"/>. </summary>
         internal TrialMatcherResult()
         {
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherResult"/>. </summary>
         /// <param name="jobId"> A processing job identifier. </param>
         /// <param name="createdDateTime"> The date and time when the processing job was created. </param>
         /// <param name="expirationDateTime"> The date and time when the processing job is set to expire. </param>

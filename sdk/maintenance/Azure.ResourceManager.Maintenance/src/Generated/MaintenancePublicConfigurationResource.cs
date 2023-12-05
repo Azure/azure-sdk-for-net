@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
     /// A Class representing a MaintenancePublicConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MaintenancePublicConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMaintenancePublicConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetMaintenancePublicConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenancePublicConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMaintenancePublicConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetMaintenancePublicConfiguration method.
     /// </summary>
     public partial class MaintenancePublicConfigurationResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.Maintenance
         private readonly PublicMaintenanceConfigurationsRestOperations _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient;
         private readonly MaintenanceConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Maintenance/publicMaintenanceConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="MaintenancePublicConfigurationResource"/> class for mocking. </summary>
         protected MaintenancePublicConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MaintenancePublicConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MaintenancePublicConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MaintenancePublicConfigurationResource(ArmClient client, MaintenanceConfigurationData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Maintenance
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Maintenance/publicMaintenanceConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

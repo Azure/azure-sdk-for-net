@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Rest Service linked service. </summary>
     public partial class RestServiceLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestServiceLinkedService"/>. </summary>
         /// <param name="url"> The base URL of the REST service. </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the REST service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "RestService";
         }
 
-        /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestServiceLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

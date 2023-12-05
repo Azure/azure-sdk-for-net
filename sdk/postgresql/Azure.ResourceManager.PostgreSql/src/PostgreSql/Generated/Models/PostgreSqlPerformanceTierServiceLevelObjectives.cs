@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Service level objectives for performance tier. </summary>
     public partial class PostgreSqlPerformanceTierServiceLevelObjectives
     {
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierServiceLevelObjectives. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierServiceLevelObjectives"/>. </summary>
         internal PostgreSqlPerformanceTierServiceLevelObjectives()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierServiceLevelObjectives. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierServiceLevelObjectives"/>. </summary>
         /// <param name="id"> ID for the service level objective. </param>
         /// <param name="edition"> Edition of the performance tier. </param>
         /// <param name="vCores"> vCore associated with the service level objective. </param>

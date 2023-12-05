@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> A run command request. </summary>
     public partial class ManagedClusterRunCommandContent
     {
-        /// <summary> Initializes a new instance of ManagedClusterRunCommandContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandContent"/>. </summary>
         /// <param name="command"> The command to run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
         public ManagedClusterRunCommandContent(string command)
@@ -21,6 +21,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             Argument.AssertNotNull(command, nameof(command));
 
             Command = command;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandContent"/>. </summary>
+        /// <param name="command"> The command to run. </param>
+        /// <param name="context"> A base64 encoded zip file containing the files required by the command. </param>
+        /// <param name="clusterToken"> AuthToken issued for AKS AAD Server App. </param>
+        internal ManagedClusterRunCommandContent(string command, string context, string clusterToken)
+        {
+            Command = command;
+            Context = context;
+            ClusterToken = clusterToken;
         }
 
         /// <summary> The command to run. </summary>

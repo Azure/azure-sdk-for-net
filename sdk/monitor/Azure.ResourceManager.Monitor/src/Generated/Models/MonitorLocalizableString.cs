@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The localizable string class. </summary>
     public partial class MonitorLocalizableString
     {
-        /// <summary> Initializes a new instance of MonitorLocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorLocalizableString"/>. </summary>
         /// <param name="value"> the invariant value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MonitorLocalizableString(string value)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of MonitorLocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorLocalizableString"/>. </summary>
         /// <param name="value"> the invariant value. </param>
         /// <param name="localizedValue"> the locale specific value. </param>
         internal MonitorLocalizableString(string value, string localizedValue)

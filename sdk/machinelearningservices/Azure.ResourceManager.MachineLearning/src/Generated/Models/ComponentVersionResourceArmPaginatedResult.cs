@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of ComponentVersion entities. </summary>
     internal partial class ComponentVersionResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of ComponentVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentVersionResourceArmPaginatedResult"/>. </summary>
         internal ComponentVersionResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningComponentVersionData>();
         }
 
-        /// <summary> Initializes a new instance of ComponentVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentVersionResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of ComponentVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type ComponentVersion. </param>
         internal ComponentVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningComponentVersionData> value)

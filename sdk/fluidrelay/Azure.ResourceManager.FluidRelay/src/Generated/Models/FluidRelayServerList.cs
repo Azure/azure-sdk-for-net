@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> Paged response. </summary>
     internal partial class FluidRelayServerList
     {
-        /// <summary> Initializes a new instance of FluidRelayServerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerList"/>. </summary>
         /// <param name="value"> A sequence of FluidRelay servers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FluidRelayServerList(IEnumerable<FluidRelayServerData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of FluidRelayServerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerList"/>. </summary>
         /// <param name="value"> A sequence of FluidRelay servers. </param>
         /// <param name="nextLink"> A link to the next page of results, if any. </param>
         internal FluidRelayServerList(IReadOnlyList<FluidRelayServerData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the IP flow to be verified. </summary>
     public partial class VerificationIPFlowContent
     {
-        /// <summary> Initializes a new instance of VerificationIPFlowContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerificationIPFlowContent"/>. </summary>
         /// <param name="targetResourceId"> The ID of the target resource to perform next-hop on. </param>
         /// <param name="direction"> The direction of the packet represented as a 5-tuple. </param>
         /// <param name="protocol"> Protocol to be verified on. </param>
@@ -37,6 +37,27 @@ namespace Azure.ResourceManager.Network.Models
             RemotePort = remotePort;
             LocalIPAddress = localIPAddress;
             RemoteIPAddress = remoteIPAddress;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VerificationIPFlowContent"/>. </summary>
+        /// <param name="targetResourceId"> The ID of the target resource to perform next-hop on. </param>
+        /// <param name="direction"> The direction of the packet represented as a 5-tuple. </param>
+        /// <param name="protocol"> Protocol to be verified on. </param>
+        /// <param name="localPort"> The local port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </param>
+        /// <param name="remotePort"> The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </param>
+        /// <param name="localIPAddress"> The local IP address. Acceptable values are valid IPv4 addresses. </param>
+        /// <param name="remoteIPAddress"> The remote IP address. Acceptable values are valid IPv4 addresses. </param>
+        /// <param name="targetNicResourceId"> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified. Otherwise optional). </param>
+        internal VerificationIPFlowContent(ResourceIdentifier targetResourceId, NetworkTrafficDirection direction, IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress, ResourceIdentifier targetNicResourceId)
+        {
+            TargetResourceId = targetResourceId;
+            Direction = direction;
+            Protocol = protocol;
+            LocalPort = localPort;
+            RemotePort = remotePort;
+            LocalIPAddress = localIPAddress;
+            RemoteIPAddress = remoteIPAddress;
+            TargetNicResourceId = targetNicResourceId;
         }
 
         /// <summary> The ID of the target resource to perform next-hop on. </summary>

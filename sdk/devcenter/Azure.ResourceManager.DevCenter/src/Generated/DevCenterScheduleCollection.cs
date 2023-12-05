@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterScheduleResource" /> and their operations.
-    /// Each <see cref="DevCenterScheduleResource" /> in the collection will belong to the same instance of <see cref="DevCenterPoolResource" />.
-    /// To get a <see cref="DevCenterScheduleCollection" /> instance call the GetDevCenterSchedules method from an instance of <see cref="DevCenterPoolResource" />.
+    /// A class representing a collection of <see cref="DevCenterScheduleResource"/> and their operations.
+    /// Each <see cref="DevCenterScheduleResource"/> in the collection will belong to the same instance of <see cref="DevCenterPoolResource"/>.
+    /// To get a <see cref="DevCenterScheduleCollection"/> instance call the GetDevCenterSchedules method from an instance of <see cref="DevCenterPoolResource"/>.
     /// </summary>
     public partial class DevCenterScheduleCollection : ArmCollection, IEnumerable<DevCenterScheduleResource>, IAsyncEnumerable<DevCenterScheduleResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterScheduleResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterScheduleSchedulesRestClient.CreateListByPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterScheduleResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterScheduleSchedulesRestClient.CreateListByPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);

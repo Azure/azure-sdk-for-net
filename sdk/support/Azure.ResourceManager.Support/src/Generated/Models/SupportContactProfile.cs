@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Contact information associated with the support ticket. </summary>
     public partial class SupportContactProfile
     {
-        /// <summary> Initializes a new instance of SupportContactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportContactProfile"/>. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="preferredContactMethod"> Preferred contact method. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Support.Models
             PreferredSupportLanguage = preferredSupportLanguage;
         }
 
-        /// <summary> Initializes a new instance of SupportContactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportContactProfile"/>. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="preferredContactMethod"> Preferred contact method. </param>

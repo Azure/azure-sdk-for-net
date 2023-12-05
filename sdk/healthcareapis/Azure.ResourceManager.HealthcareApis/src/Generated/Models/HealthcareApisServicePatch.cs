@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The description of the service. </summary>
     public partial class HealthcareApisServicePatch
     {
-        /// <summary> Initializes a new instance of HealthcareApisServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServicePatch"/>. </summary>
         public HealthcareApisServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServicePatch"/>. </summary>
+        /// <param name="tags"> Instance tags. </param>
+        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
+        internal HealthcareApisServicePatch(IDictionary<string, string> tags, HealthcareApisPublicNetworkAccess? publicNetworkAccess)
+        {
+            Tags = tags;
+            PublicNetworkAccess = publicNetworkAccess;
         }
 
         /// <summary> Instance tags. </summary>

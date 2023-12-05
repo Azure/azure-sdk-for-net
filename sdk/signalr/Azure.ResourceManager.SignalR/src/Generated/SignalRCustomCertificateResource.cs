@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// A Class representing a SignalRCustomCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SignalRCustomCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSignalRCustomCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SignalRResource" /> using the GetSignalRCustomCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SignalRCustomCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSignalRCustomCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SignalRResource"/> using the GetSignalRCustomCertificate method.
     /// </summary>
     public partial class SignalRCustomCertificateResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.SignalR
         private readonly SignalRCustomCertificatesRestOperations _signalRCustomCertificateRestClient;
         private readonly SignalRCustomCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR/customCertificates";
+
         /// <summary> Initializes a new instance of the <see cref="SignalRCustomCertificateResource"/> class for mocking. </summary>
         protected SignalRCustomCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SignalRCustomCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SignalRCustomCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SignalRCustomCertificateResource(ArmClient client, SignalRCustomCertificateData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SignalR
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR/customCertificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The SignalRCustomCertificate to use. </param>
+        /// <param name="data"> The <see cref="SignalRCustomCertificateData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SignalRCustomCertificateResource>> UpdateAsync(WaitUntil waitUntil, SignalRCustomCertificateData data, CancellationToken cancellationToken = default)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The SignalRCustomCertificate to use. </param>
+        /// <param name="data"> The <see cref="SignalRCustomCertificateData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SignalRCustomCertificateResource> Update(WaitUntil waitUntil, SignalRCustomCertificateData data, CancellationToken cancellationToken = default)

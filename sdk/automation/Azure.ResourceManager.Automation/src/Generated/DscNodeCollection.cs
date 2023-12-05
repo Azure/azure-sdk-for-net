@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DscNodeResource" /> and their operations.
-    /// Each <see cref="DscNodeResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get a <see cref="DscNodeCollection" /> instance call the GetDscNodes method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="DscNodeResource"/> and their operations.
+    /// Each <see cref="DscNodeResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get a <see cref="DscNodeCollection"/> instance call the GetDscNodes method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class DscNodeCollection : ArmCollection, IEnumerable<DscNodeResource>, IAsyncEnumerable<DscNodeResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="top"> The number of rows to take. </param>
         /// <param name="inlinecount"> Return total rows. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DscNodeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DscNodeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DscNodeResource> GetAllAsync(string filter = null, int? skip = null, int? top = null, string inlinecount = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="top"> The number of rows to take. </param>
         /// <param name="inlinecount"> Return total rows. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DscNodeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DscNodeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DscNodeResource> GetAll(string filter = null, int? skip = null, int? top = null, string inlinecount = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);

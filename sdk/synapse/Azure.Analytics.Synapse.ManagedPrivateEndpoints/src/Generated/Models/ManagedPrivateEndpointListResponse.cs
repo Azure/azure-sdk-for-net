@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
     /// <summary> A list of managed private endpoints. </summary>
     internal partial class ManagedPrivateEndpointListResponse
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointListResponse"/>. </summary>
         internal ManagedPrivateEndpointListResponse()
         {
             Value = new ChangeTrackingList<ManagedPrivateEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointListResponse"/>. </summary>
         /// <param name="value"> List of managed private endpoints. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal ManagedPrivateEndpointListResponse(IReadOnlyList<ManagedPrivateEndpoint> value, string nextLink)

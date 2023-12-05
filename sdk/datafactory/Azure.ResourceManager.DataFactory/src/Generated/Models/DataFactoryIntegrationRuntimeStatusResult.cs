@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Integration runtime status response. </summary>
     public partial class DataFactoryIntegrationRuntimeStatusResult
     {
-        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimeStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeStatusResult"/>. </summary>
         /// <param name="properties">
         /// Integration runtime properties.
         /// Please note <see cref="IntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimeStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeStatusResult"/>. </summary>
         /// <param name="name"> The integration runtime name. </param>
         /// <param name="properties">
         /// Integration runtime properties.

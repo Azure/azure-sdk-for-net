@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Request body of the CheckPrivateLinkServiceVisibility API service call. </summary>
     public partial class CheckPrivateLinkServiceVisibilityRequest
     {
-        /// <summary> Initializes a new instance of CheckPrivateLinkServiceVisibilityRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckPrivateLinkServiceVisibilityRequest"/>. </summary>
         public CheckPrivateLinkServiceVisibilityRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckPrivateLinkServiceVisibilityRequest"/>. </summary>
+        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        internal CheckPrivateLinkServiceVisibilityRequest(string privateLinkServiceAlias)
+        {
+            PrivateLinkServiceAlias = privateLinkServiceAlias;
         }
 
         /// <summary> The alias of the private link service. </summary>

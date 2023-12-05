@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of custom data column. </summary>
     public partial class DataColumnDefinition
     {
-        /// <summary> Initializes a new instance of DataColumnDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataColumnDefinition"/>. </summary>
         public DataColumnDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of DataColumnDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataColumnDefinition"/>. </summary>
         /// <param name="name"> The name of the column. </param>
         /// <param name="definitionType"> The type of the column data. </param>
         internal DataColumnDefinition(string name, DataColumnDefinitionType? definitionType)

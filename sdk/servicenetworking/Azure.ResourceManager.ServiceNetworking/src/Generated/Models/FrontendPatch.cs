@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> The type used for update operations of the Frontend. </summary>
     public partial class FrontendPatch
     {
-        /// <summary> Initializes a new instance of FrontendPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendPatch"/>. </summary>
         public FrontendPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontendPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal FrontendPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a image disk. </summary>
     public partial class ImageDisk
     {
-        /// <summary> Initializes a new instance of ImageDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDisk"/>. </summary>
         public ImageDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDisk"/>. </summary>
         /// <param name="snapshot"> The snapshot. </param>
         /// <param name="managedDisk"> The managedDisk. </param>
         /// <param name="blobUri"> The Virtual Hard Disk. </param>

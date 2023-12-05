@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> Paged list of account resources. </summary>
     internal partial class AccountList
     {
-        /// <summary> Initializes a new instance of AccountList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountList"/>. </summary>
         /// <param name="value"> Collection of items of type results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AccountList(IEnumerable<PurviewAccountData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AccountList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountList"/>. </summary>
         /// <param name="count"> Total item count. </param>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type results. </param>

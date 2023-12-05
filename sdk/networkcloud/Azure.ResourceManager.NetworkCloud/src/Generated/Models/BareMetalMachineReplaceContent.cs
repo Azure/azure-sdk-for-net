@@ -10,9 +10,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineReplaceParameters represents the body of the request to physically swap a bare metal machine for another. </summary>
     public partial class BareMetalMachineReplaceContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachineReplaceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceContent"/>. </summary>
         public BareMetalMachineReplaceContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceContent"/>. </summary>
+        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
+        /// <param name="bmcMacAddress"> The MAC address of the BMC device. </param>
+        /// <param name="bootMacAddress"> The MAC address of a NIC connected to the PXE network. </param>
+        /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
+        /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
+        internal BareMetalMachineReplaceContent(AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineName, string serialNumber)
+        {
+            BmcCredentials = bmcCredentials;
+            BmcMacAddress = bmcMacAddress;
+            BootMacAddress = bootMacAddress;
+            MachineName = machineName;
+            SerialNumber = serialNumber;
         }
 
         /// <summary> The credentials of the baseboard management controller on this bare metal machine. </summary>

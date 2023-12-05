@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Description of a CheckAvailability resource. </summary>
     public partial class NotificationHubAvailabilityResult : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NotificationHubAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAvailabilityResult"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubAvailabilityResult(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAvailabilityResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

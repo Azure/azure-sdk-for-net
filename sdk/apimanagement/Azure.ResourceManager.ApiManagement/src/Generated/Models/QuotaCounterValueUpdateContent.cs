@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Quota counter value details. </summary>
     public partial class QuotaCounterValueUpdateContent
     {
-        /// <summary> Initializes a new instance of QuotaCounterValueUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueUpdateContent"/>. </summary>
         public QuotaCounterValueUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueUpdateContent"/>. </summary>
+        /// <param name="callsCount"> Number of times Counter was called. </param>
+        /// <param name="kbTransferred"> Data Transferred in KiloBytes. </param>
+        internal QuotaCounterValueUpdateContent(int? callsCount, double? kbTransferred)
+        {
+            CallsCount = callsCount;
+            KbTransferred = kbTransferred;
         }
 
         /// <summary> Number of times Counter was called. </summary>

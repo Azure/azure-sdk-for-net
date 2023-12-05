@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TenantScheduledActionResource" /> and their operations.
-    /// Each <see cref="TenantScheduledActionResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="TenantScheduledActionCollection" /> instance call the GetTenantScheduledActions method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="TenantScheduledActionResource"/> and their operations.
+    /// Each <see cref="TenantScheduledActionResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantScheduledActionCollection"/> instance call the GetTenantScheduledActions method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantScheduledActionCollection : ArmCollection
     {

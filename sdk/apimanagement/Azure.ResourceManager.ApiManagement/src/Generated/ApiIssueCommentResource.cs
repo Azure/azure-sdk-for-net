@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiIssueComment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiIssueCommentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiIssueCommentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiIssueResource" /> using the GetApiIssueComment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiIssueCommentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiIssueCommentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiIssueResource"/> using the GetApiIssueComment method.
     /// </summary>
     public partial class ApiIssueCommentResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiIssueCommentRestOperations _apiIssueCommentRestClient;
         private readonly ApiIssueCommentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/issues/comments";
+
         /// <summary> Initializes a new instance of the <see cref="ApiIssueCommentResource"/> class for mocking. </summary>
         protected ApiIssueCommentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiIssueCommentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiIssueCommentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiIssueCommentResource(ArmClient client, ApiIssueCommentData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/issues/comments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> The configuration information for an audio transcription request. </summary>
     public partial class AudioTranscriptionOptions
     {
-        /// <summary> Initializes a new instance of AudioTranscriptionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTranscriptionOptions"/>. </summary>
         /// <param name="audioData">
         /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
         ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.

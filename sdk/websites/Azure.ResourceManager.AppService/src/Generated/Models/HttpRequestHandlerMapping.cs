@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// </summary>
     public partial class HttpRequestHandlerMapping
     {
-        /// <summary> Initializes a new instance of HttpRequestHandlerMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpRequestHandlerMapping"/>. </summary>
         public HttpRequestHandlerMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpRequestHandlerMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpRequestHandlerMapping"/>. </summary>
         /// <param name="extension"> Requests with this extension will be handled using the specified FastCGI application. </param>
         /// <param name="scriptProcessor"> The absolute path to the FastCGI application. </param>
         /// <param name="arguments"> Command-line arguments to be passed to the script processor. </param>

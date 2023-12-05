@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> SourceControl collection ARM resource. </summary>
     internal partial class SourceControlCollection
     {
-        /// <summary> Initializes a new instance of SourceControlCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SourceControlCollection(IEnumerable<ContainerAppSourceControlData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SourceControlCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal SourceControlCollection(IReadOnlyList<ContainerAppSourceControlData> value, string nextLink)

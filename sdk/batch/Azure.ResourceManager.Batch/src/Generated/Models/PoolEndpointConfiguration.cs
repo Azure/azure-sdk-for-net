@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The endpoint configuration for a pool. </summary>
     internal partial class PoolEndpointConfiguration
     {
-        /// <summary> Initializes a new instance of PoolEndpointConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PoolEndpointConfiguration"/>. </summary>
         /// <param name="inboundNatPools"> The maximum number of inbound NAT pools per Batch pool is 5. If the maximum number of inbound NAT pools is exceeded the request fails with HTTP status code 400. This cannot be specified if the IPAddressProvisioningType is NoPublicIPAddresses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatPools"/> is null. </exception>
         public PoolEndpointConfiguration(IEnumerable<BatchInboundNatPool> inboundNatPools)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Batch.Models
             InboundNatPools = inboundNatPools.ToList();
         }
 
-        /// <summary> Initializes a new instance of PoolEndpointConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PoolEndpointConfiguration"/>. </summary>
         /// <param name="inboundNatPools"> The maximum number of inbound NAT pools per Batch pool is 5. If the maximum number of inbound NAT pools is exceeded the request fails with HTTP status code 400. This cannot be specified if the IPAddressProvisioningType is NoPublicIPAddresses. </param>
         internal PoolEndpointConfiguration(IList<BatchInboundNatPool> inboundNatPools)
         {

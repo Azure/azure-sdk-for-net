@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The properties of the benefit recommendations when scope is 'Single'. </summary>
     public partial class SingleScopeBenefitRecommendationProperties : BenefitRecommendationProperties
     {
-        /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleScopeBenefitRecommendationProperties"/>. </summary>
         public SingleScopeBenefitRecommendationProperties()
         {
             Scope = BenefitRecommendationScope.Single;
         }
 
-        /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleScopeBenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>

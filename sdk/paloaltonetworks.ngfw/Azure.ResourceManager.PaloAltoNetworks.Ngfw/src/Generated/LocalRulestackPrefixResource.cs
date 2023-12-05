@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a LocalRulestackPrefix along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LocalRulestackPrefixResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLocalRulestackPrefixResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LocalRulestackResource" /> using the GetLocalRulestackPrefix method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LocalRulestackPrefixResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLocalRulestackPrefixResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LocalRulestackResource"/> using the GetLocalRulestackPrefix method.
     /// </summary>
     public partial class LocalRulestackPrefixResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly PrefixListLocalRulestackRestOperations _localRulestackPrefixPrefixListLocalRulestackRestClient;
         private readonly LocalRulestackPrefixData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/localRulestacks/prefixlists";
+
         /// <summary> Initializes a new instance of the <see cref="LocalRulestackPrefixResource"/> class for mocking. </summary>
         protected LocalRulestackPrefixResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LocalRulestackPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LocalRulestackPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LocalRulestackPrefixResource(ArmClient client, LocalRulestackPrefixData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/localRulestacks/prefixlists";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The List hybrid machine operation response. </summary>
     internal partial class MachineListResult
     {
-        /// <summary> Initializes a new instance of MachineListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineListResult"/>. </summary>
         /// <param name="value"> The list of hybrid machines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MachineListResult(IEnumerable<HybridComputeMachineData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MachineListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineListResult"/>. </summary>
         /// <param name="value"> The list of hybrid machines. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of hybrid machines. </param>
         internal MachineListResult(IReadOnlyList<HybridComputeMachineData> value, string nextLink)

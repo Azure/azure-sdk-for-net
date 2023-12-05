@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for packet capture API service call. </summary>
     internal partial class PacketCaptureListResult
     {
-        /// <summary> Initializes a new instance of PacketCaptureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureListResult"/>. </summary>
         internal PacketCaptureListResult()
         {
             Value = new ChangeTrackingList<MobileNetworkPacketCaptureData>();
         }
 
-        /// <summary> Initializes a new instance of PacketCaptureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureListResult"/>. </summary>
         /// <param name="value"> A list of packet capture sessions under a packet core control plane. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal PacketCaptureListResult(IReadOnlyList<MobileNetworkPacketCaptureData> value, string nextLink)

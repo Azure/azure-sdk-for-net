@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="publicLandMobileNetworkIdentifier"> The unique public land mobile network identifier for the network. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicLandMobileNetworkIdentifier"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MobileNetwork
             PublicLandMobileNetworkIdentifier = publicLandMobileNetworkIdentifier;
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

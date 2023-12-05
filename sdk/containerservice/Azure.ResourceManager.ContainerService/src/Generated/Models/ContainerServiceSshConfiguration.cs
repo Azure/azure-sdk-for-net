@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> SSH configuration for Linux-based VMs running on Azure. </summary>
     public partial class ContainerServiceSshConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerServiceSshConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSshConfiguration"/>. </summary>
         /// <param name="publicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicKeys"/> is null. </exception>
         public ContainerServiceSshConfiguration(IEnumerable<ContainerServiceSshPublicKey> publicKeys)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             PublicKeys = publicKeys.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceSshConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSshConfiguration"/>. </summary>
         /// <param name="publicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
         internal ContainerServiceSshConfiguration(IList<ContainerServiceSshPublicKey> publicKeys)
         {

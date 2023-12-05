@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BackupProtectionContainerResource" /> and their operations.
-    /// Each <see cref="BackupProtectionContainerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="BackupProtectionContainerCollection" /> instance call the GetBackupProtectionContainers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="BackupProtectionContainerResource"/> and their operations.
+    /// Each <see cref="BackupProtectionContainerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BackupProtectionContainerCollection"/> instance call the GetBackupProtectionContainers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class BackupProtectionContainerCollection : ArmCollection
     {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The customer name to be printed on a letter of authorization. </summary>
     public partial class GenerateExpressRoutePortsLoaContent
     {
-        /// <summary> Initializes a new instance of GenerateExpressRoutePortsLoaContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaContent"/>. </summary>
         /// <param name="customerName"> The customer name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
         public GenerateExpressRoutePortsLoaContent(string customerName)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Storage Account configurations. </summary>
     public partial class StorageAccountConfiguration
     {
-        /// <summary> Initializes a new instance of StorageAccountConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountConfiguration"/>. </summary>
         public StorageAccountConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountConfiguration"/>. </summary>
         /// <param name="id"> Resource ID of storage account. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="accountName"> Storage account name. </param>

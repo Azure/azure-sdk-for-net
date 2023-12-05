@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubsSchemaGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsSchemaGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsSchemaGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHubsSchemaGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubsSchemaGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubsSchemaGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHubsSchemaGroup method.
     /// </summary>
     public partial class EventHubsSchemaGroupResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.EventHubs
         private readonly SchemaRegistryRestOperations _eventHubsSchemaGroupSchemaRegistryRestClient;
         private readonly EventHubsSchemaGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/schemagroups";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsSchemaGroupResource"/> class for mocking. </summary>
         protected EventHubsSchemaGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsSchemaGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsSchemaGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsSchemaGroupResource(ArmClient client, EventHubsSchemaGroupData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/schemagroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

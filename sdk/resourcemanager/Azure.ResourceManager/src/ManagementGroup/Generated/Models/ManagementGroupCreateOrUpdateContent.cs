@@ -14,10 +14,29 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Management group creation parameters. </summary>
     public partial class ManagementGroupCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ManagementGroupCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupCreateOrUpdateContent"/>. </summary>
         public ManagementGroupCreateOrUpdateContent()
         {
             Children = new ChangeTrackingList<ManagementGroupChildOptions>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="resourceType"> The type of the resource.  For example, Microsoft.Management/managementGroups. </param>
+        /// <param name="name"> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="tenantId"> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the management group. If no value is passed then this  field will be set to the groupId. </param>
+        /// <param name="details"> The details of a management group used during creation. </param>
+        /// <param name="children"> The list of children. </param>
+        internal ManagementGroupCreateOrUpdateContent(string id, ResourceType? resourceType, string name, Guid? tenantId, string displayName, CreateManagementGroupDetails details, IReadOnlyList<ManagementGroupChildOptions> children)
+        {
+            Id = id;
+            ResourceType = resourceType;
+            Name = name;
+            TenantId = tenantId;
+            DisplayName = displayName;
+            Details = details;
+            Children = children;
         }
 
         /// <summary> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>

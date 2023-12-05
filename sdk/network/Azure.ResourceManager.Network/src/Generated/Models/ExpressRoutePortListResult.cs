@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListExpressRoutePorts API service call. </summary>
     internal partial class ExpressRoutePortListResult
     {
-        /// <summary> Initializes a new instance of ExpressRoutePortListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortListResult"/>. </summary>
         internal ExpressRoutePortListResult()
         {
             Value = new ChangeTrackingList<ExpressRoutePortData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRoutePortListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortListResult"/>. </summary>
         /// <param name="value"> A list of ExpressRoutePort resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ExpressRoutePortListResult(IReadOnlyList<ExpressRoutePortData> value, string nextLink)

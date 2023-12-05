@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm update protection container mapping. </summary>
     public partial class InMageRcmUpdateContainerMappingContent : ReplicationProviderSpecificUpdateContainerMappingContent
     {
-        /// <summary> Initializes a new instance of InMageRcmUpdateContainerMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateContainerMappingContent"/>. </summary>
         /// <param name="enableAgentAutoUpgrade"> A value indicating whether agent auto upgrade has to be enabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="enableAgentAutoUpgrade"/> is null. </exception>
         public InMageRcmUpdateContainerMappingContent(string enableAgentAutoUpgrade)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             EnableAgentAutoUpgrade = enableAgentAutoUpgrade;
             InstanceType = "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateContainerMappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="enableAgentAutoUpgrade"> A value indicating whether agent auto upgrade has to be enabled. </param>
+        internal InMageRcmUpdateContainerMappingContent(string instanceType, string enableAgentAutoUpgrade) : base(instanceType)
+        {
+            EnableAgentAutoUpgrade = enableAgentAutoUpgrade;
+            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> A value indicating whether agent auto upgrade has to be enabled. </summary>

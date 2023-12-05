@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The response containing cached images. </summary>
     internal partial class CachedImagesListResult
     {
-        /// <summary> Initializes a new instance of CachedImagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CachedImagesListResult"/>. </summary>
         internal CachedImagesListResult()
         {
             Value = new ChangeTrackingList<CachedImages>();
         }
 
-        /// <summary> Initializes a new instance of CachedImagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CachedImagesListResult"/>. </summary>
         /// <param name="value"> The list of cached images. </param>
         /// <param name="nextLink"> The URI to fetch the next page of cached images. </param>
         internal CachedImagesListResult(IReadOnlyList<CachedImages> value, string nextLink)

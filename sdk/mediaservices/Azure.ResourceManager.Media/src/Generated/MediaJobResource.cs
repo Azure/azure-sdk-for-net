@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a MediaJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMediaJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaTransformResource" /> using the GetMediaJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MediaJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMediaJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaTransformResource"/> using the GetMediaJob method.
     /// </summary>
     public partial class MediaJobResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Media
         private readonly JobsRestOperations _mediaJobJobsRestClient;
         private readonly MediaJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/transforms/jobs";
+
         /// <summary> Initializes a new instance of the <see cref="MediaJobResource"/> class for mocking. </summary>
         protected MediaJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MediaJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MediaJobResource(ArmClient client, MediaJobData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/transforms/jobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

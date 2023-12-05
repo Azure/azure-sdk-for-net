@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Configuration settings for the Azure App Service Authentication / Authorization V2 feature. </summary>
     public partial class SiteAuthSettingsV2 : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteAuthSettingsV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettingsV2"/>. </summary>
         public SiteAuthSettingsV2()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteAuthSettingsV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettingsV2"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

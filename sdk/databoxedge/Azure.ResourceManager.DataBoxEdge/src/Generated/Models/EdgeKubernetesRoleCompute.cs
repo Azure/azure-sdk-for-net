@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes role compute resource. </summary>
     public partial class EdgeKubernetesRoleCompute
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleCompute"/>. </summary>
         /// <param name="vmProfile"> VM profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmProfile"/> is null. </exception>
         public EdgeKubernetesRoleCompute(string vmProfile)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             VmProfile = vmProfile;
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleCompute"/>. </summary>
         /// <param name="vmProfile"> VM profile. </param>
         /// <param name="memoryInBytes"> Memory in bytes. </param>
         /// <param name="processorCount"> Processor count. </param>

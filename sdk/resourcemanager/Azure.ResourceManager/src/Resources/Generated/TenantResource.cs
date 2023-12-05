@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a Tenant along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantResource method.
     /// </summary>
     public partial class TenantResource : ArmResource
     {
@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _providersClientDiagnostics;
         private readonly ProvidersRestOperations _providersRestClient;
         private readonly TenantData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tenants";
 
         /// <summary> Initializes a new instance of the <see cref="TenantResource"/> class for mocking. </summary>
         protected TenantResource()
@@ -55,9 +58,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/tenants";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TenantResourceProvider"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(expand);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TenantResourceProvider"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(expand);

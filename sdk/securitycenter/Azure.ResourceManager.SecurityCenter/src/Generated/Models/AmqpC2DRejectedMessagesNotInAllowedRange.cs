@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Number of rejected cloud to device messages (AMQP protocol) is not in allowed range. </summary>
     public partial class AmqpC2DRejectedMessagesNotInAllowedRange : TimeWindowCustomAlertRule
     {
-        /// <summary> Initializes a new instance of AmqpC2DRejectedMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RuleType = "AmqpC2DRejectedMessagesNotInAllowedRange";
         }
 
-        /// <summary> Initializes a new instance of AmqpC2DRejectedMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>

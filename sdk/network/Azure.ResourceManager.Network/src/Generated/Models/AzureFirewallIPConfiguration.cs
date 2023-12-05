@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP configuration of an Azure Firewall. </summary>
     public partial class AzureFirewallIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallIPConfiguration"/>. </summary>
         public AzureFirewallIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

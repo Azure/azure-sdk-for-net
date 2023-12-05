@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
     /// A Class representing a VMwareVCenter along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VMwareVCenterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVMwareVCenterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVMwareVCenter method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VMwareVCenterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVMwareVCenterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVMwareVCenter method.
     /// </summary>
     public partial class VMwareVCenterResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly VCentersRestOperations _vMwareVCenterVCentersRestClient;
         private readonly VMwareVCenterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/vcenters";
+
         /// <summary> Initializes a new instance of the <see cref="VMwareVCenterResource"/> class for mocking. </summary>
         protected VMwareVCenterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VMwareVCenterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VMwareVCenterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VMwareVCenterResource(ArmClient client, VMwareVCenterData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/vcenters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The UnknownFileShareConfiguration. </summary>
     internal partial class UnknownFileShareConfiguration : FileShareConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownFileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config. </param>
         internal UnknownFileShareConfiguration(ConfigurationType configurationType) : base(configurationType)
         {

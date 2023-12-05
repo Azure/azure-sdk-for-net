@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class SiteRecoveryFabricData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricData"/>. </summary>
         internal SiteRecoveryFabricData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

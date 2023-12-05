@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update policy input. </summary>
     public partial class SiteRecoveryPolicyPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyPatch"/>. </summary>
         public SiteRecoveryPolicyPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyPatch"/>. </summary>
+        /// <param name="properties"> The ReplicationProviderSettings. </param>
+        internal SiteRecoveryPolicyPatch(UpdatePolicyContentProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> The ReplicationProviderSettings. </summary>

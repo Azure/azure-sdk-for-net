@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HealthcareApis
     /// </summary>
     public partial class FhirServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FhirServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FhirServiceData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HealthcareApis
             PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of FhirServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

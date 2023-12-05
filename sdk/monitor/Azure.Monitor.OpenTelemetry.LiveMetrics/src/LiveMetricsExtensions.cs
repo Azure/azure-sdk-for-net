@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Metrics;
@@ -47,6 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
             return builder.AddProcessor(sp =>
             {
+                // SETUP OPTIONS
                 LiveMetricsExporterOptions exporterOptions;
 
                 if (name == null)
@@ -63,9 +65,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                     exporterOptions = sp.GetRequiredService<IOptionsMonitor<LiveMetricsExporterOptions>>().Get(finalOptionsName);
                 }
 
-                DoubleBuffer doubleBuffer = new();
-
-                return new LiveMetricsExtractionProcessor(doubleBuffer, new LiveMetricsExporter(doubleBuffer, exporterOptions));
+                // INITIALIZE INTERNALS
+                var manager = ManagerFactory.Instance.Get(exporterOptions);
+                return new LiveMetricsExtractionProcessor(manager);
             });
         }
     }

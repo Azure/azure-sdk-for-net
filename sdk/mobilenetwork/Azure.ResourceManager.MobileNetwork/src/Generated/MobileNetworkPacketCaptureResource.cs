@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a MobileNetworkPacketCapture along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MobileNetworkPacketCaptureResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMobileNetworkPacketCaptureResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PacketCoreControlPlaneResource" /> using the GetMobileNetworkPacketCapture method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MobileNetworkPacketCaptureResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMobileNetworkPacketCaptureResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PacketCoreControlPlaneResource"/> using the GetMobileNetworkPacketCapture method.
     /// </summary>
     public partial class MobileNetworkPacketCaptureResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly PacketCapturesRestOperations _mobileNetworkPacketCapturePacketCapturesRestClient;
         private readonly MobileNetworkPacketCaptureData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes/packetCaptures";
+
         /// <summary> Initializes a new instance of the <see cref="MobileNetworkPacketCaptureResource"/> class for mocking. </summary>
         protected MobileNetworkPacketCaptureResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MobileNetworkPacketCaptureResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkPacketCaptureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MobileNetworkPacketCaptureResource(ArmClient client, MobileNetworkPacketCaptureData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes/packetCaptures";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

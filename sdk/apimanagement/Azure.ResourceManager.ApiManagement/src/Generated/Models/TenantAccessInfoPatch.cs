@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Tenant access information update parameters. </summary>
     public partial class TenantAccessInfoPatch
     {
-        /// <summary> Initializes a new instance of TenantAccessInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoPatch"/>. </summary>
         public TenantAccessInfoPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoPatch"/>. </summary>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
+        internal TenantAccessInfoPatch(bool? isDirectAccessEnabled)
+        {
+            IsDirectAccessEnabled = isDirectAccessEnabled;
         }
 
         /// <summary> Determines whether direct access is enabled. </summary>

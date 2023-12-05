@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseKustoPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SynapseKustoPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the kusto pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of SynapseKustoPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

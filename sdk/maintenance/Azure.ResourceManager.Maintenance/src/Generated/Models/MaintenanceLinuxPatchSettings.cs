@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Input properties for patching a Linux machine. </summary>
     public partial class MaintenanceLinuxPatchSettings
     {
-        /// <summary> Initializes a new instance of MaintenanceLinuxPatchSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceLinuxPatchSettings"/>. </summary>
         public MaintenanceLinuxPatchSettings()
         {
             PackageNameMasksToExclude = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             ClassificationsToInclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceLinuxPatchSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceLinuxPatchSettings"/>. </summary>
         /// <param name="packageNameMasksToExclude"> Package names to be excluded for patching. </param>
         /// <param name="packageNameMasksToInclude"> Package names to be included for patching. </param>
         /// <param name="classificationsToInclude"> Classification category of patches to be patched. </param>

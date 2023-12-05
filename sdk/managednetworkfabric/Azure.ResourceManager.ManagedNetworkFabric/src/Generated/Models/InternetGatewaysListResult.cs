@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of InternetGateways. </summary>
     internal partial class InternetGatewaysListResult
     {
-        /// <summary> Initializes a new instance of InternetGatewaysListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternetGatewaysListResult"/>. </summary>
         internal InternetGatewaysListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricInternetGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of InternetGatewaysListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternetGatewaysListResult"/>. </summary>
         /// <param name="value"> Displays list of Internet Gateway resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal InternetGatewaysListResult(IReadOnlyList<NetworkFabricInternetGatewayData> value, string nextLink)

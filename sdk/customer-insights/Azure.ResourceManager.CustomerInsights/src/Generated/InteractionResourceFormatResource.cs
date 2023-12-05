@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing an InteractionResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="InteractionResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetInteractionResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetInteractionResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="InteractionResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetInteractionResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetInteractionResourceFormat method.
     /// </summary>
     public partial class InteractionResourceFormatResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly InteractionsRestOperations _interactionResourceFormatInteractionsRestClient;
         private readonly InteractionResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/interactions";
+
         /// <summary> Initializes a new instance of the <see cref="InteractionResourceFormatResource"/> class for mocking. </summary>
         protected InteractionResourceFormatResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "InteractionResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InteractionResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal InteractionResourceFormatResource(ArmClient client, InteractionResourceFormatData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/interactions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

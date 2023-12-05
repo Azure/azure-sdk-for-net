@@ -13,10 +13,23 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update module operation. </summary>
     public partial class AutomationAccountModulePatch
     {
-        /// <summary> Initializes a new instance of AutomationAccountModulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountModulePatch"/>. </summary>
         public AutomationAccountModulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountModulePatch"/>. </summary>
+        /// <param name="name"> Gets or sets name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        internal AutomationAccountModulePatch(string name, AzureLocation? location, IDictionary<string, string> tags, AutomationContentLink contentLink)
+        {
+            Name = name;
+            Location = location;
+            Tags = tags;
+            ContentLink = contentLink;
         }
 
         /// <summary> Gets or sets name of the resource. </summary>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of job credentials. </summary>
     internal partial class JobCredentialListResult
     {
-        /// <summary> Initializes a new instance of JobCredentialListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobCredentialListResult"/>. </summary>
         internal JobCredentialListResult()
         {
             Value = new ChangeTrackingList<SqlServerJobCredentialData>();
         }
 
-        /// <summary> Initializes a new instance of JobCredentialListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobCredentialListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal JobCredentialListResult(IReadOnlyList<SqlServerJobCredentialData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm specific provider input. </summary>
     public partial class InMageRcmReprotectContent : ReverseReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmReprotectContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmReprotectContent"/>. </summary>
         /// <param name="reprotectAgentId"> The reprotect agent Id. </param>
         /// <param name="datastoreName"> The target datastore name. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
@@ -28,6 +28,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DatastoreName = datastoreName;
             LogStorageAccountId = logStorageAccountId;
             InstanceType = "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmReprotectContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="reprotectAgentId"> The reprotect agent Id. </param>
+        /// <param name="datastoreName"> The target datastore name. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="policyId"> The Policy Id. </param>
+        internal InMageRcmReprotectContent(string instanceType, string reprotectAgentId, string datastoreName, ResourceIdentifier logStorageAccountId, ResourceIdentifier policyId) : base(instanceType)
+        {
+            ReprotectAgentId = reprotectAgentId;
+            DatastoreName = datastoreName;
+            LogStorageAccountId = logStorageAccountId;
+            PolicyId = policyId;
+            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> The reprotect agent Id. </summary>

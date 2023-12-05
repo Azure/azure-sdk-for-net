@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerDatabaseRestorePoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerDatabaseRestorePointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerDatabaseRestorePointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetSqlServerDatabaseRestorePoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerDatabaseRestorePointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerDatabaseRestorePointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetSqlServerDatabaseRestorePoint method.
     /// </summary>
     public partial class SqlServerDatabaseRestorePointResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly RestorePointsRestOperations _sqlServerDatabaseRestorePointRestorePointsRestClient;
         private readonly SqlServerDatabaseRestorePointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/restorePoints";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerDatabaseRestorePointResource"/> class for mocking. </summary>
         protected SqlServerDatabaseRestorePointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerDatabaseRestorePointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerDatabaseRestorePointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerDatabaseRestorePointResource(ArmClient client, SqlServerDatabaseRestorePointData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/restorePoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

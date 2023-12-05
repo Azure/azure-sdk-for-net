@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Describes the Extension Instance View. </summary>
     public partial class HciExtensionInstanceView
     {
-        /// <summary> Initializes a new instance of HciExtensionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciExtensionInstanceView"/>. </summary>
         internal HciExtensionInstanceView()
         {
         }
 
-        /// <summary> Initializes a new instance of HciExtensionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciExtensionInstanceView"/>. </summary>
         /// <param name="name"> The extension name. </param>
         /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>

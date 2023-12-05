@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino user plugin. </summary>
     public partial class TrinoUserPlugin
     {
-        /// <summary> Initializes a new instance of TrinoUserPlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoUserPlugin"/>. </summary>
         public TrinoUserPlugin()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoUserPlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoUserPlugin"/>. </summary>
         /// <param name="isEnabled"> Denotes whether the plugin is active or not. </param>
         /// <param name="name"> This field maps to the sub-directory in trino plugins location, that will contain all the plugins under path. </param>
         /// <param name="path"> Fully qualified path to the folder containing the plugins. </param>

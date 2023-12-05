@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Container group diagnostic information. </summary>
     internal partial class ContainerGroupDiagnostics
     {
-        /// <summary> Initializes a new instance of ContainerGroupDiagnostics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupDiagnostics"/>. </summary>
         public ContainerGroupDiagnostics()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupDiagnostics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupDiagnostics"/>. </summary>
         /// <param name="logAnalytics"> Container group log analytics information. </param>
         internal ContainerGroupDiagnostics(ContainerGroupLogAnalytics logAnalytics)
         {

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates MySQL database connection. </summary>
     public partial class ConnectToSourceMySqlTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceMySqlTaskProperties"/>. </summary>
         public ConnectToSourceMySqlTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToSourceNonSqlTaskOutput>();
             TaskType = TaskType.ConnectToSourceMySql;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceMySqlTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceTypeRegistrationResource" /> and their operations.
-    /// Each <see cref="ResourceTypeRegistrationResource" /> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource" />.
-    /// To get a <see cref="ResourceTypeRegistrationCollection" /> instance call the GetResourceTypeRegistrations method from an instance of <see cref="ProviderRegistrationResource" />.
+    /// A class representing a collection of <see cref="ResourceTypeRegistrationResource"/> and their operations.
+    /// Each <see cref="ResourceTypeRegistrationResource"/> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource"/>.
+    /// To get a <see cref="ResourceTypeRegistrationCollection"/> instance call the GetResourceTypeRegistrations method from an instance of <see cref="ProviderRegistrationResource"/>.
     /// </summary>
     public partial class ResourceTypeRegistrationCollection : ArmCollection, IEnumerable<ResourceTypeRegistrationResource>, IAsyncEnumerable<ResourceTypeRegistrationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceTypeRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceTypeRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceTypeRegistrationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceTypeRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceTypeRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceTypeRegistrationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);

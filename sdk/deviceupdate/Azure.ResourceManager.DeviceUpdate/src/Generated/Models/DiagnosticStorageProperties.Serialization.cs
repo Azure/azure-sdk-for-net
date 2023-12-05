@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            AuthenticationType authenticationType = default;
+            DiagnosticStorageAuthenticationType authenticationType = default;
             Optional<string> connectionString = default;
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authenticationType"u8))
                 {
-                    authenticationType = new AuthenticationType(property.Value.GetString());
+                    authenticationType = new DiagnosticStorageAuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectionString"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

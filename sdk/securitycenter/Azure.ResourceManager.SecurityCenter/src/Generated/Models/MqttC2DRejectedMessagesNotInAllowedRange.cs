@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Number of rejected cloud to device messages (MQTT protocol) is not in allowed range. </summary>
     public partial class MqttC2DRejectedMessagesNotInAllowedRange : TimeWindowCustomAlertRule
     {
-        /// <summary> Initializes a new instance of MqttC2DRejectedMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RuleType = "MqttC2DRejectedMessagesNotInAllowedRange";
         }
 
-        /// <summary> Initializes a new instance of MqttC2DRejectedMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>

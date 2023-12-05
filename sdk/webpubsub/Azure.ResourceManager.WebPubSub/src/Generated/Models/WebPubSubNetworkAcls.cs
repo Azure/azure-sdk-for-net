@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Network ACLs for the resource. </summary>
     public partial class WebPubSubNetworkAcls
     {
-        /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNetworkAcls"/>. </summary>
         public WebPubSubNetworkAcls()
         {
             PrivateEndpoints = new ChangeTrackingList<PrivateEndpointAcl>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNetworkAcls"/>. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>

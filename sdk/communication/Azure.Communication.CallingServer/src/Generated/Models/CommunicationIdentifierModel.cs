@@ -10,12 +10,12 @@ namespace Azure.Communication
     /// <summary> The CommunicationIdentifierModel. </summary>
     internal partial class CommunicationIdentifierModel
     {
-        /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
         public CommunicationIdentifierModel()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
         /// <param name="rawId"> Full ID of the identifier. </param>
         /// <param name="kind"> Type of CommunicationIdentifierModel. </param>
         /// <param name="communicationUser"> The communication user. </param>

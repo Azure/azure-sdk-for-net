@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the SubscriptionBillingPeriodResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="SubscriptionBillingPeriodConsumptionResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Billing/billingPeriods.
+    /// You can only construct a <see cref="SubscriptionBillingPeriodConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingPeriods.
     /// </summary>
     public partial class SubscriptionBillingPeriodConsumptionResource : ArmResource
     {

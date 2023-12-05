@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Summarize action results. </summary>
     internal partial class SummarizeResults
     {
-        /// <summary> Initializes a new instance of SummarizeResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="SummarizeResults"/>. </summary>
         internal SummarizeResults()
         {
             Value = new ChangeTrackingList<PolicySummary>();
         }
 
-        /// <summary> Initializes a new instance of SummarizeResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="SummarizeResults"/>. </summary>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="odataCount"> OData entity count; represents the number of summaries returned; always set to 1. </param>
         /// <param name="value"> Summarize action results. </param>

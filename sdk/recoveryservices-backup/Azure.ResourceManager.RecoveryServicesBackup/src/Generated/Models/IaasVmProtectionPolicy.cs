@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload-specific backup policy. </summary>
     public partial class IaasVmProtectionPolicy : BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of IaasVmProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectionPolicy"/>. </summary>
         public IaasVmProtectionPolicy()
         {
             TieringPolicy = new ChangeTrackingDictionary<string, BackupTieringPolicy>();
             BackupManagementType = "AzureIaasVM";
         }
 
-        /// <summary> Initializes a new instance of IaasVmProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>

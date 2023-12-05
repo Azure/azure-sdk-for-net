@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Yearly retention schedule. </summary>
     public partial class YearlyRetentionSchedule
     {
-        /// <summary> Initializes a new instance of YearlyRetentionSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="YearlyRetentionSchedule"/>. </summary>
         public YearlyRetentionSchedule()
         {
             MonthsOfYear = new ChangeTrackingList<BackupMonthOfYear>();
             RetentionTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
-        /// <summary> Initializes a new instance of YearlyRetentionSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="YearlyRetentionSchedule"/>. </summary>
         /// <param name="retentionScheduleFormatType"> Retention schedule format for yearly retention policy. </param>
         /// <param name="monthsOfYear"> List of months of year of yearly retention policy. </param>
         /// <param name="retentionScheduleDaily"> Daily retention format for yearly retention policy. </param>

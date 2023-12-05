@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WcfRelayAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="WcfRelayAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="WcfRelayResource" />.
-    /// To get a <see cref="WcfRelayAuthorizationRuleCollection" /> instance call the GetWcfRelayAuthorizationRules method from an instance of <see cref="WcfRelayResource" />.
+    /// A class representing a collection of <see cref="WcfRelayAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="WcfRelayAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="WcfRelayResource"/>.
+    /// To get a <see cref="WcfRelayAuthorizationRuleCollection"/> instance call the GetWcfRelayAuthorizationRules method from an instance of <see cref="WcfRelayResource"/>.
     /// </summary>
     public partial class WcfRelayAuthorizationRuleCollection : ArmCollection, IEnumerable<WcfRelayAuthorizationRuleResource>, IAsyncEnumerable<WcfRelayAuthorizationRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WcfRelayAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WcfRelayAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WcfRelayAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayAuthorizationRuleWCFRelaysRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WcfRelayAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WcfRelayAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WcfRelayAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayAuthorizationRuleWCFRelaysRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

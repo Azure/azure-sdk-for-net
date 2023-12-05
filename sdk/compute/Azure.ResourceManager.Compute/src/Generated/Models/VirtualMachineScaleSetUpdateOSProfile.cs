@@ -13,10 +13,23 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set OS profile. </summary>
     public partial class VirtualMachineScaleSetUpdateOSProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateOSProfile"/>. </summary>
         public VirtualMachineScaleSetUpdateOSProfile()
         {
             Secrets = new ChangeTrackingList<VaultSecretGroup>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateOSProfile"/>. </summary>
+        /// <param name="customData"> A base-64 encoded string of custom data. </param>
+        /// <param name="windowsConfiguration"> The Windows Configuration of the OS profile. </param>
+        /// <param name="linuxConfiguration"> The Linux Configuration of the OS profile. </param>
+        /// <param name="secrets"> The List of certificates for addition to the VM. </param>
+        internal VirtualMachineScaleSetUpdateOSProfile(string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets)
+        {
+            CustomData = customData;
+            WindowsConfiguration = windowsConfiguration;
+            LinuxConfiguration = linuxConfiguration;
+            Secrets = secrets;
         }
 
         /// <summary> A base-64 encoded string of custom data. </summary>

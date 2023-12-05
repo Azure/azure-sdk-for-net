@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of the endpoint used for ingesting logs. </summary>
     internal partial class LogsIngestionEndpointSpec
     {
-        /// <summary> Initializes a new instance of LogsIngestionEndpointSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsIngestionEndpointSpec"/>. </summary>
         public LogsIngestionEndpointSpec()
         {
         }
 
-        /// <summary> Initializes a new instance of LogsIngestionEndpointSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsIngestionEndpointSpec"/>. </summary>
         /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
         internal LogsIngestionEndpointSpec(string endpoint)
         {

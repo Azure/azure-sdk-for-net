@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster log analytics profile to enable or disable OMS agent for cluster. </summary>
     public partial class ClusterLogAnalyticsProfile
     {
-        /// <summary> Initializes a new instance of ClusterLogAnalyticsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterLogAnalyticsProfile"/>. </summary>
         /// <param name="isEnabled"> True if log analytics is enabled for the cluster, otherwise false. </param>
         public ClusterLogAnalyticsProfile(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of ClusterLogAnalyticsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterLogAnalyticsProfile"/>. </summary>
         /// <param name="isEnabled"> True if log analytics is enabled for the cluster, otherwise false. </param>
         /// <param name="applicationLogs"> Collection of logs to be enabled or disabled for log analytics. </param>
         /// <param name="isMetricsEnabled"> True if metrics are enabled, otherwise false. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Operation request details. </summary>
     public partial class RequestContract
     {
-        /// <summary> Initializes a new instance of RequestContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestContract"/>. </summary>
         public RequestContract()
         {
             QueryParameters = new ChangeTrackingList<ParameterContract>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Representations = new ChangeTrackingList<RepresentationContract>();
         }
 
-        /// <summary> Initializes a new instance of RequestContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestContract"/>. </summary>
         /// <param name="description"> Operation request description. </param>
         /// <param name="queryParameters"> Collection of operation request query parameters. </param>
         /// <param name="headers"> Collection of operation request headers. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that migrates on-prem SQL Server databases to Azure SQL Database. </summary>
     public partial class MigrateSqlServerSqlDBTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskProperties"/>. </summary>
         public MigrateSqlServerSqlDBTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateSqlServerSqlDBTaskOutput>();
             TaskType = TaskType.MigrateSqlServerSqlDB;
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

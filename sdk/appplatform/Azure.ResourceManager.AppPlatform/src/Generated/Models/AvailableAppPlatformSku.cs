@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Describes an available Azure Spring Apps SKU. </summary>
     public partial class AvailableAppPlatformSku
     {
-        /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableAppPlatformSku"/>. </summary>
         internal AvailableAppPlatformSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Restrictions = new ChangeTrackingList<AppPlatformSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableAppPlatformSku"/>. </summary>
         /// <param name="resourceType"> Gets the type of resource the SKU applies to. </param>
         /// <param name="name"> Gets the name of SKU. </param>
         /// <param name="tier"> Gets the tier of SKU. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Description of a NotificationHub ApnsCredential. </summary>
     public partial class NotificationHubApnsCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubApnsCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubApnsCredential"/>. </summary>
         public NotificationHubApnsCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubApnsCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubApnsCredential"/>. </summary>
         /// <param name="apnsCertificate"> The APNS certificate. Specify if using Certificate Authentication Mode. </param>
         /// <param name="certificateKey"> The APNS certificate password if it exists. </param>
         /// <param name="endpoint"> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify 'gateway.sandbox.push.apple.com'. If using Certificate Authentication Mode and Production specify 'gateway.push.apple.com'. If using Token Authentication Mode and Sandbox specify 'https://api.development.push.apple.com:443/3/device'. If using Token Authentication Mode and Production specify 'https://api.push.apple.com:443/3/device'. </param>

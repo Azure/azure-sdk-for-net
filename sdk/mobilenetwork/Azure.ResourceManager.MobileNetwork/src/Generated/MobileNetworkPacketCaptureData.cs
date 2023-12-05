@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkPacketCaptureData : ResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPacketCaptureData"/>. </summary>
         public MobileNetworkPacketCaptureData()
         {
             NetworkInterfaces = new ChangeTrackingList<string>();
             OutputFiles = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPacketCaptureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

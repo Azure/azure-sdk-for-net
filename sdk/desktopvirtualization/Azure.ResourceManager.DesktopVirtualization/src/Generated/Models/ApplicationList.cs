@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of Application definitions. </summary>
     internal partial class ApplicationList
     {
-        /// <summary> Initializes a new instance of ApplicationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationList"/>. </summary>
         internal ApplicationList()
         {
             Value = new ChangeTrackingList<VirtualApplicationData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationList"/>. </summary>
         /// <param name="value"> List of Application definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal ApplicationList(IReadOnlyList<VirtualApplicationData> value, string nextLink)

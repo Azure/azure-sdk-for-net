@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Qos Traffic Profiler IP Range properties. </summary>
     public partial class QosIPRange
     {
-        /// <summary> Initializes a new instance of QosIPRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="QosIPRange"/>. </summary>
         public QosIPRange()
         {
         }
 
-        /// <summary> Initializes a new instance of QosIPRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="QosIPRange"/>. </summary>
         /// <param name="startIP"> Start IP Address. </param>
         /// <param name="endIP"> End IP Address. </param>
         internal QosIPRange(string startIP, string endIP)

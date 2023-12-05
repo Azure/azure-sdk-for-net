@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The RecordingStateResponse. </summary>
     public partial class RecordingStateResult
     {
-        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingStateResult"/>. </summary>
         internal RecordingStateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingStateResult"/>. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
         internal RecordingStateResult(string recordingId, RecordingState? recordingState)

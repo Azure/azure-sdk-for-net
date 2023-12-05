@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Activity to get metadata of dataset. </summary>
     public partial class GetDatasetMetadataActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of GetDatasetMetadataActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetDatasetMetadataActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> GetMetadata activity dataset reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "GetMetadata";
         }
 
-        /// <summary> Initializes a new instance of GetDatasetMetadataActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetDatasetMetadataActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

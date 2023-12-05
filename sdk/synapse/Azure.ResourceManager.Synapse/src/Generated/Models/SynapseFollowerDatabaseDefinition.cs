@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A class representing follower database request. </summary>
     public partial class SynapseFollowerDatabaseDefinition
     {
-        /// <summary> Initializes a new instance of SynapseFollowerDatabaseDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseFollowerDatabaseDefinition"/>. </summary>
         /// <param name="kustoPoolResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolResourceId"/> or <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
         }
 
-        /// <summary> Initializes a new instance of SynapseFollowerDatabaseDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseFollowerDatabaseDefinition"/>. </summary>
         /// <param name="kustoPoolResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>

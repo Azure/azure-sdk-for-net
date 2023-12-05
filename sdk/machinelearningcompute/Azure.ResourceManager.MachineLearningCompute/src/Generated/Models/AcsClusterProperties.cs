@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Information about the container service backing the cluster. </summary>
     public partial class AcsClusterProperties
     {
-        /// <summary> Initializes a new instance of AcsClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsClusterProperties"/>. </summary>
         /// <param name="orchestratorType"> Type of orchestrator. It cannot be changed once the cluster is created. </param>
         public AcsClusterProperties(OrchestratorType orchestratorType)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             SystemServices = new ChangeTrackingList<SystemService>();
         }
 
-        /// <summary> Initializes a new instance of AcsClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsClusterProperties"/>. </summary>
         /// <param name="clusterFqdn"> The FQDN of the cluster. </param>
         /// <param name="orchestratorType"> Type of orchestrator. It cannot be changed once the cluster is created. </param>
         /// <param name="orchestratorProperties"> Orchestrator specific properties. </param>

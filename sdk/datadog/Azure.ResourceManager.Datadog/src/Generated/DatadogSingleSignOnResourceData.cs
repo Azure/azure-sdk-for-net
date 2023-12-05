@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Datadog
     /// <summary> A class representing the DatadogSingleSignOnResource data model. </summary>
     public partial class DatadogSingleSignOnResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DatadogSingleSignOnResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceData"/>. </summary>
         public DatadogSingleSignOnResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogSingleSignOnResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

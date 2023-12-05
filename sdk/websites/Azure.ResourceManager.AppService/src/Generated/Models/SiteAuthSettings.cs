@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Configuration settings for the Azure App Service Authentication / Authorization feature. </summary>
     public partial class SiteAuthSettings : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteAuthSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettings"/>. </summary>
         public SiteAuthSettings()
         {
             AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             MicrosoftAccountOAuthScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteAuthSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A Class representing an AppConfigurationKeyValue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppConfigurationKeyValueResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppConfigurationKeyValueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource" /> using the GetAppConfigurationKeyValue method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppConfigurationKeyValueResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppConfigurationKeyValueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource"/> using the GetAppConfigurationKeyValue method.
     /// </summary>
     public partial class AppConfigurationKeyValueResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly KeyValuesRestOperations _appConfigurationKeyValueKeyValuesRestClient;
         private readonly AppConfigurationKeyValueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores/keyValues";
+
         /// <summary> Initializes a new instance of the <see cref="AppConfigurationKeyValueResource"/> class for mocking. </summary>
         protected AppConfigurationKeyValueResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppConfigurationKeyValueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationKeyValueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppConfigurationKeyValueResource(ArmClient client, AppConfigurationKeyValueData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores/keyValues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

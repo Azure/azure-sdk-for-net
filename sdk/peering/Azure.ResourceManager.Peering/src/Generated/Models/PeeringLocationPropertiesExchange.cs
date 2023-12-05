@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define an exchange peering location. </summary>
     internal partial class PeeringLocationPropertiesExchange
     {
-        /// <summary> Initializes a new instance of PeeringLocationPropertiesExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLocationPropertiesExchange"/>. </summary>
         public PeeringLocationPropertiesExchange()
         {
             PeeringFacilities = new ChangeTrackingList<ExchangePeeringFacility>();
         }
 
-        /// <summary> Initializes a new instance of PeeringLocationPropertiesExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLocationPropertiesExchange"/>. </summary>
         /// <param name="peeringFacilities"> The list of exchange peering facilities at the peering location. </param>
         internal PeeringLocationPropertiesExchange(IList<ExchangePeeringFacility> peeringFacilities)
         {

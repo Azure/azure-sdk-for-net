@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The routes table associated with the ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCircuitRoutesTableSummary
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitRoutesTableSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitRoutesTableSummary"/>. </summary>
         internal ExpressRouteCircuitRoutesTableSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitRoutesTableSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitRoutesTableSummary"/>. </summary>
         /// <param name="neighbor"> IP address of the neighbor. </param>
         /// <param name="v"> BGP version number spoken to the neighbor. </param>
         /// <param name="as"> Autonomous system number. </param>

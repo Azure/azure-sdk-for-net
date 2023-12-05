@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The ArmResourceGetMonitorMetricBaselinesOptions. </summary>
     public partial class ArmResourceGetMonitorMetricBaselinesOptions
     {
-        /// <summary> Initializes a new instance of ArmResourceGetMonitorMetricBaselinesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceGetMonitorMetricBaselinesOptions"/>. </summary>
         public ArmResourceGetMonitorMetricBaselinesOptions()
         {
         }

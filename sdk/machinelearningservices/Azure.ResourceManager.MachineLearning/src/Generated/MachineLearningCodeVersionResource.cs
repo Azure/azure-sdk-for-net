@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningCodeVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningCodeVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningCodeVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningCodeContainerResource" /> using the GetMachineLearningCodeVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningCodeVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningCodeVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningCodeContainerResource"/> using the GetMachineLearningCodeVersion method.
     /// </summary>
     public partial class MachineLearningCodeVersionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly CodeVersionsRestOperations _machineLearningCodeVersionCodeVersionsRestClient;
         private readonly MachineLearningCodeVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/codes/versions";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningCodeVersionResource"/> class for mocking. </summary>
         protected MachineLearningCodeVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningCodeVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningCodeVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningCodeVersionResource(ArmClient client, MachineLearningCodeVersionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/codes/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

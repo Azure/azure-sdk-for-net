@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
     /// A Class representing a DedicatedHsm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DedicatedHsmResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDedicatedHsmResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDedicatedHsm method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DedicatedHsmResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDedicatedHsmResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDedicatedHsm method.
     /// </summary>
     public partial class DedicatedHsmResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly DedicatedHsmRestOperations _dedicatedHsmRestClient;
         private readonly DedicatedHsmData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/dedicatedHSMs";
+
         /// <summary> Initializes a new instance of the <see cref="DedicatedHsmResource"/> class for mocking. </summary>
         protected DedicatedHsmResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DedicatedHsmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DedicatedHsmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DedicatedHsmResource(ArmClient client, DedicatedHsmData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/dedicatedHSMs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

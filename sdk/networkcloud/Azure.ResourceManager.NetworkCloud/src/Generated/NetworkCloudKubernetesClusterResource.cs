@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudKubernetesCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudKubernetesClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudKubernetesClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudKubernetesCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudKubernetesClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudKubernetesClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudKubernetesCluster method.
     /// </summary>
     public partial class NetworkCloudKubernetesClusterResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly KubernetesClustersRestOperations _networkCloudKubernetesClusterKubernetesClustersRestClient;
         private readonly NetworkCloudKubernetesClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/kubernetesClusters";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudKubernetesClusterResource"/> class for mocking. </summary>
         protected NetworkCloudKubernetesClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudKubernetesClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudKubernetesClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudKubernetesClusterResource(ArmClient client, NetworkCloudKubernetesClusterData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/kubernetesClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

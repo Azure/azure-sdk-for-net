@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Push settings for the App. </summary>
     public partial class WebAppPushSettings : ResourceData
     {
-        /// <summary> Initializes a new instance of WebAppPushSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppPushSettings"/>. </summary>
         public WebAppPushSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppPushSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppPushSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

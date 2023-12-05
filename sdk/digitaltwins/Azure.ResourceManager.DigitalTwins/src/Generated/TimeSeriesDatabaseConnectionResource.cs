@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
     /// A Class representing a TimeSeriesDatabaseConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TimeSeriesDatabaseConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTimeSeriesDatabaseConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource" /> using the GetTimeSeriesDatabaseConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TimeSeriesDatabaseConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTimeSeriesDatabaseConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource"/> using the GetTimeSeriesDatabaseConnection method.
     /// </summary>
     public partial class TimeSeriesDatabaseConnectionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.DigitalTwins
         private readonly TimeSeriesDatabaseConnectionsRestOperations _timeSeriesDatabaseConnectionRestClient;
         private readonly TimeSeriesDatabaseConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/timeSeriesDatabaseConnections";
+
         /// <summary> Initializes a new instance of the <see cref="TimeSeriesDatabaseConnectionResource"/> class for mocking. </summary>
         protected TimeSeriesDatabaseConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TimeSeriesDatabaseConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TimeSeriesDatabaseConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TimeSeriesDatabaseConnectionResource(ArmClient client, TimeSeriesDatabaseConnectionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DigitalTwins
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/timeSeriesDatabaseConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

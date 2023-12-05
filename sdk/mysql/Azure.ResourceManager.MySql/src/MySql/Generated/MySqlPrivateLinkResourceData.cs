@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateLinkResourceData"/>. </summary>
         public MySqlPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabFormula along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabFormulaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabFormulaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource" /> using the GetDevTestLabFormula method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabFormulaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabFormulaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabFormula method.
     /// </summary>
     public partial class DevTestLabFormulaResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly FormulasRestOperations _devTestLabFormulaFormulasRestClient;
         private readonly DevTestLabFormulaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/formulas";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabFormulaResource"/> class for mocking. </summary>
         protected DevTestLabFormulaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabFormulaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabFormulaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabFormulaResource(ArmClient client, DevTestLabFormulaData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/formulas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

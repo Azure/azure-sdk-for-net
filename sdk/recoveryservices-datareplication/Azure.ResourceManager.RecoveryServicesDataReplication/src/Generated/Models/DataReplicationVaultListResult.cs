@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Vault model collection. </summary>
     internal partial class DataReplicationVaultListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationVaultListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultListResult"/>. </summary>
         internal DataReplicationVaultListResult()
         {
             Value = new ChangeTrackingList<DataReplicationVaultData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationVaultListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of vaults. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationVaultListResult(IReadOnlyList<DataReplicationVaultData> value, string nextLink)

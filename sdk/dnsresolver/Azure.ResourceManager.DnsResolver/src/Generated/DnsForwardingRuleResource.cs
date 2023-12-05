@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
     /// A Class representing a DnsForwardingRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsForwardingRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDnsForwardingRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsForwardingRulesetResource" /> using the GetDnsForwardingRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsForwardingRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDnsForwardingRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsForwardingRulesetResource"/> using the GetDnsForwardingRule method.
     /// </summary>
     public partial class DnsForwardingRuleResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly ForwardingRulesRestOperations _dnsForwardingRuleForwardingRulesRestClient;
         private readonly DnsForwardingRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsForwardingRulesets/forwardingRules";
+
         /// <summary> Initializes a new instance of the <see cref="DnsForwardingRuleResource"/> class for mocking. </summary>
         protected DnsForwardingRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DnsForwardingRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsForwardingRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DnsForwardingRuleResource(ArmClient client, DnsForwardingRuleData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DnsResolver
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsForwardingRulesets/forwardingRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

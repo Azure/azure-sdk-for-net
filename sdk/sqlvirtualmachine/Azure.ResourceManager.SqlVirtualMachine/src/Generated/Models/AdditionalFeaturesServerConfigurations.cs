@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Additional SQL Server feature settings. </summary>
     internal partial class AdditionalFeaturesServerConfigurations
     {
-        /// <summary> Initializes a new instance of AdditionalFeaturesServerConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalFeaturesServerConfigurations"/>. </summary>
         public AdditionalFeaturesServerConfigurations()
         {
         }
 
-        /// <summary> Initializes a new instance of AdditionalFeaturesServerConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalFeaturesServerConfigurations"/>. </summary>
         /// <param name="isRServicesEnabled"> Enable or disable R services (SQL 2016 onwards). </param>
         internal AdditionalFeaturesServerConfigurations(bool? isRServicesEnabled)
         {

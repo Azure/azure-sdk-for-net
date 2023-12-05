@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Shopify Service linked service. </summary>
     public partial class ShopifyLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of ShopifyLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShopifyLinkedService"/>. </summary>
         /// <param name="host"> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public ShopifyLinkedService(object host)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Shopify";
         }
 
-        /// <summary> Initializes a new instance of ShopifyLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShopifyLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

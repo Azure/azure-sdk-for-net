@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The Video Analyzer edge module can act as a transparent gateway for video, enabling IoT devices to send video to the cloud from behind a firewall. A remote device adapter should be created for each such IoT device. Communication between the cloud and IoT device would then flow via the Video Analyzer edge module. </summary>
     internal partial class RemoteDeviceAdapterSetRequestBody : MethodRequest
     {
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterSetRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterSetRequestBody"/>. </summary>
         /// <param name="name"> The unique identifier for the remote device adapter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RemoteDeviceAdapterSetRequestBody(string name)
@@ -24,7 +24,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MethodName = "RemoteDeviceAdapterSetRequestBody";
         }
 
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterSetRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterSetRequestBody"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="name"> The unique identifier for the remote device adapter. </param>

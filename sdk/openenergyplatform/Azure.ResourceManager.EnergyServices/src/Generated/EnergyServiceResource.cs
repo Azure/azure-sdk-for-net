@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EnergyServices
 {
     /// <summary>
     /// A Class representing an EnergyService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EnergyServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEnergyServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEnergyService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EnergyServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEnergyServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEnergyService method.
     /// </summary>
     public partial class EnergyServiceResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.EnergyServices
         private readonly EnergyServicesRestOperations _energyServiceRestClient;
         private readonly EnergyServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OpenEnergyPlatform/energyServices";
+
         /// <summary> Initializes a new instance of the <see cref="EnergyServiceResource"/> class for mocking. </summary>
         protected EnergyServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EnergyServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EnergyServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EnergyServiceResource(ArmClient client, EnergyServiceData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.EnergyServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OpenEnergyPlatform/energyServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The EnergyServicePatch to use. </param>
+        /// <param name="patch"> The <see cref="EnergyServicePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<EnergyServiceResource>> UpdateAsync(EnergyServicePatch patch, CancellationToken cancellationToken = default)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The EnergyServicePatch to use. </param>
+        /// <param name="patch"> The <see cref="EnergyServicePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<EnergyServiceResource> Update(EnergyServicePatch patch, CancellationToken cancellationToken = default)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure storage specific error information. </summary>
     public partial class StorageErrorInfo
     {
-        /// <summary> Initializes a new instance of StorageErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageErrorInfo"/>. </summary>
         public StorageErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StorageErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageErrorInfo"/>. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorString"> Localized error string. </param>
         /// <param name="recommendations"> List of localized recommendations for above error code. </param>

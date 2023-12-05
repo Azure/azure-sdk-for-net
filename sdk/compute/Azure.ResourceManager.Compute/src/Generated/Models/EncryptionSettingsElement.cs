@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Encryption settings for one disk volume. </summary>
     public partial class EncryptionSettingsElement
     {
-        /// <summary> Initializes a new instance of EncryptionSettingsElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionSettingsElement"/>. </summary>
         public EncryptionSettingsElement()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionSettingsElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionSettingsElement"/>. </summary>
         /// <param name="diskEncryptionKey"> Key Vault Secret Url and vault id of the disk encryption key. </param>
         /// <param name="keyEncryptionKey"> Key Vault Key Url and vault id of the key encryption key. KeyEncryptionKey is optional and when provided is used to unwrap the disk encryption key. </param>
         internal EncryptionSettingsElement(KeyVaultAndSecretReference diskEncryptionKey, KeyVaultAndKeyReference keyEncryptionKey)

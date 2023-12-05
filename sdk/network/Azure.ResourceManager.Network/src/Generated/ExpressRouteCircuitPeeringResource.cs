@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRouteCircuitPeering along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteCircuitPeeringResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteCircuitPeeringResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitResource" /> using the GetExpressRouteCircuitPeering method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteCircuitPeeringResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteCircuitPeeringResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitResource"/> using the GetExpressRouteCircuitPeering method.
     /// </summary>
     public partial class ExpressRouteCircuitPeeringResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Network
         private readonly ExpressRouteCircuitsRestOperations _expressRouteCircuitRestClient;
         private readonly ExpressRouteCircuitPeeringData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/peerings";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitPeeringResource"/> class for mocking. </summary>
         protected ExpressRouteCircuitPeeringResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCircuitPeeringResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitPeeringResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteCircuitPeeringResource(ArmClient client, ExpressRouteCircuitPeeringData data) : this(client, data.Id)
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/peerings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

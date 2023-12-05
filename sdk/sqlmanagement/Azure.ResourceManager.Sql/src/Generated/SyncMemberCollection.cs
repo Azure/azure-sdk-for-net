@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SyncMemberResource" /> and their operations.
-    /// Each <see cref="SyncMemberResource" /> in the collection will belong to the same instance of <see cref="SyncGroupResource" />.
-    /// To get a <see cref="SyncMemberCollection" /> instance call the GetSyncMembers method from an instance of <see cref="SyncGroupResource" />.
+    /// A class representing a collection of <see cref="SyncMemberResource"/> and their operations.
+    /// Each <see cref="SyncMemberResource"/> in the collection will belong to the same instance of <see cref="SyncGroupResource"/>.
+    /// To get a <see cref="SyncMemberCollection"/> instance call the GetSyncMembers method from an instance of <see cref="SyncGroupResource"/>.
     /// </summary>
     public partial class SyncMemberCollection : ArmCollection, IEnumerable<SyncMemberResource>, IAsyncEnumerable<SyncMemberResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SyncMemberResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SyncMemberResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncMemberResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncMemberResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SyncMemberResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncMemberResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

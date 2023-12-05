@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.BotService
 {
     /// <summary>
     /// A Class representing a BotConnectionSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BotConnectionSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBotConnectionSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BotResource" /> using the GetBotConnectionSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BotConnectionSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBotConnectionSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BotResource"/> using the GetBotConnectionSetting method.
     /// </summary>
     public partial class BotConnectionSettingResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.BotService
         private readonly BotConnectionRestOperations _botConnectionSettingBotConnectionRestClient;
         private readonly BotConnectionSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices/connections";
+
         /// <summary> Initializes a new instance of the <see cref="BotConnectionSettingResource"/> class for mocking. </summary>
         protected BotConnectionSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BotConnectionSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BotConnectionSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BotConnectionSettingResource(ArmClient client, BotConnectionSettingData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.BotService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices/connections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

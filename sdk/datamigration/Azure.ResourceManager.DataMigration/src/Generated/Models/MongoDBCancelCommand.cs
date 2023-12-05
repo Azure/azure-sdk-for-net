@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the command that cancels a migration in whole or in part. </summary>
     public partial class MongoDBCancelCommand : CommandProperties
     {
-        /// <summary> Initializes a new instance of MongoDBCancelCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCancelCommand"/>. </summary>
         public MongoDBCancelCommand()
         {
             CommandType = CommandType.Cancel;
         }
 
-        /// <summary> Initializes a new instance of MongoDBCancelCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCancelCommand"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>

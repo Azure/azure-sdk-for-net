@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Failover properties of the protected item. </summary>
     public partial class FailoverProtectedItemProperties
     {
-        /// <summary> Initializes a new instance of FailoverProtectedItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverProtectedItemProperties"/>. </summary>
         internal FailoverProtectedItemProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of FailoverProtectedItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverProtectedItemProperties"/>. </summary>
         /// <param name="protectedItemName"> Gets or sets the protected item name. </param>
         /// <param name="vmName"> Gets or sets the VM name. </param>
         /// <param name="testVmName"> Gets or sets the test VM name. </param>

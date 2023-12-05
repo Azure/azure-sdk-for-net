@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The set of properties specific to sign in url. </summary>
     internal partial class CreateEmailSignInUrlResponseProperties
     {
-        /// <summary> Initializes a new instance of CreateEmailSignInUrlResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateEmailSignInUrlResponseProperties"/>. </summary>
         internal CreateEmailSignInUrlResponseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CreateEmailSignInUrlResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateEmailSignInUrlResponseProperties"/>. </summary>
         /// <param name="uri"> Sign in url. </param>
         internal CreateEmailSignInUrlResponseProperties(Uri uri)
         {

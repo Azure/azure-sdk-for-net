@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public abstract partial class ManagedServicePartitionScheme
     {
-        /// <summary> Initializes a new instance of ManagedServicePartitionScheme. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicePartitionScheme"/>. </summary>
         protected ManagedServicePartitionScheme()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServicePartitionScheme. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicePartitionScheme"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
         internal ManagedServicePartitionScheme(PartitionScheme partitionScheme)
         {

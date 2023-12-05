@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BlueprintResource" /> and their operations.
-    /// Each <see cref="BlueprintResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="BlueprintCollection" /> instance call the GetBlueprints method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="BlueprintResource"/> and their operations.
+    /// Each <see cref="BlueprintResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="BlueprintCollection"/> instance call the GetBlueprints method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class BlueprintCollection : ArmCollection, IEnumerable<BlueprintResource>, IAsyncEnumerable<BlueprintResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Blueprint
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BlueprintResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BlueprintResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BlueprintResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Blueprint
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BlueprintResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BlueprintResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BlueprintResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);

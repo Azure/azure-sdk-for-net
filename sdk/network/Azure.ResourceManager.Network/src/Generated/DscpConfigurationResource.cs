@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a DscpConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DscpConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDscpConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDscpConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DscpConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDscpConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDscpConfiguration method.
     /// </summary>
     public partial class DscpConfigurationResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Network
         private readonly DscpConfigurationRestOperations _dscpConfigurationRestClient;
         private readonly DscpConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dscpConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="DscpConfigurationResource"/> class for mocking. </summary>
         protected DscpConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DscpConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DscpConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DscpConfigurationResource(ArmClient client, DscpConfigurationData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dscpConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing a PartnerConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PartnerConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPartnerConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPartnerConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PartnerConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPartnerConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPartnerConfiguration method.
     /// </summary>
     public partial class PartnerConfigurationResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly PartnerConfigurationsRestOperations _partnerConfigurationRestClient;
         private readonly PartnerConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="PartnerConfigurationResource"/> class for mocking. </summary>
         protected PartnerConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PartnerConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PartnerConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PartnerConfigurationResource(ArmClient client, PartnerConfigurationData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

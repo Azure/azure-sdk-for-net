@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The BlobReferenceForConsumptionDto. </summary>
     public partial class BlobReferenceForConsumptionDto
     {
-        /// <summary> Initializes a new instance of BlobReferenceForConsumptionDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceForConsumptionDto"/>. </summary>
         internal BlobReferenceForConsumptionDto()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobReferenceForConsumptionDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceForConsumptionDto"/>. </summary>
         /// <param name="blobUri">
         /// Blob URI path for client to upload data.
         /// Example: https://blob.windows.core.net/Container/Path

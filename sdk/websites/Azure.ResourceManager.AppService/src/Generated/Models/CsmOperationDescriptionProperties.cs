@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Properties available for a Microsoft.Web resource provider operation. </summary>
     internal partial class CsmOperationDescriptionProperties
     {
-        /// <summary> Initializes a new instance of CsmOperationDescriptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescriptionProperties"/>. </summary>
         internal CsmOperationDescriptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CsmOperationDescriptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescriptionProperties"/>. </summary>
         /// <param name="serviceSpecification"> Resource metrics service provided by Microsoft.Insights resource provider. </param>
         internal CsmOperationDescriptionProperties(ServiceSpecification serviceSpecification)
         {

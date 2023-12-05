@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> ThreatIntel Whitelist for Firewall Policy. </summary>
     public partial class FirewallPolicyThreatIntelWhitelist
     {
-        /// <summary> Initializes a new instance of FirewallPolicyThreatIntelWhitelist. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyThreatIntelWhitelist"/>. </summary>
         public FirewallPolicyThreatIntelWhitelist()
         {
             IPAddresses = new ChangeTrackingList<string>();
             Fqdns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyThreatIntelWhitelist. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyThreatIntelWhitelist"/>. </summary>
         /// <param name="ipAddresses"> List of IP addresses for the ThreatIntel Whitelist. </param>
         /// <param name="fqdns"> List of FQDNs for the ThreatIntel Whitelist. </param>
         internal FirewallPolicyThreatIntelWhitelist(IList<string> ipAddresses, IList<string> fqdns)

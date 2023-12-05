@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The UpgradableVersionsDescription. </summary>
     public partial class UpgradableVersionsDescription
     {
-        /// <summary> Initializes a new instance of UpgradableVersionsDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpgradableVersionsDescription"/>. </summary>
         /// <param name="targetVersion"> The target code version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetVersion"/> is null. </exception>
         public UpgradableVersionsDescription(string targetVersion)

@@ -14,10 +14,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> Properties of a Fleet that can be patched. </summary>
     public partial class ContainerServiceFleetPatch
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetPatch"/>. </summary>
         public ContainerServiceFleetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Managed identity. </param>
+        internal ContainerServiceFleetPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity)
+        {
+            Tags = tags;
+            Identity = identity;
         }
 
         /// <summary> Resource tags. </summary>

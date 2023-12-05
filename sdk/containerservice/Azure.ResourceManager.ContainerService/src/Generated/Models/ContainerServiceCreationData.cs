@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Data used when creating a target resource from a source resource. </summary>
     internal partial class ContainerServiceCreationData
     {
-        /// <summary> Initializes a new instance of ContainerServiceCreationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceCreationData"/>. </summary>
         public ContainerServiceCreationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceCreationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceCreationData"/>. </summary>
         /// <param name="sourceResourceId"> This is the ARM ID of the source object to be used to create the target object. </param>
         internal ContainerServiceCreationData(ResourceIdentifier sourceResourceId)
         {

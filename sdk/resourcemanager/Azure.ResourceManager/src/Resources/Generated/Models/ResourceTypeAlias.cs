@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The alias type. </summary>
     public partial class ResourceTypeAlias
     {
-        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAlias"/>. </summary>
         internal ResourceTypeAlias()
         {
             Paths = new ChangeTrackingList<ResourceTypeAliasPath>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAlias"/>. </summary>
         /// <param name="name"> The alias name. </param>
         /// <param name="paths"> The paths for an alias. </param>
         /// <param name="aliasType"> The type of the alias. </param>

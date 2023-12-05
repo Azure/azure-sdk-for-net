@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsNetworkRuleSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetData"/>. </summary>
         public EventHubsNetworkRuleSetData()
         {
             VirtualNetworkRules = new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>();
             IPRules = new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

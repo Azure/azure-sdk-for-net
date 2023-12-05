@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Metrics Response. </summary>
     public partial class MetricsResponse
     {
-        /// <summary> Initializes a new instance of MetricsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsResponse"/>. </summary>
         internal MetricsResponse()
         {
             Series = new ChangeTrackingList<MetricsResponseSeriesItem>();
         }
 
-        /// <summary> Initializes a new instance of MetricsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsResponse"/>. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
         /// <param name="granularity"></param>

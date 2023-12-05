@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
     /// A Class representing an AmlFileSystem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AmlFileSystemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAmlFileSystemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAmlFileSystem method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AmlFileSystemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAmlFileSystemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAmlFileSystem method.
     /// </summary>
     public partial class AmlFileSystemResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.StorageCache
         private readonly AmlFilesystemsRestOperations _amlFileSystemamlFilesystemsRestClient;
         private readonly AmlFileSystemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/amlFilesystems";
+
         /// <summary> Initializes a new instance of the <see cref="AmlFileSystemResource"/> class for mocking. </summary>
         protected AmlFileSystemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AmlFileSystemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AmlFileSystemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AmlFileSystemResource(ArmClient client, AmlFileSystemData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.StorageCache
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/amlFilesystems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

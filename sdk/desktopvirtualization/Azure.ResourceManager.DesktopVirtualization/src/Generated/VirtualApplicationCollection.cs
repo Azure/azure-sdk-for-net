@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualApplicationResource" /> and their operations.
-    /// Each <see cref="VirtualApplicationResource" /> in the collection will belong to the same instance of <see cref="VirtualApplicationGroupResource" />.
-    /// To get a <see cref="VirtualApplicationCollection" /> instance call the GetVirtualApplications method from an instance of <see cref="VirtualApplicationGroupResource" />.
+    /// A class representing a collection of <see cref="VirtualApplicationResource"/> and their operations.
+    /// Each <see cref="VirtualApplicationResource"/> in the collection will belong to the same instance of <see cref="VirtualApplicationGroupResource"/>.
+    /// To get a <see cref="VirtualApplicationCollection"/> instance call the GetVirtualApplications method from an instance of <see cref="VirtualApplicationGroupResource"/>.
     /// </summary>
     public partial class VirtualApplicationCollection : ArmCollection, IEnumerable<VirtualApplicationResource>, IAsyncEnumerable<VirtualApplicationResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualApplicationResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualApplicationResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);

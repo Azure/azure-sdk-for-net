@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudL3Network along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudL3NetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudL3NetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudL3Network method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudL3NetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudL3NetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudL3Network method.
     /// </summary>
     public partial class NetworkCloudL3NetworkResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly L3NetworksRestOperations _networkCloudL3NetworkL3NetworksRestClient;
         private readonly NetworkCloudL3NetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/l3Networks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudL3NetworkResource"/> class for mocking. </summary>
         protected NetworkCloudL3NetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudL3NetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudL3NetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudL3NetworkResource(ArmClient client, NetworkCloudL3NetworkData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/l3Networks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

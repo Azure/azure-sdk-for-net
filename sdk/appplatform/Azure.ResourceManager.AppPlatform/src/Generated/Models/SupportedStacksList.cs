@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of supported stacks resources and a possible link for next set. </summary>
     internal partial class SupportedStacksList
     {
-        /// <summary> Initializes a new instance of SupportedStacksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedStacksList"/>. </summary>
         internal SupportedStacksList()
         {
             Value = new ChangeTrackingList<AppPlatformSupportedStackData>();
         }
 
-        /// <summary> Initializes a new instance of SupportedStacksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedStacksList"/>. </summary>
         /// <param name="value"> Collection of supported stacks resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

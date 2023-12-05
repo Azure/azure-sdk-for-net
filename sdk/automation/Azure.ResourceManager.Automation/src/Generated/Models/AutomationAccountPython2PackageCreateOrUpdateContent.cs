@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update module operation. </summary>
     public partial class AutomationAccountPython2PackageCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationAccountPython2PackageCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
         public AutomationAccountPython2PackageCreateOrUpdateContent(AutomationContentLink contentLink)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Automation.Models
             Argument.AssertNotNull(contentLink, nameof(contentLink));
 
             Tags = new ChangeTrackingDictionary<string, string>();
+            ContentLink = contentLink;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        internal AutomationAccountPython2PackageCreateOrUpdateContent(IDictionary<string, string> tags, AutomationContentLink contentLink)
+        {
+            Tags = tags;
             ContentLink = contentLink;
         }
 

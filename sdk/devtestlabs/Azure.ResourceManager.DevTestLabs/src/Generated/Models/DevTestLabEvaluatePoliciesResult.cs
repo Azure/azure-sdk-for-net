@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Response body for evaluating a policy set. </summary>
     public partial class DevTestLabEvaluatePoliciesResult
     {
-        /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePoliciesResult"/>. </summary>
         internal DevTestLabEvaluatePoliciesResult()
         {
             Results = new ChangeTrackingList<DevTestLabPolicySetResult>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePoliciesResult"/>. </summary>
         /// <param name="results"> Results of evaluating a policy set. </param>
         internal DevTestLabEvaluatePoliciesResult(IReadOnlyList<DevTestLabPolicySetResult> results)
         {

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 {
     /// <summary>
     /// A Class representing an AvailabilityGroupListener along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvailabilityGroupListenerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvailabilityGroupListenerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlVmGroupResource" /> using the GetAvailabilityGroupListener method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvailabilityGroupListenerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvailabilityGroupListenerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlVmGroupResource"/> using the GetAvailabilityGroupListener method.
     /// </summary>
     public partial class AvailabilityGroupListenerResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         private readonly AvailabilityGroupListenersRestOperations _availabilityGroupListenerRestClient;
         private readonly AvailabilityGroupListenerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/availabilityGroupListeners";
+
         /// <summary> Initializes a new instance of the <see cref="AvailabilityGroupListenerResource"/> class for mocking. </summary>
         protected AvailabilityGroupListenerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvailabilityGroupListenerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvailabilityGroupListenerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvailabilityGroupListenerResource(ArmClient client, AvailabilityGroupListenerData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/availabilityGroupListeners";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

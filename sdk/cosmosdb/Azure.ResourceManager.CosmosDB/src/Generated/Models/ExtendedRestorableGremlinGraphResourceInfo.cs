@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The resource of an Azure Cosmos DB Gremlin graph event. </summary>
     public partial class ExtendedRestorableGremlinGraphResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableGremlinGraphResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableGremlinGraphResourceInfo"/>. </summary>
         internal ExtendedRestorableGremlinGraphResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableGremlinGraphResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableGremlinGraphResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this graph event. </param>
         /// <param name="eventTimestamp"> The time when this graph event happened. </param>

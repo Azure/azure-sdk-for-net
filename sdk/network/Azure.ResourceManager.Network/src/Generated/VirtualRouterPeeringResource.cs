@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VirtualRouterPeering along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualRouterPeeringResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualRouterPeeringResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualRouterResource" /> using the GetVirtualRouterPeering method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualRouterPeeringResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualRouterPeeringResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualRouterResource"/> using the GetVirtualRouterPeering method.
     /// </summary>
     public partial class VirtualRouterPeeringResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualRouterPeeringsRestOperations _virtualRouterPeeringRestClient;
         private readonly VirtualRouterPeeringData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualRouters/peerings";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualRouterPeeringResource"/> class for mocking. </summary>
         protected VirtualRouterPeeringResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualRouterPeeringResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualRouterPeeringResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualRouterPeeringResource(ArmClient client, VirtualRouterPeeringData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualRouters/peerings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

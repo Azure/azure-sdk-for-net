@@ -14,9 +14,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The stream analytics input to sample. </summary>
     public partial class StreamAnalyticsSampleInputContent
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsSampleInputContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSampleInputContent"/>. </summary>
         public StreamAnalyticsSampleInputContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSampleInputContent"/>. </summary>
+        /// <param name="input"> The stream analytics input to sample. </param>
+        /// <param name="compatibilityLevel"> Defaults to the default ASA job compatibility level. Today it is 1.2. </param>
+        /// <param name="eventsUri"> The SAS URI of the storage blob for service to write the sampled events to. If this parameter is not provided, service will write events to he system account and share a temporary SAS URI to it. </param>
+        /// <param name="dataLocalion"> Defaults to en-US. </param>
+        internal StreamAnalyticsSampleInputContent(StreamingJobInputData input, string compatibilityLevel, Uri eventsUri, AzureLocation? dataLocalion)
+        {
+            Input = input;
+            CompatibilityLevel = compatibilityLevel;
+            EventsUri = eventsUri;
+            DataLocalion = dataLocalion;
         }
 
         /// <summary> The stream analytics input to sample. </summary>

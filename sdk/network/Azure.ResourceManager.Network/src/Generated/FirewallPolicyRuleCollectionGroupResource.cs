@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a FirewallPolicyRuleCollectionGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirewallPolicyRuleCollectionGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFirewallPolicyRuleCollectionGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FirewallPolicyResource" /> using the GetFirewallPolicyRuleCollectionGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FirewallPolicyRuleCollectionGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFirewallPolicyRuleCollectionGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FirewallPolicyResource"/> using the GetFirewallPolicyRuleCollectionGroup method.
     /// </summary>
     public partial class FirewallPolicyRuleCollectionGroupResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly FirewallPolicyRuleCollectionGroupsRestOperations _firewallPolicyRuleCollectionGroupRestClient;
         private readonly FirewallPolicyRuleCollectionGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies/ruleCollectionGroups";
+
         /// <summary> Initializes a new instance of the <see cref="FirewallPolicyRuleCollectionGroupResource"/> class for mocking. </summary>
         protected FirewallPolicyRuleCollectionGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FirewallPolicyRuleCollectionGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FirewallPolicyRuleCollectionGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FirewallPolicyRuleCollectionGroupResource(ArmClient client, FirewallPolicyRuleCollectionGroupData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies/ruleCollectionGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

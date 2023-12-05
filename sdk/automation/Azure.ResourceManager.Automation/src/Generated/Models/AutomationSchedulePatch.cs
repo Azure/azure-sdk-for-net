@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update schedule operation. </summary>
     public partial class AutomationSchedulePatch
     {
-        /// <summary> Initializes a new instance of AutomationSchedulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSchedulePatch"/>. </summary>
         public AutomationSchedulePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSchedulePatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the Schedule. </param>
+        /// <param name="description"> Gets or sets the description of the schedule. </param>
+        /// <param name="isEnabled"> Gets or sets a value indicating whether this schedule is enabled. </param>
+        internal AutomationSchedulePatch(string name, string description, bool? isEnabled)
+        {
+            Name = name;
+            Description = description;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Gets or sets the name of the Schedule. </summary>

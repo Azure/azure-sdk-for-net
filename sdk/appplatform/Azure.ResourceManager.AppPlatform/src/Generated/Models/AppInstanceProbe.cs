@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Probe describes a health check to be performed against an App Instance to determine whether it is alive or ready to receive traffic. </summary>
     public partial class AppInstanceProbe
     {
-        /// <summary> Initializes a new instance of AppInstanceProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceProbe"/>. </summary>
         /// <param name="isProbeDisabled"> Indicate whether the probe is disabled. </param>
         public AppInstanceProbe(bool isProbeDisabled)
         {
             IsProbeDisabled = isProbeDisabled;
         }
 
-        /// <summary> Initializes a new instance of AppInstanceProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceProbe"/>. </summary>
         /// <param name="probeAction">
         /// The action of the probe.
         /// Please note <see cref="AppInstanceProbeAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MongoDBRoleDefinitionResource" /> and their operations.
-    /// Each <see cref="MongoDBRoleDefinitionResource" /> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource" />.
-    /// To get a <see cref="MongoDBRoleDefinitionCollection" /> instance call the GetMongoDBRoleDefinitions method from an instance of <see cref="CosmosDBAccountResource" />.
+    /// A class representing a collection of <see cref="MongoDBRoleDefinitionResource"/> and their operations.
+    /// Each <see cref="MongoDBRoleDefinitionResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
+    /// To get a <see cref="MongoDBRoleDefinitionCollection"/> instance call the GetMongoDBRoleDefinitions method from an instance of <see cref="CosmosDBAccountResource"/>.
     /// </summary>
     public partial class MongoDBRoleDefinitionCollection : ArmCollection, IEnumerable<MongoDBRoleDefinitionResource>, IAsyncEnumerable<MongoDBRoleDefinitionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoDBRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MongoDBRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoDBRoleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateListMongoRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoDBRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MongoDBRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoDBRoleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateListMongoRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

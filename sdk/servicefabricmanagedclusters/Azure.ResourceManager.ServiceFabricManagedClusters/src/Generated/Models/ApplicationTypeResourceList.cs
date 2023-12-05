@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The list of application type names. </summary>
     internal partial class ApplicationTypeResourceList
     {
-        /// <summary> Initializes a new instance of ApplicationTypeResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationTypeResourceList"/>. </summary>
         internal ApplicationTypeResourceList()
         {
             Value = new ChangeTrackingList<ServiceFabricManagedApplicationTypeData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationTypeResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationTypeResourceList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of application type list results if there are any. </param>
         internal ApplicationTypeResourceList(IReadOnlyList<ServiceFabricManagedApplicationTypeData> value, string nextLink)

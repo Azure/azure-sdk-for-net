@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a DatabaseMigrationSqlDB along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatabaseMigrationSqlDBResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDatabaseMigrationSqlDBResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDatabaseMigrationSqlDB method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseMigrationSqlDBResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDatabaseMigrationSqlDBResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDatabaseMigrationSqlDB method.
     /// </summary>
     public partial class DatabaseMigrationSqlDBResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly DatabaseMigrationsSqlDbRestOperations _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient;
         private readonly DatabaseMigrationSqlDBData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/databaseMigrations";
+
         /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlDBResource"/> class for mocking. </summary>
         protected DatabaseMigrationSqlDBResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatabaseMigrationSqlDBResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlDBResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatabaseMigrationSqlDBResource(ArmClient client, DatabaseMigrationSqlDBData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/databaseMigrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

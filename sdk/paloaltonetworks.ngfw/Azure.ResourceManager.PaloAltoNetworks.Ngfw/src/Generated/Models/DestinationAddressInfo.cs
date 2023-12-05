@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> destination address. </summary>
     public partial class DestinationAddressInfo
     {
-        /// <summary> Initializes a new instance of DestinationAddressInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DestinationAddressInfo"/>. </summary>
         public DestinationAddressInfo()
         {
             Cidrs = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FqdnLists = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DestinationAddressInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DestinationAddressInfo"/>. </summary>
         /// <param name="cidrs"> special value 'any'. </param>
         /// <param name="countries"> list of countries. </param>
         /// <param name="feeds"> list of feeds. </param>

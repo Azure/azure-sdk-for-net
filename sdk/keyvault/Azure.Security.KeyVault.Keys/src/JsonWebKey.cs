@@ -509,6 +509,8 @@ namespace Azure.Security.KeyVault.Keys
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
 
         private static Func<RSAParameters, RSA> s_rsaFactory;
+
+        [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Incorrectly identifies RSA.Create(String); see https://github.com/Azure/azure-sdk-for-net/issues/40175 for discussion.")]
         private static RSA CreateRSAProvider(RSAParameters parameters)
         {
             if (s_rsaFactory is null)

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Common Data Service for Apps entity dataset. </summary>
     public partial class CommonDataServiceForAppsEntityDataset : Dataset
     {
-        /// <summary> Initializes a new instance of CommonDataServiceForAppsEntityDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsEntityDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public CommonDataServiceForAppsEntityDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "CommonDataServiceForAppsEntity";
         }
 
-        /// <summary> Initializes a new instance of CommonDataServiceForAppsEntityDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsEntityDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

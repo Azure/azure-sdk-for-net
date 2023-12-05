@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of active debug sessions. </summary>
     internal partial class QueryDataFlowDebugSessionsResponse
     {
-        /// <summary> Initializes a new instance of QueryDataFlowDebugSessionsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryDataFlowDebugSessionsResponse"/>. </summary>
         internal QueryDataFlowDebugSessionsResponse()
         {
             Value = new ChangeTrackingList<DataFlowDebugSessionInfo>();
         }
 
-        /// <summary> Initializes a new instance of QueryDataFlowDebugSessionsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryDataFlowDebugSessionsResponse"/>. </summary>
         /// <param name="value"> Array with all active debug sessions. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal QueryDataFlowDebugSessionsResponse(IReadOnlyList<DataFlowDebugSessionInfo> value, string nextLink)

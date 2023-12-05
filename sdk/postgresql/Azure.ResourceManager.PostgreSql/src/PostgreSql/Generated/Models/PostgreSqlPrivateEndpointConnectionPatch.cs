@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class PostgreSqlPrivateEndpointConnectionPatch
     {
-        /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateEndpointConnectionPatch"/>. </summary>
         public PostgreSqlPrivateEndpointConnectionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateEndpointConnectionPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal PostgreSqlPrivateEndpointConnectionPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

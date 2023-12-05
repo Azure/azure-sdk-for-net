@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
     /// A Class representing a DeviceUpdatePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceUpdatePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceUpdatePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceUpdateAccountResource" /> using the GetDeviceUpdatePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceUpdatePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceUpdatePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceUpdateAccountResource"/> using the GetDeviceUpdatePrivateEndpointConnection method.
     /// </summary>
     public partial class DeviceUpdatePrivateEndpointConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DeviceUpdate
         private readonly PrivateEndpointConnectionsRestOperations _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly DeviceUpdatePrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected DeviceUpdatePrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceUpdatePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceUpdatePrivateEndpointConnectionResource(ArmClient client, DeviceUpdatePrivateEndpointConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DeviceUpdate
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

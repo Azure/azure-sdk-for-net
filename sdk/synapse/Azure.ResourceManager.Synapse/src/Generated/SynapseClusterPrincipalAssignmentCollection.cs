@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseClusterPrincipalAssignmentResource" /> and their operations.
-    /// Each <see cref="SynapseClusterPrincipalAssignmentResource" /> in the collection will belong to the same instance of <see cref="SynapseKustoPoolResource" />.
-    /// To get a <see cref="SynapseClusterPrincipalAssignmentCollection" /> instance call the GetSynapseClusterPrincipalAssignments method from an instance of <see cref="SynapseKustoPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseClusterPrincipalAssignmentResource"/> and their operations.
+    /// Each <see cref="SynapseClusterPrincipalAssignmentResource"/> in the collection will belong to the same instance of <see cref="SynapseKustoPoolResource"/>.
+    /// To get a <see cref="SynapseClusterPrincipalAssignmentCollection"/> instance call the GetSynapseClusterPrincipalAssignments method from an instance of <see cref="SynapseKustoPoolResource"/>.
     /// </summary>
     public partial class SynapseClusterPrincipalAssignmentCollection : ArmCollection, IEnumerable<SynapseClusterPrincipalAssignmentResource>, IAsyncEnumerable<SynapseClusterPrincipalAssignmentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseClusterPrincipalAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseClusterPrincipalAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseClusterPrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseClusterPrincipalAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseClusterPrincipalAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseClusterPrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

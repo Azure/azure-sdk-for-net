@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxDeploymentUpdateProperties. </summary>
     public partial class NginxDeploymentUpdateProperties
     {
-        /// <summary> Initializes a new instance of NginxDeploymentUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
         public NginxDeploymentUpdateProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
+        /// <param name="enableDiagnosticsSupport"></param>
+        /// <param name="logging"></param>
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging)
+        {
+            EnableDiagnosticsSupport = enableDiagnosticsSupport;
+            Logging = logging;
         }
 
         /// <summary> Gets or sets the enable diagnostics support. </summary>

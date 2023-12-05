@@ -10,12 +10,12 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Get SAS URL operation response. </summary>
     public partial class SasUriResponse
     {
-        /// <summary> Initializes a new instance of SasUriResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasUriResponse"/>. </summary>
         internal SasUriResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of SasUriResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasUriResponse"/>. </summary>
         /// <param name="sasUri"> A URL with a SAS token to upload a blob for execution in the given workspace. </param>
         internal SasUriResponse(string sasUri)
         {

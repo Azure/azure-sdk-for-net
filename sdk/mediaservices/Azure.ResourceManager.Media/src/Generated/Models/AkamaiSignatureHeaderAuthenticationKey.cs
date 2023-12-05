@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Akamai Signature Header authentication key. </summary>
     public partial class AkamaiSignatureHeaderAuthenticationKey
     {
-        /// <summary> Initializes a new instance of AkamaiSignatureHeaderAuthenticationKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="AkamaiSignatureHeaderAuthenticationKey"/>. </summary>
         public AkamaiSignatureHeaderAuthenticationKey()
         {
         }
 
-        /// <summary> Initializes a new instance of AkamaiSignatureHeaderAuthenticationKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="AkamaiSignatureHeaderAuthenticationKey"/>. </summary>
         /// <param name="identifier"> identifier of the key. </param>
         /// <param name="base64Key"> authentication key. </param>
         /// <param name="expireOn"> The expiration time of the authentication key. </param>

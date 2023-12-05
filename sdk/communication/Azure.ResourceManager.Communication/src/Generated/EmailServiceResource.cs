@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Communication
 {
     /// <summary>
     /// A Class representing an EmailServiceResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EmailServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEmailServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEmailServiceResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EmailServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEmailServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEmailServiceResource method.
     /// </summary>
     public partial class EmailServiceResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Communication
         private readonly EmailServicesRestOperations _emailServiceResourceEmailServicesRestClient;
         private readonly EmailServiceResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices";
+
         /// <summary> Initializes a new instance of the <see cref="EmailServiceResource"/> class for mocking. </summary>
         protected EmailServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EmailServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EmailServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EmailServiceResource(ArmClient client, EmailServiceResourceData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Communication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </summary>
     internal partial class SapDiskSku
     {
-        /// <summary> Initializes a new instance of SapDiskSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDiskSku"/>. </summary>
         public SapDiskSku()
         {
         }
 
-        /// <summary> Initializes a new instance of SapDiskSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDiskSku"/>. </summary>
         /// <param name="name"> Defines the disk sku name. </param>
         internal SapDiskSku(DiskDetailsDiskSkuName? name)
         {

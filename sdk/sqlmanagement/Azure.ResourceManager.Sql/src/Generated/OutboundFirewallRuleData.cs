@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class OutboundFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of OutboundFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundFirewallRuleData"/>. </summary>
         public OutboundFirewallRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of OutboundFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

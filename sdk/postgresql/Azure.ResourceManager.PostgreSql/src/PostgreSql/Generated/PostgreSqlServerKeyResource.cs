@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
     /// A Class representing a PostgreSqlServerKey along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlServerKeyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlServerKeyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource" /> using the GetPostgreSqlServerKey method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlServerKeyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlServerKeyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource"/> using the GetPostgreSqlServerKey method.
     /// </summary>
     public partial class PostgreSqlServerKeyResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly ServerKeysRestOperations _postgreSqlServerKeyServerKeysRestClient;
         private readonly PostgreSqlServerKeyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/keys";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlServerKeyResource"/> class for mocking. </summary>
         protected PostgreSqlServerKeyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlServerKeyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlServerKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlServerKeyResource(ArmClient client, PostgreSqlServerKeyData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/keys";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

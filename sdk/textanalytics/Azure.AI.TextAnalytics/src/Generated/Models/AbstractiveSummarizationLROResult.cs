@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> An object representing the results for an Abstractive Summarization task. </summary>
     internal partial class AbstractiveSummarizationLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of AbstractiveSummarizationLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="results"> An object representing the pre-build summarization results of each document. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults;
         }
 
-        /// <summary> Initializes a new instance of AbstractiveSummarizationLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>

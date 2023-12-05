@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Supported operating systems property. </summary>
     public partial class SiteRecoverySupportedOSProperty
     {
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOSProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOSProperty"/>. </summary>
         internal SiteRecoverySupportedOSProperty()
         {
             SupportedOS = new ChangeTrackingList<SiteRecoverySupportedOSDetails>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOSProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOSProperty"/>. </summary>
         /// <param name="instanceType"> The replication provider type. </param>
         /// <param name="supportedOS"> The list of supported operating systems. </param>
         internal SiteRecoverySupportedOSProperty(string instanceType, IReadOnlyList<SiteRecoverySupportedOSDetails> supportedOS)

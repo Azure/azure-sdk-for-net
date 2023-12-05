@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> High availability properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerHighAvailability
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerHighAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHighAvailability"/>. </summary>
         public PostgreSqlFlexibleServerHighAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerHighAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHighAvailability"/>. </summary>
         /// <param name="mode"> The HA mode for the server. </param>
         /// <param name="state"> A state of a HA server that is visible to user. </param>
         /// <param name="standbyAvailabilityZone"> availability zone information of the standby. </param>

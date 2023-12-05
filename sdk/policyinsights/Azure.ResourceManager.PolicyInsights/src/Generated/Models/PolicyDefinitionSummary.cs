@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Policy definition summary. </summary>
     public partial class PolicyDefinitionSummary
     {
-        /// <summary> Initializes a new instance of PolicyDefinitionSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionSummary"/>. </summary>
         internal PolicyDefinitionSummary()
         {
             PolicyDefinitionGroupNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PolicyDefinitionSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionSummary"/>. </summary>
         /// <param name="policyDefinitionId"> Policy definition ID. </param>
         /// <param name="policyDefinitionReferenceId"> Policy definition reference ID. </param>
         /// <param name="policyDefinitionGroupNames"> Policy definition group names. </param>

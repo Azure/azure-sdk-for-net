@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Notebook. </summary>
     public partial class Notebook
     {
-        /// <summary> Initializes a new instance of Notebook. </summary>
+        /// <summary> Initializes a new instance of <see cref="Notebook"/>. </summary>
         /// <param name="metadata"> Notebook root-level metadata. </param>
         /// <param name="notebookFormat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
         /// <param name="notebookFormatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of Notebook. </summary>
+        /// <summary> Initializes a new instance of <see cref="Notebook"/>. </summary>
         /// <param name="description"> The description of the notebook. </param>
         /// <param name="bigDataPool"> Big data pool reference. </param>
         /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Service Fabric managed cluster Sku definition. </summary>
     public partial class ServiceFabricManagedClustersSku
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedClustersSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClustersSku"/>. </summary>
         /// <param name="name"> Sku Name. </param>
         public ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName name)
         {

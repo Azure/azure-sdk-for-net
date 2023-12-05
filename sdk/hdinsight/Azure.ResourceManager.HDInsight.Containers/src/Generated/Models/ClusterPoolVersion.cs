@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Available cluster pool version. </summary>
     public partial class ClusterPoolVersion : ResourceData
     {
-        /// <summary> Initializes a new instance of ClusterPoolVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolVersion"/>. </summary>
         public ClusterPoolVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterPoolVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolVersion"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

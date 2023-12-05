@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class ExperimentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExperimentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="steps"> List of steps. </param>
         /// <param name="selectors">
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Chaos
             Selectors = selectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExperimentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

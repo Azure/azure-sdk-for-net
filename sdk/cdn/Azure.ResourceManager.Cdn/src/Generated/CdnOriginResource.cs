@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a CdnOrigin along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CdnOriginResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCdnOriginResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CdnEndpointResource" /> using the GetCdnOrigin method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CdnOriginResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCdnOriginResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CdnEndpointResource"/> using the GetCdnOrigin method.
     /// </summary>
     public partial class CdnOriginResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Cdn
         private readonly CdnOriginsRestOperations _cdnOriginRestClient;
         private readonly CdnOriginData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/origins";
+
         /// <summary> Initializes a new instance of the <see cref="CdnOriginResource"/> class for mocking. </summary>
         protected CdnOriginResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CdnOriginResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnOriginResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CdnOriginResource(ArmClient client, CdnOriginData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/origins";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

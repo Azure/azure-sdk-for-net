@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
     public partial class VectorizedQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of VectorizedQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>
         /// <param name="vector"> The vector representation of a search query. </param>
         public VectorizedQuery(ReadOnlyMemory<float> vector)
         {
@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Models
             Kind = VectorQueryKind.Vector;
         }
 
-        /// <summary> Initializes a new instance of VectorizedQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>
         /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>

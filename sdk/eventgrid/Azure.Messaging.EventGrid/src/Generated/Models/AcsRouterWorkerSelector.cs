@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Router Job Worker Selector. </summary>
     public partial class AcsRouterWorkerSelector
     {
-        /// <summary> Initializes a new instance of AcsRouterWorkerSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerSelector"/>. </summary>
         internal AcsRouterWorkerSelector()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRouterWorkerSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerSelector"/>. </summary>
         /// <param name="key"> Router Job Worker Selector Key. </param>
         /// <param name="operator"> Router Job Worker Selector Label Operator. </param>
         /// <param name="labelValue"> Router Job Worker Selector Value. </param>

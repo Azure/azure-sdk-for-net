@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The LiveEvent action input parameter definition. </summary>
     public partial class LiveEventActionContent
     {
-        /// <summary> Initializes a new instance of LiveEventActionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventActionContent"/>. </summary>
         public LiveEventActionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LiveEventActionContent"/>. </summary>
+        /// <param name="removeOutputsOnStop"> The flag indicates whether live outputs are automatically deleted when live event is being stopped. Deleting live outputs do not delete the underlying assets. </param>
+        internal LiveEventActionContent(bool? removeOutputsOnStop)
+        {
+            RemoveOutputsOnStop = removeOutputsOnStop;
         }
 
         /// <summary> The flag indicates whether live outputs are automatically deleted when live event is being stopped. Deleting live outputs do not delete the underlying assets. </summary>

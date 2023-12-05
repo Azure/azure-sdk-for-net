@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list account operation. </summary>
     internal partial class AutomationAccountListResult
     {
-        /// <summary> Initializes a new instance of AutomationAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountListResult"/>. </summary>
         internal AutomationAccountListResult()
         {
             Value = new ChangeTrackingList<AutomationAccountData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountListResult"/>. </summary>
         /// <param name="value"> Gets or sets list of accounts. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationAccountListResult(IReadOnlyList<AutomationAccountData> value, string nextLink)

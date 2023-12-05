@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityDevOps
     /// </summary>
     public partial class AzureDevOpsOrgData : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgData"/>. </summary>
         public AzureDevOpsOrgData()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

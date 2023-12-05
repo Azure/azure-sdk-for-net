@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudStorageApplianceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudStorageApplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud
             StorageApplianceSkuId = storageApplianceSkuId;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudStorageApplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

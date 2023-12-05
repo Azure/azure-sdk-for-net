@@ -10,9 +10,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Subscription create details. </summary>
     public partial class ApiManagementSubscriptionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementSubscriptionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionCreateOrUpdateContent"/>. </summary>
         public ApiManagementSubscriptionCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionCreateOrUpdateContent"/>. </summary>
+        /// <param name="ownerId"> User (user id path) for whom subscription is being created in form /users/{userId}. </param>
+        /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
+        /// <param name="displayName"> Subscription name. </param>
+        /// <param name="primaryKey"> Primary subscription key. If not specified during request key will be generated automatically. </param>
+        /// <param name="secondaryKey"> Secondary subscription key. If not specified during request key will be generated automatically. </param>
+        /// <param name="state"> Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
+        /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
+        internal ApiManagementSubscriptionCreateOrUpdateContent(string ownerId, string scope, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, bool? allowTracing)
+        {
+            OwnerId = ownerId;
+            Scope = scope;
+            DisplayName = displayName;
+            PrimaryKey = primaryKey;
+            SecondaryKey = secondaryKey;
+            State = state;
+            AllowTracing = allowTracing;
         }
 
         /// <summary> User (user id path) for whom subscription is being created in form /users/{userId}. </summary>

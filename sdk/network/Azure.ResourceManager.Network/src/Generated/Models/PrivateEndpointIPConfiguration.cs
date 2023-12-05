@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An IP Configuration of the private endpoint. </summary>
     public partial class PrivateEndpointIPConfiguration
     {
-        /// <summary> Initializes a new instance of PrivateEndpointIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointIPConfiguration"/>. </summary>
         public PrivateEndpointIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointIPConfiguration"/>. </summary>
         /// <param name="name"> The name of the resource that is unique within a resource group. </param>
         /// <param name="privateEndpointIPConfigurationType"> The resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

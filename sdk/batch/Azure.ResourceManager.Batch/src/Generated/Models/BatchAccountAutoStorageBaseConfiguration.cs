@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The properties related to the auto-storage account. </summary>
     public partial class BatchAccountAutoStorageBaseConfiguration
     {
-        /// <summary> Initializes a new instance of BatchAccountAutoStorageBaseConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountAutoStorageBaseConfiguration"/>. </summary>
         /// <param name="storageAccountId"> The resource ID of the storage account to be used for auto-storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> is null. </exception>
         public BatchAccountAutoStorageBaseConfiguration(ResourceIdentifier storageAccountId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
             StorageAccountId = storageAccountId;
         }
 
-        /// <summary> Initializes a new instance of BatchAccountAutoStorageBaseConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountAutoStorageBaseConfiguration"/>. </summary>
         /// <param name="storageAccountId"> The resource ID of the storage account to be used for auto-storage account. </param>
         /// <param name="authenticationMode"> The authentication mode which the Batch service will use to manage the auto-storage account. </param>
         /// <param name="nodeIdentity"> The identity referenced here must be assigned to pools which have compute nodes that need access to auto-storage. </param>

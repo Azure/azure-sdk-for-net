@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The EncryptionKeyVaultUpdateProperties. </summary>
     public partial class EncryptionKeyVaultUpdateProperties
     {
-        /// <summary> Initializes a new instance of EncryptionKeyVaultUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionKeyVaultUpdateProperties"/>. </summary>
         /// <param name="keyIdentifier"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyIdentifier"/> is null. </exception>
         public EncryptionKeyVaultUpdateProperties(string keyIdentifier)

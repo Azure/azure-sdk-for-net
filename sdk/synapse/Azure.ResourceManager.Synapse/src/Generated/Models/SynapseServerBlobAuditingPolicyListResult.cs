@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of server auditing settings. </summary>
     internal partial class SynapseServerBlobAuditingPolicyListResult
     {
-        /// <summary> Initializes a new instance of SynapseServerBlobAuditingPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerBlobAuditingPolicyListResult"/>. </summary>
         internal SynapseServerBlobAuditingPolicyListResult()
         {
             Value = new ChangeTrackingList<SynapseServerBlobAuditingPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseServerBlobAuditingPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerBlobAuditingPolicyListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseServerBlobAuditingPolicyListResult(IReadOnlyList<SynapseServerBlobAuditingPolicyData> value, string nextLink)

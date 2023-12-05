@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceRecommendationBaseResource" /> and their operations.
-    /// Each <see cref="ResourceRecommendationBaseResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ResourceRecommendationBaseCollection" /> instance call the GetResourceRecommendationBases method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ResourceRecommendationBaseResource"/> and their operations.
+    /// Each <see cref="ResourceRecommendationBaseResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ResourceRecommendationBaseCollection"/> instance call the GetResourceRecommendationBases method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ResourceRecommendationBaseCollection : ArmCollection, IEnumerable<ResourceRecommendationBaseResource>, IAsyncEnumerable<ResourceRecommendationBaseResource>
     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceRecommendationBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceRecommendationBaseResource> GetAllAsync(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceRecommendationBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceRecommendationBaseResource> GetAll(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);

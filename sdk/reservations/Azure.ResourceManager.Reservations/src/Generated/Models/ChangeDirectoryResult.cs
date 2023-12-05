@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Change directory result for reservation order or reservation. </summary>
     public partial class ChangeDirectoryResult
     {
-        /// <summary> Initializes a new instance of ChangeDirectoryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryResult"/>. </summary>
         internal ChangeDirectoryResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ChangeDirectoryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryResult"/>. </summary>
         /// <param name="id"> Identifier of the reservation order or reservation. </param>
         /// <param name="name"> Name of the reservation order or reservation. </param>
         /// <param name="isSucceeded"> True if change directory operation succeeded on this reservation order or reservation. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes a list of server certificates referenced by common name that are used to secure the cluster. </summary>
     public partial class ClusterServerCertificateCommonNames
     {
-        /// <summary> Initializes a new instance of ClusterServerCertificateCommonNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonNames"/>. </summary>
         public ClusterServerCertificateCommonNames()
         {
             CommonNames = new ChangeTrackingList<ClusterServerCertificateCommonName>();
         }
 
-        /// <summary> Initializes a new instance of ClusterServerCertificateCommonNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonNames"/>. </summary>
         /// <param name="commonNames"> The list of server certificates referenced by common name that are used to secure the cluster. </param>
         /// <param name="x509StoreName"> The local certificate store location. </param>
         internal ClusterServerCertificateCommonNames(IList<ClusterServerCertificateCommonName> commonNames, ClusterCertificateStoreName? x509StoreName)

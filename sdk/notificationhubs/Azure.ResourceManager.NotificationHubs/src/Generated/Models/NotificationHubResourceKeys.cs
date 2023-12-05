@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Namespace/NotificationHub Connection String. </summary>
     public partial class NotificationHubResourceKeys
     {
-        /// <summary> Initializes a new instance of NotificationHubResourceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubResourceKeys"/>. </summary>
         internal NotificationHubResourceKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubResourceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubResourceKeys"/>. </summary>
         /// <param name="primaryConnectionString"> PrimaryConnectionString of the AuthorizationRule. </param>
         /// <param name="secondaryConnectionString"> SecondaryConnectionString of the created AuthorizationRule. </param>
         /// <param name="primaryKey"> PrimaryKey of the created AuthorizationRule. </param>

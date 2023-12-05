@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KustoClusterPrincipalAssignmentResource" /> and their operations.
-    /// Each <see cref="KustoClusterPrincipalAssignmentResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
-    /// To get a <see cref="KustoClusterPrincipalAssignmentCollection" /> instance call the GetKustoClusterPrincipalAssignments method from an instance of <see cref="KustoClusterResource" />.
+    /// A class representing a collection of <see cref="KustoClusterPrincipalAssignmentResource"/> and their operations.
+    /// Each <see cref="KustoClusterPrincipalAssignmentResource"/> in the collection will belong to the same instance of <see cref="KustoClusterResource"/>.
+    /// To get a <see cref="KustoClusterPrincipalAssignmentCollection"/> instance call the GetKustoClusterPrincipalAssignments method from an instance of <see cref="KustoClusterResource"/>.
     /// </summary>
     public partial class KustoClusterPrincipalAssignmentCollection : ArmCollection, IEnumerable<KustoClusterPrincipalAssignmentResource>, IAsyncEnumerable<KustoClusterPrincipalAssignmentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoClusterPrincipalAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoClusterPrincipalAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoClusterPrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoClusterPrincipalAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoClusterPrincipalAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoClusterPrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

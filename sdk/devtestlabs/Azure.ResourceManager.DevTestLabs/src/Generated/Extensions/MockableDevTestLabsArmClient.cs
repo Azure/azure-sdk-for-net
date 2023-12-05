@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabResource"/> object. </returns>
         public virtual DevTestLabResource GetDevTestLabResource(ResourceIdentifier id)
         {
             DevTestLabResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabGlobalScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabGlobalScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabGlobalScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabGlobalScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabGlobalScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabGlobalScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabGlobalScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabGlobalScheduleResource"/> object. </returns>
         public virtual DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(ResourceIdentifier id)
         {
             DevTestLabGlobalScheduleResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabScheduleResource"/> object. </returns>
         public virtual DevTestLabScheduleResource GetDevTestLabScheduleResource(ResourceIdentifier id)
         {
             DevTestLabScheduleResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabServiceFabricScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabServiceFabricScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabServiceFabricScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabServiceFabricScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabServiceFabricScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabServiceFabricScheduleResource"/> object. </returns>
         public virtual DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(ResourceIdentifier id)
         {
             DevTestLabServiceFabricScheduleResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabVmScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabVmScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabVmScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabVmScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabVmScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabVmScheduleResource"/> object. </returns>
         public virtual DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(ResourceIdentifier id)
         {
             DevTestLabVmScheduleResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabArtifactSourceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabArtifactSourceResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArtifactSourceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabArtifactSourceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabArtifactSourceResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArtifactSourceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabArtifactSourceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabArtifactSourceResource"/> object. </returns>
         public virtual DevTestLabArtifactSourceResource GetDevTestLabArtifactSourceResource(ResourceIdentifier id)
         {
             DevTestLabArtifactSourceResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabArmTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabArmTemplateResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArmTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabArmTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabArmTemplateResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArmTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabArmTemplateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabArmTemplateResource"/> object. </returns>
         public virtual DevTestLabArmTemplateResource GetDevTestLabArmTemplateResource(ResourceIdentifier id)
         {
             DevTestLabArmTemplateResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabArtifactResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabArtifactResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArtifactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabArtifactResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabArtifactResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArtifactResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabArtifactResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabArtifactResource"/> object. </returns>
         public virtual DevTestLabArtifactResource GetDevTestLabArtifactResource(ResourceIdentifier id)
         {
             DevTestLabArtifactResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabCostResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabCostResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabCostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabCostResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabCostResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabCostResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabCostResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabCostResource"/> object. </returns>
         public virtual DevTestLabCostResource GetDevTestLabCostResource(ResourceIdentifier id)
         {
             DevTestLabCostResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabCustomImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabCustomImageResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabCustomImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabCustomImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabCustomImageResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabCustomImageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabCustomImageResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabCustomImageResource"/> object. </returns>
         public virtual DevTestLabCustomImageResource GetDevTestLabCustomImageResource(ResourceIdentifier id)
         {
             DevTestLabCustomImageResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabFormulaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabFormulaResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabFormulaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabFormulaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabFormulaResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabFormulaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabFormulaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabFormulaResource"/> object. </returns>
         public virtual DevTestLabFormulaResource GetDevTestLabFormulaResource(ResourceIdentifier id)
         {
             DevTestLabFormulaResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabNotificationChannelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabNotificationChannelResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabNotificationChannelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabNotificationChannelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabNotificationChannelResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabNotificationChannelResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabNotificationChannelResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabNotificationChannelResource"/> object. </returns>
         public virtual DevTestLabNotificationChannelResource GetDevTestLabNotificationChannelResource(ResourceIdentifier id)
         {
             DevTestLabNotificationChannelResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabPolicyResource"/> object. </returns>
         public virtual DevTestLabPolicyResource GetDevTestLabPolicyResource(ResourceIdentifier id)
         {
             DevTestLabPolicyResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabServiceRunnerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabServiceRunnerResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceRunnerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabServiceRunnerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabServiceRunnerResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceRunnerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabServiceRunnerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabServiceRunnerResource"/> object. </returns>
         public virtual DevTestLabServiceRunnerResource GetDevTestLabServiceRunnerResource(ResourceIdentifier id)
         {
             DevTestLabServiceRunnerResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabUserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabUserResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabUserResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabUserResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabUserResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabUserResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabUserResource"/> object. </returns>
         public virtual DevTestLabUserResource GetDevTestLabUserResource(ResourceIdentifier id)
         {
             DevTestLabUserResource.ValidateResourceId(id);
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabDiskResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabDiskResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabDiskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabDiskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabDiskResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabDiskResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabDiskResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabDiskResource"/> object. </returns>
         public virtual DevTestLabDiskResource GetDevTestLabDiskResource(ResourceIdentifier id)
         {
             DevTestLabDiskResource.ValidateResourceId(id);
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabEnvironmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabEnvironmentResource"/> object. </returns>
         public virtual DevTestLabEnvironmentResource GetDevTestLabEnvironmentResource(ResourceIdentifier id)
         {
             DevTestLabEnvironmentResource.ValidateResourceId(id);
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabSecretResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabSecretResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabSecretResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabSecretResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabSecretResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabSecretResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabSecretResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabSecretResource"/> object. </returns>
         public virtual DevTestLabSecretResource GetDevTestLabSecretResource(ResourceIdentifier id)
         {
             DevTestLabSecretResource.ValidateResourceId(id);
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabServiceFabricResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabServiceFabricResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabServiceFabricResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabServiceFabricResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabServiceFabricResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabServiceFabricResource"/> object. </returns>
         public virtual DevTestLabServiceFabricResource GetDevTestLabServiceFabricResource(ResourceIdentifier id)
         {
             DevTestLabServiceFabricResource.ValidateResourceId(id);
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabVmResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabVmResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabVmResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabVmResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabVmResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabVmResource"/> object. </returns>
         public virtual DevTestLabVmResource GetDevTestLabVmResource(ResourceIdentifier id)
         {
             DevTestLabVmResource.ValidateResourceId(id);
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabVirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVirtualNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabVirtualNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DevTestLabVirtualNetworkResource"/> object. </returns>
         public virtual DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(ResourceIdentifier id)
         {
             DevTestLabVirtualNetworkResource.ValidateResourceId(id);

@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class TagsObject
     {
-        /// <summary> Initializes a new instance of TagsObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagsObject"/>. </summary>
         public TagsObject()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TagsObject"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal TagsObject(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.MarketplaceOrdering
 {
     /// <summary>
     /// A Class representing a MarketplaceAgreementTerm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MarketplaceAgreementTermResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMarketplaceAgreementTermResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetMarketplaceAgreementTerm method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MarketplaceAgreementTermResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMarketplaceAgreementTermResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetMarketplaceAgreementTerm method.
     /// </summary>
     public partial class MarketplaceAgreementTermResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         private readonly MarketplaceAgreementsRestOperations _marketplaceAgreementTermMarketplaceAgreementsRestClient;
         private readonly MarketplaceAgreementTermData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements";
+
         /// <summary> Initializes a new instance of the <see cref="MarketplaceAgreementTermResource"/> class for mocking. </summary>
         protected MarketplaceAgreementTermResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MarketplaceAgreementTermResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceAgreementTermResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MarketplaceAgreementTermResource(ArmClient client, MarketplaceAgreementTermData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

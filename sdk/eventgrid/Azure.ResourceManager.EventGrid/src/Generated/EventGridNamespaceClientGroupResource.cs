@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridNamespaceClientGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridNamespaceClientGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridNamespaceClientGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource" /> using the GetEventGridNamespaceClientGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridNamespaceClientGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridNamespaceClientGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource"/> using the GetEventGridNamespaceClientGroup method.
     /// </summary>
     public partial class EventGridNamespaceClientGroupResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly ClientGroupsRestOperations _eventGridNamespaceClientGroupClientGroupsRestClient;
         private readonly EventGridNamespaceClientGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/clientGroups";
+
         /// <summary> Initializes a new instance of the <see cref="EventGridNamespaceClientGroupResource"/> class for mocking. </summary>
         protected EventGridNamespaceClientGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridNamespaceClientGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridNamespaceClientGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridNamespaceClientGroupResource(ArmClient client, EventGridNamespaceClientGroupData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/clientGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

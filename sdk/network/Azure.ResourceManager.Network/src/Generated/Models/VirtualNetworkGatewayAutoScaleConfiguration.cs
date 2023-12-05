@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Virtual Network Gateway Autoscale Configuration details. </summary>
     internal partial class VirtualNetworkGatewayAutoScaleConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayAutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayAutoScaleConfiguration"/>. </summary>
         public VirtualNetworkGatewayAutoScaleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayAutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayAutoScaleConfiguration"/>. </summary>
         /// <param name="bounds"> The bounds of the autoscale configuration. </param>
         internal VirtualNetworkGatewayAutoScaleConfiguration(VirtualNetworkGatewayAutoScaleBounds bounds)
         {

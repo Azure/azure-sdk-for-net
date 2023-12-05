@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Settings to use an existing storage account. Valid storage account kinds are: Storage, StorageV2 and FileStorage. </summary>
     public partial class ScriptStorageConfiguration
     {
-        /// <summary> Initializes a new instance of ScriptStorageConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptStorageConfiguration"/>. </summary>
         public ScriptStorageConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptStorageConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptStorageConfiguration"/>. </summary>
         /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="storageAccountKey"> The storage account access key. </param>
         internal ScriptStorageConfiguration(string storageAccountName, string storageAccountKey)

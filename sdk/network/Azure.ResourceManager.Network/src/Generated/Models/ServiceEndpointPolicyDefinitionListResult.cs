@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListServiceEndpointPolicyDefinition API service call. Retrieves all service endpoint policy definition that belongs to a service endpoint policy. </summary>
     internal partial class ServiceEndpointPolicyDefinitionListResult
     {
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionListResult"/>. </summary>
         internal ServiceEndpointPolicyDefinitionListResult()
         {
             Value = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionListResult"/>. </summary>
         /// <param name="value"> The service endpoint policy definition in a service endpoint policy. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ServiceEndpointPolicyDefinitionListResult(IReadOnlyList<ServiceEndpointPolicyDefinitionData> value, string nextLink)

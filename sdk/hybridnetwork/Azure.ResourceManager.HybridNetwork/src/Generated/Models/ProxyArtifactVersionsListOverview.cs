@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The proxy artifact overview. </summary>
     public partial class ProxyArtifactVersionsListOverview : ResourceData
     {
-        /// <summary> Initializes a new instance of ProxyArtifactVersionsListOverview. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsListOverview"/>. </summary>
         public ProxyArtifactVersionsListOverview()
         {
         }
 
-        /// <summary> Initializes a new instance of ProxyArtifactVersionsListOverview. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsListOverview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

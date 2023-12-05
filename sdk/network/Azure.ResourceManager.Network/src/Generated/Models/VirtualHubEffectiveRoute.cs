@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The effective route configured on the virtual hub or specified resource. </summary>
     public partial class VirtualHubEffectiveRoute
     {
-        /// <summary> Initializes a new instance of VirtualHubEffectiveRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubEffectiveRoute"/>. </summary>
         internal VirtualHubEffectiveRoute()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             NextHops = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHubEffectiveRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubEffectiveRoute"/>. </summary>
         /// <param name="addressPrefixes"> The list of address prefixes. </param>
         /// <param name="nextHops"> The list of next hops. </param>
         /// <param name="nextHopType"> The type of the next hop. </param>

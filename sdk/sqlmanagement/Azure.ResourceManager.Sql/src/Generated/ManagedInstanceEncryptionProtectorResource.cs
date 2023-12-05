@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedInstanceEncryptionProtector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceEncryptionProtectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceEncryptionProtectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetManagedInstanceEncryptionProtector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceEncryptionProtectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceEncryptionProtectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedInstanceEncryptionProtector method.
     /// </summary>
     public partial class ManagedInstanceEncryptionProtectorResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedInstanceEncryptionProtectorsRestOperations _managedInstanceEncryptionProtectorRestClient;
         private readonly ManagedInstanceEncryptionProtectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/encryptionProtector";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceEncryptionProtectorResource"/> class for mocking. </summary>
         protected ManagedInstanceEncryptionProtectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceEncryptionProtectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceEncryptionProtectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceEncryptionProtectorResource(ArmClient client, ManagedInstanceEncryptionProtectorData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/encryptionProtector";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

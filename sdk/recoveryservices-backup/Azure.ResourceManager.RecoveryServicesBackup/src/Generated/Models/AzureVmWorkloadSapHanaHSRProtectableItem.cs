@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM workload-specific protectable item representing HANA HSR. </summary>
     public partial class AzureVmWorkloadSapHanaHSRProtectableItem : VmWorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of AzureVmWorkloadSapHanaHSRProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureVmWorkloadSapHanaHSRProtectableItem"/>. </summary>
         public AzureVmWorkloadSapHanaHSRProtectableItem()
         {
             ProtectableItemType = "HanaHSRContainer";
         }
 
-        /// <summary> Initializes a new instance of AzureVmWorkloadSapHanaHSRProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureVmWorkloadSapHanaHSRProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>

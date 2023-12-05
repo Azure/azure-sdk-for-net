@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.BillingBenefits
 {
     /// <summary>
     /// A Class representing a BillingBenefitsSavingsPlanOrder along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingBenefitsSavingsPlanOrderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingBenefitsSavingsPlanOrderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingBenefitsSavingsPlanOrder method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingBenefitsSavingsPlanOrderResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingBenefitsSavingsPlanOrderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingBenefitsSavingsPlanOrder method.
     /// </summary>
     public partial class BillingBenefitsSavingsPlanOrderResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly SavingsPlanOrderRestOperations _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient;
         private readonly BillingBenefitsSavingsPlanOrderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrders";
+
         /// <summary> Initializes a new instance of the <see cref="BillingBenefitsSavingsPlanOrderResource"/> class for mocking. </summary>
         protected BillingBenefitsSavingsPlanOrderResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingBenefitsSavingsPlanOrderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingBenefitsSavingsPlanOrderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingBenefitsSavingsPlanOrderResource(ArmClient client, BillingBenefitsSavingsPlanOrderData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.BillingBenefits
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrders";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

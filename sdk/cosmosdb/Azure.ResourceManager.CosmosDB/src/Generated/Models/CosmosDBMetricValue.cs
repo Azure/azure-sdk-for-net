@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Represents metrics values. </summary>
     public partial class CosmosDBMetricValue
     {
-        /// <summary> Initializes a new instance of CosmosDBMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricValue"/>. </summary>
         internal CosmosDBMetricValue()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricValue"/>. </summary>
         /// <param name="count"> The number of values for the metric. </param>
         /// <param name="average"> The average value of the metric. </param>
         /// <param name="maximum"> The max value of the metric. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Status of a benefit utilization summaries report. Provides Async Benefit Utilization Summaries Request input, status, and report sas url. </summary>
     public partial class BenefitUtilizationSummariesOperationStatus
     {
-        /// <summary> Initializes a new instance of BenefitUtilizationSummariesOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummariesOperationStatus"/>. </summary>
         internal BenefitUtilizationSummariesOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of BenefitUtilizationSummariesOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummariesOperationStatus"/>. </summary>
         /// <param name="input"> Input given to create the benefit utilization summaries report. </param>
         /// <param name="status"> The status of the creation of the benefit utilization summaries report. </param>
         /// <param name="properties"> Contains sas url to the async benefit utilization summaries report and a date that the url is valid until. These values will be empty if the report is in a Running or Failed state. </param>

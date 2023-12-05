@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAgFoodPlatformModelFactory
     {
-        /// <summary> Initializes a new instance of ExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatform.ExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new ExtensionData(id, name, resourceType, systemData, eTag, extensionId, extensionCategory, installedExtensionVersion, extensionAuthLink, extensionApiDocsLink);
         }
 
-        /// <summary> Initializes a new instance of FarmBeatsExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatform.FarmBeatsExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new FarmBeatsExtensionData(id, name, resourceType, systemData, targetResourceType, farmBeatsExtensionId, farmBeatsExtensionName, farmBeatsExtensionVersion, publisherId, description, extensionCategory, extensionAuthLink, extensionApiDocsLink, detailedInformation?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DetailedInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DetailedInformation"/>. </summary>
         /// <param name="apiName"> ApiName available for the farmBeatsExtension. </param>
         /// <param name="customParameters"> List of customParameters. </param>
         /// <param name="platformParameters"> List of platformParameters. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new DetailedInformation(apiName, customParameters?.ToList(), platformParameters?.ToList(), unitsSupported, apiInputParameters?.ToList());
         }
 
-        /// <summary> Initializes a new instance of UnitSystemsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UnitSystemsInfo"/>. </summary>
         /// <param name="key"> UnitSystem key sent as part of ProviderInput. </param>
         /// <param name="values"> List of unit systems supported by this data provider. </param>
         /// <returns> A new <see cref="Models.UnitSystemsInfo"/> instance for mocking. </returns>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new UnitSystemsInfo(key, values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of FarmBeatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatform.FarmBeatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new FarmBeatData(id, name, resourceType, systemData, tags, location, identity, instanceUri, provisioningState, sensorIntegration, publicNetworkAccess, privateEndpointConnections);
         }
 
-        /// <summary> Initializes a new instance of SensorIntegration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SensorIntegration"/>. </summary>
         /// <param name="enabled"> Sensor integration enable state. Allowed values are True, None. </param>
         /// <param name="provisioningState"> Sensor integration instance provisioning state. </param>
         /// <param name="provisioningInfoError"> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new SensorIntegration(enabled, provisioningState, provisioningInfoError != null ? new ErrorResponse(provisioningInfoError) : null);
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new AgFoodPlatformPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ArmAsyncOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmAsyncOperation"/>. </summary>
         /// <param name="status"> Status of the async operation. </param>
         /// <returns> A new <see cref="Models.ArmAsyncOperation"/> instance for mocking. </returns>
         public static ArmAsyncOperation ArmAsyncOperation(string status = null)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new ArmAsyncOperation(status);
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResponse"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

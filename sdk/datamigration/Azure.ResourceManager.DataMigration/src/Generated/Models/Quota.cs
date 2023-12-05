@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a quota for or usage details about a resource. </summary>
     public partial class Quota
     {
-        /// <summary> Initializes a new instance of Quota. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota"/>. </summary>
         internal Quota()
         {
         }
 
-        /// <summary> Initializes a new instance of Quota. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota"/>. </summary>
         /// <param name="currentValue"> The current value of the quota. If null or missing, the current value cannot be determined in the context of the request. </param>
         /// <param name="id"> The resource ID of the quota object. </param>
         /// <param name="limit"> The maximum value of the quota. If null or missing, the quota has no maximum, in which case it merely tracks usage. </param>

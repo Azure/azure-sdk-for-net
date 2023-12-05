@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition of a forecast. </summary>
     public partial class ForecastDefinition
     {
-        /// <summary> Initializes a new instance of ForecastDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastDefinition"/>. </summary>
         /// <param name="forecastType"> The type of the forecast. </param>
         /// <param name="timeframe"> The time frame for pulling data for the forecast. If custom, then a specific time period must be provided. </param>
         /// <param name="dataset"> Has definition for data in this forecast. </param>
@@ -25,6 +25,23 @@ namespace Azure.ResourceManager.CostManagement.Models
             ForecastType = forecastType;
             Timeframe = timeframe;
             Dataset = dataset;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ForecastDefinition"/>. </summary>
+        /// <param name="forecastType"> The type of the forecast. </param>
+        /// <param name="timeframe"> The time frame for pulling data for the forecast. If custom, then a specific time period must be provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the forecast. </param>
+        /// <param name="dataset"> Has definition for data in this forecast. </param>
+        /// <param name="includeActualCost"> A boolean determining if actualCost will be included. </param>
+        /// <param name="includeFreshPartialCost"> A boolean determining if FreshPartialCost will be included. </param>
+        internal ForecastDefinition(ForecastType forecastType, ForecastTimeframe timeframe, ForecastTimePeriod timePeriod, ForecastDataset dataset, bool? includeActualCost, bool? includeFreshPartialCost)
+        {
+            ForecastType = forecastType;
+            Timeframe = timeframe;
+            TimePeriod = timePeriod;
+            Dataset = dataset;
+            IncludeActualCost = includeActualCost;
+            IncludeFreshPartialCost = includeFreshPartialCost;
         }
 
         /// <summary> The type of the forecast. </summary>

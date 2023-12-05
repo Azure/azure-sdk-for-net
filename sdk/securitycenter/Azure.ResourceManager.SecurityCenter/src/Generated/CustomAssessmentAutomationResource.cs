@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a CustomAssessmentAutomation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CustomAssessmentAutomationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCustomAssessmentAutomationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCustomAssessmentAutomation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomAssessmentAutomationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCustomAssessmentAutomationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCustomAssessmentAutomation method.
     /// </summary>
     public partial class CustomAssessmentAutomationResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly CustomAssessmentAutomationsRestOperations _customAssessmentAutomationRestClient;
         private readonly CustomAssessmentAutomationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/customAssessmentAutomations";
+
         /// <summary> Initializes a new instance of the <see cref="CustomAssessmentAutomationResource"/> class for mocking. </summary>
         protected CustomAssessmentAutomationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CustomAssessmentAutomationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CustomAssessmentAutomationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CustomAssessmentAutomationResource(ArmClient client, CustomAssessmentAutomationData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/customAssessmentAutomations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

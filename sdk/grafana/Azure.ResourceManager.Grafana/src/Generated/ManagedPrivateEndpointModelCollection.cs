@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedPrivateEndpointModelResource" /> and their operations.
-    /// Each <see cref="ManagedPrivateEndpointModelResource" /> in the collection will belong to the same instance of <see cref="ManagedGrafanaResource" />.
-    /// To get a <see cref="ManagedPrivateEndpointModelCollection" /> instance call the GetManagedPrivateEndpointModels method from an instance of <see cref="ManagedGrafanaResource" />.
+    /// A class representing a collection of <see cref="ManagedPrivateEndpointModelResource"/> and their operations.
+    /// Each <see cref="ManagedPrivateEndpointModelResource"/> in the collection will belong to the same instance of <see cref="ManagedGrafanaResource"/>.
+    /// To get a <see cref="ManagedPrivateEndpointModelCollection"/> instance call the GetManagedPrivateEndpointModels method from an instance of <see cref="ManagedGrafanaResource"/>.
     /// </summary>
     public partial class ManagedPrivateEndpointModelCollection : ArmCollection, IEnumerable<ManagedPrivateEndpointModelResource>, IAsyncEnumerable<ManagedPrivateEndpointModelResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Grafana
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedPrivateEndpointModelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedPrivateEndpointModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedPrivateEndpointModelResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Grafana
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedPrivateEndpointModelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedPrivateEndpointModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedPrivateEndpointModelResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

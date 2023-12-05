@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
     /// A Class representing a StreamAnalyticsCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamAnalyticsClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamAnalyticsClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetStreamAnalyticsCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamAnalyticsClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamAnalyticsClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStreamAnalyticsCluster method.
     /// </summary>
     public partial class StreamAnalyticsClusterResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.StreamAnalytics
         private readonly ClustersRestOperations _streamAnalyticsClusterClustersRestClient;
         private readonly StreamAnalyticsClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="StreamAnalyticsClusterResource"/> class for mocking. </summary>
         protected StreamAnalyticsClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamAnalyticsClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamAnalyticsClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamAnalyticsClusterResource(ArmClient client, StreamAnalyticsClusterData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.StreamAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsClusterJob" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamAnalyticsClusterJob"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsClusterJob> GetStreamingJobsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsClusterJob" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamAnalyticsClusterJob"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsClusterJob> GetStreamingJobs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

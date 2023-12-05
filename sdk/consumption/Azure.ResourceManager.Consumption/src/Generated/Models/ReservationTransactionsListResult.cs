@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing reservation recommendations. </summary>
     internal partial class ReservationTransactionsListResult
     {
-        /// <summary> Initializes a new instance of ReservationTransactionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationTransactionsListResult"/>. </summary>
         internal ReservationTransactionsListResult()
         {
             Value = new ChangeTrackingList<ConsumptionReservationTransaction>();
         }
 
-        /// <summary> Initializes a new instance of ReservationTransactionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationTransactionsListResult"/>. </summary>
         /// <param name="value"> The list of reservation recommendations. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal ReservationTransactionsListResult(IReadOnlyList<ConsumptionReservationTransaction> value, string nextLink)

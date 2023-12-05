@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The response of the List Event Hubs Clusters operation. </summary>
     internal partial class ClusterListResult
     {
-        /// <summary> Initializes a new instance of ClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
         internal ClusterListResult()
         {
             Value = new ChangeTrackingList<EventHubsClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
         /// <param name="value"> The Event Hubs Clusters present in the List Event Hubs operation results. </param>
         /// <param name="nextLink"> Link to the next set of results. Empty unless the value parameter contains an incomplete list of Event Hubs Clusters. </param>
         internal ClusterListResult(IReadOnlyList<EventHubsClusterData> value, string nextLink)

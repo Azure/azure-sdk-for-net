@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The resource type aliases definition. </summary>
     public partial class ResourceTypeAliases
     {
-        /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliases"/>. </summary>
         internal ResourceTypeAliases()
         {
             Aliases = new ChangeTrackingList<ResourceTypeAlias>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliases"/>. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="aliases"> The aliases for property names. </param>
         internal ResourceTypeAliases(string resourceType, IReadOnlyList<ResourceTypeAlias> aliases)

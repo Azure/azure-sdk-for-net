@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A Class representing a ContainerRegistryRun along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerRegistryRunResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerRegistryRunResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource" /> using the GetContainerRegistryRun method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerRegistryRunResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerRegistryRunResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource"/> using the GetContainerRegistryRun method.
     /// </summary>
     public partial class ContainerRegistryRunResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly RunsRestOperations _containerRegistryRunRunsRestClient;
         private readonly ContainerRegistryRunData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/runs";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryRunResource"/> class for mocking. </summary>
         protected ContainerRegistryRunResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerRegistryRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerRegistryRunResource(ArmClient client, ContainerRegistryRunData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/runs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

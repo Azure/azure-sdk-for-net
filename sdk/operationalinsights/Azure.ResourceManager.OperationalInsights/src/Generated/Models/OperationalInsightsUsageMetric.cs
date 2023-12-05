@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> A metric describing the usage of a resource. </summary>
     public partial class OperationalInsightsUsageMetric
     {
-        /// <summary> Initializes a new instance of OperationalInsightsUsageMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsUsageMetric"/>. </summary>
         internal OperationalInsightsUsageMetric()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsUsageMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsUsageMetric"/>. </summary>
         /// <param name="name"> The name of the metric. </param>
         /// <param name="unit"> The units used for the metric. </param>
         /// <param name="currentValue"> The current value of the metric. </param>

@@ -12,9 +12,18 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The KeyPhrasesTask. </summary>
     internal partial class KeyPhrasesTask
     {
-        /// <summary> Initializes a new instance of KeyPhrasesTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhrasesTask"/>. </summary>
         public KeyPhrasesTask()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyPhrasesTask"/>. </summary>
+        /// <param name="parameters"></param>
+        /// <param name="taskName"></param>
+        internal KeyPhrasesTask(KeyPhrasesTaskParameters parameters, string taskName)
+        {
+            Parameters = parameters;
+            TaskName = taskName;
         }
 
         /// <summary> Gets or sets the parameters. </summary>

@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The DocumentHealthcareEntities. </summary>
     internal partial class DocumentHealthcareEntities
     {
-        /// <summary> Initializes a new instance of DocumentHealthcareEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentHealthcareEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentHealthcareEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentHealthcareEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>

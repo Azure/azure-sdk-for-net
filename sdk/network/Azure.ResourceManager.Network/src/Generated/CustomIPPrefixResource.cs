@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a CustomIPPrefix along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CustomIPPrefixResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCustomIPPrefixResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCustomIPPrefix method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomIPPrefixResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCustomIPPrefixResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCustomIPPrefix method.
     /// </summary>
     public partial class CustomIPPrefixResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Network
         private readonly CustomIPPrefixesRestOperations _customIPPrefixRestClient;
         private readonly CustomIPPrefixData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/customIpPrefixes";
+
         /// <summary> Initializes a new instance of the <see cref="CustomIPPrefixResource"/> class for mocking. </summary>
         protected CustomIPPrefixResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CustomIPPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CustomIPPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CustomIPPrefixResource(ArmClient client, CustomIPPrefixData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/customIpPrefixes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

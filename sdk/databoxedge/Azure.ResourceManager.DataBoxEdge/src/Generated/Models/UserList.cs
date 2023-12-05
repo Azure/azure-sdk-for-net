@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of users. </summary>
     internal partial class UserList
     {
-        /// <summary> Initializes a new instance of UserList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserList"/>. </summary>
         internal UserList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeUserData>();
         }
 
-        /// <summary> Initializes a new instance of UserList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserList"/>. </summary>
         /// <param name="value"> The list of users. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal UserList(IReadOnlyList<DataBoxEdgeUserData> value, string nextLink)

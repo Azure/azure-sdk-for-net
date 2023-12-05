@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster resource patch properties. </summary>
     public partial class UpdatableClusterProfile
     {
-        /// <summary> Initializes a new instance of UpdatableClusterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdatableClusterProfile"/>. </summary>
         public UpdatableClusterProfile()
         {
             ServiceConfigsProfiles = new ChangeTrackingList<ClusterServiceConfigsProfile>();
             ScriptActionProfiles = new ChangeTrackingList<ScriptActionProfile>();
         }
 
-        /// <summary> Initializes a new instance of UpdatableClusterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdatableClusterProfile"/>. </summary>
         /// <param name="serviceConfigsProfiles"> The service configs profiles. </param>
         /// <param name="sshProfile"> Ssh profile for the cluster. </param>
         /// <param name="autoscaleProfile"> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </param>

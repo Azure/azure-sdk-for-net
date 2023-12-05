@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The response to a live token query. </summary>
     public partial class LiveTokenResponse
     {
-        /// <summary> Initializes a new instance of LiveTokenResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveTokenResponse"/>. </summary>
         internal LiveTokenResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveTokenResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveTokenResponse"/>. </summary>
         /// <param name="liveToken"> JWT token for accessing live metrics stream data. </param>
         internal LiveTokenResponse(string liveToken)
         {

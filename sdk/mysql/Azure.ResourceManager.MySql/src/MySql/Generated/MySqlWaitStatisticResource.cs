@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlWaitStatistic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlWaitStatisticResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlWaitStatisticResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlWaitStatistic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlWaitStatisticResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlWaitStatisticResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource"/> using the GetMySqlWaitStatistic method.
     /// </summary>
     public partial class MySqlWaitStatisticResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.MySql
         private readonly WaitStatisticsRestOperations _mySqlWaitStatisticWaitStatisticsRestClient;
         private readonly MySqlWaitStatisticData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/waitStatistics";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlWaitStatisticResource"/> class for mocking. </summary>
         protected MySqlWaitStatisticResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlWaitStatisticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlWaitStatisticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlWaitStatisticResource(ArmClient client, MySqlWaitStatisticData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/waitStatistics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -160,6 +160,8 @@ namespace Azure.Core.Pipeline
         /// Marks the scope as failed with low-cardinality error.type attribute.
         /// </summary>
         /// <param name="errorCode">Error code to associate with the failed scope.</param>
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The public property System.Exception.TargetSite.get is not compatible with trimming and produces a warning when " +
+            "preserving all public properties. Since we do not use this property, and neither does Application Insights, we can suppress the warning coming from the inner method.")]
         public void Failed(string errorCode)
         {
             _activityAdapter?.MarkFailed((Exception?)null, errorCode);

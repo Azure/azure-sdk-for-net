@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App container definition. </summary>
     public partial class ContainerAppContainer : ContainerAppBaseContainer
     {
-        /// <summary> Initializes a new instance of ContainerAppContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppContainer"/>. </summary>
         public ContainerAppContainer()
         {
             Probes = new ChangeTrackingList<ContainerAppProbe>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppContainer"/>. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>

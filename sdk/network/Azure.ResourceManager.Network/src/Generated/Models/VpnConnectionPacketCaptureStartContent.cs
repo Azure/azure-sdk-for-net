@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </summary>
     public partial class VpnConnectionPacketCaptureStartContent
     {
-        /// <summary> Initializes a new instance of VpnConnectionPacketCaptureStartContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionPacketCaptureStartContent"/>. </summary>
         public VpnConnectionPacketCaptureStartContent()
         {
             LinkConnectionNames = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionPacketCaptureStartContent"/>. </summary>
+        /// <param name="filterData"> Start Packet capture parameters on vpn connection. </param>
+        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        internal VpnConnectionPacketCaptureStartContent(string filterData, IList<string> linkConnectionNames)
+        {
+            FilterData = filterData;
+            LinkConnectionNames = linkConnectionNames;
         }
 
         /// <summary> Start Packet capture parameters on vpn connection. </summary>

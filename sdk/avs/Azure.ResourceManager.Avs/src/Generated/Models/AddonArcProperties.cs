@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties of an Arc addon. </summary>
     public partial class AddonArcProperties : AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of AddonArcProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonArcProperties"/>. </summary>
         public AddonArcProperties()
         {
             AddonType = AddonType.Arc;
         }
 
-        /// <summary> Initializes a new instance of AddonArcProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonArcProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="vCenter"> The VMware vCenter resource ID. </param>

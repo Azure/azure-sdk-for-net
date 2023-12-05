@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Schema for EndpointKeys generate/refresh operations. </summary>
     public partial class GetBotServiceQnAMakerEndpointKeyResult
     {
-        /// <summary> Initializes a new instance of GetBotServiceQnAMakerEndpointKeyResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetBotServiceQnAMakerEndpointKeyResult"/>. </summary>
         internal GetBotServiceQnAMakerEndpointKeyResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GetBotServiceQnAMakerEndpointKeyResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetBotServiceQnAMakerEndpointKeyResult"/>. </summary>
         /// <param name="primaryEndpointKey"> Primary Access Key. </param>
         /// <param name="secondaryEndpointKey"> Secondary Access Key. </param>
         /// <param name="installedVersion"> Current version of runtime. </param>

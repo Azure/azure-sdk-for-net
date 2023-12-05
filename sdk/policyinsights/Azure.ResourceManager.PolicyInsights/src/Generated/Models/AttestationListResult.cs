@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> List of attestations. </summary>
     internal partial class AttestationListResult
     {
-        /// <summary> Initializes a new instance of AttestationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationListResult"/>. </summary>
         internal AttestationListResult()
         {
             Value = new ChangeTrackingList<PolicyAttestationData>();
         }
 
-        /// <summary> Initializes a new instance of AttestationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationListResult"/>. </summary>
         /// <param name="value"> Array of attestation definitions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal AttestationListResult(IReadOnlyList<PolicyAttestationData> value, string nextLink)

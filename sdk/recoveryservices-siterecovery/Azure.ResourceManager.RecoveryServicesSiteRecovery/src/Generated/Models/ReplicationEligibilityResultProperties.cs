@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Properties model for replication eligibility results API. </summary>
     public partial class ReplicationEligibilityResultProperties
     {
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultProperties"/>. </summary>
         internal ReplicationEligibilityResultProperties()
         {
             Errors = new ChangeTrackingList<ReplicationEligibilityResultErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultProperties"/>. </summary>
         /// <param name="clientRequestId"> The client request Id. </param>
         /// <param name="errors"> The error details. </param>
         internal ReplicationEligibilityResultProperties(string clientRequestId, IReadOnlyList<ReplicationEligibilityResultErrorInfo> errors)

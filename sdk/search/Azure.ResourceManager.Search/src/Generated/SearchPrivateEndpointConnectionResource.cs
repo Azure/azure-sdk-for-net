@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Search
 {
     /// <summary>
     /// A Class representing a SearchPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SearchPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSearchPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource" /> using the GetSearchPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SearchPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSearchPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource"/> using the GetSearchPrivateEndpointConnection method.
     /// </summary>
     public partial class SearchPrivateEndpointConnectionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Search
         private readonly PrivateEndpointConnectionsRestOperations _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly SearchPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="SearchPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected SearchPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SearchPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SearchPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SearchPrivateEndpointConnectionResource(ArmClient client, SearchPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Search
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

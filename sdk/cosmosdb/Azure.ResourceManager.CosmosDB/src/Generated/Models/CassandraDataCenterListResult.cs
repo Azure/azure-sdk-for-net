@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> List of managed Cassandra data centers and their properties. </summary>
     internal partial class CassandraDataCenterListResult
     {
-        /// <summary> Initializes a new instance of CassandraDataCenterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterListResult"/>. </summary>
         internal CassandraDataCenterListResult()
         {
             Value = new ChangeTrackingList<CassandraDataCenterData>();
         }
 
-        /// <summary> Initializes a new instance of CassandraDataCenterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterListResult"/>. </summary>
         /// <param name="value"> Container for array of data centers. </param>
         internal CassandraDataCenterListResult(IReadOnlyList<CassandraDataCenterData> value)
         {

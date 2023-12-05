@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBSqlRoleAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBSqlRoleAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBSqlRoleAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCosmosDBSqlRoleAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBSqlRoleAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBSqlRoleAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetCosmosDBSqlRoleAssignment method.
     /// </summary>
     public partial class CosmosDBSqlRoleAssignmentResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly SqlResourcesRestOperations _cosmosDBSqlRoleAssignmentSqlResourcesRestClient;
         private readonly CosmosDBSqlRoleAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlRoleAssignmentResource"/> class for mocking. </summary>
         protected CosmosDBSqlRoleAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBSqlRoleAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlRoleAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBSqlRoleAssignmentResource(ArmClient client, CosmosDBSqlRoleAssignmentData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

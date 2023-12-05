@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Supported parameters for a Custom Entities task. </summary>
     internal partial class CustomEntitiesTaskParameters : CustomTaskParameters
     {
-        /// <summary> Initializes a new instance of CustomEntitiesTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskParameters"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
         }
 
-        /// <summary> Initializes a new instance of CustomEntitiesTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>

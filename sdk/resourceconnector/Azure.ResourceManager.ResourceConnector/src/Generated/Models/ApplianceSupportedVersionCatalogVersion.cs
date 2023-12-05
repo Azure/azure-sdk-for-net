@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The SupportedVersionCatalogVersion object for appliance. </summary>
     public partial class ApplianceSupportedVersionCatalogVersion
     {
-        /// <summary> Initializes a new instance of ApplianceSupportedVersionCatalogVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceSupportedVersionCatalogVersion"/>. </summary>
         internal ApplianceSupportedVersionCatalogVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceSupportedVersionCatalogVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceSupportedVersionCatalogVersion"/>. </summary>
         /// <param name="data"> The newer supported version catalog version data. </param>
         /// <param name="name"> The catalog version name for the version available for upgrade. </param>
         /// <param name="namespace"> The catalog version namespace for the version available for upgrade. </param>

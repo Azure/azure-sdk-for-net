@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningUriFolderJobOutput. </summary>
     public partial class MachineLearningUriFolderJobOutput : MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningUriFolderJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUriFolderJobOutput"/>. </summary>
         public MachineLearningUriFolderJobOutput()
         {
             JobOutputType = JobOutputType.UriFolder;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUriFolderJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUriFolderJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="assetName"> Output Asset Name. </param>

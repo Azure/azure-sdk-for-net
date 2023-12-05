@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkVirtualMachineData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachineData"/>. </summary>
         public WorkloadNetworkVirtualMachineData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

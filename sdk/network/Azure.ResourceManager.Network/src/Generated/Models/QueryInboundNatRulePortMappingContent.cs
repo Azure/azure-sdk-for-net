@@ -13,9 +13,18 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The request for a QueryInboundNatRulePortMapping API. Either IpConfiguration or IpAddress should be set. </summary>
     public partial class QueryInboundNatRulePortMappingContent
     {
-        /// <summary> Initializes a new instance of QueryInboundNatRulePortMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryInboundNatRulePortMappingContent"/>. </summary>
         public QueryInboundNatRulePortMappingContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryInboundNatRulePortMappingContent"/>. </summary>
+        /// <param name="ipConfiguration"> NetworkInterfaceIPConfiguration set in load balancer backend address. </param>
+        /// <param name="ipAddress"> IP address set in load balancer backend address. </param>
+        internal QueryInboundNatRulePortMappingContent(WritableSubResource ipConfiguration, string ipAddress)
+        {
+            IPConfiguration = ipConfiguration;
+            IPAddress = ipAddress;
         }
 
         /// <summary> NetworkInterfaceIPConfiguration set in load balancer backend address. </summary>

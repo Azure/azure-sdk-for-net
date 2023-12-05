@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The DataMaskingEntity. </summary>
     public partial class DataMaskingEntity
     {
-        /// <summary> Initializes a new instance of DataMaskingEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingEntity"/>. </summary>
         public DataMaskingEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of DataMaskingEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingEntity"/>. </summary>
         /// <param name="value"> The name of an entity to mask (e.g. a name of a header or a query parameter). </param>
         /// <param name="mode"> Data masking mode. </param>
         internal DataMaskingEntity(string value, DataMaskingMode? mode)

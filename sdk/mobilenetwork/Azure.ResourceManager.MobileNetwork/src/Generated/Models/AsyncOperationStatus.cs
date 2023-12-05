@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The current status of an async operation. </summary>
     public partial class AsyncOperationStatus
     {
-        /// <summary> Initializes a new instance of AsyncOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsyncOperationStatus"/>. </summary>
         /// <param name="status"> The operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal AsyncOperationStatus(string status)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of AsyncOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsyncOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> The operation status. </param>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateEndpointConnectionData"/>. </summary>
         public StorageSyncPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

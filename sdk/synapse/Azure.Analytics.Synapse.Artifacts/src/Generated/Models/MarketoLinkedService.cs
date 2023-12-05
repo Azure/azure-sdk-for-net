@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Marketo server linked service. </summary>
     public partial class MarketoLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of MarketoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketoLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Marketo server. (i.e. 123-ABC-321.mktorest.com). </param>
         /// <param name="clientId"> The client Id of your Marketo service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Marketo";
         }
 
-        /// <summary> Initializes a new instance of MarketoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketoLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

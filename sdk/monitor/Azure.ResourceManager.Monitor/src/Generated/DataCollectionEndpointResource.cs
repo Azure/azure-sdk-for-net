@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a DataCollectionEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataCollectionEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataCollectionEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataCollectionEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataCollectionEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataCollectionEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataCollectionEndpoint method.
     /// </summary>
     public partial class DataCollectionEndpointResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.Monitor
         private readonly DataCollectionRuleAssociationsRestOperations _dataCollectionRuleAssociationRestClient;
         private readonly DataCollectionEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/dataCollectionEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="DataCollectionEndpointResource"/> class for mocking. </summary>
         protected DataCollectionEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataCollectionEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataCollectionEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataCollectionEndpointResource(ArmClient client, DataCollectionEndpointData data) : this(client, data.Id)
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/dataCollectionEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByDataCollectionEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByDataCollectionEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

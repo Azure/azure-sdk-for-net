@@ -10,9 +10,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the network interface update. </summary>
     public partial class VMwareNetworkInterfaceUpdate
     {
-        /// <summary> Initializes a new instance of VMwareNetworkInterfaceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareNetworkInterfaceUpdate"/>. </summary>
         public VMwareNetworkInterfaceUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareNetworkInterfaceUpdate"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the network interface. </param>
+        /// <param name="networkId"> Gets or sets the ARM Id of the network resource to connect the virtual machine. </param>
+        /// <param name="nicType"> NIC type. </param>
+        /// <param name="powerOnBoot"> Gets or sets the power on boot. </param>
+        /// <param name="deviceKey"> Gets or sets the device key value. </param>
+        internal VMwareNetworkInterfaceUpdate(string name, string networkId, VMwareNicType? nicType, PowerOnBootOption? powerOnBoot, int? deviceKey)
+        {
+            Name = name;
+            NetworkId = networkId;
+            NicType = nicType;
+            PowerOnBoot = powerOnBoot;
+            DeviceKey = deviceKey;
         }
 
         /// <summary> Gets or sets the name of the network interface. </summary>

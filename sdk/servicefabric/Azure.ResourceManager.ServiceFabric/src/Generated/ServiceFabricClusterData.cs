@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceFabric
     /// </summary>
     public partial class ServiceFabricClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricClusterData(AzureLocation location) : base(location)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabric
             Notifications = new ChangeTrackingList<ClusterNotification>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

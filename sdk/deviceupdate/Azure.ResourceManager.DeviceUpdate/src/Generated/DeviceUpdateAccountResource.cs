@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
     /// A Class representing a DeviceUpdateAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceUpdateAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceUpdateAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDeviceUpdateAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceUpdateAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceUpdateAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDeviceUpdateAccount method.
     /// </summary>
     public partial class DeviceUpdateAccountResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DeviceUpdate
         private readonly AccountsRestOperations _deviceUpdateAccountAccountsRestClient;
         private readonly DeviceUpdateAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdateAccountResource"/> class for mocking. </summary>
         protected DeviceUpdateAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceUpdateAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceUpdateAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceUpdateAccountResource(ArmClient client, DeviceUpdateAccountData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DeviceUpdate
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -198,11 +198,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return GetDeviceUpdatePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the DeviceUpdateAccount. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkCollection GetPrivateLinks()
+        /// <summary> Gets a collection of DeviceUpdatePrivateLinkResources in the DeviceUpdateAccount. </summary>
+        /// <returns> An object representing collection of DeviceUpdatePrivateLinkResources and their operations over a DeviceUpdatePrivateLinkResource. </returns>
+        public virtual DeviceUpdatePrivateLinkCollection GetDeviceUpdatePrivateLinks()
         {
-            return GetCachedClient(client => new PrivateLinkCollection(client, Id));
+            return GetCachedClient(client => new DeviceUpdatePrivateLinkCollection(client, Id));
         }
 
         /// <summary>
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdatePrivateLinkResource>> GetDeviceUpdatePrivateLinkAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateLinks().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return await GetDeviceUpdatePrivateLinks().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -246,39 +246,16 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLink(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceUpdatePrivateLinkResource> GetDeviceUpdatePrivateLink(string groupId, CancellationToken cancellationToken = default)
         {
-            return GetPrivateLinks().Get(groupId, cancellationToken);
+            return GetDeviceUpdatePrivateLinks().Get(groupId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionProxyResources in the DeviceUpdateAccount. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionProxyResources and their operations over a PrivateEndpointConnectionProxyResource. </returns>
-        public virtual PrivateEndpointConnectionProxyCollection GetPrivateEndpointConnectionProxies()
+        /// <summary> Gets a collection of DeviceUpdatePrivateEndpointConnectionProxyResources in the DeviceUpdateAccount. </summary>
+        /// <returns> An object representing collection of DeviceUpdatePrivateEndpointConnectionProxyResources and their operations over a DeviceUpdatePrivateEndpointConnectionProxyResource. </returns>
+        public virtual DeviceUpdatePrivateEndpointConnectionProxyCollection GetDeviceUpdatePrivateEndpointConnectionProxies()
         {
-            return GetCachedClient(client => new PrivateEndpointConnectionProxyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// (INTERNAL - DO NOT USE) Get the specified private endpoint connection proxy associated with the device update account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionProxies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionProxyResource>> GetPrivateEndpointConnectionProxyAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
-        {
-            return await GetPrivateEndpointConnectionProxies().GetAsync(privateEndpointConnectionProxyId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new DeviceUpdatePrivateEndpointConnectionProxyCollection(client, Id));
         }
 
         /// <summary>
@@ -299,9 +276,32 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionProxyResource> GetPrivateEndpointConnectionProxy(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdatePrivateEndpointConnectionProxyResource>> GetDeviceUpdatePrivateEndpointConnectionProxyAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnectionProxies().Get(privateEndpointConnectionProxyId, cancellationToken);
+            return await GetDeviceUpdatePrivateEndpointConnectionProxies().GetAsync(privateEndpointConnectionProxyId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// (INTERNAL - DO NOT USE) Get the specified private endpoint connection proxy associated with the device update account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeviceUpdatePrivateEndpointConnectionProxyResource> GetDeviceUpdatePrivateEndpointConnectionProxy(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
+        {
+            return GetDeviceUpdatePrivateEndpointConnectionProxies().Get(privateEndpointConnectionProxyId, cancellationToken);
         }
 
         /// <summary>

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A vpn client connection configuration for client connection configuration. </summary>
     public partial class VngClientConnectionConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VngClientConnectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VngClientConnectionConfiguration"/>. </summary>
         public VngClientConnectionConfiguration()
         {
             VirtualNetworkGatewayPolicyGroups = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VngClientConnectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VngClientConnectionConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

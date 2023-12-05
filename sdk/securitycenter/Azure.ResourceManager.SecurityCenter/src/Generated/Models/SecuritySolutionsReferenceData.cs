@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The SecuritySolutionsReferenceData. </summary>
     public partial class SecuritySolutionsReferenceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecuritySolutionsReferenceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceData"/>. </summary>
         /// <param name="securityFamily"> The security family of the security solution. </param>
         /// <param name="alertVendorName"> The security solutions' vendor name. </param>
         /// <param name="packageInfoUri"> The security solutions' package info url. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Template = template;
         }
 
-        /// <summary> Initializes a new instance of SecuritySolutionsReferenceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list job schedule operation. </summary>
     internal partial class AutomationJobScheduleListResult
     {
-        /// <summary> Initializes a new instance of AutomationJobScheduleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleListResult"/>. </summary>
         internal AutomationJobScheduleListResult()
         {
             Value = new ChangeTrackingList<AutomationJobScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationJobScheduleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of job schedules. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationJobScheduleListResult(IReadOnlyList<AutomationJobScheduleData> value, string nextLink)

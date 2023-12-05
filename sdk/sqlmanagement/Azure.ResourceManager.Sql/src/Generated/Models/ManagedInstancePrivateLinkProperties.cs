@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a private link resource. </summary>
     public partial class ManagedInstancePrivateLinkProperties
     {
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkProperties"/>. </summary>
         internal ManagedInstancePrivateLinkProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         internal ManagedInstancePrivateLinkProperties(string groupId, IReadOnlyList<string> requiredMembers)

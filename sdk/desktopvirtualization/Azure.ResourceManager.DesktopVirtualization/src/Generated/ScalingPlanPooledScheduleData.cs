@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class ScalingPlanPooledScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScalingPlanPooledScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanPooledScheduleData"/>. </summary>
         public ScalingPlanPooledScheduleData()
         {
             DaysOfWeek = new ChangeTrackingList<DesktopVirtualizationDayOfWeek>();
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanPooledScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanPooledScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

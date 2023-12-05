@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Request body for resizing a virtual machine. </summary>
     public partial class DevTestLabVmResizeContent
     {
-        /// <summary> Initializes a new instance of DevTestLabVmResizeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmResizeContent"/>. </summary>
         public DevTestLabVmResizeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmResizeContent"/>. </summary>
+        /// <param name="size"> Specifies the size of the virtual machine. </param>
+        internal DevTestLabVmResizeContent(string size)
+        {
+            Size = size;
         }
 
         /// <summary> Specifies the size of the virtual machine. </summary>

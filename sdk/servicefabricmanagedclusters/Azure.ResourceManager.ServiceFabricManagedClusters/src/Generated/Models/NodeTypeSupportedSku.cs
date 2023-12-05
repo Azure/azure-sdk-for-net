@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a node type supported sku. </summary>
     public partial class NodeTypeSupportedSku
     {
-        /// <summary> Initializes a new instance of NodeTypeSupportedSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeSupportedSku"/>. </summary>
         internal NodeTypeSupportedSku()
         {
         }
 
-        /// <summary> Initializes a new instance of NodeTypeSupportedSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeSupportedSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> Specifies the tier of the node type. &lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt; **Standard**. </param>
         internal NodeTypeSupportedSku(string name, string tier)

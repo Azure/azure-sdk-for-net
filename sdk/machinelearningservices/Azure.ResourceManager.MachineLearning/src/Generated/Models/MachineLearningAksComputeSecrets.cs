@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Secrets related to a Machine Learning compute based on AKS. </summary>
     public partial class MachineLearningAksComputeSecrets : MachineLearningComputeSecrets
     {
-        /// <summary> Initializes a new instance of MachineLearningAksComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeSecrets"/>. </summary>
         internal MachineLearningAksComputeSecrets()
         {
             ComputeType = ComputeType.Aks;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAksComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="userKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
         /// <param name="adminKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>

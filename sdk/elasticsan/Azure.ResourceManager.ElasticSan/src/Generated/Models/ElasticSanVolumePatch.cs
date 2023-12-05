@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Response for Volume request. </summary>
     public partial class ElasticSanVolumePatch
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
         public ElasticSanVolumePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
+        /// <param name="sizeGiB"> Volume size. </param>
+        /// <param name="managedBy"> Parent resource information. </param>
+        internal ElasticSanVolumePatch(long? sizeGiB, ManagedByInfo managedBy)
+        {
+            SizeGiB = sizeGiB;
+            ManagedBy = managedBy;
         }
 
         /// <summary> Volume size. </summary>

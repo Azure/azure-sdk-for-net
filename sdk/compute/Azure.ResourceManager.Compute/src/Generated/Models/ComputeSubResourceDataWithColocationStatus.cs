@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The ComputeSubResourceDataWithColocationStatus. </summary>
     public partial class ComputeSubResourceDataWithColocationStatus : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of ComputeSubResourceDataWithColocationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSubResourceDataWithColocationStatus"/>. </summary>
         public ComputeSubResourceDataWithColocationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeSubResourceDataWithColocationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSubResourceDataWithColocationStatus"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="colocationStatus"> Describes colocation status of a resource in the Proximity Placement Group. </param>
         internal ComputeSubResourceDataWithColocationStatus(ResourceIdentifier id, InstanceViewStatus colocationStatus) : base(id)

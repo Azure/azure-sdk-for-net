@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a cost threshold item. </summary>
     public partial class DevTestLabCostThreshold
     {
-        /// <summary> Initializes a new instance of DevTestLabCostThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostThreshold"/>. </summary>
         public DevTestLabCostThreshold()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCostThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostThreshold"/>. </summary>
         /// <param name="thresholdId"> The ID of the cost threshold item. </param>
         /// <param name="percentageThreshold"> The value of the percentage cost threshold. </param>
         /// <param name="displayOnChart"> Indicates whether this threshold will be displayed on cost charts. </param>

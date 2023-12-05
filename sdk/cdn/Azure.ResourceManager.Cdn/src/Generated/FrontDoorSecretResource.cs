@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a FrontDoorSecret along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorSecretResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorSecretResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProfileResource" /> using the GetFrontDoorSecret method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorSecretResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorSecretResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetFrontDoorSecret method.
     /// </summary>
     public partial class FrontDoorSecretResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Cdn
         private readonly FrontDoorSecretsRestOperations _frontDoorSecretRestClient;
         private readonly FrontDoorSecretData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/secrets";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorSecretResource"/> class for mocking. </summary>
         protected FrontDoorSecretResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorSecretResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorSecretResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorSecretResource(ArmClient client, FrontDoorSecretData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/secrets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

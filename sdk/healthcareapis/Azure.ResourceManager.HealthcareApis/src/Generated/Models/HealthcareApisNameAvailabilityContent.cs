@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Input values. </summary>
     public partial class HealthcareApisNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of HealthcareApisNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the service instance to check. </param>
         /// <param name="resourceType"> The fully qualified resource type which includes provider namespace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

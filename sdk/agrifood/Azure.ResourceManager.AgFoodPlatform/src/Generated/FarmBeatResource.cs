@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
     /// A Class representing a FarmBeat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FarmBeatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFarmBeatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFarmBeat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FarmBeatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFarmBeatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFarmBeat method.
     /// </summary>
     public partial class FarmBeatResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
         private readonly FarmBeatsModelsRestOperations _farmBeatFarmBeatsModelsRestClient;
         private readonly FarmBeatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats";
+
         /// <summary> Initializes a new instance of the <see cref="FarmBeatResource"/> class for mocking. </summary>
         protected FarmBeatResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FarmBeatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FarmBeatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FarmBeatResource(ArmClient client, FarmBeatData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

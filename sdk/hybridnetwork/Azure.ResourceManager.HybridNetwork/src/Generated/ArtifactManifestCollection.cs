@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ArtifactManifestResource" /> and their operations.
-    /// Each <see cref="ArtifactManifestResource" /> in the collection will belong to the same instance of <see cref="ArtifactStoreResource" />.
-    /// To get an <see cref="ArtifactManifestCollection" /> instance call the GetArtifactManifests method from an instance of <see cref="ArtifactStoreResource" />.
+    /// A class representing a collection of <see cref="ArtifactManifestResource"/> and their operations.
+    /// Each <see cref="ArtifactManifestResource"/> in the collection will belong to the same instance of <see cref="ArtifactStoreResource"/>.
+    /// To get an <see cref="ArtifactManifestCollection"/> instance call the GetArtifactManifests method from an instance of <see cref="ArtifactStoreResource"/>.
     /// </summary>
     public partial class ArtifactManifestCollection : ArmCollection, IEnumerable<ArtifactManifestResource>, IAsyncEnumerable<ArtifactManifestResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArtifactManifestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ArtifactManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArtifactManifestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactManifestRestClient.CreateListByArtifactStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ArtifactManifestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ArtifactManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArtifactManifestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactManifestRestClient.CreateListByArtifactStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

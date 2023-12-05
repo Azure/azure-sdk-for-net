@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBSqlTriggerResource" /> and their operations.
-    /// Each <see cref="CosmosDBSqlTriggerResource" /> in the collection will belong to the same instance of <see cref="CosmosDBSqlContainerResource" />.
-    /// To get a <see cref="CosmosDBSqlTriggerCollection" /> instance call the GetCosmosDBSqlTriggers method from an instance of <see cref="CosmosDBSqlContainerResource" />.
+    /// A class representing a collection of <see cref="CosmosDBSqlTriggerResource"/> and their operations.
+    /// Each <see cref="CosmosDBSqlTriggerResource"/> in the collection will belong to the same instance of <see cref="CosmosDBSqlContainerResource"/>.
+    /// To get a <see cref="CosmosDBSqlTriggerCollection"/> instance call the GetCosmosDBSqlTriggers method from an instance of <see cref="CosmosDBSqlContainerResource"/>.
     /// </summary>
     public partial class CosmosDBSqlTriggerCollection : ArmCollection, IEnumerable<CosmosDBSqlTriggerResource>, IAsyncEnumerable<CosmosDBSqlTriggerResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBSqlTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBSqlTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBSqlTriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBSqlTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBSqlTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBSqlTriggerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

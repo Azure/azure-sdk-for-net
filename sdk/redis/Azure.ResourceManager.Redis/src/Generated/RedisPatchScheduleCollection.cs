@@ -21,9 +21,9 @@ using Azure.ResourceManager.Redis.Models;
 namespace Azure.ResourceManager.Redis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RedisPatchScheduleResource" /> and their operations.
-    /// Each <see cref="RedisPatchScheduleResource" /> in the collection will belong to the same instance of <see cref="RedisResource" />.
-    /// To get a <see cref="RedisPatchScheduleCollection" /> instance call the GetRedisPatchSchedules method from an instance of <see cref="RedisResource" />.
+    /// A class representing a collection of <see cref="RedisPatchScheduleResource"/> and their operations.
+    /// Each <see cref="RedisPatchScheduleResource"/> in the collection will belong to the same instance of <see cref="RedisResource"/>.
+    /// To get a <see cref="RedisPatchScheduleCollection"/> instance call the GetRedisPatchSchedules method from an instance of <see cref="RedisResource"/>.
     /// </summary>
     public partial class RedisPatchScheduleCollection : ArmCollection, IEnumerable<RedisPatchScheduleResource>, IAsyncEnumerable<RedisPatchScheduleResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisPatchScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisPatchScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisPatchScheduleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisPatchScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisPatchScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisPatchScheduleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

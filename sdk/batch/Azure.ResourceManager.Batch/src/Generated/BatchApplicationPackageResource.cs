@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Batch
 {
     /// <summary>
     /// A Class representing a BatchApplicationPackage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BatchApplicationPackageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBatchApplicationPackageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BatchApplicationResource" /> using the GetBatchApplicationPackage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BatchApplicationPackageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBatchApplicationPackageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BatchApplicationResource"/> using the GetBatchApplicationPackage method.
     /// </summary>
     public partial class BatchApplicationPackageResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Batch
         private readonly ApplicationPackageRestOperations _batchApplicationPackageApplicationPackageRestClient;
         private readonly BatchApplicationPackageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/applications/versions";
+
         /// <summary> Initializes a new instance of the <see cref="BatchApplicationPackageResource"/> class for mocking. </summary>
         protected BatchApplicationPackageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BatchApplicationPackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BatchApplicationPackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BatchApplicationPackageResource(ArmClient client, BatchApplicationPackageData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Batch
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/applications/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

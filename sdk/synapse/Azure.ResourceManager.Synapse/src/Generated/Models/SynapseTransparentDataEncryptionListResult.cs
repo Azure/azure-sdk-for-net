@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of transparent data encryption configurations. </summary>
     internal partial class SynapseTransparentDataEncryptionListResult
     {
-        /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseTransparentDataEncryptionListResult"/>. </summary>
         internal SynapseTransparentDataEncryptionListResult()
         {
             Value = new ChangeTrackingList<SynapseTransparentDataEncryptionData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseTransparentDataEncryptionListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseTransparentDataEncryptionListResult(IReadOnlyList<SynapseTransparentDataEncryptionData> value, string nextLink)

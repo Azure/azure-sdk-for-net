@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoClusterPrincipalAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoClusterPrincipalAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterPrincipalAssignmentData"/>. </summary>
         public KustoClusterPrincipalAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoClusterPrincipalAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterPrincipalAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

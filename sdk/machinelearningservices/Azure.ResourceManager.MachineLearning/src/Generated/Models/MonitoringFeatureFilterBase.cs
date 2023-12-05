@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitoringFeatureFilterBase
     {
-        /// <summary> Initializes a new instance of MonitoringFeatureFilterBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringFeatureFilterBase"/>. </summary>
         protected MonitoringFeatureFilterBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringFeatureFilterBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringFeatureFilterBase"/>. </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
         internal MonitoringFeatureFilterBase(MonitoringFeatureFilterType filterType)
         {

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing a StorageInsight along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageInsightResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageInsightResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource" /> using the GetStorageInsight method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageInsightResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageInsightResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetStorageInsight method.
     /// </summary>
     public partial class StorageInsightResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly StorageInsightConfigsRestOperations _storageInsightStorageInsightConfigsRestClient;
         private readonly StorageInsightData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/storageInsightConfigs";
+
         /// <summary> Initializes a new instance of the <see cref="StorageInsightResource"/> class for mocking. </summary>
         protected StorageInsightResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageInsightResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageInsightResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageInsightResource(ArmClient client, StorageInsightData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/storageInsightConfigs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

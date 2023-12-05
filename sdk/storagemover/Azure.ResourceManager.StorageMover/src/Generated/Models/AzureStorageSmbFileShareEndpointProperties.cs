@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The properties of Azure Storage SMB file share endpoint. </summary>
     public partial class AzureStorageSmbFileShareEndpointProperties : EndpointBaseProperties
     {
-        /// <summary> Initializes a new instance of AzureStorageSmbFileShareEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointProperties"/>. </summary>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
         /// <param name="fileShareName"> The name of the Azure Storage file share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountResourceId"/> or <paramref name="fileShareName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             EndpointType = EndpointType.AzureStorageSmbFileShare;
         }
 
-        /// <summary> Initializes a new instance of AzureStorageSmbFileShareEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>

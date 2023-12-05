@@ -13,13 +13,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryImportSourceCredentials. </summary>
     public partial class ContainerRegistryImportSourceCredentials
     {
-        /// <summary> Initializes a new instance of ContainerRegistryImportSourceCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSourceCredentials"/>. </summary>
         /// <param name="password"> The password used to authenticate with the source registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
         public ContainerRegistryImportSourceCredentials(string password)
         {
             Argument.AssertNotNull(password, nameof(password));
 
+            Password = password;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSourceCredentials"/>. </summary>
+        /// <param name="username"> The username to authenticate with the source registry. </param>
+        /// <param name="password"> The password used to authenticate with the source registry. </param>
+        internal ContainerRegistryImportSourceCredentials(string username, string password)
+        {
+            Username = username;
             Password = password;
         }
 
