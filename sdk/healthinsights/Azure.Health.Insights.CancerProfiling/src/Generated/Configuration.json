@@ -1,0 +1,11 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Health.Insights.CancerProfiling",
+  "library-name": "Azure.Health.Insights.CancerProfiling",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/healthinsights.oncophenotype/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/healthinsights.oncophenotype/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "use-overloads-between-protocol-and-convenience": true,
+  "model-namespace": false
+}
