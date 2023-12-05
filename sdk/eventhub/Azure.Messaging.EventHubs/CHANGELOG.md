@@ -12,7 +12,7 @@
 
 - Fixed a race condition that could lead to a synchronization primitive being double-released if `IsRunning` was called concurrently while starting or stopping an event processor.
 
-- Fixed an issue with event processor validation where a exception for quota exceeded may inappropriately be surfaced when starting the processor.
+- Fixed an issue with event processor validation where an exception for quota exceeded may inappropriately be surfaced when starting the processor.
 
 ### Other Changes
 
