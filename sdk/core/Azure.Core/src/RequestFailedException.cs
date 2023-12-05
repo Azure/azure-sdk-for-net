@@ -19,7 +19,7 @@ namespace Azure
     /// An exception thrown when service request fails.
     /// </summary>
     [Serializable]
-    public class RequestFailedException : ClientRequestException, ISerializable
+    public partial class RequestFailedException : ClientRequestException, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
 
@@ -28,38 +28,51 @@ namespace Azure
         /// </summary>
         public string? ErrorCode { get; }
 
-        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message.</summary>
-        /// <param name="message">The message that describes the error.</param>
-        public RequestFailedException(string message) : this(0, message)
+        // #1 -> #2
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
+        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
+        /// <param name="response">The response to obtain error details from.</param>
+        public RequestFailedException(Response response)
+            : this(response, null)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message, HTTP status code and a reference to the inner exception that is the cause of this exception.</summary>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
-        public RequestFailedException(string message, Exception? innerException) : this(0, message, innerException)
+        // #2 -> #3
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
+        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
+        /// <param name="response">The response to obtain error details from.</param>
+        /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
+        public RequestFailedException(Response response, Exception? innerException)
+            : this(response, innerException, null)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message and HTTP status code.</summary>
-        /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
-        /// <param name="message">The message that describes the error.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message)
-            : this(status, message, null)
+        // #3 -> #4
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
+        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
+        /// <param name="response">The response to obtain error details from.</param>
+        /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
+        /// <param name="detailsParser">The parser to use to parse the response content.</param>
+        public RequestFailedException(Response response, Exception? innerException, RequestFailedDetailsParser? detailsParser)
+            : this(response.Status, GetRequestFailedExceptionContent(response, detailsParser), innerException)
         {
+            //_response = response;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message and a reference to the inner exception that is the cause of this exception.</summary>
-        /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, Exception? innerException)
-            : this(status, message, null, innerException)
+        // #4 -> #5
+        private RequestFailedException(int status, ErrorDetails details, Exception? innerException)
+            : this(status, details.Message, details.ErrorCode, innerException)
         {
+            if (details.Data != null)
+            {
+                foreach (KeyValuePair<string, string> keyValuePair in details.Data)
+                {
+                    Data.Add(keyValuePair.Key, keyValuePair.Value);
+                }
+            }
         }
 
+        // #5 -> base
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message, HTTP status code, error code, and a reference to the inner exception that is the cause of this exception.</summary>
         /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
@@ -72,50 +85,44 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
-        internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :
-            this(status, details.Message, details.Error?.Code, null)
+        // #6 -> #7
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message.</summary>
+        /// <param name="message">The message that describes the error.</param>
+        public RequestFailedException(string message) : this(0, message)
         {
         }
 
-        internal RequestFailedException(int status, (string FormatMessage, string? ErrorCode, IDictionary<string, string>? Data) details, Exception? innerException) :
-            this(status, details.FormatMessage, details.ErrorCode, innerException)
-        {
-            if (details.Data != null)
-            {
-                foreach (KeyValuePair<string, string> keyValuePair in details.Data)
-                {
-                    Data.Add(keyValuePair.Key, keyValuePair.Value);
-                }
-            }
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
-        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
-        /// <param name="response">The response to obtain error details from.</param>
-        public RequestFailedException(Response response)
-            : this(response, null)
+        // #7 -> #8
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message and HTTP status code.</summary>
+        /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
+        /// <param name="message">The message that describes the error.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public RequestFailedException(int status, string message)
+            : this(status, message, null)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
-        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
-        /// <param name="response">The response to obtain error details from.</param>
-        /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
-        public RequestFailedException(Response response, Exception? innerException)
-            : this(response, innerException, null)
+        // #8 -> #9
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message, HTTP status code and a reference to the inner exception that is the cause of this exception.</summary>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        public RequestFailedException(string message, Exception? innerException)
+            : this(0, message, innerException)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
-        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
-        /// <param name="response">The response to obtain error details from.</param>
-        /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
-        /// <param name="detailsParser">The parser to use to parse the response content.</param>
-        public RequestFailedException(Response response, Exception? innerException, RequestFailedDetailsParser? detailsParser)
-            : this(response.Status, GetRequestFailedExceptionContent(response, detailsParser), innerException)
+        // #9 -> #5
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message and a reference to the inner exception that is the cause of this exception.</summary>
+        /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public RequestFailedException(int status, string message, Exception? innerException)
+            : this(status, message, null, innerException)
         {
-            _response = response;
         }
+
+        #region ISerializable implementation
 
         /// <inheritdoc />
         protected RequestFailedException(SerializationInfo info, StreamingContext context)
@@ -134,17 +141,22 @@ namespace Azure
             base.GetObjectData(info, context);
         }
 
+        #endregion
+
         /// <summary>
         /// Gets the response, if any, that led to the exception.
         /// </summary>
         public new Response? GetRawResponse() => (Response?)base.GetRawResponse();
 
-        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
+        private static ErrorDetails GetRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
         {
             BufferResponseIfNeeded(response);
             parser ??= response.RequestFailedDetailsParser;
 
-            bool parseSuccess = parser == null ? TryExtractErrorContent(response, out ResponseError? error, out IDictionary<string, string>? additionalInfo) : parser.TryParse(response, out error, out additionalInfo);
+            bool parseSuccess = parser == null ?
+                DefaultRequestFailedDetailsParser.TryParseDetails(response, out ResponseError? error, out IDictionary<string, string>? additionalInfo) :
+                parser.TryParse(response, out error, out additionalInfo);
+
             if (!parseSuccess)
             {
                 error = null;
@@ -208,8 +220,7 @@ namespace Azure
                 messageBuilder.AppendLine(header);
             }
 
-            var formatMessage = messageBuilder.ToString();
-            return (formatMessage, error?.Code, additionalInfo);
+            return new ErrorDetails(messageBuilder.ToString(), error?.Code, additionalInfo);
         }
 
         private static void BufferResponseIfNeeded(Response response)
@@ -231,47 +242,15 @@ namespace Azure
             response.ContentStream = bufferedStream;
         }
 
-        internal static bool TryExtractErrorContent(Response response, out ResponseError? error, out IDictionary<string, string>? data)
-        {
-            error = null;
-            data = null;
-
-            try
-            {
-                // The response content is buffered at this point.
-                string? content = response.Content.ToString();
-
-                // Optimistic check for JSON object we expect
-                if (content == null || !content.StartsWith("{", StringComparison.OrdinalIgnoreCase))
-                {
-                    return false;
-                }
-                // Try the ErrorResponse format and fallback to the ResponseError format.
-
-#if NET6_0_OR_GREATER
-                error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content, ResponseErrorSourceGenerationContext.Default.ErrorResponse)?.Error;
-                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content, ResponseErrorSourceGenerationContext.Default.ResponseError);
-#else
-                error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
-                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);
-#endif
-            }
-            catch (Exception)
-            {
-                // Ignore any failures - unexpected content will be
-                // included verbatim in the detailed error message
-            }
-
-            return error != null;
-        }
-
-        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
+        // This class needs to be internal rather than private so that it can be used
+        // by the System.Text.Json source generator.
         internal class ErrorResponse
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
             public ResponseError? Error { get; set; }
         }
 
+		// TODO: is this still needed in the current implementation where RFE inherits from CRE?
         private class ErrorPipelineResponse : PipelineResponse
         {
             private readonly int _status;
