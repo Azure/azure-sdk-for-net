@@ -171,7 +171,7 @@ namespace Azure.Storage.DataMovement
             {
                 if (args.Success)
                 {
-                    await _downloadRangeChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                    _downloadRangeChannel.Writer.TryWrite(args);
                 }
                 else
                 {
