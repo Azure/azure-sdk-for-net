@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -80,8 +79,9 @@ namespace Azure
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
-            : base(new ErrorPipelineResponse(status), message, innerException)
+            : base(message, innerException)
         {
+            Status = status;
             ErrorCode = errorCode;
         }
 
@@ -248,34 +248,6 @@ namespace Azure
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
             public ResponseError? Error { get; set; }
-        }
-
-		// TODO: is this still needed in the current implementation where RFE inherits from CRE?
-        private class ErrorPipelineResponse : PipelineResponse
-        {
-            private readonly int _status;
-
-            public ErrorPipelineResponse(int status)
-            {
-                _status = status;
-            }
-
-            public override int Status => _status;
-
-            public override Stream? ContentStream
-            {
-                get => throw new NotSupportedException();
-                set => throw new NotSupportedException();
-            }
-
-            public override string ReasonPhrase => throw new NotSupportedException();
-
-            public override void Dispose() => throw new NotSupportedException();
-
-            protected override MessageHeaders GetHeadersCore()
-            {
-                throw new NotSupportedException();
-            }
         }
     }
 }
