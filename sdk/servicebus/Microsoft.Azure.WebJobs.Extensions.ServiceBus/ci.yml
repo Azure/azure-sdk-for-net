@@ -8,9 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
     - sdk/servicebus/service.projects
     - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
+    - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/ci.yml
 
 pr:
   branches:
@@ -21,9 +21,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
     - sdk/servicebus/service.projects
     - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
+    - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/ci.yml
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
