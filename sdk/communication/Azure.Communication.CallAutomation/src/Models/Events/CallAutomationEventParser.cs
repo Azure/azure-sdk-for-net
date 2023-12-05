@@ -140,6 +140,8 @@ namespace Azure.Communication.CallAutomation
                     return CancelAddParticipantSucceeded.Deserialize(eventData);
                 case nameof(TranscriptionStarted):
                     return TranscriptionStarted.Deserialize(eventData);
+                case nameof(TranscriptionUpdated):
+                    return TranscriptionUpdated.Deserialize(eventData);
                 case nameof(TranscriptionStopped):
                     return TranscriptionStopped.Deserialize(eventData);
                 case nameof(TranscriptionResumed):
