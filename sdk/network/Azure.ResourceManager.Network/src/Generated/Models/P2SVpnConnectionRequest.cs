@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Network.Models
             VpnConnectionIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionRequest"/>. </summary>
+        /// <param name="vpnConnectionIds"> List of p2s vpn connection Ids. </param>
+        internal P2SVpnConnectionRequest(IList<string> vpnConnectionIds)
+        {
+            VpnConnectionIds = vpnConnectionIds;
+        }
+
         /// <summary> List of p2s vpn connection Ids. </summary>
         public IList<string> VpnConnectionIds { get; }
     }

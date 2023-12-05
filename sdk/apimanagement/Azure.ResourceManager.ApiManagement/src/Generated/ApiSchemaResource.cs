@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiSchemaRestOperations _apiSchemaRestClient;
         private readonly ApiSchemaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/schemas";
+
         /// <summary> Initializes a new instance of the <see cref="ApiSchemaResource"/> class for mocking. </summary>
         protected ApiSchemaResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/schemas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -29,6 +29,21 @@ namespace Azure.Monitor.Query.Models
             Workspaces = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataSolutionRelated"/>. </summary>
+        /// <param name="tables"> The tables related to the Log Analytics solution. </param>
+        /// <param name="functions"> The functions related to the Log Analytics solution. </param>
+        /// <param name="categories"> The categories related to the Log Analytics solution. </param>
+        /// <param name="queries"> The saved queries related to the Log Analytics solution. </param>
+        /// <param name="workspaces"> The Workspaces referenced in the metadata request that are related to the Log Analytics solution. </param>
+        internal MetadataSolutionRelated(IReadOnlyList<string> tables, IReadOnlyList<string> functions, IReadOnlyList<string> categories, IReadOnlyList<string> queries, IReadOnlyList<string> workspaces)
+        {
+            Tables = tables;
+            Functions = functions;
+            Categories = categories;
+            Queries = queries;
+            Workspaces = workspaces;
+        }
+
         /// <summary> The tables related to the Log Analytics solution. </summary>
         public IReadOnlyList<string> Tables { get; }
         /// <summary> The functions related to the Log Analytics solution. </summary>

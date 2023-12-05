@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.LabServices
         private readonly UsersRestOperations _labUserUsersRestClient;
         private readonly LabUserData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.LabServices/labs/users";
+
         /// <summary> Initializes a new instance of the <see cref="LabUserResource"/> class for mocking. </summary>
         protected LabUserResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.LabServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.LabServices/labs/users";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

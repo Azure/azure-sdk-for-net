@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         private readonly DatabasesRestOperations _redisEnterpriseDatabaseDatabasesRestClient;
         private readonly RedisEnterpriseDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cache/redisEnterprise/databases";
+
         /// <summary> Initializes a new instance of the <see cref="RedisEnterpriseDatabaseResource"/> class for mocking. </summary>
         protected RedisEnterpriseDatabaseResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.RedisEnterprise
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cache/redisEnterprise/databases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

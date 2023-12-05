@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly ClustersRestOperations _operationalInsightsClusterClustersRestClient;
         private readonly OperationalInsightsClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsClusterResource"/> class for mocking. </summary>
         protected OperationalInsightsClusterResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

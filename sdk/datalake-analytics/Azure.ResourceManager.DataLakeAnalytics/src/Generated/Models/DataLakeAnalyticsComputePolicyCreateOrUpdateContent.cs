@@ -30,6 +30,31 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             ObjectType = objectType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyCreateOrUpdateContent"/>. </summary>
+        /// <param name="objectId">
+        /// The AAD object identifier for the entity to create a policy for.
+        /// Serialized Name: CreateOrUpdateComputePolicyParameters.properties.objectId
+        /// </param>
+        /// <param name="objectType">
+        /// The type of AAD object the object identifier refers to.
+        /// Serialized Name: CreateOrUpdateComputePolicyParameters.properties.objectType
+        /// </param>
+        /// <param name="maxDegreeOfParallelismPerJob">
+        /// The maximum degree of parallelism per job this user can use to submit jobs. This property, the min priority per job property, or both must be passed.
+        /// Serialized Name: CreateOrUpdateComputePolicyParameters.properties.maxDegreeOfParallelismPerJob
+        /// </param>
+        /// <param name="minPriorityPerJob">
+        /// The minimum priority per job this user can use to submit jobs. This property, the max degree of parallelism per job property, or both must be passed.
+        /// Serialized Name: CreateOrUpdateComputePolicyParameters.properties.minPriorityPerJob
+        /// </param>
+        internal DataLakeAnalyticsComputePolicyCreateOrUpdateContent(Guid objectId, AadObjectIdentifierType objectType, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob)
+        {
+            ObjectId = objectId;
+            ObjectType = objectType;
+            MaxDegreeOfParallelismPerJob = maxDegreeOfParallelismPerJob;
+            MinPriorityPerJob = minPriorityPerJob;
+        }
+
         /// <summary>
         /// The AAD object identifier for the entity to create a policy for.
         /// Serialized Name: CreateOrUpdateComputePolicyParameters.properties.objectId

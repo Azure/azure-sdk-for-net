@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         private readonly ConfigurationsRestOperations _configurationsRestClient;
         private readonly CosmosDBForPostgreSqlClusterServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/servers";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlClusterServerResource"/> class for mocking. </summary>
         protected CosmosDBForPostgreSqlClusterServerResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/servers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -18,6 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2ACrossClusterMigration";
         }
 
+        /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationEnableProtectionContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="recoveryContainerId"> The recovery container Id. </param>
+        internal A2ACrossClusterMigrationEnableProtectionContent(string instanceType, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId) : base(instanceType)
+        {
+            FabricObjectId = fabricObjectId;
+            RecoveryContainerId = recoveryContainerId;
+            InstanceType = instanceType ?? "A2ACrossClusterMigration";
+        }
+
         /// <summary> The fabric specific object Id of the virtual machine. </summary>
         public ResourceIdentifier FabricObjectId { get; set; }
         /// <summary> The recovery container Id. </summary>

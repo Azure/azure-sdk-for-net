@@ -27,6 +27,19 @@ namespace Azure.Communication.CallAutomation
             PlaySourceInfo = playSourceInfo;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StartHoldMusicRequestInternal"/>. </summary>
+        /// <param name="targetParticipant"> Participant to be held from the call. </param>
+        /// <param name="playSourceInfo"> Prompt to play while in hold. </param>
+        /// <param name="loop"> If the prompt will be looped or not. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        internal StartHoldMusicRequestInternal(CommunicationIdentifierModel targetParticipant, PlaySourceInternal playSourceInfo, bool? loop, string operationContext)
+        {
+            TargetParticipant = targetParticipant;
+            PlaySourceInfo = playSourceInfo;
+            Loop = loop;
+            OperationContext = operationContext;
+        }
+
         /// <summary> Participant to be held from the call. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Prompt to play while in hold. </summary>

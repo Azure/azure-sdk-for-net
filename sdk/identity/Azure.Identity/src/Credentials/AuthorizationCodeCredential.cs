@@ -26,6 +26,7 @@ namespace Azure.Identity
         private readonly string _redirectUri;
         private readonly string _tenantId;
         internal readonly string[] AdditionallyAllowedTenantIds;
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -102,7 +103,7 @@ namespace Azure.Identity
                           clientSecret,
                           _redirectUri,
                           options);
-
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 

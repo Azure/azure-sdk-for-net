@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGenerateUploadUriContent"/>. </summary>
+        /// <param name="blobName"> The blob name of the upload URI. </param>
+        internal DevTestLabGenerateUploadUriContent(string blobName)
+        {
+            BlobName = blobName;
+        }
+
         /// <summary> The blob name of the upload URI. </summary>
         public string BlobName { get; set; }
     }

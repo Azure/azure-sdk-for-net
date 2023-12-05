@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         private readonly FederatedIdentityCredentialsRestOperations _federatedIdentityCredentialRestClient;
         private readonly FederatedIdentityCredentialData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials";
+
         /// <summary> Initializes a new instance of the <see cref="FederatedIdentityCredentialResource"/> class for mocking. </summary>
         protected FederatedIdentityCredentialResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

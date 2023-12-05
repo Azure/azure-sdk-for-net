@@ -6,5 +6,6 @@
     <PackageReference Include="Azure.ResourceManager.ExtendedLocations" />
     <PackageReference Include="Azure.ResourceManager.Kubernetes" />
     <PackageReference Include="Azure.ResourceManager.KubernetesConfiguration" />
+    <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
   </ItemGroup>
 </Project>

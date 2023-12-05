@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.Maps.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorPatch"/>. </summary>
+        /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. </param>
+        /// <param name="provisioningState"> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </param>
+        /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
+        internal MapsCreatorPatch(IDictionary<string, string> tags, string provisioningState, int? storageUnits)
+        {
+            Tags = tags;
+            ProvisioningState = provisioningState;
+            StorageUnits = storageUnits;
+        }
+
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </summary>

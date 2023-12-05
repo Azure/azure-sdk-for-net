@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly ScalingPlanPersonalSchedulesRestOperations _scalingPlanPersonalScheduleRestClient;
         private readonly ScalingPlanPersonalScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/scalingPlans/personalSchedules";
+
         /// <summary> Initializes a new instance of the <see cref="ScalingPlanPersonalScheduleResource"/> class for mocking. </summary>
         protected ScalingPlanPersonalScheduleResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/scalingPlans/personalSchedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

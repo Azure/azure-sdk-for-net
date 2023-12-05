@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Qumulo
         private readonly FileSystemsRestOperations _qumuloFileSystemResourceFileSystemsRestClient;
         private readonly QumuloFileSystemResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Qumulo.Storage/fileSystems";
+
         /// <summary> Initializes a new instance of the <see cref="QumuloFileSystemResource"/> class for mocking. </summary>
         protected QumuloFileSystemResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Qumulo
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Qumulo.Storage/fileSystems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

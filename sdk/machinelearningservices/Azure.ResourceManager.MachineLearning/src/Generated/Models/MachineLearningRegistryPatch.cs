@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryPatch"/>. </summary>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal MachineLearningRegistryPatch(ManagedServiceIdentity identity, MachineLearningSkuPatch sku, IDictionary<string, string> tags)
+        {
+            Identity = identity;
+            Sku = sku;
+            Tags = tags;
+        }
+
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>

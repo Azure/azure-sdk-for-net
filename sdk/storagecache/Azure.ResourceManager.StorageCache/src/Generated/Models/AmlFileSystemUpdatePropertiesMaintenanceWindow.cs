@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemUpdatePropertiesMaintenanceWindow"/>. </summary>
+        /// <param name="dayOfWeek"> Day of the week on which the maintenance window will occur. </param>
+        /// <param name="timeOfDayUTC"> The time of day (in UTC) to start the maintenance window. </param>
+        internal AmlFileSystemUpdatePropertiesMaintenanceWindow(MaintenanceDayOfWeekType? dayOfWeek, string timeOfDayUTC)
+        {
+            DayOfWeek = dayOfWeek;
+            TimeOfDayUTC = timeOfDayUTC;
+        }
+
         /// <summary> Day of the week on which the maintenance window will occur. </summary>
         public MaintenanceDayOfWeekType? DayOfWeek { get; set; }
         /// <summary> The time of day (in UTC) to start the maintenance window. </summary>

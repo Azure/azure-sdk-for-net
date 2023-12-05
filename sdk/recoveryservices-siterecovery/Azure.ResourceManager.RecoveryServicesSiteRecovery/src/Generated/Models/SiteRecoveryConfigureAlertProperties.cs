@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomEmailAddresses = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryConfigureAlertProperties"/>. </summary>
+        /// <param name="sendToOwners"> A value indicating whether to send email to subscription administrator. </param>
+        /// <param name="customEmailAddresses"> The custom email address for sending emails. </param>
+        /// <param name="locale"> The locale for the email notification. </param>
+        internal SiteRecoveryConfigureAlertProperties(string sendToOwners, IList<string> customEmailAddresses, string locale)
+        {
+            SendToOwners = sendToOwners;
+            CustomEmailAddresses = customEmailAddresses;
+            Locale = locale;
+        }
+
         /// <summary> A value indicating whether to send email to subscription administrator. </summary>
         public string SendToOwners { get; set; }
         /// <summary> The custom email address for sending emails. </summary>

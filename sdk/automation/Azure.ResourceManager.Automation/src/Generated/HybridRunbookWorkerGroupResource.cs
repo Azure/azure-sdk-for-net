@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Automation
         private readonly HybridRunbookWorkerGroupRestOperations _hybridRunbookWorkerGroupRestClient;
         private readonly HybridRunbookWorkerGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups";
+
         /// <summary> Initializes a new instance of the <see cref="HybridRunbookWorkerGroupResource"/> class for mocking. </summary>
         protected HybridRunbookWorkerGroupResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

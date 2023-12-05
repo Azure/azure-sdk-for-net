@@ -1,9 +1,12 @@
 # Release History
 
-## 12.0.0-beta.1 (Unreleased)
+## 12.0.0-beta.1 (2023-12-05)
 
-### Features Added
+- This preview is the first release of a ground-up rewrite of our client data movement
+libraries (for Share Files support) to ensure consistency, idiomatic design, productivity, and an
+excellent developer experience.  It was created following the Azure SDK Design
+Guidelines for .NET at https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html.
 
-### Breaking Changes
+- For known issues and limitations, see https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md.
 
-### Bugs Fixed
+- For Azure SDK lifecycle and support policy, see https://azure.github.io/azure-sdk/policies_support.html.

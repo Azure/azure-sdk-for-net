@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSaveContent"/>. </summary>
+        /// <param name="branch"> The name of the Git branch in which to commit the current configuration snapshot. </param>
+        /// <param name="forceUpdate"> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </param>
+        internal ConfigurationSaveContent(string branch, bool? forceUpdate)
+        {
+            Branch = branch;
+            ForceUpdate = forceUpdate;
+        }
+
         /// <summary> The name of the Git branch in which to commit the current configuration snapshot. </summary>
         public string Branch { get; set; }
         /// <summary> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </summary>

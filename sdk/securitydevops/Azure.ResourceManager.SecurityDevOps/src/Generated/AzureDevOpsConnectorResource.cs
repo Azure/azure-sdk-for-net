@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         private readonly AzureDevOpsConnectorStatsRestOperations _azureDevOpsConnectorStatsRestClient;
         private readonly AzureDevOpsConnectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/azureDevOpsConnectors";
+
         /// <summary> Initializes a new instance of the <see cref="AzureDevOpsConnectorResource"/> class for mocking. </summary>
         protected AzureDevOpsConnectorResource()
         {
@@ -77,9 +80,6 @@ namespace Azure.ResourceManager.SecurityDevOps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/azureDevOpsConnectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly TopicTypesRestOperations _topicTypeRestClient;
         private readonly TopicTypeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/topicTypes";
+
         /// <summary> Initializes a new instance of the <see cref="TopicTypeResource"/> class for mocking. </summary>
         protected TopicTypeResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/topicTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

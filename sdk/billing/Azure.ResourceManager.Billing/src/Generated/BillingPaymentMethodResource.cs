@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Billing
         private readonly PaymentMethodsRestOperations _billingPaymentMethodPaymentMethodsRestClient;
         private readonly BillingPaymentMethodData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/paymentMethods";
+
         /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class for mocking. </summary>
         protected BillingPaymentMethodResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Billing
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/paymentMethods";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

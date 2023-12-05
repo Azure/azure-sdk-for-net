@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly OpenIdConnectProviderRestOperations _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient;
         private readonly ApiManagementOpenIdConnectProviderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/openidConnectProviders";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementOpenIdConnectProviderResource"/> class for mocking. </summary>
         protected ApiManagementOpenIdConnectProviderResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/openidConnectProviders";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

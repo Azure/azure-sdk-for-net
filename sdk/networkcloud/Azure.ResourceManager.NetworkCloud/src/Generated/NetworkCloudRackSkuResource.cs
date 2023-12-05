@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly RackSkusRestOperations _networkCloudRackSkuRackSkusRestClient;
         private readonly NetworkCloudRackSkuData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/rackSkus";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudRackSkuResource"/> class for mocking. </summary>
         protected NetworkCloudRackSkuResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/rackSkus";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

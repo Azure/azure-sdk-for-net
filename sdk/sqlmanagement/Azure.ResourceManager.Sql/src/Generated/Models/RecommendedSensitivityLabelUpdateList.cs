@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Sql.Models
             Operations = new ChangeTrackingList<RecommendedSensitivityLabelUpdate>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecommendedSensitivityLabelUpdateList"/>. </summary>
+        /// <param name="operations"></param>
+        internal RecommendedSensitivityLabelUpdateList(IList<RecommendedSensitivityLabelUpdate> operations)
+        {
+            Operations = operations;
+        }
+
         /// <summary> Gets the operations. </summary>
         public IList<RecommendedSensitivityLabelUpdate> Operations { get; }
     }

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Analysis
         private readonly ServersRestOperations _analysisServerServersRestClient;
         private readonly AnalysisServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AnalysisServices/servers";
+
         /// <summary> Initializes a new instance of the <see cref="AnalysisServerResource"/> class for mocking. </summary>
         protected AnalysisServerResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Analysis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AnalysisServices/servers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

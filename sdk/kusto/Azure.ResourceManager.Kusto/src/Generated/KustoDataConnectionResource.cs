@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Kusto
         private readonly DataConnectionsRestOperations _kustoDataConnectionDataConnectionsRestClient;
         private readonly KustoDataConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/dataConnections";
+
         /// <summary> Initializes a new instance of the <see cref="KustoDataConnectionResource"/> class for mocking. </summary>
         protected KustoDataConnectionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/dataConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

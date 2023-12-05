@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DevCenter
         private readonly NetworkConnectionsRestOperations _healthCheckStatusDetailNetworkConnectionsRestClient;
         private readonly HealthCheckStatusDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/networkConnections/healthChecks";
+
         /// <summary> Initializes a new instance of the <see cref="HealthCheckStatusDetailResource"/> class for mocking. </summary>
         protected HealthCheckStatusDetailResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/networkConnections/healthChecks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

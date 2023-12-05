@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly VolumeSnapshotsRestOperations _elasticSanSnapshotVolumeSnapshotsRestClient;
         private readonly ElasticSanSnapshotData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups/snapshots";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanSnapshotResource"/> class for mocking. </summary>
         protected ElasticSanSnapshotResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups/snapshots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

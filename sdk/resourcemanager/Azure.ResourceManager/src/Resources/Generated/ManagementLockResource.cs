@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Resources
         private readonly ManagementLocksRestOperations _managementLockRestClient;
         private readonly ManagementLockData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/locks";
+
         /// <summary> Initializes a new instance of the <see cref="ManagementLockResource"/> class for mocking. </summary>
         protected ManagementLockResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/locks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

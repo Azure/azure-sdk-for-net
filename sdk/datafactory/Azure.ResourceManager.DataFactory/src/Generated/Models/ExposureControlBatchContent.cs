@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             ExposureControlRequests = exposureControlRequests.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchContent"/>. </summary>
+        /// <param name="exposureControlRequests"> List of exposure control features. </param>
+        internal ExposureControlBatchContent(IList<ExposureControlContent> exposureControlRequests)
+        {
+            ExposureControlRequests = exposureControlRequests;
+        }
+
         /// <summary> List of exposure control features. </summary>
         public IList<ExposureControlContent> ExposureControlRequests { get; }
     }

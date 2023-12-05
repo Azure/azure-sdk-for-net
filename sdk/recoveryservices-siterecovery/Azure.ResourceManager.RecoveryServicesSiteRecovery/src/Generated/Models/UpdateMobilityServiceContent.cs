@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateMobilityServiceContent"/>. </summary>
+        /// <param name="properties"> The properties of the update mobility service request. </param>
+        internal UpdateMobilityServiceContent(UpdateMobilityServiceRequestProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> The properties of the update mobility service request. </summary>
         internal UpdateMobilityServiceRequestProperties Properties { get; set; }
         /// <summary> The CS run as account Id. </summary>

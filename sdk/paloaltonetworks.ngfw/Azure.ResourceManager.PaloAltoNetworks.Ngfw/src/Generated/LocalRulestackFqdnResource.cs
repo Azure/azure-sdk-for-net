@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly FqdnListLocalRulestackRestOperations _localRulestackFqdnFqdnListLocalRulestackRestClient;
         private readonly LocalRulestackFqdnData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/localRulestacks/fqdnlists";
+
         /// <summary> Initializes a new instance of the <see cref="LocalRulestackFqdnResource"/> class for mocking. </summary>
         protected LocalRulestackFqdnResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/localRulestacks/fqdnlists";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

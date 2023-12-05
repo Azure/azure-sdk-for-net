@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         private readonly GuestConfigurationHcrpAssignmentReportsRestOperations _guestConfigurationHcrpAssignmentReportsRestClient;
         private readonly GuestConfigurationAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.GuestConfiguration/guestConfigurationAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="GuestConfigurationHcrpAssignmentResource"/> class for mocking. </summary>
         protected GuestConfigurationHcrpAssignmentResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.GuestConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.GuestConfiguration/guestConfigurationAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

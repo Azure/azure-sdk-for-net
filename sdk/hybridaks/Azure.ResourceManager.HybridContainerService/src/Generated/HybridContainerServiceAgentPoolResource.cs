@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly AgentPoolRestOperations _hybridContainerServiceAgentPoolagentPoolRestClient;
         private readonly HybridContainerServiceAgentPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters/agentPools";
+
         /// <summary> Initializes a new instance of the <see cref="HybridContainerServiceAgentPoolResource"/> class for mocking. </summary>
         protected HybridContainerServiceAgentPoolResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.HybridContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters/agentPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly RegistryCodeVersionsRestOperations _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient;
         private readonly MachineLearningCodeVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/registries/codes/versions";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryCodeVersionResource"/> class for mocking. </summary>
         protected MachineLearningRegistryCodeVersionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/registries/codes/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

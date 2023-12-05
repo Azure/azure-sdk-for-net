@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fix `ContainerAppJobExecutionData` deserialization issue
+
 ### Other Changes
 
 ## 1.1.1 (2023-11-27)

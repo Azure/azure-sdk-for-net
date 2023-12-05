@@ -20,6 +20,15 @@ namespace Azure.ResourceManager.Network.Models
             LinkConnectionNames = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionPacketCaptureStopContent"/>. </summary>
+        /// <param name="sasUri"> SAS url for packet capture on vpn connection. </param>
+        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        internal VpnConnectionPacketCaptureStopContent(Uri sasUri, IList<string> linkConnectionNames)
+        {
+            SasUri = sasUri;
+            LinkConnectionNames = linkConnectionNames;
+        }
+
         /// <summary> SAS url for packet capture on vpn connection. </summary>
         public Uri SasUri { get; set; }
         /// <summary> List of site link connection names. </summary>

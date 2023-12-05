@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataFactory
         private readonly PipelinesRestOperations _dataFactoryPipelinePipelinesRestClient;
         private readonly DataFactoryPipelineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/pipelines";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryPipelineResource"/> class for mocking. </summary>
         protected DataFactoryPipelineResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/pipelines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
