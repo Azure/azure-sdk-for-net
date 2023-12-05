@@ -196,8 +196,14 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
         public string Method { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
-        public virtual void Dispose() { }
-        protected virtual System.Uri GetUriCore() { throw null; }
+        public abstract void Dispose();
+        protected abstract System.ClientModel.InputContent? GetContentCore();
+        protected abstract System.ClientModel.Primitives.MessageHeaders GetHeadersCore();
+        protected abstract string GetMethodCore();
+        protected abstract System.Uri GetUriCore();
+        protected abstract void SetContentCore(System.ClientModel.InputContent? content);
+        protected abstract void SetMethodCore(string method);
+        protected abstract void SetUriCore(System.Uri uri);
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {

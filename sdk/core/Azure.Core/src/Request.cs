@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -18,6 +20,25 @@ namespace Azure.Core
     {
         private RequestUriBuilder? _uriBuilder;
         private string? _clientRequestId;
+
+        /// <summary>
+        /// Gets or sets the request HTTP method.
+        /// </summary>
+        public new virtual RequestMethod Method { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override string GetMethodCore()
+            => Method.Method;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="method"></param>
+        protected override void SetMethodCore(string method)
+            => Method = RequestMethod.Parse(method);
 
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
@@ -40,22 +61,30 @@ namespace Azure.Core
             => Uri.ToUri();
 
         /// <summary>
-        /// Gets or sets the request HTTP method.
+        /// TBD.
         /// </summary>
-        public new virtual RequestMethod Method
-        {
-            get => RequestMethod.Parse(base.Method);
-            set => base.Method = value.Method;
-        }
+        /// <param name="uri"></param>
+        protected override void SetUriCore(Uri uri)
+            => Uri.Reset(uri);
 
         /// <summary>
         /// Gets or sets the request content.
         /// </summary>
-        public new virtual RequestContent? Content
-        {
-            get => (RequestContent?)base.Content;
-            set => base.Content = value;
-        }
+        public new virtual RequestContent? Content { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override InputContent? GetContentCore()
+            => Content;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="content"></param>
+        protected override void SetContentCore(InputContent? content)
+            => Content = (RequestContent?)content;
 
         /// <summary>
         /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
@@ -75,7 +104,12 @@ namespace Azure.Core
         /// </summary>
         public new RequestHeaders Headers => new(this);
 
-        internal MessageHeaders PipelineMessageHeaders => base.Headers;
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override MessageHeaders GetHeadersCore()
+            => new AzureCoreMessageHeaders(Headers);
 
         /// <summary>
         /// Adds a header value to the header collection.
@@ -129,5 +163,67 @@ namespace Azure.Core
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+
+        /// <summary>
+        /// Backwards adapter to MessageHeaders to implement GetHeadersCore
+        /// </summary>
+        private sealed class AzureCoreMessageHeaders : MessageHeaders
+        {
+            /// <summary>
+            /// Headers on the Azure.Core.Request type to adapt to.
+            /// </summary>
+            private readonly RequestHeaders _headers;
+
+            public AzureCoreMessageHeaders(RequestHeaders headers)
+                => _headers = headers;
+
+            public override int Count => _headers.Count();
+
+            public override void Add(string name, string value)
+                => _headers.Add(name, value);
+
+            public override bool Remove(string name)
+                => _headers.Remove(name);
+
+            public override void Set(string name, string value)
+                => _headers.SetValue(name, value);
+
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+            {
+                headers = GetHeadersEnumerableValues();
+                return true;
+            }
+
+            private IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersEnumerableValues()
+            {
+                foreach (HttpHeader header in _headers)
+                {
+                    yield return new KeyValuePair<string, IEnumerable<string>>(header.Name, GetHeaderValues(header.Value));
+                }
+            }
+
+            private IEnumerable<string> GetHeaderValues(string compositeHeaderValue)
+                => compositeHeaderValue.Split(';');
+
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+            {
+                headers = GetHeadersCompositeValues();
+                return true;
+            }
+
+            private IEnumerable<KeyValuePair<string, string>> GetHeadersCompositeValues()
+            {
+                foreach (HttpHeader header in _headers)
+                {
+                    yield return new KeyValuePair<string, string>(header.Name, header.Value);
+                }
+            }
+
+            public override bool TryGetValue(string name, out string? value)
+                => _headers.TryGetValue(name, out value);
+
+            public override bool TryGetValues(string name, out IEnumerable<string>? values)
+                => _headers.TryGetValues(name, out values);
+        }
     }
 }

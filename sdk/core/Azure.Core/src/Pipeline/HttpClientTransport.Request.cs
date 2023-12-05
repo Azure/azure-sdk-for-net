@@ -18,29 +18,65 @@ namespace Azure.Core.Pipeline
     {
         private sealed class HttpClientTransportRequest : Request
         {
+            private readonly PipelineRequest _pipelineRequest;
+
+            public HttpClientTransportRequest(PipelineRequest request)
+            {
+                _pipelineRequest = request;
+            }
+
+            #region Adapt PipelineResponse to inherit functional implementation from ClientModel
+            protected override string GetMethodCore()
+                => _pipelineRequest.Method;
+
+            protected override void SetMethodCore(string method)
+                => _pipelineRequest.Method = method;
+
+            protected override Uri GetUriCore()
+                => _pipelineRequest.Uri;
+
+            protected override void SetUriCore(Uri uri)
+                => _pipelineRequest.Uri = uri;
+
+            protected override MessageHeaders GetHeadersCore()
+                => _pipelineRequest.Headers;
+
+            protected override InputContent? GetContentCore()
+                => _pipelineRequest.Content;
+
+            protected override void SetContentCore(InputContent? content)
+                => _pipelineRequest.Content = content;
+            #endregion
+
+            #region Implement Azure.Core Request abstract methods
+
             protected internal override void AddHeader(string name, string value)
-                => PipelineMessageHeaders.Add(name, value);
+                => _pipelineRequest.Headers.Add(name, value);
+
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+                => _pipelineRequest.Headers.TryGetValue(name, out value);
+
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+                => _pipelineRequest.Headers.TryGetValues(name, out values);
 
             protected internal override bool ContainsHeader(string name)
-                => PipelineMessageHeaders.TryGetValue(name, out _);
+                => _pipelineRequest.Headers.TryGetValue(name, out _);
+
+            protected internal override bool RemoveHeader(string name)
+                => _pipelineRequest.Headers.Remove(name);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                PipelineMessageHeaders.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+                _pipelineRequest.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
                 foreach (KeyValuePair<string, string> header in headers)
                 {
                     yield return new HttpHeader(header.Key, header.Value);
                 }
             }
 
-            protected internal override bool RemoveHeader(string name)
-                => PipelineMessageHeaders.Remove(name);
+            #endregion
 
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-                => PipelineMessageHeaders.TryGetValue(name, out value);
-
-            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-                => PipelineMessageHeaders.TryGetValues(name, out values);
+            #region Azure.Core extensions of ClientModel functionality
 
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 
@@ -70,6 +106,11 @@ namespace Azure.Core.Pipeline
                 httpRequest.Properties[name] = value;
 #endif
             }
+
+            #endregion
+
+            public override void Dispose()
+                => _pipelineRequest.Dispose();
         }
     }
 }
