@@ -46,6 +46,7 @@ namespace Azure.Template.Models
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate. </summary>
         public string Kid { get; }
+        /// <summary> If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate. </summary>
         public string KidTest { get; set;}
         /// <summary> True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true. </summary>
         public bool? Managed { get; }

@@ -26,6 +26,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("contentType").ToString());
 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("kid").ToString());
+Console.WriteLine(result.GetProperty("kidTest").ToString());
 Console.WriteLine(result.GetProperty("managed").ToString());
 ]]></code></example>
     </member>
