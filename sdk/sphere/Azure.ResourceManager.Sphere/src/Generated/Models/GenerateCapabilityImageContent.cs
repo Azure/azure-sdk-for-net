@@ -31,6 +31,16 @@ namespace Azure.ResourceManager.Sphere.Models
             Capabilities = capabilities.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/>. </summary>
+        /// <param name="capabilities">
+        /// List of capabilities to create
+        /// Serialized Name: GenerateCapabilityImageRequest.capabilities
+        /// </param>
+        internal GenerateCapabilityImageContent(IList<SphereCapabilityType> capabilities)
+        {
+            Capabilities = capabilities;
+        }
+
         /// <summary>
         /// List of capabilities to create
         /// Serialized Name: GenerateCapabilityImageRequest.capabilities

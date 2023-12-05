@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly JobsRestOperations _containerAppJobJobsRestClient;
         private readonly ContainerAppJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/jobs";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppJobResource"/> class for mocking. </summary>
         protected ContainerAppJobResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/jobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

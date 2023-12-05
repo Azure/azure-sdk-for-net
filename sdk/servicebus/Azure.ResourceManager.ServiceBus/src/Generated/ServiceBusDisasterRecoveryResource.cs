@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly DisasterRecoveryConfigsRestOperations _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient;
         private readonly ServiceBusDisasterRecoveryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusDisasterRecoveryResource"/> class for mocking. </summary>
         protected ServiceBusDisasterRecoveryResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

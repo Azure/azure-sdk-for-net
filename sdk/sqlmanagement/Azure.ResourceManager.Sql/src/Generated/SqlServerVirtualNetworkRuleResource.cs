@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly VirtualNetworkRulesRestOperations _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient;
         private readonly SqlServerVirtualNetworkRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/virtualNetworkRules";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerVirtualNetworkRuleResource"/> class for mocking. </summary>
         protected SqlServerVirtualNetworkRuleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/virtualNetworkRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         private readonly AccountsRestOperations _deviceUpdateAccountAccountsRestClient;
         private readonly DeviceUpdateAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdateAccountResource"/> class for mocking. </summary>
         protected DeviceUpdateAccountResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DeviceUpdate
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

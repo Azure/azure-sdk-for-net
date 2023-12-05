@@ -15,6 +15,13 @@ namespace Azure.Communication.PhoneNumbers
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberPurchaseRequest"/>. </summary>
+        /// <param name="searchId"> The search id. </param>
+        internal PhoneNumberPurchaseRequest(string searchId)
+        {
+            SearchId = searchId;
+        }
+
         /// <summary> The search id. </summary>
         public string SearchId { get; set; }
     }

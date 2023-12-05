@@ -16,6 +16,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="primaryKekCertificatePfx"> The primary KEK certificate PFX. </param>
+        /// <param name="secondaryKekCertificatePfx"> The secondary KEK certificate PFX. </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
+        internal RecoveryPlanHyperVReplicaAzureFailoverContent(string instanceType, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, HyperVReplicaAzureRpRecoveryPointType? recoveryPointType) : base(instanceType)
+        {
+            PrimaryKekCertificatePfx = primaryKekCertificatePfx;
+            SecondaryKekCertificatePfx = secondaryKekCertificatePfx;
+            RecoveryPointType = recoveryPointType;
+            InstanceType = instanceType ?? "HyperVReplicaAzure";
+        }
+
         /// <summary> The primary KEK certificate PFX. </summary>
         public string PrimaryKekCertificatePfx { get; set; }
         /// <summary> The secondary KEK certificate PFX. </summary>

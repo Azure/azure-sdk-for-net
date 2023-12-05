@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Network
         private readonly ExpressRouteConnectionsRestOperations _expressRouteConnectionRestClient;
         private readonly ExpressRouteConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteGateways/expressRouteConnections";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteConnectionResource"/> class for mocking. </summary>
         protected ExpressRouteConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteGateways/expressRouteConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

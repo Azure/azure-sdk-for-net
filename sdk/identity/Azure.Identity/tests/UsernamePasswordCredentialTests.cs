@@ -72,7 +72,7 @@ namespace Azure.Identity.Tests
             TestSetup();
             var options = new UsernamePasswordCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
 
             var credential = InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, options, null, mockPublicMsalClient));
 

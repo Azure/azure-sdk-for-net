@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceRebootContent"/>. </summary>
+        /// <param name="rebootType"> Type of reboot to be performed. Example: GracefulRebootWithZTP. </param>
+        internal NetworkDeviceRebootContent(NetworkDeviceRebootType? rebootType)
+        {
+            RebootType = rebootType;
+        }
+
         /// <summary> Type of reboot to be performed. Example: GracefulRebootWithZTP. </summary>
         public NetworkDeviceRebootType? RebootType { get; set; }
     }

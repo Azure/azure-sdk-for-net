@@ -1,14 +1,12 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2023-12-04)
 
 ### Features Added
 
-### Breaking Changes
+- Added `ChatAttachment` object that contains properties for inline images incoming from Teams Chat Threads.
 
-### Bugs Fixed
-
-### Other Changes
+## 1.2.0-beta.1 (2023-08-15)
 
 ## 1.1.2 (2023-06-19)
 

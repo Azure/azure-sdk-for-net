@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Storage
         private readonly TableServicesRestOperations _tableServiceRestClient;
         private readonly TableServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/tableServices";
+
         /// <summary> Initializes a new instance of the <see cref="TableServiceResource"/> class for mocking. </summary>
         protected TableServiceResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/tableServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

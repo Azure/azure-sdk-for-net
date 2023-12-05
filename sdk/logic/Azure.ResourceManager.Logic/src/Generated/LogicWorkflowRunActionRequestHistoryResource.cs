@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Logic
         private readonly WorkflowRunActionRequestHistoriesRestOperations _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient;
         private readonly LogicWorkflowRequestHistoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions/requestHistories";
+
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionRequestHistoryResource"/> class for mocking. </summary>
         protected LogicWorkflowRunActionRequestHistoryResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions/requestHistories";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

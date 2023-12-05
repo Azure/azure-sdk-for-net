@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.Purview.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountPatch"/>. </summary>
+        /// <param name="identity"> Identity related info to add/remove userAssignedIdentities. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="properties"> The account properties. </param>
+        /// <param name="tags"> Tags on the azure resource. </param>
+        internal PurviewAccountPatch(ManagedServiceIdentity identity, PurviewAccountProperties properties, IDictionary<string, string> tags)
+        {
+            Identity = identity;
+            Properties = properties;
+            Tags = tags;
+        }
+
         /// <summary> Identity related info to add/remove userAssignedIdentities. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The account properties. </summary>

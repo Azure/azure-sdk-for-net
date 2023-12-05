@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasCreateOrUpdateContent"/>. </summary>
+        /// <param name="createDnsRecord"> Whether or not DNS record should be created for this alias. </param>
+        internal ManagedServerDnsAliasCreateOrUpdateContent(bool? createDnsRecord)
+        {
+            CreateDnsRecord = createDnsRecord;
+        }
+
         /// <summary> Whether or not DNS record should be created for this alias. </summary>
         public bool? CreateDnsRecord { get; set; }
     }

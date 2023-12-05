@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SecureScoreControlsRestOperations _secureScoreControlsRestClient;
         private readonly SecureScoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/secureScores";
+
         /// <summary> Initializes a new instance of the <see cref="SecureScoreResource"/> class for mocking. </summary>
         protected SecureScoreResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/secureScores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

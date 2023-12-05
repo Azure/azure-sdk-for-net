@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Peering
         private readonly RegisteredAsnsRestOperations _peeringRegisteredAsnRegisteredAsnsRestClient;
         private readonly PeeringRegisteredAsnData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerings/registeredAsns";
+
         /// <summary> Initializes a new instance of the <see cref="PeeringRegisteredAsnResource"/> class for mocking. </summary>
         protected PeeringRegisteredAsnResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Peering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerings/registeredAsns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

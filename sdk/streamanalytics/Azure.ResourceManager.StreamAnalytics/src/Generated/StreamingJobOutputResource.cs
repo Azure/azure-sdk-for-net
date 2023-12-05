@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         private readonly OutputsRestOperations _streamingJobOutputOutputsRestClient;
         private readonly StreamingJobOutputData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs/outputs";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingJobOutputResource"/> class for mocking. </summary>
         protected StreamingJobOutputResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.StreamAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs/outputs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

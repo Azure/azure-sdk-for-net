@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute
         private readonly VirtualMachineExtensionImagesRestOperations _virtualMachineExtensionImageRestClient;
         private readonly VirtualMachineExtensionImageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/publishers/artifacttypes/types/versions";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionImageResource"/> class for mocking. </summary>
         protected VirtualMachineExtensionImageResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/publishers/artifacttypes/types/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

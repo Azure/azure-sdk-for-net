@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MixedReality
         private readonly RemoteRenderingAccountsRestOperations _remoteRenderingAccountRestClient;
         private readonly RemoteRenderingAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MixedReality/remoteRenderingAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="RemoteRenderingAccountResource"/> class for mocking. </summary>
         protected RemoteRenderingAccountResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MixedReality
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MixedReality/remoteRenderingAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

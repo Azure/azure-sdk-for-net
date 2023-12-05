@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly NetworkServiceDesignVersionsRestOperations _networkServiceDesignVersionRestClient;
         private readonly NetworkServiceDesignVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/networkServiceDesignGroups/networkServiceDesignVersions";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkServiceDesignVersionResource"/> class for mocking. </summary>
         protected NetworkServiceDesignVersionResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/networkServiceDesignGroups/networkServiceDesignVersions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

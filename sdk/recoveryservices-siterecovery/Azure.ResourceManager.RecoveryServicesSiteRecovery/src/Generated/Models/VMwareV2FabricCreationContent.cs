@@ -24,6 +24,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareV2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="VMwareV2FabricCreationContent"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. </param>
+        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
+        /// <param name="migrationSolutionId"> The ARM Id of the migration solution. </param>
+        internal VMwareV2FabricCreationContent(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId) : base(instanceType)
+        {
+            VMwareSiteId = vmwareSiteId;
+            PhysicalSiteId = physicalSiteId;
+            MigrationSolutionId = migrationSolutionId;
+            InstanceType = instanceType ?? "VMwareV2";
+        }
+
         /// <summary> The ARM Id of the VMware site. </summary>
         public ResourceIdentifier VMwareSiteId { get; set; }
         /// <summary> The ARM Id of the physical site. </summary>

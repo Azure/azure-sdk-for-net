@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerAzureADAdministratorsRestOperations _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient;
         private readonly SqlServerAzureADAdministratorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/administrators";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerAzureADAdministratorResource"/> class for mocking. </summary>
         protected SqlServerAzureADAdministratorResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/administrators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

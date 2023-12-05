@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.IotCentral
         private readonly PrivateLinksRestOperations _iotCentralPrivateLinkResourcePrivateLinksRestClient;
         private readonly IotCentralPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.IoTCentral/iotApps/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="IotCentralPrivateLinkResource"/> class for mocking. </summary>
         protected IotCentralPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.IotCentral
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.IoTCentral/iotApps/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

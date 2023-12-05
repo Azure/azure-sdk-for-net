@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SignalR
         private readonly SignalRCustomCertificatesRestOperations _signalRCustomCertificateRestClient;
         private readonly SignalRCustomCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR/customCertificates";
+
         /// <summary> Initializes a new instance of the <see cref="SignalRCustomCertificateResource"/> class for mocking. </summary>
         protected SignalRCustomCertificateResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SignalR
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR/customCertificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

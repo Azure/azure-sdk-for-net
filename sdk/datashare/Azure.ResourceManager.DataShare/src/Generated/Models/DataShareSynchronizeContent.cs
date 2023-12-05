@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.DataShare.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataShareSynchronizeContent"/>. </summary>
+        /// <param name="synchronizationMode"> Mode of synchronization used in triggers and snapshot sync. Incremental by default. </param>
+        internal DataShareSynchronizeContent(SynchronizationMode? synchronizationMode)
+        {
+            SynchronizationMode = synchronizationMode;
+        }
+
         /// <summary> Mode of synchronization used in triggers and snapshot sync. Incremental by default. </summary>
         public SynchronizationMode? SynchronizationMode { get; set; }
     }

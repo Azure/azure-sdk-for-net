@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly ViewsRestOperations _viewResourceFormatViewsRestClient;
         private readonly ViewResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/views";
+
         /// <summary> Initializes a new instance of the <see cref="ViewResourceFormatResource"/> class for mocking. </summary>
         protected ViewResourceFormatResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/views";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

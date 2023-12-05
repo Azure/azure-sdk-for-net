@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly SqlResourcesRestOperations _cosmosDBSqlContainerSqlResourcesRestClient;
         private readonly CosmosDBSqlContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlContainerResource"/> class for mocking. </summary>
         protected CosmosDBSqlContainerResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using System.IO.Pipes;
 using System.Runtime.CompilerServices;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Consumer;
@@ -2149,19 +2150,23 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="startingPosition">The position in the event stream that reading will start from.</param>
         /// <param name="checkpointUsed"><c>true</c> if a checkpoint was used for the position; otherwise, <c>false</c>.</param>
+        /// <param name="lastModified">The date and time that the checkpoint was last modified.</param>
+        /// <param name="authorIdentifier">The author of the checkpoint used to determine this position.</param>
         ///
-        [Event(105, Level = EventLevel.Verbose, Message = "The processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} is initializing partition '{0}' with starting position: [{4}]. Position chosen by {5}.")]
+        [Event(105, Level = EventLevel.Verbose, Message = "The processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} is initializing partition '{0}' with starting position: [{4}]. Position chosen by {5} (AuthorIdentifier '{6}': LastModified: '{7}').")]
         public virtual void EventProcessorPartitionProcessingEventPositionDetermined(string partitionId,
                                                                                      string identifier,
                                                                                      string eventHubName,
                                                                                      string consumerGroup,
                                                                                      string startingPosition,
-                                                                                     bool checkpointUsed)
+                                                                                     bool checkpointUsed,
+                                                                                     DateTimeOffset? lastModified,
+                                                                                     string authorIdentifier)
         {
             if (IsEnabled())
             {
-                var selectionBasedOn = checkpointUsed ? "checkpoint" : "default";
-                WriteEvent(105, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, startingPosition ?? string.Empty, selectionBasedOn);
+                var selectionBasedOn = checkpointUsed ? $"checkpoint" : "default";
+                WriteEvent(105, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, startingPosition ?? string.Empty, selectionBasedOn, authorIdentifier ?? string.Empty, lastModified ?? default);
             }
         }
 
@@ -3686,6 +3691,72 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
 
                 WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with two string arguments and two value type arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        /// <param name="arg7">The seventh argument.</param>
+        /// <param name="arg8">The eighth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1>(int eventId,
+                                                         string arg1,
+                                                         string arg2,
+                                                         string arg3,
+                                                         string arg4,
+                                                         string arg5,
+                                                         string arg6,
+                                                         string arg7,
+                                                         TValue1 arg8)
+            where TValue1 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            fixed (char* arg6Ptr = arg6)
+            fixed (char* arg7Ptr = arg7)
+            {
+                var eventPayload = stackalloc EventData[8];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
+
+                eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
+                eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
+
+                eventPayload[7].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[7].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg8);
+
+                WriteEventCore(eventId, 8, eventPayload);
             }
         }
     }

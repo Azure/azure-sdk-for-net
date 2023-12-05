@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataFactory
         private readonly GlobalParametersRestOperations _dataFactoryGlobalParameterGlobalParametersRestClient;
         private readonly DataFactoryGlobalParameterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/globalParameters";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryGlobalParameterResource"/> class for mocking. </summary>
         protected DataFactoryGlobalParameterResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/globalParameters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

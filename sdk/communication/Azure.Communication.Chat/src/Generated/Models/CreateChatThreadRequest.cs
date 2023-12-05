@@ -25,6 +25,15 @@ namespace Azure.Communication.Chat
             Participants = new ChangeTrackingList<ChatParticipantInternal>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadRequest"/>. </summary>
+        /// <param name="topic"> The chat thread topic. </param>
+        /// <param name="participants"> Participants to be added to the chat thread. </param>
+        internal CreateChatThreadRequest(string topic, IList<ChatParticipantInternal> participants)
+        {
+            Topic = topic;
+            Participants = participants;
+        }
+
         /// <summary> The chat thread topic. </summary>
         public string Topic { get; }
         /// <summary> Participants to be added to the chat thread. </summary>

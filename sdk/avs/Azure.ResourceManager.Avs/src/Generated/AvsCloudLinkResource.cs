@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Avs
         private readonly CloudLinksRestOperations _avsCloudLinkCloudLinksRestClient;
         private readonly AvsCloudLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/cloudLinks";
+
         /// <summary> Initializes a new instance of the <see cref="AvsCloudLinkResource"/> class for mocking. </summary>
         protected AvsCloudLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/cloudLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Media
         private readonly PrivateLinkResourcesRestOperations _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly MediaServicesPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="MediaServicesPrivateLinkResource"/> class for mocking. </summary>
         protected MediaServicesPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

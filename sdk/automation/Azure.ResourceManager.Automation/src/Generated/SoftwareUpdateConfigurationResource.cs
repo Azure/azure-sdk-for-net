@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Automation
         private readonly SoftwareUpdateConfigurationsRestOperations _softwareUpdateConfigurationRestClient;
         private readonly SoftwareUpdateConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/softwareUpdateConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="SoftwareUpdateConfigurationResource"/> class for mocking. </summary>
         protected SoftwareUpdateConfigurationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/softwareUpdateConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

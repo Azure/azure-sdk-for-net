@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly PostRulesRestOperations _postRulestackRulePostRulesRestClient;
         private readonly PostRulestackRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/postRules";
+
         /// <summary> Initializes a new instance of the <see cref="PostRulestackRuleResource"/> class for mocking. </summary>
         protected PostRulestackRuleResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/postRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

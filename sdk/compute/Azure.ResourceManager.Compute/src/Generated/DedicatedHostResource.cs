@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Compute
         private readonly DedicatedHostsRestOperations _dedicatedHostRestClient;
         private readonly DedicatedHostData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/hostGroups/hosts";
+
         /// <summary> Initializes a new instance of the <see cref="DedicatedHostResource"/> class for mocking. </summary>
         protected DedicatedHostResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/hostGroups/hosts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Resources
         private readonly FeaturesRestOperations _featureRestClient;
         private readonly FeatureData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/features";
+
         /// <summary> Initializes a new instance of the <see cref="FeatureResource"/> class for mocking. </summary>
         protected FeatureResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/features";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

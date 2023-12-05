@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests
         public async Task AuthenticateWithAuthCodeHonorsTenantId([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
 
             var options = new AuthorizationCodeCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             AuthorizationCodeCredential cred = InstrumentClient(

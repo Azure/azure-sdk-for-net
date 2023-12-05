@@ -15,5 +15,12 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             ValidationType = DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob;
         }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/>. </summary>
+        /// <param name="validationType"> Identifies the type of validation request. </param>
+        internal SubscriptionIsAllowedToCreateJobValidationContent(DataBoxValidationInputDiscriminator validationType) : base(validationType)
+        {
+            ValidationType = validationType;
+        }
     }
 }

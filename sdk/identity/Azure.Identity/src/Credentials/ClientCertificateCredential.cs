@@ -38,6 +38,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
 
         internal readonly string[] AdditionallyAllowedTenantIds;
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -167,6 +168,7 @@ namespace Azure.Identity
                          certCredOptions?.SendCertificateChain ?? false,
                          options);
 
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 

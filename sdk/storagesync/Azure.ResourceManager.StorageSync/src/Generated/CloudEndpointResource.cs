@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.StorageSync
         private readonly CloudEndpointsRestOperations _cloudEndpointRestClient;
         private readonly CloudEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/syncGroups/cloudEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="CloudEndpointResource"/> class for mocking. </summary>
         protected CloudEndpointResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.StorageSync
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/syncGroups/cloudEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

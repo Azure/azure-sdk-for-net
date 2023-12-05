@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sphere
         private readonly ProductsRestOperations _sphereProductProductsRestClient;
         private readonly SphereProductData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/products";
+
         /// <summary> Initializes a new instance of the <see cref="SphereProductResource"/> class for mocking. </summary>
         protected SphereProductResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/products";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

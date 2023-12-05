@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakReplicationContent"/>. </summary>
+        /// <param name="forceBreakReplication"> If replication is in status transferring and you want to force break the replication, set to true. </param>
+        internal NetAppVolumeBreakReplicationContent(bool? forceBreakReplication)
+        {
+            ForceBreakReplication = forceBreakReplication;
+        }
+
         /// <summary> If replication is in status transferring and you want to force break the replication, set to true. </summary>
         public bool? ForceBreakReplication { get; set; }
     }

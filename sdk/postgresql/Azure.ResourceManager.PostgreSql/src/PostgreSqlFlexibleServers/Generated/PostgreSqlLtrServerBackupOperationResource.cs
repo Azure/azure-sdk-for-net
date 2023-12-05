@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly LtrBackupRestOperations _postgreSqlLtrServerBackupOperationltrBackupOperationsRestClient;
         private readonly PostgreSqlLtrServerBackupOperationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/ltrBackupOperations";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlLtrServerBackupOperationResource"/> class for mocking. </summary>
         protected PostgreSqlLtrServerBackupOperationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/ltrBackupOperations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

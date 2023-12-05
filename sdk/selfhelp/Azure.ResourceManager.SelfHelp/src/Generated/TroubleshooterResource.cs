@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SelfHelp
         private readonly TroubleshootersRestOperations _troubleshooterResourceTroubleshootersRestClient;
         private readonly TroubleshooterResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Help/troubleshooters";
+
         /// <summary> Initializes a new instance of the <see cref="TroubleshooterResource"/> class for mocking. </summary>
         protected TroubleshooterResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SelfHelp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Help/troubleshooters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

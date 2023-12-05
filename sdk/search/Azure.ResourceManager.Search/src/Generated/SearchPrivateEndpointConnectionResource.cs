@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Search
         private readonly PrivateEndpointConnectionsRestOperations _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly SearchPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="SearchPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected SearchPrivateEndpointConnectionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Search
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

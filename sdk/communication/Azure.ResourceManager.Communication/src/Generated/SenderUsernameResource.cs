@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Communication
         private readonly SenderUsernamesRestOperations _senderUsernameResourceSenderUsernamesRestClient;
         private readonly SenderUsernameResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains/senderUsernames";
+
         /// <summary> Initializes a new instance of the <see cref="SenderUsernameResource"/> class for mocking. </summary>
         protected SenderUsernameResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Communication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains/senderUsernames";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

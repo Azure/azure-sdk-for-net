@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly OutboundFirewallRulesRestOperations _outboundFirewallRuleRestClient;
         private readonly OutboundFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/outboundFirewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="OutboundFirewallRuleResource"/> class for mocking. </summary>
         protected OutboundFirewallRuleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/outboundFirewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
