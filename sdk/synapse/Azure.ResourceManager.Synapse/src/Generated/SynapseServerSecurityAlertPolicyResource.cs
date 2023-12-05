@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly WorkspaceManagedSqlServerSecurityAlertPolicyRestOperations _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient;
         private readonly SynapseServerSecurityAlertPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/securityAlertPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseServerSecurityAlertPolicyResource"/> class for mocking. </summary>
         protected SynapseServerSecurityAlertPolicyResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/securityAlertPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

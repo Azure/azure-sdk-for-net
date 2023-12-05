@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateIdentityCertificateContent"/>. </summary>
+        /// <param name="applicationId"> The application id. </param>
+        /// <param name="certificate"> The certificate in base64 encoded format. </param>
+        /// <param name="certificatePassword"> The password of the certificate. </param>
+        internal HDInsightClusterUpdateIdentityCertificateContent(string applicationId, string certificate, string certificatePassword)
+        {
+            ApplicationId = applicationId;
+            Certificate = certificate;
+            CertificatePassword = certificatePassword;
+        }
+
         /// <summary> The application id. </summary>
         public string ApplicationId { get; set; }
         /// <summary> The certificate in base64 encoded format. </summary>

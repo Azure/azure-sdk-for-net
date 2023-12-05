@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A custom image. </summary>
@@ -12,6 +14,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImagePatch"/>. </summary>
         public DevTestLabCustomImagePatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImagePatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal DevTestLabCustomImagePatch(IDictionary<string, string> tags) : base(tags)
         {
         }
     }

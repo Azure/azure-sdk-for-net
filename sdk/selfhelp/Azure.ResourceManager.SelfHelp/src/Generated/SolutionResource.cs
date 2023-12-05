@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SelfHelp
         private readonly SolutionRestOperations _solutionResourceSolutionRestClient;
         private readonly SolutionResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Help/solutions";
+
         /// <summary> Initializes a new instance of the <see cref="SolutionResource"/> class for mocking. </summary>
         protected SolutionResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SelfHelp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Help/solutions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

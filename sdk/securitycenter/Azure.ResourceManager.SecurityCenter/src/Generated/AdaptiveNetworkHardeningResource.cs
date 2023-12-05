@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AdaptiveNetworkHardeningsRestOperations _adaptiveNetworkHardeningRestClient;
         private readonly AdaptiveNetworkHardeningData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/adaptiveNetworkHardenings";
+
         /// <summary> Initializes a new instance of the <see cref="AdaptiveNetworkHardeningResource"/> class for mocking. </summary>
         protected AdaptiveNetworkHardeningResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/adaptiveNetworkHardenings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

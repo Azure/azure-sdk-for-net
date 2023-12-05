@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly PublishersRestOperations _publisherRestClient;
         private readonly PublisherData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers";
+
         /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class for mocking. </summary>
         protected PublisherResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

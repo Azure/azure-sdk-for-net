@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertPatch"/>. </summary>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
+        internal ActivityLogAlertPatch(IDictionary<string, string> tags, bool? isEnabled)
+        {
+            Tags = tags;
+            IsEnabled = isEnabled;
+        }
+
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>

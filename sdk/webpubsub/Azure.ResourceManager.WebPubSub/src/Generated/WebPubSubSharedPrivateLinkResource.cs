@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.WebPubSub
         private readonly WebPubSubSharedPrivateLinkResourcesRestOperations _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient;
         private readonly WebPubSubSharedPrivateLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="WebPubSubSharedPrivateLinkResource"/> class for mocking. </summary>
         protected WebPubSubSharedPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.WebPubSub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

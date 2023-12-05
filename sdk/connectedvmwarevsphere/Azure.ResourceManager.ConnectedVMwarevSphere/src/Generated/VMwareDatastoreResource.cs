@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly DatastoresRestOperations _vMwareDatastoreDatastoresRestClient;
         private readonly VMwareDatastoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/datastores";
+
         /// <summary> Initializes a new instance of the <see cref="VMwareDatastoreResource"/> class for mocking. </summary>
         protected VMwareDatastoreResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/datastores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

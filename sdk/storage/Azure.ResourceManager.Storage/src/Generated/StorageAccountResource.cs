@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Storage
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly StorageAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="StorageAccountResource"/> class for mocking. </summary>
         protected StorageAccountResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

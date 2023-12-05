@@ -15,6 +15,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiManagementOpenIdConnectProviderPatch"/>. </summary>
+        /// <param name="displayName"> User-friendly OpenID Connect Provider name. </param>
+        /// <param name="description"> User-friendly description of OpenID Connect Provider. </param>
+        /// <param name="metadataEndpoint"> Metadata endpoint URI. </param>
+        /// <param name="clientId"> Client ID of developer console which is the client application. </param>
+        /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
+        internal ApiManagementOpenIdConnectProviderPatch(string displayName, string description, string metadataEndpoint, string clientId, string clientSecret)
+        {
+            DisplayName = displayName;
+            Description = description;
+            MetadataEndpoint = metadataEndpoint;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+        }
+
         /// <summary> User-friendly OpenID Connect Provider name. </summary>
         public string DisplayName { get; set; }
         /// <summary> User-friendly description of OpenID Connect Provider. </summary>

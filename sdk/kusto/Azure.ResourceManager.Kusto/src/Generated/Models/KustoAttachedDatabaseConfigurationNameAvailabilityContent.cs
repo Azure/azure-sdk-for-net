@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Kusto.Models
             ResourceType = AttachedDatabaseType.MicrosoftKustoClustersAttachedDatabaseConfigurations;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KustoAttachedDatabaseConfigurationNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Attached database resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </param>
+        internal KustoAttachedDatabaseConfigurationNameAvailabilityContent(string name, AttachedDatabaseType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Attached database resource name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </summary>

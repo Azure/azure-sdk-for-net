@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
         private const string TranscriptionStartedValue = "transcriptionStarted";
         private const string TranscriptionFailedValue = "transcriptionFailed";
         private const string TranscriptionResumedValue = "transcriptionResumed";
-        private const string TranscriptionLocaleUpdatedValue = "transcriptionLocaleUpdated";
+        private const string TranscriptionUpdatedValue = "transcriptionUpdated";
         private const string TranscriptionStoppedValue = "transcriptionStopped";
         private const string UnspecifiedErrorValue = "unspecifiedError";
 
@@ -35,8 +35,8 @@ namespace Azure.Communication.CallAutomation
         public static TranscriptionStatus TranscriptionFailed { get; } = new TranscriptionStatus(TranscriptionFailedValue);
         /// <summary> transcriptionResumed. </summary>
         public static TranscriptionStatus TranscriptionResumed { get; } = new TranscriptionStatus(TranscriptionResumedValue);
-        /// <summary> transcriptionLocaleUpdated. </summary>
-        public static TranscriptionStatus TranscriptionLocaleUpdated { get; } = new TranscriptionStatus(TranscriptionLocaleUpdatedValue);
+        /// <summary> transcriptionUpdated. </summary>
+        public static TranscriptionStatus TranscriptionUpdated { get; } = new TranscriptionStatus(TranscriptionUpdatedValue);
         /// <summary> transcriptionStopped. </summary>
         public static TranscriptionStatus TranscriptionStopped { get; } = new TranscriptionStatus(TranscriptionStoppedValue);
         /// <summary> unspecifiedError. </summary>

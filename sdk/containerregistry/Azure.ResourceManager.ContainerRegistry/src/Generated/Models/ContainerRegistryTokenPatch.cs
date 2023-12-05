@@ -17,6 +17,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenPatch"/>. </summary>
+        /// <param name="scopeMapId"> The resource ID of the scope map to which the token will be associated with. </param>
+        /// <param name="status"> The status of the token example enabled or disabled. </param>
+        /// <param name="credentials"> The credentials that can be used for authenticating the token. </param>
+        internal ContainerRegistryTokenPatch(ResourceIdentifier scopeMapId, ContainerRegistryTokenStatus? status, ContainerRegistryTokenCredentials credentials)
+        {
+            ScopeMapId = scopeMapId;
+            Status = status;
+            Credentials = credentials;
+        }
+
         /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
         public ResourceIdentifier ScopeMapId { get; set; }
         /// <summary> The status of the token example enabled or disabled. </summary>

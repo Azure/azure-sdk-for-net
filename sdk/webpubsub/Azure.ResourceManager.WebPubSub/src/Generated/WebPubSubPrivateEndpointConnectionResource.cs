@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.WebPubSub
         private readonly WebPubSubPrivateEndpointConnectionsRestOperations _webPubSubPrivateEndpointConnectionRestClient;
         private readonly WebPubSubPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="WebPubSubPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected WebPubSubPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.WebPubSub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

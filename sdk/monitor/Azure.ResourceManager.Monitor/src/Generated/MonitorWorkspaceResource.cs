@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Monitor
         private readonly AzureMonitorWorkspacesRestOperations _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
         private readonly MonitorWorkspaceResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Monitor/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="MonitorWorkspaceResource"/> class for mocking. </summary>
         protected MonitorWorkspaceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Monitor/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

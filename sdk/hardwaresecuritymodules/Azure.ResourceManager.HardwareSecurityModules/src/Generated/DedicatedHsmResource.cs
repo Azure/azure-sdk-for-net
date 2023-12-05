@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly DedicatedHsmRestOperations _dedicatedHsmRestClient;
         private readonly DedicatedHsmData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/dedicatedHSMs";
+
         /// <summary> Initializes a new instance of the <see cref="DedicatedHsmResource"/> class for mocking. </summary>
         protected DedicatedHsmResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/dedicatedHSMs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

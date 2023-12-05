@@ -20,6 +20,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             StepType = ContainerRegistryTaskStepType.FileTask;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryFileTaskStepUpdateContent"/>. </summary>
+        /// <param name="stepType"> The type of the step. </param>
+        /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
+        /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <param name="taskFilePath"> The task template/definition file path relative to the source context. </param>
+        /// <param name="valuesFilePath"> The values/parameters file path relative to the source context. </param>
+        /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
+        internal ContainerRegistryFileTaskStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken, string taskFilePath, string valuesFilePath, IList<ContainerRegistryTaskOverridableValue> values) : base(stepType, contextPath, contextAccessToken)
+        {
+            TaskFilePath = taskFilePath;
+            ValuesFilePath = valuesFilePath;
+            Values = values;
+            StepType = stepType;
+        }
+
         /// <summary> The task template/definition file path relative to the source context. </summary>
         public string TaskFilePath { get; set; }
         /// <summary> The values/parameters file path relative to the source context. </summary>

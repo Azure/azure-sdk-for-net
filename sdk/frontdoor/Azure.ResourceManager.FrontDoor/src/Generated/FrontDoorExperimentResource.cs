@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.FrontDoor
         private readonly ReportsRestOperations _reportsRestClient;
         private readonly FrontDoorExperimentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/NetworkExperimentProfiles/Experiments";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorExperimentResource"/> class for mocking. </summary>
         protected FrontDoorExperimentResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.FrontDoor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/NetworkExperimentProfiles/Experiments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

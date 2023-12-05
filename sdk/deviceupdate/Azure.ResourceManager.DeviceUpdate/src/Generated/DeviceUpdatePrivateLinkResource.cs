@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         private readonly PrivateLinkResourcesRestOperations _deviceUpdatePrivateLinkPrivateLinkResourcesRestClient;
         private readonly DeviceUpdatePrivateLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdatePrivateLinkResource"/> class for mocking. </summary>
         protected DeviceUpdatePrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DeviceUpdate
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

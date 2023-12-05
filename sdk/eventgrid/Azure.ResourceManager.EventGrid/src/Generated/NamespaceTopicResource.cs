@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly NamespaceTopicsRestOperations _namespaceTopicRestClient;
         private readonly NamespaceTopicData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/topics";
+
         /// <summary> Initializes a new instance of the <see cref="NamespaceTopicResource"/> class for mocking. </summary>
         protected NamespaceTopicResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/topics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

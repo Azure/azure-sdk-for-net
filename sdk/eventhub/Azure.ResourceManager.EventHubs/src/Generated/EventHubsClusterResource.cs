@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ConfigurationRestOperations _configurationRestClient;
         private readonly EventHubsClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsClusterResource"/> class for mocking. </summary>
         protected EventHubsClusterResource()
         {
@@ -74,9 +77,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

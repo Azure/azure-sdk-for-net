@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Avs
         private readonly GlobalReachConnectionsRestOperations _globalReachConnectionRestClient;
         private readonly GlobalReachConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/globalReachConnections";
+
         /// <summary> Initializes a new instance of the <see cref="GlobalReachConnectionResource"/> class for mocking. </summary>
         protected GlobalReachConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/globalReachConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

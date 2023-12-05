@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.StoragePool
         private readonly IscsiTargetsRestOperations _diskPoolIscsiTargetIscsiTargetsRestClient;
         private readonly DiskPoolIscsiTargetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StoragePool/diskPools/iscsiTargets";
+
         /// <summary> Initializes a new instance of the <see cref="DiskPoolIscsiTargetResource"/> class for mocking. </summary>
         protected DiskPoolIscsiTargetResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.StoragePool
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StoragePool/diskPools/iscsiTargets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

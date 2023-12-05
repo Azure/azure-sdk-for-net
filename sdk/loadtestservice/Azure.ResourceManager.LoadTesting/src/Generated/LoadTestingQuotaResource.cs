@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.LoadTesting
         private readonly QuotasRestOperations _loadTestingQuotaQuotasRestClient;
         private readonly LoadTestingQuotaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/locations/quotas";
+
         /// <summary> Initializes a new instance of the <see cref="LoadTestingQuotaResource"/> class for mocking. </summary>
         protected LoadTestingQuotaResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.LoadTesting
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/locations/quotas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

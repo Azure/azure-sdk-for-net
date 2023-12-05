@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly PrivateLinkResourcesRestOperations _postgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly PostgreSqlPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlPrivateLinkResource"/> class for mocking. </summary>
         protected PostgreSqlPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

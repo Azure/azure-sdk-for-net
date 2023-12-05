@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.StorageSync.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpec"/>. </summary>
+        /// <param name="path"> Restore file spec path. </param>
+        /// <param name="isDirectory"> Restore file spec isdir. </param>
+        internal RestoreFileSpec(string path, bool? isDirectory)
+        {
+            Path = path;
+            IsDirectory = isDirectory;
+        }
+
         /// <summary> Restore file spec path. </summary>
         public string Path { get; set; }
         /// <summary> Restore file spec isdir. </summary>

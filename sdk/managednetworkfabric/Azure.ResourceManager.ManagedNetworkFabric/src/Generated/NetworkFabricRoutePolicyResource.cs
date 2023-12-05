@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly RoutePoliciesRestOperations _networkFabricRoutePolicyRoutePoliciesRestClient;
         private readonly NetworkFabricRoutePolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/routePolicies";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricRoutePolicyResource"/> class for mocking. </summary>
         protected NetworkFabricRoutePolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/routePolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly DicomServicesRestOperations _dicomServiceRestClient;
         private readonly DicomServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/dicomservices";
+
         /// <summary> Initializes a new instance of the <see cref="DicomServiceResource"/> class for mocking. </summary>
         protected DicomServiceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/dicomservices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

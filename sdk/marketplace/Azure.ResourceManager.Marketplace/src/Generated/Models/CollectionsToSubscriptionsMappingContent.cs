@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingContent"/>. </summary>
+        /// <param name="properties"> Subscriptions ids list. </param>
+        internal CollectionsToSubscriptionsMappingContent(CollectionsToSubscriptionsMappingProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Subscriptions ids list. </summary>
         internal CollectionsToSubscriptionsMappingProperties Properties { get; set; }
         /// <summary> Subscriptions ids list. </summary>

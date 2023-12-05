@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.StoragePool
         private readonly DiskPoolsRestOperations _diskPoolRestClient;
         private readonly DiskPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StoragePool/diskPools";
+
         /// <summary> Initializes a new instance of the <see cref="DiskPoolResource"/> class for mocking. </summary>
         protected DiskPoolResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.StoragePool
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StoragePool/diskPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

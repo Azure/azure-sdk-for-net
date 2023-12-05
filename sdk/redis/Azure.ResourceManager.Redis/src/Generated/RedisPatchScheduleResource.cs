@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Redis
         private readonly PatchSchedulesRestOperations _redisPatchSchedulePatchSchedulesRestClient;
         private readonly RedisPatchScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cache/redis/patchSchedules";
+
         /// <summary> Initializes a new instance of the <see cref="RedisPatchScheduleResource"/> class for mocking. </summary>
         protected RedisPatchScheduleResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Redis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cache/redis/patchSchedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

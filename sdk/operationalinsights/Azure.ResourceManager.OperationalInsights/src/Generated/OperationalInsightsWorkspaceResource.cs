@@ -58,6 +58,9 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly WorkspacePurgeRestOperations _workspacePurgeRestClient;
         private readonly OperationalInsightsWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsWorkspaceResource"/> class for mocking. </summary>
         protected OperationalInsightsWorkspaceResource()
         {
@@ -100,9 +103,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

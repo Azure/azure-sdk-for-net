@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> The properties of a configure alert request. </param>
+        internal SiteRecoveryAlertCreateOrUpdateContent(SiteRecoveryConfigureAlertProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> The properties of a configure alert request. </summary>
         public SiteRecoveryConfigureAlertProperties Properties { get; set; }
     }

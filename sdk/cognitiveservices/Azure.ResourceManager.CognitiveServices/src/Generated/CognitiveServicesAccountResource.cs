@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly CognitiveServicesAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesAccountResource"/> class for mocking. </summary>
         protected CognitiveServicesAccountResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.CognitiveServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

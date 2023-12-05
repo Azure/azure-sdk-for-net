@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network
         private readonly P2SVpnGatewaysRestOperations _p2sVpnGatewayP2sVpnGatewaysRestClient;
         private readonly P2SVpnGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/p2svpnGateways";
+
         /// <summary> Initializes a new instance of the <see cref="P2SVpnGatewayResource"/> class for mocking. </summary>
         protected P2SVpnGatewayResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/p2svpnGateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

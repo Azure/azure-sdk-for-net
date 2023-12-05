@@ -46,8 +46,8 @@ namespace Azure.Communication.CallAutomation
         public TranscriptionOptions TranscriptionOptions { get; set; }
 
         /// <summary>
-        /// The endpoint URL of the Azure Cognitive Services resource attached
+        /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
         /// </summary>
-        public Uri AzureCognitiveServicesEndpointUri { get; set; }
+        public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
     }
 }

@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.PolicyInsights
         private readonly AttestationsRestOperations _policyAttestationAttestationsRestClient;
         private readonly PolicyAttestationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/attestations";
+
         /// <summary> Initializes a new instance of the <see cref="PolicyAttestationResource"/> class for mocking. </summary>
         protected PolicyAttestationResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.PolicyInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/attestations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

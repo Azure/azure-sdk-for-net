@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly DisasterRecoveryAuthorizationRulesRestOperations _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient;
         private readonly ServiceBusAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/authorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> class for mocking. </summary>
         protected ServiceBusDisasterRecoveryAuthorizationRuleResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/authorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly RedisEnterpriseClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cache/redisEnterprise";
+
         /// <summary> Initializes a new instance of the <see cref="RedisEnterpriseClusterResource"/> class for mocking. </summary>
         protected RedisEnterpriseClusterResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.RedisEnterprise
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cache/redisEnterprise";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

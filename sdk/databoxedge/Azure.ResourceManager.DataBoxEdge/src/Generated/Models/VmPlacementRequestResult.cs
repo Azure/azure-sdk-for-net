@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             VmSize = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="VmPlacementRequestResult"/>. </summary>
+        /// <param name="vmSize"> List of VM sizes being checked. </param>
+        /// <param name="isFeasible"> Boolean value indicating if the VM(s) in VmSize can be created. </param>
+        /// <param name="messageCode"> MessageCode indicating reason for success or failure. </param>
+        /// <param name="message"> Localized message to be displayed to the user to explain the check result. </param>
+        internal VmPlacementRequestResult(IList<string> vmSize, bool? isFeasible, string messageCode, string message)
+        {
+            VmSize = vmSize;
+            IsFeasible = isFeasible;
+            MessageCode = messageCode;
+            Message = message;
+        }
+
         /// <summary> List of VM sizes being checked. </summary>
         public IList<string> VmSize { get; }
         /// <summary> Boolean value indicating if the VM(s) in VmSize can be created. </summary>

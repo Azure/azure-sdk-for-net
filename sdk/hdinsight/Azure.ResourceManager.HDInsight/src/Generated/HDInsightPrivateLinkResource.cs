@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.HDInsight
         private readonly PrivateLinkResourcesRestOperations _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly HDInsightPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="HDInsightPrivateLinkResource"/> class for mocking. </summary>
         protected HDInsightPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HDInsight
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly DeletedServersRestOperations _deletedServerRestClient;
         private readonly DeletedServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/deletedServers";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedServerResource"/> class for mocking. </summary>
         protected DeletedServerResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/deletedServers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

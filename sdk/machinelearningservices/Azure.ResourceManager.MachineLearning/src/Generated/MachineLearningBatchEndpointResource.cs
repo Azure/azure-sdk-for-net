@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly BatchEndpointsRestOperations _machineLearningBatchEndpointBatchEndpointsRestClient;
         private readonly MachineLearningBatchEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/batchEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningBatchEndpointResource"/> class for mocking. </summary>
         protected MachineLearningBatchEndpointResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/batchEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

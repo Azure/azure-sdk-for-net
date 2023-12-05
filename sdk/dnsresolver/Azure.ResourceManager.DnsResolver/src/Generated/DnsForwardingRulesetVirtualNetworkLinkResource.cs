@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly VirtualNetworkLinksRestOperations _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient;
         private readonly DnsForwardingRulesetVirtualNetworkLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks";
+
         /// <summary> Initializes a new instance of the <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> class for mocking. </summary>
         protected DnsForwardingRulesetVirtualNetworkLinkResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DnsResolver
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

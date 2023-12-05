@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql
         private readonly VirtualClustersRestOperations _virtualClusterRestClient;
         private readonly VirtualClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/virtualClusters";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualClusterResource"/> class for mocking. </summary>
         protected VirtualClusterResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/virtualClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

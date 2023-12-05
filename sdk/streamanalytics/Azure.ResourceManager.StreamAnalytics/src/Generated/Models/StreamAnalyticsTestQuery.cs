@@ -24,6 +24,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             StreamingJob = streamingJob;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestQuery"/>. </summary>
+        /// <param name="streamingJob"> Stream analytics job object which defines the input, output, and transformation for the query testing. </param>
+        /// <param name="writeUri"> The SAS URI to the container or directory. </param>
+        /// <param name="path"> The path to the subdirectory. </param>
+        internal StreamAnalyticsTestQuery(StreamingJobData streamingJob, Uri writeUri, string path)
+        {
+            StreamingJob = streamingJob;
+            WriteUri = writeUri;
+            Path = path;
+        }
+
         /// <summary> Stream analytics job object which defines the input, output, and transformation for the query testing. </summary>
         public StreamingJobData StreamingJob { get; }
         /// <summary> The SAS URI to the container or directory. </summary>
