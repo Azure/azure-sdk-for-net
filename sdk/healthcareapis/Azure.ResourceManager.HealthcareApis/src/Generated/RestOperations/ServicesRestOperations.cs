@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Get the metadata of a service instance. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Get the metadata of a service instance. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Create or update the metadata of a service instance. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="data"> The service instance metadata. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Create or update the metadata of a service instance. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="data"> The service instance metadata. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Update the metadata of a service instance. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="patch"> The service instance metadata and security metadata. </param>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Update the metadata of a service instance. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="patch"> The service instance metadata and security metadata. </param>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Delete a service instance. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Delete a service instance. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Get all the service instances in a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Get all the service instances in a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Get all the service instances in a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Get all the service instances in a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Check if a service instance name is available. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Check if a service instance name is available. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Get all the service instances in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Get all the service instances in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Get all the service instances in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Get all the service instances in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

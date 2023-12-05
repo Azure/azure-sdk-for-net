@@ -9,7 +9,7 @@ csharp: true
 library-name: HealthcareApis
 namespace: Azure.ResourceManager.HealthcareApis
 require: https://github.com/Azure/azure-rest-api-specs/blob/4eb1ac218704edf7a414ea78c35f7c84bc210f30/specification/healthcareapis/resource-manager/readme.md
-tag: 2023-11
+#tag: package-2023-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,6 +18,9 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -97,6 +100,8 @@ rename-mapping:
   ServiceImportConfigurationInfo.enabled: IsEnabled
   ServiceImportConfigurationInfo.initialImportMode: IsInitialImportMode
   IotFhirDestination.properties.fhirServiceResourceId: -|arm-id
+  ServiceCosmosDbConfigurationInfo.crossTenantCmkApplicationId: -|uuid
+  ImplementationGuidesConfiguration.usCoreMissingData: IsUsCoreMissingDataEnabled
 
 directive:
 # remove LRO related operations
