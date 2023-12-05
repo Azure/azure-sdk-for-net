@@ -23,6 +23,12 @@ namespace Azure.Core.Pipeline
             public HttpClientTransportRequest(PipelineRequest request)
             {
                 _pipelineRequest = request;
+
+                // Initialize duplicated properties on base type from adapted request.
+                base.SetMethodCore(request.Method);
+
+                // Uri and Content are initialized to null in constructor
+                // so don't need to be set here.
             }
 
             #region Adapt PipelineResponse to inherit functional implementation from ClientModel
@@ -30,7 +36,15 @@ namespace Azure.Core.Pipeline
                 => _pipelineRequest.Method;
 
             protected override void SetMethodCore(string method)
-                => _pipelineRequest.Method = method;
+            {
+                // In this implementation of the abstract Azure.Core.Request type,
+                // we have two "method" fields -- one on the Request implementation
+                // and one in the PipelineRequest implementation.  We need to keep
+                // them both in sync with each other.
+
+                base.SetMethodCore(method);
+                _pipelineRequest.Method = method;
+            }
 
             protected override Uri GetUriCore()
             {
@@ -40,7 +54,11 @@ namespace Azure.Core.Pipeline
             }
 
             protected override void SetUriCore(Uri uri)
-                => _pipelineRequest.Uri = uri;
+            {
+                // Update Uri fields on both Request and PipelineRequest.
+                base.SetUriCore(uri);
+                _pipelineRequest.Uri = uri;
+            }
 
             protected override MessageHeaders GetHeadersCore()
                 => _pipelineRequest.Headers;
@@ -49,7 +67,11 @@ namespace Azure.Core.Pipeline
                 => _pipelineRequest.Content;
 
             protected override void SetContentCore(InputContent? content)
-                => _pipelineRequest.Content = content;
+            {
+                // Update Content fields on both Request and PipelineRequest.
+                base.SetContentCore(content);
+                _pipelineRequest.Content = content;
+            }
             #endregion
 
             #region Implement Azure.Core Request abstract methods

@@ -18,13 +18,20 @@ namespace Azure.Core
     public abstract class Request : PipelineRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        private RequestMethod _method;
         private RequestUriBuilder? _uriBuilder;
+        private RequestContent? _content;
+
         private string? _clientRequestId;
 
         /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
-        public new virtual RequestMethod Method { get; set; }
+        public new virtual RequestMethod Method
+        {
+            get => _method;
+            set => _method = value;
+        }
 
         /// <summary>
         /// TBD.
@@ -49,6 +56,7 @@ namespace Azure.Core
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
+
                 _uriBuilder = value;
             }
         }
@@ -70,21 +78,25 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets the request content.
         /// </summary>
-        public new virtual RequestContent? Content { get; set; }
+        public new virtual RequestContent? Content
+        {
+            get => (RequestContent?)GetContentCore();
+            set => SetContentCore(value);
+        }
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <returns></returns>
         protected override InputContent? GetContentCore()
-            => Content;
+            => _content;
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="content"></param>
         protected override void SetContentCore(InputContent? content)
-            => Content = (RequestContent?)content;
+            => _content = (RequestContent?)content;
 
         /// <summary>
         /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
