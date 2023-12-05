@@ -15,6 +15,38 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> An object representing an extracted text line. </summary>
     internal partial class TextLine
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TextLine"/>. </summary>
         /// <param name="text"> The text content of the line. </param>
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
@@ -36,12 +68,19 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="words"> List of words in the text line. </param>
         /// <param name="appearance"> Text appearance properties. </param>
-        internal TextLine(string text, IReadOnlyList<float> boundingBox, IReadOnlyList<TextWord> words, TextAppearance appearance)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextLine(string text, IReadOnlyList<float> boundingBox, IReadOnlyList<TextWord> words, TextAppearance appearance, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             BoundingBox = boundingBox;
             Words = words;
             Appearance = appearance;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextLine"/> for deserialization. </summary>
+        internal TextLine()
+        {
         }
 
         /// <summary> The text content of the line. </summary>

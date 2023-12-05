@@ -15,6 +15,38 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing observed text styles. </summary>
     public partial class DocumentStyle
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DocumentStyle"/>. </summary>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
@@ -25,6 +57,7 @@ namespace Azure.AI.DocumentIntelligence
 
             Spans = spans.ToList();
             Confidence = confidence;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentStyle"/>. </summary>
@@ -39,7 +72,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format.. </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, FontStyle? fontStyle, FontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, FontStyle? fontStyle, FontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsHandwritten = isHandwritten;
             SimilarFontFamily = similarFontFamily;
@@ -49,6 +83,12 @@ namespace Azure.AI.DocumentIntelligence
             BackgroundColor = backgroundColor;
             Spans = spans;
             Confidence = confidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentStyle"/> for deserialization. </summary>
+        internal DocumentStyle()
+        {
         }
 
         /// <summary> Is content handwritten?. </summary>

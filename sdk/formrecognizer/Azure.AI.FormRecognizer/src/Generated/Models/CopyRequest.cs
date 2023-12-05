@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -13,6 +14,38 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Request parameter to copy an existing custom model from the source resource to a target resource referenced by the resource ID. </summary>
     internal partial class CopyRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CopyRequest"/>. </summary>
         /// <param name="targetResourceId"> Azure Resource Id of the target Form Recognizer resource where the model is copied to. </param>
         /// <param name="targetResourceRegion"> Location of the target Azure resource. A valid Azure region name supported by Cognitive Services. </param>
@@ -27,6 +60,24 @@ namespace Azure.AI.FormRecognizer.Models
             TargetResourceId = targetResourceId;
             TargetResourceRegion = targetResourceRegion;
             CopyAuthorization = copyAuthorization;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyRequest"/>. </summary>
+        /// <param name="targetResourceId"> Azure Resource Id of the target Form Recognizer resource where the model is copied to. </param>
+        /// <param name="targetResourceRegion"> Location of the target Azure resource. A valid Azure region name supported by Cognitive Services. </param>
+        /// <param name="copyAuthorization"> Entity that encodes claims to authorize the copy request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyRequest(string targetResourceId, string targetResourceRegion, CopyAuthorizationResult copyAuthorization, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetResourceId = targetResourceId;
+            TargetResourceRegion = targetResourceRegion;
+            CopyAuthorization = copyAuthorization;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyRequest"/> for deserialization. </summary>
+        internal CopyRequest()
+        {
         }
 
         /// <summary> Azure Resource Id of the target Form Recognizer resource where the model is copied to. </summary>

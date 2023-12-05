@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceDisconnected event. </summary>
@@ -20,7 +23,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="deviceConnectionStateEventInfo"> Information about the device connection state event. </param>
-        internal IotHubDeviceDisconnectedEventData(string deviceId, string moduleId, string hubName, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo) : base(deviceId, moduleId, hubName, deviceConnectionStateEventInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDeviceDisconnectedEventData(string deviceId, string moduleId, string hubName, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(deviceId, moduleId, hubName, deviceConnectionStateEventInfo, serializedAdditionalRawData)
         {
         }
     }

@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.SignalRService.ClientConnectionDisconnected event. </summary>
     public partial class SignalRServiceClientConnectionDisconnectedEventData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionDisconnectedEventData"/>. </summary>
         internal SignalRServiceClientConnectionDisconnectedEventData()
         {
@@ -23,13 +56,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
         /// <param name="userId"> The user Id of connected client connection. </param>
         /// <param name="errorMessage"> The message of error that cause the client connection disconnected. </param>
-        internal SignalRServiceClientConnectionDisconnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId, string errorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRServiceClientConnectionDisconnectedEventData(DateTimeOffset? timestamp, string hubName, string connectionId, string userId, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             HubName = hubName;
             ConnectionId = connectionId;
             UserId = userId;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time at which the event occurred. </summary>

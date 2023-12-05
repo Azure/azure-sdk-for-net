@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all Router Worker events. </summary>
@@ -19,8 +22,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
-        internal AcsRouterWorkerEventData(string jobId, string channelReference, string channelId, string workerId) : base(jobId, channelReference, channelId)
+        internal AcsRouterWorkerEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string workerId) : base(jobId, channelReference, channelId, serializedAdditionalRawData)
         {
             WorkerId = workerId;
         }

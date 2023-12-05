@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
 {
-    internal partial class CloudEventInternal : IUtf8JsonSerializable
+    internal partial class CloudEventInternal : IUtf8JsonSerializable, IJsonModel<CloudEventInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEventInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudEventInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudEventInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -60,5 +72,134 @@ namespace Azure.Messaging.EventGrid.Models
             }
             writer.WriteEndObject();
         }
+
+        CloudEventInternal IJsonModel<CloudEventInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudEventInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudEventInternal(document.RootElement, options);
+        }
+
+        internal static CloudEventInternal DeserializeCloudEventInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            string source = default;
+            Optional<JsonElement> data = default;
+            Optional<byte[]> dataBase64 = default;
+            string type = default;
+            Optional<DateTimeOffset> time = default;
+            string specversion = default;
+            Optional<string> dataschema = default;
+            Optional<string> datacontenttype = default;
+            Optional<string> subject = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("source"u8))
+                {
+                    source = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("data"u8))
+                {
+                    data = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("data_base64"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataBase64 = property.Value.GetBytesFromBase64("D");
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("time"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    time = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("specversion"u8))
+                {
+                    specversion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataschema"u8))
+                {
+                    dataschema = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("datacontenttype"u8))
+                {
+                    datacontenttype = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subject"u8))
+                {
+                    subject = property.Value.GetString();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new CloudEventInternal(id, source, data, dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
+        }
+
+        BinaryData IPersistableModel<CloudEventInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudEventInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CloudEventInternal IPersistableModel<CloudEventInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudEventInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudEventInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudEventInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

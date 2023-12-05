@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage(e), _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage(e), _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

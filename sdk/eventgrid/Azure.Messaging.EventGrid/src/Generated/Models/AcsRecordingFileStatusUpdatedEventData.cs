@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RecordingFileStatusUpdated event. </summary>
     public partial class AcsRecordingFileStatusUpdatedEventData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/>. </summary>
         internal AcsRecordingFileStatusUpdatedEventData()
         {
@@ -25,7 +58,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="channelType"> The recording  channel type - Mixed, Unmixed. </param>
         /// <param name="formatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
-        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, AcsRecordingContentType? contentType, AcsRecordingChannelType? channelType, AcsRecordingFormatType? formatType, string sessionEndReason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, AcsRecordingContentType? contentType, AcsRecordingChannelType? channelType, AcsRecordingFormatType? formatType, string sessionEndReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecordingStorageInfo = recordingStorageInfo;
             RecordingStartTime = recordingStartTime;
@@ -34,6 +68,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ChannelType = channelType;
             FormatType = formatType;
             SessionEndReason = sessionEndReason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The details of recording storage information. </summary>

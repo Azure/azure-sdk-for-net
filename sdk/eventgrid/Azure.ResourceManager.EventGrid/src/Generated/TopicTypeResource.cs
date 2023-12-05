@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListEventTypesRequest(Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventTypeUnderTopic.DeserializeEventTypeUnderTopic(e), _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<EventTypeUnderTopic> GetEventTypes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListEventTypesRequest(Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventTypeUnderTopic.DeserializeEventTypeUnderTopic(e), _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }

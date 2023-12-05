@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Information about the device twin, which is the cloud representation of application device metadata. </summary>
     public partial class DeviceTwinInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DeviceTwinInfo"/>. </summary>
         internal DeviceTwinInfo()
         {
@@ -27,7 +62,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="statusUpdateTime"> The ISO8601 timestamp of the last device twin status update. </param>
         /// <param name="version"> An integer that is incremented by one each time the device twin is updated. </param>
         /// <param name="x509Thumbprint"> The thumbprint is a unique value for the x509 certificate, commonly used to find a particular certificate in a certificate store. The thumbprint is dynamically generated using the SHA1 algorithm, and does not physically exist in the certificate. </param>
-        internal DeviceTwinInfo(string authenticationType, float? cloudToDeviceMessageCount, string connectionState, string deviceId, string etag, string lastActivityTime, DeviceTwinInfoProperties properties, string status, string statusUpdateTime, float? version, DeviceTwinInfoX509Thumbprint x509Thumbprint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceTwinInfo(string authenticationType, float? cloudToDeviceMessageCount, string connectionState, string deviceId, string etag, string lastActivityTime, DeviceTwinInfoProperties properties, string status, string statusUpdateTime, float? version, DeviceTwinInfoX509Thumbprint x509Thumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthenticationType = authenticationType;
             CloudToDeviceMessageCount = cloudToDeviceMessageCount;
@@ -40,6 +76,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             StatusUpdateTime = statusUpdateTime;
             Version = version;
             X509Thumbprint = x509Thumbprint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Authentication type used for this device: either SAS, SelfSigned, or CertificateAuthority. </summary>

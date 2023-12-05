@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinkResourcesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DesktopVirtualizationPrivateLinkResourceData.DeserializeDesktopVirtualizationPrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "VirtualWorkspaceResource.GetPrivateLinkResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DesktopVirtualizationPrivateLinkResourceData.DeserializeDesktopVirtualizationPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "VirtualWorkspaceResource.GetPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinkResourcesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DesktopVirtualizationPrivateLinkResourceData.DeserializeDesktopVirtualizationPrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "VirtualWorkspaceResource.GetPrivateLinkResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DesktopVirtualizationPrivateLinkResourceData.DeserializeDesktopVirtualizationPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "VirtualWorkspaceResource.GetPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

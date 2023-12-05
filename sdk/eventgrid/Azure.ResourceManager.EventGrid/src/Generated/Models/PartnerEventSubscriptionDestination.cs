@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The PartnerEventSubscriptionDestination. </summary>
@@ -18,8 +21,9 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Initializes a new instance of <see cref="PartnerEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of a Partner Destination of an event subscription. </param>
-        internal PartnerEventSubscriptionDestination(EndpointType endpointType, string resourceId) : base(endpointType)
+        internal PartnerEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceId) : base(endpointType, serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             EndpointType = endpointType;

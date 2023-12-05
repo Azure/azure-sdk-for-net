@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Encoder connect event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingStreamReceived event. </summary>
     public partial class MediaLiveEventIncomingStreamReceivedEventData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingStreamReceivedEventData"/>. </summary>
         internal MediaLiveEventIncomingStreamReceivedEventData()
         {
@@ -25,7 +60,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="timestamp"> Gets the first timestamp of the data chunk received. </param>
         /// <param name="duration"> Gets the duration of the first data chunk. </param>
         /// <param name="timescale"> Gets the timescale in which timestamp is represented. </param>
-        internal MediaLiveEventIncomingStreamReceivedEventData(string ingestUrl, string trackType, string trackName, long? bitrate, string encoderIp, string encoderPort, string timestamp, string duration, string timescale)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventIncomingStreamReceivedEventData(string ingestUrl, string trackType, string trackName, long? bitrate, string encoderIp, string encoderPort, string timestamp, string duration, string timescale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IngestUrl = ingestUrl;
             TrackType = trackType;
@@ -36,6 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Timestamp = timestamp;
             Duration = duration;
             Timescale = timescale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the ingest URL provided by the live event. </summary>

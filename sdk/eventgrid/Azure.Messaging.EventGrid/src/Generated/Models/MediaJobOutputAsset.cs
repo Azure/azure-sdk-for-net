@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The event data for a Job output asset. </summary>
@@ -24,11 +27,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="label"> Gets the Job output label. </param>
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="state"> Gets the Job output state. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="assetName"> Gets the Job output asset name. </param>
-        internal MediaJobOutputAsset(string odataType, MediaJobError error, string label, long progress, MediaJobState state, string assetName) : base(odataType, error, label, progress, state)
+        internal MediaJobOutputAsset(string odataType, MediaJobError error, string label, long progress, MediaJobState state, IDictionary<string, BinaryData> serializedAdditionalRawData, string assetName) : base(odataType, error, label, progress, state, serializedAdditionalRawData)
         {
             AssetName = assetName;
             OdataType = odataType ?? "#Microsoft.Media.JobOutputAsset";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputAsset"/> for deserialization. </summary>
+        internal MediaJobOutputAsset()
+        {
         }
 
         /// <summary> Gets the Job output asset name. </summary>

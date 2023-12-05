@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,13 +25,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="attachedWorkerSelectors"> Router Job Queued Attached Worker Selector. </param>
         /// <param name="requestedWorkerSelectors"> Router Job Queued Requested Worker Selector. </param>
-        internal AcsRouterJobQueuedEventData(string jobId, string channelReference, string channelId, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors) : base(jobId, channelReference, channelId, queueId, labels, tags)
+        internal AcsRouterJobQueuedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
         {
             Priority = priority;
             AttachedWorkerSelectors = attachedWorkerSelectors;

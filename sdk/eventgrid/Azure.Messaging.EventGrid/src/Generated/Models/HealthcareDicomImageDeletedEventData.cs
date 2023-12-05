@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.DicomImageDeleted event. </summary>
     public partial class HealthcareDicomImageDeletedEventData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageDeletedEventData"/>. </summary>
         internal HealthcareDicomImageDeletedEventData()
         {
@@ -22,7 +57,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
         /// <param name="serviceHostName"> Host name of the DICOM account for this image. </param>
         /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
-        internal HealthcareDicomImageDeletedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareDicomImageDeletedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PartitionName = partitionName;
             ImageStudyInstanceUid = imageStudyInstanceUid;
@@ -30,6 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ImageSopInstanceUid = imageSopInstanceUid;
             ServiceHostName = serviceHostName;
             SequenceNumber = sequenceNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Data partition name. </summary>

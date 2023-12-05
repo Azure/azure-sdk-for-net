@@ -5,16 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TextLine
+    internal partial class TextLine : IUtf8JsonSerializable, IJsonModel<TextLine>
     {
-        internal static TextLine DeserializeTextLine(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextLine>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TextLine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TextLine>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TextLine)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("boundingBox"u8);
+            writer.WriteStartArray();
+            foreach (var item in BoundingBox)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("words"u8);
+            writer.WriteStartArray();
+            foreach (var item in Words)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Appearance))
+            {
+                writer.WritePropertyName("appearance"u8);
+                writer.WriteObjectValue(Appearance);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TextLine IJsonModel<TextLine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextLine>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TextLine)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextLine(document.RootElement, options);
+        }
+
+        internal static TextLine DeserializeTextLine(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +90,8 @@ namespace Azure.AI.FormRecognizer.Models
             IReadOnlyList<float> boundingBox = default;
             IReadOnlyList<TextWord> words = default;
             Optional<TextAppearance> appearance = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -59,8 +128,44 @@ namespace Azure.AI.FormRecognizer.Models
                     appearance = TextAppearance.DeserializeTextAppearance(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TextLine(text, boundingBox, words, appearance.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TextLine(text, boundingBox, words, appearance.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TextLine>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextLine>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TextLine)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TextLine IPersistableModel<TextLine>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextLine>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTextLine(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TextLine)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TextLine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
             languageDisplayNames ??= new Dictionary<string, string>();
             languageDescriptions ??= new Dictionary<string, string>();
 
-            return new DigitalTwinsModelData(languageDisplayNames, languageDescriptions, id, uploadedOn, decommissioned, dtdlModel);
+            return new DigitalTwinsModelData(languageDisplayNames, languageDescriptions, id, uploadedOn, decommissioned, dtdlModel, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Core.IncomingRelationship"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns> A new <see cref="Core.IncomingRelationship"/> instance for mocking. </returns>
         public static IncomingRelationship IncomingRelationship(string relationshipId = null, string sourceId = null, string relationshipName = null, string relationshipLink = null)
         {
-            return new IncomingRelationship(relationshipId, sourceId, relationshipName, relationshipLink);
+            return new IncomingRelationship(relationshipId, sourceId, relationshipName, relationshipLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Core.DigitalTwinsEventRoute"/>. </summary>
@@ -48,7 +48,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns> A new <see cref="Core.DigitalTwinsEventRoute"/> instance for mocking. </returns>
         public static DigitalTwinsEventRoute DigitalTwinsEventRoute(string id = null, string endpointName = null, string filter = null)
         {
-            return new DigitalTwinsEventRoute(id, endpointName, filter);
+            return new DigitalTwinsEventRoute(id, endpointName, filter, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Core.ImportJob"/>. </summary>
@@ -64,7 +64,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns> A new <see cref="Core.ImportJob"/> instance for mocking. </returns>
         public static ImportJob ImportJob(string id = null, Uri inputBlobUri = null, Uri outputBlobUri = null, ImportJobStatus? status = null, DateTimeOffset? createdDateTime = null, DateTimeOffset? lastActionDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ResponseError error = null)
         {
-            return new ImportJob(id, inputBlobUri, outputBlobUri, status, createdDateTime, lastActionDateTime, finishedDateTime, purgeDateTime, error);
+            return new ImportJob(id, inputBlobUri, outputBlobUri, status, createdDateTime, lastActionDateTime, finishedDateTime, purgeDateTime, error, serializedAdditionalRawData: null);
         }
     }
 }

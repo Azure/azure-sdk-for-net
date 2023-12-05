@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferRevoked event. </summary>
@@ -19,10 +22,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
         /// <param name="queueId"> Router Worker Offer Revoked Queue Id. </param>
         /// <param name="offerId"> Router Worker Offer Revoked Offer Id. </param>
-        internal AcsRouterWorkerOfferRevokedEventData(string jobId, string channelReference, string channelId, string workerId, string queueId, string offerId) : base(jobId, channelReference, channelId, workerId)
+        internal AcsRouterWorkerOfferRevokedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string workerId, string queueId, string offerId) : base(jobId, channelReference, channelId, serializedAdditionalRawData, workerId)
         {
             QueueId = queueId;
             OfferId = offerId;

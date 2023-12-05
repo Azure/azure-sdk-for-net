@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,83 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(HealthcareDicomImageCreatedEventDataConverter))]
-    public partial class HealthcareDicomImageCreatedEventData
+    public partial class HealthcareDicomImageCreatedEventData : IUtf8JsonSerializable, IJsonModel<HealthcareDicomImageCreatedEventData>
     {
-        internal static HealthcareDicomImageCreatedEventData DeserializeHealthcareDicomImageCreatedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareDicomImageCreatedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HealthcareDicomImageCreatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HealthcareDicomImageCreatedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PartitionName))
+            {
+                writer.WritePropertyName("partitionName"u8);
+                writer.WriteStringValue(PartitionName);
+            }
+            if (Optional.IsDefined(ImageStudyInstanceUid))
+            {
+                writer.WritePropertyName("imageStudyInstanceUid"u8);
+                writer.WriteStringValue(ImageStudyInstanceUid);
+            }
+            if (Optional.IsDefined(ImageSeriesInstanceUid))
+            {
+                writer.WritePropertyName("imageSeriesInstanceUid"u8);
+                writer.WriteStringValue(ImageSeriesInstanceUid);
+            }
+            if (Optional.IsDefined(ImageSopInstanceUid))
+            {
+                writer.WritePropertyName("imageSopInstanceUid"u8);
+                writer.WriteStringValue(ImageSopInstanceUid);
+            }
+            if (Optional.IsDefined(ServiceHostName))
+            {
+                writer.WritePropertyName("serviceHostName"u8);
+                writer.WriteStringValue(ServiceHostName);
+            }
+            if (Optional.IsDefined(SequenceNumber))
+            {
+                writer.WritePropertyName("sequenceNumber"u8);
+                writer.WriteNumberValue(SequenceNumber.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HealthcareDicomImageCreatedEventData IJsonModel<HealthcareDicomImageCreatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HealthcareDicomImageCreatedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareDicomImageCreatedEventData(document.RootElement, options);
+        }
+
+        internal static HealthcareDicomImageCreatedEventData DeserializeHealthcareDicomImageCreatedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +103,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> imageSopInstanceUid = default;
             Optional<string> serviceHostName = default;
             Optional<long> sequenceNumber = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionName"u8))
@@ -63,15 +141,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     sequenceNumber = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthcareDicomImageCreatedEventData(partitionName.Value, imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Optional.ToNullable(sequenceNumber));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthcareDicomImageCreatedEventData(partitionName.Value, imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Optional.ToNullable(sequenceNumber), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HealthcareDicomImageCreatedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HealthcareDicomImageCreatedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HealthcareDicomImageCreatedEventData IPersistableModel<HealthcareDicomImageCreatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHealthcareDicomImageCreatedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HealthcareDicomImageCreatedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HealthcareDicomImageCreatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class HealthcareDicomImageCreatedEventDataConverter : JsonConverter<HealthcareDicomImageCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, HealthcareDicomImageCreatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override HealthcareDicomImageCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

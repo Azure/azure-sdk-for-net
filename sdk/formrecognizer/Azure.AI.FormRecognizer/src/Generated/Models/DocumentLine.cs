@@ -15,6 +15,38 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A content line object consisting of an adjacent sequence of content elements, such as words and selection marks. </summary>
     public partial class DocumentLine
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DocumentLine"/>. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
@@ -33,11 +65,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="polygon"> Bounding polygon of the line. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
-        internal DocumentLine(string content, IReadOnlyList<float> polygon, IReadOnlyList<DocumentSpan> spans)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentLine(string content, IReadOnlyList<float> polygon, IReadOnlyList<DocumentSpan> spans, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             Polygon = polygon;
             Spans = spans;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentLine"/> for deserialization. </summary>
+        internal DocumentLine()
+        {
         }
 
         /// <summary> Concatenated content of the contained elements in reading order. </summary>
