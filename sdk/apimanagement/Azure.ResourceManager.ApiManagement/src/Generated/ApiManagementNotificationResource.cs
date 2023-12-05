@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<RecipientUserContract> GetNotificationRecipientUsersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRecipientUserRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RecipientUserContract.DeserializeRecipientUserContract, _notificationRecipientUserClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientUsers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RecipientUserContract.DeserializeRecipientUserContract(e), _notificationRecipientUserClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientUsers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<RecipientUserContract> GetNotificationRecipientUsers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRecipientUserRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RecipientUserContract.DeserializeRecipientUserContract, _notificationRecipientUserClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientUsers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RecipientUserContract.DeserializeRecipientUserContract(e), _notificationRecipientUserClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientUsers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<RecipientEmailContract> GetNotificationRecipientEmailsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRecipientEmailRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RecipientEmailContract.DeserializeRecipientEmailContract, _notificationRecipientEmailClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientEmails", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RecipientEmailContract.DeserializeRecipientEmailContract(e), _notificationRecipientEmailClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientEmails", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<RecipientEmailContract> GetNotificationRecipientEmails(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRecipientEmailRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RecipientEmailContract.DeserializeRecipientEmailContract, _notificationRecipientEmailClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientEmails", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RecipientEmailContract.DeserializeRecipientEmailContract(e), _notificationRecipientEmailClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientEmails", "value", null, cancellationToken);
         }
 
         /// <summary>

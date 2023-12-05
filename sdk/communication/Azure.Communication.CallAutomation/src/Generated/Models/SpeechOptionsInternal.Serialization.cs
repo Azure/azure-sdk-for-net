@@ -5,22 +5,123 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class SpeechOptionsInternal : IUtf8JsonSerializable
+    internal partial class SpeechOptionsInternal : IUtf8JsonSerializable, IJsonModel<SpeechOptionsInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpeechOptionsInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SpeechOptionsInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpeechOptionsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SpeechOptionsInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EndSilenceTimeoutInMs))
             {
                 writer.WritePropertyName("endSilenceTimeoutInMs"u8);
                 writer.WriteNumberValue(EndSilenceTimeoutInMs.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SpeechOptionsInternal IJsonModel<SpeechOptionsInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpeechOptionsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SpeechOptionsInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpeechOptionsInternal(document.RootElement, options);
+        }
+
+        internal static SpeechOptionsInternal DeserializeSpeechOptionsInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<long> endSilenceTimeoutInMs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("endSilenceTimeoutInMs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endSilenceTimeoutInMs = property.Value.GetInt64();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SpeechOptionsInternal(Optional.ToNullable(endSilenceTimeoutInMs), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SpeechOptionsInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpeechOptionsInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SpeechOptionsInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SpeechOptionsInternal IPersistableModel<SpeechOptionsInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpeechOptionsInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSpeechOptionsInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SpeechOptionsInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SpeechOptionsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

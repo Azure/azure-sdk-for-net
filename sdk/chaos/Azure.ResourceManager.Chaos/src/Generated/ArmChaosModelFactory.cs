@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Chaos.CapabilityData"/> instance for mocking. </returns>
         public static CapabilityData CapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string targetType = null, string description = null, string parametersSchema = null, string urn = null)
         {
-            return new CapabilityData(id, name, resourceType, systemData, publisher, targetType, description, parametersSchema, urn);
+            return new CapabilityData(id, name, resourceType, systemData, publisher, targetType, description, parametersSchema, urn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.CapabilityTypeData"/>. </summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos.Models
             azureRbacActions ??= new List<string>();
             azureRbacDataActions ??= new List<string>();
 
-            return new CapabilityTypeData(id, name, resourceType, systemData, location, publisher, targetType, displayName, description, parametersSchema, urn, kind, azureRbacActions?.ToList(), azureRbacDataActions?.ToList(), runtimeKind != null ? new CapabilityTypePropertiesRuntimeProperties(runtimeKind) : null);
+            return new CapabilityTypeData(id, name, resourceType, systemData, location, publisher, targetType, displayName, description, parametersSchema, urn, kind, azureRbacActions?.ToList(), azureRbacDataActions?.ToList(), runtimeKind != null ? new CapabilityTypePropertiesRuntimeProperties(runtimeKind, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ExperimentData"/>. </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Chaos.Models
             steps ??= new List<Step>();
             selectors ??= new List<Selector>();
 
-            return new ExperimentData(id, name, resourceType, systemData, tags, location, identity, steps?.ToList(), selectors?.ToList(), startOnCreation);
+            return new ExperimentData(id, name, resourceType, systemData, tags, location, identity, steps?.ToList(), selectors?.ToList(), startOnCreation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentCancelOperationResult"/>. </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ExperimentCancelOperationResult"/> instance for mocking. </returns>
         public static ExperimentCancelOperationResult ExperimentCancelOperationResult(string name = null, string statusUri = null)
         {
-            return new ExperimentCancelOperationResult(name, statusUri);
+            return new ExperimentCancelOperationResult(name, statusUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentStartOperationResult"/>. </summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ExperimentStartOperationResult"/> instance for mocking. </returns>
         public static ExperimentStartOperationResult ExperimentStartOperationResult(string name = null, string statusUri = null)
         {
-            return new ExperimentStartOperationResult(name, statusUri);
+            return new ExperimentStartOperationResult(name, statusUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ExperimentStatusData"/>. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Chaos.ExperimentStatusData"/> instance for mocking. </returns>
         public static ExperimentStatusData ExperimentStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? createdDateUtc = null, DateTimeOffset? endDateUtc = null)
         {
-            return new ExperimentStatusData(id, name, resourceType, systemData, status, createdDateUtc, endDateUtc);
+            return new ExperimentStatusData(id, name, resourceType, systemData, status, createdDateUtc, endDateUtc, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ExperimentExecutionDetailData"/>. </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             runInformationSteps ??= new List<StepStatus>();
 
-            return new ExperimentExecutionDetailData(id, name, resourceType, systemData, experimentId, status, failureReason, createdOn, lastActionOn, startOn, stopOn, runInformationSteps != null ? new ExperimentExecutionDetailsPropertiesRunInformation(runInformationSteps?.ToList()) : null);
+            return new ExperimentExecutionDetailData(id, name, resourceType, systemData, experimentId, status, failureReason, createdOn, lastActionOn, startOn, stopOn, runInformationSteps != null ? new ExperimentExecutionDetailsPropertiesRunInformation(runInformationSteps?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StepStatus"/>. </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             branches ??= new List<BranchStatus>();
 
-            return new StepStatus(stepName, stepId, status, branches?.ToList());
+            return new StepStatus(stepName, stepId, status, branches?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BranchStatus"/>. </summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             actions ??= new List<ActionStatus>();
 
-            return new BranchStatus(branchName, branchId, status, actions?.ToList());
+            return new BranchStatus(branchName, branchId, status, actions?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ActionStatus"/>. </summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             targets ??= new List<ExperimentExecutionActionTargetDetailsProperties>();
 
-            return new ActionStatus(actionName, actionId, status, startOn, endOn, targets?.ToList());
+            return new ActionStatus(actionName, actionId, status, startOn, endOn, targets?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ExperimentExecutionActionTargetDetailsProperties"/> instance for mocking. </returns>
         public static ExperimentExecutionActionTargetDetailsProperties ExperimentExecutionActionTargetDetailsProperties(string status = null, string target = null, DateTimeOffset? targetFailedOn = null, DateTimeOffset? targetCompletedOn = null, ExperimentExecutionActionTargetDetailsError error = null)
         {
-            return new ExperimentExecutionActionTargetDetailsProperties(status, target, targetFailedOn, targetCompletedOn, error);
+            return new ExperimentExecutionActionTargetDetailsProperties(status, target, targetFailedOn, targetCompletedOn, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionActionTargetDetailsError"/>. </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ExperimentExecutionActionTargetDetailsError"/> instance for mocking. </returns>
         public static ExperimentExecutionActionTargetDetailsError ExperimentExecutionActionTargetDetailsError(string code = null, string message = null)
         {
-            return new ExperimentExecutionActionTargetDetailsError(code, message);
+            return new ExperimentExecutionActionTargetDetailsError(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.TargetTypeData"/>. </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             resourceTypes ??= new List<string>();
 
-            return new TargetTypeData(id, name, resourceType, systemData, location, displayName, description, propertiesSchema, resourceTypes?.ToList());
+            return new TargetTypeData(id, name, resourceType, systemData, location, displayName, description, propertiesSchema, resourceTypes?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.TargetData"/>. </summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             properties ??= new Dictionary<string, BinaryData>();
 
-            return new TargetData(id, name, resourceType, systemData, location, properties);
+            return new TargetData(id, name, resourceType, systemData, location, properties, serializedAdditionalRawData: null);
         }
     }
 }

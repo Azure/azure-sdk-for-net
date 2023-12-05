@@ -5,16 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class BranchStatus
+    public partial class BranchStatus : IUtf8JsonSerializable, IJsonModel<BranchStatus>
     {
-        internal static BranchStatus DeserializeBranchStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BranchStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BranchStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BranchStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(BranchStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(BranchName))
+            {
+                writer.WritePropertyName("branchName"u8);
+                writer.WriteStringValue(BranchName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BranchId))
+            {
+                writer.WritePropertyName("branchId"u8);
+                writer.WriteStringValue(BranchId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
+            {
+                writer.WritePropertyName("actions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Actions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BranchStatus IJsonModel<BranchStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BranchStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(BranchStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBranchStatus(document.RootElement, options);
+        }
+
+        internal static BranchStatus DeserializeBranchStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.ResourceManager.Chaos.Models
             Optional<string> branchId = default;
             Optional<string> status = default;
             Optional<IReadOnlyList<ActionStatus>> actions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("branchName"u8))
@@ -54,8 +127,44 @@ namespace Azure.ResourceManager.Chaos.Models
                     actions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BranchStatus(branchName.Value, branchId.Value, status.Value, Optional.ToList(actions));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BranchStatus(branchName.Value, branchId.Value, status.Value, Optional.ToList(actions), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BranchStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BranchStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BranchStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BranchStatus IPersistableModel<BranchStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BranchStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBranchStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BranchStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BranchStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

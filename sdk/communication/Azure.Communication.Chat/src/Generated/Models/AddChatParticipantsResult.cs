@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Communication.Chat
     /// <summary> Result of the add chat participants operation. </summary>
     public partial class AddChatParticipantsResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AddChatParticipantsResult"/>. </summary>
         internal AddChatParticipantsResult()
         {
@@ -21,9 +54,11 @@ namespace Azure.Communication.Chat
 
         /// <summary> Initializes a new instance of <see cref="AddChatParticipantsResult"/>. </summary>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
-        internal AddChatParticipantsResult(IReadOnlyList<ChatError> invalidParticipants)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddChatParticipantsResult(IReadOnlyList<ChatError> invalidParticipants, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InvalidParticipants = invalidParticipants;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The participants that failed to be added to the chat thread. </summary>

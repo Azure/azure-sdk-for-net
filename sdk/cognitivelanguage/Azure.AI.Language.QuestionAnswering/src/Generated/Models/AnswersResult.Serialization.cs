@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class AnswersResult
+    public partial class AnswersResult : IUtf8JsonSerializable, IJsonModel<AnswersResult>
     {
-        internal static AnswersResult DeserializeAnswersResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnswersResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnswersResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswersResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnswersResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Answers))
+            {
+                writer.WritePropertyName("answers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Answers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnswersResult IJsonModel<AnswersResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswersResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnswersResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnswersResult(document.RootElement, options);
+        }
+
+        internal static AnswersResult DeserializeAnswersResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<KnowledgeBaseAnswer>> answers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("answers"u8))
@@ -36,8 +94,44 @@ namespace Azure.AI.Language.QuestionAnswering
                     answers = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnswersResult(Optional.ToList(answers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnswersResult(Optional.ToList(answers), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnswersResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswersResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnswersResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnswersResult IPersistableModel<AnswersResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswersResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnswersResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnswersResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnswersResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

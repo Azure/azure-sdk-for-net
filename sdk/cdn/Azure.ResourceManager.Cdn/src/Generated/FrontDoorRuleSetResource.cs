@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FrontDoorUsage.DeserializeFrontDoorUsage, _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FrontDoorUsage.DeserializeFrontDoorUsage, _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

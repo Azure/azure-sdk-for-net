@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gatewayApiRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gatewayApiRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, GatewayApiData.DeserializeGatewayApiData, _gatewayApiClientDiagnostics, Pipeline, "ApiManagementGatewayResource.GetGatewayApisByService", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GatewayApiData.DeserializeGatewayApiData(e), _gatewayApiClientDiagnostics, Pipeline, "ApiManagementGatewayResource.GetGatewayApisByService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gatewayApiRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gatewayApiRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, GatewayApiData.DeserializeGatewayApiData, _gatewayApiClientDiagnostics, Pipeline, "ApiManagementGatewayResource.GetGatewayApisByService", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GatewayApiData.DeserializeGatewayApiData(e), _gatewayApiClientDiagnostics, Pipeline, "ApiManagementGatewayResource.GetGatewayApisByService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

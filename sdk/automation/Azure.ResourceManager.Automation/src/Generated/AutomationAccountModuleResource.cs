@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationActivity.DeserializeAutomationActivity, _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutomationActivity.DeserializeAutomationActivity(e), _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationActivity.DeserializeAutomationActivity, _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutomationActivity.DeserializeAutomationActivity(e), _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>

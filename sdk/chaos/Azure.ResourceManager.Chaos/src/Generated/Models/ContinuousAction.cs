@@ -36,15 +36,21 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of <see cref="ContinuousAction"/>. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
-        internal ContinuousAction(string actionType, string name, TimeSpan duration, IList<KeyValuePair> parameters, string selectorId) : base(actionType, name)
+        internal ContinuousAction(string actionType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan duration, IList<KeyValuePair> parameters, string selectorId) : base(actionType, name, serializedAdditionalRawData)
         {
             Duration = duration;
             Parameters = parameters;
             SelectorId = selectorId;
             ActionType = actionType ?? "continuous";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousAction"/> for deserialization. </summary>
+        internal ContinuousAction()
+        {
         }
 
         /// <summary> ISO8601 formatted string that represents a duration. </summary>

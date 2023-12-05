@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
@@ -12,10 +15,118 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class CallConnectionPropertiesInternal
+    internal partial class CallConnectionPropertiesInternal : IUtf8JsonSerializable, IJsonModel<CallConnectionPropertiesInternal>
     {
-        internal static CallConnectionPropertiesInternal DeserializeCallConnectionPropertiesInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CallConnectionPropertiesInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CallConnectionPropertiesInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CallConnectionPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CallConnectionPropertiesInternal)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
+            if (Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (Optional.IsCollectionDefined(Targets))
+            {
+                writer.WritePropertyName("targets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Targets)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CallConnectionState))
+            {
+                writer.WritePropertyName("callConnectionState"u8);
+                writer.WriteStringValue(CallConnectionState.Value.ToString());
+            }
+            if (Optional.IsDefined(CallbackUri))
+            {
+                writer.WritePropertyName("callbackUri"u8);
+                writer.WriteStringValue(CallbackUri);
+            }
+            if (Optional.IsDefined(MediaSubscriptionId))
+            {
+                writer.WritePropertyName("mediaSubscriptionId"u8);
+                writer.WriteStringValue(MediaSubscriptionId);
+            }
+            if (Optional.IsDefined(DataSubscriptionId))
+            {
+                writer.WritePropertyName("dataSubscriptionId"u8);
+                writer.WriteStringValue(DataSubscriptionId);
+            }
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
+                writer.WriteObjectValue(SourceCallerIdNumber);
+            }
+            if (Optional.IsDefined(SourceDisplayName))
+            {
+                writer.WritePropertyName("sourceDisplayName"u8);
+                writer.WriteStringValue(SourceDisplayName);
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source);
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (Optional.IsDefined(AnsweredBy))
+            {
+                writer.WritePropertyName("answeredBy"u8);
+                writer.WriteObjectValue(AnsweredBy);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CallConnectionPropertiesInternal IJsonModel<CallConnectionPropertiesInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CallConnectionPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CallConnectionPropertiesInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCallConnectionPropertiesInternal(document.RootElement, options);
+        }
+
+        internal static CallConnectionPropertiesInternal DeserializeCallConnectionPropertiesInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +143,8 @@ namespace Azure.Communication.CallAutomation
             Optional<CommunicationIdentifierModel> source = default;
             Optional<string> correlationId = default;
             Optional<CommunicationUserIdentifierModel> answeredBy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -119,8 +232,44 @@ namespace Azure.Communication.CallAutomation
                     answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, dataSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, source.Value, correlationId.Value, answeredBy.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, dataSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, source.Value, correlationId.Value, answeredBy.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CallConnectionPropertiesInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CallConnectionPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CallConnectionPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CallConnectionPropertiesInternal IPersistableModel<CallConnectionPropertiesInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CallConnectionPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCallConnectionPropertiesInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CallConnectionPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CallConnectionPropertiesInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

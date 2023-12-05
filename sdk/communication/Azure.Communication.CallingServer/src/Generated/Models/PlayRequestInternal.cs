@@ -15,6 +15,38 @@ namespace Azure.Communication.CallingServer
     /// <summary> The PlayRequest. </summary>
     internal partial class PlayRequestInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
         /// <param name="playSourceInfo"> The source of the audio to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> is null. </exception>
@@ -34,12 +66,19 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="playOptions"> Defines options for playing the audio. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal PlayRequestInternal(PlaySourceInternal playSourceInfo, IList<CommunicationIdentifierModel> playTo, PlayOptionsInternal playOptions, string operationContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlayRequestInternal(PlaySourceInternal playSourceInfo, IList<CommunicationIdentifierModel> playTo, PlayOptionsInternal playOptions, string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlaySourceInfo = playSourceInfo;
             PlayTo = playTo;
             PlayOptions = playOptions;
             OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/> for deserialization. </summary>
+        internal PlayRequestInternal()
+        {
         }
 
         /// <summary> The source of the audio to be played. </summary>

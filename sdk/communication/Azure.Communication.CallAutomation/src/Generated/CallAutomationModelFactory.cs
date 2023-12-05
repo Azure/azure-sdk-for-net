@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TransferCallToParticipantResult"/> instance for mocking. </returns>
         public static TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null)
         {
-            return new TransferCallToParticipantResult(operationContext);
+            return new TransferCallToParticipantResult(operationContext, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.SendDtmfTonesResult"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.SendDtmfTonesResult"/> instance for mocking. </returns>
         public static SendDtmfTonesResult SendDtmfTonesResult(string operationContext = null)
         {
-            return new SendDtmfTonesResult(operationContext);
+            return new SendDtmfTonesResult(operationContext, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.MuteParticipantResult"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.MuteParticipantResult"/> instance for mocking. </returns>
         public static MuteParticipantResult MuteParticipantResult(string operationContext = null)
         {
-            return new MuteParticipantResult(operationContext);
+            return new MuteParticipantResult(operationContext, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.UnmuteParticipantResult"/>. </summary>
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.UnmuteParticipantResult"/> instance for mocking. </returns>
         public static UnmuteParticipantResult UnmuteParticipantResult(string operationContext = null)
         {
-            return new UnmuteParticipantResult(operationContext);
+            return new UnmuteParticipantResult(operationContext, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
         public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
         {
-            return new ResultInformation(code, subCode, message);
+            return new ResultInformation(code, subCode, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.CollectTonesResult"/>. </summary>
@@ -63,7 +63,7 @@ namespace Azure.Communication.CallAutomation
         {
             tones ??= new List<DtmfTone>();
 
-            return new CollectTonesResult(tones?.ToList());
+            return new CollectTonesResult(tones?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.DtmfResult"/>. </summary>
@@ -73,7 +73,7 @@ namespace Azure.Communication.CallAutomation
         {
             tones ??= new List<DtmfTone>();
 
-            return new DtmfResult(tones?.ToList());
+            return new DtmfResult(tones?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
@@ -81,7 +81,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
         public static SpeechResult SpeechResult(string speech = null)
         {
-            return new SpeechResult(speech);
+            return new SpeechResult(speech, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.ChoiceResult"/>. </summary>
@@ -93,7 +93,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>
         public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null)
         {
-            return new ChoiceResult(label, recognizedPhrase);
+            return new ChoiceResult(label, recognizedPhrase, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.UserConsent"/>. </summary>
@@ -101,7 +101,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.UserConsent"/> instance for mocking. </returns>
         public static UserConsent UserConsent(int? recording = null)
         {
-            return new UserConsent(recording);
+            return new UserConsent(recording, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStarted"/>. </summary>
@@ -114,7 +114,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TranscriptionStarted"/> instance for mocking. </returns>
         public static TranscriptionStarted TranscriptionStarted(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TranscriptionStarted(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
+            return new TranscriptionStarted(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdate"/>. </summary>
@@ -123,7 +123,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TranscriptionUpdate"/> instance for mocking. </returns>
         public static TranscriptionUpdate TranscriptionUpdate(TranscriptionStatus? transcriptionStatus = null, TranscriptionStatusDetails? transcriptionStatusDetails = null)
         {
-            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails);
+            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStopped"/>. </summary>
@@ -136,7 +136,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TranscriptionStopped"/> instance for mocking. </returns>
         public static TranscriptionStopped TranscriptionStopped(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TranscriptionStopped(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
+            return new TranscriptionStopped(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionResumed"/>. </summary>
@@ -149,7 +149,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TranscriptionResumed"/> instance for mocking. </returns>
         public static TranscriptionResumed TranscriptionResumed(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TranscriptionResumed(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
+            return new TranscriptionResumed(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>
@@ -162,7 +162,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TranscriptionFailed"/> instance for mocking. </returns>
         public static TranscriptionFailed TranscriptionFailed(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TranscriptionFailed(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
+            return new TranscriptionFailed(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId, serializedAdditionalRawData: null);
         }
     }
 }

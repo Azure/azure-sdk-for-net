@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
     /// <summary> Defines the "initialization time data" used to provision the attestation target for use by the MAA. </summary>
     internal partial class InitTimeData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InitTimeData"/>. </summary>
         public InitTimeData()
         {
@@ -20,10 +53,12 @@ namespace Azure.Security.Attestation
         /// <summary> Initializes a new instance of <see cref="InitTimeData"/>. </summary>
         /// <param name="data"> UTF-8 encoded Initialization Data passed into the trusted environment when it is created. </param>
         /// <param name="dataType"> The type of data contained within the "data" field. </param>
-        internal InitTimeData(byte[] data, DataType? dataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InitTimeData(byte[] data, DataType? dataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Data = data;
             DataType = dataType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> UTF-8 encoded Initialization Data passed into the trusted environment when it is created. </summary>

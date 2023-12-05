@@ -1065,7 +1065,7 @@ namespace Azure.AI.AnomalyDetector
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnomalyDetectionModel.DeserializeAnomalyDetectionModel(e), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         /// <summary> List Multivariate Models. </summary>
@@ -1079,7 +1079,7 @@ namespace Azure.AI.AnomalyDetector
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnomalyDetectionModel.DeserializeAnomalyDetectionModel(e), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         /// <summary>

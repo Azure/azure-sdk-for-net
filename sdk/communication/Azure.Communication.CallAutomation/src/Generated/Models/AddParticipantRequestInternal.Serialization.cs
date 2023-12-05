@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class AddParticipantRequestInternal : IUtf8JsonSerializable
+    internal partial class AddParticipantRequestInternal : IUtf8JsonSerializable, IJsonModel<AddParticipantRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddParticipantRequestInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AddParticipantRequestInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AddParticipantRequestInternal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceCallerIdNumber))
             {
@@ -47,7 +60,140 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AddParticipantRequestInternal IJsonModel<AddParticipantRequestInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AddParticipantRequestInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddParticipantRequestInternal(document.RootElement, options);
+        }
+
+        internal static AddParticipantRequestInternal DeserializeAddParticipantRequestInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
+            Optional<string> sourceDisplayName = default;
+            CommunicationIdentifierModel participantToAdd = default;
+            Optional<int> invitationTimeoutInSeconds = default;
+            Optional<string> operationContext = default;
+            Optional<CustomCallingContextInternal> customCallingContext = default;
+            Optional<string> operationCallbackUri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceCallerIdNumber"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceCallerIdNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sourceDisplayName"u8))
+                {
+                    sourceDisplayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("participantToAdd"u8))
+                {
+                    participantToAdd = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("invitationTimeoutInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invitationTimeoutInSeconds = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("customCallingContext"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customCallingContext = CustomCallingContextInternal.DeserializeCustomCallingContextInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("operationCallbackUri"u8))
+                {
+                    operationCallbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AddParticipantRequestInternal(sourceCallerIdNumber.Value, sourceDisplayName.Value, participantToAdd, Optional.ToNullable(invitationTimeoutInSeconds), operationContext.Value, customCallingContext.Value, operationCallbackUri.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AddParticipantRequestInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AddParticipantRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AddParticipantRequestInternal IPersistableModel<AddParticipantRequestInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantRequestInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAddParticipantRequestInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AddParticipantRequestInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AddParticipantRequestInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

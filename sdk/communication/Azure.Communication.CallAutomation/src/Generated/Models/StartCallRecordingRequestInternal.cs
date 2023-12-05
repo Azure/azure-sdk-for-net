@@ -15,6 +15,38 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload start for call recording operation with call locator. </summary>
     internal partial class StartCallRecordingRequestInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
@@ -47,7 +79,8 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="externalStorage"> Optional property to specify location where recording will be stored. </param>
         /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which could be resumed. </param>
-        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, ExternalStorageInternal externalStorage, bool? pauseOnStart)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, ExternalStorageInternal externalStorage, bool? pauseOnStart, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CallLocator = callLocator;
             RecordingStateCallbackUri = recordingStateCallbackUri;
@@ -58,6 +91,12 @@ namespace Azure.Communication.CallAutomation
             ChannelAffinity = channelAffinity;
             ExternalStorage = externalStorage;
             PauseOnStart = pauseOnStart;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/> for deserialization. </summary>
+        internal StartCallRecordingRequestInternal()
+        {
         }
 
         /// <summary> The call locator. </summary>

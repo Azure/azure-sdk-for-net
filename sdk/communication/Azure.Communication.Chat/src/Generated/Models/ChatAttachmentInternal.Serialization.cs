@@ -6,15 +6,80 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatAttachmentInternal
+    internal partial class ChatAttachmentInternal : IUtf8JsonSerializable, IJsonModel<ChatAttachmentInternal>
     {
-        internal static ChatAttachmentInternal DeserializeChatAttachmentInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatAttachmentInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ChatAttachmentInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatAttachmentInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ChatAttachmentInternal)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("attachmentType"u8);
+            writer.WriteStringValue(AttachmentType.ToString());
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url.AbsoluteUri);
+            }
+            if (Optional.IsDefined(PreviewUrl))
+            {
+                writer.WritePropertyName("previewUrl"u8);
+                writer.WriteStringValue(PreviewUrl.AbsoluteUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ChatAttachmentInternal IJsonModel<ChatAttachmentInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatAttachmentInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ChatAttachmentInternal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatAttachmentInternal(document.RootElement, options);
+        }
+
+        internal static ChatAttachmentInternal DeserializeChatAttachmentInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +89,8 @@ namespace Azure.Communication.Chat
             Optional<string> name = default;
             Optional<Uri> url = default;
             Optional<Uri> previewUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,8 +126,44 @@ namespace Azure.Communication.Chat
                     previewUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ChatAttachmentInternal(id, attachmentType, name.Value, url.Value, previewUrl.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ChatAttachmentInternal(id, attachmentType, name.Value, url.Value, previewUrl.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ChatAttachmentInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatAttachmentInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ChatAttachmentInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ChatAttachmentInternal IPersistableModel<ChatAttachmentInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatAttachmentInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeChatAttachmentInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ChatAttachmentInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ChatAttachmentInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

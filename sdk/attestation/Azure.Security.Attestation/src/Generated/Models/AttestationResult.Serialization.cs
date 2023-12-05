@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,223 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(AttestationResultConverter))]
-    public partial class AttestationResult
+    public partial class AttestationResult : IUtf8JsonSerializable, IJsonModel<AttestationResult>
     {
-        internal static AttestationResult DeserializeAttestationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AttestationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AttestationResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(InternalJti))
+            {
+                writer.WritePropertyName("jti"u8);
+                writer.WriteStringValue(InternalJti);
+            }
+            if (Optional.IsDefined(InternalIss))
+            {
+                writer.WritePropertyName("iss"u8);
+                writer.WriteStringValue(InternalIss);
+            }
+            if (Optional.IsDefined(InternalIat))
+            {
+                writer.WritePropertyName("iat"u8);
+                writer.WriteNumberValue(InternalIat.Value);
+            }
+            if (Optional.IsDefined(InternalExp))
+            {
+                writer.WritePropertyName("exp"u8);
+                writer.WriteNumberValue(InternalExp.Value);
+            }
+            if (Optional.IsDefined(InternalNbf))
+            {
+                writer.WritePropertyName("nbf"u8);
+                writer.WriteNumberValue(InternalNbf.Value);
+            }
+            if (Optional.IsDefined(InternalCnf))
+            {
+                writer.WritePropertyName("cnf"u8);
+                writer.WriteObjectValue(InternalCnf);
+            }
+            if (Optional.IsDefined(Nonce))
+            {
+                writer.WritePropertyName("nonce"u8);
+                writer.WriteStringValue(Nonce);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("x-ms-ver"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(RuntimeClaims))
+            {
+                writer.WritePropertyName("x-ms-runtime"u8);
+                writer.WriteObjectValue(RuntimeClaims);
+            }
+            if (Optional.IsDefined(InittimeClaims))
+            {
+                writer.WritePropertyName("x-ms-inittime"u8);
+                writer.WriteObjectValue(InittimeClaims);
+            }
+            if (Optional.IsDefined(PolicyClaims))
+            {
+                writer.WritePropertyName("x-ms-policy"u8);
+                writer.WriteObjectValue(PolicyClaims);
+            }
+            if (Optional.IsDefined(VerifierType))
+            {
+                writer.WritePropertyName("x-ms-attestation-type"u8);
+                writer.WriteStringValue(VerifierType);
+            }
+            if (Optional.IsDefined(InternalPolicySigner))
+            {
+                writer.WritePropertyName("x-ms-policy-signer"u8);
+                writer.WriteObjectValue(InternalPolicySigner);
+            }
+            if (Optional.IsDefined(InternalPolicyHash))
+            {
+                writer.WritePropertyName("x-ms-policy-hash"u8);
+                writer.WriteStringValue(InternalPolicyHash);
+            }
+            if (Optional.IsDefined(IsDebuggable))
+            {
+                writer.WritePropertyName("x-ms-sgx-is-debuggable"u8);
+                writer.WriteBooleanValue(IsDebuggable.Value);
+            }
+            if (Optional.IsDefined(ProductId))
+            {
+                writer.WritePropertyName("x-ms-sgx-product-id"u8);
+                writer.WriteNumberValue(ProductId.Value);
+            }
+            if (Optional.IsDefined(MrEnclave))
+            {
+                writer.WritePropertyName("x-ms-sgx-mrenclave"u8);
+                writer.WriteStringValue(MrEnclave);
+            }
+            if (Optional.IsDefined(MrSigner))
+            {
+                writer.WritePropertyName("x-ms-sgx-mrsigner"u8);
+                writer.WriteStringValue(MrSigner);
+            }
+            if (Optional.IsDefined(Svn))
+            {
+                writer.WritePropertyName("x-ms-sgx-svn"u8);
+                writer.WriteNumberValue(Svn.Value);
+            }
+            if (Optional.IsDefined(InternalEnclaveHeldData))
+            {
+                writer.WritePropertyName("x-ms-sgx-ehd"u8);
+                writer.WriteStringValue(InternalEnclaveHeldData);
+            }
+            if (Optional.IsDefined(SgxCollateral))
+            {
+                writer.WritePropertyName("x-ms-sgx-collateral"u8);
+                writer.WriteObjectValue(SgxCollateral);
+            }
+            if (Optional.IsDefined(InternalDeprecatedVersion))
+            {
+                writer.WritePropertyName("ver"u8);
+                writer.WriteStringValue(InternalDeprecatedVersion);
+            }
+            if (Optional.IsDefined(InternalDeprecatedIsDebuggable))
+            {
+                writer.WritePropertyName("is-debuggable"u8);
+                writer.WriteBooleanValue(InternalDeprecatedIsDebuggable.Value);
+            }
+            if (Optional.IsDefined(InternalDeprecatedSgxCollateral))
+            {
+                writer.WritePropertyName("maa-attestationcollateral"u8);
+                writer.WriteObjectValue(InternalDeprecatedSgxCollateral);
+            }
+            if (Optional.IsDefined(InternalDeprecatedEnclaveHeldData))
+            {
+                writer.WritePropertyName("aas-ehd"u8);
+                writer.WriteStringValue(InternalDeprecatedEnclaveHeldData);
+            }
+            if (Optional.IsDefined(InternalDeprecatedEnclaveHeldData2))
+            {
+                writer.WritePropertyName("maa-ehd"u8);
+                writer.WriteStringValue(InternalDeprecatedEnclaveHeldData2);
+            }
+            if (Optional.IsDefined(InternalDeprecatedProductId))
+            {
+                writer.WritePropertyName("product-id"u8);
+                writer.WriteNumberValue(InternalDeprecatedProductId.Value);
+            }
+            if (Optional.IsDefined(InternalDeprecatedMrEnclave))
+            {
+                writer.WritePropertyName("sgx-mrenclave"u8);
+                writer.WriteStringValue(InternalDeprecatedMrEnclave);
+            }
+            if (Optional.IsDefined(InternalDeprecatedMrSigner))
+            {
+                writer.WritePropertyName("sgx-mrsigner"u8);
+                writer.WriteStringValue(InternalDeprecatedMrSigner);
+            }
+            if (Optional.IsDefined(InternalDeprecatedSvn))
+            {
+                writer.WritePropertyName("svn"u8);
+                writer.WriteNumberValue(InternalDeprecatedSvn.Value);
+            }
+            if (Optional.IsDefined(InternalDeprecatedTee))
+            {
+                writer.WritePropertyName("tee"u8);
+                writer.WriteStringValue(InternalDeprecatedTee);
+            }
+            if (Optional.IsDefined(InternalDeprecatedPolicySigner))
+            {
+                writer.WritePropertyName("policy_signer"u8);
+                writer.WriteObjectValue(InternalDeprecatedPolicySigner);
+            }
+            if (Optional.IsDefined(InternalDeprecatedPolicyHash))
+            {
+                writer.WritePropertyName("policy_hash"u8);
+                writer.WriteStringValue(InternalDeprecatedPolicyHash);
+            }
+            if (Optional.IsDefined(InternalDeprecatedRpData))
+            {
+                writer.WritePropertyName("rp_data"u8);
+                writer.WriteStringValue(InternalDeprecatedRpData);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AttestationResult IJsonModel<AttestationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AttestationResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAttestationResult(document.RootElement, options);
+        }
+
+        internal static AttestationResult DeserializeAttestationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +271,8 @@ namespace Azure.Security.Attestation
             Optional<JsonWebKey> policySigner = default;
             Optional<string> policyHash = default;
             Optional<string> rpData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jti"u8))
@@ -295,15 +513,51 @@ namespace Azure.Security.Attestation
                     rpData = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AttestationResult(jti.Value, iss.Value, Optional.ToNullable(iat), Optional.ToNullable(exp), Optional.ToNullable(nbf), cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AttestationResult(jti.Value, iss.Value, Optional.ToNullable(iat), Optional.ToNullable(exp), Optional.ToNullable(nbf), cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AttestationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AttestationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AttestationResult IPersistableModel<AttestationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAttestationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AttestationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AttestationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AttestationResultConverter : JsonConverter<AttestationResult>
         {
             public override void Write(Utf8JsonWriter writer, AttestationResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AttestationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

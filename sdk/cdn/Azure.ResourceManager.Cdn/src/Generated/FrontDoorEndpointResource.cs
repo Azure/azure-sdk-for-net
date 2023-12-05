@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FrontDoorUsage.DeserializeFrontDoorUsage, _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FrontDoorUsage.DeserializeFrontDoorUsage, _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

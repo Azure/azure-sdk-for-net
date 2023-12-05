@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Parameters to query a knowledge base. </summary>
     public partial class AnswersOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AnswersOptions"/>. </summary>
         public AnswersOptions()
         {
@@ -26,7 +61,8 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="filters"> Filter QnAs based on given metadata list and knowledge base sources. </param>
         /// <param name="shortAnswerOptions"> To configure Answer span prediction feature. </param>
         /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
-        internal AnswersOptions(int? qnaId, string question, int? size, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerOptions shortAnswerOptions, bool? includeUnstructuredSources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnswersOptions(int? qnaId, string question, int? size, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerOptions shortAnswerOptions, bool? includeUnstructuredSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QnaId = qnaId;
             Question = question;
@@ -38,6 +74,7 @@ namespace Azure.AI.Language.QuestionAnswering
             Filters = filters;
             ShortAnswerOptions = shortAnswerOptions;
             IncludeUnstructuredSources = includeUnstructuredSources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Unique identifier for the user. </summary>
         public string UserId { get; set; }

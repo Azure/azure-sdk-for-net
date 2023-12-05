@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> A Microsoft Azure Attestation response token body - the body of a response token issued by MAA. </summary>
     public partial class AttestationResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AttestationResult"/>. </summary>
         /// <param name="internalJti"> Unique Identifier for the token. </param>
         /// <param name="internalIss"> The Principal who issued the token. </param>
@@ -45,7 +80,8 @@ namespace Azure.Security.Attestation
         /// <param name="internalDeprecatedPolicySigner"> DEPRECATED: Private Preview version of x-ms-policy-signer. </param>
         /// <param name="internalDeprecatedPolicyHash"> DEPRECATED: Private Preview version of x-ms-policy-hash. </param>
         /// <param name="internalDeprecatedRpData"> DEPRECATED: Private Preview version of nonce. </param>
-        internal AttestationResult(string internalJti, string internalIss, double? internalIat, double? internalExp, double? internalNbf, object internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, JsonWebKey internalPolicySigner, string internalPolicyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, string internalEnclaveHeldData, object sgxCollateral, string internalDeprecatedVersion, bool? internalDeprecatedIsDebuggable, object internalDeprecatedSgxCollateral, string internalDeprecatedEnclaveHeldData, string internalDeprecatedEnclaveHeldData2, float? internalDeprecatedProductId, string internalDeprecatedMrEnclave, string internalDeprecatedMrSigner, float? internalDeprecatedSvn, string internalDeprecatedTee, JsonWebKey internalDeprecatedPolicySigner, string internalDeprecatedPolicyHash, string internalDeprecatedRpData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationResult(string internalJti, string internalIss, double? internalIat, double? internalExp, double? internalNbf, object internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, JsonWebKey internalPolicySigner, string internalPolicyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, string internalEnclaveHeldData, object sgxCollateral, string internalDeprecatedVersion, bool? internalDeprecatedIsDebuggable, object internalDeprecatedSgxCollateral, string internalDeprecatedEnclaveHeldData, string internalDeprecatedEnclaveHeldData2, float? internalDeprecatedProductId, string internalDeprecatedMrEnclave, string internalDeprecatedMrSigner, float? internalDeprecatedSvn, string internalDeprecatedTee, JsonWebKey internalDeprecatedPolicySigner, string internalDeprecatedPolicyHash, string internalDeprecatedRpData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InternalJti = internalJti;
             InternalIss = internalIss;
@@ -81,6 +117,7 @@ namespace Azure.Security.Attestation
             InternalDeprecatedPolicySigner = internalDeprecatedPolicySigner;
             InternalDeprecatedPolicyHash = internalDeprecatedPolicyHash;
             InternalDeprecatedRpData = internalDeprecatedRpData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The Nonce input to the attestation request, if provided. </summary>
         public string Nonce { get; }
