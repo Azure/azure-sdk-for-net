@@ -19,9 +19,55 @@ public partial class HttpClientPipelineTransport
     {
         private const string AuthorizationHeaderName = "Authorization";
 
+        private string _method;
+        private Uri? _uri;
+        private InputContent? _content;
+
+        private readonly PipelineRequestHeaders _headers;
+
+        private bool _disposed;
+
         protected internal HttpPipelineRequest()
         {
+            _method = HttpMethod.Get.Method;
+            _headers = new PipelineRequestHeaders();
         }
+
+        protected override string GetMethodCore()
+            => _method;
+
+        protected override void SetMethodCore(string method)
+        {
+            ClientUtilities.AssertNotNull(method, nameof(method));
+
+            _method = method;
+        }
+
+        protected override Uri GetUriCore()
+        {
+            if (_uri is null)
+            {
+                throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
+            }
+
+            return _uri;
+        }
+
+        protected override void SetUriCore(Uri uri)
+        {
+            ClientUtilities.AssertNotNull(uri, nameof(uri));
+
+            _uri = uri;
+        }
+
+        protected override InputContent? GetContentCore()
+            => _content;
+
+        protected override void SetContentCore(InputContent? content)
+            => _content = content;
+
+        protected override MessageHeaders GetHeadersCore()
+            => _headers;
 
         // PATCH value needed for compat with pre-net5.0 TFMs
         private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
@@ -111,14 +157,36 @@ public partial class HttpClientPipelineTransport
                 => _content.TryComputeLength(out length);
 
 #if NET5_0_OR_GREATER
-        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-            => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+                => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
-        protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-            => _content.WriteTo(stream, cancellationToken);
+            protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+                => _content.WriteTo(stream, cancellationToken);
 #endif
         }
 
         public override string ToString() => BuildHttpRequestMessage(this, default).ToString();
+
+        public sealed override void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                var content = _content;
+                if (content != null)
+                {
+                    _content = null;
+                    content.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
     }
 }

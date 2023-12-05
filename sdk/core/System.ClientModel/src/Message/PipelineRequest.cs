@@ -5,56 +5,42 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelineRequest : IDisposable
 {
-    private string _method;
-    private Uri? _uri;
-
-    private readonly PipelineRequestHeaders _headers;
-
-    protected PipelineRequest()
-    {
-        _method = "GET";
-        _headers = new PipelineRequestHeaders();
-    }
-
     /// <summary>
     /// Gets or sets the request HTTP method.
     /// </summary>
     public string Method
     {
-        get => _method;
-        set => _method = value;
+        get => GetMethodCore();
+        set => SetMethodCore(value);
     }
+
+    protected abstract string GetMethodCore();
+
+    protected abstract void SetMethodCore(string method);
 
     public Uri Uri
     {
         get => GetUriCore();
-
-        set => _uri = value;
+        set => SetUriCore(value);
     }
 
-    protected virtual Uri GetUriCore()
+    protected abstract Uri GetUriCore();
+
+    protected abstract void SetUriCore(Uri uri);
+
+    public MessageHeaders Headers { get => GetHeadersCore(); }
+
+    protected abstract MessageHeaders GetHeadersCore();
+
+    public InputContent? Content
     {
-        if (_uri is null)
-        {
-            throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
-        }
-
-        return _uri;
+        get => GetContentCore();
+        set => SetContentCore(value);
     }
 
-    public InputContent? Content { get; set; }
+    protected abstract InputContent? GetContentCore();
 
-    public MessageHeaders Headers => _headers;
+    protected abstract void SetContentCore(InputContent? content);
 
-    public virtual void Dispose()
-    {
-        var content = Content;
-        if (content != null)
-        {
-            Content = null;
-            content.Dispose();
-        }
-
-        GC.SuppressFinalize(this);
-    }
+    public abstract void Dispose();
 }
