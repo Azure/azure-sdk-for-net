@@ -167,7 +167,9 @@ function Finish-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDir
     Write-Host "`" to push the results as a new tag."
 }
 
-function Resolve-Target-Tags($AssetsJson, $TargetTags) {
+function Resolve-Target-Tags($AssetsJson, $TargetTags, $MountDirectory) {
+    $inprogress = Load-Incomplete-Progress $MountDirectory
+
     $jsonContent = Get-Content -Raw -Path $AssetsJson
     $jsonObj = $JsonContent | ConvertFrom-Json
 
@@ -175,9 +177,14 @@ function Resolve-Target-Tags($AssetsJson, $TargetTags) {
 
     return $TargetTags | Where-Object {
         if ($_ -eq $existingTarget) {
-            Write-Host "Excluding tag $($_) due from tag list, it is present in assets.json."
+            Write-Host "Excluding tag $($_) from tag input list, it is present in assets.json."
         }
         $_ -ne $existingTarget
+    } | Where-Object {
+        if ($_ -in $inprogress) {
+            Write-Host "Excluding tag $($_) because we have already done work against it in a previous script invocation."
+        }
+        $_ -notin $inprogress
     }
 }
 
@@ -224,10 +231,8 @@ function Prepare-Assets($ProxyExe, $MountDirectory, $AssetsJson) {
 function CombineTags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
     foreach($Tag in $RemainingTags){
         $tagSha = Get-Tag-SHA $Tag $AssetsRepoLocation
-        
-        $cherryPickOut = Git-Command "cherry-pick $tagSha" $AssetsRepoLocation
-
         Save-Incomplete-Progress $Tag $MountDirectory
+        $cherryPickOut = Git-Command "cherry-pick $tagSha" $AssetsRepoLocation
     }
     
     # todo: if we managed to get here without any errors, we need to touch a file that all the cherry-picked commits will push up so that test-proxy push
@@ -255,7 +260,7 @@ $assetsRepoLocation = Locate-Assets-Slice $proxyExe $AssetsJson $mountDirectory
 
 # resolve the tags that we will go after. If the target assets.json contains one of these tags, that tag is _already present_
 # because the entire point of this script is to run in context of a set of recordings in the repo
-$tags = Resolve-Target-Tags $AssetsJson $TargetTags
+$tags = Resolve-Target-Tags $AssetsJson $TargetTags $mountDirectory
 
 Start-Message $AssetsJson $Tags $AssetsRepoLocation $mountDirectory
 
