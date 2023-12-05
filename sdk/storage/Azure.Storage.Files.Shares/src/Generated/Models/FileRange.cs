@@ -10,7 +10,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> An Azure Storage file range. </summary>
     internal partial class FileRange
     {
-        /// <summary> Initializes a new instance of FileRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileRange"/>. </summary>
         /// <param name="start"> Start of the range. </param>
         /// <param name="end"> End of the range. </param>
         internal FileRange(long start, long end)

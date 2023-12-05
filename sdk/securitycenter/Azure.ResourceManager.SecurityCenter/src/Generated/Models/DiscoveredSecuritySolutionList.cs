@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The DiscoveredSecuritySolutionList. </summary>
     internal partial class DiscoveredSecuritySolutionList
     {
-        /// <summary> Initializes a new instance of DiscoveredSecuritySolutionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolutionList"/>. </summary>
         internal DiscoveredSecuritySolutionList()
         {
             Value = new ChangeTrackingList<DiscoveredSecuritySolution>();
         }
 
-        /// <summary> Initializes a new instance of DiscoveredSecuritySolutionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolutionList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal DiscoveredSecuritySolutionList(IReadOnlyList<DiscoveredSecuritySolution> value, string nextLink)

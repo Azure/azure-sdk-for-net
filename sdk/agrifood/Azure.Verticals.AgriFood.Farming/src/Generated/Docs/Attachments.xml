@@ -5,8 +5,9 @@
       <example>
 This sample shows how to call GetAttachmentAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", null);
 
@@ -15,8 +16,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetAttachmentAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", null);
 
@@ -41,8 +43,9 @@ Console.WriteLine(result.GetProperty("eTag").ToString());
       <example>
 This sample shows how to call GetAttachment and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetAttachment("<partyId>", "<attachmentId>", null);
 
@@ -51,8 +54,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetAttachment with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetAttachment("<partyId>", "<attachmentId>", null);
 
@@ -77,8 +81,9 @@ Console.WriteLine(result.GetProperty("eTag").ToString());
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = null;
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
@@ -88,8 +93,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
@@ -115,8 +121,9 @@ Console.WriteLine(result.GetProperty("eTag").ToString());
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = null;
 Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
@@ -126,8 +133,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
@@ -153,8 +161,9 @@ Console.WriteLine(result.GetProperty("eTag").ToString());
       <example>
 This sample shows how to call DeleteAsync.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
 
@@ -162,8 +171,9 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
 
@@ -174,8 +184,9 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Delete.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<attachmentId>");
 
@@ -183,8 +194,9 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<attachmentId>");
 
@@ -195,8 +207,9 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DownloadAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", null);
 
@@ -208,8 +221,9 @@ if (response.ContentStream != null)
 ]]></code>
 This sample shows how to call DownloadAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", null);
 
@@ -224,8 +238,9 @@ if (response.ContentStream != null)
       <example>
 This sample shows how to call Download and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Download("<partyId>", "<attachmentId>", null);
 
@@ -237,8 +252,9 @@ if (response.ContentStream != null)
 ]]></code>
 This sample shows how to call Download with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Download("<partyId>", "<attachmentId>", null);
 
@@ -253,8 +269,9 @@ if (response.ContentStream != null)
       <example>
 This sample shows how to call GetAttachmentsByPartyIdAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetAttachmentsByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -264,8 +281,9 @@ await foreach (BinaryData item in client.GetAttachmentsByPartyIdAsync("<partyId>
 ]]></code>
 This sample shows how to call GetAttachmentsByPartyIdAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetAttachmentsByPartyIdAsync("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -291,8 +309,9 @@ await foreach (BinaryData item in client.GetAttachmentsByPartyIdAsync("<partyId>
       <example>
 This sample shows how to call GetAttachmentsByPartyId and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetAttachmentsByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -302,8 +321,9 @@ foreach (BinaryData item in client.GetAttachmentsByPartyId("<partyId>", null, nu
 ]]></code>
 This sample shows how to call GetAttachmentsByPartyId with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetAttachmentsByPartyId("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {

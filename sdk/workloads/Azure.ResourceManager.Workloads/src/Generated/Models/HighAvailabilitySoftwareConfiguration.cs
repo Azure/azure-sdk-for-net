@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the HA software configuration. </summary>
     public partial class HighAvailabilitySoftwareConfiguration
     {
-        /// <summary> Initializes a new instance of HighAvailabilitySoftwareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HighAvailabilitySoftwareConfiguration"/>. </summary>
         /// <param name="fencingClientId"> The fencing client id. </param>
         /// <param name="fencingClientPassword"> The fencing client id secret/password. The secret should never expire. This will be used pacemaker to start/stop the cluster VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fencingClientId"/> or <paramref name="fencingClientPassword"/> is null. </exception>

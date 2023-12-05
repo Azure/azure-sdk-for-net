@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Quota
         private readonly UsagesRestOperations _currentUsagesBaseUsagesRestClient;
         private readonly CurrentUsagesBaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Quota/usages";
+
         /// <summary> Initializes a new instance of the <see cref="CurrentUsagesBaseResource"/> class for mocking. </summary>
         protected CurrentUsagesBaseResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Quota
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Quota/usages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

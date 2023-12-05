@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MySql
         private readonly WaitStatisticsRestOperations _mySqlWaitStatisticWaitStatisticsRestClient;
         private readonly MySqlWaitStatisticData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/waitStatistics";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlWaitStatisticResource"/> class for mocking. </summary>
         protected MySqlWaitStatisticResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/waitStatistics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

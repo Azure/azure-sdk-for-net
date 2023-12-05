@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Information protection policies response. </summary>
     internal partial class InformationProtectionPolicyList
     {
-        /// <summary> Initializes a new instance of InformationProtectionPolicyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicyList"/>. </summary>
         internal InformationProtectionPolicyList()
         {
             Value = new ChangeTrackingList<InformationProtectionPolicy>();
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionPolicyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicyList"/>. </summary>
         /// <param name="value"> List of information protection policies. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal InformationProtectionPolicyList(IReadOnlyList<InformationProtectionPolicy> value, string nextLink)

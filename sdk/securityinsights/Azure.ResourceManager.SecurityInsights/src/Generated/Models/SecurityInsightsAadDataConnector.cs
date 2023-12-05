@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents AAD (Azure Active Directory) data connector. </summary>
     public partial class SecurityInsightsAadDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAadDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAadDataConnector"/>. </summary>
         public SecurityInsightsAadDataConnector()
         {
             Kind = DataConnectorKind.AzureActiveDirectory;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAadDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAadDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

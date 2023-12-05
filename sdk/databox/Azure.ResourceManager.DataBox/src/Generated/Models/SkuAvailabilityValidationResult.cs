@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Properties of sku availability validation response. </summary>
     public partial class SkuAvailabilityValidationResult : DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of SkuAvailabilityValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuAvailabilityValidationResult"/>. </summary>
         internal SkuAvailabilityValidationResult()
         {
             ValidationType = DataBoxValidationInputDiscriminator.ValidateSkuAvailability;
         }
 
-        /// <summary> Initializes a new instance of SkuAvailabilityValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuAvailabilityValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Sku availability validation status. </param>

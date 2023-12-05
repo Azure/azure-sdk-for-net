@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Windows Azure Search Service. </summary>
     public partial class AzureSearchLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureSearchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedService"/>. </summary>
         /// <param name="uri"> URL for Azure Search service. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public AzureSearchLinkedService(DataFactoryElement<string> uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AzureSearch";
         }
 
-        /// <summary> Initializes a new instance of AzureSearchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

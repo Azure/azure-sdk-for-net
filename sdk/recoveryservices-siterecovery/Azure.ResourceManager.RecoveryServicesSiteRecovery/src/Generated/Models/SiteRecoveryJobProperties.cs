@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Job custom data details. </summary>
     public partial class SiteRecoveryJobProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobProperties"/>. </summary>
         internal SiteRecoveryJobProperties()
         {
             Tasks = new ChangeTrackingList<AsrTask>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AllowedActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobProperties"/>. </summary>
         /// <param name="activityId"> The activity id. </param>
         /// <param name="scenarioName"> The ScenarioName. </param>
         /// <param name="friendlyName"> The DisplayName. </param>

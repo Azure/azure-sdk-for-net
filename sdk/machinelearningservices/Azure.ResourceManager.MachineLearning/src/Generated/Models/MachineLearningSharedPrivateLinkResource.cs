@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningSharedPrivateLinkResource. </summary>
     public partial class MachineLearningSharedPrivateLinkResource
     {
-        /// <summary> Initializes a new instance of MachineLearningSharedPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSharedPrivateLinkResource"/>. </summary>
         public MachineLearningSharedPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSharedPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSharedPrivateLinkResource"/>. </summary>
         /// <param name="name"> Unique name of the private link. </param>
         /// <param name="groupId"> group id of the private link. </param>
         /// <param name="privateLinkResourceId"> the resource id that private link links to. </param>

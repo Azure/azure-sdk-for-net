@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters for a check name availability request. </summary>
     public partial class BatchNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of BatchNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public BatchNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Batch.Models
 
             Name = name;
             ResourceType = "Microsoft.Batch/batchAccounts";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name to check for availability. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        internal BatchNameAvailabilityContent(string name, ResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> The name to check for availability. </summary>

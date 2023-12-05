@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Url data for creating or accessing a blob file. </summary>
     public partial class UriToken
     {
-        /// <summary> Initializes a new instance of UriToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriToken"/>. </summary>
         internal UriToken()
         {
         }
 
-        /// <summary> Initializes a new instance of UriToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriToken"/>. </summary>
         /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
         /// <param name="uploadUri"> SAS URL for file uploading. Kept for backwards compatibility. </param>
         internal UriToken(Uri uri, Uri uploadUri)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of alerts. </summary>
     internal partial class CostManagementAlertsResult
     {
-        /// <summary> Initializes a new instance of CostManagementAlertsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertsResult"/>. </summary>
         internal CostManagementAlertsResult()
         {
             Value = new ChangeTrackingList<CostManagementAlertData>();
         }
 
-        /// <summary> Initializes a new instance of CostManagementAlertsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertsResult"/>. </summary>
         /// <param name="value"> List of alerts. </param>
         /// <param name="nextLink"> URL to get the next set of alerts results if there are any. </param>
         internal CostManagementAlertsResult(IReadOnlyList<CostManagementAlertData> value, string nextLink)

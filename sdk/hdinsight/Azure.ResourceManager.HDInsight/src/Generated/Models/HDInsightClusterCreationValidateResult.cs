@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The response of cluster create request validation. </summary>
     public partial class HDInsightClusterCreationValidateResult
     {
-        /// <summary> Initializes a new instance of HDInsightClusterCreationValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreationValidateResult"/>. </summary>
         internal HDInsightClusterCreationValidateResult()
         {
             ValidationErrors = new ChangeTrackingList<HDInsightClusterValidationErrorInfo>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             AaddsResourcesDetails = new ChangeTrackingList<HDInsightClusterAaddsDetail>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterCreationValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreationValidateResult"/>. </summary>
         /// <param name="validationErrors"> The validation errors. </param>
         /// <param name="validationWarnings"> The validation warnings. </param>
         /// <param name="estimatedCreationDuration"> The estimated creation duration. </param>

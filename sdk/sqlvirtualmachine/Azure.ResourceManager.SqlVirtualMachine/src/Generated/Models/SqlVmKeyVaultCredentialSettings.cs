@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Configure your SQL virtual machine to be able to connect to the Azure Key Vault service. </summary>
     public partial class SqlVmKeyVaultCredentialSettings
     {
-        /// <summary> Initializes a new instance of SqlVmKeyVaultCredentialSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmKeyVaultCredentialSettings"/>. </summary>
         public SqlVmKeyVaultCredentialSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmKeyVaultCredentialSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmKeyVaultCredentialSettings"/>. </summary>
         /// <param name="isEnabled"> Enable or disable key vault credential setting. </param>
         /// <param name="credentialName"> Credential name. </param>
         /// <param name="azureKeyVaultUri"> Azure Key Vault url. </param>

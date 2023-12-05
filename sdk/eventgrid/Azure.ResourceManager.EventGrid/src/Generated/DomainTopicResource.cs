@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly DomainTopicsRestOperations _domainTopicRestClient;
         private readonly DomainTopicData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/topics";
+
         /// <summary> Initializes a new instance of the <see cref="DomainTopicResource"/> class for mocking. </summary>
         protected DomainTopicResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/topics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

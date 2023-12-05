@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Connection information for encrypting the on-premises data source credentials. </summary>
     public partial class SynapseIntegrationRuntimeConnectionInfo
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeConnectionInfo"/>. </summary>
         internal SynapseIntegrationRuntimeConnectionInfo()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeConnectionInfo"/>. </summary>
         /// <param name="serviceToken"> The token generated in service. Callers use this token to authenticate to integration runtime. </param>
         /// <param name="identityCertThumbprint"> The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation. </param>
         /// <param name="hostServiceUri"> The on-premises integration runtime host URL. </param>

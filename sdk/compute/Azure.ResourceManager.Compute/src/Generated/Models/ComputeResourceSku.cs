@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an available Compute SKU. </summary>
     public partial class ComputeResourceSku
     {
-        /// <summary> Initializes a new instance of ComputeResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSku"/>. </summary>
         internal ComputeResourceSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
             Restrictions = new ChangeTrackingList<ComputeResourceSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of ComputeResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Spring Cloud Gateway custom domain resources and a possible link for next set. </summary>
     internal partial class GatewayCustomDomainResourceList
     {
-        /// <summary> Initializes a new instance of GatewayCustomDomainResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomDomainResourceList"/>. </summary>
         internal GatewayCustomDomainResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformGatewayCustomDomainData>();
         }
 
-        /// <summary> Initializes a new instance of GatewayCustomDomainResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomDomainResourceList"/>. </summary>
         /// <param name="value"> Collection of Spring Cloud Gateway custom domain resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

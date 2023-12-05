@@ -12,12 +12,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessPolicyInitiatePort. </summary>
     public partial class JitNetworkAccessPolicyInitiatePort
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyInitiatePort. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
         /// <param name="number"></param>
         /// <param name="endOn"> The time to close the request in UTC. </param>
         public JitNetworkAccessPolicyInitiatePort(int number, DateTimeOffset endOn)
         {
             Number = number;
+            EndOn = endOn;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
+        /// <param name="number"></param>
+        /// <param name="allowedSourceAddressPrefix"> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </param>
+        /// <param name="endOn"> The time to close the request in UTC. </param>
+        internal JitNetworkAccessPolicyInitiatePort(int number, string allowedSourceAddressPrefix, DateTimeOffset endOn)
+        {
+            Number = number;
+            AllowedSourceAddressPrefix = allowedSourceAddressPrefix;
             EndOn = endOn;
         }
 

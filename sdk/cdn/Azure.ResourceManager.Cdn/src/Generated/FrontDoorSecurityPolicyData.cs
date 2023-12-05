@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorSecurityPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorSecurityPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSecurityPolicyData"/>. </summary>
         public FrontDoorSecurityPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorSecurityPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSecurityPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

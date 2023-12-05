@@ -14,13 +14,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSDeliveryReportReceived event. </summary>
     public partial class AcsSmsDeliveryReportReceivedEventData : AcsSmsEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsSmsDeliveryReportReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
         internal AcsSmsDeliveryReportReceivedEventData()
         {
             DeliveryAttempts = new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>();
         }
 
-        /// <summary> Initializes a new instance of AcsSmsDeliveryReportReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>

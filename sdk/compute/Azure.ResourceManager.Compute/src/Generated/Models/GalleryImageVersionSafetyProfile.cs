@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the safety profile of the Gallery Image Version. </summary>
     public partial class GalleryImageVersionSafetyProfile : GalleryArtifactSafetyProfileBase
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionSafetyProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionSafetyProfile"/>. </summary>
         public GalleryImageVersionSafetyProfile()
         {
             PolicyViolations = new ChangeTrackingList<GalleryImageVersionPolicyViolation>();
         }
 
-        /// <summary> Initializes a new instance of GalleryImageVersionSafetyProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionSafetyProfile"/>. </summary>
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
         /// <param name="isReportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft's policies. </param>
         /// <param name="policyViolations"> A list of Policy Violations that have been reported for this Gallery Image Version. </param>

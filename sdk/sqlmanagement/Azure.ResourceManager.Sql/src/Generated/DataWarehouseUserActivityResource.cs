@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql
         private readonly DataWarehouseUserActivitiesRestOperations _dataWarehouseUserActivityRestClient;
         private readonly DataWarehouseUserActivityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/dataWarehouseUserActivities";
+
         /// <summary> Initializes a new instance of the <see cref="DataWarehouseUserActivityResource"/> class for mocking. </summary>
         protected DataWarehouseUserActivityResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/dataWarehouseUserActivities";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

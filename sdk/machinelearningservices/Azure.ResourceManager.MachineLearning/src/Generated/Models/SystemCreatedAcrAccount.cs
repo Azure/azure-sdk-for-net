@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The SystemCreatedAcrAccount. </summary>
     public partial class SystemCreatedAcrAccount
     {
-        /// <summary> Initializes a new instance of SystemCreatedAcrAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemCreatedAcrAccount"/>. </summary>
         public SystemCreatedAcrAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of SystemCreatedAcrAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemCreatedAcrAccount"/>. </summary>
         /// <param name="acrAccountName"> Name of the ACR account. </param>
         /// <param name="acrAccountSku"> SKU of the ACR account. </param>
         /// <param name="armResourceIdentifier"> This is populated once the ACR account is created. </param>

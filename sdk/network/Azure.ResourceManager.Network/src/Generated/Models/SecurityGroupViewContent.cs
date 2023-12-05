@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the VM to check security groups for. </summary>
     public partial class SecurityGroupViewContent
     {
-        /// <summary> Initializes a new instance of SecurityGroupViewContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityGroupViewContent"/>. </summary>
         /// <param name="targetResourceId"> ID of the target VM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public SecurityGroupViewContent(ResourceIdentifier targetResourceId)

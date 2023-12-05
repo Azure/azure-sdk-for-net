@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The api resource metadata. </summary>
     public partial class LogicApiResourceMetadata
     {
-        /// <summary> Initializes a new instance of LogicApiResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceMetadata"/>. </summary>
         internal LogicApiResourceMetadata()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceMetadata"/>. </summary>
         /// <param name="source"> The source. </param>
         /// <param name="brandColor"> The brand color. </param>
         /// <param name="hideKey"> The hide key. </param>

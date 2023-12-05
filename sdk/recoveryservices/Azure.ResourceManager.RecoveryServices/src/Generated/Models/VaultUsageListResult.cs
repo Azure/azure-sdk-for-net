@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Usage for vault. </summary>
     internal partial class VaultUsageListResult
     {
-        /// <summary> Initializes a new instance of VaultUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUsageListResult"/>. </summary>
         internal VaultUsageListResult()
         {
             Value = new ChangeTrackingList<VaultUsage>();
         }
 
-        /// <summary> Initializes a new instance of VaultUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUsageListResult"/>. </summary>
         /// <param name="value"> The list of usages for the given vault. </param>
         internal VaultUsageListResult(IReadOnlyList<VaultUsage> value)
         {

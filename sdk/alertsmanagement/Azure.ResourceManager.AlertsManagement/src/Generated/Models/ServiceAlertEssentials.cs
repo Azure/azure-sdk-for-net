@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> This object contains consistent fields across different monitor services. </summary>
     public partial class ServiceAlertEssentials
     {
-        /// <summary> Initializes a new instance of ServiceAlertEssentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertEssentials"/>. </summary>
         public ServiceAlertEssentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertEssentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertEssentials"/>. </summary>
         /// <param name="severity"> Severity of alert Sev0 being highest and Sev4 being lowest. </param>
         /// <param name="signalType"> The type of signal the alert is based on, which could be metrics, logs or activity logs. </param>
         /// <param name="alertState"> Alert object state, which can be modified by the user. </param>

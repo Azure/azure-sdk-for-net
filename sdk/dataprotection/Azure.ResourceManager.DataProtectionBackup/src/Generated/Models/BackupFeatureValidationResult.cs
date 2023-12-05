@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Feature Validation Response. </summary>
     public partial class BackupFeatureValidationResult : BackupFeatureValidationResultBase
     {
-        /// <summary> Initializes a new instance of BackupFeatureValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResult"/>. </summary>
         internal BackupFeatureValidationResult()
         {
             Features = new ChangeTrackingList<BackupSupportedFeature>();
             ObjectType = "FeatureValidationResponse";
         }
 
-        /// <summary> Initializes a new instance of BackupFeatureValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResult"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="featureType"> backup support feature type. </param>
         /// <param name="features"> Response features. </param>

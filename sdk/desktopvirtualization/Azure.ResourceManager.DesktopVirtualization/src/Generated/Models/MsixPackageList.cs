@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of MSIX Package definitions. </summary>
     internal partial class MsixPackageList
     {
-        /// <summary> Initializes a new instance of MsixPackageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageList"/>. </summary>
         internal MsixPackageList()
         {
             Value = new ChangeTrackingList<MsixPackageData>();
         }
 
-        /// <summary> Initializes a new instance of MsixPackageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageList"/>. </summary>
         /// <param name="value"> List of MSIX Package definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal MsixPackageList(IReadOnlyList<MsixPackageData> value, string nextLink)

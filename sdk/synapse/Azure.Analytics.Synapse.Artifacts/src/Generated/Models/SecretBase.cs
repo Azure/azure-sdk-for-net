@@ -14,12 +14,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class SecretBase
     {
-        /// <summary> Initializes a new instance of SecretBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBase"/>. </summary>
         public SecretBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBase"/>. </summary>
         /// <param name="type"> Type of the secret. </param>
         internal SecretBase(string type)
         {

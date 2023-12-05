@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Specifies the Security profile settings for the virtual machine. </summary>
     internal partial class SecurityProfile
     {
-        /// <summary> Initializes a new instance of SecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
         public SecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot used while creating the virtual machine. </param>
         internal SecurityProfile(UefiSettings uefiSettings)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> List of linked servers (with properties) of a Redis cache. </summary>
     internal partial class RedisLinkedServerWithPropertiesList
     {
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertiesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertiesList"/>. </summary>
         internal RedisLinkedServerWithPropertiesList()
         {
             Value = new ChangeTrackingList<RedisLinkedServerWithPropertyData>();
         }
 
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertiesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertiesList"/>. </summary>
         /// <param name="value"> List of linked servers (with properties) of a Redis cache. </param>
         /// <param name="nextLink"> Link for next set. </param>
         internal RedisLinkedServerWithPropertiesList(IReadOnlyList<RedisLinkedServerWithPropertyData> value, string nextLink)

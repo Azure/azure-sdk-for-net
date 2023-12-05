@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> An image response item that directly represents the image data as a base64-encoded string. </summary>
     internal partial class ImagePayload
     {
-        /// <summary> Initializes a new instance of ImagePayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImagePayload"/>. </summary>
         /// <param name="base64Data"> The complete data for an image represented as a base64-encoded string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="base64Data"/> is null. </exception>
         internal ImagePayload(string base64Data)

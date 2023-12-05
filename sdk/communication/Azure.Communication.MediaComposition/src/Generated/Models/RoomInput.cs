@@ -14,7 +14,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> A Room to be used as an input. </summary>
     public partial class RoomInput : MediaInput
     {
-        /// <summary> Initializes a new instance of RoomInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoomInput"/>. </summary>
         /// <param name="id"> Room identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public RoomInput(string id)
@@ -25,7 +25,7 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaInputType.Room;
         }
 
-        /// <summary> Initializes a new instance of RoomInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoomInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
         /// <param name="id"> Room identifier. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Operation. </summary>
     public partial class AuthorizationProviderOperationInfo
     {
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationInfo"/>. </summary>
         internal AuthorizationProviderOperationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationInfo"/>. </summary>
         /// <param name="name"> The operation name. </param>
         /// <param name="displayName"> The operation display name. </param>
         /// <param name="description"> The operation description. </param>

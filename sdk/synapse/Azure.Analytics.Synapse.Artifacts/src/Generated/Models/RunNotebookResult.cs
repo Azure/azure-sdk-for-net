@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Result of run notebook. </summary>
     public partial class RunNotebookResult
     {
-        /// <summary> Initializes a new instance of RunNotebookResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookResult"/>. </summary>
         internal RunNotebookResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RunNotebookResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookResult"/>. </summary>
         /// <param name="runId"> Run id. </param>
         /// <param name="runStatus"> Status of the run notebook. </param>
         /// <param name="lastCheckedOn"> Timestamp of last update. </param>

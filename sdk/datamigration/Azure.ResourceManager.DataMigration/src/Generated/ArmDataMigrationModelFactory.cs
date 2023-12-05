@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDataMigrationModelFactory
     {
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlDBData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DatabaseMigrationSqlDBData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseMigrationSqlDBData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlDBProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlDBProperties"/>. </summary>
         /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseMigrationSqlDBProperties(ResourceType.SqlDB, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, migrationStatusDetails, targetSqlConnection, offline != null ? new SqlDBOfflineConfiguration(offline) : null, tableList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlDBMigrationStatusDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDBMigrationStatusDetails"/>. </summary>
         /// <param name="migrationState"> Current State of Migration. </param>
         /// <param name="sqlDataCopyErrors"> Sql Data Copy errors, if any. </param>
         /// <param name="listOfCopyProgressDetails"> Details on progress of ADF copy activities. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SqlDBMigrationStatusDetails(migrationState, sqlDataCopyErrors?.ToList(), listOfCopyProgressDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CopyProgressDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CopyProgressDetails"/>. </summary>
         /// <param name="tableName"> Table Name. </param>
         /// <param name="status"> Status of the Copy activity (InProgress, Succeeded, Failed, Canceled). </param>
         /// <param name="parallelCopyType"> Type of parallel copy (Dynamic range, Physical partition, none). </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new CopyProgressDetails(tableName, status, parallelCopyType, usedParallelCopies, dataRead, dataWritten, rowsRead, rowsCopied, copyStart, copyThroughput, copyDuration);
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationProperties"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownDatabaseMigrationProperties(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError);
         }
 
-        /// <summary> Initializes a new instance of ErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorInfo"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <returns> A new <see cref="Models.ErrorInfo"/> instance for mocking. </returns>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ErrorInfo(code, message);
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlMIData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DatabaseMigrationSqlMIData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseMigrationSqlMIData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlMIProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlMIProperties"/>. </summary>
         /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseMigrationSqlMIProperties(ResourceType.SqlMI, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, migrationStatusDetails, backupConfiguration, offlineConfiguration);
         }
 
-        /// <summary> Initializes a new instance of MigrationStatusDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationStatusDetails"/>. </summary>
         /// <param name="migrationState"> Current State of Migration. </param>
         /// <param name="fullBackupSetInfo"> Details of full backup set. </param>
         /// <param name="lastRestoredBackupSetInfo"> Last applied backup set information. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrationStatusDetails(migrationState, fullBackupSetInfo, lastRestoredBackupSetInfo, activeBackupSets?.ToList(), invalidFiles?.ToList(), blobContainerName, isFullBackupRestored, restoreBlockingReason, completeRestoreErrorMessage, fileUploadBlockingErrors?.ToList(), currentRestoringFilename, lastRestoredFilename, pendingLogBackupsCount);
         }
 
-        /// <summary> Initializes a new instance of SqlBackupSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlBackupSetInfo"/>. </summary>
         /// <param name="backupSetId"> Backup set id. </param>
         /// <param name="firstLSN"> First LSN of the backup set. </param>
         /// <param name="lastLSN"> Last LSN of the backup set. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SqlBackupSetInfo(backupSetId, firstLSN, lastLSN, backupType, listOfBackupFiles?.ToList(), backupStartOn, backupFinishOn, isBackupRestored, hasBackupChecksums, familyCount, ignoreReasons?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlBackupFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlBackupFileInfo"/>. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="status"> Status of the file. (Initial, Uploading, Uploaded, Restoring, Restored or Skipped). </param>
         /// <param name="totalSize"> File size in bytes. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SqlBackupFileInfo(fileName, status, totalSize, dataRead, dataWritten, copyThroughput, copyDuration, familySequenceNumber);
         }
 
-        /// <summary> Initializes a new instance of SourceLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SourceLocation"/>. </summary>
         /// <param name="fileShare"> Source File share. </param>
         /// <param name="azureBlob"> Source Azure Blob. </param>
         /// <param name="fileStorageType"> Backup storage Type. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SourceLocation(fileShare, azureBlob, fileStorageType);
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlVmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DatabaseMigrationSqlVmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseMigrationSqlVmData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlVmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlVmProperties"/>. </summary>
         /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseMigrationSqlVmProperties(ResourceType.SqlVm, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, migrationStatusDetails, backupConfiguration, offlineConfiguration);
         }
 
-        /// <summary> Initializes a new instance of SqlMigrationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.SqlMigrationServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SqlMigrationServiceData(id, name, resourceType, systemData, tags, location, provisioningState, integrationRuntimeState);
         }
 
-        /// <summary> Initializes a new instance of AuthenticationKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthenticationKeys"/>. </summary>
         /// <param name="authKey1"> The first authentication key. </param>
         /// <param name="authKey2"> The second authentication key. </param>
         /// <returns> A new <see cref="Models.AuthenticationKeys"/> instance for mocking. </returns>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new AuthenticationKeys(authKey1, authKey2);
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigration"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseMigration(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationRuntimeMonitoringData"/>. </summary>
         /// <param name="name"> The name of Integration Runtime. </param>
         /// <param name="nodes"> Integration Runtime node monitoring data. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeMonitoringData"/> instance for mocking. </returns>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new IntegrationRuntimeMonitoringData(name, nodes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NodeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NodeMonitoringData"/>. </summary>
         /// <param name="additionalProperties"> Unmatched properties from the message are deserialized in this collection. </param>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new NodeMonitoringData(additionalProperties, nodeName, availableMemoryInMB, cpuUtilization, concurrentJobsLimit, concurrentJobsRunning, maxConcurrentJobs, sentBytes, receivedBytes);
         }
 
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of DMS in a scale set. </param>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ResourceSku(resourceType, name, tier, size, family, kind, capacity, locations?.ToList(), apiVersions?.ToList(), costs?.ToList(), capabilities?.ToList(), restrictions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity. </param>
         /// <param name="default"> The default capacity. </param>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ResourceSkuCapacity(minimum, maximum, @default, scaleType);
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCosts. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuCosts"/>. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
         /// <param name="extendedUnit"> An invariant to show the extended unit. </param>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ResourceSkuCosts(meterId, quantity, extendedUnit);
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuCapabilities"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         /// <returns> A new <see cref="Models.ResourceSkuCapabilities"/> instance for mocking. </returns>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ResourceSkuCapabilities(name, value);
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="reasonCode"> The reason code for restriction. </param>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ResourceSkuRestrictions(restrictionsType, values?.ToList(), reasonCode);
         }
 
-        /// <summary> Initializes a new instance of ODataError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ODataError"/>. </summary>
         /// <param name="code"> The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'. </param>
         /// <param name="message"> The human-readable description of the error. </param>
         /// <param name="details"> Inner errors that caused this error. </param>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ODataError(code, message, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DataMigrationServiceData(id, name, resourceType, systemData, tags, location, etag, kind, sku, provisioningState, publicKey, virtualSubnetId, virtualNicId, autoStopDelay, deleteResourcesOnStop);
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationServiceStatusResponse"/>. </summary>
         /// <param name="agentVersion"> The DMS instance agent version. </param>
         /// <param name="agentConfiguration"> Agent Configuration. </param>
         /// <param name="status"> The machine-readable status, such as 'Initializing', 'Offline', 'Online', 'Deploying', 'Deleting', 'Stopped', 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop' or 'Failed'. </param>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DataMigrationServiceStatusResponse(agentVersion, agentConfiguration, status, vmSize, supportedTaskTypes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AvailableServiceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableServiceSku"/>. </summary>
         /// <param name="resourceType"> The resource type, including the provider namespace. </param>
         /// <param name="sku"> SKU name, tier, etc. </param>
         /// <param name="capacity"> A description of the scaling capacities of the SKU. </param>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new AvailableServiceSku(resourceType, sku, capacity);
         }
 
-        /// <summary> Initializes a new instance of AvailableServiceSkuSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableServiceSkuSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="family"> SKU family. </param>
         /// <param name="size"> SKU size. </param>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new AvailableServiceSkuSku(name, family, size, tier);
         }
 
-        /// <summary> Initializes a new instance of AvailableServiceSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableServiceSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity, usually 0 or 1. </param>
         /// <param name="maximum"> The maximum capacity. </param>
         /// <param name="default"> The default capacity. </param>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new AvailableServiceSkuCapacity(minimum, maximum, @default, scaleType);
         }
 
-        /// <summary> Initializes a new instance of ProjectTaskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.ProjectTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ProjectTaskData(id, name, resourceType, systemData, etag, properties);
         }
 
-        /// <summary> Initializes a new instance of ProjectTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProjectTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownProjectTaskProperties(taskType, errors?.ToList(), state, commands?.ToList(), clientData);
         }
 
-        /// <summary> Initializes a new instance of CommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownCommandProperties(commandType, errors?.ToList(), state);
         }
 
-        /// <summary> Initializes a new instance of NameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NameAvailabilityResponse"/>. </summary>
         /// <param name="nameAvailable"> If true, the name is valid and available. If false, 'reason' describes why not. </param>
         /// <param name="reason"> The reason why the name is not available, if nameAvailable is false. </param>
         /// <param name="message"> The localized reason why the name is not available, if nameAvailable is false. </param>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new NameAvailabilityResponse(nameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of ProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.ProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ProjectData(id, name, resourceType, systemData, tags, location, etag, sourcePlatform, azureAuthenticationInfo, targetPlatform, createdOn, sourceConnectionInfo, targetConnectionInfo, databasesInfo?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of Quota. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Quota"/>. </summary>
         /// <param name="currentValue"> The current value of the quota. If null or missing, the current value cannot be determined in the context of the request. </param>
         /// <param name="id"> The resource ID of the quota object. </param>
         /// <param name="limit"> The maximum value of the quota. If null or missing, the quota has no maximum, in which case it merely tracks usage. </param>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new Quota(currentValue, id, limit, name, unit);
         }
 
-        /// <summary> Initializes a new instance of QuotaName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaName"/>. </summary>
         /// <param name="localizedValue"> The localized name of the quota. </param>
         /// <param name="value"> The unlocalized name (or ID) of the quota. </param>
         /// <returns> A new <see cref="Models.QuotaName"/> instance for mocking. </returns>
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new QuotaName(localizedValue, value);
         }
 
-        /// <summary> Initializes a new instance of ProjectFileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.ProjectFileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ProjectFileData(id, name, resourceType, systemData, etag, properties);
         }
 
-        /// <summary> Initializes a new instance of ProjectFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProjectFileProperties"/>. </summary>
         /// <param name="extension"> Optional File extension. If submitted it should not have a leading period and must match the extension from filePath. </param>
         /// <param name="filePath"> Relative path of this file resource. This property can be set when creating or updating the file resource. </param>
         /// <param name="lastModified"> Modification DateTime. </param>
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ProjectFileProperties(extension, filePath, lastModified, mediaType, size);
         }
 
-        /// <summary> Initializes a new instance of FileStorageInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FileStorageInfo"/>. </summary>
         /// <param name="uri"> A URI that can be used to access the file content. </param>
         /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
         /// <returns> A new <see cref="Models.FileStorageInfo"/> instance for mocking. </returns>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new FileStorageInfo(uri, headers);
         }
 
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSyncCompleteCommandProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <param name="input"> Command input. </param>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSyncCompleteCommandProperties(CommandType.MigrateSyncCompleteDatabase, errors?.ToList(), state, input, output, commandId);
         }
 
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSyncCompleteCommandOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="errors"> List of errors that happened during the command execution. </param>
         /// <returns> A new <see cref="Models.MigrateSyncCompleteCommandOutput"/> instance for mocking. </returns>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSyncCompleteCommandOutput(id, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReportableException. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReportableException"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="actionableMessage"> Actionable steps for this exception. </param>
         /// <param name="filePath"> The path to the file where exception occurred. </param>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ReportableException(message, actionableMessage, filePath, lineNumber, hResult, stackTrace);
         }
 
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMISyncCompleteCommandProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <param name="inputSourceDatabaseName"> Command input. </param>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMISyncCompleteCommandProperties(CommandType.MigrateSqlServerAzureDBSqlMIComplete, errors?.ToList(), state, inputSourceDatabaseName != null ? new MigrateMISyncCompleteCommandInput(inputSourceDatabaseName) : null, outputErrors != null ? new MigrateMISyncCompleteCommandOutput(outputErrors?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of BackupSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BackupSetInfo"/>. </summary>
         /// <param name="backupSetId"> Id for the set of backup files. </param>
         /// <param name="firstLsn"> First log sequence number of the backup file. </param>
         /// <param name="lastLsn"> Last log sequence number of the backup file. </param>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new BackupSetInfo(backupSetId, firstLsn, lastLsn, lastModifiedOn, backupType, listOfBackupFiles?.ToList(), databaseName, backupStartOn, backupFinishedOn, isBackupRestored);
         }
 
-        /// <summary> Initializes a new instance of BackupFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BackupFileInfo"/>. </summary>
         /// <param name="fileLocation"> Location of the backup file in shared folder. </param>
         /// <param name="familySequenceNumber"> Sequence number of the backup file in the backup set. </param>
         /// <param name="status"> Status of the backup file during migration. </param>
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new BackupFileInfo(fileLocation, familySequenceNumber, status);
         }
 
-        /// <summary> Initializes a new instance of OrphanedUserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OrphanedUserInfo"/>. </summary>
         /// <param name="name"> Name of the orphaned user. </param>
         /// <param name="databaseName"> Parent database of the user. </param>
         /// <returns> A new <see cref="Models.OrphanedUserInfo"/> instance for mocking. </returns>
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new OrphanedUserInfo(name, databaseName);
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskOutput"/> instance for mocking. </returns>
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownConnectToSourceSqlServerTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputTaskLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskOutputTaskLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databases"> Source databases as a map from database name to database id. </param>
         /// <param name="logins"> Source logins as a map from login name to login id. </param>
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceSqlServerTaskOutputTaskLevel(id, "TaskLevelOutput", databases, logins, agentJobs, databaseTdeCertificateMapping, sourceServerVersion, sourceServerBrandVersion, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="name"> Database name. </param>
         /// <param name="sizeMB"> Size of the file in megabytes. </param>
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", name, sizeMB, databaseFiles?.ToList(), compatibilityLevel, databaseState);
         }
 
-        /// <summary> Initializes a new instance of DatabaseFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseFileInfo"/>. </summary>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="id"> Unique identifier for database file. </param>
         /// <param name="logicalName"> Logical name of the file. </param>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseFileInfo(databaseName, id, logicalName, physicalFullName, restoreFullName, fileType, sizeMB);
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputLoginLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskOutputLoginLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="name"> Login name. </param>
         /// <param name="loginType"> The type of login. </param>
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceSqlServerTaskOutputLoginLevel(id, "LoginLevelOutput", name, loginType, defaultDatabase, isEnabled, migrationEligibility);
         }
 
-        /// <summary> Initializes a new instance of MigrationEligibilityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationEligibilityInfo"/>. </summary>
         /// <param name="isEligibleForMigration"> Whether object is eligible for migration or not. </param>
         /// <param name="validationMessages"> Information about eligibility failure for the server object. </param>
         /// <returns> A new <see cref="Models.MigrationEligibilityInfo"/> instance for mocking. </returns>
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrationEligibilityInfo(isEligibleForMigration, validationMessages?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputAgentJobLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="name"> Agent Job name. </param>
         /// <param name="jobCategory"> The type of Agent Job. </param>
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(id, "AgentJobLevelOutput", name, jobCategory, isEnabled, jobOwner, lastExecutedOn, validationErrors?.ToList(), migrationEligibility);
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourcePostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourcePostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="sourceServerVersion"> Version of the source server. </param>
         /// <param name="databases"> List of databases on source server. </param>
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourcePostgreSqlSyncTaskOutput(id, sourceServerVersion, databases?.ToList(), sourceServerBrandVersion, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetAzureDBForMySqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="serverVersion"> Version of the target server. </param>
         /// <param name="databases"> List of databases on target server. </param>
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetAzureDBForMySqlTaskOutput(id, serverVersion, databases?.ToList(), targetServerBrandVersion, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlDBTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databases"> Source databases as a map from database name to database id. </param>
         /// <param name="targetServerVersion"> Version of the target server. </param>
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetSqlDBTaskOutput(id, databases, targetServerVersion, targetServerBrandVersion);
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlMISyncTaskOutput"/>. </summary>
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="validationErrors"> Validation errors. </param>
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetSqlMISyncTaskOutput(targetServerVersion, targetServerBrandVersion, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlMITaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetSqlMITaskOutput(id, targetServerVersion, targetServerBrandVersion, logins?.ToList(), agentJobs?.ToList(), validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="targetServerVersion"> Version of the target server. </param>
         /// <param name="databases"> List of databases on target server. </param>
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(id, targetServerVersion, databases?.ToList(), targetServerBrandVersion, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesMySqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesMySqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databasesToTables"> Mapping from database name to list of tables. </param>
         /// <param name="validationErrors"> Validation errors. </param>
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesMySqlTaskOutput(id, databasesToTables, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DatabaseTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseTable"/>. </summary>
         /// <param name="hasRows"> Indicates whether table is empty or not. </param>
         /// <param name="name"> Schema-qualified name of the table. </param>
         /// <returns> A new <see cref="Models.DatabaseTable"/> instance for mocking. </returns>
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseTable(hasRows, name);
         }
 
-        /// <summary> Initializes a new instance of GetTdeCertificatesSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetTdeCertificatesSqlTaskOutput"/>. </summary>
         /// <param name="base64EncodedCertificates"> Mapping from certificate name to base 64 encoded format. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.GetTdeCertificatesSqlTaskOutput"/> instance for mocking. </returns>
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetTdeCertificatesSqlTaskOutput(base64EncodedCertificates, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesSqlSyncTaskOutput"/>. </summary>
         /// <param name="databasesToSourceTables"> Mapping from database name to list of source tables. </param>
         /// <param name="databasesToTargetTables"> Mapping from database name to list of target tables. </param>
         /// <param name="tableValidationErrors"> Mapping from database name to list of validation errors. </param>
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables, databasesToTargetTables, tableValidationErrors, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesSqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databasesToTables"> Mapping from database name to list of tables. </param>
         /// <param name="validationErrors"> Validation errors. </param>
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesSqlTaskOutput(id, databasesToTables, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSchemaSqlServerSqlDBTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSchemaSqlServerSqlDBTaskProperties(TaskType.MigrateSchemaSqlServerSqlDB, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), createdOn, taskId, isCloneable);
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutput"/> instance for mocking. </returns>
@@ -992,7 +992,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigrateSchemaSqlServerSqlDBTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="state"> Overall state of the schema migration. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(id, "MigrationLevelOutput", state, startedOn, endedOn, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion);
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="state"> State of the schema migration for this database. </param>
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", databaseName, state, stage, startedOn, endedOn, databaseErrorResultPrefix, schemaErrorResultPrefix, numberOfSuccessfulOperations, numberOfFailedOperations, fileId);
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="commandText"> Schema command which failed. </param>
         /// <param name="errorText"> Reason of failure. </param>
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSchemaSqlServerSqlDBTaskOutputError(id, "SchemaErrorOutput", commandText, errorText);
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSchemaSqlTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSchemaSqlTaskOutputError"/> instance for mocking. </returns>
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSchemaSqlTaskOutputError(id, "ErrorOutput", error);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput"/> instance for mocking. </returns>
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -1067,7 +1067,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", startedOn, endedOn, sourceServerVersion, sourceServer, targetServerVersion, targetServer);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", databaseName, startedOn, endedOn, migrationState, incomingChanges, appliedChanges, cdcInsertCounter, cdcDeleteCounter, cdcUpdateCounter, fullLoadCompletedTables, fullLoadLoadingTables, fullLoadQueuedTables, fullLoadErroredTables, initializationCompleted, latency);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="databaseName"> Name of the database. </param>
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(id, "TableLevelOutput", tableName, databaseName, cdcInsertCounter, cdcUpdateCounter, cdcDeleteCounter, fullLoadEstFinishOn, fullLoadStartedOn, fullLoadEndedOn, fullLoadTotalRows, state, totalChangesApplied, dataErrorsCounter, lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/> instance for mocking. </returns>
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputError(id, "ErrorOutput", error);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="events"> List of error events. </param>
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError(id, "DatabaseLevelErrorOutput", errorMessage, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SyncMigrationDatabaseErrorEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SyncMigrationDatabaseErrorEvent"/>. </summary>
         /// <param name="timestampString"> String value of timestamp. </param>
         /// <param name="eventTypeString"> Event type. </param>
         /// <param name="eventText"> Event text. </param>
@@ -1142,7 +1142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SyncMigrationDatabaseErrorEvent(timestampString, eventTypeString, eventText);
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL. </param>
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(selectedDatabases?.ToList(), targetConnectionInfo, sourceConnectionInfo, encryptedKeyForSecureFields, startedOn);
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="id"> Result identifier. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(name, id, targetDatabaseName, migrationSetting, sourceSetting, targetSetting, selectedTables?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/> instance for mocking. </returns>
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -1202,7 +1202,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", startedOn, endedOn, sourceServerVersion, sourceServer, targetServerVersion, targetServer, sourceServerType, targetServerType, state, databaseCount);
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -1225,7 +1225,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", databaseName, startedOn, endedOn, migrationState, incomingChanges, appliedChanges, cdcInsertCounter, cdcDeleteCounter, cdcUpdateCounter, fullLoadCompletedTables, fullLoadLoadingTables, fullLoadQueuedTables, fullLoadErroredTables, initializationCompleted, latency);
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="databaseName"> Name of the database. </param>
@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(id, "TableLevelOutput", tableName, databaseName, cdcInsertCounter, cdcUpdateCounter, cdcDeleteCounter, fullLoadEstFinishOn, fullLoadStartedOn, fullLoadEndedOn, fullLoadTotalRows, state, totalChangesApplied, dataErrorsCounter, lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <param name="events"> List of error events. </param>
@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(id, "ErrorOutput", error, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="events"> List of error events. </param>
@@ -1270,7 +1270,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(id, "DatabaseLevelErrorOutput", errorMessage, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutput"/> instance for mocking. </returns>
@@ -1279,7 +1279,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigrateSqlServerSqlDBSyncTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -1294,7 +1294,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", startedOn, endedOn, sourceServerVersion, sourceServer, targetServerVersion, targetServer, databaseCount);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -1317,7 +1317,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", databaseName, startedOn, endedOn, migrationState, incomingChanges, appliedChanges, cdcInsertCounter, cdcDeleteCounter, cdcUpdateCounter, fullLoadCompletedTables, fullLoadLoadingTables, fullLoadQueuedTables, fullLoadErroredTables, initializationCompleted, latency);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="databaseName"> Name of the database. </param>
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBSyncTaskOutputTableLevel(id, "TableLevelOutput", tableName, databaseName, cdcInsertCounter, cdcUpdateCounter, cdcDeleteCounter, fullLoadEstFinishOn, fullLoadStartedOn, fullLoadEndedOn, fullLoadTotalRows, state, totalChangesApplied, dataErrorsCounter, lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputError"/> instance for mocking. </returns>
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBSyncTaskOutputError(id, "ErrorOutput", error);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="events"> List of error events. </param>
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(id, "DatabaseLevelErrorOutput", errorMessage, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutput"/> instance for mocking. </returns>
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigrateSqlServerSqlDBTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBTaskOutputMigrationLevel(id, "MigrationLevelOutput", startedOn, endedOn, durationInSeconds, status, statusMessage, message, databases, databaseSummary, migrationValidationResult, migrationReportResult, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion, exceptionsAndWarnings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrationValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationValidationResult"/>. </summary>
         /// <param name="id"> Migration validation result identifier. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="summaryResults"> Validation summary results for each database. </param>
@@ -1406,7 +1406,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrationValidationResult(id, migrationId, summaryResults, status);
         }
 
-        /// <summary> Initializes a new instance of MigrationValidationDatabaseSummaryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationValidationDatabaseSummaryResult"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrationValidationDatabaseSummaryResult(id, migrationId, sourceDatabaseName, targetDatabaseName, startedOn, endedOn, status);
         }
 
-        /// <summary> Initializes a new instance of MigrationReportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationReportResult"/>. </summary>
         /// <param name="id"> Migration validation result identifier. </param>
         /// <param name="reportUri"> The url of the report. </param>
         /// <returns> A new <see cref="Models.MigrationReportResult"/> instance for mocking. </returns>
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrationReportResult(id, reportUri);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databaseName"> Name of the item. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", databaseName, startedOn, endedOn, state, stage, statusMessage, message, numberOfObjects, numberOfObjectsCompleted, errorCount, errorPrefix, resultPrefix, exceptionsAndWarnings?.ToList(), objectSummary);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="objectName"> Name of the item. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -1470,7 +1470,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBTaskOutputTableLevel(id, "TableLevelOutput", objectName, startedOn, endedOn, state, statusMessage, itemsCount, itemsCompletedCount, errorPrefix, resultPrefix);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputError"/> instance for mocking. </returns>
@@ -1479,7 +1479,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBTaskOutputError(id, "ErrorOutput", error);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutputValidationResult"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="summaryResults"> Validation summary results for each database. </param>
@@ -1492,7 +1492,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBTaskOutputValidationResult(id, "MigrationValidationOutput", migrationId, summaryResults, status);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
@@ -1509,7 +1509,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(id, "MigrationDatabaseLevelValidationOutput", migrationId, sourceDatabaseName, targetDatabaseName, startedOn, endedOn, dataIntegrityValidationResult, schemaValidationResult, queryAnalysisValidationResult, status);
         }
 
-        /// <summary> Initializes a new instance of DataIntegrityValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataIntegrityValidationResult"/>. </summary>
         /// <param name="failedObjects"> List of failed table names of source and target pair. </param>
         /// <param name="validationErrors"> List of errors that happened while performing data integrity validation. </param>
         /// <returns> A new <see cref="Models.DataIntegrityValidationResult"/> instance for mocking. </returns>
@@ -1520,7 +1520,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DataIntegrityValidationResult(failedObjects, validationErrors);
         }
 
-        /// <summary> Initializes a new instance of ValidationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidationError"/>. </summary>
         /// <param name="text"> Error Text. </param>
         /// <param name="severity"> Severity of the error. </param>
         /// <returns> A new <see cref="Models.ValidationError"/> instance for mocking. </returns>
@@ -1529,7 +1529,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidationError(text, severity);
         }
 
-        /// <summary> Initializes a new instance of SchemaComparisonValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SchemaComparisonValidationResult"/>. </summary>
         /// <param name="schemaDifferences"> List of schema differences between the source and target databases. </param>
         /// <param name="validationErrors"> List of errors that happened while performing schema compare validation. </param>
         /// <param name="sourceDatabaseObjectCount"> Count of source database objects. </param>
@@ -1543,7 +1543,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SchemaComparisonValidationResult(schemaDifferences, validationErrors, sourceDatabaseObjectCount, targetDatabaseObjectCount);
         }
 
-        /// <summary> Initializes a new instance of SchemaComparisonValidationResultType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SchemaComparisonValidationResultType"/>. </summary>
         /// <param name="objectName"> Name of the object that has the difference. </param>
         /// <param name="objectType"> Type of the object that has the difference. e.g (Table/View/StoredProcedure). </param>
         /// <param name="updateAction"> Update action type with respect to target. </param>
@@ -1553,7 +1553,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SchemaComparisonValidationResultType(objectName, objectType, updateAction);
         }
 
-        /// <summary> Initializes a new instance of QueryAnalysisValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryAnalysisValidationResult"/>. </summary>
         /// <param name="queryResults"> List of queries executed and it's execution results in source and target. </param>
         /// <param name="validationErrors"> Errors that are part of the execution. </param>
         /// <returns> A new <see cref="Models.QueryAnalysisValidationResult"/> instance for mocking. </returns>
@@ -1562,7 +1562,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new QueryAnalysisValidationResult(queryResults, validationErrors);
         }
 
-        /// <summary> Initializes a new instance of QueryExecutionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryExecutionResult"/>. </summary>
         /// <param name="queryText"> Query text retrieved from the source server. </param>
         /// <param name="statementsInBatch"> Total no. of statements in the batch. </param>
         /// <param name="sourceResult"> Query analysis result from the source. </param>
@@ -1573,7 +1573,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new QueryExecutionResult(queryText, statementsInBatch, sourceResult, targetResult);
         }
 
-        /// <summary> Initializes a new instance of ExecutionStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExecutionStatistics"/>. </summary>
         /// <param name="executionCount"> No. of query executions. </param>
         /// <param name="cpuTimeMs"> CPU Time in millisecond(s) for the query execution. </param>
         /// <param name="elapsedTimeMs"> Time taken in millisecond(s) for executing the query. </param>
@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ExecutionStatistics(executionCount, cpuTimeMs, elapsedTimeMs, waitStats, hasErrors, sqlErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of WaitStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WaitStatistics"/>. </summary>
         /// <param name="waitType"> Type of the Wait. </param>
         /// <param name="waitTimeMs"> Total wait time in millisecond(s). </param>
         /// <param name="waitCount"> Total no. of waits. </param>
@@ -1599,7 +1599,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new WaitStatistics(waitType, waitTimeMs, waitCount);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskOutput"/> instance for mocking. </returns>
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigrateSqlServerSqlMISyncTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databaseCount"> Count of databases. </param>
         /// <param name="state"> Current state of migration. </param>
@@ -1627,7 +1627,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", databaseCount, state, startedOn, endedOn, sourceServerName, sourceServerVersion, sourceServerBrandVersion, targetServerName, targetServerVersion, targetServerBrandVersion, databaseErrorCount);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="sourceDatabaseName"> Name of the database. </param>
         /// <param name="migrationState"> Current state of database. </param>
@@ -1649,7 +1649,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", sourceDatabaseName, migrationState, startedOn, endedOn, fullBackupSetInfo, lastRestoredBackupSetInfo, activeBackupSets?.ToList(), containerName, errorPrefix, isFullBackupRestored, exceptionsAndWarnings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputError"/> instance for mocking. </returns>
@@ -1658,7 +1658,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMISyncTaskOutputError(id, "ErrorOutput", error);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskOutput"/> instance for mocking. </returns>
@@ -1667,7 +1667,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigrateSqlServerSqlMITaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMITaskOutputMigrationLevel(id, "MigrationLevelOutput", startedOn, endedOn, status, state, agentJobs, logins, message, serverRoleResults, orphanedUsersInfo?.ToList(), databases, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion, exceptionsAndWarnings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="sizeMB"> Size of the database in megabytes. </param>
@@ -1711,7 +1711,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMITaskOutputDatabaseLevel(id, "DatabaseLevelOutput", databaseName, sizeMB, state, stage, startedOn, endedOn, message, exceptionsAndWarnings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputAgentJobLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="name"> Agent Job name. </param>
         /// <param name="isEnabled"> The state of the original Agent Job. </param>
@@ -1728,7 +1728,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMITaskOutputAgentJobLevel(id, "AgentJobLevelOutput", name, isEnabled, state, startedOn, endedOn, message, exceptionsAndWarnings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputLoginLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutputLoginLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="loginName"> Login name. </param>
         /// <param name="state"> Current state of login. </param>
@@ -1745,7 +1745,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMITaskOutputLoginLevel(id, "LoginLevelOutput", loginName, state, stage, startedOn, endedOn, message, exceptionsAndWarnings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskOutputError"/> instance for mocking. </returns>
@@ -1754,7 +1754,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMITaskOutputError(id, "ErrorOutput", error);
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSsisTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateSsisTaskOutput"/> instance for mocking. </returns>
@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigrateSsisTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSsisTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -1783,7 +1783,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSsisTaskOutputMigrationLevel(id, "MigrationLevelOutput", startedOn, endedOn, status, message, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion, exceptionsAndWarnings?.ToList(), stage);
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutputProjectLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSsisTaskOutputProjectLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="folderName"> Name of the folder. </param>
         /// <param name="projectName"> Name of the project. </param>
@@ -1801,7 +1801,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSsisTaskOutputProjectLevel(id, "SsisProjectLevelOutput", folderName, projectName, state, stage, startedOn, endedOn, message, exceptionsAndWarnings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MongoDBCancelCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBCancelCommand"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <param name="inputObjectName"> Command input. </param>
@@ -1813,7 +1813,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBCancelCommand(CommandType.Cancel, errors?.ToList(), state, inputObjectName != null ? new MongoDBCommandInput(inputObjectName) : null);
         }
 
-        /// <summary> Initializes a new instance of MongoDBClusterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="supportsSharding"> Whether the cluster supports sharded collections. </param>
         /// <param name="clusterType"> The type of data source. </param>
@@ -1826,7 +1826,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBClusterInfo(databases?.ToList(), supportsSharding, clusterType, version);
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBDatabaseInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
@@ -1851,7 +1851,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBDatabaseInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, collections?.ToList(), supportsSharding);
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBCollectionInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
@@ -1880,7 +1880,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBCollectionInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, databaseName, isCapped, isSystemCollection, isView, shardKey, supportsSharding, viewOf);
         }
 
-        /// <summary> Initializes a new instance of MongoDBShardKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBShardKeyInfo"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <param name="isUnique"> Whether the shard key is unique. </param>
         /// <returns> A new <see cref="Models.MongoDBShardKeyInfo"/> instance for mocking. </returns>
@@ -1891,7 +1891,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBShardKeyInfo(fields?.ToList(), isUnique);
         }
 
-        /// <summary> Initializes a new instance of MongoDBObjectInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBObjectInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
@@ -1913,7 +1913,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBObjectInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName);
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBCollectionProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -1935,7 +1935,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBCollectionProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, MongoDBProgressResultType.Collection, state, totalBytes, totalDocuments);
         }
 
-        /// <summary> Initializes a new instance of MongoDBProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -1958,7 +1958,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMongoDBProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, resultType, state, totalBytes, totalDocuments);
         }
 
-        /// <summary> Initializes a new instance of MongoDBError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBError"/>. </summary>
         /// <param name="code"> The non-localized, machine-readable code that describes the error or warning. </param>
         /// <param name="count"> The number of times the error or warning has occurred. </param>
         /// <param name="message"> The localized, human-readable message that describes the error or warning. </param>
@@ -1969,7 +1969,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBError(code, count, message, errorType);
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBDatabaseProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -1993,7 +1993,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBDatabaseProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, MongoDBProgressResultType.Database, state, totalBytes, totalDocuments, collections);
         }
 
-        /// <summary> Initializes a new instance of MongoDBFinishCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBFinishCommand"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <param name="input"> Command input. </param>
@@ -2005,7 +2005,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBFinishCommand(CommandType.Finish, errors?.ToList(), state, input);
         }
 
-        /// <summary> Initializes a new instance of MongoDBMigrationProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBMigrationProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -2029,7 +2029,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBMigrationProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, MongoDBProgressResultType.Migration, state, totalBytes, totalDocuments, databases);
         }
 
-        /// <summary> Initializes a new instance of MongoDBRestartCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBRestartCommand"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <param name="inputObjectName"> Command input. </param>
@@ -2041,7 +2041,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBRestartCommand(CommandType.Restart, errors?.ToList(), state, inputObjectName != null ? new MongoDBCommandInput(inputObjectName) : null);
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceOracleSyncTaskOutput"/>. </summary>
         /// <param name="sourceServerVersion"> Version of the source server. </param>
         /// <param name="databases"> List of schemas on source server. </param>
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
@@ -2055,7 +2055,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceOracleSyncTaskOutput(sourceServerVersion, databases?.ToList(), sourceServerBrandVersion, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="targetServerVersion"> Version of the target server. </param>
         /// <param name="databases"> List of databases on target server. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
@@ -2071,7 +2071,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(targetServerVersion, databases?.ToList(), targetServerBrandVersion, validationErrors?.ToList(), databaseSchemaMap?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem"/>. </summary>
         /// <param name="database"></param>
         /// <param name="schemas"></param>
         /// <returns> A new <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem"/> instance for mocking. </returns>
@@ -2082,7 +2082,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem(database, schemas?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesOracleTaskOutput"/>. </summary>
         /// <param name="schemaName"> The schema this result is for. </param>
         /// <param name="tables"> List of valid tables found for this schema. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
@@ -2095,7 +2095,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesOracleTaskOutput(schemaName, tables?.ToList(), validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesPostgreSqlTaskOutput"/>. </summary>
         /// <param name="databaseName"> The database this result is for. </param>
         /// <param name="tables"> List of valid tables found for this database. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
@@ -2108,7 +2108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesPostgreSqlTaskOutput(databaseName, tables?.ToList(), validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidateOracleAzureDBPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateOracleAzureDBPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>
         /// <returns> A new <see cref="Models.ValidateOracleAzureDBPostgreSqlSyncTaskOutput"/> instance for mocking. </returns>
         public static ValidateOracleAzureDBPostgreSqlSyncTaskOutput ValidateOracleAzureDBPostgreSqlSyncTaskOutput(IEnumerable<ReportableException> validationErrors = null)
@@ -2118,7 +2118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateOracleAzureDBPostgreSqlSyncTaskOutput(validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput"/> instance for mocking. </returns>
@@ -2127,7 +2127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -2141,7 +2141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", startedOn, endedOn, sourceServerVersion, sourceServer, targetServerVersion, targetServer);
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -2164,7 +2164,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", databaseName, startedOn, endedOn, migrationState, incomingChanges, appliedChanges, cdcInsertCounter, cdcDeleteCounter, cdcUpdateCounter, fullLoadCompletedTables, fullLoadLoadingTables, fullLoadQueuedTables, fullLoadErroredTables, initializationCompleted, latency);
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="databaseName"> Name of the database. </param>
@@ -2185,7 +2185,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(id, "TableLevelOutput", tableName, databaseName, cdcInsertCounter, cdcUpdateCounter, cdcDeleteCounter, fullLoadEstFinishOn, fullLoadStartedOn, fullLoadEndedOn, fullLoadTotalRows, state, totalChangesApplied, dataErrorsCounter, lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/> instance for mocking. </returns>
@@ -2194,7 +2194,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputError(id, "ErrorOutput", error);
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="events"> List of error events. </param>
@@ -2206,7 +2206,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError(id, "DatabaseLevelErrorOutput", errorMessage, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OracleOciDriverInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OracleOciDriverInfo"/>. </summary>
         /// <param name="driverName"> The name of the driver package. </param>
         /// <param name="driverSize"> The size in bytes of the driver package. </param>
         /// <param name="archiveChecksum"> The MD5 Base64 encoded checksum for the driver package. </param>
@@ -2221,7 +2221,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new OracleOciDriverInfo(driverName, driverSize, archiveChecksum, oracleChecksum, assemblyVersion, supportedOracleVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CheckOciDriverTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CheckOciDriverTaskOutput"/>. </summary>
         /// <param name="installedDriver"> Information about the installed driver if found and valid. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.CheckOciDriverTaskOutput"/> instance for mocking. </returns>
@@ -2232,7 +2232,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new CheckOciDriverTaskOutput(installedDriver, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of UploadOciDriverTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UploadOciDriverTaskOutput"/>. </summary>
         /// <param name="driverPackageName"> The name of the driver package that was validated and uploaded. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.UploadOciDriverTaskOutput"/> instance for mocking. </returns>
@@ -2243,7 +2243,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UploadOciDriverTaskOutput(driverPackageName, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InstallOciDriverTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InstallOciDriverTaskOutput"/>. </summary>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.InstallOciDriverTaskOutput"/> instance for mocking. </returns>
         public static InstallOciDriverTaskOutput InstallOciDriverTaskOutput(IEnumerable<ReportableException> validationErrors = null)
@@ -2253,7 +2253,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new InstallOciDriverTaskOutput(validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CheckOciDriverTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CheckOciDriverTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2275,7 +2275,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new CheckOciDriverTaskProperties(TaskType.ServiceCheckOci, errors?.ToList(), state, commands?.ToList(), clientData, inputServerVersion != null ? new CheckOciDriverTaskInput(inputServerVersion) : null, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of UploadOciDriverTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UploadOciDriverTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UploadOciDriverTaskProperties(TaskType.ServiceUploadOci, errors?.ToList(), state, commands?.ToList(), clientData, inputDriverShare != null ? new UploadOciDriverTaskInput(inputDriverShare) : null, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InstallOciDriverTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InstallOciDriverTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2319,7 +2319,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new InstallOciDriverTaskProperties(TaskType.ServiceInstallOci, errors?.ToList(), state, commands?.ToList(), clientData, inputDriverPackageName != null ? new InstallOciDriverTaskInput(inputDriverPackageName) : null, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToMongoDBTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2341,7 +2341,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToMongoDBTaskProperties(TaskType.ConnectMongoDB, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2368,7 +2368,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceSqlServerTaskProperties(TaskType.ConnectToSourceSqlServer, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), taskId);
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2394,7 +2394,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceSqlServerSyncTaskProperties(TaskType.ConnectToSourceSqlServerSync, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourcePostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourcePostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2416,7 +2416,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourcePostgreSqlSyncTaskProperties(TaskType.ConnectToSourcePostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, inputSourceConnectionInfo != null ? new ConnectToSourcePostgreSqlSyncTaskInput(inputSourceConnectionInfo) : null, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceMySqlTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2438,7 +2438,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceMySqlTaskProperties(TaskType.ConnectToSourceMySql, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceNonSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceNonSqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="sourceServerBrandVersion"> Server brand version. </param>
         /// <param name="serverProperties"> Server properties. </param>
@@ -2453,7 +2453,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceNonSqlTaskOutput(id, sourceServerBrandVersion, serverProperties, databases?.ToList(), validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerProperties"/>. </summary>
         /// <param name="serverPlatform"> Name of the server platform. </param>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="serverVersion"> Version of the database server. </param>
@@ -2466,7 +2466,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ServerProperties(serverPlatform, serverName, serverVersion, serverEdition, serverOperatingSystemVersion, serverDatabaseCount);
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceOracleSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2488,7 +2488,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceOracleSyncTaskProperties(TaskType.ConnectToSourceOracleSync, errors?.ToList(), state, commands?.ToList(), clientData, inputSourceConnectionInfo != null ? new ConnectToSourceOracleSyncTaskInput(inputSourceConnectionInfo) : null, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlDBTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2511,7 +2511,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetSqlDBTaskProperties(TaskType.ConnectToTargetSqlDB, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), createdOn);
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlDBSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2533,7 +2533,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetSqlDBSyncTaskProperties(TaskType.ConnectToTargetSqlDBSync, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2555,7 +2555,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(TaskType.ConnectToTargetAzureDBForPostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2577,7 +2577,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType.ConnectToTargetOracleAzureDBForPostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, inputTargetConnectionInfo != null ? new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(inputTargetConnectionInfo) : null, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesSqlTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2600,7 +2600,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesSqlTaskProperties(TaskType.GetUserTablesSql, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), taskId);
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesSqlSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2622,7 +2622,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesSqlSyncTaskProperties(TaskType.GetUserTablesAzureSqlDBSync, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesOracleTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2644,7 +2644,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesOracleTaskProperties(TaskType.GetUserTablesOracle, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesPostgreSqlTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2666,7 +2666,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesPostgreSqlTaskProperties(TaskType.GetUserTablesPostgreSql, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesMySqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesMySqlTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2688,7 +2688,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesMySqlTaskProperties(TaskType.GetUserTablesMySql, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlMITaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2710,7 +2710,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetSqlMITaskProperties(TaskType.ConnectToTargetAzureSqlDBMI, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMISyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlMISyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2732,7 +2732,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetSqlMISyncTaskProperties(TaskType.ConnectToTargetAzureSqlDBMISyncLRS, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetAzureDBForMySqlTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2754,7 +2754,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetAzureDBForMySqlTaskProperties(TaskType.ConnectToTargetAzureDBForMySql, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMongoDBTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2779,7 +2779,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMongoDBTaskProperties(TaskType.MigrateMongoDB, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2809,7 +2809,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMITaskProperties(TaskType.MigrateSqlServerAzureSqlDBMI, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), taskId, createdOn, parentTaskId, isCloneable);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMISyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2836,7 +2836,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMISyncTaskProperties(TaskType.MigrateSqlServerAzureSqlDBMISyncLRS, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), createdOn);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2865,7 +2865,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBTaskProperties(TaskType.MigrateSqlServerSqlDB, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), taskId, isCloneable, createdOn);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2891,7 +2891,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBSyncTaskProperties(TaskType.MigrateSqlServerAzureSqlDBSync, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2917,7 +2917,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlSyncTaskProperties(TaskType.MigrateMySqlAzureDBForMySqlSync, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2945,7 +2945,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(TaskType.MigrateMySqlAzureDBForMySql, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), isCloneable, taskId);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput"/> instance for mocking. </returns>
@@ -2954,7 +2954,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(id, resultType);
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -2983,7 +2983,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(TaskType.MigratePostgreSqlAzureDBForPostgreSqlSyncV2, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), taskId, createdOn, isCloneable);
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -3009,7 +3009,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType.MigrateOracleAzureDBForPostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlDBSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -3031,7 +3031,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(TaskType.ValidateMigrationInputSqlServerSqlDBSync, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidateSyncMigrationInputSqlServerTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateSyncMigrationInputSqlServerTaskOutput"/>. </summary>
         /// <param name="id"> Database identifier. </param>
         /// <param name="name"> Name of database. </param>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>
@@ -3043,7 +3043,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateSyncMigrationInputSqlServerTaskOutput(id, name, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -3065,7 +3065,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateMigrationInputSqlServerSqlMITaskProperties(TaskType.ValidateMigrationInputSqlServerAzureSqlDBMI, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="name"> Name of database. </param>
         /// <param name="restoreDatabaseNameErrors"> Errors associated with the RestoreDatabaseName. </param>
@@ -3086,7 +3086,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateMigrationInputSqlServerSqlMITaskOutput(id, name, restoreDatabaseNameErrors?.ToList(), backupFolderErrors?.ToList(), backupShareCredentialsErrors?.ToList(), backupStorageAccountErrors?.ToList(), existingBackupErrors?.ToList(), databaseBackupInfo);
         }
 
-        /// <summary> Initializes a new instance of DatabaseBackupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseBackupInfo"/>. </summary>
         /// <param name="databaseName"> Database name. </param>
         /// <param name="backupType"> Backup Type. </param>
         /// <param name="backupFiles"> The list of backup files for the current database. </param>
@@ -3103,7 +3103,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseBackupInfo(databaseName, backupType, backupFiles?.ToList(), position, isDamaged, isCompressed, familyCount, backupFinishOn);
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMISyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -3125,7 +3125,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateMigrationInputSqlServerSqlMISyncTaskProperties(TaskType.ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskOutput"/>. </summary>
         /// <param name="id"> Database identifier. </param>
         /// <param name="name"> Name of database. </param>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>
@@ -3137,7 +3137,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateMigrationInputSqlServerSqlMISyncTaskOutput(id, name, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidateMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateMongoDBTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -3159,7 +3159,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateMongoDBTaskProperties(TaskType.ValidateMongoDB, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -3181,7 +3181,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType.ValidateOracleAzureDBPostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GetTdeCertificatesSqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetTdeCertificatesSqlTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -3203,7 +3203,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetTdeCertificatesSqlTaskProperties(TaskType.GetTDECertificatesSql, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateSsisTaskProperties"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
@@ -3229,7 +3229,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSsisTaskProperties(TaskType.MigrateSsis, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -3254,7 +3254,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(id, "MigrationLevelOutput", startedOn, endedOn, durationInSeconds, status, statusMessage, message, databases, databaseSummary, migrationReportResult, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion, exceptionsAndWarnings?.ToList(), lastStorageUpdate);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -3279,7 +3279,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", databaseName, startedOn, endedOn, state, stage, statusMessage, message, numberOfObjects, numberOfObjectsCompleted, errorCount, errorPrefix, resultPrefix, exceptionsAndWarnings?.ToList(), lastStorageUpdate, objectSummary);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="objectName"> Name of the item. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -3297,7 +3297,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(id, "TableLevelOutput", objectName, startedOn, endedOn, state, statusMessage, itemsCount, itemsCompletedCount, errorPrefix, resultPrefix, lastStorageUpdate);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/> instance for mocking. </returns>

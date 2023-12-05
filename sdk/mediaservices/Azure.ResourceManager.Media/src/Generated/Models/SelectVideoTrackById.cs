@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Select video tracks from the input by specifying a track identifier. </summary>
     public partial class SelectVideoTrackById : VideoTrackDescriptor
     {
-        /// <summary> Initializes a new instance of SelectVideoTrackById. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackById"/>. </summary>
         /// <param name="trackId"> Track identifier to select. </param>
         public SelectVideoTrackById(long trackId)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.SelectVideoTrackById";
         }
 
-        /// <summary> Initializes a new instance of SelectVideoTrackById. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackById"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="trackId"> Track identifier to select. </param>
         internal SelectVideoTrackById(string odataType, long trackId) : base(odataType)

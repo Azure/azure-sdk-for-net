@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> Label patch properties. </summary>
     public partial class EasmLabelPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of EasmLabelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmLabelPatch"/>. </summary>
         public EasmLabelPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of EasmLabelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmLabelPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

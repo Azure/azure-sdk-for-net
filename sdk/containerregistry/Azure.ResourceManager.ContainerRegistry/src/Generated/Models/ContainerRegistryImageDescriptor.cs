@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Properties for a registry image. </summary>
     public partial class ContainerRegistryImageDescriptor
     {
-        /// <summary> Initializes a new instance of ContainerRegistryImageDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImageDescriptor"/>. </summary>
         public ContainerRegistryImageDescriptor()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryImageDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImageDescriptor"/>. </summary>
         /// <param name="registry"> The registry login server. </param>
         /// <param name="repository"> The repository name. </param>
         /// <param name="tag"> The tag name. </param>

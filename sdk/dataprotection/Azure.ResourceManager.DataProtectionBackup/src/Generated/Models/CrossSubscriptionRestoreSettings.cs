@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> CrossSubscriptionRestore Settings. </summary>
     internal partial class CrossSubscriptionRestoreSettings
     {
-        /// <summary> Initializes a new instance of CrossSubscriptionRestoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossSubscriptionRestoreSettings"/>. </summary>
         public CrossSubscriptionRestoreSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CrossSubscriptionRestoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossSubscriptionRestoreSettings"/>. </summary>
         /// <param name="state"> CrossSubscriptionRestore state. </param>
         internal CrossSubscriptionRestoreSettings(DataProtectionBackupCrossSubscriptionRestoreState? state)
         {

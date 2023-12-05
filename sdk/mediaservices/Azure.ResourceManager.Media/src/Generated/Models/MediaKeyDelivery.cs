@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The MediaKeyDelivery. </summary>
     internal partial class MediaKeyDelivery
     {
-        /// <summary> Initializes a new instance of MediaKeyDelivery. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaKeyDelivery"/>. </summary>
         public MediaKeyDelivery()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaKeyDelivery. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaKeyDelivery"/>. </summary>
         /// <param name="accessControl"> The access control properties for Key Delivery. </param>
         internal MediaKeyDelivery(MediaAccessControl accessControl)
         {

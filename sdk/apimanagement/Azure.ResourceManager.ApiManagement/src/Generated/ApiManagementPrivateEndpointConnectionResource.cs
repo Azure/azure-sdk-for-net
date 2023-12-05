@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly PrivateEndpointConnectionRestOperations _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient;
         private readonly ApiManagementPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected ApiManagementPrivateEndpointConnectionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

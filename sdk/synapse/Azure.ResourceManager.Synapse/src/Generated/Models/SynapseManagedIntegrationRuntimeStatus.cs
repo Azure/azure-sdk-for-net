@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Managed integration runtime status. </summary>
     public partial class SynapseManagedIntegrationRuntimeStatus : SynapseIntegrationRuntimeStatus
     {
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedIntegrationRuntimeStatus"/>. </summary>
         internal SynapseManagedIntegrationRuntimeStatus()
         {
             Nodes = new ChangeTrackingList<SynapseManagedIntegrationRuntimeNode>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse.Models
             RuntimeType = IntegrationRuntimeType.Managed;
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedIntegrationRuntimeStatus"/>. </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>

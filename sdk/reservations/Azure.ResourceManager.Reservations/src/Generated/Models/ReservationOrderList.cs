@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> List of `ReservationOrder`s. </summary>
     internal partial class ReservationOrderList
     {
-        /// <summary> Initializes a new instance of ReservationOrderList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderList"/>. </summary>
         internal ReservationOrderList()
         {
             Value = new ChangeTrackingList<ReservationOrderData>();
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Url to get the next page of reservationOrders. </param>
         internal ReservationOrderList(IReadOnlyList<ReservationOrderData> value, string nextLink)

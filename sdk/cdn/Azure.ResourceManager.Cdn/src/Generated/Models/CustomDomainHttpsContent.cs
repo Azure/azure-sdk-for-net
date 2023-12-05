@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// </summary>
     public abstract partial class CustomDomainHttpsContent
     {
-        /// <summary> Initializes a new instance of CustomDomainHttpsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/>. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         protected CustomDomainHttpsContent(SecureDeliveryProtocolType protocolType)
         {
             ProtocolType = protocolType;
         }
 
-        /// <summary> Initializes a new instance of CustomDomainHttpsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>

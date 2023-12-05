@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
     /// <summary> The response of a Service list operation. </summary>
     internal partial class ApiCenterServiceListResult
     {
-        /// <summary> Initializes a new instance of ApiCenterServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
         /// <param name="value"> The Service items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApiCenterServiceListResult(IEnumerable<ApiCenterServiceData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApiCenterServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
         /// <param name="value"> The Service items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal ApiCenterServiceListResult(IReadOnlyList<ApiCenterServiceData> value, Uri nextLink)

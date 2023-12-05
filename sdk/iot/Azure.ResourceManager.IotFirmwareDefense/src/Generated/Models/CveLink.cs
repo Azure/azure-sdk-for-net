@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Link for CVE. </summary>
     public partial class CveLink
     {
-        /// <summary> Initializes a new instance of CveLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CveLink"/>. </summary>
         internal CveLink()
         {
         }
 
-        /// <summary> Initializes a new instance of CveLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CveLink"/>. </summary>
         /// <param name="href"> Href of CVE link. </param>
         /// <param name="label"> Label of CVE link. </param>
         internal CveLink(string href, string label)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the move resource status. </summary>
     public partial class MoverResourcePropertiesMoveStatus : MoverResourceStatus
     {
-        /// <summary> Initializes a new instance of MoverResourcePropertiesMoveStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourcePropertiesMoveStatus"/>. </summary>
         internal MoverResourcePropertiesMoveStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourcePropertiesMoveStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourcePropertiesMoveStatus"/>. </summary>
         /// <param name="moveState"> Defines the MoveResource states. </param>
         /// <param name="jobStatus"> Defines the job status. </param>
         /// <param name="errors"> An error response from the azure resource mover service. </param>

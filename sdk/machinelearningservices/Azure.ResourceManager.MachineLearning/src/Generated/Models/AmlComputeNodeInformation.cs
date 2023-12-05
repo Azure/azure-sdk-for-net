@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Compute node information related to a AmlCompute. </summary>
     public partial class AmlComputeNodeInformation
     {
-        /// <summary> Initializes a new instance of AmlComputeNodeInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlComputeNodeInformation"/>. </summary>
         internal AmlComputeNodeInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlComputeNodeInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlComputeNodeInformation"/>. </summary>
         /// <param name="nodeId"> ID of the compute node. </param>
         /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
         /// <param name="publicIPAddress"> Public IP address of the compute node. </param>

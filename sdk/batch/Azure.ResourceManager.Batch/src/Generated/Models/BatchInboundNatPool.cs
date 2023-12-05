@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A inbound NAT pool that can be used to address specific ports on compute nodes in a Batch pool externally. </summary>
     public partial class BatchInboundNatPool
     {
-        /// <summary> Initializes a new instance of BatchInboundNatPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchInboundNatPool"/>. </summary>
         /// <param name="name"> The name must be unique within a Batch pool, can contain letters, numbers, underscores, periods, and hyphens. Names must start with a letter or number, must end with a letter, number, or underscore, and cannot exceed 77 characters.  If any invalid values are provided the request fails with HTTP status code 400. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="backendPort"> This must be unique within a Batch pool. Acceptable values are between 1 and 65535 except for 22, 3389, 29876 and 29877 as these are reserved. If any reserved values are provided the request fails with HTTP status code 400. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch.Models
             NetworkSecurityGroupRules = new ChangeTrackingList<BatchNetworkSecurityGroupRule>();
         }
 
-        /// <summary> Initializes a new instance of BatchInboundNatPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchInboundNatPool"/>. </summary>
         /// <param name="name"> The name must be unique within a Batch pool, can contain letters, numbers, underscores, periods, and hyphens. Names must start with a letter or number, must end with a letter, number, or underscore, and cannot exceed 77 characters.  If any invalid values are provided the request fails with HTTP status code 400. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="backendPort"> This must be unique within a Batch pool. Acceptable values are between 1 and 65535 except for 22, 3389, 29876 and 29877 as these are reserved. If any reserved values are provided the request fails with HTTP status code 400. </param>

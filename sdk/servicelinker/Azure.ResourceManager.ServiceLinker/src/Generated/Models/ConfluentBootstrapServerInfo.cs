@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The service properties when target service type is ConfluentBootstrapServer. </summary>
     public partial class ConfluentBootstrapServerInfo : TargetServiceBaseInfo
     {
-        /// <summary> Initializes a new instance of ConfluentBootstrapServerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentBootstrapServerInfo"/>. </summary>
         public ConfluentBootstrapServerInfo()
         {
             TargetServiceType = TargetServiceType.ConfluentBootstrapServer;
         }
 
-        /// <summary> Initializes a new instance of ConfluentBootstrapServerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentBootstrapServerInfo"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
         /// <param name="endpoint"> The endpoint of service. </param>
         internal ConfluentBootstrapServerInfo(TargetServiceType targetServiceType, string endpoint) : base(targetServiceType)

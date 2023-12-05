@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The NumericalDataDriftMetricThreshold. </summary>
     public partial class NumericalDataDriftMetricThreshold : DataDriftMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of NumericalDataDriftMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumericalDataDriftMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The numerical data drift metric to calculate. </param>
         public NumericalDataDriftMetricThreshold(NumericalDataDriftMetric metric)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataType = MonitoringFeatureDataType.Numerical;
         }
 
-        /// <summary> Initializes a new instance of NumericalDataDriftMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumericalDataDriftMetricThreshold"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         /// <param name="metric"> [Required] The numerical data drift metric to calculate. </param>

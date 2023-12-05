@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The details for role assignment response. </summary>
     public partial class RoleAssignmentDetail
     {
-        /// <summary> Initializes a new instance of RoleAssignmentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentDetail"/>. </summary>
         /// <param name="roleId"> Role Id of the Built-In Role. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="userName"> User name. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             RoleAssignmentId = roleAssignmentId;
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentDetail"/>. </summary>
         /// <param name="roleId"> Role Id of the Built-In Role. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="userName"> User name. </param>

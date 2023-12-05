@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of a Run Command metadata. </summary>
     public partial class RunCommandDocumentBase
     {
-        /// <summary> Initializes a new instance of RunCommandDocumentBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocumentBase"/>. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="id"> The VM run command id. </param>
         /// <param name="osType"> The Operating System type. </param>

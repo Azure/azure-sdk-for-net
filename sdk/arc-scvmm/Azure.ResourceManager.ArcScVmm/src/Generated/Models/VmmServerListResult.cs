@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> List of VmmServers. </summary>
     internal partial class VmmServerListResult
     {
-        /// <summary> Initializes a new instance of VmmServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmServerListResult"/>. </summary>
         internal VmmServerListResult()
         {
             Value = new ChangeTrackingList<ScVmmServerData>();
         }
 
-        /// <summary> Initializes a new instance of VmmServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmServerListResult"/>. </summary>
         /// <param name="value"> List of VmmServers. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal VmmServerListResult(IReadOnlyList<ScVmmServerData> value, string nextLink)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Properties to configure Encryption. </summary>
     public partial class ServiceAccountEncryptionProperties
     {
-        /// <summary> Initializes a new instance of ServiceAccountEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountEncryptionProperties"/>. </summary>
         public ServiceAccountEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountEncryptionProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         internal ServiceAccountEncryptionProperties(CognitiveServicesKeyVaultProperties keyVaultProperties, ServiceAccountEncryptionKeySource? keySource)

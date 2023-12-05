@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.KeyVault
     /// </summary>
     public partial class ManagedHsmPrivateEndpointConnectionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedHsmPrivateEndpointConnectionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

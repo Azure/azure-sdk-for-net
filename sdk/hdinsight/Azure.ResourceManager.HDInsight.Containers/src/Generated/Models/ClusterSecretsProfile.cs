@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The cluster secret profile. </summary>
     public partial class ClusterSecretsProfile
     {
-        /// <summary> Initializes a new instance of ClusterSecretsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterSecretsProfile"/>. </summary>
         /// <param name="keyVaultResourceId"> Name of the user Key Vault where all the cluster specific user secrets are stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultResourceId"/> is null. </exception>
         public ClusterSecretsProfile(ResourceIdentifier keyVaultResourceId)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Secrets = new ChangeTrackingList<ClusterSecretReference>();
         }
 
-        /// <summary> Initializes a new instance of ClusterSecretsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterSecretsProfile"/>. </summary>
         /// <param name="keyVaultResourceId"> Name of the user Key Vault where all the cluster specific user secrets are stored. </param>
         /// <param name="secrets"> Properties of Key Vault secret. </param>
         internal ClusterSecretsProfile(ResourceIdentifier keyVaultResourceId, IList<ClusterSecretReference> secrets)

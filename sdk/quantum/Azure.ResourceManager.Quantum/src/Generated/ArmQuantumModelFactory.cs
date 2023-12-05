@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmQuantumModelFactory
     {
-        /// <summary> Initializes a new instance of QuantumWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quantum.QuantumWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new QuantumWorkspaceData(id, name, resourceType, systemData, tags, location, identity, providers?.ToList(), usable, provisioningState, storageAccount, endpointUri);
         }
 
-        /// <summary> Initializes a new instance of ProviderDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderDescription"/>. </summary>
         /// <param name="id"> Unique provider's id. </param>
         /// <param name="name"> Provider's display name. </param>
         /// <param name="properties"> A list of provider-specific properties. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new ProviderDescription(id, name, properties);
         }
 
-        /// <summary> Initializes a new instance of ProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderProperties"/>. </summary>
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new ProviderProperties(description, providerType, company, defaultEndpoint, aad, managedApplication, targets?.ToList(), skus?.ToList(), quotaDimensions?.ToList(), pricingDimensions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProviderPropertiesAad. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderPropertiesAad"/>. </summary>
         /// <param name="applicationId"> Provider's application id. </param>
         /// <param name="tenantId"> Provider's tenant id. </param>
         /// <returns> A new <see cref="Models.ProviderPropertiesAad"/> instance for mocking. </returns>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new ProviderPropertiesAad(applicationId, tenantId);
         }
 
-        /// <summary> Initializes a new instance of ProviderPropertiesManagedApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderPropertiesManagedApplication"/>. </summary>
         /// <param name="publisherId"> Provider's publisher id. </param>
         /// <param name="offerId"> Provider's offer id. </param>
         /// <returns> A new <see cref="Models.ProviderPropertiesManagedApplication"/> instance for mocking. </returns>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new ProviderPropertiesManagedApplication(publisherId, offerId);
         }
 
-        /// <summary> Initializes a new instance of TargetDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TargetDescription"/>. </summary>
         /// <param name="id"> Unique target id. </param>
         /// <param name="name"> Display name of this target. </param>
         /// <param name="description"> A description about this target. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new TargetDescription(id, name, description, acceptedDataFormats?.ToList(), acceptedContentEncodings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SkuDescription"/>. </summary>
         /// <param name="id"> Unique sku id. </param>
         /// <param name="name"> Display name of this sku. </param>
         /// <param name="version"> Display name of this sku. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new SkuDescription(id, name, version, description, restrictedAccessUri, autoAdd, targets?.ToList(), quotaDimensions?.ToList(), pricingDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of QuotaDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaDimension"/>. </summary>
         /// <param name="id"> Unique id of this dimension. </param>
         /// <param name="scope"> The scope of this quota dimension. </param>
         /// <param name="period"> The reset period of this quota dimension. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new QuotaDimension(id, scope, period, quota, name, description, unit, unitPlural);
         }
 
-        /// <summary> Initializes a new instance of PricingDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PricingDetail"/>. </summary>
         /// <param name="id"> Unique id for this pricing information. </param>
         /// <param name="value"> The unit cost of this sku. </param>
         /// <returns> A new <see cref="Models.PricingDetail"/> instance for mocking. </returns>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new PricingDetail(id, value);
         }
 
-        /// <summary> Initializes a new instance of PricingDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PricingDimension"/>. </summary>
         /// <param name="id"> Unique id of this pricing dimension. </param>
         /// <param name="name"> The display name of this pricing dimension. </param>
         /// <returns> A new <see cref="Models.PricingDimension"/> instance for mocking. </returns>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Quantum.Models
             return new PricingDimension(id, name);
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicator of availability of the Quantum Workspace resource name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>

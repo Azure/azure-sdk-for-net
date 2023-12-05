@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes properties that can identify extensions. </summary>
     public partial class ConfigurationExtension
     {
-        /// <summary> Initializes a new instance of ConfigurationExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationExtension"/>. </summary>
         internal ConfigurationExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationExtension"/>. </summary>
         /// <param name="publisher"> Publisher of the extension. </param>
         /// <param name="configurationExtensionType"> Type of the extension. </param>
         internal ConfigurationExtension(string publisher, string configurationExtensionType)

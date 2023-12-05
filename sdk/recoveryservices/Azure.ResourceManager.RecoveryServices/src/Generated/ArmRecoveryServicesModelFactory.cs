@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRecoveryServicesModelFactory
     {
-        /// <summary> Initializes a new instance of VaultCertificateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultCertificateResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultCertificateResult(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ResourceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateDetails"/>. </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new UnknownResourceCertificateDetails(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn);
         }
 
-        /// <summary> Initializes a new instance of ReplicationUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationUsage"/>. </summary>
         /// <param name="monitoringSummary"> Summary of the replication monitoring data for this vault. </param>
         /// <param name="jobsSummary"> Summary of the replication jobs data for this vault. </param>
         /// <param name="protectedItemCount"> Number of replication protected items for this vault. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new ReplicationUsage(monitoringSummary, jobsSummary, protectedItemCount, recoveryPlanCount, registeredServersCount, recoveryServicesProviderAuthType);
         }
 
-        /// <summary> Initializes a new instance of VaultMonitoringSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultMonitoringSummary"/>. </summary>
         /// <param name="unHealthyVmCount"> Count of unhealthy VMs. </param>
         /// <param name="unHealthyProviderCount"> Count of unhealthy replication providers. </param>
         /// <param name="eventsCount"> Count of all critical warnings. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultMonitoringSummary(unHealthyVmCount, unHealthyProviderCount, eventsCount, deprecatedProviderCount, supportedProviderCount, unsupportedProviderCount);
         }
 
-        /// <summary> Initializes a new instance of ReplicationJobSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationJobSummary"/>. </summary>
         /// <param name="failedJobs"> Count of failed jobs. </param>
         /// <param name="suspendedJobs"> Count of suspended jobs. </param>
         /// <param name="inProgressJobs"> Count of in-progress jobs. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new ReplicationJobSummary(failedJobs, suspendedJobs, inProgressJobs);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"></param>
         /// <param name="reason"></param>
         /// <param name="message"></param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesVaultData(id, name, resourceType, systemData, tags, location, identity, properties, sku, etag);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesVaultProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="upgradeDetails"> Details for upgrading vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection. </param>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesVaultProperties(provisioningState, upgradeDetails, privateEndpointConnections?.ToList(), privateEndpointStateForBackup, privateEndpointStateForSiteRecovery, encryption, moveDetails, moveState, backupStorageVersion, publicNetworkAccess, monitoringSettings, crossSubscriptionRestoreState != null ? new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState)) : null, redundancySettings, securitySettings, secureScore);
         }
 
-        /// <summary> Initializes a new instance of VaultUpgradeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultUpgradeDetails"/>. </summary>
         /// <param name="operationId"> ID of the vault upgrade operation. </param>
         /// <param name="startOn"> UTC time at which the upgrade operation has started. </param>
         /// <param name="lastUpdatedOn"> UTC time at which the upgrade operation status was last updated. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultUpgradeDetails(operationId, startOn, lastUpdatedOn, endOn, status, message, triggerType, upgradedResourceId, previousResourceId);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnectionVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesPrivateEndpointConnectionVaultProperties(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesPrivateEndpointConnection"/>. </summary>
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> The Private Endpoint network resource that is linked to the Private Endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesPrivateEndpointConnection(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, groupIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Gets or sets the status. </param>
         /// <param name="description"> Gets or sets description. </param>
         /// <param name="actionsRequired"> Gets or sets actions required. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesPrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of VaultPropertiesMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultPropertiesMoveDetails"/>. </summary>
         /// <param name="operationId"> OperationId of the Resource Move Operation. </param>
         /// <param name="startOn"> Start Time of the Resource Move Operation. </param>
         /// <param name="completedOn"> End Time of the Resource Move Operation. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultPropertiesMoveDetails(operationId, startOn, completedOn, sourceResourceId, targetResourceId);
         }
 
-        /// <summary> Initializes a new instance of VaultPropertiesRedundancySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultPropertiesRedundancySettings"/>. </summary>
         /// <param name="standardTierStorageRedundancy"> The storage redundancy setting of a vault. </param>
         /// <param name="crossRegionRestore"> Flag to show if Cross Region Restore is enabled on the Vault or not. </param>
         /// <returns> A new <see cref="Models.VaultPropertiesRedundancySettings"/> instance for mocking. </returns>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesSecuritySettings"/>. </summary>
         /// <param name="immutabilityState"> Immutability Settings of a vault. </param>
         /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
         /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesSecuritySettings(immutabilityState != null ? new ImmutabilitySettings(immutabilityState) : null, softDeleteSettings, multiUserAuthorization);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesVaultPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesVaultPatch(id, name, resourceType, systemData, tags, location, properties, sku, identity, etag);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultExtendedInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesVaultExtendedInfoData(id, name, resourceType, systemData, integrityKey, encryptionKey, encryptionKeyThumbprint, algorithm, etag);
         }
 
-        /// <summary> Initializes a new instance of VaultUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultUsage"/>. </summary>
         /// <param name="unit"> Unit of the usage. </param>
         /// <param name="quotaPeriod"> Quota period of usage. </param>
         /// <param name="nextResetOn"> Next reset time of usage. </param>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultUsage(unit, quotaPeriod, nextResetOn, currentValue, limit, name);
         }
 
-        /// <summary> Initializes a new instance of VaultUsageNameInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultUsageNameInfo"/>. </summary>
         /// <param name="value"> Value of usage. </param>
         /// <param name="localizedValue"> Localized value of usage. </param>
         /// <returns> A new <see cref="Models.VaultUsageNameInfo"/> instance for mocking. </returns>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultUsageNameInfo(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of ResourceCertificateAndAadDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateAndAadDetails"/>. </summary>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
         /// <param name="issuer"> Certificate issuer. </param>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new ResourceCertificateAndAadDetails("AzureActiveDirectory", certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId, aadAudience);
         }
 
-        /// <summary> Initializes a new instance of ResourceCertificateAndAcsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateAndAcsDetails"/>. </summary>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
         /// <param name="issuer"> Certificate issuer. </param>

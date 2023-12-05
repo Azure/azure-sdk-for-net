@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The address validation output. </summary>
     public partial class AddressValidationResult : DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of AddressValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressValidationResult"/>. </summary>
         internal AddressValidationResult()
         {
             AlternateAddresses = new ChangeTrackingList<DataBoxShippingAddress>();
             ValidationType = DataBoxValidationInputDiscriminator.ValidateAddress;
         }
 
-        /// <summary> Initializes a new instance of AddressValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>

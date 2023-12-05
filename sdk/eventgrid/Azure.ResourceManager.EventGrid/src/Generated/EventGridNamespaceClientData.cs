@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class EventGridNamespaceClientData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventGridNamespaceClientData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientData"/>. </summary>
         public EventGridNamespaceClientData()
         {
             Attributes = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of EventGridNamespaceClientData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

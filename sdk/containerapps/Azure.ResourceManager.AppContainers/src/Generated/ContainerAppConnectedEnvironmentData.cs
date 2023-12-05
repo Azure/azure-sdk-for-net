@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerAppConnectedEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownTargetRollingWindowSize. </summary>
     internal partial class UnknownTargetRollingWindowSize : TargetRollingWindowSize
     {
-        /// <summary> Initializes a new instance of UnknownTargetRollingWindowSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTargetRollingWindowSize"/>. </summary>
         /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
         internal UnknownTargetRollingWindowSize(TargetRollingWindowSizeMode mode) : base(mode)
         {

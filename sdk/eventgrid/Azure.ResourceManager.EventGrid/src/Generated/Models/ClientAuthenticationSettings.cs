@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Client authentication settings for namespace resource. </summary>
     internal partial class ClientAuthenticationSettings
     {
-        /// <summary> Initializes a new instance of ClientAuthenticationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientAuthenticationSettings"/>. </summary>
         public ClientAuthenticationSettings()
         {
             AlternativeAuthenticationNameSources = new ChangeTrackingList<AlternativeAuthenticationNameSource>();
         }
 
-        /// <summary> Initializes a new instance of ClientAuthenticationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientAuthenticationSettings"/>. </summary>
         /// <param name="alternativeAuthenticationNameSources"> Alternative authentication name sources related to client authentication settings for namespace resource. </param>
         internal ClientAuthenticationSettings(IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources)
         {

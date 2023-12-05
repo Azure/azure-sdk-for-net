@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Ssis environment. </summary>
     public partial class SynapseSsisEnvironment : SynapseSsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SynapseSsisEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisEnvironment"/>. </summary>
         internal SynapseSsisEnvironment()
         {
             Variables = new ChangeTrackingList<SynapseSsisVariable>();
             MetadataType = SynapseSsisObjectMetadataType.Environment;
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisEnvironment"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The Kusto SKU description of given resource type. </summary>
     public partial class KustoSkuDescription
     {
-        /// <summary> Initializes a new instance of KustoSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoSkuDescription"/>. </summary>
         internal KustoSkuDescription()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Restrictions = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of KustoSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoSkuDescription"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The tier of the SKU. </param>

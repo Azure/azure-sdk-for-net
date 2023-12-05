@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The MetricsResponseSeriesPropertiesItemsItem. </summary>
     public partial class MetricsResponseSeriesPropertiesItemsItem
     {
-        /// <summary> Initializes a new instance of MetricsResponseSeriesPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesPropertiesItemsItem"/>. </summary>
         internal MetricsResponseSeriesPropertiesItemsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricsResponseSeriesPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesPropertiesItemsItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
         internal MetricsResponseSeriesPropertiesItemsItem(string name, string value)

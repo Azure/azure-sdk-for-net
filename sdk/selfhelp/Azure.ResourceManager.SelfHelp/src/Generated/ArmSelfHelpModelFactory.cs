@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSelfHelpModelFactory
     {
-        /// <summary> Initializes a new instance of SelfHelpNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
         /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelp.SelfHelpDiagnosticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpDiagnosticData(id, name, resourceType, systemData, globalParameters, insights?.ToList(), acceptedOn, provisioningState, diagnostics?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpDiagnosticInfo"/>. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="status"> Denotes the status of the diagnostic resource. </param>
         /// <param name="insights"> The problems (if any) detected by this insight. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpDiagnosticInfo(solutionId, status, insights?.ToList(), error);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpError"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
         /// <param name="message"> Description of the error. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpError(code, errorType, message, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, solutions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SolutionMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SolutionMetadataProperties"/>. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="solutionType"> Solution Type. </param>
         /// <param name="description"> A detailed description of solution. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SolutionResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelp.SolutionResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of TroubleshooterResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelp.TroubleshooterResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new TroubleshooterResourceData(id, name, resourceType, systemData, solutionId, parameters, provisioningState, steps?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SelfHelpStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpStep"/>. </summary>
         /// <param name="id"> Unique step id. </param>
         /// <param name="title"> Step title. </param>
         /// <param name="description"> Step description. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpStep(id, title, description, guidance, executionStatus, executionStatusDescription, stepType, isLastStep, inputs?.ToList(), automatedCheckResults, insights?.ToList(), error);
         }
 
-        /// <summary> Initializes a new instance of StepInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StepInput"/>. </summary>
         /// <param name="questionId"> Use Index as QuestionId. </param>
         /// <param name="questionType"> Text Input. Will be a single line input. </param>
         /// <param name="questionContent"> User question content. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new StepInput(questionId, questionType, questionContent, questionContentType, responseHint, recommendedOption, selectedOptionValue, responseValidationProperties, responseOptions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ResponseValidationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResponseValidationProperties"/>. </summary>
         /// <param name="regex"> Regex used for the input validation. </param>
         /// <param name="isRequired"> Default True. </param>
         /// <param name="validationErrorMessage"> Validation Error Message. </param>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new ResponseValidationProperties(regex, isRequired, validationErrorMessage, maxLength);
         }
 
-        /// <summary> Initializes a new instance of ResponseConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResponseConfig"/>. </summary>
         /// <param name="key"> Unique string. </param>
         /// <param name="value"> Option description. </param>
         /// <returns> A new <see cref="Models.ResponseConfig"/> instance for mocking. </returns>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new ResponseConfig(key, value);
         }
 
-        /// <summary> Initializes a new instance of AutomatedCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutomatedCheckResult"/>. </summary>
         /// <param name="result"> Insight Article Content. </param>
         /// <param name="resultType"> Type of Result. </param>
         /// <returns> A new <see cref="Models.AutomatedCheckResult"/> instance for mocking. </returns>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new AutomatedCheckResult(result, resultType);
         }
 
-        /// <summary> Initializes a new instance of RestartTroubleshooterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RestartTroubleshooterResult"/>. </summary>
         /// <param name="troubleshooterResourceName"> Updated TroubleshooterResource Name . </param>
         /// <returns> A new <see cref="Models.RestartTroubleshooterResult"/> instance for mocking. </returns>
         public static RestartTroubleshooterResult RestartTroubleshooterResult(string troubleshooterResourceName = null)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of usage counter name. </summary>
     public partial class AutomationUsageCounterName
     {
-        /// <summary> Initializes a new instance of AutomationUsageCounterName. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationUsageCounterName"/>. </summary>
         internal AutomationUsageCounterName()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationUsageCounterName. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationUsageCounterName"/>. </summary>
         /// <param name="value"> Gets or sets the usage counter name. </param>
         /// <param name="localizedValue"> Gets or sets the localized usage counter name. </param>
         internal AutomationUsageCounterName(string value, string localizedValue)

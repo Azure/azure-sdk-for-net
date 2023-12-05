@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownTaskTypeDetails. </summary>
     internal partial class UnknownTaskTypeDetails : SiteRecoveryTaskTypeDetails
     {
-        /// <summary> Initializes a new instance of UnknownTaskTypeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTaskTypeDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         internal UnknownTaskTypeDetails(string instanceType) : base(instanceType)
         {

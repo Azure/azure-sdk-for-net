@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Reason for cancellation. </summary>
     public partial class EdgeOrderItemCancellationReason
     {
-        /// <summary> Initializes a new instance of EdgeOrderItemCancellationReason. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemCancellationReason"/>. </summary>
         /// <param name="reason"> Reason for cancellation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reason"/> is null. </exception>
         public EdgeOrderItemCancellationReason(string reason)

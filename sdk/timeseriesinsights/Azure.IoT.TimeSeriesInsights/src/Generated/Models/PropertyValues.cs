@@ -12,12 +12,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </summary>
     public partial class PropertyValues : TimeSeriesInsightsEventProperty
     {
-        /// <summary> Initializes a new instance of PropertyValues. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyValues"/>. </summary>
         public PropertyValues()
         {
         }
 
-        /// <summary> Initializes a new instance of PropertyValues. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyValues"/>. </summary>
         /// <param name="name"> The name of the property. </param>
         /// <param name="propertyValueType"> The type of the property. </param>
         /// <param name="valuesInternal"> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </param>

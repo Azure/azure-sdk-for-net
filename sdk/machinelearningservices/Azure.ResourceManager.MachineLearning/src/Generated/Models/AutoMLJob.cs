@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class AutoMLJob : MachineLearningJobProperties
     {
-        /// <summary> Initializes a new instance of AutoMLJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLJob"/>. </summary>
         /// <param name="taskDetails">
         /// [Required] This represents scenario which can be one of Tables/NLP/Image
         /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobType = JobType.AutoML;
         }
 
-        /// <summary> Initializes a new instance of AutoMLJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

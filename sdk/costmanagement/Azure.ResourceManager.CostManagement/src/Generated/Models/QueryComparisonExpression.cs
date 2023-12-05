@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The comparison expression to be used in the query. </summary>
     public partial class QueryComparisonExpression
     {
-        /// <summary> Initializes a new instance of QueryComparisonExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryComparisonExpression"/>. </summary>
         /// <param name="name"> The name of the column to use in comparison. </param>
         /// <param name="operator"> The operator to use for comparison. </param>
         /// <param name="values"> Array of values to use for comparison. </param>
@@ -28,6 +28,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             Name = name;
             Operator = @operator;
             Values = values.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryComparisonExpression"/>. </summary>
+        /// <param name="name"> The name of the column to use in comparison. </param>
+        /// <param name="operator"> The operator to use for comparison. </param>
+        /// <param name="values"> Array of values to use for comparison. </param>
+        internal QueryComparisonExpression(string name, QueryOperatorType @operator, IList<string> values)
+        {
+            Name = name;
+            Operator = @operator;
+            Values = values;
         }
 
         /// <summary> The name of the column to use in comparison. </summary>

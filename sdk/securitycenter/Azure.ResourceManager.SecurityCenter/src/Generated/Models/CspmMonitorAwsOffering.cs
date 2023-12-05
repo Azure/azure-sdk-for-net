@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The CSPM monitoring for AWS offering. </summary>
     public partial class CspmMonitorAwsOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of CspmMonitorAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOffering"/>. </summary>
         public CspmMonitorAwsOffering()
         {
             OfferingType = OfferingType.CspmMonitorAws;
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>

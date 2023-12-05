@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Configuration values for periodic mode backup. </summary>
     public partial class PeriodicModeProperties
     {
-        /// <summary> Initializes a new instance of PeriodicModeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeriodicModeProperties"/>. </summary>
         public PeriodicModeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PeriodicModeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeriodicModeProperties"/>. </summary>
         /// <param name="backupIntervalInMinutes"> An integer representing the interval in minutes between two backups. </param>
         /// <param name="backupRetentionIntervalInHours"> An integer representing the time (in hours) that each backup is retained. </param>
         /// <param name="backupStorageRedundancy"> Enum to indicate type of backup residency. </param>

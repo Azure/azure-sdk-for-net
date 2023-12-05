@@ -14,10 +14,19 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> ArcSetting details to update. </summary>
     public partial class ArcSettingPatch
     {
-        /// <summary> Initializes a new instance of ArcSettingPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcSettingPatch"/>. </summary>
         public ArcSettingPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArcSettingPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        internal ArcSettingPatch(IDictionary<string, string> tags, BinaryData connectivityProperties)
+        {
+            Tags = tags;
+            ConnectivityProperties = connectivityProperties;
         }
 
         /// <summary> Resource tags. </summary>

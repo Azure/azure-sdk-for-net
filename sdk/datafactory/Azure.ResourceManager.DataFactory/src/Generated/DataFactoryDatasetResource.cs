@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataFactory
         private readonly DatasetsRestOperations _dataFactoryDatasetDatasetsRestClient;
         private readonly DataFactoryDatasetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/datasets";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryDatasetResource"/> class for mocking. </summary>
         protected DataFactoryDatasetResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/datasets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

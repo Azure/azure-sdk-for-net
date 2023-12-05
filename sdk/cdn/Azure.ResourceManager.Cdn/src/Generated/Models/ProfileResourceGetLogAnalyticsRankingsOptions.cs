@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ProfileResourceGetLogAnalyticsRankingsOptions. </summary>
     public partial class ProfileResourceGetLogAnalyticsRankingsOptions
     {
-        /// <summary> Initializes a new instance of ProfileResourceGetLogAnalyticsRankingsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/>. </summary>
         /// <param name="rankings"> The rankings. </param>
         /// <param name="metrics"> The metrics. </param>
         /// <param name="maxRanking"> The maxRanking. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> An object that represents enumerating SKUs for existing resources. </summary>
     internal partial class ExistingResourceResultSkuEnumeration
     {
-        /// <summary> Initializes a new instance of ExistingResourceResultSkuEnumeration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExistingResourceResultSkuEnumeration"/>. </summary>
         internal ExistingResourceResultSkuEnumeration()
         {
             Value = new ChangeTrackingList<AnalysisExistingSku>();
         }
 
-        /// <summary> Initializes a new instance of ExistingResourceResultSkuEnumeration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExistingResourceResultSkuEnumeration"/>. </summary>
         /// <param name="value"> The collection of available SKUs for existing resources. </param>
         internal ExistingResourceResultSkuEnumeration(IReadOnlyList<AnalysisExistingSku> value)
         {

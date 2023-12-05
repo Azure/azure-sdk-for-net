@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> The UnknownFabricModelCustomProperties. </summary>
     internal partial class UnknownFabricModelCustomProperties : FabricModelCustomProperties
     {
-        /// <summary> Initializes a new instance of UnknownFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFabricModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal UnknownFabricModelCustomProperties(string instanceType) : base(instanceType)
         {

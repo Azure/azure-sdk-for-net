@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeJobData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobData"/>. </summary>
         internal DataBoxEdgeJobData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

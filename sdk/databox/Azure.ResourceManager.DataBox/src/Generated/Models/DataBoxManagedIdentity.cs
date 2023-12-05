@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Managed identity properties. </summary>
     public partial class DataBoxManagedIdentity
     {
-        /// <summary> Initializes a new instance of DataBoxManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxManagedIdentity"/>. </summary>
         public DataBoxManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxManagedIdentity"/>. </summary>
         /// <param name="identityType"> Managed service identity type. </param>
         /// <param name="userAssigned"> User assigned identity properties. </param>
         internal DataBoxManagedIdentity(string identityType, DataBoxUserAssignedIdentity userAssigned)

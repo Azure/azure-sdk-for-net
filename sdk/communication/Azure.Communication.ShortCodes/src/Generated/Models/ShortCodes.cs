@@ -13,13 +13,13 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> A wrapper for a list of short code entities. </summary>
     internal partial class ShortCodes
     {
-        /// <summary> Initializes a new instance of ShortCodes. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortCodes"/>. </summary>
         internal ShortCodes()
         {
             ShortCodesValue = new ChangeTrackingList<ShortCode>();
         }
 
-        /// <summary> Initializes a new instance of ShortCodes. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortCodes"/>. </summary>
         /// <param name="shortCodesValue"> List of short codes. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         internal ShortCodes(IReadOnlyList<ShortCode> shortCodesValue, string nextLink)

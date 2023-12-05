@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An iSCSI volume from Microsoft.StoragePool provider. </summary>
     public partial class DiskPoolVolume
     {
-        /// <summary> Initializes a new instance of DiskPoolVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolVolume"/>. </summary>
         /// <param name="targetId"> Azure resource ID of the iSCSI target. </param>
         /// <param name="lunName"> Name of the LUN to be used for datastore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetId"/> or <paramref name="lunName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             LunName = lunName;
         }
 
-        /// <summary> Initializes a new instance of DiskPoolVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolVolume"/>. </summary>
         /// <param name="targetId"> Azure resource ID of the iSCSI target. </param>
         /// <param name="lunName"> Name of the LUN to be used for datastore. </param>
         /// <param name="mountOption"> Mode that describes whether the LUN has to be mounted as a datastore or attached as a LUN. </param>

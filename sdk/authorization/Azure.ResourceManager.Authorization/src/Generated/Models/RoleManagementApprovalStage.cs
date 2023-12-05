@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The approval stage. </summary>
     public partial class RoleManagementApprovalStage
     {
-        /// <summary> Initializes a new instance of RoleManagementApprovalStage. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementApprovalStage"/>. </summary>
         public RoleManagementApprovalStage()
         {
             PrimaryApprovers = new ChangeTrackingList<RoleManagementUserInfo>();
             EscalationApprovers = new ChangeTrackingList<RoleManagementUserInfo>();
         }
 
-        /// <summary> Initializes a new instance of RoleManagementApprovalStage. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementApprovalStage"/>. </summary>
         /// <param name="approvalStageTimeOutInDays"> The time in days when approval request would be timed out. </param>
         /// <param name="isApproverJustificationRequired"> Determines whether approver need to provide justification for his decision. </param>
         /// <param name="escalationTimeInMinutes"> The time in minutes when the approval request would be escalated if the primary approver does not approve. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A ExpressRouteResourceProvider object. </summary>
     public partial class ExpressRouteServiceProvider : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
         public ExpressRouteServiceProvider()
         {
             PeeringLocations = new ChangeTrackingList<string>();
             BandwidthsOffered = new ChangeTrackingList<ExpressRouteServiceProviderBandwidthsOffered>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

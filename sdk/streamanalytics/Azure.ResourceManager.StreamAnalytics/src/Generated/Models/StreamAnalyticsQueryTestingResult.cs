@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The result of the query testing request. </summary>
     public partial class StreamAnalyticsQueryTestingResult : StreamAnalyticsError
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryTestingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryTestingResult"/>. </summary>
         internal StreamAnalyticsQueryTestingResult()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryTestingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryTestingResult"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Error target. </param>

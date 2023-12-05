@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The rule result adjusted with baseline. </summary>
     public partial class BaselineAdjustedResult
     {
-        /// <summary> Initializes a new instance of BaselineAdjustedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
         public BaselineAdjustedResult()
         {
             ResultsNotInBaseline = new ChangeTrackingList<IList<string>>();
             ResultsOnlyInBaseline = new ChangeTrackingList<IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of BaselineAdjustedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
         /// <param name="baseline"> Baseline details. </param>
         /// <param name="status"> The rule result status. </param>
         /// <param name="resultsNotInBaseline"> Results the are not in baseline. </param>

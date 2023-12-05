@@ -13,7 +13,7 @@ namespace Azure.AI.DocumentIntelligence
     /// </summary>
     public partial class DocumentSpan
     {
-        /// <summary> Initializes a new instance of DocumentSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSpan"/>. </summary>
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>
         /// <param name="length"> Number of characters in the content represented by the span. </param>
         internal DocumentSpan(int offset, int length)

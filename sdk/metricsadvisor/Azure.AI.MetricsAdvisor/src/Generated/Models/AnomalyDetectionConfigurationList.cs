@@ -13,13 +13,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyDetectionConfigurationList. </summary>
     internal partial class AnomalyDetectionConfigurationList
     {
-        /// <summary> Initializes a new instance of AnomalyDetectionConfigurationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionConfigurationList"/>. </summary>
         internal AnomalyDetectionConfigurationList()
         {
             Value = new ChangeTrackingList<AnomalyDetectionConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of AnomalyDetectionConfigurationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionConfigurationList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal AnomalyDetectionConfigurationList(IReadOnlyList<AnomalyDetectionConfiguration> value, string nextLink)

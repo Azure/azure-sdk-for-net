@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Configuration of an App Service app. </summary>
     public partial class SiteConfigProperties
     {
-        /// <summary> Initializes a new instance of SiteConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigProperties"/>. </summary>
         public SiteConfigProperties()
         {
             DefaultDocuments = new ChangeTrackingList<string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             AzureStorageAccounts = new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
         }
 
-        /// <summary> Initializes a new instance of SiteConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigProperties"/>. </summary>
         /// <param name="numberOfWorkers"> Number of workers. </param>
         /// <param name="defaultDocuments"> Default documents. </param>
         /// <param name="netFrameworkVersion"> .NET Framework version. </param>

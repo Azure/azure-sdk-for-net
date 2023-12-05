@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> An instance of Remote Dependency represents an interaction of the monitored component with a remote component/service like SQL or an HTTP endpoint. </summary>
     internal partial class RemoteDependencyData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of RemoteDependencyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDependencyData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="name"> Name of the command initiated with this dependency call. Low cardinality value. Examples are stored procedure name and URL path template. </param>
         /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
@@ -28,6 +28,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Duration = duration;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoteDependencyData"/>. </summary>
+        /// <param name="version"> Schema version. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="id"> Identifier of a dependency call instance. Used for correlation with the request telemetry item corresponding to this dependency call. </param>
+        /// <param name="name"> Name of the command initiated with this dependency call. Low cardinality value. Examples are stored procedure name and URL path template. </param>
+        /// <param name="resultCode"> Result code of a dependency call. Examples are SQL error code and HTTP status code. </param>
+        /// <param name="data"> Command initiated by this dependency call. Examples are SQL statement and HTTP URL with all query parameters. </param>
+        /// <param name="type"> Dependency type name. Very low cardinality value for logical grouping of dependencies and interpretation of other fields like commandName and resultCode. Examples are SQL, Azure table, and HTTP. </param>
+        /// <param name="target"> Target site of a dependency call. Examples are server name, host address. </param>
+        /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
+        /// <param name="success"> Indication of successful or unsuccessful call. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="measurements"> Collection of custom measurements. </param>
+        internal RemoteDependencyData(int version, IDictionary<string, object> additionalProperties, string id, string name, string resultCode, string data, string type, string target, string duration, bool? success, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        {
+            Id = id;
+            Name = name;
+            ResultCode = resultCode;
+            Data = data;
+            Type = type;
+            Target = target;
+            Duration = duration;
+            Success = success;
+            Properties = properties;
+            Measurements = measurements;
         }
 
         /// <summary> Identifier of a dependency call instance. Used for correlation with the request telemetry item corresponding to this dependency call. </summary>

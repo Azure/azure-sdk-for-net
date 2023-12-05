@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The list of SSH public keys. </summary>
     internal partial class SshProfile
     {
-        /// <summary> Initializes a new instance of SshProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshProfile"/>. </summary>
         public SshProfile()
         {
             PublicKeys = new ChangeTrackingList<HDInsightSshPublicKey>();
         }
 
-        /// <summary> Initializes a new instance of SshProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshProfile"/>. </summary>
         /// <param name="publicKeys"> The list of SSH public keys. </param>
         internal SshProfile(IList<HDInsightSshPublicKey> publicKeys)
         {

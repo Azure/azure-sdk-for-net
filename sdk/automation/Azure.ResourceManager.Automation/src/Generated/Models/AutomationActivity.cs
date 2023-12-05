@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the activity. </summary>
     public partial class AutomationActivity
     {
-        /// <summary> Initializes a new instance of AutomationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivity"/>. </summary>
         internal AutomationActivity()
         {
             ParameterSets = new ChangeTrackingList<AutomationActivityParameterSet>();
             OutputTypes = new ChangeTrackingList<AutomationActivityOutputType>();
         }
 
-        /// <summary> Initializes a new instance of AutomationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivity"/>. </summary>
         /// <param name="id"> Gets or sets the id of the resource. </param>
         /// <param name="name"> Gets the name of the activity. </param>
         /// <param name="definition"> Gets or sets the user name of the activity. </param>

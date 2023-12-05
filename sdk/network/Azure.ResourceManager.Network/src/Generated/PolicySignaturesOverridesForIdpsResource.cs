@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network
         private readonly FirewallPolicyIdpsSignaturesOverridesRestOperations _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient;
         private readonly PolicySignaturesOverridesForIdpsData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies/signatureOverrides";
+
         /// <summary> Initializes a new instance of the <see cref="PolicySignaturesOverridesForIdpsResource"/> class for mocking. </summary>
         protected PolicySignaturesOverridesForIdpsResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies/signatureOverrides";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

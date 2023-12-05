@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt container mapping input. </summary>
     public partial class VMwareCbtContainerMappingContent : ReplicationProviderSpecificContainerMappingContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtContainerMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtContainerMappingContent"/>. </summary>
         /// <param name="storageAccountId"> The storage account ARM Id. </param>
         /// <param name="targetLocation"> The target location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> or <paramref name="targetLocation"/> is null. </exception>
@@ -25,6 +25,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             StorageAccountId = storageAccountId;
             TargetLocation = targetLocation;
             InstanceType = "VMwareCbt";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtContainerMappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="keyVaultId"> The target key vault ARM Id. </param>
+        /// <param name="keyVaultUri"> The target key vault URL. </param>
+        /// <param name="storageAccountId"> The storage account ARM Id. </param>
+        /// <param name="storageAccountSasSecretName"> The secret name of the storage account. </param>
+        /// <param name="serviceBusConnectionStringSecretName"> The secret name of the service bus connection string. </param>
+        /// <param name="targetLocation"> The target location. </param>
+        internal VMwareCbtContainerMappingContent(string instanceType, ResourceIdentifier keyVaultId, Uri keyVaultUri, ResourceIdentifier storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation) : base(instanceType)
+        {
+            KeyVaultId = keyVaultId;
+            KeyVaultUri = keyVaultUri;
+            StorageAccountId = storageAccountId;
+            StorageAccountSasSecretName = storageAccountSasSecretName;
+            ServiceBusConnectionStringSecretName = serviceBusConnectionStringSecretName;
+            TargetLocation = targetLocation;
+            InstanceType = instanceType ?? "VMwareCbt";
         }
 
         /// <summary> The target key vault ARM Id. </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningEndpointScheduleAction. </summary>
     public partial class MachineLearningEndpointScheduleAction : MachineLearningScheduleAction
     {
-        /// <summary> Initializes a new instance of MachineLearningEndpointScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointScheduleAction"/>. </summary>
         /// <param name="endpointInvocationDefinition">
         /// [Required] Defines Schedule action definition details.
         /// &lt;see href="TBD" /&gt;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ActionType = ScheduleActionType.InvokeBatchEndpoint;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEndpointScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointScheduleAction"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
         /// <param name="endpointInvocationDefinition">
         /// [Required] Defines Schedule action definition details.

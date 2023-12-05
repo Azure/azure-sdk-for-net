@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The CSPM P1 for Aws offering. </summary>
     public partial class DefenderCspmAwsOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderCspmAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOffering"/>. </summary>
         public DefenderCspmAwsOffering()
         {
             OfferingType = OfferingType.DefenderCspmAws;
         }
 
-        /// <summary> Initializes a new instance of DefenderCspmAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>

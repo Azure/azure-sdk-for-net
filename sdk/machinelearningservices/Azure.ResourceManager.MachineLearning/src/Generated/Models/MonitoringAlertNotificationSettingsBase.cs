@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitoringAlertNotificationSettingsBase
     {
-        /// <summary> Initializes a new instance of MonitoringAlertNotificationSettingsBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringAlertNotificationSettingsBase"/>. </summary>
         protected MonitoringAlertNotificationSettingsBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringAlertNotificationSettingsBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringAlertNotificationSettingsBase"/>. </summary>
         /// <param name="alertNotificationType"> [Required] Specifies the type of signal to monitor. </param>
         internal MonitoringAlertNotificationSettingsBase(MonitoringAlertNotificationType alertNotificationType)
         {

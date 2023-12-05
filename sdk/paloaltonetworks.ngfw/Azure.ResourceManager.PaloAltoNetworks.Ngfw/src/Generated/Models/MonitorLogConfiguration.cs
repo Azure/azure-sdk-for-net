@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> MonitorLog configurations. </summary>
     public partial class MonitorLogConfiguration
     {
-        /// <summary> Initializes a new instance of MonitorLogConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorLogConfiguration"/>. </summary>
         public MonitorLogConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorLogConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorLogConfiguration"/>. </summary>
         /// <param name="id"> Resource ID of MonitorLog. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="workspace"> MonitorLog workspace. </param>

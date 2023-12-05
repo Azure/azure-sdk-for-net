@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBackupAuthCredentials
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupAuthCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAuthCredentials"/>. </summary>
         protected DataProtectionBackupAuthCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupAuthCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAuthCredentials"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal DataProtectionBackupAuthCredentials(string objectType)
         {

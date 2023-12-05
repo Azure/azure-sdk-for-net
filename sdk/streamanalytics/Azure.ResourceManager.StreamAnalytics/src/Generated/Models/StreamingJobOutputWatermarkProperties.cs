@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Settings which determine whether to send watermarks to downstream. </summary>
     public partial class StreamingJobOutputWatermarkProperties
     {
-        /// <summary> Initializes a new instance of StreamingJobOutputWatermarkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputWatermarkProperties"/>. </summary>
         public StreamingJobOutputWatermarkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobOutputWatermarkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputWatermarkProperties"/>. </summary>
         /// <param name="watermarkMode"> The output watermark mode. </param>
         /// <param name="maxWatermarkDifferenceAcrossPartitions"> Describes the maximal delta between the fastest and slowest partitions, so the out of order window that catches all necessary events in downstream jobs is well defined. </param>
         internal StreamingJobOutputWatermarkProperties(StreamingJobOutputWatermarkMode? watermarkMode, string maxWatermarkDifferenceAcrossPartitions)

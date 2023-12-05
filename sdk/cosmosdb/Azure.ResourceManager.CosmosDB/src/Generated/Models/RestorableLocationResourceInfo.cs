@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties of the regional restorable account. </summary>
     public partial class RestorableLocationResourceInfo
     {
-        /// <summary> Initializes a new instance of RestorableLocationResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableLocationResourceInfo"/>. </summary>
         internal RestorableLocationResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableLocationResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableLocationResourceInfo"/>. </summary>
         /// <param name="locationName"> The location of the regional restorable account. </param>
         /// <param name="regionalDatabaseAccountInstanceId"> The instance id of the regional restorable account. </param>
         /// <param name="createdOn"> The creation time of the regional restorable database account (ISO-8601 format). </param>

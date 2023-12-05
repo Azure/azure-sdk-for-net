@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Represents an instance of an PowerBI Dedicated resource. </summary>
     public partial class PowerBIDedicatedResourceData
     {
-        /// <summary> Initializes a new instance of PowerBIDedicatedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerBIDedicatedResourceData"/>. </summary>
         /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
         public PowerBIDedicatedResourceData(AzureLocation location)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of PowerBIDedicatedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerBIDedicatedResourceData"/>. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
         /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Response schema. Contains list of tables returned. </summary>
     internal partial class ListTableResource
     {
-        /// <summary> Initializes a new instance of ListTableResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListTableResource"/>. </summary>
         internal ListTableResource()
         {
             Value = new ChangeTrackingList<TableData>();
         }
 
-        /// <summary> Initializes a new instance of ListTableResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListTableResource"/>. </summary>
         /// <param name="value"> List of tables returned. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of tables. </param>
         internal ListTableResource(IReadOnlyList<TableData> value, string nextLink)

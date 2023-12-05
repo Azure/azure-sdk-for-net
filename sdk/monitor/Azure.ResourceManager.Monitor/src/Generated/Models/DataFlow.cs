@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of which streams are sent to which destinations. </summary>
     public partial class DataFlow
     {
-        /// <summary> Initializes a new instance of DataFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlow"/>. </summary>
         public DataFlow()
         {
             Streams = new ChangeTrackingList<DataFlowStream>();
             Destinations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlow"/>. </summary>
         /// <param name="streams"> List of streams for this data flow. </param>
         /// <param name="destinations"> List of destinations for this data flow. </param>
         /// <param name="transformKql"> The KQL query to transform stream data. </param>

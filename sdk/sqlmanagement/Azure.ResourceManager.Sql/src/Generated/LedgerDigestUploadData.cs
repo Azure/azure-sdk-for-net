@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class LedgerDigestUploadData : ResourceData
     {
-        /// <summary> Initializes a new instance of LedgerDigestUploadData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LedgerDigestUploadData"/>. </summary>
         public LedgerDigestUploadData()
         {
         }
 
-        /// <summary> Initializes a new instance of LedgerDigestUploadData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LedgerDigestUploadData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

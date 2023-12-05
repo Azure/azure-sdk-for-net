@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes the output of a function. </summary>
     public partial class StreamingJobFunctionOutput
     {
-        /// <summary> Initializes a new instance of StreamingJobFunctionOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobFunctionOutput"/>. </summary>
         public StreamingJobFunctionOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobFunctionOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobFunctionOutput"/>. </summary>
         /// <param name="dataType"> The (Azure Stream Analytics supported) data type of the function output. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx. </param>
         internal StreamingJobFunctionOutput(string dataType)
         {

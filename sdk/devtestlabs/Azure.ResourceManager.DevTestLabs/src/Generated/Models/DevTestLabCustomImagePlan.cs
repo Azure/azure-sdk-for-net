@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for plan on a custom image. </summary>
     public partial class DevTestLabCustomImagePlan
     {
-        /// <summary> Initializes a new instance of DevTestLabCustomImagePlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImagePlan"/>. </summary>
         public DevTestLabCustomImagePlan()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImagePlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImagePlan"/>. </summary>
         /// <param name="id"> The id of the plan, equivalent to name of the plan. </param>
         /// <param name="publisher"> The publisher for the plan from the marketplace image the custom image is derived from. </param>
         /// <param name="offer"> The offer for the plan from the marketplace image the custom image is derived from. </param>

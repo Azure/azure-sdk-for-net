@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly VMInstanceGuestAgentsRestOperations _vmInstanceGuestAgentVmInstanceGuestAgentsRestClient;
         private readonly VmInstanceGuestAgentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/guestAgents";
+
         /// <summary> Initializes a new instance of the <see cref="VmInstanceGuestAgentResource"/> class for mocking. </summary>
         protected VmInstanceGuestAgentResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/guestAgents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

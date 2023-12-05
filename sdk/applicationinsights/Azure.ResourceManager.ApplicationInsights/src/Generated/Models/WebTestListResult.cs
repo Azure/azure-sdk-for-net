@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> A list of 0 or more Application Insights WebTest definitions. </summary>
     internal partial class WebTestListResult
     {
-        /// <summary> Initializes a new instance of WebTestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestListResult"/>. </summary>
         /// <param name="value"> Set of Application Insights WebTest definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WebTestListResult(IEnumerable<WebTestData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of WebTestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestListResult"/>. </summary>
         /// <param name="value"> Set of Application Insights WebTest definitions. </param>
         /// <param name="nextLink"> The link to get the next part of the returned list of WebTest, should the return set be too large for a single request. May be null. </param>
         internal WebTestListResult(IReadOnlyList<WebTestData> value, string nextLink)

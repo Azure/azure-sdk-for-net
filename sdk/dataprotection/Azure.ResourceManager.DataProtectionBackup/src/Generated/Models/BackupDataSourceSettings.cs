@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class BackupDataSourceSettings
     {
-        /// <summary> Initializes a new instance of BackupDataSourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupDataSourceSettings"/>. </summary>
         protected BackupDataSourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupDataSourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupDataSourceSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal BackupDataSourceSettings(string objectType)
         {

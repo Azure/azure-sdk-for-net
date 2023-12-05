@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Advances setting to customize StackEnsemble run. </summary>
     public partial class MachineLearningStackEnsembleSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningStackEnsembleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStackEnsembleSettings"/>. </summary>
         public MachineLearningStackEnsembleSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningStackEnsembleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStackEnsembleSettings"/>. </summary>
         /// <param name="stackMetaLearnerKWargs"> Optional parameters to pass to the initializer of the meta-learner. </param>
         /// <param name="stackMetaLearnerTrainPercentage"> Specifies the proportion of the training set (when choosing train and validation type of training) to be reserved for training the meta-learner. Default value is 0.2. </param>
         /// <param name="stackMetaLearnerType"> The meta-learner is a model trained on the output of the individual heterogeneous models. </param>

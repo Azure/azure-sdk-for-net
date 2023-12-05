@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Describes the credential parameters for accessing the source registry. </summary>
     internal partial class SourceRegistryCredentials
     {
-        /// <summary> Initializes a new instance of SourceRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceRegistryCredentials"/>. </summary>
         public SourceRegistryCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceRegistryCredentials"/>. </summary>
         /// <param name="loginMode">
         /// The authentication mode which determines the source registry login scope. The credentials for the source registry
         /// will be generated using the given scope. These credentials will be used to login to

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </summary>
     public partial class UpdatePrerequisite
     {
-        /// <summary> Initializes a new instance of UpdatePrerequisite. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdatePrerequisite"/>. </summary>
         public UpdatePrerequisite()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdatePrerequisite. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdatePrerequisite"/>. </summary>
         /// <param name="updateType"> Updatable component type. </param>
         /// <param name="version"> Version of the prerequisite. </param>
         /// <param name="packageName"> Friendly name of the prerequisite. </param>

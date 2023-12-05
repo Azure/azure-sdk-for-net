@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for task that validates migration input for SQL sync migrations. </summary>
     public partial class ValidateSyncMigrationInputSqlServerTaskInput
     {
-        /// <summary> Initializes a new instance of ValidateSyncMigrationInputSqlServerTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source SQL server. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedDatabases = selectedDatabases.ToList();
         }
 
-        /// <summary> Initializes a new instance of ValidateSyncMigrationInputSqlServerTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source SQL server. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>

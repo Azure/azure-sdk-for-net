@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes properties of the IP address. </summary>
     public partial class IPAddress
     {
-        /// <summary> Initializes a new instance of IPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddress"/>. </summary>
         internal IPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of IPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddress"/>. </summary>
         /// <param name="address"> Represents the IP Address. </param>
         /// <param name="ipAddressVersion"> Represents the Ip Address Version. </param>
         /// <param name="subnet"> The subnet to which this IP address belongs. </param>

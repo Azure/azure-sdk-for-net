@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly DiagnosticSettingsRestOperations _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient;
         private readonly DiagnosticRemoteSupportSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/diagnosticRemoteSupportSettings";
+
         /// <summary> Initializes a new instance of the <see cref="DiagnosticRemoteSupportSettingResource"/> class for mocking. </summary>
         protected DiagnosticRemoteSupportSettingResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/diagnosticRemoteSupportSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

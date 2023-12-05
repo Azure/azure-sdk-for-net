@@ -10,12 +10,12 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Summary object. </summary>
     public partial class RouteMatrixSummary
     {
-        /// <summary> Initializes a new instance of RouteMatrixSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixSummary"/>. </summary>
         internal RouteMatrixSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteMatrixSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixSummary"/>. </summary>
         /// <param name="successfulRoutes"> Number of successful routes in the response. </param>
         /// <param name="totalRoutes"> Total number of routes requested. Number of cells in the input matrix. </param>
         internal RouteMatrixSummary(int? successfulRoutes, int? totalRoutes)

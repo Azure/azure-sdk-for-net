@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAppContainersModelFactory
     {
-        /// <summary> Initializes a new instance of ContainerAppAuthConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppAuthConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppAuthConfigData(id, name, resourceType, systemData, platform, globalValidation, identityProviders, login, httpSettings);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppAvailableWorkloadProfile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppAvailableWorkloadProfile(id, name, resourceType, systemData, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppBillingMeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppBillingMeter"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppBillingMeter(id, name, resourceType, systemData, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppConnectedEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppConnectedEnvironmentData(id, name, resourceType, systemData, tags, location, extendedLocation, provisioningState, deploymentErrors, defaultDomain, staticIP, daprAIConnectionString, customDomainConfiguration);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppCustomDomainConfiguration"/>. </summary>
         /// <param name="customDomainVerificationId"> Id used to verify domain name ownership. </param>
         /// <param name="dnsSuffix"> Dns suffix for the environment domain. </param>
         /// <param name="certificateValue"> PFX or PEM blob. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppCustomDomainConfiguration(customDomainVerificationId, dnsSuffix, certificateValue, certificatePassword, expireOn, thumbprint, subjectName);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppCertificateData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppCertificateProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="password"> Certificate password. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppCertificateProperties(provisioningState, password, subjectName, subjectAlternativeNames?.ToList(), value, issuer, issueOn, expireOn, thumbprint, isValid, publicKeyHash);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDaprComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppDaprComponentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppDaprComponentData(id, name, resourceType, systemData, componentType, version, ignoreErrors, initTimeout, secrets?.ToList(), secretStoreComponent, metadata?.ToList(), scopes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDaprSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppDaprSecret"/>. </summary>
         /// <param name="name"> Secret Name. </param>
         /// <param name="value"> Secret Value. </param>
         /// <returns> A new <see cref="Models.ContainerAppDaprSecret"/> instance for mocking. </returns>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppDaprSecret(name, value);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentStorageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppConnectedEnvironmentStorageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppConnectedEnvironmentStorageData(id, name, resourceType, systemData, connectedEnvironmentStorageAzureFile != null ? new ConnectedEnvironmentStorageProperties(connectedEnvironmentStorageAzureFile) : null);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppData(id, name, resourceType, systemData, tags, location, extendedLocation, identity, managedBy, provisioningState, managedEnvironmentId, environmentId, workloadProfileName, latestRevisionName, latestReadyRevisionName, latestRevisionFqdn, customDomainVerificationId, configuration, template, outboundIPAddressList?.ToList(), eventStreamEndpoint);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppIngressConfiguration"/>. </summary>
         /// <param name="fqdn"> Hostname. </param>
         /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
         /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppIngressConfiguration(fqdn, external, targetPort, exposedPort, transport, traffic?.ToList(), customDomains?.ToList(), allowInsecure, ipSecurityRestrictions?.ToList(), stickySessionsAffinity != null ? new IngressStickySessions(stickySessionsAffinity) : null, clientCertificateMode, corsPolicy);
         }
 
-        /// <summary> Initializes a new instance of AppContainerResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppContainerResources"/>. </summary>
         /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
         /// <param name="memory"> Required memory, e.g. "250Mb". </param>
         /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. "1Gi". </param>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new AppContainerResources(cpu, memory, ephemeralStorage);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomHostnameAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppCustomHostnameAnalysisResult"/>. </summary>
         /// <param name="hostName"> Host name that was analyzed. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="customDomainVerificationTest"> DNS verification test result. </param>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppCustomHostnameAnalysisResult(hostName, isHostnameAlreadyVerified, customDomainVerificationTest, customDomainVerificationFailureInfo, hasConflictOnManagedEnvironment, conflictWithEnvironmentCustomDomain, conflictingContainerAppResourceId, cNameRecords?.ToList(), txtRecords?.ToList(), aRecords?.ToList(), alternateCNameRecords?.ToList(), alternateTxtRecords?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppCustomDomainVerificationFailureInfo"/>. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppCustomDomainVerificationFailureInfo(code, message, target, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfoDetailsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppCustomDomainVerificationFailureInfoDetailsItem"/>. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppCustomDomainVerificationFailureInfoDetailsItem(code, message, target);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppSecret"/>. </summary>
         /// <param name="name"> Secret Name. </param>
         /// <param name="value"> Secret Value. </param>
         /// <param name="identity"> Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity. </param>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppSecret(name, value, identity, keyVaultUri);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppAuthToken"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppAuthToken(id, name, resourceType, systemData, tags, location, token, expireOn);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppRevisionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppRevisionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppRevisionData(id, name, resourceType, systemData, createdOn, lastActiveOn, fqdn, template, isActive, replicas, trafficWeight, provisioningError, healthState, provisioningState, runningState);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppReplicaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppReplicaData(id, name, resourceType, systemData, createdOn, runningState, runningStateDetails, containers?.ToList(), initContainers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ContainerAppReplicaContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppReplicaContainer"/>. </summary>
         /// <param name="name"> The Name of the Container. </param>
         /// <param name="containerId"> The Id of the Container. </param>
         /// <param name="isReady"> The container ready status. </param>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppReplicaContainer(name, containerId, isReady, isStarted, restartCount, runningState, runningStateDetails, logStreamEndpoint, execEndpoint);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppDiagnosticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppDiagnosticData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppDiagnosticsMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppDiagnosticsMetadata(id, name, resourceType, systemData, description, author, category, supportTopicList?.ToList(), analysisTypes?.ToList(), score);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticSupportTopic. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppDiagnosticSupportTopic"/>. </summary>
         /// <param name="id"> Unique topic identifier. </param>
         /// <param name="pesId"> PES identifier. </param>
         /// <returns> A new <see cref="Models.ContainerAppDiagnosticSupportTopic"/> instance for mocking. </returns>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppDiagnosticSupportTopic(id, pesId);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppManagedEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppManagedEnvironmentData(id, name, resourceType, systemData, tags, location, kind, provisioningState, daprAIInstrumentationKey, daprAIConnectionString, vnetConfiguration, deploymentErrors, defaultDomain, staticIP, appLogsConfiguration, isZoneRedundant, customDomainConfiguration, eventStreamEndpoint, workloadProfiles?.ToList(), kedaVersion != null ? new KedaConfiguration(kedaVersion) : null, daprVersion != null ? new DaprConfiguration(daprVersion) : null, infrastructureResourceGroup, isMtlsEnabled != null ? new ManagedEnvironmentPropertiesPeerAuthentication(new Mtls(isMtlsEnabled)) : null);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppJobData(id, name, resourceType, systemData, tags, location, identity, provisioningState, environmentId, workloadProfileName, configuration, template, outboundIPAddresses?.ToList(), eventStreamEndpoint);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppJobExecutionBase"/>. </summary>
         /// <param name="name"> Job execution name. </param>
         /// <param name="id"> Job execution Id. </param>
         /// <returns> A new <see cref="Models.ContainerAppJobExecutionBase"/> instance for mocking. </returns>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppJobExecutionBase(name, id);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecutions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppJobExecutions"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         /// <returns> A new <see cref="Models.ContainerAppJobExecutions"/> instance for mocking. </returns>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppJobExecutions(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppJobExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppJobExecutionData(id, name, resourceType, systemData, status, startOn, endOn, template);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppManagedCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppManagedCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppManagedCertificateData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedCertificateProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="error"> Any error occurred during the certificate provision. </param>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ManagedCertificateProperties(provisioningState, subjectName, error, domainControlValidation, validationToken);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppEnvironmentAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppEnvironmentAuthToken"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppEnvironmentAuthToken(id, name, resourceType, systemData, tags, location, token, expireOn);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfileState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppWorkloadProfileState"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppWorkloadProfileState(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentStorageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppManagedEnvironmentStorageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppManagedEnvironmentStorageData(id, name, resourceType, systemData, managedEnvironmentStorageAzureFile != null ? new ManagedEnvironmentStorageProperties(managedEnvironmentStorageAzureFile) : null);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppSourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppSourceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

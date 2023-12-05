@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A class that represents a VerificationStatus record. </summary>
     public partial class VerificationDnsRecord
     {
-        /// <summary> Initializes a new instance of VerificationDnsRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerificationDnsRecord"/>. </summary>
         internal VerificationDnsRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of VerificationDnsRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerificationDnsRecord"/>. </summary>
         /// <param name="dnsRecordType"> Type of the DNS record. Example: TXT. </param>
         /// <param name="name"> Name of the DNS record. </param>
         /// <param name="value"> Value of the DNS record. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> IP address information for a virtual network adapter reported by the fabric. </summary>
     public partial class NicIPAddressSettings
     {
-        /// <summary> Initializes a new instance of NicIPAddressSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicIPAddressSettings"/>. </summary>
         internal NicIPAddressSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of NicIPAddressSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicIPAddressSettings"/>. </summary>
         /// <param name="allocationMethod"> Gets the ip address allocation method. </param>
         /// <param name="ipAddress"> Gets the ip address for the nic. </param>
         /// <param name="subnetMask"> Gets the mask. </param>

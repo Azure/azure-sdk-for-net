@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Communication
     /// </summary>
     public partial class SenderUsernameResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SenderUsernameResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SenderUsernameResourceData"/>. </summary>
         public SenderUsernameResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SenderUsernameResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SenderUsernameResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

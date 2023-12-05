@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Information of Access Rule in Network Profile. </summary>
     public partial class EventHubsNspAccessRule : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsNspAccessRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRule"/>. </summary>
         internal EventHubsNspAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNspAccessRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

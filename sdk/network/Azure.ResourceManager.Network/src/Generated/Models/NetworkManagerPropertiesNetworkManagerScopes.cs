@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Scope of Network Manager. </summary>
     public partial class NetworkManagerPropertiesNetworkManagerScopes
     {
-        /// <summary> Initializes a new instance of NetworkManagerPropertiesNetworkManagerScopes. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerPropertiesNetworkManagerScopes"/>. </summary>
         public NetworkManagerPropertiesNetworkManagerScopes()
         {
             ManagementGroups = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             CrossTenantScopes = new ChangeTrackingList<CrossTenantScopes>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerPropertiesNetworkManagerScopes. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerPropertiesNetworkManagerScopes"/>. </summary>
         /// <param name="managementGroups"> List of management groups. </param>
         /// <param name="subscriptions"> List of subscriptions. </param>
         /// <param name="crossTenantScopes"> List of cross tenant scopes. </param>

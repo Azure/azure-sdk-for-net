@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class IPv6FirewallRuleData : ProxyResourceWithWritableName
     {
-        /// <summary> Initializes a new instance of IPv6FirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6FirewallRuleData"/>. </summary>
         public IPv6FirewallRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of IPv6FirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6FirewallRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

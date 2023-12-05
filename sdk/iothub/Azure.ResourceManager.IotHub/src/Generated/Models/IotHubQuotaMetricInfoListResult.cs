@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized array of IotHubQuotaMetricInfo objects with a next link. </summary>
     internal partial class IotHubQuotaMetricInfoListResult
     {
-        /// <summary> Initializes a new instance of IotHubQuotaMetricInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubQuotaMetricInfoListResult"/>. </summary>
         internal IotHubQuotaMetricInfoListResult()
         {
             Value = new ChangeTrackingList<IotHubQuotaMetricInfo>();
         }
 
-        /// <summary> Initializes a new instance of IotHubQuotaMetricInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubQuotaMetricInfoListResult"/>. </summary>
         /// <param name="value"> The array of quota metrics objects. </param>
         /// <param name="nextLink"> The next link. </param>
         internal IotHubQuotaMetricInfoListResult(IReadOnlyList<IotHubQuotaMetricInfo> value, string nextLink)

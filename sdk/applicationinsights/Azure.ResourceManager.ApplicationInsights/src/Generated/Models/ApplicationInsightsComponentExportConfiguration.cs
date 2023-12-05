@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Properties that define a Continuous Export configuration. </summary>
     public partial class ApplicationInsightsComponentExportConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentExportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentExportConfiguration"/>. </summary>
         internal ApplicationInsightsComponentExportConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentExportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentExportConfiguration"/>. </summary>
         /// <param name="exportId"> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </param>
         /// <param name="instrumentationKey"> The instrumentation key of the Application Insights component. </param>
         /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </param>

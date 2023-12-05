@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> The private endpoint connection resource. </summary>
     public partial class MySqlFlexibleServersPrivateEndpointConnection : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServersPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersPrivateEndpointConnection"/>. </summary>
         public MySqlFlexibleServersPrivateEndpointConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServersPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersPrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

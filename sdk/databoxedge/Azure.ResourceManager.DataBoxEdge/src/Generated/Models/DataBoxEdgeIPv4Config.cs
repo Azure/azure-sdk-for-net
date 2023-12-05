@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Details related to the IPv4 address configuration. </summary>
     public partial class DataBoxEdgeIPv4Config
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeIPv4Config. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeIPv4Config"/>. </summary>
         internal DataBoxEdgeIPv4Config()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeIPv4Config. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeIPv4Config"/>. </summary>
         /// <param name="ipAddress"> The IPv4 address of the network adapter. </param>
         /// <param name="subnet"> The IPv4 subnet of the network adapter. </param>
         /// <param name="gateway"> The IPv4 gateway of the network adapter. </param>

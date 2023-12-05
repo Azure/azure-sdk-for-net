@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> List of order entities. </summary>
     internal partial class OrderList
     {
-        /// <summary> Initializes a new instance of OrderList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderList"/>. </summary>
         internal OrderList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeOrderData>();
         }
 
-        /// <summary> Initializes a new instance of OrderList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderList"/>. </summary>
         /// <param name="value"> The list of orders. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal OrderList(IReadOnlyList<DataBoxEdgeOrderData> value, string nextLink)

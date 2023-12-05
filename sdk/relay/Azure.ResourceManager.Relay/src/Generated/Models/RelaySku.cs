@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> SKU of the namespace. </summary>
     public partial class RelaySku
     {
-        /// <summary> Initializes a new instance of RelaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelaySku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         public RelaySku(RelaySkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RelaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelaySku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The tier of this SKU. </param>
         internal RelaySku(RelaySkuName name, RelaySkuTier? tier)

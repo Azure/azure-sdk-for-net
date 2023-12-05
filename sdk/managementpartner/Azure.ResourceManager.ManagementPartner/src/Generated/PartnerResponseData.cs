@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ManagementPartner
     /// </summary>
     public partial class PartnerResponseData : ResourceData
     {
-        /// <summary> Initializes a new instance of PartnerResponseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerResponseData"/>. </summary>
         internal PartnerResponseData()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerResponseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerResponseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

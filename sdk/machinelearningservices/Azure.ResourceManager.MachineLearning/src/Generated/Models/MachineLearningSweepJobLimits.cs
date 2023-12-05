@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Sweep Job limit class. </summary>
     public partial class MachineLearningSweepJobLimits : MachineLearningJobLimits
     {
-        /// <summary> Initializes a new instance of MachineLearningSweepJobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJobLimits"/>. </summary>
         public MachineLearningSweepJobLimits()
         {
             JobLimitsType = JobLimitsType.Sweep;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSweepJobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJobLimits"/>. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
         /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
         /// <param name="maxConcurrentTrials"> Sweep Job max concurrent trials. </param>

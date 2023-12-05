@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Input parameter for verification APIs. </summary>
     public partial class DomainsRecordVerificationContent
     {
-        /// <summary> Initializes a new instance of DomainsRecordVerificationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainsRecordVerificationContent"/>. </summary>
         /// <param name="verificationType"> Type of verification. </param>
         public DomainsRecordVerificationContent(DomainRecordVerificationType verificationType)
         {

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// </summary>
     public abstract partial class FrontDoorSecretProperties
     {
-        /// <summary> Initializes a new instance of FrontDoorSecretProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSecretProperties"/>. </summary>
         protected FrontDoorSecretProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorSecretProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSecretProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         internal FrontDoorSecretProperties(SecretType secretType)
         {

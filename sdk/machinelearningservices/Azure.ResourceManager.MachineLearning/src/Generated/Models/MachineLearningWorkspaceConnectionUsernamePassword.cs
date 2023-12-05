@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceConnectionUsernamePassword. </summary>
     public partial class MachineLearningWorkspaceConnectionUsernamePassword
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionUsernamePassword. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionUsernamePassword"/>. </summary>
         public MachineLearningWorkspaceConnectionUsernamePassword()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionUsernamePassword. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionUsernamePassword"/>. </summary>
         /// <param name="password"></param>
         /// <param name="username"></param>
         internal MachineLearningWorkspaceConnectionUsernamePassword(string password, string username)

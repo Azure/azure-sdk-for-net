@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Maintenance Operation Status. </summary>
     public partial class MaintenanceRedeployStatus
     {
-        /// <summary> Initializes a new instance of MaintenanceRedeployStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceRedeployStatus"/>. </summary>
         internal MaintenanceRedeployStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceRedeployStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceRedeployStatus"/>. </summary>
         /// <param name="isCustomerInitiatedMaintenanceAllowed"> True, if customer is allowed to perform Maintenance. </param>
         /// <param name="preMaintenanceWindowStartOn"> Start Time for the Pre Maintenance Window. </param>
         /// <param name="preMaintenanceWindowEndOn"> End Time for the Pre Maintenance Window. </param>

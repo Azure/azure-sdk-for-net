@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMwareToAzStackHCI protected disk properties. </summary>
     public partial class VMwareToAzStackHciProtectedDiskProperties
     {
-        /// <summary> Initializes a new instance of VMwareToAzStackHciProtectedDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedDiskProperties"/>. </summary>
         internal VMwareToAzStackHciProtectedDiskProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareToAzStackHciProtectedDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedDiskProperties"/>. </summary>
         /// <param name="storageContainerId"> Gets or sets the ARM Id of the storage container. </param>
         /// <param name="storageContainerLocalPath"> Gets or sets the local path of the storage container. </param>
         /// <param name="sourceDiskId"> Gets or sets the source disk Id. </param>

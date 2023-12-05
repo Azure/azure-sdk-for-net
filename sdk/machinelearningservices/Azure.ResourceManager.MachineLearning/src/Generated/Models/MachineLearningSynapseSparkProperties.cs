@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningSynapseSparkProperties. </summary>
     public partial class MachineLearningSynapseSparkProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningSynapseSparkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSynapseSparkProperties"/>. </summary>
         public MachineLearningSynapseSparkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSynapseSparkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSynapseSparkProperties"/>. </summary>
         /// <param name="autoScaleProperties"> Auto scale properties. </param>
         /// <param name="autoPauseProperties"> Auto pause properties. </param>
         /// <param name="sparkVersion"> Spark version. </param>

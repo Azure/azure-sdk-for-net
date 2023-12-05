@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.HybridConnectivity
         private readonly EndpointsRestOperations _endpointResourceEndpointsRestClient;
         private readonly EndpointResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridConnectivity/endpoints";
+
         /// <summary> Initializes a new instance of the <see cref="EndpointResource"/> class for mocking. </summary>
         protected EndpointResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.HybridConnectivity
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridConnectivity/endpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

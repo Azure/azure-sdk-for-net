@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The response of the GetSsoToken operation. </summary>
     public partial class ApiManagementServiceGetSsoTokenResult
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceGetSsoTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceGetSsoTokenResult"/>. </summary>
         internal ApiManagementServiceGetSsoTokenResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceGetSsoTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceGetSsoTokenResult"/>. </summary>
         /// <param name="redirectUri"> Redirect URL to the Publisher Portal containing the SSO token. </param>
         internal ApiManagementServiceGetSsoTokenResult(Uri redirectUri)
         {

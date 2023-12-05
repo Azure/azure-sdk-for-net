@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of active debug sessions. </summary>
     internal partial class DataFlowDebugSessionInfoListResult
     {
-        /// <summary> Initializes a new instance of DataFlowDebugSessionInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugSessionInfoListResult"/>. </summary>
         internal DataFlowDebugSessionInfoListResult()
         {
             Value = new ChangeTrackingList<DataFlowDebugSessionInfo>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugSessionInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugSessionInfoListResult"/>. </summary>
         /// <param name="value"> Array with all active debug sessions. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal DataFlowDebugSessionInfoListResult(IReadOnlyList<DataFlowDebugSessionInfo> value, string nextLink)

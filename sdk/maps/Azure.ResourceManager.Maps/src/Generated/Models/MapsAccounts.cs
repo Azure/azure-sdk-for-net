@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> A list of Maps Accounts. </summary>
     internal partial class MapsAccounts
     {
-        /// <summary> Initializes a new instance of MapsAccounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccounts"/>. </summary>
         internal MapsAccounts()
         {
             Value = new ChangeTrackingList<MapsAccountData>();
         }
 
-        /// <summary> Initializes a new instance of MapsAccounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccounts"/>. </summary>
         /// <param name="value"> a Maps Account. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

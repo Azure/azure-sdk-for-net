@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The NodeMonitoringData. </summary>
     public partial class NodeMonitoringData
     {
-        /// <summary> Initializes a new instance of NodeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeMonitoringData"/>. </summary>
         internal NodeMonitoringData()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of NodeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeMonitoringData"/>. </summary>
         /// <param name="additionalProperties"> Unmatched properties from the message are deserialized in this collection. </param>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>

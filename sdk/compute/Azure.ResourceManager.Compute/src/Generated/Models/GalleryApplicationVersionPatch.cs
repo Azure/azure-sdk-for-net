@@ -14,10 +14,29 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery Application Version that you want to update. </summary>
     public partial class GalleryApplicationVersionPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of GalleryApplicationVersionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionPatch"/>. </summary>
         public GalleryApplicationVersionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
+        /// <param name="safetyProfile"> The safety profile of the Gallery Application Version. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal GalleryApplicationVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionSafetyProfile safetyProfile, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        {
+            PublishingProfile = publishingProfile;
+            SafetyProfile = safetyProfile;
+            ProvisioningState = provisioningState;
+            ReplicationStatus = replicationStatus;
+            Tags = tags;
         }
 
         /// <summary> The publishing profile of a gallery image version. </summary>

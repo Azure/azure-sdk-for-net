@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraError. </summary>
     public partial class CassandraError
     {
-        /// <summary> Initializes a new instance of CassandraError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraError"/>. </summary>
         public CassandraError()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraError"/>. </summary>
         /// <param name="code"> The code of error that occurred. </param>
         /// <param name="message"> The message of the error. </param>
         /// <param name="target"> The target resource of the error. </param>

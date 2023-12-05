@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownRecoveryPlanActionDetails. </summary>
     internal partial class UnknownRecoveryPlanActionDetails : RecoveryPlanActionDetails
     {
-        /// <summary> Initializes a new instance of UnknownRecoveryPlanActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryPlanActionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
         internal UnknownRecoveryPlanActionDetails(string instanceType) : base(instanceType)
         {

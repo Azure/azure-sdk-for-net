@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlDBTaskOutputValidationResult. </summary>
     public partial class MigrateSqlServerSqlDBTaskOutputValidationResult : MigrateSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputValidationResult"/>. </summary>
         internal MigrateSqlServerSqlDBTaskOutputValidationResult()
         {
             SummaryResults = new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>();
             ResultType = "MigrationValidationOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputValidationResult"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="migrationId"> Migration Identifier. </param>

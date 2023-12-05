@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Private endpoint connection definition. </summary>
     public partial class RegistryPrivateEndpointConnection
     {
-        /// <summary> Initializes a new instance of RegistryPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpointConnection"/>. </summary>
         public RegistryPrivateEndpointConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RegistryPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpointConnection"/>. </summary>
         /// <param name="id">
         /// This is the private endpoint connection name created on SRP
         /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/privateEndpointConnections/{peConnectionName}

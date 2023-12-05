@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Private link service proxy details. </summary>
     public partial class DeviceUpdatePrivateLinkServiceProxy
     {
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkServiceProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateLinkServiceProxy"/>. </summary>
         public DeviceUpdatePrivateLinkServiceProxy()
         {
             GroupConnectivityInformation = new ChangeTrackingList<GroupConnectivityInformation>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkServiceProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateLinkServiceProxy"/>. </summary>
         /// <param name="id"> NRP resource ID. </param>
         /// <param name="remotePrivateLinkServiceConnectionState"> Remote private link service connection state. </param>
         /// <param name="remotePrivateEndpointConnection"> Remote private endpoint connection details. </param>

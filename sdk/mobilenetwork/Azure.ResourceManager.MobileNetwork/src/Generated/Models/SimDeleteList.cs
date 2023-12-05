@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The SIMs to delete. </summary>
     public partial class SimDeleteList
     {
-        /// <summary> Initializes a new instance of SimDeleteList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimDeleteList"/>. </summary>
         /// <param name="sims"> A list of SIM resource names to delete. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sims"/> is null. </exception>
         public SimDeleteList(IEnumerable<string> sims)
@@ -23,6 +23,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Argument.AssertNotNull(sims, nameof(sims));
 
             Sims = sims.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SimDeleteList"/>. </summary>
+        /// <param name="sims"> A list of SIM resource names to delete. </param>
+        internal SimDeleteList(IList<string> sims)
+        {
+            Sims = sims;
         }
 
         /// <summary> A list of SIM resource names to delete. </summary>

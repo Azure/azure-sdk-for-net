@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> The billing information of the resource. </summary>
     public partial class SignalRResourceSku
     {
-        /// <summary> Initializes a new instance of SignalRResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of SignalRResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Pause replication input. </summary>
     public partial class PauseReplicationContent
     {
-        /// <summary> Initializes a new instance of PauseReplicationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PauseReplicationContent"/>. </summary>
         /// <param name="properties"> Pause replication input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public PauseReplicationContent(PauseReplicationProperties properties)

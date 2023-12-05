@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class ScVmmServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScVmmServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="fqdn"> Fqdn is the hostname/ip of the vmmServer. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ArcScVmm
             Fqdn = fqdn;
         }
 
-        /// <summary> Initializes a new instance of ScVmmServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

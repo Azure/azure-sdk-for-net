@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The component properties of the network function. </summary>
     public partial class ComponentProperties
     {
-        /// <summary> Initializes a new instance of ComponentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentProperties"/>. </summary>
         public ComponentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ComponentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the component resource. </param>
         /// <param name="deploymentProfile"> The JSON-serialized deployment profile of the component resource. </param>
         /// <param name="deploymentStatus"> The deployment status of the component resource. </param>

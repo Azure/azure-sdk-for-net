@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters to get network configuration diagnostic. </summary>
     public partial class NetworkConfigurationDiagnosticContent
     {
-        /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticContent"/>. </summary>
         /// <param name="targetResourceId"> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </param>
         /// <param name="profiles"> List of network configuration diagnostic profiles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="profiles"/> is null. </exception>
@@ -26,6 +26,17 @@ namespace Azure.ResourceManager.Network.Models
 
             TargetResourceId = targetResourceId;
             Profiles = profiles.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticContent"/>. </summary>
+        /// <param name="targetResourceId"> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </param>
+        /// <param name="verbosityLevel"> Verbosity level. </param>
+        /// <param name="profiles"> List of network configuration diagnostic profiles. </param>
+        internal NetworkConfigurationDiagnosticContent(ResourceIdentifier targetResourceId, VerbosityLevel? verbosityLevel, IList<NetworkConfigurationDiagnosticProfile> profiles)
+        {
+            TargetResourceId = targetResourceId;
+            VerbosityLevel = verbosityLevel;
+            Profiles = profiles;
         }
 
         /// <summary> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </summary>

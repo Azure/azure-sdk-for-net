@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubData"/>. </summary>
         public EventHubData()
         {
             PartitionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

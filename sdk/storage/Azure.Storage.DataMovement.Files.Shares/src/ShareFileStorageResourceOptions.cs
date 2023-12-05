@@ -48,15 +48,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public ShareFileRequestConditions DestinationConditions { get; set; }
 
         /// <summary>
-        /// Optional boolean Specifying to set archive attribute on a target file. True
-        /// means archive attribute will be set on a target file despite attribute
-        /// overrides or a source file state.
-        ///
-        /// Only valid on Service Copy on the destination.
-        /// </summary>
-        public bool? Archive { get; set; }
-
-        /// <summary>
         /// Optional. Defines custom metadata to set on the destination resource.
         ///
         /// Applies to upload and copy transfers.
@@ -73,11 +64,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata FileMetadata { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
-
-        /// <summary>
-        /// The protocols to enable for the share.
-        /// </summary>
-        public ShareProtocols? Protocols { get; set; }
 
         /// <summary>
         /// Optional. Options for transfer validation settings on this operation.

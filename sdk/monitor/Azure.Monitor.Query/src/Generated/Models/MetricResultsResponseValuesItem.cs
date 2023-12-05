@@ -15,12 +15,12 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The MetricResultsResponseValuesItem. </summary>
     public partial class MetricResultsResponseValuesItem
     {
-        /// <summary> Initializes a new instance of MetricResultsResponseValuesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResultsResponseValuesItem"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="value"> The value of the collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<QueryBatchMetric> value)
+        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<MetricResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricResultsResponseValuesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResultsResponseValuesItem"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
         /// <param name="resourceId"> The resource that has been queried for metrics. </param>
         /// <param name="value"> The value of the collection. </param>
-        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, string resourceRegion, ResourceIdentifier resourceId, IReadOnlyList<QueryBatchMetric> value)
+        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, string resourceRegion, ResourceIdentifier resourceId, IReadOnlyList<MetricResult> value)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -52,6 +52,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The namespace of the metrics been queried. </summary>
         public string Namespace { get; }
         /// <summary> The value of the collection. </summary>
-        public IReadOnlyList<QueryBatchMetric> Value { get; }
+        public IReadOnlyList<MetricResult> Value { get; }
     }
 }

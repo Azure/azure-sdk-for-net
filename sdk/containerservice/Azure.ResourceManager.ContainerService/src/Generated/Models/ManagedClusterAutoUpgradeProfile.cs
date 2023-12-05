@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Auto upgrade profile for a managed cluster. </summary>
     public partial class ManagedClusterAutoUpgradeProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterAutoUpgradeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAutoUpgradeProfile"/>. </summary>
         public ManagedClusterAutoUpgradeProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAutoUpgradeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAutoUpgradeProfile"/>. </summary>
         /// <param name="upgradeChannel"> For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel). </param>
         /// <param name="nodeOSUpgradeChannel"> The default is Unmanaged, but may change to either NodeImage or SecurityPatch at GA. </param>
         internal ManagedClusterAutoUpgradeProfile(UpgradeChannel? upgradeChannel, ManagedClusterNodeOSUpgradeChannel? nodeOSUpgradeChannel)

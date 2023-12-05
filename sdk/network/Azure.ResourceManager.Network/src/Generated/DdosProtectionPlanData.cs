@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class DdosProtectionPlanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DdosProtectionPlanData(AzureLocation location) : base(location)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             VirtualNetworks = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

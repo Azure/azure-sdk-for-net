@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Specifies set of extensions that should be installed onto the virtual machines. </summary>
     public partial class NodeTypeVmssExtension
     {
-        /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>

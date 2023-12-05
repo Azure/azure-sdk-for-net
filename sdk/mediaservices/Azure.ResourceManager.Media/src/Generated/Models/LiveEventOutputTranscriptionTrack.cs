@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes a transcription track in the output of a live event, generated using speech-to-text transcription. This property is reserved for future use, any value set on this property will be ignored. </summary>
     internal partial class LiveEventOutputTranscriptionTrack
     {
-        /// <summary> Initializes a new instance of LiveEventOutputTranscriptionTrack. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventOutputTranscriptionTrack"/>. </summary>
         /// <param name="trackName"> The output track name. This property is reserved for future use, any value set on this property will be ignored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         public LiveEventOutputTranscriptionTrack(string trackName)

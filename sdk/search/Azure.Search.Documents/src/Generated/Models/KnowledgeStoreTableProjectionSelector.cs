@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Description for what data to store in Azure Tables. </summary>
     public partial class KnowledgeStoreTableProjectionSelector : KnowledgeStoreProjectionSelector
     {
-        /// <summary> Initializes a new instance of KnowledgeStoreTableProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/>. </summary>
         /// <param name="tableName"> Name of the Azure table to store projected data in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public KnowledgeStoreTableProjectionSelector(string tableName)
@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
             TableName = tableName;
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStoreTableProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/>. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>

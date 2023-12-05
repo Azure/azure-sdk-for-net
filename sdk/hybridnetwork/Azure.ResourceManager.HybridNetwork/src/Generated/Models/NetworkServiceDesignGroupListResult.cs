@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of network service design group resources. </summary>
     internal partial class NetworkServiceDesignGroupListResult
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignGroupListResult"/>. </summary>
         internal NetworkServiceDesignGroupListResult()
         {
             Value = new ChangeTrackingList<NetworkServiceDesignGroupData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignGroupListResult"/>. </summary>
         /// <param name="value"> A list of network service design group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NetworkServiceDesignGroupListResult(IReadOnlyList<NetworkServiceDesignGroupData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> An environment variable to be set on a task process. </summary>
     public partial class BatchEnvironmentSetting
     {
-        /// <summary> Initializes a new instance of BatchEnvironmentSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEnvironmentSetting"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public BatchEnvironmentSetting(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of BatchEnvironmentSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEnvironmentSetting"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <param name="value"> The value of the environment variable. </param>
         internal BatchEnvironmentSetting(string name, string value)

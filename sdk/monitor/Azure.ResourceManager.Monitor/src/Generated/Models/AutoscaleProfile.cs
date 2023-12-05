@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Autoscale profile. </summary>
     public partial class AutoscaleProfile
     {
-        /// <summary> Initializes a new instance of AutoscaleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleProfile"/>. </summary>
         /// <param name="name"> the name of the profile. </param>
         /// <param name="capacity"> the number of instances that can be used during this profile. </param>
         /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Rules = rules.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleProfile"/>. </summary>
         /// <param name="name"> the name of the profile. </param>
         /// <param name="capacity"> the number of instances that can be used during this profile. </param>
         /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>

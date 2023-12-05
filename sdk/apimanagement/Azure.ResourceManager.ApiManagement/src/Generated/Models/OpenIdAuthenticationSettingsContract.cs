@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API OAuth2 Authentication settings details. </summary>
     public partial class OpenIdAuthenticationSettingsContract
     {
-        /// <summary> Initializes a new instance of OpenIdAuthenticationSettingsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIdAuthenticationSettingsContract"/>. </summary>
         public OpenIdAuthenticationSettingsContract()
         {
             BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethod>();
         }
 
-        /// <summary> Initializes a new instance of OpenIdAuthenticationSettingsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIdAuthenticationSettingsContract"/>. </summary>
         /// <param name="openIdProviderId"> OAuth authorization server identifier. </param>
         /// <param name="bearerTokenSendingMethods"> How to send token to the server. </param>
         internal OpenIdAuthenticationSettingsContract(string openIdProviderId, IList<BearerTokenSendingMethod> bearerTokenSendingMethods)

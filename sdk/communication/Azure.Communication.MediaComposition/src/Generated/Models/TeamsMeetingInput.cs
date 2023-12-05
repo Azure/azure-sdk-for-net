@@ -14,7 +14,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> A Teams meeting to be used as an input. </summary>
     public partial class TeamsMeetingInput : MediaInput
     {
-        /// <summary> Initializes a new instance of TeamsMeetingInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeamsMeetingInput"/>. </summary>
         /// <param name="teamsJoinUrl"> The url from Teams to join the meeting. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="teamsJoinUrl"/> is null. </exception>
         public TeamsMeetingInput(string teamsJoinUrl)
@@ -25,7 +25,7 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaInputType.TeamsMeeting;
         }
 
-        /// <summary> Initializes a new instance of TeamsMeetingInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeamsMeetingInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
         /// <param name="teamsJoinUrl"> The url from Teams to join the meeting. </param>

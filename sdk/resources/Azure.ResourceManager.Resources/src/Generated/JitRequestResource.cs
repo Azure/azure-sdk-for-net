@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Resources
         private readonly JitRequestsRestOperations _jitRequestRestClient;
         private readonly JitRequestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Solutions/jitRequests";
+
         /// <summary> Initializes a new instance of the <see cref="JitRequestResource"/> class for mocking. </summary>
         protected JitRequestResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Solutions/jitRequests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

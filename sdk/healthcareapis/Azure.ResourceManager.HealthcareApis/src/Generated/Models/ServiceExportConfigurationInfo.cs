@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Export operation configuration information. </summary>
     internal partial class ServiceExportConfigurationInfo
     {
-        /// <summary> Initializes a new instance of ServiceExportConfigurationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceExportConfigurationInfo"/>. </summary>
         public ServiceExportConfigurationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceExportConfigurationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceExportConfigurationInfo"/>. </summary>
         /// <param name="storageAccountName"> The name of the default export storage account. </param>
         internal ServiceExportConfigurationInfo(string storageAccountName)
         {

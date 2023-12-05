@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Encoder connect event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventEncoderConnected event. </summary>
     public partial class MediaLiveEventEncoderConnectedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventEncoderConnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventEncoderConnectedEventData"/>. </summary>
         internal MediaLiveEventEncoderConnectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventEncoderConnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventEncoderConnectedEventData"/>. </summary>
         /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
         /// <param name="streamId"> Gets the stream Id. </param>
         /// <param name="encoderIp"> Gets the remote IP. </param>

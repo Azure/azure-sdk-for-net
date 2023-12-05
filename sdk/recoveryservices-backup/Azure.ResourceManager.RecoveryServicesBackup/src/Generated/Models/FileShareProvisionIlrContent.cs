@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Update snapshot Uri with the correct friendly Name of the source Azure file share. </summary>
     public partial class FileShareProvisionIlrContent : IlrContent
     {
-        /// <summary> Initializes a new instance of FileShareProvisionIlrContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareProvisionIlrContent"/>. </summary>
         public FileShareProvisionIlrContent()
         {
             ObjectType = "AzureFileShareProvisionILRRequest";
         }
 
-        /// <summary> Initializes a new instance of FileShareProvisionIlrContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareProvisionIlrContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointId"> Recovery point ID. </param>
         /// <param name="sourceResourceId"> Source Storage account ARM Id. </param>

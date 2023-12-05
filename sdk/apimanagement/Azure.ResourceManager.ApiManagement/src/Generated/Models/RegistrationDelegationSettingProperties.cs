@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> User registration delegation settings properties. </summary>
     internal partial class RegistrationDelegationSettingProperties
     {
-        /// <summary> Initializes a new instance of RegistrationDelegationSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationDelegationSettingProperties"/>. </summary>
         public RegistrationDelegationSettingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RegistrationDelegationSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationDelegationSettingProperties"/>. </summary>
         /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
         internal RegistrationDelegationSettingProperties(bool? isUserRegistrationDelegationEnabled)
         {

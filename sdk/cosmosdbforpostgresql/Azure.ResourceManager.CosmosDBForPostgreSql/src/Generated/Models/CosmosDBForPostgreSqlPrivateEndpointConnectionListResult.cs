@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> List of private endpoint connections associated with the specified resource. </summary>
     internal partial class CosmosDBForPostgreSqlPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionListResult"/>. </summary>
         internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData> value)
         {

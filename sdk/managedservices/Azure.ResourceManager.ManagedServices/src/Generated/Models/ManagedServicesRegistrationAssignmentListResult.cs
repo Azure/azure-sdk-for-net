@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The list of registration assignments. </summary>
     internal partial class ManagedServicesRegistrationAssignmentListResult
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentListResult"/>. </summary>
         internal ManagedServicesRegistrationAssignmentListResult()
         {
             Value = new ChangeTrackingList<ManagedServicesRegistrationAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of registration assignments. </param>
         /// <param name="nextLink"> The link to the next page of registration assignments. </param>
         internal ManagedServicesRegistrationAssignmentListResult(IReadOnlyList<ManagedServicesRegistrationAssignmentData> value, string nextLink)

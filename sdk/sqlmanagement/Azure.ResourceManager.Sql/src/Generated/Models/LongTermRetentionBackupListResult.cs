@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of long term retention backups. </summary>
     internal partial class LongTermRetentionBackupListResult
     {
-        /// <summary> Initializes a new instance of LongTermRetentionBackupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupListResult"/>. </summary>
         internal LongTermRetentionBackupListResult()
         {
             Value = new ChangeTrackingList<LongTermRetentionBackupData>();
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionBackupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal LongTermRetentionBackupListResult(IReadOnlyList<LongTermRetentionBackupData> value, string nextLink)

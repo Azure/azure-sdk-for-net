@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Defender for Databases GCP offering configurations. </summary>
     public partial class DefenderForDatabasesGcpOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderForDatabasesGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesGcpOffering"/>. </summary>
         public DefenderForDatabasesGcpOffering()
         {
             OfferingType = OfferingType.DefenderForDatabasesGcp;
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>

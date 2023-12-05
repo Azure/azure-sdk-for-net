@@ -14,7 +14,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// <summary> An image input. </summary>
     public partial class ImageInput : MediaInput
     {
-        /// <summary> Initializes a new instance of ImageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageInput"/>. </summary>
         /// <param name="uri"> Url of the image file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ImageInput(string uri)
@@ -25,7 +25,7 @@ namespace Azure.Communication.MediaComposition.Models
             Kind = MediaInputType.Image;
         }
 
-        /// <summary> Initializes a new instance of ImageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
         /// <param name="uri"> Url of the image file. </param>

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly DataExportsRestOperations _operationalInsightsDataExportDataExportsRestClient;
         private readonly OperationalInsightsDataExportData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/dataExports";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsDataExportResource"/> class for mocking. </summary>
         protected OperationalInsightsDataExportResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/dataExports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

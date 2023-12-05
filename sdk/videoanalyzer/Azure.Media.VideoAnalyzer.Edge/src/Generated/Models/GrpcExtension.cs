@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> GRPC extension processor allows pipeline extension plugins to be connected to the pipeline through over a gRPC channel. Extension plugins must act as an gRPC server. Please see https://aka.ms/ava-extension-grpc for details. </summary>
     public partial class GrpcExtension : ExtensionProcessorBase
     {
-        /// <summary> Initializes a new instance of GrpcExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrpcExtension"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint">
@@ -37,7 +37,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.GrpcExtension";
         }
 
-        /// <summary> Initializes a new instance of GrpcExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrpcExtension"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

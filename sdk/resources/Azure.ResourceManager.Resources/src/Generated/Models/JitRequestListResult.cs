@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of JIT requests. </summary>
     internal partial class JitRequestListResult
     {
-        /// <summary> Initializes a new instance of JitRequestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestListResult"/>. </summary>
         internal JitRequestListResult()
         {
             Value = new ChangeTrackingList<JitRequestData>();
         }
 
-        /// <summary> Initializes a new instance of JitRequestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestListResult"/>. </summary>
         /// <param name="value"> The array of Jit request definition. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal JitRequestListResult(IReadOnlyList<JitRequestData> value, string nextLink)

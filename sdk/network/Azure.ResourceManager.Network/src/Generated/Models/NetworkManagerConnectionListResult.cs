@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of network manager connections. </summary>
     internal partial class NetworkManagerConnectionListResult
     {
-        /// <summary> Initializes a new instance of NetworkManagerConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerConnectionListResult"/>. </summary>
         internal NetworkManagerConnectionListResult()
         {
             Value = new ChangeTrackingList<NetworkManagerConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerConnectionListResult"/>. </summary>
         /// <param name="value"> List of network manager connections. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         internal NetworkManagerConnectionListResult(IReadOnlyList<NetworkManagerConnectionData> value, string nextLink)

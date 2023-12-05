@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of metadata for the app configuration snapshots that can be restored. </summary>
     internal partial class SiteConfigurationSnapshotInfoListResult
     {
-        /// <summary> Initializes a new instance of SiteConfigurationSnapshotInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigurationSnapshotInfoListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SiteConfigurationSnapshotInfoListResult(IEnumerable<SiteConfigurationSnapshotInfo> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SiteConfigurationSnapshotInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigurationSnapshotInfoListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal SiteConfigurationSnapshotInfoListResult(IReadOnlyList<SiteConfigurationSnapshotInfo> value, string nextLink)

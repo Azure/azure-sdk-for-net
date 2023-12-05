@@ -1,5 +1,17 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fix `ContainerAppJobExecutionData` deserialization issue
+
+### Other Changes
+
 ## 1.1.1 (2023-11-27)
 
 ### Features Added

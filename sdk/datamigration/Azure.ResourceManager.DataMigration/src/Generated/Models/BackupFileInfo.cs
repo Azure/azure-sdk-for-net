@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information of the backup file. </summary>
     public partial class BackupFileInfo
     {
-        /// <summary> Initializes a new instance of BackupFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFileInfo"/>. </summary>
         internal BackupFileInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFileInfo"/>. </summary>
         /// <param name="fileLocation"> Location of the backup file in shared folder. </param>
         /// <param name="familySequenceNumber"> Sequence number of the backup file in the backup set. </param>
         /// <param name="status"> Status of the backup file during migration. </param>

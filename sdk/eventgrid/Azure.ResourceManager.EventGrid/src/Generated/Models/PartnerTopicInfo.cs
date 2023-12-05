@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the corresponding partner topic of a Channel. </summary>
     public partial class PartnerTopicInfo
     {
-        /// <summary> Initializes a new instance of PartnerTopicInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicInfo"/>. </summary>
         public PartnerTopicInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerTopicInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicInfo"/>. </summary>
         /// <param name="azureSubscriptionId">
         /// Azure subscription ID of the subscriber. The partner topic associated with the channel will be
         /// created under this Azure subscription.

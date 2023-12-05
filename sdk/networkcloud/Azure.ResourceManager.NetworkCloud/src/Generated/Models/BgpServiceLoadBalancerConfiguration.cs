@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BgpServiceLoadBalancerConfiguration represents the configuration of a BGP service load balancer. </summary>
     public partial class BgpServiceLoadBalancerConfiguration
     {
-        /// <summary> Initializes a new instance of BgpServiceLoadBalancerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpServiceLoadBalancerConfiguration"/>. </summary>
         public BgpServiceLoadBalancerConfiguration()
         {
             BgpAdvertisements = new ChangeTrackingList<BgpAdvertisement>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IPAddressPools = new ChangeTrackingList<IPAddressPool>();
         }
 
-        /// <summary> Initializes a new instance of BgpServiceLoadBalancerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpServiceLoadBalancerConfiguration"/>. </summary>
         /// <param name="bgpAdvertisements"> The association of IP address pools to the communities and peers, allowing for announcement of IPs. </param>
         /// <param name="bgpPeers"> The list of additional BgpPeer entities that the Kubernetes cluster will peer with. All peering must be explicitly defined. </param>
         /// <param name="fabricPeeringEnabled"> The indicator to specify if the load balancer peers with the network fabric. </param>

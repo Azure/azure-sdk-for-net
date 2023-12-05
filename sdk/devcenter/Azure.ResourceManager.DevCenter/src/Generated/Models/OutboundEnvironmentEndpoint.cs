@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> A collection of related endpoints from the same service for which the agent requires outbound access. </summary>
     public partial class OutboundEnvironmentEndpoint
     {
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         internal OutboundEnvironmentEndpoint()
         {
             Endpoints = new ChangeTrackingList<EndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service that the agent connects to. </param>
         /// <param name="endpoints"> The endpoints for this service for which the agent requires outbound access. </param>
         internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<EndpointDependency> endpoints)

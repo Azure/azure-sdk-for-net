@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information of backup file. </summary>
     public partial class SqlBackupFileInfo
     {
-        /// <summary> Initializes a new instance of SqlBackupFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlBackupFileInfo"/>. </summary>
         internal SqlBackupFileInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlBackupFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlBackupFileInfo"/>. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="status"> Status of the file. (Initial, Uploading, Uploaded, Restoring, Restored or Skipped). </param>
         /// <param name="totalSize"> File size in bytes. </param>

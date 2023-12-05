@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Virtual Wan Vpn profile parameters Vpn profile generation. </summary>
     public partial class VirtualWanVpnProfileContent
     {
-        /// <summary> Initializes a new instance of VirtualWanVpnProfileContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWanVpnProfileContent"/>. </summary>
         public VirtualWanVpnProfileContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualWanVpnProfileContent"/>. </summary>
+        /// <param name="vpnServerConfigurationResourceId"> VpnServerConfiguration partial resource uri with which VirtualWan is associated to. </param>
+        /// <param name="authenticationMethod"> VPN client authentication method. </param>
+        internal VirtualWanVpnProfileContent(ResourceIdentifier vpnServerConfigurationResourceId, NetworkAuthenticationMethod? authenticationMethod)
+        {
+            VpnServerConfigurationResourceId = vpnServerConfigurationResourceId;
+            AuthenticationMethod = authenticationMethod;
         }
 
         /// <summary> VpnServerConfiguration partial resource uri with which VirtualWan is associated to. </summary>

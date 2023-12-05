@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for starting data flow debug session. </summary>
     public partial class StartDataFlowDebugSessionRequest
     {
-        /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartDataFlowDebugSessionRequest"/>. </summary>
         public StartDataFlowDebugSessionRequest()
         {
             DataFlows = new ChangeTrackingList<DataFlowResource>();
@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             LinkedServices = new ChangeTrackingList<LinkedServiceResource>();
         }
 
-        /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartDataFlowDebugSessionRequest"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="dataFlow"> Data flow instance. </param>
         /// <param name="dataFlows"> List of Data flows. </param>

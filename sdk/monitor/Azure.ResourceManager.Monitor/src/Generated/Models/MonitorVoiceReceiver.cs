@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A voice receiver. </summary>
     public partial class MonitorVoiceReceiver
     {
-        /// <summary> Initializes a new instance of MonitorVoiceReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorVoiceReceiver"/>. </summary>
         /// <param name="name"> The name of the voice receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="countryCode"> The country code of the voice receiver. </param>
         /// <param name="phoneNumber"> The phone number of the voice receiver. </param>

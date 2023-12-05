@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Training related configuration. </summary>
     public partial class MachineLearningTrainingSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTrainingSettings"/>. </summary>
         public MachineLearningTrainingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTrainingSettings"/>. </summary>
         /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
         /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
         /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>

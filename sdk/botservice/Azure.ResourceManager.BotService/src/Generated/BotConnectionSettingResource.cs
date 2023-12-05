@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.BotService
         private readonly BotConnectionRestOperations _botConnectionSettingBotConnectionRestClient;
         private readonly BotConnectionSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices/connections";
+
         /// <summary> Initializes a new instance of the <see cref="BotConnectionSettingResource"/> class for mocking. </summary>
         protected BotConnectionSettingResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.BotService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices/connections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

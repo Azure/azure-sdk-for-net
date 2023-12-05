@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Recommended actions based on discovered issues. </summary>
     public partial class TroubleshootingRecommendedActions
     {
-        /// <summary> Initializes a new instance of TroubleshootingRecommendedActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingRecommendedActions"/>. </summary>
         internal TroubleshootingRecommendedActions()
         {
         }
 
-        /// <summary> Initializes a new instance of TroubleshootingRecommendedActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingRecommendedActions"/>. </summary>
         /// <param name="actionId"> ID of the recommended action. </param>
         /// <param name="actionText"> Description of recommended actions. </param>
         /// <param name="actionUri"> The uri linking to a documentation for the recommended troubleshooting actions. </param>

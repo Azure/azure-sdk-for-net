@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The routing policy object used in a RoutingIntent resource. </summary>
     public partial class RoutingPolicy
     {
-        /// <summary> Initializes a new instance of RoutingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingPolicy"/>. </summary>
         /// <param name="name"> The unique name for the routing policy. </param>
         /// <param name="destinations"> List of all destinations which this routing policy is applicable to (for example: Internet, PrivateTraffic). </param>
         /// <param name="nextHop"> The next hop resource id on which this routing policy is applicable to. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
             NextHop = nextHop;
         }
 
-        /// <summary> Initializes a new instance of RoutingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingPolicy"/>. </summary>
         /// <param name="name"> The unique name for the routing policy. </param>
         /// <param name="destinations"> List of all destinations which this routing policy is applicable to (for example: Internet, PrivateTraffic). </param>
         /// <param name="nextHop"> The next hop resource id on which this routing policy is applicable to. </param>

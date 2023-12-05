@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm provider specific input for unplanned failover. </summary>
     public partial class InMageRcmUnplannedFailoverContent : UnplannedFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmUnplannedFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUnplannedFailoverContent"/>. </summary>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="performShutdown"/> is null. </exception>
         public InMageRcmUnplannedFailoverContent(string performShutdown)
@@ -22,6 +22,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             PerformShutdown = performShutdown;
             InstanceType = "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUnplannedFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        internal InMageRcmUnplannedFailoverContent(string instanceType, string performShutdown, ResourceIdentifier recoveryPointId) : base(instanceType)
+        {
+            PerformShutdown = performShutdown;
+            RecoveryPointId = recoveryPointId;
+            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> A value indicating whether VM is to be shutdown. </summary>

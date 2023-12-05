@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The StorageSpacesPropertiesVmwareStorageProfile. </summary>
     public partial class StorageSpacesPropertiesVmwareStorageProfile
     {
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesVmwareStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesVmwareStorageProfile"/>. </summary>
         public StorageSpacesPropertiesVmwareStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesVmwareStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesVmwareStorageProfile"/>. </summary>
         /// <param name="datacenter"> Name of the datacenter in VSphere. </param>
         /// <param name="datastore"> Name of the datastore in VSphere. </param>
         /// <param name="folder"> Name of the folder in VSphere. </param>

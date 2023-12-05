@@ -13,9 +13,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of an update vCenter request. </summary>
     public partial class SiteRecoveryUpdateVCenterProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryUpdateVCenterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryUpdateVCenterProperties"/>. </summary>
         public SiteRecoveryUpdateVCenterProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryUpdateVCenterProperties"/>. </summary>
+        /// <param name="friendlyName"> The friendly name of the vCenter. </param>
+        /// <param name="ipAddress"> The IP address of the vCenter to be discovered. </param>
+        /// <param name="processServerId"> The process server Id from where the update can be orchestrated. </param>
+        /// <param name="port"> The port number for discovery. </param>
+        /// <param name="runAsAccountId"> The CS account Id which has privileges to update the vCenter. </param>
+        internal SiteRecoveryUpdateVCenterProperties(string friendlyName, IPAddress ipAddress, Guid? processServerId, string port, string runAsAccountId)
+        {
+            FriendlyName = friendlyName;
+            IPAddress = ipAddress;
+            ProcessServerId = processServerId;
+            Port = port;
+            RunAsAccountId = runAsAccountId;
         }
 
         /// <summary> The friendly name of the vCenter. </summary>

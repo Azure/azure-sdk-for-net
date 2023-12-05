@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ThirdPartyProviderAuthorization. </summary>
     public partial class ThirdPartyProviderAuthorization
     {
-        /// <summary> Initializes a new instance of ThirdPartyProviderAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThirdPartyProviderAuthorization"/>. </summary>
         public ThirdPartyProviderAuthorization()
         {
             Authorizations = new ChangeTrackingList<LightHouseAuthorization>();
         }
 
-        /// <summary> Initializes a new instance of ThirdPartyProviderAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThirdPartyProviderAuthorization"/>. </summary>
         /// <param name="authorizations"></param>
         /// <param name="managedByTenantId"></param>
         internal ThirdPartyProviderAuthorization(IList<LightHouseAuthorization> authorizations, string managedByTenantId)

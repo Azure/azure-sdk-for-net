@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MonitorPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceData"/>. </summary>
         public MonitorPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The location of file server dataset. </summary>
     public partial class AzureFileStorageLocation : DatasetLocation
     {
-        /// <summary> Initializes a new instance of AzureFileStorageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileStorageLocation"/>. </summary>
         public AzureFileStorageLocation()
         {
             DatasetLocationType = "AzureFileStorageLocation";
         }
 
-        /// <summary> Initializes a new instance of AzureFileStorageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileStorageLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>

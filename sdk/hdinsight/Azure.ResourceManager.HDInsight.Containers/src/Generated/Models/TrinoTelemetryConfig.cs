@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino user telemetry definition. </summary>
     public partial class TrinoTelemetryConfig
     {
-        /// <summary> Initializes a new instance of TrinoTelemetryConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoTelemetryConfig"/>. </summary>
         public TrinoTelemetryConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoTelemetryConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoTelemetryConfig"/>. </summary>
         /// <param name="hivecatalogName"> Hive Catalog name used to mount external tables on the logs written by trino, if not specified there tables are not created. </param>
         /// <param name="hivecatalogSchema"> Schema of the above catalog to use, to mount query logs as external tables, if not specified tables will be mounted under schema trinologs. </param>
         /// <param name="partitionRetentionInDays"> Retention period for query log table partitions, this doesn't have any affect on actual data. </param>

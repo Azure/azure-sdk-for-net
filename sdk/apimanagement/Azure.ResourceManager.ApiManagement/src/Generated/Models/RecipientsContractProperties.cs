@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Notification Parameter contract. </summary>
     public partial class RecipientsContractProperties
     {
-        /// <summary> Initializes a new instance of RecipientsContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientsContractProperties"/>. </summary>
         public RecipientsContractProperties()
         {
             Emails = new ChangeTrackingList<string>();
             Users = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RecipientsContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientsContractProperties"/>. </summary>
         /// <param name="emails"> List of Emails subscribed for the notification. </param>
         /// <param name="users"> List of Users subscribed for the notification. </param>
         internal RecipientsContractProperties(IList<string> emails, IList<string> users)

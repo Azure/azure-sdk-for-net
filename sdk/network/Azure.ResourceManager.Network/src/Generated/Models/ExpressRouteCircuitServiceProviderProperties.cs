@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains ServiceProviderProperties in an ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCircuitServiceProviderProperties
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitServiceProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitServiceProviderProperties"/>. </summary>
         public ExpressRouteCircuitServiceProviderProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitServiceProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitServiceProviderProperties"/>. </summary>
         /// <param name="serviceProviderName"> The serviceProviderName. </param>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="bandwidthInMbps"> The BandwidthInMbps. </param>

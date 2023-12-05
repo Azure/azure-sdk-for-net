@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
     public partial class NetworkCloudSshPublicKey
     {
-        /// <summary> Initializes a new instance of NetworkCloudSshPublicKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudSshPublicKey"/>. </summary>
         /// <param name="keyData"> The SSH public key data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> is null. </exception>
         public NetworkCloudSshPublicKey(string keyData)

@@ -13,13 +13,13 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The metrics result for a resource. </summary>
     public partial class MetricResultsResponse
     {
-        /// <summary> Initializes a new instance of MetricResultsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResultsResponse"/>. </summary>
         internal MetricResultsResponse()
         {
             Values = new ChangeTrackingList<MetricResultsResponseValuesItem>();
         }
 
-        /// <summary> Initializes a new instance of MetricResultsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResultsResponse"/>. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
         internal MetricResultsResponse(IReadOnlyList<MetricResultsResponseValuesItem> values)
         {

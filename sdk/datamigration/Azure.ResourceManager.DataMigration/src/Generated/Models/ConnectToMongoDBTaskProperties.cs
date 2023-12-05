@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates the connection to and provides information about a MongoDB server. </summary>
     public partial class ConnectToMongoDBTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToMongoDBTaskProperties"/>. </summary>
         public ConnectToMongoDBTaskProperties()
         {
             Output = new ChangeTrackingList<MongoDBClusterInfo>();
             TaskType = TaskType.ConnectMongoDB;
         }
 
-        /// <summary> Initializes a new instance of ConnectToMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToMongoDBTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryApplicationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GalleryApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryApplicationData(AzureLocation location) : base(location)
         {
             CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

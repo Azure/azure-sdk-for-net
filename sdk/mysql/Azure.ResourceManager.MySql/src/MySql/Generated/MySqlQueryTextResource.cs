@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MySql
         private readonly QueryTextsRestOperations _mySqlQueryTextQueryTextsRestClient;
         private readonly MySqlQueryTextData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/queryTexts";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlQueryTextResource"/> class for mocking. </summary>
         protected MySqlQueryTextResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/queryTexts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

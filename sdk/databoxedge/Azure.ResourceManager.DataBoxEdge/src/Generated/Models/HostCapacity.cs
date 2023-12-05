@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Host Capacity Data. </summary>
     public partial class HostCapacity
     {
-        /// <summary> Initializes a new instance of HostCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostCapacity"/>. </summary>
         public HostCapacity()
         {
             VmUsedMemory = new ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>();
             NumaNodesData = new ChangeTrackingList<NumaNodeInfo>();
         }
 
-        /// <summary> Initializes a new instance of HostCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostCapacity"/>. </summary>
         /// <param name="hostName"> The name of the host. </param>
         /// <param name="effectiveAvailableMemoryInMBOnHost"> The available memory on the host accounting for VM placement size and any host VM reservations. </param>
         /// <param name="availableGpuCount"> The available amount of GPUs on the host to use after accounting for GPUS used by reservations on the host. </param>

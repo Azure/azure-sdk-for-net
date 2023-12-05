@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteProviderPortData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteProviderPortData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ExpressRouteProviderPortData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteProviderPortData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

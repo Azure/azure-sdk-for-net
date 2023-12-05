@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Resync input. </summary>
     public partial class MigrationItemResyncContent
     {
-        /// <summary> Initializes a new instance of MigrationItemResyncContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationItemResyncContent"/>. </summary>
         /// <param name="properties"> Resync input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MigrationItemResyncContent(MigrationItemResyncProperties properties)

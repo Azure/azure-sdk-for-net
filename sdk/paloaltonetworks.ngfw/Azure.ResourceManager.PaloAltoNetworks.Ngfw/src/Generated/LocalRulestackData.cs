@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class LocalRulestackData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LocalRulestackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LocalRulestackData(AzureLocation location) : base(location)
         {
             AssociatedSubscriptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

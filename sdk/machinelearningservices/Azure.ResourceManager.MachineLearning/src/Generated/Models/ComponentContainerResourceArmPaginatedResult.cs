@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of ComponentContainer entities. </summary>
     internal partial class ComponentContainerResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of ComponentContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentContainerResourceArmPaginatedResult"/>. </summary>
         internal ComponentContainerResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningComponentContainerData>();
         }
 
-        /// <summary> Initializes a new instance of ComponentContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentContainerResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of ComponentContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type ComponentContainer. </param>
         internal ComponentContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningComponentContainerData> value)

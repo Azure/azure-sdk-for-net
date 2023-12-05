@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> Recommendation resource metadata. </summary>
     public partial class ResourceMetadata
     {
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetadata"/>. </summary>
         public ResourceMetadata()
         {
             Action = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetadata"/>. </summary>
         /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
         /// <param name="source"> Source from which recommendation is generated. </param>
         /// <param name="action"> The action to view resource. </param>

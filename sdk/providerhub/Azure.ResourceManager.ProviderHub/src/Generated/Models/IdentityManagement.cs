@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The IdentityManagement. </summary>
     internal partial class IdentityManagement
     {
-        /// <summary> Initializes a new instance of IdentityManagement. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityManagement"/>. </summary>
         internal IdentityManagement()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityManagement. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityManagement"/>. </summary>
         /// <param name="managementType"></param>
         internal IdentityManagement(IdentityManagementType? managementType)
         {

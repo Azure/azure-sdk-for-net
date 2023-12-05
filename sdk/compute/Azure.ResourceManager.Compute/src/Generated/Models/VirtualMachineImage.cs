@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a Virtual Machine Image. </summary>
     public partial class VirtualMachineImage : VirtualMachineImageBase
     {
-        /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             Features = new ChangeTrackingList<VirtualMachineImageFeature>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>

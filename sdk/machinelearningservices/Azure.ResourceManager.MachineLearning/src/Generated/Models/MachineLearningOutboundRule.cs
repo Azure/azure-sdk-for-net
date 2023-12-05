@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningOutboundRule
     {
-        /// <summary> Initializes a new instance of MachineLearningOutboundRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRule"/>. </summary>
         protected MachineLearningOutboundRule()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOutboundRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>

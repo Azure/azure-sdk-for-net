@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk input for update. </summary>
     public partial class UpdateDiskContent
     {
-        /// <summary> Initializes a new instance of UpdateDiskContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public UpdateDiskContent(string diskId)
@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(diskId, nameof(diskId));
 
             DiskId = diskId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="targetDiskName"> The target disk name. </param>
+        internal UpdateDiskContent(string diskId, string targetDiskName)
+        {
+            DiskId = diskId;
+            TargetDiskName = targetDiskName;
         }
 
         /// <summary> The disk Id. </summary>

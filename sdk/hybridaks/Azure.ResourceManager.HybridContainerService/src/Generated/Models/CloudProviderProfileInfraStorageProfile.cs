@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> InfraStorageProfile - List of infra storage profiles for the provisioned cluster. </summary>
     internal partial class CloudProviderProfileInfraStorageProfile
     {
-        /// <summary> Initializes a new instance of CloudProviderProfileInfraStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudProviderProfileInfraStorageProfile"/>. </summary>
         public CloudProviderProfileInfraStorageProfile()
         {
             StorageSpaceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CloudProviderProfileInfraStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudProviderProfileInfraStorageProfile"/>. </summary>
         /// <param name="storageSpaceIds"> Reference to azure resource corresponding to the new HybridAKSStorage object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpaceName}. </param>
         internal CloudProviderProfileInfraStorageProfile(IList<string> storageSpaceIds)
         {

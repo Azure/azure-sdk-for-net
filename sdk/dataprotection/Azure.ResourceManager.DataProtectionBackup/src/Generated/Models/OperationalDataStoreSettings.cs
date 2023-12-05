@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Parameters for Operational-Tier DataStore. </summary>
     public partial class OperationalDataStoreSettings : DataStoreSettings
     {
-        /// <summary> Initializes a new instance of OperationalDataStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalDataStoreSettings"/>. </summary>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         public OperationalDataStoreSettings(DataStoreType dataStoreType) : base(dataStoreType)
         {
             ObjectType = "AzureOperationalStoreParameters";
         }
 
-        /// <summary> Initializes a new instance of OperationalDataStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalDataStoreSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         /// <param name="resourceGroupId"> Gets or sets the Snapshot Resource Group Uri. </param>

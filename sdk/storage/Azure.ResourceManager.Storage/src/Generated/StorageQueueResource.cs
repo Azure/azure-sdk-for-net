@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Storage
         private readonly QueueRestOperations _storageQueueQueueRestClient;
         private readonly StorageQueueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/queueServices/queues";
+
         /// <summary> Initializes a new instance of the <see cref="StorageQueueResource"/> class for mocking. </summary>
         protected StorageQueueResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/queueServices/queues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

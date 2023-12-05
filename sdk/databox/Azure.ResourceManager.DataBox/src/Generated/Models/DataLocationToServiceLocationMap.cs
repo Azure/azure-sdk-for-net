@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Map of data location to service location. </summary>
     public partial class DataLocationToServiceLocationMap
     {
-        /// <summary> Initializes a new instance of DataLocationToServiceLocationMap. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLocationToServiceLocationMap"/>. </summary>
         internal DataLocationToServiceLocationMap()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLocationToServiceLocationMap. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLocationToServiceLocationMap"/>. </summary>
         /// <param name="dataLocation"> Location of the data. </param>
         /// <param name="serviceLocation"> Location of the service. </param>
         internal DataLocationToServiceLocationMap(AzureLocation? dataLocation, AzureLocation? serviceLocation)
