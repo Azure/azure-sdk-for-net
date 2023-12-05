@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricResultsResponseValuesItem
+    public partial class MetricBatchResult
     {
-        internal static MetricResultsResponseValuesItem DeserializeMetricResultsResponseValuesItem(JsonElement element)
+        internal static MetricBatchResult DeserializeMetricBatchResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query.Models
             DateTimeOffset endtime = default;
             Optional<TimeSpan> interval = default;
             Optional<string> @namespace = default;
-            Optional<string> resourceregion = default;
+            Optional<AzureLocation> resourceregion = default;
             Optional<ResourceIdentifier> resourceid = default;
             IReadOnlyList<MetricResult> value = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +55,11 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("resourceregion"u8))
                 {
-                    resourceregion = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceregion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceid"u8))
@@ -78,7 +82,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricResultsResponseValuesItem(starttime, endtime, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, resourceid.Value, value);
+            return new MetricBatchResult(starttime, endtime, Optional.ToNullable(interval), @namespace.Value, resourceregion, resourceid.Value, value);
         }
     }
 }

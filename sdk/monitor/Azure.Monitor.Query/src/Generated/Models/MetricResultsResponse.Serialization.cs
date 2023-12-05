@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetricResultsResponseValuesItem>> values = default;
+            Optional<IReadOnlyList<MetricBatchResult>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -28,10 +28,10 @@ namespace Azure.Monitor.Query.Models
                     {
                         continue;
                     }
-                    List<MetricResultsResponseValuesItem> array = new List<MetricResultsResponseValuesItem>();
+                    List<MetricBatchResult> array = new List<MetricBatchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricResultsResponseValuesItem.DeserializeMetricResultsResponseValuesItem(item));
+                        array.Add(MetricBatchResult.DeserializeMetricBatchResult(item));
                     }
                     values = array;
                     continue;

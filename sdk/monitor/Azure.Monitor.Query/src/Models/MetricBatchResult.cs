@@ -4,12 +4,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> The MetricResultsResponseValuesItem. </summary>
-    public partial class MetricResultsResponseValuesItem
+    /// <summary> The MetricBatchResult. </summary>
+    [CodeGenModel("MetricResultsResponseValuesItem")]
+    public partial class MetricBatchResult
     {
         /// <summary> The start time, in datetime format, for which the data was retrieved. </summary>
         [CodeGenMember("Starttime")]
@@ -25,6 +27,10 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> The region of the resource been queried for metrics. </summary>
         [CodeGenMember("Resourceregion")]
-        public string ResourceRegion { get; }
+        public AzureLocation ResourceRegion { get; }
+
+        /// <summary> The value of the collection. </summary>
+        [CodeGenMember("Value")]
+        public IReadOnlyList<MetricResult> Metrics { get; }
     }
 }
