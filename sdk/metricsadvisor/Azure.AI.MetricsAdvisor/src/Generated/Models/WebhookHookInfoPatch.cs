@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -24,8 +25,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="description"> hook description. </param>
         /// <param name="externalLink"> hook external link. </param>
         /// <param name="admins"> hook administrators. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hookParameter"></param>
-        internal WebhookHookInfoPatch(NotificationHookKind hookType, string hookName, string description, string externalLink, IList<string> admins, WebhookHookParameterPatch hookParameter) : base(hookType, hookName, description, externalLink, admins)
+        internal WebhookHookInfoPatch(NotificationHookKind hookType, string hookName, string description, string externalLink, IList<string> admins, IDictionary<string, BinaryData> serializedAdditionalRawData, WebhookHookParameterPatch hookParameter) : base(hookType, hookName, description, externalLink, admins, serializedAdditionalRawData)
         {
             HookParameter = hookParameter;
             HookType = hookType;

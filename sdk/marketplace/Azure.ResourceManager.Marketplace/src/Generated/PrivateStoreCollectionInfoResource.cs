@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<MarketplaceRule> QueryRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryRulesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MarketplaceRule.DeserializeMarketplaceRule(e), _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<MarketplaceRule> QueryRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryRulesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MarketplaceRule.DeserializeMarketplaceRule(e), _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CollectionOffersByContext.DeserializeCollectionOffersByContext(e), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CollectionOffersByContext.DeserializeCollectionOffersByContext(e), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Administration
             permissions ??= new List<KeyVaultPermission>();
             assignableScopes ??= new List<KeyVaultRoleScope>();
 
-            return new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions?.ToList(), assignableScopes?.ToList());
+            return new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions?.ToList(), assignableScopes?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultRoleAssignment"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> A new <see cref="Administration.KeyVaultRoleAssignment"/> instance for mocking. </returns>
         public static KeyVaultRoleAssignment KeyVaultRoleAssignment(string id = null, string name = null, string type = null, KeyVaultRoleAssignmentProperties properties = null)
         {
-            return new KeyVaultRoleAssignment(id, name, type, properties);
+            return new KeyVaultRoleAssignment(id, name, type, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultRoleAssignmentProperties"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> A new <see cref="Administration.KeyVaultRoleAssignmentProperties"/> instance for mocking. </returns>
         public static KeyVaultRoleAssignmentProperties KeyVaultRoleAssignmentProperties(KeyVaultRoleScope? scope = null, string roleDefinitionId = null, string principalId = null)
         {
-            return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId);
+            return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultSetting"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
         public static KeyVaultSetting KeyVaultSetting(string name = null, string content = null, KeyVaultSettingType? settingType = null)
         {
-            return new KeyVaultSetting(name, content, settingType);
+            return new KeyVaultSetting(name, content, settingType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Administration.GetSettingsResult"/>. </summary>
@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             settings ??= new List<KeyVaultSetting>();
 
-            return new GetSettingsResult(settings?.ToList());
+            return new GetSettingsResult(settings?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

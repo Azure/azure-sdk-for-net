@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Maps.Rendering
     /// <summary> Metadata for a tileset in the TileJSON format. </summary>
     public partial class MapTileSet
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MapTileSet"/>. </summary>
         internal MapTileSet()
         {
@@ -21,6 +54,43 @@ namespace Azure.Maps.Rendering
             GeoJsonDataFiles = new ChangeTrackingList<string>();
             BoundsInternal = new ChangeTrackingList<float>();
             CenterInternal = new ChangeTrackingList<float>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapTileSet"/>. </summary>
+        /// <param name="tileJsonVersion"> Describes the version of the TileJSON spec that is implemented by this JSON object. </param>
+        /// <param name="tileSetName"> A name describing the tileset. The name can contain any legal character. Implementations SHOULD NOT interpret the name as HTML. </param>
+        /// <param name="tileSetDescription"> Text description of the tileset. The description can contain any legal character. Implementations SHOULD NOT interpret the description as HTML. </param>
+        /// <param name="tileSetVersion"> A semver.org style version number for the tiles contained within the tileset. When changes across tiles are introduced, the minor version MUST change. </param>
+        /// <param name="copyrightAttribution"> Copyright attribution to be displayed on the map. Implementations MAY decide to treat this as HTML or literal text. For security reasons, make absolutely sure that this field can't be abused as a vector for XSS or beacon tracking. </param>
+        /// <param name="template"> A mustache template to be used to format data from grids for interaction. </param>
+        /// <param name="mapTileLegend"> A legend to be displayed with the map. Implementations MAY decide to treat this as HTML or literal text. For security reasons, make absolutely sure that this field can't be abused as a vector for XSS or beacon tracking. </param>
+        /// <param name="schemeInternal"> Default: "xyz". Either "xyz" or "tms". Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed. </param>
+        /// <param name="tileEndpoints"> An array of tile endpoints. If multiple endpoints are specified, clients may use any combination of endpoints. All endpoints MUST return the same content for the same URL. The array MUST contain at least one endpoint. </param>
+        /// <param name="grids"> An array of interactivity endpoints. </param>
+        /// <param name="geoJsonDataFiles"> An array of data files in GeoJSON format. </param>
+        /// <param name="minZoomLevel"> The minimum zoom level. </param>
+        /// <param name="maxZoomLevel"> The maximum zoom level. </param>
+        /// <param name="boundsInternal"> The maximum extent of available map tiles. Bounds MUST define an area covered by all zoom levels. The bounds are represented in WGS:84 latitude and longitude values, in the order left, bottom, right, top. Values may be integers or floating point numbers. </param>
+        /// <param name="centerInternal"> The default location of the tileset in the form [longitude, latitude, zoom]. The zoom level MUST be between minzoom and maxzoom. Implementations can use this value to set the default location. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapTileSet(string tileJsonVersion, string tileSetName, string tileSetDescription, string tileSetVersion, string copyrightAttribution, string template, string mapTileLegend, string schemeInternal, IReadOnlyList<string> tileEndpoints, IReadOnlyList<string> grids, IReadOnlyList<string> geoJsonDataFiles, int? minZoomLevel, int? maxZoomLevel, IReadOnlyList<float> boundsInternal, IReadOnlyList<float> centerInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TileJsonVersion = tileJsonVersion;
+            TileSetName = tileSetName;
+            TileSetDescription = tileSetDescription;
+            TileSetVersion = tileSetVersion;
+            CopyrightAttribution = copyrightAttribution;
+            Template = template;
+            MapTileLegend = mapTileLegend;
+            SchemeInternal = schemeInternal;
+            TileEndpoints = tileEndpoints;
+            Grids = grids;
+            GeoJsonDataFiles = geoJsonDataFiles;
+            MinZoomLevel = minZoomLevel;
+            MaxZoomLevel = maxZoomLevel;
+            BoundsInternal = boundsInternal;
+            CenterInternal = centerInternal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownDataImportSource. </summary>
@@ -13,7 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="UnknownDataImportSource"/>. </summary>
         /// <param name="connection"> Workspace connection for data import source storage. </param>
         /// <param name="sourceType"> [Required] Specifies the type of data. </param>
-        internal UnknownDataImportSource(string connection, DataImportSourceType sourceType) : base(connection, sourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataImportSource(string connection, DataImportSourceType sourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(connection, sourceType, serializedAdditionalRawData)
         {
             SourceType = sourceType;
         }

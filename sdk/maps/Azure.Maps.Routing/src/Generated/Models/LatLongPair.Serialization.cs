@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    internal partial class LatLongPair
+    internal partial class LatLongPair : IUtf8JsonSerializable, IJsonModel<LatLongPair>
     {
-        internal static LatLongPair DeserializeLatLongPair(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LatLongPair>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LatLongPair>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LatLongPair>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LatLongPair)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(_Latitude))
+            {
+                writer.WritePropertyName("latitude"u8);
+                writer.WriteNumberValue(_Latitude.Value);
+            }
+            if (Optional.IsDefined(_Longitude))
+            {
+                writer.WritePropertyName("longitude"u8);
+                writer.WriteNumberValue(_Longitude.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LatLongPair IJsonModel<LatLongPair>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LatLongPair>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LatLongPair)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLatLongPair(document.RootElement, options);
+        }
+
+        internal static LatLongPair DeserializeLatLongPair(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<double> latitude = default;
             Optional<double> longitude = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latitude"u8))
@@ -40,8 +99,44 @@ namespace Azure.Maps.Routing.Models
                     longitude = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LatLongPair(Optional.ToNullable(latitude), Optional.ToNullable(longitude));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LatLongPair(Optional.ToNullable(latitude), Optional.ToNullable(longitude), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LatLongPair>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LatLongPair>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LatLongPair)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LatLongPair IPersistableModel<LatLongPair>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LatLongPair>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLatLongPair(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LatLongPair)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LatLongPair>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

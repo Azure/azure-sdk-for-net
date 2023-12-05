@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The JobRequest. </summary>
     public partial class JobRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JobRequest"/>. </summary>
         public JobRequest()
         {
@@ -25,7 +58,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="queryCondition"> The condition for devices to execute the job. This is required if the job type is updateTwin or cloudToDeviceMethod. </param>
         /// <param name="startTime"> The start date and time of the job in ISO 8601 standard. </param>
         /// <param name="maxExecutionTimeInSeconds"> The maximum execution time in secounds. </param>
-        internal JobRequest(string jobId, JobRequestType? type, CloudToDeviceMethodRequest cloudToDeviceMethod, TwinData updateTwin, string queryCondition, DateTimeOffset? startTime, long? maxExecutionTimeInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobRequest(string jobId, JobRequestType? type, CloudToDeviceMethodRequest cloudToDeviceMethod, TwinData updateTwin, string queryCondition, DateTimeOffset? startTime, long? maxExecutionTimeInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             Type = type;
@@ -34,6 +68,7 @@ namespace Azure.IoT.Hub.Service.Models
             QueryCondition = queryCondition;
             StartTime = startTime;
             MaxExecutionTimeInSeconds = maxExecutionTimeInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the job. </summary>

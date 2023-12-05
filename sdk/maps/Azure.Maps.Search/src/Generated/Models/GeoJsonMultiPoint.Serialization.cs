@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonMultiPoint : IUtf8JsonSerializable
+    internal partial class GeoJsonMultiPoint : IUtf8JsonSerializable, IJsonModel<GeoJsonMultiPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoJsonMultiPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GeoJsonMultiPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonMultiPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GeoJsonMultiPoint)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
@@ -35,17 +46,48 @@ namespace Azure.Maps.Search.Models
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GeoJsonMultiPoint DeserializeGeoJsonMultiPoint(JsonElement element)
+        GeoJsonMultiPoint IJsonModel<GeoJsonMultiPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonMultiPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GeoJsonMultiPoint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGeoJsonMultiPoint(document.RootElement, options);
+        }
+
+        internal static GeoJsonMultiPoint DeserializeGeoJsonMultiPoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<IList<double>> coordinates = default;
             GeoJsonObjectType type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"u8))
@@ -75,8 +117,44 @@ namespace Azure.Maps.Search.Models
                     type = property.Value.GetString().ToGeoJsonObjectType();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GeoJsonMultiPoint(type, coordinates);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GeoJsonMultiPoint(type, serializedAdditionalRawData, coordinates);
         }
+
+        BinaryData IPersistableModel<GeoJsonMultiPoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonMultiPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GeoJsonMultiPoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GeoJsonMultiPoint IPersistableModel<GeoJsonMultiPoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonMultiPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGeoJsonMultiPoint(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GeoJsonMultiPoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GeoJsonMultiPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

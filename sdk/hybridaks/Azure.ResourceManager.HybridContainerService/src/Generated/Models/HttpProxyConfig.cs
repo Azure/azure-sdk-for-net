@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
@@ -23,8 +24,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
         /// <param name="trustedCa"> Alternative CA cert to use for connecting to proxy servers. </param>
         /// <param name="username"> Username to use for connecting to proxy server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="password"> Password to use for connecting to proxy server. </param>
-        internal HttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCa, string username, string password) : base(httpProxy, httpsProxy, noProxy, trustedCa, username)
+        internal HttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCa, string username, IDictionary<string, BinaryData> serializedAdditionalRawData, string password) : base(httpProxy, httpsProxy, noProxy, trustedCa, username, serializedAdditionalRawData)
         {
             Password = password;
         }

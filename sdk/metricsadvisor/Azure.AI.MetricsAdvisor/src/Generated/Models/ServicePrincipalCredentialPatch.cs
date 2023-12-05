@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ServicePrincipalCredentialPatch. </summary>
@@ -20,8 +23,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
         /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
         /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"></param>
-        internal ServicePrincipalCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription, ServicePrincipalParamPatch parameters) : base(dataSourceCredentialType, dataSourceCredentialName, dataSourceCredentialDescription)
+        internal ServicePrincipalCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription, IDictionary<string, BinaryData> serializedAdditionalRawData, ServicePrincipalParamPatch parameters) : base(dataSourceCredentialType, dataSourceCredentialName, dataSourceCredentialDescription, serializedAdditionalRawData)
         {
             Parameters = parameters;
             DataSourceCredentialType = dataSourceCredentialType;

@@ -5,16 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class SasDefinitionBundle
+    public partial class SasDefinitionBundle : IUtf8JsonSerializable, IJsonModel<SasDefinitionBundle>
     {
-        internal static SasDefinitionBundle DeserializeSasDefinitionBundle(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SasDefinitionBundle>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SasDefinitionBundle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SasDefinitionBundle>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SasDefinitionBundle)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecretId))
+            {
+                writer.WritePropertyName("sid"u8);
+                writer.WriteStringValue(SecretId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TemplateUri))
+            {
+                writer.WritePropertyName("templateUri"u8);
+                writer.WriteStringValue(TemplateUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SasType))
+            {
+                writer.WritePropertyName("sasType"u8);
+                writer.WriteStringValue(SasType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ValidityPeriod))
+            {
+                writer.WritePropertyName("validityPeriod"u8);
+                writer.WriteStringValue(ValidityPeriod);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Attributes))
+            {
+                writer.WritePropertyName("attributes"u8);
+                writer.WriteObjectValue(Attributes);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SasDefinitionBundle IJsonModel<SasDefinitionBundle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SasDefinitionBundle>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SasDefinitionBundle)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSasDefinitionBundle(document.RootElement, options);
+        }
+
+        internal static SasDefinitionBundle DeserializeSasDefinitionBundle(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +113,8 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<string> validityPeriod = default;
             Optional<SasDefinitionAttributes> attributes = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -80,8 +169,44 @@ namespace Azure.Security.KeyVault.Storage.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SasDefinitionBundle(id.Value, sid.Value, templateUri.Value, Optional.ToNullable(sasType), validityPeriod.Value, attributes.Value, Optional.ToDictionary(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SasDefinitionBundle(id.Value, sid.Value, templateUri.Value, Optional.ToNullable(sasType), validityPeriod.Value, attributes.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SasDefinitionBundle>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SasDefinitionBundle>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SasDefinitionBundle)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SasDefinitionBundle IPersistableModel<SasDefinitionBundle>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SasDefinitionBundle>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSasDefinitionBundle(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SasDefinitionBundle)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SasDefinitionBundle>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

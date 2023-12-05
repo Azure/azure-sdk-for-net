@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ProvisionedClusterData(id, name, resourceType, systemData, tags, location, identity, properties, extendedLocation);
+            return new ProvisionedClusterData(id, name, resourceType, systemData, tags, location, identity, properties, extendedLocation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClustersResponseProperties"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             addonProfiles ??= new Dictionary<string, AddonProfiles>();
             agentPoolProfiles ??= new List<NamedAgentPoolProfile>();
 
-            return new ProvisionedClustersResponseProperties(aadProfile, windowsProfile, httpProxyConfig, enableRbac, linuxProfile, featuresArcAgentProfile != null ? new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile) : null, addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
+            return new ProvisionedClustersResponseProperties(aadProfile, windowsProfile, httpProxyConfig, serializedAdditionalRawData: null, enableRbac, linuxProfile, featuresArcAgentProfile != null ? new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile, serializedAdditionalRawData: null) : null, addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClustersCommonPropertiesStatus"/>. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             addonStatus ??= new Dictionary<string, AddonStatus>();
 
-            return new ProvisionedClustersCommonPropertiesStatus(arcAgentStatus != null ? new ProvisionedClustersCommonPropertiesStatusFeaturesStatus(arcAgentStatus) : null, addonStatus, errorMessage, provisioningStatus);
+            return new ProvisionedClustersCommonPropertiesStatus(arcAgentStatus != null ? new ProvisionedClustersCommonPropertiesStatusFeaturesStatus(arcAgentStatus, serializedAdditionalRawData: null) : null, addonStatus, errorMessage, provisioningStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArcAgentStatus"/>. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.ArcAgentStatus"/> instance for mocking. </returns>
         public static ArcAgentStatus ArcAgentStatus(DeploymentState? deploymentState = null, string errorMessage = null, string onboardingPublicKey = null, string agentVersion = null, long? coreCount = null, DateTimeOffset? managedIdentityCertificateExpirationOn = null, DateTimeOffset? lastConnectivityOn = null)
         {
-            return new ArcAgentStatus(deploymentState, errorMessage, onboardingPublicKey, agentVersion, coreCount, managedIdentityCertificateExpirationOn, lastConnectivityOn);
+            return new ArcAgentStatus(deploymentState, errorMessage, onboardingPublicKey, agentVersion, coreCount, managedIdentityCertificateExpirationOn, lastConnectivityOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonStatus"/>. </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.AddonStatus"/> instance for mocking. </returns>
         public static AddonStatus AddonStatus(string errorMessage = null, string phase = null, bool? ready = null)
         {
-            return new AddonStatus(errorMessage, phase, ready);
+            return new AddonStatus(errorMessage, phase, ready, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatus"/>. </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatus"/> instance for mocking. </returns>
         public static ProvisionedClustersCommonPropertiesStatusProvisioningStatus ProvisionedClustersCommonPropertiesStatusProvisioningStatus(ProvisionedClustersCommonPropertiesStatusProvisioningStatusError error = null, string operationId = null, string phase = null, string status = null)
         {
-            return new ProvisionedClustersCommonPropertiesStatusProvisioningStatus(error, operationId, phase, status);
+            return new ProvisionedClustersCommonPropertiesStatusProvisioningStatus(error, operationId, phase, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatusError"/>. </summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatusError"/> instance for mocking. </returns>
         public static ProvisionedClustersCommonPropertiesStatusProvisioningStatusError ProvisionedClustersCommonPropertiesStatusProvisioningStatusError(string code = null, string message = null)
         {
-            return new ProvisionedClustersCommonPropertiesStatusProvisioningStatusError(code, message);
+            return new ProvisionedClustersCommonPropertiesStatusProvisioningStatusError(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterCreateOrUpdateContent"/>. </summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ProvisionedClusterCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, identity, properties, extendedLocation);
+            return new ProvisionedClusterCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, identity, properties, extendedLocation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClustersAllProperties"/>. </summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             addonProfiles ??= new Dictionary<string, AddonProfiles>();
             agentPoolProfiles ??= new List<NamedAgentPoolProfile>();
 
-            return new ProvisionedClustersAllProperties(aadProfile, windowsProfile, httpProxyConfig, enableRbac, linuxProfile, featuresArcAgentProfile != null ? new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile) : null, addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
+            return new ProvisionedClustersAllProperties(aadProfile, windowsProfile, httpProxyConfig, serializedAdditionalRawData: null, enableRbac, linuxProfile, featuresArcAgentProfile != null ? new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile, serializedAdditionalRawData: null) : null, addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerService.ProvisionedClusterUpgradeProfileData"/>. </summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             agentPoolProfiles ??= new List<ProvisionedClusterPoolUpgradeProfile>();
 
-            return new ProvisionedClusterUpgradeProfileData(id, name, resourceType, systemData, provisioningState, controlPlaneProfile, agentPoolProfiles?.ToList());
+            return new ProvisionedClusterUpgradeProfileData(id, name, resourceType, systemData, provisioningState, controlPlaneProfile, agentPoolProfiles?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterPoolUpgradeProfile"/>. </summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             upgrades ??= new List<ProvisionedClusterPoolUpgradeProfileProperties>();
 
-            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion, name, osType, upgrades?.ToList());
+            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion, name, osType, upgrades?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterPoolUpgradeProfileProperties"/>. </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.ProvisionedClusterPoolUpgradeProfileProperties"/> instance for mocking. </returns>
         public static ProvisionedClusterPoolUpgradeProfileProperties ProvisionedClusterPoolUpgradeProfileProperties(string kubernetesVersion = null, bool? isPreview = null)
         {
-            return new ProvisionedClusterPoolUpgradeProfileProperties(kubernetesVersion, isPreview);
+            return new ProvisionedClusterPoolUpgradeProfileProperties(kubernetesVersion, isPreview, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridIdentityMetadataData"/>. </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="HybridContainerService.HybridIdentityMetadataData"/> instance for mocking. </returns>
         public static HybridIdentityMetadataData HybridIdentityMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceUid = null, string publicKey = null, ManagedServiceIdentity identity = null, string provisioningState = null)
         {
-            return new HybridIdentityMetadataData(id, name, resourceType, systemData, resourceUid, publicKey, identity, provisioningState);
+            return new HybridIdentityMetadataData(id, name, resourceType, systemData, resourceUid, publicKey, identity, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridContainerServiceAgentPoolData"/>. </summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             nodeLabels ??= new Dictionary<string, string>();
             nodeTaints ??= new List<string>();
 
-            return new HybridContainerServiceAgentPoolData(id, name, resourceType, systemData, tags, location, extendedLocation, count, availabilityZones?.ToList(), maxCount, maxPods, minCount, mode, nodeLabels, nodeTaints?.ToList(), osType, nodeImageVersion, vmSize, cloudProviderProfile, provisioningState, status);
+            return new HybridContainerServiceAgentPoolData(id, name, resourceType, systemData, tags, location, extendedLocation, count, availabilityZones?.ToList(), maxCount, maxPods, minCount, mode, nodeLabels, nodeTaints?.ToList(), osType, nodeImageVersion, vmSize, cloudProviderProfile, provisioningState, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OrchestratorVersionProfileListResult"/>. </summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             orchestrators ??= new List<OrchestratorVersionProfile>();
 
-            return new OrchestratorVersionProfileListResult(id, name, resourceType, systemData, orchestrators?.ToList());
+            return new OrchestratorVersionProfileListResult(id, name, resourceType, systemData, orchestrators?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OrchestratorVersionProfile"/>. </summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             upgrades ??= new List<OrchestratorProfile>();
 
-            return new OrchestratorVersionProfile(isPreview, @default, orchestratorType, orchestratorVersion, upgrades?.ToList());
+            return new OrchestratorVersionProfile(isPreview, @default, orchestratorType, orchestratorVersion, upgrades?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OrchestratorProfile"/>. </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.OrchestratorProfile"/> instance for mocking. </returns>
         public static OrchestratorProfile OrchestratorProfile(bool? isPreview = null, string orchestratorType = null, string orchestratorVersion = null)
         {
-            return new OrchestratorProfile(isPreview, orchestratorType, orchestratorVersion);
+            return new OrchestratorProfile(isPreview, orchestratorType, orchestratorVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmSkuListResult"/>. </summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             vmSKUs ??= new List<string>();
 
-            return new VmSkuListResult(id, name, resourceType, systemData, vmSKUs?.ToList());
+            return new VmSkuListResult(id, name, resourceType, systemData, vmSKUs?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerService.StorageSpaceData"/>. </summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StorageSpaceData(id, name, resourceType, systemData, tags, location, properties, extendedLocation);
+            return new StorageSpaceData(id, name, resourceType, systemData, tags, location, properties, extendedLocation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSpacesProperties"/>. </summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.StorageSpacesProperties"/> instance for mocking. </returns>
         public static StorageSpacesProperties StorageSpacesProperties(StorageSpacesPropertiesHciStorageProfile hciStorageProfile = null, StorageSpacesPropertiesVmwareStorageProfile vmwareStorageProfile = null, ProvisioningState? provisioningState = null, StorageSpacesPropertiesStatusProvisioningStatus provisioningStatus = null)
         {
-            return new StorageSpacesProperties(hciStorageProfile, vmwareStorageProfile, provisioningState, provisioningStatus != null ? new StorageSpacesPropertiesStatus(provisioningStatus) : null);
+            return new StorageSpacesProperties(hciStorageProfile, vmwareStorageProfile, provisioningState, provisioningStatus != null ? new StorageSpacesPropertiesStatus(provisioningStatus, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridContainerServiceVirtualNetworkData"/>. </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HybridContainerServiceVirtualNetworkData(id, name, resourceType, systemData, tags, location, properties, extendedLocation);
+            return new HybridContainerServiceVirtualNetworkData(id, name, resourceType, systemData, tags, location, properties, extendedLocation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworksProperties"/>. </summary>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             dhcpServers ??= new List<string>();
             dnsServers ??= new List<string>();
 
-            return new VirtualNetworksProperties(infraVnetProfile, vipPool?.ToList(), vmipPool?.ToList(), dhcpServers?.ToList(), dnsServers?.ToList(), gateway, ipAddressPrefix, vlanId, provisioningState, provisioningStatus != null ? new VirtualNetworksPropertiesStatus(provisioningStatus) : null);
+            return new VirtualNetworksProperties(infraVnetProfile, vipPool?.ToList(), vmipPool?.ToList(), dhcpServers?.ToList(), dnsServers?.ToList(), gateway, ipAddressPrefix, vlanId, provisioningState, provisioningStatus != null ? new VirtualNetworksPropertiesStatus(provisioningStatus, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworksPropertiesStatusProvisioningStatus"/>. </summary>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.VirtualNetworksPropertiesStatusProvisioningStatus"/> instance for mocking. </returns>
         public static VirtualNetworksPropertiesStatusProvisioningStatus VirtualNetworksPropertiesStatusProvisioningStatus(VirtualNetworksPropertiesStatusProvisioningStatusError error = null, string operationId = null, string phase = null, string status = null)
         {
-            return new VirtualNetworksPropertiesStatusProvisioningStatus(error, operationId, phase, status);
+            return new VirtualNetworksPropertiesStatusProvisioningStatus(error, operationId, phase, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworksPropertiesStatusProvisioningStatusError"/>. </summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.VirtualNetworksPropertiesStatusProvisioningStatusError"/> instance for mocking. </returns>
         public static VirtualNetworksPropertiesStatusProvisioningStatusError VirtualNetworksPropertiesStatusProvisioningStatusError(string code = null, string message = null)
         {
-            return new VirtualNetworksPropertiesStatusProvisioningStatusError(code, message);
+            return new VirtualNetworksPropertiesStatusProvisioningStatusError(code, message, serializedAdditionalRawData: null);
         }
     }
 }

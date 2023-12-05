@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The JobProperties. </summary>
     public partial class JobProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JobProperties"/>. </summary>
         public JobProperties()
         {
@@ -33,7 +66,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="failureReason"> System genereated.  Ignored at creation. The reason for failure, if a failure occurred. </param>
         /// <param name="includeConfigurations"> Defaults to false. If true, then configurations are included in the data export/import. </param>
         /// <param name="configurationsBlobName"> Defaults to configurations.txt. Specifies the name of the blob to use when exporting/importing configurations. </param>
-        internal JobProperties(string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobPropertiesType? type, JobPropertiesStatus? status, int? progress, string inputBlobContainerUri, string inputBlobName, string outputBlobContainerUri, string outputBlobName, bool? excludeKeysInExport, JobPropertiesStorageAuthenticationType? storageAuthenticationType, string failureReason, bool? includeConfigurations, string configurationsBlobName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobProperties(string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobPropertiesType? type, JobPropertiesStatus? status, int? progress, string inputBlobContainerUri, string inputBlobName, string outputBlobContainerUri, string outputBlobName, bool? excludeKeysInExport, JobPropertiesStorageAuthenticationType? storageAuthenticationType, string failureReason, bool? includeConfigurations, string configurationsBlobName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             StartTimeUtc = startTimeUtc;
@@ -50,6 +84,7 @@ namespace Azure.IoT.Hub.Service.Models
             FailureReason = failureReason;
             IncludeConfigurations = includeConfigurations;
             ConfigurationsBlobName = configurationsBlobName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the job. </summary>

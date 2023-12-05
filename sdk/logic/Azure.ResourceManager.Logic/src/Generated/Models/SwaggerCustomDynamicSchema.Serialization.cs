@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicSchema : IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicSchema : IUtf8JsonSerializable, IJsonModel<SwaggerCustomDynamicSchema>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerCustomDynamicSchema>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SwaggerCustomDynamicSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicSchema>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OperationId))
             {
@@ -50,11 +60,40 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SwaggerCustomDynamicSchema DeserializeSwaggerCustomDynamicSchema(JsonElement element)
+        SwaggerCustomDynamicSchema IJsonModel<SwaggerCustomDynamicSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicSchema>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSwaggerCustomDynamicSchema(document.RootElement, options);
+        }
+
+        internal static SwaggerCustomDynamicSchema DeserializeSwaggerCustomDynamicSchema(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +101,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> operationId = default;
             Optional<string> valuePath = default;
             Optional<IDictionary<string, BinaryData>> parameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -95,8 +136,44 @@ namespace Azure.ResourceManager.Logic.Models
                     parameters = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SwaggerCustomDynamicSchema(operationId.Value, valuePath.Value, Optional.ToDictionary(parameters));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SwaggerCustomDynamicSchema(operationId.Value, valuePath.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SwaggerCustomDynamicSchema>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicSchema>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SwaggerCustomDynamicSchema IPersistableModel<SwaggerCustomDynamicSchema>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicSchema>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSwaggerCustomDynamicSchema(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SwaggerCustomDynamicSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The ConfigurationQueriesTestInput. </summary>
     public partial class ConfigurationQueriesTestInput
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ConfigurationQueriesTestInput"/>. </summary>
         public ConfigurationQueriesTestInput()
         {
@@ -22,10 +55,12 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of <see cref="ConfigurationQueriesTestInput"/>. </summary>
         /// <param name="targetCondition"> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </param>
         /// <param name="customMetricQueries"> The key-value pairs with queries and their identifier. </param>
-        internal ConfigurationQueriesTestInput(string targetCondition, IDictionary<string, string> customMetricQueries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationQueriesTestInput(string targetCondition, IDictionary<string, string> customMetricQueries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetCondition = targetCondition;
             CustomMetricQueries = customMetricQueries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </summary>

@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureLogAnalyticsParameter : IUtf8JsonSerializable
+    internal partial class AzureLogAnalyticsParameter : IUtf8JsonSerializable, IJsonModel<AzureLogAnalyticsParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureLogAnalyticsParameter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureLogAnalyticsParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureLogAnalyticsParameter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureLogAnalyticsParameter)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
@@ -34,11 +46,40 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(WorkspaceId);
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureLogAnalyticsParameter DeserializeAzureLogAnalyticsParameter(JsonElement element)
+        AzureLogAnalyticsParameter IJsonModel<AzureLogAnalyticsParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureLogAnalyticsParameter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureLogAnalyticsParameter)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureLogAnalyticsParameter(document.RootElement, options);
+        }
+
+        internal static AzureLogAnalyticsParameter DeserializeAzureLogAnalyticsParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +89,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> clientSecret = default;
             string workspaceId = default;
             string query = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -75,8 +118,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     query = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureLogAnalyticsParameter(tenantId.Value, clientId.Value, clientSecret.Value, workspaceId, query);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureLogAnalyticsParameter(tenantId.Value, clientId.Value, clientSecret.Value, workspaceId, query, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureLogAnalyticsParameter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureLogAnalyticsParameter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureLogAnalyticsParameter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureLogAnalyticsParameter IPersistableModel<AzureLogAnalyticsParameter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureLogAnalyticsParameter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureLogAnalyticsParameter(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureLogAnalyticsParameter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureLogAnalyticsParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

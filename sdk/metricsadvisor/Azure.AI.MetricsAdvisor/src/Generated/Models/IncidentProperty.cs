@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The IncidentProperty. </summary>
     internal partial class IncidentProperty
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IncidentProperty"/>. </summary>
         /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
         /// <param name="incidentStatus">
@@ -34,12 +69,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </param>
         /// <param name="valueOfRootNode"> value of the root node. </param>
         /// <param name="expectedValueOfRootNode"> expected value of the root node given by smart detector. </param>
-        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double valueOfRootNode, double? expectedValueOfRootNode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double valueOfRootNode, double? expectedValueOfRootNode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxSeverity = maxSeverity;
             IncidentStatus = incidentStatus;
             ValueOfRootNode = valueOfRootNode;
             ExpectedValueOfRootNode = expectedValueOfRootNode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IncidentProperty"/> for deserialization. </summary>
+        internal IncidentProperty()
+        {
         }
 
         /// <summary> max severity of latest anomalies in the incident. </summary>

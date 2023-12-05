@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             extensions ??= new List<MachineExtensionInstanceView>();
             detectedProperties ??= new Dictionary<string, string>();
 
-            return new HybridComputeMachineData(id, name, resourceType, systemData, tags, location, resources?.ToList(), identity, locationData, agentConfiguration, serviceStatuses, cloudMetadataProvider != null ? new CloudMetadata(cloudMetadataProvider) : null, agentUpgrade, osProfile, provisioningState, status, lastStatusChange, errorDetails?.ToList(), agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, extensions?.ToList(), osSku, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, mssqlDiscovered, detectedProperties);
+            return new HybridComputeMachineData(id, name, resourceType, systemData, tags, location, resources?.ToList(), identity, locationData, agentConfiguration, serviceStatuses, cloudMetadataProvider != null ? new CloudMetadata(cloudMetadataProvider, serializedAdditionalRawData: null) : null, agentUpgrade, osProfile, provisioningState, status, lastStatusChange, errorDetails?.ToList(), agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, extensions?.ToList(), osSku, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, mssqlDiscovered, detectedProperties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AgentConfiguration"/>. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             extensionsBlockList ??= new List<ConfigurationExtension>();
             proxyBypass ??= new List<string>();
 
-            return new AgentConfiguration(proxyUri, incomingConnectionsPorts?.ToList(), extensionsAllowList?.ToList(), extensionsBlockList?.ToList(), proxyBypass?.ToList(), extensionsEnabled, guestConfigurationEnabled, configMode);
+            return new AgentConfiguration(proxyUri, incomingConnectionsPorts?.ToList(), extensionsAllowList?.ToList(), extensionsBlockList?.ToList(), proxyBypass?.ToList(), extensionsEnabled, guestConfigurationEnabled, configMode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationExtension"/>. </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.ConfigurationExtension"/> instance for mocking. </returns>
         public static ConfigurationExtension ConfigurationExtension(string publisher = null, string configurationExtensionType = null)
         {
-            return new ConfigurationExtension(publisher, configurationExtensionType);
+            return new ConfigurationExtension(publisher, configurationExtensionType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AgentUpgrade"/>. </summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.AgentUpgrade"/> instance for mocking. </returns>
         public static AgentUpgrade AgentUpgrade(string desiredVersion = null, Guid? correlationId = null, bool? enableAutomaticUpgrade = null, DateTimeOffset? lastAttemptTimestamp = null, LastAttemptStatusEnum? lastAttemptStatus = null, string lastAttemptMessage = null)
         {
-            return new AgentUpgrade(desiredVersion, correlationId, enableAutomaticUpgrade, lastAttemptTimestamp, lastAttemptStatus, lastAttemptMessage);
+            return new AgentUpgrade(desiredVersion, correlationId, enableAutomaticUpgrade, lastAttemptTimestamp, lastAttemptStatus, lastAttemptMessage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OSProfile"/>. </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.OSProfile"/> instance for mocking. </returns>
         public static OSProfile OSProfile(string computerName = null, OSProfileWindowsConfiguration windowsConfiguration = null, OSProfileLinuxConfiguration linuxConfiguration = null)
         {
-            return new OSProfile(computerName, windowsConfiguration, linuxConfiguration);
+            return new OSProfile(computerName, windowsConfiguration, linuxConfiguration, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeMachineExtensionData"/>. </summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             settings ??= new Dictionary<string, BinaryData>();
             protectedSettings ??= new Dictionary<string, BinaryData>();
 
-            return new HybridComputeMachineExtensionData(id, name, resourceType, systemData, tags, location, forceUpdateTag, publisher, typePropertiesType, typeHandlerVersion, enableAutomaticUpgrade, autoUpgradeMinorVersion, settings, protectedSettings, provisioningState, instanceView);
+            return new HybridComputeMachineExtensionData(id, name, resourceType, systemData, tags, location, forceUpdateTag, publisher, typePropertiesType, typeHandlerVersion, enableAutomaticUpgrade, autoUpgradeMinorVersion, settings, protectedSettings, provisioningState, instanceView, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineAssessPatchesResult"/>. </summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.MachineAssessPatchesResult"/> instance for mocking. </returns>
         public static MachineAssessPatchesResult MachineAssessPatchesResult(PatchOperationStatus? status = null, Guid? assessmentActivityId = null, bool? rebootPending = null, AvailablePatchCountByClassification availablePatchCountByClassification = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, OSType? osType = null, ResponseError errorDetails = null)
         {
-            return new MachineAssessPatchesResult(status, assessmentActivityId, rebootPending, availablePatchCountByClassification, startOn, lastModifiedOn, startedBy, patchServiceUsed, osType, errorDetails);
+            return new MachineAssessPatchesResult(status, assessmentActivityId, rebootPending, availablePatchCountByClassification, startOn, lastModifiedOn, startedBy, patchServiceUsed, osType, errorDetails, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailablePatchCountByClassification"/>. </summary>
@@ -176,7 +176,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.AvailablePatchCountByClassification"/> instance for mocking. </returns>
         public static AvailablePatchCountByClassification AvailablePatchCountByClassification(int? security = null, int? critical = null, int? definition = null, int? updateRollup = null, int? featurePack = null, int? servicePack = null, int? tools = null, int? updates = null, int? other = null)
         {
-            return new AvailablePatchCountByClassification(security, critical, definition, updateRollup, featurePack, servicePack, tools, updates, other);
+            return new AvailablePatchCountByClassification(security, critical, definition, updateRollup, featurePack, servicePack, tools, updates, other, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineInstallPatchesContent"/>. </summary>
+        /// <param name="maximumDuration"> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </param>
+        /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
+        /// <param name="windowsParameters"> Input for InstallPatches on a Windows VM, as directly received by the API. </param>
+        /// <param name="linuxParameters"> Input for InstallPatches on a Linux VM, as directly received by the API. </param>
+        /// <returns> A new <see cref="Models.MachineInstallPatchesContent"/> instance for mocking. </returns>
+        public static MachineInstallPatchesContent MachineInstallPatchesContent(TimeSpan maximumDuration = default, VmGuestPatchRebootSetting rebootSetting = default, WindowsParameters windowsParameters = null, LinuxParameters linuxParameters = null)
+        {
+            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineInstallPatchesResult"/>. </summary>
@@ -198,7 +209,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.MachineInstallPatchesResult"/> instance for mocking. </returns>
         public static MachineInstallPatchesResult MachineInstallPatchesResult(PatchOperationStatus? status = null, string installationActivityId = null, VmGuestPatchRebootStatus? rebootStatus = null, bool? maintenanceWindowExceeded = null, int? excludedPatchCount = null, int? notSelectedPatchCount = null, int? pendingPatchCount = null, int? installedPatchCount = null, int? failedPatchCount = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, OSType? osType = null, ResponseError errorDetails = null)
         {
-            return new MachineInstallPatchesResult(status, installationActivityId, rebootStatus, maintenanceWindowExceeded, excludedPatchCount, notSelectedPatchCount, pendingPatchCount, installedPatchCount, failedPatchCount, startOn, lastModifiedOn, startedBy, patchServiceUsed, osType, errorDetails);
+            return new MachineInstallPatchesResult(status, installationActivityId, rebootStatus, maintenanceWindowExceeded, excludedPatchCount, notSelectedPatchCount, pendingPatchCount, installedPatchCount, failedPatchCount, startOn, lastModifiedOn, startedBy, patchServiceUsed, osType, errorDetails, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridCompute.ExtensionValueData"/>. </summary>
@@ -212,7 +223,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="HybridCompute.ExtensionValueData"/> instance for mocking. </returns>
         public static ExtensionValueData ExtensionValueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string version = null, string extensionType = null, string publisher = null)
         {
-            return new ExtensionValueData(id, name, resourceType, systemData, version, extensionType, publisher);
+            return new ExtensionValueData(id, name, resourceType, systemData, version, extensionType, publisher, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkProfile"/>. </summary>
@@ -222,7 +233,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             networkInterfaces ??= new List<NetworkInterface>();
 
-            return new NetworkProfile(networkInterfaces?.ToList());
+            return new NetworkProfile(networkInterfaces?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkInterface"/>. </summary>
@@ -232,7 +243,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             ipAddresses ??= new List<IPAddress>();
 
-            return new NetworkInterface(ipAddresses?.ToList());
+            return new NetworkInterface(ipAddresses?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IPAddress"/>. </summary>
@@ -242,7 +253,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.IPAddress"/> instance for mocking. </returns>
         public static IPAddress IPAddress(string address = null, string ipAddressVersion = null, string subnetAddressPrefix = null)
         {
-            return new IPAddress(address, ipAddressVersion, subnetAddressPrefix != null ? new Subnet(subnetAddressPrefix) : null);
+            return new IPAddress(address, ipAddressVersion, subnetAddressPrefix != null ? new Subnet(subnetAddressPrefix, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputePrivateLinkScopeData"/>. </summary>
@@ -258,7 +269,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HybridComputePrivateLinkScopeData(id, name, resourceType, systemData, tags, location, properties);
+            return new HybridComputePrivateLinkScopeData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputePrivateLinkScopeProperties"/>. </summary>
@@ -271,7 +282,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             privateEndpointConnections ??= new List<PrivateEndpointConnectionDataModel>();
 
-            return new HybridComputePrivateLinkScopeProperties(publicNetworkAccess, provisioningState, privateLinkScopeId, privateEndpointConnections?.ToList());
+            return new HybridComputePrivateLinkScopeProperties(publicNetworkAccess, provisioningState, privateLinkScopeId, privateEndpointConnections?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionDataModel"/>. </summary>
@@ -283,7 +294,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionDataModel"/> instance for mocking. </returns>
         public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
-            return new PrivateEndpointConnectionDataModel(id, name, resourceType, systemData, properties);
+            return new PrivateEndpointConnectionDataModel(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionProperties"/>. </summary>
@@ -296,7 +307,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             groupIds ??= new List<string>();
 
-            return new PrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList());
+            return new PrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputePrivateLinkServiceConnectionStateProperty"/>. </summary>
@@ -306,7 +317,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.HybridComputePrivateLinkServiceConnectionStateProperty"/> instance for mocking. </returns>
         public static HybridComputePrivateLinkServiceConnectionStateProperty HybridComputePrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null)
         {
-            return new HybridComputePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
+            return new HybridComputePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputePrivateLinkResourceData"/>. </summary>
@@ -318,7 +329,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="HybridCompute.HybridComputePrivateLinkResourceData"/> instance for mocking. </returns>
         public static HybridComputePrivateLinkResourceData HybridComputePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridComputePrivateLinkResourceProperties properties = null)
         {
-            return new HybridComputePrivateLinkResourceData(id, name, resourceType, systemData, properties);
+            return new HybridComputePrivateLinkResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputePrivateLinkResourceProperties"/>. </summary>
@@ -331,7 +342,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new HybridComputePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new HybridComputePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputePrivateEndpointConnectionData"/>. </summary>
@@ -343,7 +354,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="HybridCompute.HybridComputePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static HybridComputePrivateEndpointConnectionData HybridComputePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
-            return new HybridComputePrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
+            return new HybridComputePrivateEndpointConnectionData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkScopeValidationDetails"/>. </summary>
@@ -355,7 +366,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             connectionDetails ??= new List<ConnectionDetail>();
 
-            return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails?.ToList());
+            return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionDetail"/>. </summary>
@@ -367,7 +378,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.ConnectionDetail"/> instance for mocking. </returns>
         public static ConnectionDetail ConnectionDetail(string id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null)
         {
-            return new ConnectionDetail(id, privateIPAddress, linkIdentifier, groupId, memberName);
+            return new ConnectionDetail(id, privateIPAddress, linkIdentifier, groupId, memberName, serializedAdditionalRawData: null);
         }
     }
 }

@@ -14,6 +14,38 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricSeriesQueryOptions. </summary>
     internal partial class MetricSeriesQueryOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricSeriesQueryOptions"/>. </summary>
         /// <param name="activeSince"> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </param>
         public MetricSeriesQueryOptions(DateTimeOffset activeSince)
@@ -25,10 +57,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of <see cref="MetricSeriesQueryOptions"/>. </summary>
         /// <param name="activeSince"> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="dimensionFilter"> filter specific dimension name and values. </param>
-        internal MetricSeriesQueryOptions(DateTimeOffset activeSince, IDictionary<string, IList<string>> dimensionFilter)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricSeriesQueryOptions(DateTimeOffset activeSince, IDictionary<string, IList<string>> dimensionFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActiveSince = activeSince;
             DimensionFilter = dimensionFilter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesQueryOptions"/> for deserialization. </summary>
+        internal MetricSeriesQueryOptions()
+        {
         }
 
         /// <summary> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </summary>

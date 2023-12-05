@@ -28,11 +28,17 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPoint"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
-        internal GeoJsonMultiPoint(GeoJsonObjectType type, IList<IList<double>> coordinates) : base(type)
+        internal GeoJsonMultiPoint(GeoJsonObjectType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IList<double>> coordinates) : base(type, serializedAdditionalRawData)
         {
             Coordinates = coordinates;
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPoint"/> for deserialization. </summary>
+        internal GeoJsonMultiPoint()
+        {
         }
 
         /// <summary> Coordinates for the `GeoJson MultiPoint` geometry. </summary>

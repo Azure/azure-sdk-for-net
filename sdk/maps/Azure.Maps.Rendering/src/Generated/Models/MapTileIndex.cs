@@ -5,11 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Rendering
 {
     /// <summary> Parameter group. </summary>
     public partial class MapTileIndex
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapTileIndex"/>. </summary>
+        /// <param name="z">
+        /// Zoom level for the desired tile.
+        ///
+        /// Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/en-us/azure/location-based-services/zoom-levels-and-tile-grid) for details.
+        /// </param>
+        /// <param name="x">
+        /// X coordinate of the tile on zoom grid. Value must be in the range [0, 2&lt;sup&gt;`zoom`&lt;/sup&gt; -1].
+        ///
+        /// Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details.
+        /// </param>
+        /// <param name="y">
+        /// Y coordinate of the tile on zoom grid. Value must be in the range [0, 2&lt;sup&gt;`zoom`&lt;/sup&gt; -1].
+        ///
+        /// Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapTileIndex(int z, int x, int y, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Z = z;
+            X = x;
+            Y = y;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapTileIndex"/> for deserialization. </summary>
+        internal MapTileIndex()
+        {
+        }
+
         /// <summary>
         /// Zoom level for the desired tile.
         ///

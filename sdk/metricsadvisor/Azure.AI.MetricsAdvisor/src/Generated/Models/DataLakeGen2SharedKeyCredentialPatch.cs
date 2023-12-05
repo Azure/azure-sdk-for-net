@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DataLakeGen2SharedKeyCredentialPatch. </summary>
@@ -20,8 +23,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
         /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
         /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"></param>
-        internal DataLakeGen2SharedKeyCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription, DataLakeGen2SharedKeyParamPatch parameters) : base(dataSourceCredentialType, dataSourceCredentialName, dataSourceCredentialDescription)
+        internal DataLakeGen2SharedKeyCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription, IDictionary<string, BinaryData> serializedAdditionalRawData, DataLakeGen2SharedKeyParamPatch parameters) : base(dataSourceCredentialType, dataSourceCredentialName, dataSourceCredentialDescription, serializedAdditionalRawData)
         {
             Parameters = parameters;
             DataSourceCredentialType = dataSourceCredentialType;

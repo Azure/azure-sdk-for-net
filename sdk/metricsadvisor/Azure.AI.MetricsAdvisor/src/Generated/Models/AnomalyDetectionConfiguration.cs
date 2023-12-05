@@ -14,6 +14,38 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyDetectionConfiguration. </summary>
     public partial class AnomalyDetectionConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AnomalyDetectionConfiguration"/>. </summary>
         /// <param name="id"> anomaly detection configuration unique id. </param>
         /// <param name="name"> anomaly detection configuration name. </param>
@@ -22,7 +54,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="wholeSeriesDetectionConditions"></param>
         /// <param name="seriesGroupDetectionConditions"> detection configuration for series group. </param>
         /// <param name="seriesDetectionConditions"> detection configuration for specific series. </param>
-        internal AnomalyDetectionConfiguration(string id, string name, string description, string metricId, MetricWholeSeriesDetectionCondition wholeSeriesDetectionConditions, IList<MetricSeriesGroupDetectionCondition> seriesGroupDetectionConditions, IList<MetricSingleSeriesDetectionCondition> seriesDetectionConditions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyDetectionConfiguration(string id, string name, string description, string metricId, MetricWholeSeriesDetectionCondition wholeSeriesDetectionConditions, IList<MetricSeriesGroupDetectionCondition> seriesGroupDetectionConditions, IList<MetricSingleSeriesDetectionCondition> seriesDetectionConditions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -31,6 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             WholeSeriesDetectionConditions = wholeSeriesDetectionConditions;
             SeriesGroupDetectionConditions = seriesGroupDetectionConditions;
             SeriesDetectionConditions = seriesDetectionConditions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

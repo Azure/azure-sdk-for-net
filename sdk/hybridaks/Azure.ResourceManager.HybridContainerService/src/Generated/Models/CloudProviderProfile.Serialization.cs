@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class CloudProviderProfile : IUtf8JsonSerializable
+    public partial class CloudProviderProfile : IUtf8JsonSerializable, IJsonModel<CloudProviderProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudProviderProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudProviderProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudProviderProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudProviderProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(InfraNetworkProfile))
             {
@@ -25,17 +37,48 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("infraStorageProfile"u8);
                 writer.WriteObjectValue(InfraStorageProfile);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudProviderProfile DeserializeCloudProviderProfile(JsonElement element)
+        CloudProviderProfile IJsonModel<CloudProviderProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudProviderProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudProviderProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudProviderProfile(document.RootElement, options);
+        }
+
+        internal static CloudProviderProfile DeserializeCloudProviderProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<CloudProviderProfileInfraNetworkProfile> infraNetworkProfile = default;
             Optional<CloudProviderProfileInfraStorageProfile> infraStorageProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("infraNetworkProfile"u8))
@@ -56,8 +99,44 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     infraStorageProfile = CloudProviderProfileInfraStorageProfile.DeserializeCloudProviderProfileInfraStorageProfile(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudProviderProfile(infraNetworkProfile.Value, infraStorageProfile.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudProviderProfile(infraNetworkProfile.Value, infraStorageProfile.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudProviderProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudProviderProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudProviderProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CloudProviderProfile IPersistableModel<CloudProviderProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudProviderProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudProviderProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudProviderProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudProviderProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

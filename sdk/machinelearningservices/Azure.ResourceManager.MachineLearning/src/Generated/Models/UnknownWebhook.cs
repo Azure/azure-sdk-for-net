@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownWebhook. </summary>
@@ -13,7 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="UnknownWebhook"/>. </summary>
         /// <param name="eventType"> Send callback on a specified notification event. </param>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
-        internal UnknownWebhook(string eventType, MachineLearningWebhookType webhookType) : base(eventType, webhookType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownWebhook(string eventType, MachineLearningWebhookType webhookType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(eventType, webhookType, serializedAdditionalRawData)
         {
             WebhookType = webhookType;
         }

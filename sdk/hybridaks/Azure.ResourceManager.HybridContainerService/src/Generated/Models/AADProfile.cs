@@ -22,13 +22,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="AADProfile"/>. </summary>
         /// <param name="serverAppSecret"> The server AAD application secret. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
         /// <param name="clientAppId"> The client AAD application ID. </param>
         /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="managed"> Whether to enable managed AAD. </param>
         /// <param name="serverAppId"> The server AAD application ID. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        internal AADProfile(string serverAppSecret, IList<string> adminGroupObjectIds, string clientAppId, bool? enableAzureRbac, bool? managed, string serverAppId, Guid? tenantId) : base(serverAppSecret)
+        internal AADProfile(string serverAppSecret, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> adminGroupObjectIds, string clientAppId, bool? enableAzureRbac, bool? managed, string serverAppId, Guid? tenantId) : base(serverAppSecret, serializedAdditionalRawData)
         {
             AdminGroupObjectIds = adminGroupObjectIds;
             ClientAppId = clientAppId;

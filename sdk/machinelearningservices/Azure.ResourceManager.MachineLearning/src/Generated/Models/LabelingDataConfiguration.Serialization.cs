@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class LabelingDataConfiguration : IUtf8JsonSerializable
+    public partial class LabelingDataConfiguration : IUtf8JsonSerializable, IJsonModel<LabelingDataConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabelingDataConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LabelingDataConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LabelingDataConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LabelingDataConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DataId))
             {
@@ -32,17 +44,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("incrementalDataRefresh"u8);
                 writer.WriteStringValue(IncrementalDataRefresh.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabelingDataConfiguration DeserializeLabelingDataConfiguration(JsonElement element)
+        LabelingDataConfiguration IJsonModel<LabelingDataConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LabelingDataConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LabelingDataConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabelingDataConfiguration(document.RootElement, options);
+        }
+
+        internal static LabelingDataConfiguration DeserializeLabelingDataConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> dataId = default;
             Optional<IncrementalDataRefresh> incrementalDataRefresh = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataId"u8))
@@ -64,8 +107,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     incrementalDataRefresh = new IncrementalDataRefresh(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LabelingDataConfiguration(dataId.Value, Optional.ToNullable(incrementalDataRefresh));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LabelingDataConfiguration(dataId.Value, Optional.ToNullable(incrementalDataRefresh), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LabelingDataConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabelingDataConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LabelingDataConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LabelingDataConfiguration IPersistableModel<LabelingDataConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabelingDataConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLabelingDataConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LabelingDataConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LabelingDataConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

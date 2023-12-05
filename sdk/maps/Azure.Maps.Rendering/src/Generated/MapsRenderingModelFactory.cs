@@ -19,7 +19,7 @@ namespace Azure.Maps.Rendering
         /// <returns> A new <see cref="Rendering.CopyrightCaption"/> instance for mocking. </returns>
         public static CopyrightCaption CopyrightCaption(string formatVersion = null, string copyright = null)
         {
-            return new CopyrightCaption(formatVersion, copyright);
+            return new CopyrightCaption(formatVersion, copyright, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Rendering.RenderCopyright"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Maps.Rendering
             generalCopyrights ??= new List<string>();
             regionalCopyrights ??= new List<RegionalCopyright>();
 
-            return new RenderCopyright(formatVersion, generalCopyrights?.ToList(), regionalCopyrights?.ToList());
+            return new RenderCopyright(formatVersion, generalCopyrights?.ToList(), regionalCopyrights?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Rendering.RegionalCopyright"/>. </summary>
@@ -43,7 +43,7 @@ namespace Azure.Maps.Rendering
         {
             copyrights ??= new List<string>();
 
-            return new RegionalCopyright(copyrights?.ToList(), country);
+            return new RegionalCopyright(copyrights?.ToList(), country, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Rendering.RegionalCopyrightCountry"/>. </summary>
@@ -52,7 +52,7 @@ namespace Azure.Maps.Rendering
         /// <returns> A new <see cref="Rendering.RegionalCopyrightCountry"/> instance for mocking. </returns>
         public static RegionalCopyrightCountry RegionalCopyrightCountry(string iso3 = null, string label = null)
         {
-            return new RegionalCopyrightCountry(iso3, label);
+            return new RegionalCopyrightCountry(iso3, label, serializedAdditionalRawData: null);
         }
     }
 }

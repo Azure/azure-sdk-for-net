@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProxyArtifactListOverview.DeserializeProxyArtifactListOverview, _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(e), _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProxyArtifactListOverview.DeserializeProxyArtifactListOverview, _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(e), _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.HybridNetwork
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview, _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(e), _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.HybridNetwork
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview, _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(e), _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

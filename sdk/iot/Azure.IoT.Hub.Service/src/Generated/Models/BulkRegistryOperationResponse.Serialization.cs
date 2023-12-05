@@ -5,16 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class BulkRegistryOperationResponse
+    public partial class BulkRegistryOperationResponse : IUtf8JsonSerializable, IJsonModel<BulkRegistryOperationResponse>
     {
-        internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BulkRegistryOperationResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BulkRegistryOperationResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BulkRegistryOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(BulkRegistryOperationResponse)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsSuccessful))
+            {
+                writer.WritePropertyName("isSuccessful"u8);
+                writer.WriteBooleanValue(IsSuccessful.Value);
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Warnings))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (var item in Warnings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BulkRegistryOperationResponse IJsonModel<BulkRegistryOperationResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BulkRegistryOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(BulkRegistryOperationResponse)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBulkRegistryOperationResponse(document.RootElement, options);
+        }
+
+        internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +93,8 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<bool> isSuccessful = default;
             Optional<IReadOnlyList<DeviceRegistryOperationError>> errors = default;
             Optional<IReadOnlyList<DeviceRegistryOperationWarning>> warnings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSuccessful"u8))
@@ -61,8 +134,44 @@ namespace Azure.IoT.Hub.Service.Models
                     warnings = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BulkRegistryOperationResponse(Optional.ToNullable(isSuccessful), Optional.ToList(errors), Optional.ToList(warnings));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BulkRegistryOperationResponse(Optional.ToNullable(isSuccessful), Optional.ToList(errors), Optional.ToList(warnings), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BulkRegistryOperationResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BulkRegistryOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BulkRegistryOperationResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BulkRegistryOperationResponse IPersistableModel<BulkRegistryOperationResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BulkRegistryOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBulkRegistryOperationResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BulkRegistryOperationResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BulkRegistryOperationResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

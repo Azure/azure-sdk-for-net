@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The UnknownNFVIs. </summary>
@@ -13,7 +16,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="UnknownNFVIs"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
-        internal UnknownNFVIs(string name, NfviType nfviType) : base(name, nfviType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNFVIs(string name, NfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, nfviType, serializedAdditionalRawData)
         {
             NfviType = nfviType;
         }

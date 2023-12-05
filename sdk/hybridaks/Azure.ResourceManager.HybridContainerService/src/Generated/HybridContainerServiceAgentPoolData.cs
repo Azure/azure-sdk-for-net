@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class HybridContainerServiceAgentPoolData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HybridContainerServiceAgentPoolData(AzureLocation location) : base(location)
@@ -49,7 +82,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
         /// <param name="provisioningState"></param>
         /// <param name="status"> HybridAKSNodePoolStatus defines the observed state of HybridAKSNodePool. </param>
-        internal HybridContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AgentPoolExtendedLocation extendedLocation, int? count, IList<string> availabilityZones, int? maxCount, int? maxPods, int? minCount, Mode? mode, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, OSType? osType, string nodeImageVersion, string vmSize, CloudProviderProfile cloudProviderProfile, AgentPoolProvisioningState? provisioningState, AgentPoolProvisioningStatusStatus status) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AgentPoolExtendedLocation extendedLocation, int? count, IList<string> availabilityZones, int? maxCount, int? maxPods, int? minCount, Mode? mode, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, OSType? osType, string nodeImageVersion, string vmSize, CloudProviderProfile cloudProviderProfile, AgentPoolProvisioningState? provisioningState, AgentPoolProvisioningStatusStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Count = count;
@@ -66,6 +100,12 @@ namespace Azure.ResourceManager.HybridContainerService
             CloudProviderProfile = cloudProviderProfile;
             ProvisioningState = provisioningState;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolData"/> for deserialization. </summary>
+        internal HybridContainerServiceAgentPoolData()
+        {
         }
 
         /// <summary> Gets or sets the extended location. </summary>
