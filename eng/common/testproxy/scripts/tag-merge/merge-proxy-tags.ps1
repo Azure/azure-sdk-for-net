@@ -162,6 +162,7 @@ function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDire
 
 function Finish-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory) {
     $len = $TargetTags.Length
+
     Write-Host "`nSuccessfully combined $len tags. Invoke `"test-proxy push " -nonewline
     Write-Host $AssetsJson -ForegroundColor Green -nonewline
     Write-Host "`" to push the results as a new tag."
@@ -228,15 +229,15 @@ function Prepare-Assets($ProxyExe, $MountDirectory, $AssetsJson) {
     }
 }
 
-function CombineTags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
+function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
     foreach($Tag in $RemainingTags){
         $tagSha = Get-Tag-SHA $Tag $AssetsRepoLocation
         Save-Incomplete-Progress $Tag $MountDirectory
         $cherryPickOut = Git-Command "cherry-pick $tagSha" $AssetsRepoLocation
     }
-    
-    # todo: if we managed to get here without any errors, we need to touch a file that all the cherry-picked commits will push up so that test-proxy push
-    # properly sees the additional commits
+
+    $testFile = Get-ChildItem -Recurse -Path $AssetsRepoLocation | Where-Object { !$_.PSIsContainer } | Select-Object -First 1
+    Add-Content -Path $testFile -Value "`n"
 
     # if we have successfully gotten to the end without any non-zero exit codes...delete the mergeprogress file, we're g2g
     Cleanup-Incomplete-Progress $MountDirectory
@@ -246,6 +247,8 @@ $ErrorActionPreference = "Stop"
 
 # resolve the proxy location so that we can invoke it easily
 $proxyExe = Resolve-Proxy
+
+$AssetsJson = Resolve-Path $AssetsJson
 
 # figure out where the root of the repo for the passed assets.json is. We need it to properly set the mounting
 # directory so that the test-proxy restore operations work IN PLACE with existing tooling
@@ -264,6 +267,6 @@ $tags = Resolve-Target-Tags $AssetsJson $TargetTags $mountDirectory
 
 Start-Message $AssetsJson $Tags $AssetsRepoLocation $mountDirectory
 
-$CombinedTags = CombineTags $Tags $AssetsRepoLocation $mountDirectory
+$CombinedTags = Combine-Tags $Tags $AssetsRepoLocation $mountDirectory
 
 Finish-Message $AssetsJson $CombinedTags $AssetsRepoLocation $mountDirectory
