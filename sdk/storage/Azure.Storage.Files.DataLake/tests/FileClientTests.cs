@@ -3353,7 +3353,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task ReadAsync()
         {
-            await using DisposingFileSystem test = await GetNewFileSystem();
+            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);
 
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
@@ -3381,6 +3381,89 @@ namespace Azure.Storage.Files.DataLake.Tests
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2024_05_04)]
+        public async Task ReadAsyncACL()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakeFileClient fileClient = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    AccessControlList = AccessControlList
+                }
+            };
+
+            await fileClient.CreateAsync(options: options);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await fileClient.AppendAsync(stream, 0);
+            }
+
+            await fileClient.FlushAsync(Constants.KB);
+
+            // Act
+            Response<FileDownloadInfo> response = await fileClient.ReadAsync();
+
+            // Assert
+            Assert.AreEqual(data.Length, response.Value.ContentLength);
+            Assert.IsNotNull(response.Value.Properties.LastModified);
+            Assert.IsNotNull(response.Value.Properties.AcceptRanges);
+            Assert.IsNotNull(response.Value.Properties.ETag);
+            Assert.IsNotNull(response.Value.Properties.LeaseStatus);
+            Assert.IsNotNull(response.Value.Properties.LeaseState);
+            Assert.IsNotNull(response.Value.Properties.IsServerEncrypted);
+            Assert.IsNotNull(response.Value.Properties.CreatedOn);
+            AssertAccessControlListEquality(AccessControlList, response.Value.Properties.AccessControlList.ToList());
+
+            var actual = new MemoryStream();
+            await response.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2024_05_04)]
+        public async Task GetPropertiesAsyncACL()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakeFileClient fileClient = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    AccessControlList = AccessControlList
+                }
+            };
+
+            await fileClient.CreateAsync(options: options);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await fileClient.AppendAsync(stream, 0);
+            }
+
+            await fileClient.FlushAsync(Constants.KB);
+
+            // Act
+            Response<PathProperties> response = await fileClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(data.Length, response.Value.ContentLength);
+            AssertAccessControlListEquality(AccessControlList, response.Value.AccessControlList.ToList());
         }
 
         [RecordedTest]
