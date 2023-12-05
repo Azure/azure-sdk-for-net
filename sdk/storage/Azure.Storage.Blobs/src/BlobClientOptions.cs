@@ -183,6 +183,11 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public bool TrimBlobNameSlashes { get; set; } = Constants.DefaultTrimBlobNameSlashes;
 
+        /// <summary>
+        /// Behavior options for setting HTTP header <c>Expect: 100-continue</c> on requests.
+        /// </summary>
+        public ExpectContinueOptions ExpectContinueBehavior { get; set; }
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion

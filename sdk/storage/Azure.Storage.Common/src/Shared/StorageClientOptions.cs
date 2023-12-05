@@ -103,8 +103,13 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="authentication">Optional authentication policy.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+        /// <param name="expectContinue">Options for selecting expect continue policy.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
+        public static HttpPipeline Build(
+            this ClientOptions options,
+            HttpPipelinePolicy authentication = null,
+            Uri geoRedundantSecondaryStorageUri = null,
+            ExpectContinueOptions expectContinue = null)
         {
             StorageResponseClassifier classifier = new();
             var pipelineOptions = new HttpPipelineOptions(options)
@@ -120,6 +125,26 @@ namespace Azure.Storage
             {
                 pipelineOptions.PerRetryPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
                 classifier.SecondaryStorageUri = geoRedundantSecondaryStorageUri;
+            }
+
+            if (expectContinue != null)
+            {
+                switch (expectContinue.Mode)
+                {
+                    case ExpectContinueOptions.ApplyHeaderMode.Auto:
+                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { Backoff = expectContinue.Backoff });
+                        break;
+                    case ExpectContinueOptions.ApplyHeaderMode.On:
+                        pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy());
+                        break;
+                    case ExpectContinueOptions.ApplyHeaderMode.Off:
+                        break;
+                }
+            }
+            else
+            {
+                // TODO get env config for whether to disable
+                pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { Backoff = TimeSpan.FromMinutes(1) });
             }
 
             pipelineOptions.PerRetryPolicies.Add(new StorageRequestValidationPipelinePolicy());
