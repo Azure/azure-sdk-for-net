@@ -148,7 +148,8 @@ namespace Azure.Core.Pipeline
                 // TODO (limolkova) when we start targeting .NET 8 we should put
                 // requestFailedException.InnerException.HttpRequestError into error.type
 
-                _activityAdapter?.MarkFailed(exception, requestFailedException.ErrorCode);
+                string? errorCode = string.IsNullOrEmpty(requestFailedException.ErrorCode) ? null : requestFailedException.ErrorCode;
+                _activityAdapter?.MarkFailed(exception, errorCode);
             }
             else
             {
