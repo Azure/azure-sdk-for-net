@@ -397,9 +397,11 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
-        public void ParentIdCanBeSetActivitySource()
+        public void TraceContextCanBeSetActivitySource()
         {
-            string parentId = "00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00";
+            string traceId = "6e76af18746bae4eadc3581338bbe8b1";
+            string spanId = "2899ebfdbdce904b";
+            string traceparent = $"00-{traceId}-{spanId}-01";
             string traceState = "state";
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
@@ -411,21 +413,23 @@ namespace Azure.Core.Tests
                 true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
-            scope.SetTraceContext(parentId, traceState);
+            scope.SetTraceContext(traceparent, traceState);
             scope.Start();
             scope.Dispose();
 
             Assert.AreEqual(1, activityListener.Activities.Count);
             var activity = activityListener.Activities.Dequeue();
-            Assert.AreEqual(parentId, activity.ParentId);
+            Assert.AreEqual(traceparent, activity.ParentId);
+            Assert.AreEqual(traceId, Activity.Current.TraceId);
+            Assert.AreEqual(spanId, Activity.Current.ParentSpanId);
             Assert.AreEqual(traceState, activity.TraceStateString);
         }
 
         [Test]
         [NonParallelizable]
-        public void ParentIdCannotBeSetOnStartedScopeActivitySource()
+        public void TraceparentCannotBeSetOnStartedScopeActivitySource()
         {
-            string parentId = "00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00";
+            string traceparent = "00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00";
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
@@ -437,7 +441,33 @@ namespace Azure.Core.Tests
 
             using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
             scope.Start();
-            Assert.Throws<InvalidOperationException>(() => scope.SetTraceContext(parentId));
+            Assert.Throws<InvalidOperationException>(() => scope.SetTraceContext(traceparent));
+        }
+
+        [TestCase("foobar")]
+        [TestCase("")]
+        [TestCase(null)]
+        [TestCase("00-00-00-00")]
+        [TestCase("00-00000000000000000000000000000000-0000000000000000-00")]
+        [NonParallelizable]
+        public void InvalidContextDoesNotThrow(string traceparent)
+        {
+            using var testListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false,
+                false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.SetTraceContext(traceparent, null);
+            scope.Start();
+
+            Assert.IsNull(Activity.Current.ParentId);
+            Assert.AreEqual(default, Activity.Current.ParentSpanId);
+            Assert.IsNull(Activity.Current.TraceStateString);
         }
 
         [Test]
