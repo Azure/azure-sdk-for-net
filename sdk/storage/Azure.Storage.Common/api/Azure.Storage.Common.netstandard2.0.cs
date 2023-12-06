@@ -20,6 +20,19 @@ namespace Azure.Storage
         public bool AutoValidateChecksum { get { throw null; } set { } }
         public Azure.Storage.StorageChecksumAlgorithm ChecksumAlgorithm { get { throw null; } set { } }
     }
+    public partial class ExpectContinueOptions
+    {
+        public ExpectContinueOptions() { }
+        public System.TimeSpan Backoff { get { throw null; } set { } }
+        public long ContentLengthThreshold { get { throw null; } set { } }
+        public Azure.Storage.ExpectContinueOptions.ApplyHeaderMode Mode { get { throw null; } set { } }
+        public enum ApplyHeaderMode
+        {
+            Auto = 0,
+            On = 1,
+            Off = 2,
+        }
+    }
     public enum StorageChecksumAlgorithm
     {
         Auto = 0,
