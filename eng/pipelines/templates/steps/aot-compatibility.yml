@@ -13,4 +13,4 @@ steps:
         -ServiceDirectory ${{ parameters.ServiceDirectory }}
         -PackageName ${{ aotTestInput.ArtifactName }}
         -ExpectedWarningsFilePath ${{ aotTestInput.ExpectedAOTWarningsFilepath }}
-      workingDirectory: eng/common/aotcompatibility
+      workingDirectory: eng/scripts/aotcompatibility
