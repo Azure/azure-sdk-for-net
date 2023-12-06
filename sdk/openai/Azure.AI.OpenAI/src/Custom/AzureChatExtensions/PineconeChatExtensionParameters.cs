@@ -21,7 +21,7 @@ internal partial class PineconeChatExtensionParameters
 
     /// <summary> The environment name of Pinecone. </summary>
     public string Environment { get; set; }
-    /// <summary> The index name name of Pinecone. </summary>
+    /// <summary> The name of the Pinecone database index. </summary>
     public string IndexName { get; set; }
     /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
     public PineconeFieldMappingOptions FieldMappingOptions { get; set; }

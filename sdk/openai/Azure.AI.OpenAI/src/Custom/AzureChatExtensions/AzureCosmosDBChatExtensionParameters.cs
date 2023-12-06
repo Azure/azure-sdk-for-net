@@ -19,11 +19,11 @@ internal partial class AzureCosmosDBChatExtensionParameters
     internal AzureCosmosDBChatExtensionParameters()
     { }
 
-    /// <summary> The database name of Azure Cosmos DB. </summary>
+    /// <summary> The MongoDB vCore database name to use with Azure Cosmos DB. </summary>
     public string DatabaseName { get; set; }
-    /// <summary> The container name name of Azure Cosmos DB. </summary>
+    /// <summary> The name of the Azure Cosmos DB resource container. </summary>
     public string ContainerName { get; set; }
-    /// <summary> The index name of Azure Cosmos DB. </summary>
+    /// <summary> The MongoDB vCore index name to use with Azure Cosmos DB. </summary>
     public string IndexName { get; set; }
     /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
     public AzureCosmosDBFieldMappingOptions FieldMappingOptions { get; set; }

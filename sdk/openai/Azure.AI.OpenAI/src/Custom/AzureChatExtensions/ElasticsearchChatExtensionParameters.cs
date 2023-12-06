@@ -20,8 +20,8 @@ internal partial class ElasticsearchChatExtensionParameters
     internal ElasticsearchChatExtensionParameters()
     { }
 
-    /// <summary> The endpoint of Elasticsearch. </summary>
+    /// <summary> The endpoint of Elasticsearch®. </summary>
     public Uri Endpoint { get; set; }
-    /// <summary> The index name of Elasticsearch. </summary>
+    /// <summary> The index name of Elasticsearch®. </summary>
     public string IndexName { get; set; }
 }
