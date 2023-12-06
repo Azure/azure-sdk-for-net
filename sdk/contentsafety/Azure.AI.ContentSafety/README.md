@@ -6,7 +6,7 @@
 * Image Analysis API: Scans images for sexual content, violence, hate, and self-harm with multi-severity levels.
 * Text Blocklist Management APIs: The default AI classifiers are sufficient for most content safety needs; however, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.ContentSafety) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/content-safety/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.ContentSafety) | [API reference documentation](https://learn.microsoft.com/dotnet/api/azure.ai.contentsafety) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/content-safety/)
 
 ## Getting started
 
@@ -36,7 +36,7 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
 
 #### Create a ContentSafetyClient with API key
 
-- Step 1: Get the API key
+* Step 1: Get the API key
 
     The API key can be found in the [Azure Portal][azure_portal] or by running the following [Azure CLI][azure_cli_key_lookup] command:
 
@@ -44,7 +44,7 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
     az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
     ```
 
-- Step 2: Create a ContentSafetyClient with AzureKeyCredential
+* Step 2: Create a ContentSafetyClient with AzureKeyCredential
 
     Pass the API key as a string into an instance of `AzureKeyCredential`.
 
@@ -66,6 +66,7 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
 
 * Step 2: Set the values of the client ID, tenant ID, and client secret of the Microsoft Entra application as environment variables: `AZURE_CLIENT_ID`, `TENANT_ID`, `AZURE_CLIENT_SECRET`.
    DefaultAzureCredential will use the values from these environment variables.
+   And you need to install **Azure.Identity** package to use DefaultAzureCredential.
 
    ```csharp
     string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
@@ -73,7 +74,37 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
     ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new DefaultAzureCredential());
     ```
 
+#### Create a BlocklistClient with API key
+
+* Step 1: Get the API key
+
+    The API key can be found in the [Azure Portal][azure_portal] or by running the following [Azure CLI][azure_cli_key_lookup] command:
+
+    ```bash
+    az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
+    ```
+
+* Step 2: Create a BlocklistClient with AzureKeyCredential
+
+    Pass the API key as a string into an instance of `AzureKeyCredential`.
+
+    ```csharp
+    string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
+    string key = "<api_key>";
+
+    BlocklistClient client = new BlocklistClient(new Uri(endpoint), new AzureKeyCredential(key));
+
 ## Key concepts
+
+### Available features
+
+There are different types of analysis available from this service. The following table describes the currently available APIs.
+
+|Feature  |Description  |
+|---------|---------|
+|Text Analysis API|Scans text for sexual content, violence, hate, and self harm with multi-severity levels.|
+|Image Analysis API|Scans images for sexual content, violence, hate, and self harm with multi-severity levels.|
+| Text Blocklist Management APIs|The default AI classifiers are sufficient for most content safety needs. However, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.|
 
 ### Harm categories
 
