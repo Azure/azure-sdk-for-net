@@ -360,6 +360,35 @@ for (int i = 0; i < result.Languages.Count; i++)
 }
 ```
 
+## Key-value pairs extraction
+To extract key-value pairs from a given file at a URI with the add-on keyValuePairs capability, use the `AnalyzeDocumentAsync` method and specify `DocumentAnalysisFeature.KeyValuePairs` as the analysis features. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+
+```C# Snippet:DocumentIntelligenceSampleKeyValuePairsExtraction
+Uri uriSource = new Uri("<uriSource>");
+var content = new AnalyzeDocumentContent()
+{
+   UrlSource = uriSource
+};
+
+List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
+features.Add(DocumentAnalysisFeature.KeyValuePairs);
+
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+AnalyzeResult result = operation.Value;
+
+Console.WriteLine("----Key Value Pair Options detected in the document----");
+Console.WriteLine($"Detected {result.KeyValuePairs.Count} Key Value Pairs:");
+ 
+for (int i = 0; i < result.KeyValuePairs.Count; i++)
+{
+    var kvp = result.KeyValuePairs[i];
+
+    Console.WriteLine($"- Key Value Pair #{i}: Key '{kvp.Key}'");
+    Console.WriteLine($"  Value: {kvp.Value}");
+    Console.WriteLine($"  Confidence: {kvp.Confidence}");
+}
+```
+
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence#getting-started
 [docint_addon]: https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept-add-on-capabilities
 [docint_pricing]: https://azure.microsoft.com/pricing/details/ai-document-intelligence/
