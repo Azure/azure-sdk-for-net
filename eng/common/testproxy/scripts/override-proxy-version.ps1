@@ -10,7 +10,7 @@ param(
    [Parameter(mandatory=$true)] [string] $TargetVersion
 )
 
-$versionFile = Join-Path $PSScriptRoot "target_version.txt"
+$versionFile = Join-Path $PSScriptRoot ".." "target_version.txt"
 $existingVersionText = Get-Content -Raw -Path $versionFile
 $existingVersion = $existingVersionText.Trim()
 
