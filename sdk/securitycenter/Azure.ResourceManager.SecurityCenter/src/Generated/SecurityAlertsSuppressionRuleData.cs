@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
         /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
-        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </param>
+        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </param>
         /// <param name="reason"> The reason for dismissing the alert. </param>
         /// <param name="state"> Possible states of the rule. </param>
         /// <param name="comment"> Any comment regarding the rule. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public string AlertType { get; set; }
         /// <summary> The last time this rule was modified. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </summary>
+        /// <summary> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The reason for dismissing the alert. </summary>
         public string Reason { get; set; }
