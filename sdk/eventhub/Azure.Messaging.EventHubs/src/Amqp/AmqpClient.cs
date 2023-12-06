@@ -162,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 ServiceEndpoint = new UriBuilder
                 {
-                    Scheme = clientOptions.TransportType.GetUriScheme(),
+                    Scheme = clientOptions.TransportType.GetUriScheme(clientOptions.UseTls),
                     Host = host
                 }.Uri;
 
@@ -173,7 +173,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                     _ => new UriBuilder
                         {
                             Scheme = ServiceEndpoint.Scheme,
-                            Host = clientOptions.CustomEndpointAddress.Host
+                            Host = clientOptions.CustomEndpointAddress.Host,
+                            Port = clientOptions.CustomEndpointAddress.IsDefaultPort ? -1 : clientOptions.CustomEndpointAddress.Port
                         }.Uri
                 };
 

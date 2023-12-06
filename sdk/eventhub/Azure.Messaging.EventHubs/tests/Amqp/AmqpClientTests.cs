@@ -125,6 +125,30 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true, "amqps")]
+        [TestCase(false, "amqp")]
+        public void ConstructorRespectsTheUseTlsOption(bool useTls,
+                                                       string expectedScheme)
+        {
+            var options = new EventHubConnectionOptions
+            {
+                CustomEndpointAddress = new Uri("sb://iam.custom.net"),
+                TransportType = EventHubsTransportType.AmqpTcp,
+                UseTls = useTls
+            };
+
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
+            var client = new AmqpClient("my.endpoint.com", "somePath", TimeSpan.FromDays(1), credential.Object, options);
+
+            Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(options.CustomEndpointAddress.Host), "The connection endpoint should have used the custom endpoint URI from the options.");
+            Assert.That(client.ConnectionEndpoint.Scheme, Is.EqualTo(expectedScheme), "The connection endpoint scheme should reflect the TLS setting.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpClient.CloseAsync"/>
         ///   method.
         /// </summary>

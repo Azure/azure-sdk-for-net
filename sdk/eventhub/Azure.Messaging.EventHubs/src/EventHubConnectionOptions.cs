@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -121,6 +122,15 @@ namespace Azure.Messaging.EventHubs
         public RemoteCertificateValidationCallback CertificateValidationCallback { get; set; }
 
         /// <summary>
+        ///   Indicates whether or not the connection should be established using transport
+        ///   layer security (TLS).
+        /// </summary>
+        ///
+        /// <value><c>true</c> if TLS should be used; otherwise, <c>false</c>.  It is assumed that TLS is used by default.</value>
+        ///
+        internal bool UseTls { get; set; } = true;
+
+        /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -148,5 +158,19 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="EventHubConnectionOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="EventHubConnectionOptions" />.</returns>
+        ///
+        internal EventHubConnectionOptions Clone()
+        {
+            var clone = EventHubConnectionOptionsExtensions.Clone(this);
+            clone.UseTls = UseTls;
+
+            return clone;
+        }
     }
 }

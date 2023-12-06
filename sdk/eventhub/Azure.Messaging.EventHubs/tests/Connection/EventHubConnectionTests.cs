@@ -353,6 +353,42 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void ConstructorWithConnectionStringAndDevelopmentEmulatorInitializesProperties()
+        {
+            var endpoint = new Uri("sb://localhost:1234", UriKind.Absolute);
+            var fakeConnection = $"Endpoint={ endpoint };SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName;UseDevelopmentEmulator=true";
+            var connection = new ReadableOptionsMock(fakeConnection);
+            var options = connection.Options;
+
+            Assert.That(options.UseTls, Is.False, "The options should not use TLS for the development emulator.");
+            Assert.That(options.CustomEndpointAddress, Is.Not.Null, "The custom endpoint address should have been implicitly set.");
+            Assert.That(options.CustomEndpointAddress, Is.EqualTo(endpoint), "The custom endpoint address should match the connection string endpoint.");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubConnection" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorWithConnectionStringAndDevelopmentEmulatorHonorsExplicitCustomEndpointAddress()
+        {
+            var endpoint = new Uri("https://some-proxy.local:9876", UriKind.Absolute);
+            var fakeConnection = $"Endpoint=sb://localhost:5678;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName;UseDevelopmentEmulator=true";
+            var constructorOptions = new EventHubConnectionOptions { CustomEndpointAddress = endpoint };
+            var connection = new ReadableOptionsMock(fakeConnection, constructorOptions);
+            var options = connection.Options;
+
+            Assert.That(options.UseTls, Is.False, "The options should not use TLS for the development emulator.");
+            Assert.That(options.CustomEndpointAddress, Is.EqualTo(endpoint), "The custom endpoint address should match the explicitly provided value.");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubConnection" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
         public void ConstructorWithTokenCredentialInitializesProperties()
         {
             var fullyQualifiedNamespace = "host.windows.servicebus.net";
@@ -429,7 +465,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithConnectionStringCreatesTheTransportClient()
+        public void ConstructorWithConnectionStringCreatesTheTransportClient()
         {
             var connection = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
             Assert.That(GetTransportClient(connection), Is.Not.Null);
@@ -441,7 +477,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithConnectionStringUsingSharedAccessSignatureCreatesTheCorrectTransportCredential()
+        public void ConstructorWithConnectionStringUsingSharedAccessSignatureCreatesTheCorrectTransportCredential()
         {
             var sasToken = new SharedAccessSignature("hub", "root", "abc1234").Value;
             var connection = new InjectableTransportClientMock(Mock.Of<TransportClient>(), $"Endpoint=sb://not-real.servicebus.windows.net/;EntityPath=fake;SharedAccessSignature={ sasToken }");
@@ -456,7 +492,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithTokenCredentialCreatesTheTransportClient()
+        public void ConstructorWithTokenCredentialCreatesTheTransportClient()
         {
             var fullyQualifiedNamespace = "my.eventhubs.com";
             var path = "some-hub";
@@ -476,7 +512,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithSharedKeyCredentialCreatesTheTransportClient()
+        public void ConstructorWithSharedKeyCredentialCreatesTheTransportClient()
         {
             var fullyQualifiedNamespace = "my.eventhubs.com";
             var path = "some-hub";
@@ -495,7 +531,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithSasCredentialCreatesTheTransportClient()
+        public void CConstructorWithSasCredentialCreatesTheTransportClient()
         {
             var fullyQualifiedNamespace = "my.eventhubs.com";
             var path = "some-hub";

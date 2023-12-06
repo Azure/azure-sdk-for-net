@@ -190,6 +190,15 @@ namespace Azure.Messaging.EventHubs
 
             var tokenCredentials = new EventHubTokenCredential(new SharedAccessCredential(sharedAccessSignature));
 
+            // If the emulator is in use, then unset TLS and set the endpoint as a custom endpoint
+            // address, unless one was explicitly provided.
+
+            if (connectionStringProperties.UseDevelopmentEmulator)
+            {
+                connectionOptions.UseTls = false;
+                connectionOptions.CustomEndpointAddress ??= connectionStringProperties.Endpoint;
+            }
+
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
