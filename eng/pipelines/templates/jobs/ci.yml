@@ -148,7 +148,7 @@ jobs:
           Artifacts: ${{ parameters.Artifacts }}
       
       - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
-        - template: /eng/common/pipelines/templates/steps/aot-compatibility.yml
+        - template: /eng/pipelines/steps/aot-compatibility.yml
           parameters:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             AOTTestInputs: ${{ parameters.AOTTestInputs }}

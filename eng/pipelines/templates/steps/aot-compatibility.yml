@@ -8,7 +8,7 @@ steps:
     displayName: Check for AOT compatibility regressions in ${{ aotTestInput.ArtifactName }}
     inputs:
       targetType: filepath
-      filePath: eng/common/aotcompatibility/Check-AOT-Compatibility.ps1
+      filePath: /eng/scripts/aotcompatibility/Check-AOT-Compatibility.ps1
       arguments: >-
         -ServiceDirectory ${{ parameters.ServiceDirectory }}
         -PackageName ${{ aotTestInput.ArtifactName }}
