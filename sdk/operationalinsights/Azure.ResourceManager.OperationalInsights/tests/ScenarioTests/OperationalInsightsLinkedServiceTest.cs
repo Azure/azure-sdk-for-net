@@ -14,7 +14,7 @@ using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.Models;
 using Microsoft.Identity.Client.AppConfig;
 
-namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
+namespace Azure.ResourceManager.OperationalInsights.Tests
 {
     public class OperationalInsightsLinkedServiceTest : OperationalInsightsManagementTestBase
     {

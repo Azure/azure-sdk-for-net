@@ -13,7 +13,7 @@ using NUnit.Framework;
 using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
+namespace Azure.ResourceManager.OperationalInsights.Tests
 {
     public class OperationalInsightsSavedSearchTest: OperationalInsightsManagementTestBase
     {

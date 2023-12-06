@@ -14,7 +14,7 @@ using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.OperationalInsights.Models;
 
-namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
+namespace Azure.ResourceManager.OperationalInsights.Tests
 {
     public class StorageInsightTest : OperationalInsightsManagementTestBase
     {

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
+namespace Azure.ResourceManager.OperationalInsights.Tests
 {
     public class OperationalInsightsDataSourceTest: OperationalInsightsManagementTestBase
     {

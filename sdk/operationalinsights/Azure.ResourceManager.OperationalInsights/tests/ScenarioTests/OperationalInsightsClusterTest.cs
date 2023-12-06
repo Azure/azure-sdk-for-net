@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManagedServiceIdentities;
 using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
+namespace Azure.ResourceManager.OperationalInsights.Tests
 {
     public class OperationalInsightsClusterTest: OperationalInsightsManagementTestBase
     {

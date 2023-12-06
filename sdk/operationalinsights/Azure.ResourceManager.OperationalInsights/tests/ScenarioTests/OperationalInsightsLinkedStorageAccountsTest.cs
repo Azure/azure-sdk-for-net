@@ -14,7 +14,7 @@ using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
+namespace Azure.ResourceManager.OperationalInsights.Tests
 {
     public class OperationalInsightsLinkedStorageAccountsTest : OperationalInsightsManagementTestBase
     {
