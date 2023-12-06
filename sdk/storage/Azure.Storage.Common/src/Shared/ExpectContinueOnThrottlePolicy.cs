@@ -17,15 +17,19 @@ internal class ExpectContinueOnThrottlePolicy : HttpPipelineSynchronousPolicy
         set => _backoffTicks = value.Ticks;
     }
 
+    public long ContentLengthThreshold { get; set; }
+
     public override void OnSendingRequest(HttpMessage message)
     {
-        if (message.Request.Method == RequestMethod.Put)
+        if (message.Request.Content == null ||
+            (message.Request.Content.TryComputeLength(out long contentLength) && contentLength < ContentLengthThreshold))
         {
-            long lastThrottleTicks = Interlocked.Read(ref _lastThrottleTicks);
-            if (DateTimeOffset.UtcNow.Ticks - lastThrottleTicks < _backoffTicks)
-            {
-                message.Request.Headers.SetValue("Expect", "100-continue");
-            }
+            return;
+        }
+        long lastThrottleTicks = Interlocked.Read(ref _lastThrottleTicks);
+        if (DateTimeOffset.UtcNow.Ticks - lastThrottleTicks < _backoffTicks)
+        {
+            message.Request.Headers.SetValue("Expect", "100-continue");
         }
     }
 
