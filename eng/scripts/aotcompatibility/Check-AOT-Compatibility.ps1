@@ -55,82 +55,18 @@ $programFileContent | Set-Content -Path $programFile
 
 ### Publishing and collecting trimming warnings ###
 
-Write-Host "Collecting the set of trimming warnings."
+Write-Host "Collecting the set of trimming warnings.`n"
 
 dotnet clean aotcompatibility.csproj | Out-Null
 dotnet restore aotcompatibility.csproj | Out-Null
-$publishOutput = dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
+#$publishOutput = dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
+#Write-Host $publishOutput
 
-if ($LASTEXITCODE -ne 0)
-{
-    Write-Host "Publish failed."
-
-    Write-Host $publishOutput
-
-    Write-Host "Deleting test app files."
-
-    Set-Location -Path ..
-    Remove-Item -Path "./$folderPath" -Recurse -Force
-
-    Exit 2
-}
-
-$actualWarningCount = 0
-
-foreach ($line in $($publishOutput -split "`r`n"))
-{
-    if ($line -like "*analysis warning IL*")
-    {
-        $actualWarningCount += 1
-    }
-}
-
-Write-Host "There were $actualWarningCount warnings reported."
-
-### Reading the contents of the text file path ###
-
-Write-Host "Reading the list of patterns that represent the list of expected warnings."
-
-if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
-    # Read the contents of the file and store each line in an array
-    $expectedWarnings = Get-Content -Path $expectedWarningsFullPath
-} else {
-    # If no correct expected warnings were provided, check that there are no warnings reported.
-
-    Write-Host "The specified file does not exist. Assuming no warnings are expected."
-
-    $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+'
-    $numWarnings = $warnings.Count
-
-    if ($numWarnings -gt 0) {
-      $numWarnings = $warnings.Count
-      Write-Host "Found $numWarnings additional warnings that were not expected:`n$publishOutput"
-    }
-
-    Write-Host "Deleting test app files."
-
-    Set-Location -Path ..
-    Remove-Item -Path "./$folderPath" -Recurse -Force
-
-    exit $warnings.Count
-}
-
-### Comparing expected warnings to the publish output ###
-
-$numExpectedWarnings = $expectedWarnings.Count
-
-Write-Host "Checking against the list of expected warnings. There are $numExpectedWarnings warnings expected."
-
-$warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern $expectedWarnings -notmatch -simplematch
-if ($warnings.Count -gt 0) {
-  Write-Host "Found additional warnings that were not expected:`n$warnings"
-}
-
-### Cleanup ###
+dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
 
 Write-Host "Deleting test app files."
 
 Set-Location -Path ..
 Remove-Item -Path "./$folderPath" -Recurse -Force
 
-exit $warnings.Count
+exit 3
