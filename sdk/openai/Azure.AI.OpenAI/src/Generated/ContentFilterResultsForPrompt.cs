@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> Content filtering results for a single prompt in the request. </summary>
@@ -12,16 +15,12 @@ namespace Azure.AI.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ContentFilterResultsForPrompt"/>. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
-        internal ContentFilterResultsForPrompt(int promptIndex)
-        {
-            PromptIndex = promptIndex;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContentFilterResultsForPrompt"/>. </summary>
-        /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         /// <param name="contentFilterResults"> Content filtering results for this prompt. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentFilterResults"/> is null. </exception>
         internal ContentFilterResultsForPrompt(int promptIndex, ContentFilterResultDetailsForPrompt contentFilterResults)
         {
+            Argument.AssertNotNull(contentFilterResults, nameof(contentFilterResults));
+
             PromptIndex = promptIndex;
             ContentFilterResults = contentFilterResults;
         }

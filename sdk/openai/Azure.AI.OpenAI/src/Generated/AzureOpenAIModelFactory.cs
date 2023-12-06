@@ -93,9 +93,15 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResultsForPrompt"/>. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         /// <param name="contentFilterResults"> Content filtering results for this prompt. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentFilterResults"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ContentFilterResultsForPrompt"/> instance for mocking. </returns>
         public static ContentFilterResultsForPrompt ContentFilterResultsForPrompt(int promptIndex = default, ContentFilterResultDetailsForPrompt contentFilterResults = null)
         {
+            if (contentFilterResults == null)
+            {
+                throw new ArgumentNullException(nameof(contentFilterResults));
+            }
+
             return new ContentFilterResultsForPrompt(promptIndex, contentFilterResults);
         }
 

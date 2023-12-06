@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -20,7 +19,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             int promptIndex = default;
-            Optional<ContentFilterResultDetailsForPrompt> contentFilterResults = default;
+            ContentFilterResultDetailsForPrompt contentFilterResults = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prompt_index"u8))
@@ -30,15 +29,11 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("content_filter_results"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     contentFilterResults = ContentFilterResultDetailsForPrompt.DeserializeContentFilterResultDetailsForPrompt(property.Value);
                     continue;
                 }
             }
-            return new ContentFilterResultsForPrompt(promptIndex, contentFilterResults.Value);
+            return new ContentFilterResultsForPrompt(promptIndex, contentFilterResults);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
