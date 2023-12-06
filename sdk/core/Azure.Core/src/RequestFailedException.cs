@@ -18,7 +18,7 @@ namespace Azure
     /// An exception thrown when service request fails.
     /// </summary>
     [Serializable]
-    public partial class RequestFailedException : ClientRequestException, ISerializable
+    public class RequestFailedException : ClientRequestException, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
 
@@ -27,7 +27,8 @@ namespace Azure
         /// </summary>
         public string? ErrorCode { get; }
 
-        // #1 -> #2
+        #region Response constructors
+
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
         /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
@@ -36,7 +37,6 @@ namespace Azure
         {
         }
 
-        // #2 -> #3
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
         /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
@@ -46,7 +46,6 @@ namespace Azure
         {
         }
 
-        // #3 -> #4
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
         /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
@@ -57,11 +56,9 @@ namespace Azure
         {
         }
 
-        // #4 -> base
         private RequestFailedException(Response response, ErrorDetails details, Exception? innerException)
             : base(response, details.Message, innerException)
         {
-            Status = response.Status;
             ErrorCode = details.ErrorCode;
 
             if (details.Data != null)
@@ -73,14 +70,16 @@ namespace Azure
             }
         }
 
-        // #6 -> #7
+        #endregion
+
+        #region No-Response constructors
+
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message.</summary>
         /// <param name="message">The message that describes the error.</param>
         public RequestFailedException(string message) : this(0, message)
         {
         }
 
-        // #7 -> #8
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message and HTTP status code.</summary>
         /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
         /// <param name="message">The message that describes the error.</param>
@@ -90,7 +89,6 @@ namespace Azure
         {
         }
 
-        // #8 -> #9
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message, HTTP status code and a reference to the inner exception that is the cause of this exception.</summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
@@ -99,7 +97,6 @@ namespace Azure
         {
         }
 
-        // #9 -> #5
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message and a reference to the inner exception that is the cause of this exception.</summary>
         /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
@@ -110,7 +107,6 @@ namespace Azure
         {
         }
 
-        // #5 -> base
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message, HTTP status code, error code, and a reference to the inner exception that is the cause of this exception.</summary>
         /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
@@ -123,6 +119,8 @@ namespace Azure
             Status = status;
             ErrorCode = errorCode;
         }
+
+        #endregion
 
         #region ISerializable implementation
 
@@ -251,6 +249,22 @@ namespace Azure
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
             public ResponseError? Error { get; set; }
+        }
+
+        private readonly struct ErrorDetails
+        {
+            public ErrorDetails(string message, string? errorCode, IDictionary<string, string>? data)
+            {
+                Message = message;
+                ErrorCode = errorCode;
+                Data = data;
+            }
+
+            public string Message { get; }
+
+            public string? ErrorCode { get; }
+
+            public IDictionary<string, string>? Data { get; }
         }
     }
 }
