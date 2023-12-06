@@ -95,7 +95,22 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     # Read the contents of the file and store each line in an array
     $expectedWarnings = Get-Content -Path $expectedWarningsFullPath
 } else {
-    Write-Host "The specified file does not exist."
+    # If no correct expected warnings were provided, check that there are no warnings reported.
+
+    Write-Host "The specified file does not exist. Assuming no warnings are expected."
+
+    $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+'
+
+    if ($warnings.Count -gt 0) {
+      Write-Host "Found additional warnings that were not expected:`n$warnings"
+    }
+
+    Write-Host "Deleting test app files."
+
+    Set-Location -Path ..
+    Remove-Item -Path "./$folderPath" -Recurse -Force
+
+    exit $warnings.Count
 }
 
 ### Comparing expected warnings to the publish output ###
