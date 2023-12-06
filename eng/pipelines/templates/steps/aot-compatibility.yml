@@ -9,6 +9,11 @@ steps:
     inputs:
       targetType: filepath
       filePath: $(Build.SourcesDirectory)/eng/scripts/aotcompatibility/Check-AOT-Compatibility.ps1
+    ${{ if eq(length(aotTestInput), 1) }}:
+      arguments: >-
+        -ServiceDirectory ${{ parameters.ServiceDirectory }}
+        -PackageName ${{ aotTestInput.ArtifactName }}
+    ${{ if eq(length(aotTestInput), 2) }}:
       arguments: >-
         -ServiceDirectory ${{ parameters.ServiceDirectory }}
         -PackageName ${{ aotTestInput.ArtifactName }}
