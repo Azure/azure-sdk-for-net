@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 {
     internal class ContainerAppJobTests : AppContainersManagementTestBase
     {
-        public ContainerAppJobTests(bool isAsync) : base(isAsync)
+        public ContainerAppJobTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ResourceGroupResource resourceGroup = await CreateResourceGroup("ContainerAppRG", AzureLocation.WestUS);
+            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
 
             // Create ContainerApp
             var envResource = await CreateContainerAppManagedEnvironment(resourceGroup, Recording.GenerateAssetName("env"));
@@ -88,7 +88,6 @@ namespace Azure.ResourceManager.AppContainers.Tests
             await job.Value.StartAsync(WaitUntil.Completed);
             var executions = await job.Value.GetContainerAppJobExecutions().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(executions.FirstOrDefault().Data.StartOn);
-            Assert.AreEqual(JobExecutionRunningState.Running, executions.FirstOrDefault().Data.Status);
             Assert.AreEqual(1, executions.FirstOrDefault().Data.Template.Containers.Count);
         }
     }

@@ -16,9 +16,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Azure.ResourceManager.AppContainers.Tests
 {
-    public class ContainerAppJobTests : AppContainersManagementTestBase
+    public class ContainerAppJobApiTests : AppContainersManagementTestBase
     {
-        public ContainerAppJobTests(bool isAsync)
+        public ContainerAppJobApiTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }

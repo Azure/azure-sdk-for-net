@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
         protected async Task<ContainerAppManagedEnvironmentResource> CreateContainerAppManagedEnvironment(ResourceGroupResource resourceGroup, string envName)
         {
-            ContainerAppManagedEnvironmentData data = new ContainerAppManagedEnvironmentData(AzureLocation.WestUS)
+            ContainerAppManagedEnvironmentData data = new ContainerAppManagedEnvironmentData(AzureLocation.EastUS)
             {
                 WorkloadProfiles =
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
         protected async Task<ContainerAppResource> CreateContainerApp(ResourceGroupResource resourceGroup, ContainerAppManagedEnvironmentResource env,string containerAppName)
         {
-            ContainerAppData appData = new ContainerAppData(AzureLocation.WestUS)
+            ContainerAppData appData = new ContainerAppData(AzureLocation.EastUS)
             {
                 WorkloadProfileName = "gp1",
                 ManagedEnvironmentId = new ResourceIdentifier(env.Data.Id),
