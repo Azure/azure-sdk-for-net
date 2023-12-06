@@ -3,9 +3,10 @@ namespace System.ClientModel
     public partial class ClientRequestException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response) { }
-        public ClientRequestException(System.ClientModel.Primitives.PipelineResponse? response, string? message, System.Exception? innerException = null) { }
+        public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response, string? message, System.Exception? innerException) { }
         protected ClientRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public int Status { get { throw null; } }
+        public ClientRequestException(string message, System.Exception? innerException = null) { }
+        public int Status { get { throw null; } protected set { } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
     }
