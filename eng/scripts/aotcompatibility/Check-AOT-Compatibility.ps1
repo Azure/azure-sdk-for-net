@@ -57,7 +57,9 @@ $programFileContent | Set-Content -Path $programFile
 
 Write-Host "Collecting the set of trimming warnings."
 
-$publishOutput = dotnet clean aotcompatibility.csproj && dotnet restore aotcompatibility.csproj && dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
+dotnet clean aotcompatibility.csproj | Out-Null
+dotnet restore aotcompatibility.csproj | Out-Null
+$publishOutput = dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
 
 if ($LASTEXITCODE -ne 0)
 {
