@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests;
@@ -65,7 +66,7 @@ public class MapsClientTests
     }
 
     [Test]
-    public void SetNetworkTimeout()
+    public void SetNetworkTimeout_ClientScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
         KeyCredential credential = new KeyCredential(key);
@@ -133,6 +134,109 @@ public class MapsClientTests
             PipelineResponse reponse = output.GetRawResponse();
 
             Assert.AreEqual("CustomTransportResponse", reponse.ReasonPhrase);
+        }
+        catch (ClientRequestException e)
+        {
+            Assert.Fail($"Error: Response status code: '{e.Status}'");
+        }
+    }
+
+    [Test]
+    public void PassCancellationToken_MethodScope()
+    {
+        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+        KeyCredential credential = new KeyCredential(key);
+
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
+
+        try
+        {
+            IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+
+            RequestOptions options = new RequestOptions();
+            options.CancellationToken = new CancellationToken();
+
+            // Call protocol method in order to pass RequestOptions
+            OutputMessage output = client.GetCountryCode(ipAddress.ToString(), options);
+
+            // TODO: Add validation test
+        }
+        catch (ClientRequestException e)
+        {
+            Assert.Fail($"Error: Response status code: '{e.Status}'");
+        }
+    }
+
+    [Test]
+    public void AddRequestHeader_MethodScope()
+    {
+        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+        KeyCredential credential = new KeyCredential(key);
+
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
+
+        try
+        {
+            IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+
+            RequestOptions options = new RequestOptions();
+            options.RequestHeaders.Add("CustomHeader", "CustomHeaderValue");
+
+            // Call protocol method in order to pass RequestOptions
+            OutputMessage output = client.GetCountryCode(ipAddress.ToString(), options);
+
+            // TODO: Add validation test
+        }
+        catch (ClientRequestException e)
+        {
+            Assert.Fail($"Error: Response status code: '{e.Status}'");
+        }
+    }
+
+    [Test]
+    public void AddCustomPolicy_MethodScope()
+    {
+        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+        KeyCredential credential = new KeyCredential(key);
+
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
+
+        try
+        {
+            IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+
+            RequestOptions options = new RequestOptions();
+            CustomPolicy customPolicy = new CustomPolicy();
+            options.AddPolicy(customPolicy, PipelinePosition.PerCall);
+
+            // Call protocol method in order to pass RequestOptions
+            OutputMessage output = client.GetCountryCode(ipAddress.ToString(), options);
+
+            Assert.IsTrue(customPolicy.ProcessedMessage);
+        }
+        catch (ClientRequestException e)
+        {
+            Assert.Fail($"Error: Response status code: '{e.Status}'");
+        }
+    }
+
+    [Test]
+    public void ChangeMethodBehaviorOnErrorResponse()
+    {
+        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+        KeyCredential credential = new KeyCredential(key);
+
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
+
+        try
+        {
+            IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+
+            RequestOptions options = new RequestOptions();
+            options.ErrorBehavior = ErrorBehavior.NoThrow;
+
+            // Call protocol method in order to pass RequestOptions
+            OutputMessage output = client.GetCountryCode(ipAddress.ToString(), options);
         }
         catch (ClientRequestException e)
         {
