@@ -422,10 +422,14 @@ namespace Azure.ResourceManager.OperationalInsights
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs RestoredLogs { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics ResultStatistics { get { throw null; } }
         public int? RetentionInDays { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use `IsRetentionInDaysAsDefault` instead", false)]
         public Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState? RetentionInDaysAsDefault { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema Schema { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults SearchResults { get { throw null; } set { } }
         public int? TotalRetentionInDays { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use `IsTotalRetentionInDaysAsDefault` instead", false)]
         public Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState? TotalRetentionInDaysAsDefault { get { throw null; } }
     }
     public partial class OperationalInsightsTableResource : Azure.ResourceManager.ArmResource
