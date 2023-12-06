@@ -6,17 +6,13 @@ using System.ComponentModel;
 
 namespace System.ClientModel;
 
-public class OutputMessage<T> : OptionalOutputMessage<T>
+public abstract class OutputMessage<T> : OptionalOutputMessage<T>
 {
-    internal OutputMessage(T value, PipelineResponse response) : base(value, response)
-    {
-        // Null values must use OptionalOutputMessage<T>
-        if (value is null) throw new ArgumentNullException(nameof(value));
-        if (response is null) throw new ArgumentNullException(nameof(response));
-    }
+    protected OutputMessage(T value, PipelineResponse response)
+        : base(value, response) { }
 
-    public override T Value => base.Value!;
+    public sealed override T Value => base.Value!;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override bool HasValue => true;
+    public sealed override bool HasValue => true;
 }

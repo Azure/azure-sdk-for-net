@@ -25,6 +25,21 @@ namespace Azure.Containers.ContainerRegistry
             Service = service;
         }
 
+        /// <summary> Initializes a new instance of <see cref="Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema"/>. </summary>
+        /// <param name="grantType"> Can take a value of access_token_refresh_token, or access_token, or refresh_token. </param>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="tenant"> AAD tenant associated to the AAD credentials. </param>
+        /// <param name="refreshToken"> AAD refresh token, mandatory when grant_type is access_token_refresh_token or refresh_token. </param>
+        /// <param name="aadAccessToken"> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </param>
+        internal Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema(PostContentSchemaGrantType grantType, string service, string tenant, string refreshToken, string aadAccessToken)
+        {
+            GrantType = grantType;
+            Service = service;
+            Tenant = tenant;
+            RefreshToken = refreshToken;
+            AadAccessToken = aadAccessToken;
+        }
+
         /// <summary> Can take a value of access_token_refresh_token, or access_token, or refresh_token. </summary>
         public PostContentSchemaGrantType GrantType { get; }
         /// <summary> Indicates the name of your Azure container registry. </summary>

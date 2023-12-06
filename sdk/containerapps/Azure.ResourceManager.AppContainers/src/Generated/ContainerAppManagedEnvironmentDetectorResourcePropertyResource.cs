@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ManagedEnvironmentsDiagnosticsRestOperations _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsRestClient;
         private readonly ContainerAppManagedEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectorProperties";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> class for mocking. </summary>
         protected ContainerAppManagedEnvironmentDetectorResourcePropertyResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectorProperties";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

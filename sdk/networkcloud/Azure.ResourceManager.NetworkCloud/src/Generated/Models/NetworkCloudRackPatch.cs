@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="rackLocation"> The free-form description of the rack location. (e.g. “DTN Datacenter, Floor 3, Isle 9, Rack 2B”). </param>
+        /// <param name="rackSerialNumber"> The globally unique identifier for the rack. </param>
+        internal NetworkCloudRackPatch(IDictionary<string, string> tags, string rackLocation, string rackSerialNumber)
+        {
+            Tags = tags;
+            RackLocation = rackLocation;
+            RackSerialNumber = rackSerialNumber;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The free-form description of the rack location. (e.g. “DTN Datacenter, Floor 3, Isle 9, Rack 2B”). </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly ServerAdministratorsRestOperations _postgreSqlServerAdministratorServerAdministratorsRestClient;
         private readonly PostgreSqlServerAdministratorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/administrators";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlServerAdministratorResource"/> class for mocking. </summary>
         protected PostgreSqlServerAdministratorResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.PostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/administrators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

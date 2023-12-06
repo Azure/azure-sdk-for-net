@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevCenter
         private readonly ProjectsRestOperations _devCenterProjectProjectsRestClient;
         private readonly DevCenterProjectData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects";
+
         /// <summary> Initializes a new instance of the <see cref="DevCenterProjectResource"/> class for mocking. </summary>
         protected DevCenterProjectResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

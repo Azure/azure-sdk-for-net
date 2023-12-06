@@ -33,7 +33,7 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
         _keyPrefix = keyPrefix;
     }
 
-    public override void Process(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override void Process(PipelineMessage message, PipelineProcessor pipeline)
     {
         string key = _credential.GetValue();
 
@@ -42,7 +42,7 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
         pipeline.ProcessNext();
     }
 
-    public override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
     {
         string key = _credential.GetValue();
 

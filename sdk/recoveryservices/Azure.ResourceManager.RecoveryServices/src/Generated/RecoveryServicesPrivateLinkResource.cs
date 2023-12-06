@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.RecoveryServices
         private readonly PrivateLinkResourcesRestOperations _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly RecoveryServicesPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="RecoveryServicesPrivateLinkResource"/> class for mocking. </summary>
         protected RecoveryServicesPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.RecoveryServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

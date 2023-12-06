@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteContinuousWebJobWebAppsRestClient;
         private readonly ContinuousWebJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/continuouswebjobs";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteContinuousWebJobResource"/> class for mocking. </summary>
         protected WebSiteContinuousWebJobResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/continuouswebjobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

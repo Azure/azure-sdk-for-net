@@ -25,6 +25,13 @@ namespace Azure.Monitor.Query.Models
             Requests = requests.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
+        /// <param name="requests"> An single request in a batch. </param>
+        internal BatchRequest(IList<BatchQueryRequest> requests)
+        {
+            Requests = requests;
+        }
+
         /// <summary> An single request in a batch. </summary>
         public IList<BatchQueryRequest> Requests { get; }
     }

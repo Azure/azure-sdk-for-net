@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sphere
         private readonly CertificatesRestOperations _sphereCertificateCertificatesRestClient;
         private readonly SphereCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="SphereCertificateResource"/> class for mocking. </summary>
         protected SphereCertificateResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Monitor
         private readonly LogProfilesRestOperations _logProfileRestClient;
         private readonly LogProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/logprofiles";
+
         /// <summary> Initializes a new instance of the <see cref="LogProfileResource"/> class for mocking. </summary>
         protected LogProfileResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/logprofiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

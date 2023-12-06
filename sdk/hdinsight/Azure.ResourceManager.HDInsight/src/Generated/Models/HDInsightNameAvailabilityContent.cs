@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        internal HDInsightNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> The resource name. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>

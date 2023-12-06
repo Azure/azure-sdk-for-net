@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly CloudHsmClusterPrivateEndpointConnectionsRestOperations _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsRestClient;
         private readonly HardwareSecurityModulesPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected HardwareSecurityModulesPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

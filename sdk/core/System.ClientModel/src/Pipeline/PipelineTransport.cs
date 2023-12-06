@@ -68,17 +68,17 @@ public abstract class PipelineTransport : PipelinePolicy
 
     // These methods from PipelinePolicy just say "you've reached the end
     // of the line", i.e. they stop the invocation of the policy chain.
-    public override void Process(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override void Process(PipelineMessage message, PipelineProcessor pipeline)
     {
-        Debug.Assert(pipeline.Length == 0);
-
         Process(message);
+
+        Debug.Assert(pipeline.ProcessNext() == false);
     }
 
-    public override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
     {
-        Debug.Assert(pipeline.Length == 0);
-
         await ProcessAsync(message).ConfigureAwait(false);
+
+        Debug.Assert(await pipeline.ProcessNextAsync().ConfigureAwait(false) == false);
     }
 }

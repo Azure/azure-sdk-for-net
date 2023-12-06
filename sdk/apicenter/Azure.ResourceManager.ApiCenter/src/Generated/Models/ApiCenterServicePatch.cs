@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ApiCenter.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiCenterServicePatch"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        internal ApiCenterServicePatch(ApiCenterProvisioningState? provisioningState)
+        {
+            ProvisioningState = provisioningState;
+        }
+
         /// <summary> The status of the last operation. </summary>
         public ApiCenterProvisioningState? ProvisioningState { get; }
     }

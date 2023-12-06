@@ -18,6 +18,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureReprotectContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="hyperVHostVmId"> The Hyper-V host Vm Id. </param>
+        /// <param name="vmName"> The Vm Name. </param>
+        /// <param name="osType"> The OS type associated with vm. </param>
+        /// <param name="vhdId"> The OS disk VHD id associated with vm. </param>
+        /// <param name="storageAccountId"> The storage account name. </param>
+        /// <param name="logStorageAccountId"> The storage account to be used for logging during replication. </param>
+        internal HyperVReplicaAzureReprotectContent(string instanceType, string hyperVHostVmId, string vmName, string osType, string vhdId, ResourceIdentifier storageAccountId, ResourceIdentifier logStorageAccountId) : base(instanceType)
+        {
+            HyperVHostVmId = hyperVHostVmId;
+            VmName = vmName;
+            OSType = osType;
+            VhdId = vhdId;
+            StorageAccountId = storageAccountId;
+            LogStorageAccountId = logStorageAccountId;
+            InstanceType = instanceType ?? "HyperVReplicaAzure";
+        }
+
         /// <summary> The Hyper-V host Vm Id. </summary>
         public string HyperVHostVmId { get; set; }
         /// <summary> The Vm Name. </summary>

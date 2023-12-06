@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -151,21 +150,33 @@ public partial class ClientPipeline
             _policies = policies;
         }
 
-        public override int Length => _policies.Length;
-
         public override bool ProcessNext()
         {
+            if (_policies.Length == 0)
+            {
+                return false;
+            }
+
             var next = _policies.Span[0];
             _policies = _policies.Slice(1);
+
             next.Process(_message, this);
+
             return _policies.Length > 0;
         }
 
         public override async ValueTask<bool> ProcessNextAsync()
         {
+            if (_policies.Length == 0)
+            {
+                return false;
+            }
+
             var next = _policies.Span[0];
             _policies = _policies.Slice(1);
+
             await next.ProcessAsync(_message, this).ConfigureAwait(false);
+
             return _policies.Length > 0;
         }
     }

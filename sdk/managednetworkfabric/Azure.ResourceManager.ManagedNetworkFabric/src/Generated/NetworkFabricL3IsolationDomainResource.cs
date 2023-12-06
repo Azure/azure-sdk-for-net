@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly L3IsolationDomainsRestOperations _networkFabricL3IsolationDomainL3IsolationDomainsRestClient;
         private readonly NetworkFabricL3IsolationDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricL3IsolationDomainResource"/> class for mocking. </summary>
         protected NetworkFabricL3IsolationDomainResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

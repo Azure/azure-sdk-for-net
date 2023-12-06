@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ReservationCalculateRefundRequestProperties"/>. </summary>
+        /// <param name="scope"> The scope of the refund, e.g. Reservation. </param>
+        /// <param name="reservationToReturn"> Reservation to return. </param>
+        internal ReservationCalculateRefundRequestProperties(string scope, ReservationToReturn reservationToReturn)
+        {
+            Scope = scope;
+            ReservationToReturn = reservationToReturn;
+        }
+
         /// <summary> The scope of the refund, e.g. Reservation. </summary>
         public string Scope { get; set; }
         /// <summary> Reservation to return. </summary>

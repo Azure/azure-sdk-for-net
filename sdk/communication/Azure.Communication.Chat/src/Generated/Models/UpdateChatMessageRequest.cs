@@ -19,6 +19,15 @@ namespace Azure.Communication.Chat
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateChatMessageRequest"/>. </summary>
+        /// <param name="content"> Chat message content. </param>
+        /// <param name="metadata"> Message metadata. </param>
+        internal UpdateChatMessageRequest(string content, IDictionary<string, string> metadata)
+        {
+            Content = content;
+            Metadata = metadata;
+        }
+
         /// <summary> Chat message content. </summary>
         public string Content { get; set; }
         /// <summary> Message metadata. </summary>

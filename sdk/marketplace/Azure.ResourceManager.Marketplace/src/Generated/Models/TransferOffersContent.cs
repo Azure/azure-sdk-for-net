@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             OfferIdsList = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="TransferOffersContent"/>. </summary>
+        /// <param name="targetCollections"> Target collections ids. </param>
+        /// <param name="operation"> Operation to perform (For example: Copy or Move). </param>
+        /// <param name="offerIdsList"> Offers ids list to transfer from source collection to target collection(s). </param>
+        internal TransferOffersContent(IList<string> targetCollections, string operation, IList<string> offerIdsList)
+        {
+            TargetCollections = targetCollections;
+            Operation = operation;
+            OfferIdsList = offerIdsList;
+        }
+
         /// <summary> Target collections ids. </summary>
         public IList<string> TargetCollections { get; }
         /// <summary> Operation to perform (For example: Copy or Move). </summary>

@@ -65,7 +65,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         return message;
     }
 
-    protected override void ProcessCore(PipelineMessage message)
+    protected sealed override void ProcessCore(PipelineMessage message)
     {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
 
@@ -87,7 +87,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
-    protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
+    protected sealed override async ValueTask ProcessCoreAsync(PipelineMessage message)
         => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
@@ -152,7 +152,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         }
         catch (HttpRequestException e)
         {
-            throw new ClientRequestException(response: null, e.Message, e);
+            throw new ClientRequestException(e.Message, e);
         }
 
         message.Response = new HttpPipelineResponse(responseMessage);
@@ -191,6 +191,12 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     #region IDisposable
 
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         if (disposing && !_disposed)
@@ -203,12 +209,6 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
             _disposed = true;
         }
-    }
-
-    public virtual void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     #endregion

@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.IotHub.Models
             SystemProperties = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RoutingMessage"/>. </summary>
+        /// <param name="body"> Body of routing message. </param>
+        /// <param name="appProperties"> App properties. </param>
+        /// <param name="systemProperties"> System properties. </param>
+        internal RoutingMessage(string body, IDictionary<string, string> appProperties, IDictionary<string, string> systemProperties)
+        {
+            Body = body;
+            AppProperties = appProperties;
+            SystemProperties = systemProperties;
+        }
+
         /// <summary> Body of routing message. </summary>
         public string Body { get; set; }
         /// <summary> App properties. </summary>

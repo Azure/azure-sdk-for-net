@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsDiagnosticsRestOperations _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient;
         private readonly ContainerAppRevisionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectorProperties/revisions";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorPropertyRevisionResource"/> class for mocking. </summary>
         protected ContainerAppDetectorPropertyRevisionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectorProperties/revisions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -16,6 +16,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceCredentialType = DataSourceCredentialKind.ServicePrincipal;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalCredentialPatch"/>. </summary>
+        /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
+        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
+        /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        /// <param name="parameters"></param>
+        internal ServicePrincipalCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription, ServicePrincipalParamPatch parameters) : base(dataSourceCredentialType, dataSourceCredentialName, dataSourceCredentialDescription)
+        {
+            Parameters = parameters;
+            DataSourceCredentialType = dataSourceCredentialType;
+        }
+
         /// <summary> Gets or sets the parameters. </summary>
         public ServicePrincipalParamPatch Parameters { get; set; }
     }

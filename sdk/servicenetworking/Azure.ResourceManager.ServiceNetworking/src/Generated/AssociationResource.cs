@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         private readonly AssociationsInterfaceRestOperations _associationAssociationsInterfaceRestClient;
         private readonly AssociationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceNetworking/trafficControllers/associations";
+
         /// <summary> Initializes a new instance of the <see cref="AssociationResource"/> class for mocking. </summary>
         protected AssociationResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ServiceNetworking
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceNetworking/trafficControllers/associations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

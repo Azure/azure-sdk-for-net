@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExchangeRequestProperties"/>. </summary>
+        /// <param name="sessionId"> SessionId that was returned by CalculateExchange API. </param>
+        internal ExchangeRequestProperties(Guid? sessionId)
+        {
+            SessionId = sessionId;
+        }
+
         /// <summary> SessionId that was returned by CalculateExchange API. </summary>
         public Guid? SessionId { get; set; }
     }

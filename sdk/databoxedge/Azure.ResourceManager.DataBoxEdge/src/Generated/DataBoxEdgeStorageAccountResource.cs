@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly StorageAccountsRestOperations _dataBoxEdgeStorageAccountStorageAccountsRestClient;
         private readonly DataBoxEdgeStorageAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageAccountResource"/> class for mocking. </summary>
         protected DataBoxEdgeStorageAccountResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

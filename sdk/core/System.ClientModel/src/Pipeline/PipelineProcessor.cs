@@ -9,8 +9,6 @@ namespace System.ClientModel.Primitives;
 // the interface it implements vs. an abstract class you have to allocate every time?
 public abstract class PipelineProcessor
 {
-    public abstract int Length { get; }
-
     public abstract bool ProcessNext();
 
     public abstract ValueTask<bool> ProcessNextAsync();

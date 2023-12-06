@@ -33,10 +33,10 @@ namespace Azure.Communication.CallAutomation
         /// Required only when calling a PSTN callee.
         /// </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
-        /// <param name="sourceIdentity"> Source identity. </param>
+        /// <param name="source"> Source identity. </param>
         /// <param name="correlationId"> The correlation ID. </param>
-        /// <param name="answeredByIdentifier"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel sourceIdentity, string correlationId, CommunicationUserIdentifierModel answeredByIdentifier)
+        /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -47,9 +47,9 @@ namespace Azure.Communication.CallAutomation
             DataSubscriptionId = dataSubscriptionId;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
-            SourceIdentity = sourceIdentity;
+            Source = source;
             CorrelationId = correlationId;
-            AnsweredByIdentifier = answeredByIdentifier;
+            AnsweredBy = answeredBy;
         }
 
         /// <summary> The call connection id. </summary>
@@ -74,10 +74,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
         public string SourceDisplayName { get; }
         /// <summary> Source identity. </summary>
-        public CommunicationIdentifierModel SourceIdentity { get; }
+        public CommunicationIdentifierModel Source { get; }
         /// <summary> The correlation ID. </summary>
         public string CorrelationId { get; }
         /// <summary> Identity of the answering entity. Only populated when identity is provided in the request. </summary>
-        public CommunicationUserIdentifierModel AnsweredByIdentifier { get; }
+        public CommunicationUserIdentifierModel AnsweredBy { get; }
     }
 }

@@ -119,13 +119,42 @@ public class ClientPipelineTests
         {
             public TransportRequest() { }
 
-            public override InputContent? Content
+            public override void Dispose()
             {
-                get => throw new NotImplementedException();
-                set => throw new NotImplementedException();
+                throw new NotImplementedException();
             }
 
-            public override void Dispose()
+            protected override InputContent? GetContentCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override MessageHeaders GetHeadersCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override string GetMethodCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override Uri GetUriCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetContentCore(InputContent? content)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetMethodCore(string method)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetUriCore(Uri uri)
             {
                 throw new NotImplementedException();
             }
@@ -141,6 +170,11 @@ public class ClientPipelineTests
             {
                 get => null;
                 set => throw new NotImplementedException();
+            }
+
+            protected override MessageHeaders GetHeadersCore()
+            {
+                throw new NotImplementedException();
             }
 
             public override void Dispose()

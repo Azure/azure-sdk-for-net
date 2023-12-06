@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.FluidRelay
         private readonly FluidRelayContainersRestOperations _fluidRelayContainerRestClient;
         private readonly FluidRelayContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.FluidRelay/fluidRelayServers/fluidRelayContainers";
+
         /// <summary> Initializes a new instance of the <see cref="FluidRelayContainerResource"/> class for mocking. </summary>
         protected FluidRelayContainerResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.FluidRelay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.FluidRelay/fluidRelayServers/fluidRelayContainers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        internal DynatraceTagRulePatch(DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules)
+        {
+            LogRules = logRules;
+            MetricRules = metricRules;
+        }
+
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
         public DynatraceMonitorResourceLogRules LogRules { get; set; }
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>

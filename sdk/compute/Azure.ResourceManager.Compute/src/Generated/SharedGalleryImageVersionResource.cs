@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Compute
         private readonly SharedGalleryImageVersionsRestOperations _sharedGalleryImageVersionRestClient;
         private readonly SharedGalleryImageVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/sharedGalleries/images/versions";
+
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageVersionResource"/> class for mocking. </summary>
         protected SharedGalleryImageVersionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/sharedGalleries/images/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

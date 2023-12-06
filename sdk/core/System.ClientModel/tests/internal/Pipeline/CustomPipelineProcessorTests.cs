@@ -586,6 +586,45 @@ public class CustomPipelineProcessorTests
 
     internal class MockRequest : PipelineRequest
     {
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override InputContent? GetContentCore()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override MessageHeaders GetHeadersCore()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override string GetMethodCore()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Uri GetUriCore()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetContentCore(InputContent? content)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetMethodCore(string method)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetUriCore(Uri uri)
+        {
+            throw new NotImplementedException();
+        }
     }
     #endregion
 }

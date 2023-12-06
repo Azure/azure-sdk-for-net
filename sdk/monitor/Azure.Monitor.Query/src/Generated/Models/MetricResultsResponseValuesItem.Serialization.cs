@@ -26,7 +26,7 @@ namespace Azure.Monitor.Query.Models
             Optional<string> @namespace = default;
             Optional<string> resourceregion = default;
             Optional<ResourceIdentifier> resourceid = default;
-            IReadOnlyList<QueryBatchMetric> value = default;
+            IReadOnlyList<MetricResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("starttime"u8))
@@ -69,10 +69,10 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    List<QueryBatchMetric> array = new List<QueryBatchMetric>();
+                    List<MetricResult> array = new List<MetricResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryBatchMetric.DeserializeQueryBatchMetric(item));
+                        array.Add(MetricResult.DeserializeMetricResult(item));
                     }
                     value = array;
                     continue;

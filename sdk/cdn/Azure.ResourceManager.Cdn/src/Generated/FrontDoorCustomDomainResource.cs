@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Cdn
         private readonly FrontDoorCustomDomainsRestOperations _frontDoorCustomDomainRestClient;
         private readonly FrontDoorCustomDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/customDomains";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorCustomDomainResource"/> class for mocking. </summary>
         protected FrontDoorCustomDomainResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/customDomains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

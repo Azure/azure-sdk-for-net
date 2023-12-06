@@ -33,13 +33,13 @@ public class ResponseBufferingPolicy : PipelinePolicy
         _networkTimeout = networkTimeout;
     }
 
-    public override void Process(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override void Process(PipelineMessage message, PipelineProcessor pipeline)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineProcessor pipeline, bool async)
@@ -88,7 +88,8 @@ public class ResponseBufferingPolicy : PipelinePolicy
         }
 
         Stream? responseContentStream = message.Response.ContentStream;
-        if (responseContentStream == null || PipelineResponse.ContentIsBuffered(responseContentStream))
+        if (responseContentStream is null ||
+            message.Response.TryGetBufferedContent(out var _))
         {
             // There is either no content on the response, or the content has already
             // been buffered.
@@ -104,19 +105,14 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
         try
         {
-            var bufferedStream = new MemoryStream();
             if (async)
             {
-                await CopyToAsync(responseContentStream, bufferedStream, invocationNetworkTimeout, cts).ConfigureAwait(false);
+                await BufferContentAsync(message.Response, invocationNetworkTimeout, cts).ConfigureAwait(false);
             }
             else
             {
-                CopyTo(responseContentStream, bufferedStream, invocationNetworkTimeout, cts);
+                BufferContent(message.Response, invocationNetworkTimeout, cts);
             }
-
-            responseContentStream.Dispose();
-            bufferedStream.Position = 0;
-            message.Response.ContentStream = bufferedStream;
         }
         // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
         catch (Exception ex)
@@ -130,7 +126,29 @@ public class ResponseBufferingPolicy : PipelinePolicy
         }
     }
 
-    private async Task CopyToAsync(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
+    internal static void BufferContent(PipelineResponse response, TimeSpan timeout, CancellationTokenSource cts)
+    {
+        Stream? responseContentStream = response.ContentStream;
+        if (responseContentStream == null || response.TryGetBufferedContent(out _)) return;
+        var bufferedStream = new MemoryStream();
+        CopyTo(responseContentStream, bufferedStream, timeout, cts);
+        responseContentStream.Dispose();
+        bufferedStream.Position = 0;
+        response.ContentStream = bufferedStream;
+    }
+
+    private static async Task BufferContentAsync(PipelineResponse response, TimeSpan timeout, CancellationTokenSource cts)
+    {
+        Stream? responseContentStream = response.ContentStream;
+        if (responseContentStream == null || response.TryGetBufferedContent(out _)) return;
+        var bufferedStream = new MemoryStream();
+        await CopyToAsync(responseContentStream, bufferedStream, timeout, cts).ConfigureAwait(false);
+        responseContentStream.Dispose();
+        bufferedStream.Position = 0;
+        response.ContentStream = bufferedStream;
+    }
+
+    private static async Task CopyToAsync(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
     {
         byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
         try
@@ -152,7 +170,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
         }
     }
 
-    private void CopyTo(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
+    private static void CopyTo(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
     {
         byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
         try

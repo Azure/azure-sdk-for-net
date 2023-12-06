@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Consumption
         private readonly BudgetsRestOperations _consumptionBudgetBudgetsRestClient;
         private readonly ConsumptionBudgetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Consumption/budgets";
+
         /// <summary> Initializes a new instance of the <see cref="ConsumptionBudgetResource"/> class for mocking. </summary>
         protected ConsumptionBudgetResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Consumption
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Consumption/budgets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

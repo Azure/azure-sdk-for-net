@@ -17,6 +17,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCachePatch"/>. </summary>
+        /// <param name="description"> Cache description. </param>
+        /// <param name="connectionString"> Runtime connection string to cache. </param>
+        /// <param name="useFromLocation"> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </param>
+        /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
+        internal ApiManagementCachePatch(string description, string connectionString, string useFromLocation, Uri resourceUri)
+        {
+            Description = description;
+            ConnectionString = connectionString;
+            UseFromLocation = useFromLocation;
+            ResourceUri = resourceUri;
+        }
+
         /// <summary> Cache description. </summary>
         public string Description { get; set; }
         /// <summary> Runtime connection string to cache. </summary>

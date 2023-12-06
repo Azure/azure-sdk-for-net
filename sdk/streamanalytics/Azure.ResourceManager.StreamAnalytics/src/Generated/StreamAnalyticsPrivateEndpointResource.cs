@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         private readonly PrivateEndpointsRestOperations _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient;
         private readonly StreamAnalyticsPrivateEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/clusters/privateEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="StreamAnalyticsPrivateEndpointResource"/> class for mocking. </summary>
         protected StreamAnalyticsPrivateEndpointResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.StreamAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/clusters/privateEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

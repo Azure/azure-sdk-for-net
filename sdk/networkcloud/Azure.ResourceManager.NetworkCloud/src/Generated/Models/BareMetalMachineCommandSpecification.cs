@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Command = command;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineCommandSpecification"/>. </summary>
+        /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
+        /// <param name="command"> The command to execute against the bare metal machine. </param>
+        internal BareMetalMachineCommandSpecification(IList<string> arguments, string command)
+        {
+            Arguments = arguments;
+            Command = command;
+        }
+
         /// <summary> The list of string arguments that will be passed to the script in order as separate arguments. </summary>
         public IList<string> Arguments { get; }
         /// <summary> The command to execute against the bare metal machine. </summary>

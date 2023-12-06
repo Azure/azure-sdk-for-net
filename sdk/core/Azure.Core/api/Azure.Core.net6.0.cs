@@ -114,16 +114,16 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
-    public abstract partial class NullableResponse<T>
+    public abstract partial class NullableResponse<T> : System.ClientModel.OptionalOutputMessage<T>
     {
-        protected NullableResponse() { }
-        public abstract bool HasValue { get; }
-        public abstract T? Value { get; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected NullableResponse() : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected NullableResponse(T? value, Azure.Response response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public abstract Azure.Response GetRawResponse();
+        public virtual new Azure.Response GetRawResponse() { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class Operation
@@ -239,10 +239,14 @@ namespace Azure
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
+        public virtual new System.BinaryData Content { get { throw null; } }
         public virtual new Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        public virtual new bool IsError { get { throw null; } }
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected override System.ClientModel.Primitives.MessageHeaders GetHeadersCore() { throw null; }
         public override string ToString() { throw null; }
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
@@ -256,7 +260,9 @@ namespace Azure
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected Response() { }
+        protected Response(T value, Azure.Response response) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }
@@ -517,9 +523,15 @@ namespace Azure.Core
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
+        protected override System.ClientModel.InputContent? GetContentCore() { throw null; }
+        protected override System.ClientModel.Primitives.MessageHeaders GetHeadersCore() { throw null; }
+        protected override string GetMethodCore() { throw null; }
         protected override System.Uri GetUriCore() { throw null; }
         protected internal abstract bool RemoveHeader(string name);
+        protected override void SetContentCore(System.ClientModel.InputContent? content) { }
         protected internal virtual void SetHeader(string name, string value) { }
+        protected override void SetMethodCore(string method) { }
+        protected override void SetUriCore(System.Uri uri) { }
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }

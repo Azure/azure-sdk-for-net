@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly IotSecuritySolutionsAnalyticsRecommendationRestOperations _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient;
         private readonly IotSecurityAggregatedRecommendationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations";
+
         /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedRecommendationResource"/> class for mocking. </summary>
         protected IotSecurityAggregatedRecommendationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

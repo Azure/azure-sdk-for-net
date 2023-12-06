@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MsixImageUri"/>. </summary>
+        /// <param name="uri"> URI to Image. </param>
+        internal MsixImageUri(Uri uri)
+        {
+            Uri = uri;
+        }
+
         /// <summary> URI to Image. </summary>
         public Uri Uri { get; set; }
     }

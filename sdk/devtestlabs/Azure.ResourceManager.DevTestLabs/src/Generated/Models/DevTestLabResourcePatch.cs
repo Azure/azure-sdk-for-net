@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabResourcePatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal DevTestLabResourcePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -20,6 +20,19 @@ namespace Azure.IoT.TimeSeriesInsights
             Update = new ChangeTrackingList<TimeSeriesInstance>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="InstancesBatchRequest"/>. </summary>
+        /// <param name="get"> Time series IDs or names of time series instances to return. </param>
+        /// <param name="put"> Time series instances to be created or updated. </param>
+        /// <param name="update"> Time series instance to be updated. If instance does not exist, an error is returned. </param>
+        /// <param name="delete"> Time series instances to be deleted. Time series ID or name may be specified. </param>
+        internal InstancesBatchRequest(InstancesRequestBatchGetOrDelete @get, IList<TimeSeriesInstance> put, IList<TimeSeriesInstance> update, InstancesRequestBatchGetOrDelete delete)
+        {
+            Get = @get;
+            Put = put;
+            Update = update;
+            Delete = delete;
+        }
+
         /// <summary> Time series IDs or names of time series instances to return. </summary>
         public InstancesRequestBatchGetOrDelete Get { get; set; }
         /// <summary> Time series instances to be created or updated. </summary>

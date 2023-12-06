@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteConfigSnapshotWebAppsRestClient;
         private readonly SiteConfigData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/config/snapshots";
+
         /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshotResource"/> class for mocking. </summary>
         protected SiteConfigSnapshotResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/config/snapshots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

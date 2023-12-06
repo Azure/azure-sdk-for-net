@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/>. </summary>
+        /// <param name="virtualNetworkArmResourceId"> Virtual network resource id. </param>
+        internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(ResourceIdentifier virtualNetworkArmResourceId)
+        {
+            VirtualNetworkArmResourceId = virtualNetworkArmResourceId;
+        }
+
         /// <summary> Virtual network resource id. </summary>
         public ResourceIdentifier VirtualNetworkArmResourceId { get; set; }
     }

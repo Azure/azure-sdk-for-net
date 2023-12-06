@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Dynatrace
         private readonly SingleSignOnRestOperations _dynatraceSingleSignOnSingleSignOnRestClient;
         private readonly DynatraceSingleSignOnData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors/singleSignOnConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="DynatraceSingleSignOnResource"/> class for mocking. </summary>
         protected DynatraceSingleSignOnResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Dynatrace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors/singleSignOnConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Network.Models
             Values = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryFilterItems"/>. </summary>
+        /// <param name="field"> The name of the field we would like to filter. </param>
+        /// <param name="values"> List of values to filter the current field by. </param>
+        internal IdpsQueryFilterItems(string field, IList<string> values)
+        {
+            Field = field;
+            Values = values;
+        }
+
         /// <summary> The name of the field we would like to filter. </summary>
         public string Field { get; set; }
         /// <summary> List of values to filter the current field by. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly ArtifactsRestOperations _devTestLabArtifactArtifactsRestClient;
         private readonly DevTestLabArtifactData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/artifactsources/artifacts";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabArtifactResource"/> class for mocking. </summary>
         protected DevTestLabArtifactResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/artifactsources/artifacts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

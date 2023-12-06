@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _scmSiteBasicPublishingCredentialsPolicyWebAppsRestClient;
         private readonly CsmPublishingCredentialsPoliciesEntityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/basicPublishingCredentialsPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="ScmSiteBasicPublishingCredentialsPolicyResource"/> class for mocking. </summary>
         protected ScmSiteBasicPublishingCredentialsPolicyResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/basicPublishingCredentialsPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
