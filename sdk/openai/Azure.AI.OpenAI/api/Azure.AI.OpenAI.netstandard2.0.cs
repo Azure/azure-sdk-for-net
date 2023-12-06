@@ -384,7 +384,7 @@ namespace Azure.AI.OpenAI
     {
         public ChatMessageImageContentItem(Azure.AI.OpenAI.ChatMessageImageUrl imageUrl) { }
         public ChatMessageImageContentItem(System.Uri imageUri) { }
-        public Azure.AI.OpenAI.ChatMessageImageDetailLevel? Detail { get { throw null; } set { } }
+        public ChatMessageImageContentItem(System.Uri imageUri, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
         public Azure.AI.OpenAI.ChatMessageImageUrl ImageUrl { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -409,6 +409,7 @@ namespace Azure.AI.OpenAI
     public partial class ChatMessageImageUrl
     {
         public ChatMessageImageUrl(System.Uri url) { }
+        public Azure.AI.OpenAI.ChatMessageImageDetailLevel? Detail { get { throw null; } set { } }
         public System.Uri Url { get { throw null; } }
     }
     public partial class ChatMessageTextContentItem : Azure.AI.OpenAI.ChatMessageContentItem

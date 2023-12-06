@@ -27,22 +27,12 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of <see cref="ChatMessageImageContentItem"/>. </summary>
         /// <param name="type"> The discriminated object type. </param>
         /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
-        /// <param name="detail">
-        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
-        /// accuracy.
-        /// </param>
-        internal ChatMessageImageContentItem(string type, ChatMessageImageUrl imageUrl, ChatMessageImageDetailLevel? detail) : base(type)
+        internal ChatMessageImageContentItem(string type, ChatMessageImageUrl imageUrl) : base(type)
         {
             ImageUrl = imageUrl;
-            Detail = detail;
         }
 
         /// <summary> An internet location, which must be accessible to the model,from which the image may be retrieved. </summary>
         public ChatMessageImageUrl ImageUrl { get; }
-        /// <summary>
-        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
-        /// accuracy.
-        /// </summary>
-        public ChatMessageImageDetailLevel? Detail { get; set; }
     }
 }

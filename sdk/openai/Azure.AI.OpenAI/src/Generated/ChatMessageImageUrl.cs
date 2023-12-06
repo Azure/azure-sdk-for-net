@@ -23,7 +23,24 @@ namespace Azure.AI.OpenAI
             Url = url;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ChatMessageImageUrl"/>. </summary>
+        /// <param name="url"> The URL of the image. </param>
+        /// <param name="detail">
+        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
+        /// accuracy.
+        /// </param>
+        internal ChatMessageImageUrl(Uri url, ChatMessageImageDetailLevel? detail)
+        {
+            Url = url;
+            Detail = detail;
+        }
+
         /// <summary> The URL of the image. </summary>
         public Uri Url { get; }
+        /// <summary>
+        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
+        /// accuracy.
+        /// </summary>
+        public ChatMessageImageDetailLevel? Detail { get; set; }
     }
 }

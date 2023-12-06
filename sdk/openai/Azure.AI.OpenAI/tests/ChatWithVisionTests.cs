@@ -33,7 +33,8 @@ public class ChatWithVisionTests : OpenAITestBase
                 new ChatRequestUserMessage(
                     new ChatMessageTextContentItem("describe this image"),
                     new ChatMessageImageContentItem(
-                        new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg"))),
+                        new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg"),
+                        ChatMessageImageDetailLevel.Low)),
             },
             MaxTokens = 2048,
         };
