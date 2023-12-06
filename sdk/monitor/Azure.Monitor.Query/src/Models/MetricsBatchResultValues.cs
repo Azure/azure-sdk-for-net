@@ -9,9 +9,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> The MetricBatchResult. </summary>
+    /// <summary> The MetricsBatchResultValues. </summary>
     [CodeGenModel("MetricResultsResponseValuesItem")]
-    public partial class MetricBatchResult
+    public partial class MetricsBatchResultValues
     {
         /// <summary> The start time, in datetime format, for which the data was retrieved. </summary>
         [CodeGenMember("Starttime")]

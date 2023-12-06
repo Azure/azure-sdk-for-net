@@ -343,12 +343,12 @@ namespace Azure.Monitor.Query.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
 
-            Response<MetricResultsResponse> metricsResultsResponse = await client.QueryBatchAsync(
+            Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
                 resourceIds: new List<string> { resourceId },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-            MetricResultsResponse metricsQueryResults = metricsResultsResponse.Value;
+            MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
             Assert.AreEqual(1, metricsQueryResults.Values.Count);
             Assert.AreEqual(TestEnvironment.StorageAccountId, metricsQueryResults.Values[0].ResourceId.ToString());
             Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);

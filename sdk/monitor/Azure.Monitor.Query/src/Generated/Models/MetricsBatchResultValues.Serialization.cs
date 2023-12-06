@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricBatchResult
+    public partial class MetricsBatchResultValues
     {
-        internal static MetricBatchResult DeserializeMetricBatchResult(JsonElement element)
+        internal static MetricsBatchResultValues DeserializeMetricsBatchResultValues(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricBatchResult(starttime, endtime, Optional.ToNullable(interval), @namespace.Value, resourceregion, resourceid.Value, value);
+            return new MetricsBatchResultValues(starttime, endtime, Optional.ToNullable(interval), @namespace.Value, resourceregion, resourceid.Value, value);
         }
     }
 }
