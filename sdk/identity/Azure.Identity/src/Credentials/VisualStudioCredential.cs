@@ -35,8 +35,8 @@ namespace Azure.Identity
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
         internal bool _isChainedCredential;
-
         internal TimeSpan ProcessTimeout { get; private set; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -59,6 +59,7 @@ namespace Azure.Identity
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(30);
             _isChainedCredential = options?.IsChainedCredential ?? false;

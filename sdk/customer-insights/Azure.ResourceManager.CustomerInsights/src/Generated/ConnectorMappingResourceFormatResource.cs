@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly ConnectorMappingsRestOperations _connectorMappingResourceFormatConnectorMappingsRestClient;
         private readonly ConnectorMappingResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/connectors/mappings";
+
         /// <summary> Initializes a new instance of the <see cref="ConnectorMappingResourceFormatResource"/> class for mocking. </summary>
         protected ConnectorMappingResourceFormatResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/connectors/mappings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

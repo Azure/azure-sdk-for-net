@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.StorageMover
         private readonly EndpointsRestOperations _storageMoverEndpointEndpointsRestClient;
         private readonly StorageMoverEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/endpoints";
+
         /// <summary> Initializes a new instance of the <see cref="StorageMoverEndpointResource"/> class for mocking. </summary>
         protected StorageMoverEndpointResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.StorageMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/endpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly ResourceGuardProxyRestOperations _resourceGuardProxyRestClient;
         private readonly ResourceGuardProxyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupResourceGuardProxies";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGuardProxyResource"/> class for mocking. </summary>
         protected ResourceGuardProxyResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupResourceGuardProxies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

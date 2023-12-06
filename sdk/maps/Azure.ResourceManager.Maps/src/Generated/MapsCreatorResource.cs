@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Maps
         private readonly CreatorsRestOperations _mapsCreatorCreatorsRestClient;
         private readonly MapsCreatorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Maps/accounts/creators";
+
         /// <summary> Initializes a new instance of the <see cref="MapsCreatorResource"/> class for mocking. </summary>
         protected MapsCreatorResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Maps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Maps/accounts/creators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

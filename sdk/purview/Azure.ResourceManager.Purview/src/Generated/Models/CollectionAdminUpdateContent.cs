@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Purview.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="CollectionAdminUpdateContent"/>. </summary>
+        /// <param name="adminObjectId"> Gets or sets the object identifier of the admin. </param>
+        internal CollectionAdminUpdateContent(string adminObjectId)
+        {
+            AdminObjectId = adminObjectId;
+        }
+
         /// <summary> Gets or sets the object identifier of the admin. </summary>
         public string AdminObjectId { get; set; }
     }

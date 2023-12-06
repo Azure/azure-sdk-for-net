@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationServicePatch"/>. </summary>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        internal SqlMigrationServicePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
     }

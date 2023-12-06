@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly SavedSearchesRestOperations _operationalInsightsSavedSearchSavedSearchesRestClient;
         private readonly OperationalInsightsSavedSearchData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/savedSearches";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsSavedSearchResource"/> class for mocking. </summary>
         protected OperationalInsightsSavedSearchResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/savedSearches";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

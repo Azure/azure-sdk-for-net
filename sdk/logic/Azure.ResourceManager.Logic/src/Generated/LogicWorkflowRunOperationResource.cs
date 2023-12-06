@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Logic
         private readonly WorkflowRunRestOperations _logicWorkflowRunOperationWorkflowRunOperationsRestClient;
         private readonly LogicWorkflowRunData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/operations";
+
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunOperationResource"/> class for mocking. </summary>
         protected LogicWorkflowRunOperationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/operations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

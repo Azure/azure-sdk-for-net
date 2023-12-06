@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly ChannelsRestOperations _partnerNamespaceChannelChannelsRestClient;
         private readonly PartnerNamespaceChannelData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces/channels";
+
         /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceChannelResource"/> class for mocking. </summary>
         protected PartnerNamespaceChannelResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces/channels";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

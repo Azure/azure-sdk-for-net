@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppService
         private readonly DomainsRestOperations _appServiceDomainDomainsRestClient;
         private readonly AppServiceDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DomainRegistration/domains";
+
         /// <summary> Initializes a new instance of the <see cref="AppServiceDomainResource"/> class for mocking. </summary>
         protected AppServiceDomainResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DomainRegistration/domains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

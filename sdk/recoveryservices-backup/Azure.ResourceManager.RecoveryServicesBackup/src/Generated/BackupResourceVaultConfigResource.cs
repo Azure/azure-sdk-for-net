@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly BackupResourceVaultConfigsRestOperations _backupResourceVaultConfigRestClient;
         private readonly BackupResourceVaultConfigData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupconfig";
+
         /// <summary> Initializes a new instance of the <see cref="BackupResourceVaultConfigResource"/> class for mocking. </summary>
         protected BackupResourceVaultConfigResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupconfig";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

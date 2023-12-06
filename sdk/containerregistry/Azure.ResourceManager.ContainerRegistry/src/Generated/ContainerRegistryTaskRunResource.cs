@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly TaskRunsRestOperations _containerRegistryTaskRunTaskRunsRestClient;
         private readonly ContainerRegistryTaskRunData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/taskRuns";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryTaskRunResource"/> class for mocking. </summary>
         protected ContainerRegistryTaskRunResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/taskRuns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

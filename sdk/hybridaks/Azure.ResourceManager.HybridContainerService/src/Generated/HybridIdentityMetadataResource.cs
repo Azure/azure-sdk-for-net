@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly HybridIdentityMetadataRestOperations _hybridIdentityMetadataHybridIdentityMetadataRestClient;
         private readonly HybridIdentityMetadataData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters/hybridIdentityMetadata";
+
         /// <summary> Initializes a new instance of the <see cref="HybridIdentityMetadataResource"/> class for mocking. </summary>
         protected HybridIdentityMetadataResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HybridContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters/hybridIdentityMetadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly WorkbooksRestOperations _workbookRevisionWorkbooksRestClient;
         private readonly WorkbookData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/workbooks/revisions";
+
         /// <summary> Initializes a new instance of the <see cref="WorkbookRevisionResource"/> class for mocking. </summary>
         protected WorkbookRevisionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/workbooks/revisions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

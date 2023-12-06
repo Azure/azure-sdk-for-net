@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationPoliciesRestOperations _siteRecoveryPolicyReplicationPoliciesRestClient;
         private readonly SiteRecoveryPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryPolicyResource"/> class for mocking. </summary>
         protected SiteRecoveryPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RenewCertificateContentProperties"/>. </summary>
+        /// <param name="renewCertificateType"> Renew certificate type. </param>
+        internal RenewCertificateContentProperties(string renewCertificateType)
+        {
+            RenewCertificateType = renewCertificateType;
+        }
+
         /// <summary> Renew certificate type. </summary>
         public string RenewCertificateType { get; set; }
     }

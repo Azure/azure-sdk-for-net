@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly CertificateRestOperations _apiManagementCertificateCertificateRestClient;
         private readonly ApiManagementCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementCertificateResource"/> class for mocking. </summary>
         protected ApiManagementCertificateResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

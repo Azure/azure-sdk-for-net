@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.WorkloadMonitor
         private readonly HealthMonitorsRestOperations _healthMonitorRestClient;
         private readonly HealthMonitorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.WorkloadMonitor/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="HealthMonitorResource"/> class for mocking. </summary>
         protected HealthMonitorResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.WorkloadMonitor/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

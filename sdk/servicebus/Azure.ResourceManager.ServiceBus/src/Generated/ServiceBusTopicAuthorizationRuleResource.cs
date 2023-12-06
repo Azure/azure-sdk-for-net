@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly TopicAuthorizationRulesRestOperations _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesRestClient;
         private readonly ServiceBusAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/authorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusTopicAuthorizationRuleResource"/> class for mocking. </summary>
         protected ServiceBusTopicAuthorizationRuleResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/authorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

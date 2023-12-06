@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A Disk. </summary>
@@ -12,6 +14,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         /// <summary> Initializes a new instance of <see cref="DevTestLabDiskPatch"/>. </summary>
         public DevTestLabDiskPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal DevTestLabDiskPatch(IDictionary<string, string> tags) : base(tags)
         {
         }
     }

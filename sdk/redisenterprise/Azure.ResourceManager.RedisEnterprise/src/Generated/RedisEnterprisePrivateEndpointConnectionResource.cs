@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         private readonly PrivateEndpointConnectionsRestOperations _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly RedisEnterprisePrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cache/redisEnterprise/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected RedisEnterprisePrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.RedisEnterprise
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cache/redisEnterprise/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

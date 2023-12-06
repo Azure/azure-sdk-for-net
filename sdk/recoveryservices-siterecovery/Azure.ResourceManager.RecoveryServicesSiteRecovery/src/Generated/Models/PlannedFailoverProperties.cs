@@ -15,6 +15,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverProperties"/>. </summary>
+        /// <param name="failoverDirection"> Failover direction. </param>
+        /// <param name="providerSpecificDetails">
+        /// Provider specific settings.
+        /// Please note <see cref="PlannedFailoverProviderSpecificFailoverContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVReplicaAzurePlannedFailoverProviderContent"/>, <see cref="HyperVReplicaAzureFailbackProviderContent"/> and <see cref="InMageRcmFailbackPlannedFailoverProviderContent"/>.
+        /// </param>
+        internal PlannedFailoverProperties(string failoverDirection, PlannedFailoverProviderSpecificFailoverContent providerSpecificDetails)
+        {
+            FailoverDirection = failoverDirection;
+            ProviderSpecificDetails = providerSpecificDetails;
+        }
+
         /// <summary> Failover direction. </summary>
         public string FailoverDirection { get; set; }
         /// <summary>

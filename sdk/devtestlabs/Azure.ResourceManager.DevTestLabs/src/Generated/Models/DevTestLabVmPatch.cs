@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A virtual machine. </summary>
@@ -12,6 +14,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         /// <summary> Initializes a new instance of <see cref="DevTestLabVmPatch"/>. </summary>
         public DevTestLabVmPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal DevTestLabVmPatch(IDictionary<string, string> tags) : base(tags)
         {
         }
     }

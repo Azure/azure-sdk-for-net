@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Network
         private readonly SecurityAdminConfigurationsRestOperations _securityAdminConfigurationRestClient;
         private readonly SecurityAdminConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/securityAdminConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityAdminConfigurationResource"/> class for mocking. </summary>
         protected SecurityAdminConfigurationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/securityAdminConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

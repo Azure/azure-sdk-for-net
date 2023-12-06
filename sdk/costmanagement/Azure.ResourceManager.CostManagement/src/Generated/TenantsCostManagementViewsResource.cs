@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.CostManagement
         private readonly ViewsRestOperations _tenantsCostManagementViewsViewsRestClient;
         private readonly CostManagementViewData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/views";
+
         /// <summary> Initializes a new instance of the <see cref="TenantsCostManagementViewsResource"/> class for mocking. </summary>
         protected TenantsCostManagementViewsResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.CostManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/views";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ArcScVmm
         private readonly InventoryItemsRestOperations _inventoryItemRestClient;
         private readonly InventoryItemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/vmmServers/inventoryItems";
+
         /// <summary> Initializes a new instance of the <see cref="InventoryItemResource"/> class for mocking. </summary>
         protected InventoryItemResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ArcScVmm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/vmmServers/inventoryItems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

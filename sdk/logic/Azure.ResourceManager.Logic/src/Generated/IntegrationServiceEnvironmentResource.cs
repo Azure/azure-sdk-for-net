@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.Logic
         private readonly IntegrationServiceEnvironmentNetworkHealthRestOperations _integrationServiceEnvironmentNetworkHealthRestClient;
         private readonly IntegrationServiceEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationServiceEnvironments";
+
         /// <summary> Initializes a new instance of the <see cref="IntegrationServiceEnvironmentResource"/> class for mocking. </summary>
         protected IntegrationServiceEnvironmentResource()
         {
@@ -76,9 +79,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationServiceEnvironments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

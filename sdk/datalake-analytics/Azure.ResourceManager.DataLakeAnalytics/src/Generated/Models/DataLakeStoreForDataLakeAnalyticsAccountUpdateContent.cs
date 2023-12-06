@@ -29,6 +29,21 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
+        /// <param name="name">
+        /// The unique name of the Data Lake Store account to update.
+        /// Serialized Name: UpdateDataLakeStoreWithAccountParameters.name
+        /// </param>
+        /// <param name="suffix">
+        /// The optional suffix for the Data Lake Store account.
+        /// Serialized Name: UpdateDataLakeStoreWithAccountParameters.properties.suffix
+        /// </param>
+        internal DataLakeStoreForDataLakeAnalyticsAccountUpdateContent(string name, string suffix)
+        {
+            Name = name;
+            Suffix = suffix;
+        }
+
         /// <summary>
         /// The unique name of the Data Lake Store account to update.
         /// Serialized Name: UpdateDataLakeStoreWithAccountParameters.name

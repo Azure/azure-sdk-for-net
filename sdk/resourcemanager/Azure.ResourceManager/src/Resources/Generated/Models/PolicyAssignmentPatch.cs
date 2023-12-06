@@ -21,6 +21,19 @@ namespace Azure.ResourceManager.Resources.Models
             Overrides = new ChangeTrackingList<PolicyOverride>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentPatch"/>. </summary>
+        /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
+        /// <param name="identity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
+        /// <param name="overrides"> The policy property value override. </param>
+        internal PolicyAssignmentPatch(AzureLocation? location, ManagedServiceIdentity identity, IList<ResourceSelector> resourceSelectors, IList<PolicyOverride> overrides)
+        {
+            Location = location;
+            Identity = identity;
+            ResourceSelectors = resourceSelectors;
+            Overrides = overrides;
+        }
+
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>

@@ -26,6 +26,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Destination = destination;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckContent"/>. </summary>
+        /// <param name="source"> Definitions about the connectivity check origin. </param>
+        /// <param name="destination"> The connectivity check operation destination. </param>
+        /// <param name="preferredIPVersion"> The IP version to be used. Only IPv4 is supported for now. </param>
+        /// <param name="protocol"> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </param>
+        /// <param name="protocolConfiguration"> Protocol-specific configuration. </param>
+        internal ConnectivityCheckContent(ConnectivityCheckRequestSource source, ConnectivityCheckRequestDestination destination, PreferredIPVersion? preferredIPVersion, ConnectivityCheckProtocol? protocol, ConnectivityCheckRequestProtocolConfiguration protocolConfiguration)
+        {
+            Source = source;
+            Destination = destination;
+            PreferredIPVersion = preferredIPVersion;
+            Protocol = protocol;
+            ProtocolConfiguration = protocolConfiguration;
+        }
+
         /// <summary> Definitions about the connectivity check origin. </summary>
         public ConnectivityCheckRequestSource Source { get; }
         /// <summary> The connectivity check operation destination. </summary>

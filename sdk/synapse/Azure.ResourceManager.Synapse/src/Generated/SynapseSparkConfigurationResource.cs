@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly SparkConfigurationRestOperations _synapseSparkConfigurationSparkConfigurationRestClient;
         private readonly SynapseSparkConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sparkconfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseSparkConfigurationResource"/> class for mocking. </summary>
         protected SynapseSparkConfigurationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sparkconfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

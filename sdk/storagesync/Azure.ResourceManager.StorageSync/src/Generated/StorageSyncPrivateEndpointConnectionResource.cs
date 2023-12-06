@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.StorageSync
         private readonly PrivateEndpointConnectionsRestOperations _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly StorageSyncPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="StorageSyncPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected StorageSyncPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.StorageSync
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

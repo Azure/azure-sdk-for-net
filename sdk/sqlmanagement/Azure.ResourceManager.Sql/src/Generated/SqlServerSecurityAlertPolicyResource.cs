@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerSecurityAlertPoliciesRestOperations _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient;
         private readonly SqlServerSecurityAlertPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/securityAlertPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerSecurityAlertPolicyResource"/> class for mocking. </summary>
         protected SqlServerSecurityAlertPolicyResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/securityAlertPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

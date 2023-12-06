@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly IncidentCommentsRestOperations _securityInsightsIncidentCommentIncidentCommentsRestClient;
         private readonly SecurityInsightsIncidentCommentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/incidents/comments";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentCommentResource"/> class for mocking. </summary>
         protected SecurityInsightsIncidentCommentResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/incidents/comments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.StorageMover
         private readonly ProjectsRestOperations _storageMoverProjectProjectsRestClient;
         private readonly StorageMoverProjectData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/projects";
+
         /// <summary> Initializes a new instance of the <see cref="StorageMoverProjectResource"/> class for mocking. </summary>
         protected StorageMoverProjectResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.StorageMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/projects";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

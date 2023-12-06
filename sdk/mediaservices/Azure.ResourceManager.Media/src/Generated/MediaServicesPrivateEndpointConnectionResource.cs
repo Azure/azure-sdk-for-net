@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Media
         private readonly PrivateEndpointConnectionsRestOperations _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly MediaServicesPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="MediaServicesPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected MediaServicesPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

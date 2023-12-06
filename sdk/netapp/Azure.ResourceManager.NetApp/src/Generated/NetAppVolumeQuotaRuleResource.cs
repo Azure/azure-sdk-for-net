@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.NetApp
         private readonly VolumeQuotaRulesRestOperations _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient;
         private readonly NetAppVolumeQuotaRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules";
+
         /// <summary> Initializes a new instance of the <see cref="NetAppVolumeQuotaRuleResource"/> class for mocking. </summary>
         protected NetAppVolumeQuotaRuleResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

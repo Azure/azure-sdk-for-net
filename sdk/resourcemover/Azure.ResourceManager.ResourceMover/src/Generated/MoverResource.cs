@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ResourceMover
         private readonly MoveResourcesRestOperations _moverResourceMoveResourcesRestClient;
         private readonly MoverResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Migrate/moveCollections/moveResources";
+
         /// <summary> Initializes a new instance of the <see cref="MoverResource"/> class for mocking. </summary>
         protected MoverResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ResourceMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Migrate/moveCollections/moveResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

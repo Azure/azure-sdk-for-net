@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataMigration
         private readonly FilesRestOperations _projectFileFilesRestClient;
         private readonly ProjectFileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services/projects/files";
+
         /// <summary> Initializes a new instance of the <see cref="ProjectFileResource"/> class for mocking. </summary>
         protected ProjectFileResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services/projects/files";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

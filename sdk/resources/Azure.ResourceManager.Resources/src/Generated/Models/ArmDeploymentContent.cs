@@ -25,6 +25,17 @@ namespace Azure.ResourceManager.Resources.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentContent"/>. </summary>
+        /// <param name="location"> The location to store the deployment data. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <param name="tags"> Deployment tags. </param>
+        internal ArmDeploymentContent(AzureLocation? location, ArmDeploymentProperties properties, IDictionary<string, string> tags)
+        {
+            Location = location;
+            Properties = properties;
+            Tags = tags;
+        }
+
         /// <summary> The location to store the deployment data. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The deployment properties. </summary>

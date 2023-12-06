@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly RolesRestOperations _dataBoxEdgeRoleRolesRestClient;
         private readonly DataBoxEdgeRoleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeRoleResource"/> class for mocking. </summary>
         protected DataBoxEdgeRoleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

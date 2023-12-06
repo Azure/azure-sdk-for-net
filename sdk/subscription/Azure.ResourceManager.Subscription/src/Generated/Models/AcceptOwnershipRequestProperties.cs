@@ -25,6 +25,17 @@ namespace Azure.ResourceManager.Subscription.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipRequestProperties"/>. </summary>
+        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="managementGroupId"> Management group Id for the subscription. </param>
+        /// <param name="tags"> Tags for the subscription. </param>
+        internal AcceptOwnershipRequestProperties(string displayName, string managementGroupId, IDictionary<string, string> tags)
+        {
+            DisplayName = displayName;
+            ManagementGroupId = managementGroupId;
+            Tags = tags;
+        }
+
         /// <summary> The friendly name of the subscription. </summary>
         public string DisplayName { get; }
         /// <summary> Management group Id for the subscription. </summary>

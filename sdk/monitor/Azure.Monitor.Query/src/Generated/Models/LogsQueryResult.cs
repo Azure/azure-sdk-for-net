@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsQueryResult
     {
         /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
-        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <param name="allTables"> The results of the query in tabular format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
         internal LogsQueryResult(IEnumerable<LogsTable> allTables)
         {
@@ -27,7 +27,7 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
-        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <param name="allTables"> The results of the query in tabular format. </param>
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>

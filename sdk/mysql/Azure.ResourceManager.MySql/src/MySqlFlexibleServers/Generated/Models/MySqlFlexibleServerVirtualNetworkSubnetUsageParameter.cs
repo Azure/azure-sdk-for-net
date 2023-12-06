@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/>. </summary>
+        /// <param name="virtualNetworkResourceId"> Virtual network resource id. </param>
+        internal MySqlFlexibleServerVirtualNetworkSubnetUsageParameter(ResourceIdentifier virtualNetworkResourceId)
+        {
+            VirtualNetworkResourceId = virtualNetworkResourceId;
+        }
+
         /// <summary> Virtual network resource id. </summary>
         public ResourceIdentifier VirtualNetworkResourceId { get; set; }
     }
