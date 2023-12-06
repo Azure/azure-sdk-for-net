@@ -4,6 +4,7 @@
 using Maps;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -204,6 +205,41 @@ public class MapsClientTests
 
         private class CustomTransportRequest : PipelineRequest
         {
+            private string _method;
+            private Uri _uri;
+            private MessageHeaders _headers;
+
+            public CustomTransportRequest()
+            {
+                _headers = new CustomHeaders();
+            }
+
+            public override void Dispose() { }
+
+            protected override string GetMethodCore()
+                => _method;
+
+            protected override Uri GetUriCore()
+                => _uri;
+
+            protected override MessageHeaders GetHeadersCore()
+                => _headers;
+
+            protected override InputContent GetContentCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetMethodCore(string method)
+                => _method = method;
+
+            protected override void SetUriCore(Uri uri)
+                => _uri = uri;
+
+            protected override void SetContentCore(InputContent content)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private class CustomTransportResponse : PipelineResponse
@@ -229,6 +265,63 @@ public class MapsClientTests
             public override void Dispose()
             {
                 _stream?.Dispose();
+            }
+
+            protected override MessageHeaders GetHeadersCore()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private class CustomHeaders : MessageHeaders
+        {
+            private readonly Dictionary<string, string> _headers;
+
+            public CustomHeaders()
+            {
+                _headers = new Dictionary<string, string>();
+            }
+
+            public override int Count => throw new NotImplementedException();
+
+            public override void Add(string name, string value)
+            {
+                if (_headers.ContainsKey(name))
+                {
+                    _headers[name] = $"{_headers[name]};{value}";
+                }
+                else
+                {
+                    _headers.Add(name, value);
+                }
+            }
+
+            public override bool Remove(string name)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void Set(string name, string value)
+                => _headers[name] = value;
+
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool TryGetValue(string name, out string value)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool TryGetValues(string name, out IEnumerable<string> values)
+            {
+                throw new NotImplementedException();
             }
         }
     }
