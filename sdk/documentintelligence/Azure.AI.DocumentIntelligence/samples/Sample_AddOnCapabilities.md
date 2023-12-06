@@ -390,6 +390,6 @@ for (int i = 0; i < result.KeyValuePairs.Count; i++)
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence#getting-started
-[docint_addon]: https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept-add-on-capabilities
+[docint_addon]: https://learn.microsoft.com/azure/ai-services/document-intelligence/concept-add-on-capabilities
 [docint_pricing]: https://azure.microsoft.com/pricing/details/ai-document-intelligence/
-[sdk_docfeature]: https://learn.microsoft.com/en-us/dotnet/api/azure.ai.documentintelligence.documentanalysisfeature
+[sdk_docfeature]: https://learn.microsoft.com/dotnet/api/azure.ai.documentintelligence.documentanalysisfeature
