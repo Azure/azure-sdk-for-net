@@ -5,19 +5,22 @@ Merge multiple asset tagss worth of content into a single asset tag.
 .DESCRIPTION
 USAGE: merge-proxy-tags.ps1 path/to/target_assets_json. TAG1 TAG2 TAG3
 
-Attempts to merge the contents of multiple assets tags into a live .assets repository.
+Attempts to merge the contents of multiple assets tags into a single new local changeset, which can be `test-proxy push`-ed.
 
 In the case one of the targeted tags exists in the targeted assets.json, that tag will always be the start point.
 
-1. test-proxy restore <assets-file>
-2. locate recording location
+1. test-proxy restore -a <assets-file> -> populate .assets
+2. test-proxy config locate -a <assets-file> -> get location of cloned git repo
 3. walk the incoming tags, cherry-picking their changes directly into the changeset _in context_
 4. In the case of a discovered git conflict, the process ends. A list of which tags merged and which didn't will be presented to the user.
-  4a. Users should resolve the git conflicts themselves (don't commit, there's a proxy bug to detect already commit stuff :D)
-  4b. Once users have the files into a state they like. They should test-proxy push.
-  4c. After pushing the resolved conflict, if there are additional tags, they should re-run this script, just excluding the tags that have been merged.
+  4a. Users should resolve the git conflicts themselves.
+  4b. If the conflict was on the final tag, resolve the conflict (leaving it uncommitted tyvm), and test-proxy push, you're done.
+  4c. If the conflict was _not_ on the final tag, resolve the conflict, commit it, and then re-run this script with the SAME arguments as before.
 
 This script requires that test-proxy or azure.sdk.tools.testproxy should be on the PATH.
+
+.PARAMETER AssetsJson
+The script uses a target assets.json to resolve where specifically on disk the tag merging should take place.
 
 .PARAMETER TargetTags
 The set of tags whos contents should be merged into the targeted 
@@ -32,7 +35,7 @@ param(
 
 . (Join-Path $PSScriptRoot ".." ".." "onboarding" "common-asset-functions.ps1")
 
-function Git-Command($CommandString,$WorkingDirectory=$null) {
+function Git-Command-With-Result($CommandString, $WorkingDirectory) {
     Write-Host "git $CommandString"
 
     if ($WorkingDirectory){
@@ -45,12 +48,21 @@ function Git-Command($CommandString,$WorkingDirectory=$null) {
         Pop-Location
     }
 
-    if ($lastexitcode -ne 0) {
+    return [PSCustomObject]@{
+        ExitCode = $lastexitcode,
+        Output = $result
+    }
+}
+
+function Git-Command($CommandString, $WorkingDirectory, $HardExit=$true) {
+    $result = Git-Command-With-Result $CommandString $WorkingDirectory
+
+    if ($lastexitcode -ne 0 -and $HardExit) {
         Write-Error $result
         exit 1
     }
 
-    return $result
+    return $result.Output
 }
 
 function Resolve-Proxy {
@@ -233,7 +245,21 @@ function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
     foreach($Tag in $RemainingTags){
         $tagSha = Get-Tag-SHA $Tag $AssetsRepoLocation
         Save-Incomplete-Progress $Tag $MountDirectory
-        $cherryPickOut = Git-Command "cherry-pick $tagSha" $AssetsRepoLocation
+        $cherryPickResult = Git-Command-With-Result "cherry-pick $tagSha" - $AssetsRepoLocation -HardExit $false
+
+        if ($cherryPickResult.ExitCode -ne 0) {
+            Write-Error $cherryPickResult.Output
+            # not last tag
+            if ($Tag -ne $RemainingTags[-1]) {
+                Write-Error "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", commit the result, and re-run this script with the same arguments as before."
+                exit 1
+            }
+            # last tag
+            elseif ($Tag -eq $RemainingTags[-1]) {
+                Write-Error "Conflicts while cherry-picking $Tag. Resolve the conflict over in `"$AssetsRepoLocation`", leave the result uncommitted, ``test-proxy push`` the assets.json you ran this script against!"
+                exit 1
+            }
+        }
     }
 
     $testFile = Get-ChildItem -Recurse -Path $AssetsRepoLocation | Where-Object { !$_.PSIsContainer } | Select-Object -First 1
