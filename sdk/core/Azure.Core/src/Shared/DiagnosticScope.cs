@@ -478,6 +478,10 @@ namespace Azure.Core.Pipeline
 
             private Activity? StartActivitySourceActivity()
             {
+                if (_activitySource == null)
+                {
+                    return null;
+                }
 #if NETCOREAPP2_1
                 return ActivityExtensions.ActivitySourceStartActivity(
                     _activitySource,
@@ -491,7 +495,7 @@ namespace Azure.Core.Pipeline
 #else
                 // TODO(limolkova) set isRemote to true once we switch to DiagnosticSource 7.0
                 ActivityContext.TryParse(_traceparent, _tracestate, out ActivityContext context);
-                return _activitySource?.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
+                return _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
 #endif
             }
 

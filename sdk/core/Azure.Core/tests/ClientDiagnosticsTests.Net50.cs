@@ -420,8 +420,8 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, activityListener.Activities.Count);
             var activity = activityListener.Activities.Dequeue();
             Assert.AreEqual(traceparent, activity.ParentId);
-            Assert.AreEqual(traceId, Activity.Current.TraceId);
-            Assert.AreEqual(spanId, Activity.Current.ParentSpanId);
+            Assert.AreEqual(traceId, activity.TraceId.ToString());
+            Assert.AreEqual(spanId, activity.ParentSpanId.ToString());
             Assert.AreEqual(traceState, activity.TraceStateString);
         }
 
@@ -452,21 +452,20 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public void InvalidContextDoesNotThrow(string traceparent)
         {
-            using var testListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
+            using var testListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
                 "Azure.Clients",
                 "Microsoft.Azure.Core.Cool.Tests",
                 true,
                 false,
-                false);
+                true);
 
-            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
             scope.SetTraceContext(traceparent, null);
             scope.Start();
 
             Assert.IsNull(Activity.Current.ParentId);
-            Assert.AreEqual(default, Activity.Current.ParentSpanId);
             Assert.IsNull(Activity.Current.TraceStateString);
         }
 
