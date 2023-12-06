@@ -127,7 +127,7 @@ namespace Azure.Storage.DataMovement
                 if (args.Success)
                 {
                     // Let's add to the channel, and our notifier will handle the chunks.
-                    await _stageChunkChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                    _stageChunkChannel.Writer.TryWrite(args);
                 }
                 else
                 {
