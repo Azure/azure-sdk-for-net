@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
-require: https://github.com/eliagrady/azure-rest-api-specs/blob/4a361fccb94e82da94a239d3563f1e3e3b9d007d/specification/security/resource-manager/readme.md
-#tag: package-composite-v3
+require: https://github.com/eliagrady/azure-rest-api-specs/blob/1cd4ce6d7cb875c574163242e624c9e0a310af8d/specification/security/resource-manager/readme.md
+tag: package-dotnet-sdk
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,7 +20,6 @@ sample-gen:
   - InformationProtectionPolicies_List
   - SubAssessments_ListAll
   - Assessments_List
-tag: package-dotnet-sdk
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
