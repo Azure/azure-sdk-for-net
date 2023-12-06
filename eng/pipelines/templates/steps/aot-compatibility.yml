@@ -12,5 +12,5 @@ steps:
       arguments: >-
         -ServiceDirectory ${{ parameters.ServiceDirectory }}
         -PackageName ${{ aotTestInput.ArtifactName }}
-        -ExpectedWarningsFilePath ${{ aotTestInput.ExpectedAOTWarningsFilepath }}
+        $(if [string]::IsNullOrEmpty('$(aotTestInput.ExpectedAOTWarningsFilepath)') { '' } else { "-ExpectedWarningsFilePath `"`$(ExpectedWarningsFilePath)`"" })
       workingDirectory: $(Build.SourcesDirectory)/eng/scripts/aotcompatibility
