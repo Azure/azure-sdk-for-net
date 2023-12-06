@@ -23,7 +23,7 @@ This script requires that test-proxy or azure.sdk.tools.testproxy should be on t
 The script uses a target assets.json to resolve where specifically on disk the tag merging should take place.
 
 .PARAMETER TargetTags
-The set of tags whos contents should be merged into the targeted 
+The set of tags whose contents should be combined. Any number of tags > 1 is allowed.
 
 #>
 param(
@@ -44,7 +44,7 @@ function Git-Command-With-Result($CommandString, $WorkingDirectory) {
 
     $result = Invoke-Expression "git $CommandString"
 
-    if ($WorkingDirectory){
+    if ($WorkingDirectory) {
         Pop-Location
     }
 
@@ -74,7 +74,7 @@ function Resolve-Proxy {
     $proxyToolPresent = Test-Exe-In-Path -ExeToLookFor "test-proxy" -ExitOnError $false
     $proxyStandalonePresent = Test-Exe-In-Path -ExeToLookFor "Azure.Sdk.Tools.TestProxy" -ExitOnError $false
 
-    if (-not $proxyToolPresent -and -not $proxyStandalonePresent){
+    if (-not $proxyToolPresent -and -not $proxyStandalonePresent) {
         Write-Error "This script requires the presence of a test-proxy executable to complete its operations. Exiting."
         exit 1
     }
@@ -96,13 +96,13 @@ function Call-Proxy {
 
     $CommandArgs += " --storage-location=$MountDirectory"
 
-    if ($Output -eq $true){
+    if ($Output -eq $true) {
         Write-Host "$TestProxyExe $CommandArgs"
     }
 
     [array] $output = & "$TestProxyExe" $CommandArgs.Split(" ")
 
-    if ($lastexitcode -ne 0){
+    if ($lastexitcode -ne 0) {
         foreach($line in $output) {
             Write-Host $line
         }
@@ -110,7 +110,7 @@ function Call-Proxy {
         exit 1
     }
 
-    if ($Output -eq $true){
+    if ($Output -eq $true) {
         foreach($line in $output) {
             Write-Host $line
         }
@@ -150,7 +150,7 @@ function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDire
         Write-Host "If the presence of a previous execution of this script is surprising, delete the .assets folder and .mergeprogress file before invoking the script again."
         Write-Host "Attempting to continue from a previous run, and excluding:"
 
-        foreach($Tag in $alreadyCombinedTags){
+        foreach($Tag in $alreadyCombinedTags) {
             Write-Host " - " -NoNewLine
             Write-Host "$Tag" -ForegroundColor Green
         }
@@ -163,11 +163,11 @@ function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDire
     }
     else {
         Write-Host "`nThis script will attempt to merge the following tag" -NoNewLine
-        if ($TargetTags.Length -gt 1){
+        if ($TargetTags.Length -gt 1) {
             Write-Host "s" -NoNewLine
         }
         Write-Host ":"
-        foreach($Tag in $TargetTags){
+        foreach($Tag in $TargetTags) {
             Write-Host " - " -NoNewLine
             Write-Host "$Tag" -ForegroundColor Green
         }
@@ -251,7 +251,7 @@ function Prepare-Assets($ProxyExe, $MountDirectory, $AssetsJson) {
 }
 
 function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
-    foreach($Tag in $RemainingTags){
+    foreach($Tag in $RemainingTags) {
         $tagSha = Get-Tag-SHA $Tag $AssetsRepoLocation
         $existingTags = Save-Incomplete-Progress $Tag $MountDirectory
         $cherryPickResult = Git-Command-With-Result "cherry-pick $tagSha" - $AssetsRepoLocation -HardExit $false
