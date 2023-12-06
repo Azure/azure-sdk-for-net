@@ -61,6 +61,30 @@ C:/repo/azure-sdk-for-python/.assets/eDscgL1p9G/python [???]|>git cherry-pick --
  1 file changed, 2 insertions(+), 2 deletions(-)
 ```
 
+Once you've resolved the conflict, re-run the same script. The results of the cherry-pick resolution will be visible.
+
+```bash
+C:/repo/azure-sdk-for-python [test-storage-tag-combination]|>eng/common/testproxy/scripts/tag-merge/merge-proxy-tags.ps1 sdk/storage/azure-storage-blob/assets.json integration/example/storage_feature_addition2 integration/example/storage_feature_addition2_conflict integration/example/storage_feature_addition1
+Excluding tag integration/example/storage_feature_addition2 because we have already done work against it in a previous script invocation.
+Excluding tag integration/example/storage_feature_addition2_conflict because we have already done work against it in a previous script invocation.
+This script has detected the presence of a .mergeprogress file within folder C:\repo\azure-sdk-for-python.
+If the presence of a previous execution of this script is surprising, delete the .assets folder and .mergeprogress file before invoking the script again.
+Attempting to continue from a previous run, and excluding:
+ - integration/example/storage_feature_addition2
+ - integration/example/storage_feature_addition2_conflict
+But continuing with:
+ - integration/example/storage_feature_addition1
+If the above looks correct, press enter, otherwise, ctrl-c:
+```
+
+On successful result, the following will be present:
+
+```
+Successfully combined 3 tags. Invoke "test-proxy push C:\repo\azure-sdk-for-python\sdk\storage\azure-storage-blob\assets.json" to push the results as a new tag.
+```
+
+Just follow the instructions to push your combined tag!
+
 ### Push the result
 
 Once the script has completed successfully, `test-proxy push` the results!

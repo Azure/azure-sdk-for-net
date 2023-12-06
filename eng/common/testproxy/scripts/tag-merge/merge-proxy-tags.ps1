@@ -142,32 +142,41 @@ function Get-Tag-SHA($TagName, $WorkingDirectory) {
 
 function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory) {
     $alreadyCombinedTags = Load-Incomplete-Progress $MountDirectory
+    
+    $TargetTags = $TargetTags | Where-Object { $_ -notin $alreadyCombinedTags }
 
     if ($alreadyCombinedTags) {
-        Write-Host "This script has detected the presence of a .mergeprogress file with folder $MountDirectory."
-        Write-Host "Attempting to continue from a previous run, and excluding: "
+        Write-Host "This script has detected the presence of a .mergeprogress file within folder $MountDirectory."
+        Write-Host "If the presence of a previous execution of this script is surprising, delete the .assets folder and .mergeprogress file before invoking the script again."
+        Write-Host "Attempting to continue from a previous run, and excluding:"
+
         foreach($Tag in $alreadyCombinedTags){
-            Write-Host " - " -nonewline
+            Write-Host " - " -NoNewLine
+            Write-Host "$Tag" -ForegroundColor Green
+        }
+        Write-Host "But continuing with:"
+
+        foreach($Tag in $TargetTags){
+            Write-Host " - " -NoNewLine
             Write-Host "$Tag" -ForegroundColor Green
         }
     }
-
-    $TargetTags = $TargetTags | Where-Object { $_ -notin $alreadyCombinedTags }
-
-    Write-Host "`nThis script will attempt to merge the following tag" -nonewline
-    if ($TargetTags.Length -gt 1){
-        Write-Host "s" -nonewline
+    else {
+        Write-Host "`nThis script will attempt to merge the following tag" -NoNewLine
+        if ($TargetTags.Length -gt 1){
+            Write-Host "s" -NoNewLine
+        }
+        Write-Host ":"
+        foreach($Tag in $TargetTags){
+            Write-Host " - " -NoNewLine
+            Write-Host "$Tag" -ForegroundColor Green
+        }
+        Write-Host "`nTargeting the assets slice targeted by " -NoNewLine
+        Write-Host "$AssetsJson." -ForegroundColor Green
+        Write-Host "`nThe work will be completed in " -NoNewLine
+        Write-Host $AssetsRepoLocation -ForegroundColor Green -NoNewLine
+        Write-Host "."
     }
-    Write-Host ":"
-    foreach($Tag in $TargetTags){
-        Write-Host " - " -nonewline
-        Write-Host "$Tag" -ForegroundColor Green
-    }
-    Write-Host "`nTargeting the assets slice targeted by " -nonewline
-    Write-Host "$AssetsJson." -ForegroundColor Green
-    Write-Host "`nThe work will be completed in " -nonewline
-    Write-Host $AssetsRepoLocation -ForegroundColor Green -nonewline
-    Write-Host "."
 
     Read-Host -Prompt "If the above looks correct, press enter, otherwise, ctrl-c"
 }
@@ -175,8 +184,8 @@ function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDire
 function Finish-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory) {
     $len = $TargetTags.Length
 
-    Write-Host "`nSuccessfully combined $len tags. Invoke `"test-proxy push " -nonewline
-    Write-Host $AssetsJson -ForegroundColor Green -nonewline
+    Write-Host "`nSuccessfully combined $len tags. Invoke `"test-proxy push " -NoNewLine
+    Write-Host $AssetsJson -ForegroundColor Green -NoNewLine
     Write-Host "`" to push the results as a new tag."
 }
 
@@ -219,7 +228,7 @@ function Load-Incomplete-Progress($MountDirectory) {
     $progressFile = (Join-Path $MountDirectory ".mergeprogress")
     [array] $existingTags = @()
     if (Test-Path $progressFile) {
-        $existingTags = (Get-Content -Path $progressFile) -split "`n" | ForEach-Object { $_.Trim() }
+        $existingTags = ((Get-Content -Path $progressFile) -split "`n" | ForEach-Object { $_.Trim() })
     }
 
     return $existingTags
@@ -244,23 +253,24 @@ function Prepare-Assets($ProxyExe, $MountDirectory, $AssetsJson) {
 function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
     foreach($Tag in $RemainingTags){
         $tagSha = Get-Tag-SHA $Tag $AssetsRepoLocation
-        Save-Incomplete-Progress $Tag $MountDirectory
+        $existingTags = Save-Incomplete-Progress $Tag $MountDirectory
         $cherryPickResult = Git-Command-With-Result "cherry-pick $tagSha" - $AssetsRepoLocation -HardExit $false
 
         if ($cherryPickResult.ExitCode -ne 0) {
-            Write-Error $cherryPickResult.Output
-            if ($Tag -ne $RemainingTags[-1]) {
-                Write-Error "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-run this script with the same arguments as before."
-                exit 1
-            }
+            Write-Host "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-run this script with the same arguments as before." -ForegroundColor Red
+            exit 1
         }
     }
+
+    $pushedTags = Load-Incomplete-Progress $MountDirectory
 
     $testFile = Get-ChildItem -Recurse -Path $AssetsRepoLocation | Where-Object { !$_.PSIsContainer } | Select-Object -First 1
     Add-Content -Path $testFile -Value "`n"
 
     # if we have successfully gotten to the end without any non-zero exit codes...delete the mergeprogress file, we're g2g
     Cleanup-Incomplete-Progress $MountDirectory
+
+    return $pushedTags
 }
 
 $ErrorActionPreference = "Stop"
