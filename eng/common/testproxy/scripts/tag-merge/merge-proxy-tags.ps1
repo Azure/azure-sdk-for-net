@@ -49,7 +49,7 @@ function Git-Command-With-Result($CommandString, $WorkingDirectory) {
     }
 
     return [PSCustomObject]@{
-        ExitCode = $lastexitcode,
+        ExitCode = $lastexitcode
         Output = $result
     }
 }
@@ -57,8 +57,8 @@ function Git-Command-With-Result($CommandString, $WorkingDirectory) {
 function Git-Command($CommandString, $WorkingDirectory, $HardExit=$true) {
     $result = Git-Command-With-Result $CommandString $WorkingDirectory
 
-    if ($lastexitcode -ne 0 -and $HardExit) {
-        Write-Error $result
+    if ($result.ExitCode -ne 0 -and $HardExit) {
+        Write-Error $result.Output
         exit 1
     }
 
@@ -249,14 +249,8 @@ function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
 
         if ($cherryPickResult.ExitCode -ne 0) {
             Write-Error $cherryPickResult.Output
-            # not last tag
             if ($Tag -ne $RemainingTags[-1]) {
-                Write-Error "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", commit the result, and re-run this script with the same arguments as before."
-                exit 1
-            }
-            # last tag
-            elseif ($Tag -eq $RemainingTags[-1]) {
-                Write-Error "Conflicts while cherry-picking $Tag. Resolve the conflict over in `"$AssetsRepoLocation`", leave the result uncommitted, ``test-proxy push`` the assets.json you ran this script against!"
+                Write-Error "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-run this script with the same arguments as before."
                 exit 1
             }
         }

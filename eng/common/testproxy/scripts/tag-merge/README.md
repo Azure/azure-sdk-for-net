@@ -30,13 +30,41 @@ test-proxy push -a sdk/storage/azure-storage-blob/assets.json
 
 If the script ends early to a `git conflict` occurring, the script leaves the asset repo in a resolvable state.
 
-- `cd` to the working directory described in the output from the script before it starts working.
-- `git status`, then resolve the conflicts in the files. you don't need to commit the result
-- Invoke the script **with the original arguments**
-  - If the script stopped to resolve a conflict, it drops a tiny file (`.mergeprogress`) at repo root to remember where it stopped progressing. It will utilize this file to avoid cherry-picking already completed commits.
+- `cd` to the working directory described in the output from the script before it starts working. ("The work will be complete in...")
+- `git status` to identify which files are conflicted
+
+You will see something along these lines:
+
+```bash
+C:/repo/azure-sdk-for-python/.assets/eDscgL1p9G/python |>git status
+HEAD detached from python/storage/azure-storage-blob_12c8154ae2
+You are currently cherry-picking commit 1fd0865.
+  (fix conflicts and run "git cherry-pick --continue")
+  (use "git cherry-pick --skip" to skip this patch)
+  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+
+You are in a sparse checkout with 100% of tracked files present.
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both added:      sdk/storage/azure-storage-blob/tests/recordings/test_append_blob_async.pyTestStorageAppendBlobAsynctest_append_blob_from_text_new.json
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Resolve the conflicts in the file, then add it using `git add <filename>`. Once the conflict is fully resolved, use
+
+```bash
+C:/repo/azure-sdk-for-python/.assets/eDscgL1p9G/python [???]|>git cherry-pick --continue
+[detached HEAD 236e234] add the same file names as what was present in tag integration/example/storage_feature_addition2. In this case, the files themselves are just different enough from integration/example/storage_feature_addition2 that we should intentionally cause a conflict
+ Date: Fri Dec 1 16:57:52 2023 -0800
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+```
 
 ### Push the result
 
 Once the script has completed successfully, `test-proxy push` the results!
 
-C:\repo\azure-sdk-tools\eng\common\testproxy\scripts\tag-merge\merge-proxy-tags.ps1 "C:/repo/azure-sdk-for-python/sdk/storage/azure-storage-blob/assets.json" integration/example/storage_feature_addition2 integration/example/storage_feature_addition1
+```bash
+test-proxy push sdk/storage/azure-storage-blob/assets.json
+```
