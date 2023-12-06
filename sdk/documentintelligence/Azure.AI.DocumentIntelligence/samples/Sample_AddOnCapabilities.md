@@ -33,6 +33,7 @@ To extract content from a given file at a URI with improved quality through the 
 
 ```C# Snippet:DocumentIntelligenceSampleHighResolutionExtraction
 Uri uriSource = new Uri("<uriSource>");
+
 var content = new AnalyzeDocumentContent()
 {
     UrlSource = uriSource
@@ -113,6 +114,7 @@ To extract formulas from a given file at a URI with the add-on formulas capabili
 
 ```C# Snippet:DocumentIntelligenceSampleFormulaExtraction
 Uri uriSource = new Uri("<uriSource>");
+
 var content = new AnalyzeDocumentContent()
 {
     UrlSource = uriSource
@@ -128,11 +130,8 @@ foreach (DocumentPage page in result.Pages)
 {
     Console.WriteLine($"----Formulas detected from page #{page.PageNumber}----");
 
-    var inline_formulas = page.Formulas.Where(s => s.Kind == "inline").ToList();
-    var display_formulas = page.Formulas.Where(s => s.Kind == "display").ToList();
-
-    Console.WriteLine($"Detected {page.Formulas.Count()} formulas.");
-    for (int i = 0; i < page.Formulas.Count(); i++)
+    Console.WriteLine($"Detected {page.Formulas.Count} formulas.");
+    for (int i = 0; i < page.Formulas.Count; i++)
     {
         DocumentFormula formula = page.Formulas[i];
         Console.WriteLine($"- Formula #{i}: {formula.Value}");
@@ -152,9 +151,10 @@ To extract font information from a given file at a URI with the add-on font styl
 
 ```C# Snippet:DocumentIntelligenceSampleFontStyling
 Uri uriSource = new Uri("<uriSource>");
+
 var content = new AnalyzeDocumentContent()
 {
-   UrlSource = uriSource
+    UrlSource = uriSource
 };
 
 List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
@@ -297,9 +297,10 @@ To extract barcodes from a given file at a URI with the add-on barcodes capabili
 
 ```C# Snippet:DocumentIntelligenceSampleBarcodeExtraction
 Uri uriSource = new Uri("<uriSource>");
+
 var content = new AnalyzeDocumentContent()
 {
-   UrlSource = uriSource
+    UrlSource = uriSource
 };
 
 List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
@@ -322,9 +323,9 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"  Confidence: {barcode.Confidence}");
         Console.WriteLine($"  bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < barcode.Polygon.Count; j+=2)
+        for (int j = 0; j < barcode.Polygon.Count; j += 2)
         {
-            Console.WriteLine($"      Point {j/2} => X: {barcode.Polygon[j]}, Y: {barcode.Polygon[j+1]}");
+            Console.WriteLine($"      Point {j / 2} => X: {barcode.Polygon[j]}, Y: {barcode.Polygon[j + 1]}");
         }
     }
 }
@@ -335,9 +336,10 @@ To detect languages from a given file at a URI with the add-on languages capabil
 
 ```C# Snippet:DocumentIntelligenceSampleLanguageDetection
 Uri uriSource = new Uri("<uriSource>");
+
 var content = new AnalyzeDocumentContent()
 {
-   UrlSource = uriSource
+    UrlSource = uriSource
 };
 
 List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
@@ -365,9 +367,10 @@ To extract key-value pairs from a given file at a URI with the add-on keyValuePa
 
 ```C# Snippet:DocumentIntelligenceSampleKeyValuePairsExtraction
 Uri uriSource = new Uri("<uriSource>");
+
 var content = new AnalyzeDocumentContent()
 {
-   UrlSource = uriSource
+    UrlSource = uriSource
 };
 
 List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
@@ -378,7 +381,7 @@ AnalyzeResult result = operation.Value;
 
 Console.WriteLine("----Key Value Pair Options detected in the document----");
 Console.WriteLine($"Detected {result.KeyValuePairs.Count} Key Value Pairs:");
- 
+
 for (int i = 0; i < result.KeyValuePairs.Count; i++)
 {
     var kvp = result.KeyValuePairs[i];
