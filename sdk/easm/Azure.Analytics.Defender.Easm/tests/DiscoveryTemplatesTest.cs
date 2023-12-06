@@ -8,7 +8,6 @@ using Azure.Analytics.Defender.Easm;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-
 namespace Azure.Analytics.Defender.Easm.Tests
 {
     internal class DiscoveryTemplatesTest : EasmClientTest
@@ -19,9 +18,8 @@ namespace Azure.Analytics.Defender.Easm.Tests
         public DiscoveryTemplatesTest(bool isAsync) : base(isAsync)
         {
             TemplateId = "43488";
-            PartialName = "ku";
+            PartialName = "sample";
         }
-
         [Test]
         public async System.Threading.Tasks.Task DiscoveryTemplatesListTest()
         {
@@ -41,4 +39,3 @@ namespace Azure.Analytics.Defender.Easm.Tests
         }
     }
 }
-

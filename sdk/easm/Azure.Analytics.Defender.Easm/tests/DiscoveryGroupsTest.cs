@@ -91,7 +91,6 @@ namespace Azure.Analytics.Defender.Easm.Tests
             Response response = await client.RunDiscoGroupAsync(knownGroupName).ConfigureAwait(false);
             Assert.AreEqual(204, response.Status);
         }
-
         [Test]
         public async System.Threading.Tasks.Task DisocRunListTest()
         {

@@ -17,7 +17,6 @@ namespace Azure.Analytics.Defender.Easm.Tests
         {
             metric = "savedfilter_metric_51126";
         }
-
         [Test]
         public async System.Threading.Tasks.Task ReportsBillableTest()
         {
@@ -29,7 +28,6 @@ namespace Azure.Analytics.Defender.Easm.Tests
             Assert.AreEqual(metric, reportAssetSnapshotResult.Metric);
             Assert.IsNotNull(reportAssetSnapshotResult.Description);
         }
-
         [Test]
         public async System.Threading.Tasks.Task ReportsSnapshotTest()
         {
@@ -42,7 +40,6 @@ namespace Azure.Analytics.Defender.Easm.Tests
             Assert.IsNotNull(reportAssetSnapshotResult.Description);
             Assert.IsNotNull(reportAssetSnapshotResult.Assets);
         }
-
         [Test]
         public async System.Threading.Tasks.Task ReportsSummaryTest()
         {
@@ -53,4 +50,3 @@ namespace Azure.Analytics.Defender.Easm.Tests
         }
     }
 }
-
