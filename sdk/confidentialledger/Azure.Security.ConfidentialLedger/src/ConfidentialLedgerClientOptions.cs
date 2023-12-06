@@ -13,5 +13,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </summary>
         /// <value></value>
         public Uri CertificateEndpoint { get; set; }
+
+        /// <summary>
+        /// Boolean determining whether or not a certificate validation is required to verify the client connection a the ledger.
+        /// </summary>
+        /// <value></value>
+        public bool VerifyConnection { get; set; }
     }
 }
