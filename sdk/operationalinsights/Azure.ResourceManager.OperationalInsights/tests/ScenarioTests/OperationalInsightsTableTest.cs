@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
             var _collection = workSpace.GetOperationalInsightsTables();
 
             //OperationalInsightsTableCollection_Create
+            var tablelist = workSpace.GetOperationalInsightsTables().ToList();
+            foreach (var item in tablelist)
+            {
+                Console.WriteLine(item.Data.Name);
+            }
             var tableName = Recording.GenerateAssetName("OpTable");
             var tableData = new OperationalInsightsTableData();
             var opTable = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, tableName, tableData)).Value;

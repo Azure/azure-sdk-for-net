@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
             var clusterName = Recording.GenerateAssetName("InsightsCluster");
             var clusterData = new OperationalInsightsClusterData(_location)
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
-                    //UserAssignedIdentities =
-                    //{
-                    //    [managedIdentity.Data.Id] = new UserAssignedIdentity()
-                    //}
+                    UserAssignedIdentities =
+                    {
+                        [managedIdentity.Data.Id] = new UserAssignedIdentity()
+                    }
                 },
                 Sku = new OperationalInsightsClusterSku()
                 {

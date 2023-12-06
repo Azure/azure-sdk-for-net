@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
         { }
 
         [Test]
-        [Ignore("OperationalInsightsStorageAccount Class storage account key null")]
+        //[Ignore("OperationalInsightsStorageAccount Class storage account key null")]
         public async Task StorageInsightTestCase()
         {
             _subscription = await Client.GetDefaultSubscriptionAsync();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
                 Tags =
                 {
                     ["key1"] = "value"
+                },
+                Containers =
+                {
+                    "dsad"
                 }
             };
 

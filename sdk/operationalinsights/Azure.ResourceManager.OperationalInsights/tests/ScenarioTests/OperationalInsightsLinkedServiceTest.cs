@@ -11,6 +11,8 @@ using Azure.Core;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.OperationalInsights.Models;
+using Azure.ResourceManager.Models;
+using Microsoft.Identity.Client.AppConfig;
 
 namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
 {
@@ -32,12 +34,13 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
             var workSpaceData = new OperationalInsightsWorkspaceData(_location);
             var workSpace = (await _resourceGroup.GetOperationalInsightsWorkspaces().CreateOrUpdateAsync(WaitUntil.Completed, workSpaceName, workSpaceData)).Value;
             var _collection = workSpace.GetOperationalInsightsLinkedServices();
+            var cluster = await Createcluster();
 
             //OperationalInsightsLinkedServiceCollection_Create
             var linkedName = Recording.GenerateAssetName("OpLinkedService");
             var linkedData = new OperationalInsightsLinkedServiceData()
             {
-                ResourceId = workSpace.Data.Id,
+                WriteAccessResourceId = cluster.Data.Id,
                 Tags =
                 {
                     ["key1"] = "value"
@@ -129,6 +132,25 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.ScenarioTests
             Assert.IsFalse(await _collection.ExistsAsync(linkedName));
             await workSpace.DeleteAsync(WaitUntil.Completed);
             await _resourceGroup.DeleteAsync(WaitUntil.Completed);
+        }
+
+        public async Task<OperationalInsightsClusterResource> Createcluster()
+        {
+            var clusterName = Recording.GenerateAssetName("InsightsCluster");
+            var clusterData = new OperationalInsightsClusterData(_location)
+            {
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                Sku = new OperationalInsightsClusterSku()
+                {
+                    Capacity = OperationalInsightsClusterCapacity.TenHundred,
+                    Name = OperationalInsightsClusterSkuName.CapacityReservation,
+                },
+                Tags =
+                {
+                    ["key1"] = "value"
+                }
+            };
+            return (await _resourceGroup.GetOperationalInsightsClusters().CreateOrUpdateAsync(WaitUntil.Completed,clusterName,clusterData)).Value;
         }
     }
 }
