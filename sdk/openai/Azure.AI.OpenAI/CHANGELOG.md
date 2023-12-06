@@ -1,14 +1,41 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
+## 1.0.0-beta.10 (2023-12-06)
+
+Following OpenAI's November Dev Day and Microsoft's 2023 Ignite conference, this update brings a slew of new
+features and changes to the SDK.
 
 ### Features Added
 
+- `-1106` model feature support for `gpt-35-turbo` and `gpt-4-turbo`, including use of `seed`, `system_fingerprint`,
+    parallel function calling via tools, "JSON mode" for guaranteed function outputs, and more
+- `dall-e-3` image generation capabilities via `GetImageGenerations`, featuring higher model quality, automatic prompt
+    revisions by `gpt-4`, and customizable quality/style settings
+- Greatly expanded "On Your Data" capabilities in Azure OpenAI, including many new data source options and authentication
+    mechanisms
+- Early support for `gpt-4-vision-preview`, which allows the hybrid use of text and images as input to enable scenarios
+    like "describe this image for me"
+- Support for Azure enhancements to `gpt-4-vision-preview` results that include grounding and OCR features
+
 ### Breaking Changes
 
-### Bugs Fixed
+`ChatMessage` changes:
 
-### Other Changes
+- The singular `ChatMessage` type has been replaced by `ChatRequestMessage` and `ChatResponseMessage`, the former of
+    which is an abstract, polymorphic type with concrete derivations like `ChatRequestSystemMessage` and
+    `ChatRequestUserMessage`. This requires conversion from old `ChatMessages` into the new types. While this is
+    usually a straightforward string replacement, converting a response message into a request message (e.g. when
+    propagating an assistant response to continue the conversation) will require creating a new instance of the
+    appropriate request message with the response message's data. See the examples for details.
+
+Dall-e-3:
+
+- Azure OpenAI now uses `dall-e-3` model deployments for its image generation API and such a valid deployment must
+    be provided into the options for the `GetImageGenerations` method to receive results.
+
+### Other changes
+
+- Audio transcription and translation (via `GetAudioTranscription()` and `GetAudioTranslation()` now allow specification of an optional `Filename` in addition to the binary audio data. This is used purely as an identifier and does not functionally alter the transcription/translation behavior in any way.
 
 ## 1.0.0-beta.9 (2023-11-06)
 
