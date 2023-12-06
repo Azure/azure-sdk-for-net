@@ -513,19 +513,21 @@ namespace Azure.Core.Pipeline
                     _diagnosticSource?.Write(_activityName + ".Exception", exception);
                 }
 
-#if NETCOREAPP2_1
-                if (ActivityExtensions.SupportsActivitySource())
-                {
-                    _currentActivity?.SetErrorStatus(exception?.ToString());
-                }
-#endif
-#if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
                 if (errorCode == null && exception != null)
                 {
                     errorCode = exception.GetType().FullName;
                 }
 
-                _currentActivity?.AddTag("error.type", errorCode ?? "_OTHER");
+                errorCode ??= "_OTHER";
+#if NETCOREAPP2_1
+                if (ActivityExtensions.SupportsActivitySource())
+                {
+                    _currentActivity?.AddTag("error.type", errorCode);
+                    _currentActivity?.SetErrorStatus(exception?.ToString());
+                }
+#else
+                // SetStatus is only defined in NET 6 or greater
+                _currentActivity?.SetTag("error.type", errorCode);
                 _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
 #endif
             }

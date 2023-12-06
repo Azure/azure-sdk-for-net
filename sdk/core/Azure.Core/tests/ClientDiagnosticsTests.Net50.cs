@@ -14,7 +14,6 @@ using OpenTelemetry.Trace;
 
 namespace Azure.Core.Tests
 {
-#if NET5_0_OR_GREATER
     public partial class ClientDiagnosticsTests
     {
         [SetUp]
@@ -314,6 +313,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetActivitySourceAndDiagnosticSourceActivitiesTogether()
         {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
@@ -630,5 +630,4 @@ namespace Azure.Core.Tests
             }
         }
     }
-#endif
 }
