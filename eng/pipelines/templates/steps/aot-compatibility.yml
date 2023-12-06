@@ -9,13 +9,8 @@ steps:
     inputs:
       targetType: filepath
       filePath: $(Build.SourcesDirectory)/eng/scripts/aotcompatibility/Check-AOT-Compatibility.ps1
-      ${{ if eq(length(aotTestInput.ExpectedWarningsFilePath), 0) }}:
         arguments: >-
           -ServiceDirectory ${{ parameters.ServiceDirectory }}
           -PackageName ${{ aotTestInput.ArtifactName }}
-      ${{ if gt(length(aotTestInput.ExpectedWarningsFilePath), 0) }}:
-        arguments: >-
-          -ServiceDirectory ${{ parameters.ServiceDirectory }}
-          -PackageName ${{ aotTestInput.ArtifactName }}
-          -ExpectedWarningsFilePath ${{ ExpectedWarningsFilePath }}
+          -ExpectedWarningsFilePath ${{ aotTestInput.ExpectedWarningsFilePath }}
       workingDirectory: $(Build.SourcesDirectory)/eng/scripts/aotcompatibility
