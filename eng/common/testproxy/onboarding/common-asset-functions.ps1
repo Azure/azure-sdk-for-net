@@ -184,11 +184,13 @@ Function New-Assets-Json-File {
 Function Invoke-ProxyCommand {
   param(
     [string] $TestProxyExe,
-    [string] $CommandArgs,
+    [string] $CommandString,
     [string] $TargetDirectory
   )
   $updatedDirectory = $TargetDirectory.Replace("`\", "/")
 
+  # CommandString just a string indicating the proxy arguments. In the default case of running against the proxy tool, can just be used directly.
+  # However, in the case of docker, we need to append a bunch more arguments to the string.
   if ($TestProxyExe -eq "docker" -or $TestProxyExe -eq "podman"){
     $token = $env:GIT_TOKEN
     $committer = $env:GIT_COMMIT_OWNER
@@ -210,7 +212,7 @@ Function Invoke-ProxyCommand {
 
     $targetImage = if ($env:TRANSITION_SCRIPT_DOCKER_TAG) { $env:TRANSITION_SCRIPT_DOCKER_TAG } else { "azsdkengsys.azurecr.io/engsys/test-proxy:latest" }
 
-    $CommandArgs = @(
+    $CommandString = @(
       "run --rm --name transition.test.proxy",
       "-v `"${updatedDirectory}:/srv/testproxy`"",
       "-e `"GIT_TOKEN=${token}`"",
@@ -218,12 +220,12 @@ Function Invoke-ProxyCommand {
       "-e `"GIT_COMMIT_EMAIL=${email}`"",
       $targetImage,
       "test-proxy",
-      $CommandArgs
+      $CommandString
     ) -join " "
   }
 
-  Write-Host "$TestProxyExe $CommandArgs"
-  [array] $output = & "$TestProxyExe" $CommandArgs.Split(" ") --storage-location="$updatedDirectory"
+  Write-Host "$TestProxyExe $CommandString"
+  [array] $output = & "$TestProxyExe" $CommandString.Split(" ") --storage-location="$updatedDirectory"
   # echo the command output
   foreach ($line in $output) {
     Write-Host "$line"

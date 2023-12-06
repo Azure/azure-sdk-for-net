@@ -135,7 +135,7 @@ if ($InitialPush) {
     # Execute a restore on the current assets.json, it'll prep the root directory that
     # the recordings need to be copied into
     $CommandArgs = "restore --assets-json-path $assetsJsonRelPath"
-    Invoke-ProxyCommand -TestProxyExe $TestProxyExe -CommandArgs $CommandArgs -TargetDirectory $repoRoot
+    Invoke-ProxyCommand -TestProxyExe $TestProxyExe -CommandString $CommandArgs -TargetDirectory $repoRoot
 
     $assetsRoot = (Get-AssetsRoot -AssetsJsonFile $assetsJsonFile -TestProxyExe $TestProxyExe)
     Write-Host "assetsRoot=$assetsRoot"
@@ -143,7 +143,7 @@ if ($InitialPush) {
     Move-AssetsFromLangRepo -AssetsRoot $assetsRoot
 
     $CommandArgs = "push --assets-json-path $assetsJsonRelPath"
-    Invoke-ProxyCommand -TestProxyExe $TestProxyExe -CommandArgs $CommandArgs -TargetDirectory $repoRoot
+    Invoke-ProxyCommand -TestProxyExe $TestProxyExe -CommandString $CommandArgs -TargetDirectory $repoRoot
 
     # Verify that the assets.json file was updated
     $updatedAssets = Get-Content $assetsJsonFile | Out-String | ConvertFrom-Json
