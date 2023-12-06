@@ -3,7 +3,10 @@
 
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.Globalization;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Threading;
 
 namespace System.ClientModel
 {
@@ -31,23 +34,18 @@ namespace System.ClientModel
         }
 
         // Constructor from Response and InnerException
-        public ClientRequestException(PipelineResponse response, Exception innerException)
-            : this(response, default, innerException)
+        public ClientRequestException(PipelineResponse response, string? message, Exception? innerException)
+            : base(GetMessage(message, response), innerException)
         {
+            _response = response;
+            _status = response.Status;
         }
 
         // Constructor for case with no Response
         public ClientRequestException(string message, Exception? innerException = default)
-            : this(default, message, innerException)
+            : base(message, innerException)
         {
-        }
-
-        // Base constructor that handles all cases.
-        private ClientRequestException(PipelineResponse? response, string? message, Exception? innerException)
-            : base(GetMessageFromResponse(response, message), innerException)
-        {
-            _response = response;
-            _status = response?.Status ?? 0;
+            _status = 0;
         }
 
         /// <summary>
@@ -74,10 +72,42 @@ namespace System.ClientModel
         public PipelineResponse? GetRawResponse() => _response;
 
         // Create message from Response if available, and override message, if available.
-        private static string GetMessageFromResponse(PipelineResponse? response, string? message)
+        private static string GetMessage(string? message, PipelineResponse? response)
         {
-            // TODO: implement for real
-            return $"Service error: {response?.Status}";
+            // Setting the message will override extracting it from the response.
+            if (message is not null)
+            {
+                return message;
+            }
+
+            if (response is null)
+            {
+                return DefaultMessage;
+            }
+
+            ResponseBufferingPolicy.BufferContent(response, ResponseBufferingPolicy.DefaultNetworkTimeout, new CancellationTokenSource());
+
+            StringBuilder messageBuilder = new();
+
+            messageBuilder
+                .AppendLine(DefaultMessage)
+                .Append("Status: ")
+                .Append(response.Status.ToString(CultureInfo.InvariantCulture));
+
+            if (!string.IsNullOrEmpty(response.ReasonPhrase))
+            {
+                messageBuilder.Append(" (")
+                    .Append(response.ReasonPhrase)
+                    .AppendLine(")");
+            }
+            else
+            {
+                messageBuilder.AppendLine();
+            }
+
+            // Content or headers can be obtained from raw response so are not added here.
+
+            return messageBuilder.ToString();
         }
     }
 }
