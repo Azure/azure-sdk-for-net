@@ -592,11 +592,12 @@ Samples showing how to use the Document Intelligence library are available in th
 - [Analyze a document with a prebuilt model][analyze_prebuilt]
 - [Build a custom model][build_a_custom_model]
 - [Manage models][manage_models]
-- [Classify a document][classify_a_document]
+- [Classify a document][classify_document]
 - [Build a document classifier][build_a_document_classifier]
 - [Get and List document model operations][get_and_list]
 - [Compose a model][compose_model]
 - [Copy a custom model between Document Intelligence resources][copy_custom_models]
+- [Analyze a document with add-on capabilities][analyze_with_addons]
 
 ## Contributing
 
@@ -647,6 +648,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/Sample_CopyCustomModel.md
 [compose_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/Sample_ModelCompose.md
 [get_and_list]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/Sample_GetAndListOperations.md
+[analyze_with_addons]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/Sample_AddOnCapabilities.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
