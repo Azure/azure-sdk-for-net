@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MySql.Tests
         public MySqlFlexibleServerBackupTests(bool isAsync)
             : base(isAsync)
         {
-            BodyKeySanitizers.Add(new BodyKeySanitizer("SanitizeSasUriList1") { JsonPath = "targetDetails.sasUriList[0]" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue) { JsonPath = "targetDetails.sasUriList[0]" });
         }
 
         [TestCase]
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MySql.Tests
 
             //create backup
             List<string> list1 = new List<string>();
-            list1.Add("SanitizeSasUriList1");
+            list1.Add(SanitizeValue);
             MySqlFlexibleServerBackupAndExportContent backupAndExportContent = new MySqlFlexibleServerBackupAndExportContent
             (
                 new MySqlFlexibleServerBackupSettings("customer-backup-sdktest-1"),
