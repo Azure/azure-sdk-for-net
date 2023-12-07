@@ -13,31 +13,31 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The MetricResultsResponseValuesItem. </summary>
-    public partial class MetricResultsResponseValuesItem
+    public partial class MetricsBatchResultValues
     {
-        /// <summary> Initializes a new instance of <see cref="MetricResultsResponseValuesItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="value"> The value of the collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<MetricResult> value)
+        /// <param name="metrics"> The value of the collection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
+        internal MetricsBatchResultValues(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<MetricResult> metrics)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             StartTime = startTime;
             EndTime = endTime;
-            Value = value.ToList();
+            Metrics = metrics.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricResultsResponseValuesItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
         /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
         /// <param name="resourceId"> The resource that has been queried for metrics. </param>
-        /// <param name="value"> The value of the collection. </param>
-        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, string resourceRegion, ResourceIdentifier resourceId, IReadOnlyList<MetricResult> value)
+        /// <param name="metrics"> The value of the collection. </param>
+        internal MetricsBatchResultValues(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, AzureLocation resourceRegion, ResourceIdentifier resourceId, IReadOnlyList<MetricResult> metrics)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -45,13 +45,11 @@ namespace Azure.Monitor.Query.Models
             Namespace = @namespace;
             ResourceRegion = resourceRegion;
             ResourceId = resourceId;
-            Value = value;
+            Metrics = metrics;
         }
         /// <summary> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
         public TimeSpan? Interval { get; }
         /// <summary> The namespace of the metrics been queried. </summary>
         public string Namespace { get; }
-        /// <summary> The value of the collection. </summary>
-        public IReadOnlyList<MetricResult> Value { get; }
     }
 }
