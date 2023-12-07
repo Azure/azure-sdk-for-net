@@ -17,10 +17,21 @@ public class ChatFunctionsTests : OpenAITestBase
     {
     }
 
+    public enum FunctionCallTestType
+    {
+        DoNotUseFunctionCall,
+        UseAutoPresetFunctionCall,
+        UseNonePresetFunctionCall,
+        UseFunctionDefinitionFunctionCall,
+    }
+
     [RecordedTest]
     [TestCase(Service.Azure)]
+    [TestCase(Service.Azure, FunctionCallTestType.UseAutoPresetFunctionCall)]
+    [TestCase(Service.Azure, FunctionCallTestType.UseNonePresetFunctionCall)]
+    [TestCase(Service.Azure, FunctionCallTestType.UseFunctionDefinitionFunctionCall)]
     [TestCase(Service.NonAzure)]
-    public async Task SimpleFunctionCallWorks(Service serviceTarget)
+    public async Task SimpleFunctionCallWorks(Service serviceTarget, FunctionCallTestType functionCallType = FunctionCallTestType.DoNotUseFunctionCall)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
@@ -37,6 +48,17 @@ public class ChatFunctionsTests : OpenAITestBase
             MaxTokens = 512,
         };
 
+        if (functionCallType != FunctionCallTestType.DoNotUseFunctionCall)
+        {
+            requestOptions.FunctionCall = functionCallType switch
+            {
+                FunctionCallTestType.UseNonePresetFunctionCall => FunctionDefinition.None,
+                FunctionCallTestType.UseAutoPresetFunctionCall => FunctionDefinition.Auto,
+                FunctionCallTestType.UseFunctionDefinitionFunctionCall => s_futureTemperatureFunction,
+                _ => throw new NotImplementedException(),
+            };
+        }
+
         Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
         Assert.That(response, Is.Not.Null);
 
@@ -44,7 +66,24 @@ public class ChatFunctionsTests : OpenAITestBase
         Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
 
         ChatChoice choice = response.Value.Choices[0];
-        Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.FunctionCall));
+
+        if (functionCallType == FunctionCallTestType.UseNonePresetFunctionCall)
+        {
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(choice.Message.FunctionCall, Is.Null.Or.Empty);
+            // test complete, as we were merely validating that we didn't get what we shouldn't
+            return;
+        }
+        else if (functionCallType == FunctionCallTestType.UseAutoPresetFunctionCall || functionCallType == FunctionCallTestType.DoNotUseFunctionCall)
+        {
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.FunctionCall));
+            // and continue, as we certainly have function_calls to parse
+        }
+        else
+        {
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            // and continue the test, as we should have function_calls to parse
+        }
 
         ChatResponseMessage message = choice.Message;
         Assert.That(message.Role, Is.EqualTo(ChatRole.Assistant));

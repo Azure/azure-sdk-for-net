@@ -108,23 +108,9 @@ public partial class ChatTools
         #endregion
 
         #region Snippet:ChatTools:UseToolChoice
-        chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.None; // don't call tools
         chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.Auto; // let the model decide
+        chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.None; // don't call tools
         chatCompletionsOptions.ToolChoice = getWeatherTool; // only use the specified tool
-
-        /* Prior to the introduction of the ChatCompletionsToolChoice type, please use BinaryData, instead:
-
-        chatCompletionsOptions.ToolChoice = BinaryData.FromString("none");
-        chatCompletionsOptions.ToolChoice = BinaryData.FromString("auto");
-        chatCompletionsOptions.ToolChoice = BinaryData.FromObjectAsJson(new
-        {
-            type = "function",
-            function = new
-            {
-                name = getWeatherTool.Name,
-            },
-        });
-        */
         #endregion
     }
 }

@@ -50,11 +50,6 @@ public partial class ChatCompletionsToolChoice
         return new(functionToolDefinition);
     }
 
-    public static implicit operator ChatCompletionsToolChoice(string functionName)
-    {
-        return new(new FunctionDefinition(name: functionName));
-    }
-
     /// <summary>
     /// Initializes a new instance of <see cref="ChatCompletionsToolChoice"/> that requests the model constrains its
     /// response to calling a provided function tool that matches the name of the provided

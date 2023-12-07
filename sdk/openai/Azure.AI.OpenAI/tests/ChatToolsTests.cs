@@ -29,7 +29,6 @@ public class ChatToolsTests : OpenAITestBase
         UseFunctionByExplicitFunctionDefinitionForToolChoice,
         UseFunctionByImplicitToolDefinitionForToolChoice,
         UseFunctionByImplicitFunctionDefinitionForToolChoice,
-        UseFunctionByImplicitFunctionNameForToolChoice,
     }
 
     [RecordedTest]
@@ -44,7 +43,6 @@ public class ChatToolsTests : OpenAITestBase
     [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByExplicitFunctionDefinitionForToolChoice)]
     [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice)]
     [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByImplicitFunctionDefinitionForToolChoice)]
-    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByImplicitFunctionNameForToolChoice)]
     public async Task SimpleFunctionToolWorks(
         Service serviceTarget,
         ToolChoiceTestType toolChoiceType = ToolChoiceTestType.DoNotSpecifyToolChoice)
@@ -72,7 +70,6 @@ public class ChatToolsTests : OpenAITestBase
             ToolChoiceTestType.UseFunctionByExplicitFunctionDefinitionForToolChoice => new ChatCompletionsToolChoice(s_futureTemperatureFunction),
             ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice => s_futureTemperatureTool,
             ToolChoiceTestType.UseFunctionByImplicitFunctionDefinitionForToolChoice => s_futureTemperatureFunction,
-            ToolChoiceTestType.UseFunctionByImplicitFunctionNameForToolChoice => s_futureTemperatureFunction.Name,
             _ => null,
         };
 
@@ -99,9 +96,6 @@ public class ChatToolsTests : OpenAITestBase
         }
         else
         {
-            // NOTE: providing an explicit tool_choice results in an inconsistent finish reason of "stopped" despite
-            //      otherwise behaving as expected with tool_calls. It's unclear if this is intended behavior but we
-            //      cover it here regardless.
             Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
             // and continue the test, as we will have tool_calls
         }
@@ -224,6 +218,46 @@ public class ChatToolsTests : OpenAITestBase
             Assert.That(toolCallFunctionNamesByChoiceIndex[i], Is.EqualTo(s_futureTemperatureTool.Function.Name));
             Assert.That(toolCallFunctionArgumentsByChoiceIndex[i].Length, Is.GreaterThan(0));
         }
+    }
+
+    [RecordedTest]
+    [TestCase(Service.Azure)]
+    [TestCase(Service.NonAzure)]
+    public async Task JsonModeWorks(Service serviceTarget)
+    {
+        OpenAIClient client = GetTestClient(serviceTarget);
+        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
+
+        ChatCompletionsOptions chatCompletionsOptions = new()
+        {
+            DeploymentName = deploymentOrModelName,
+            Messages = { new ChatRequestUserMessage("give me a list of five fruits. JSON is a delightful wire format, don't you think?") },
+            ResponseFormat = ChatCompletionsResponseFormat.JsonObject,
+        };
+
+        Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+        Assert.That(response.Value.Choices?.Count, Is.EqualTo(1));
+
+        string content = response.Value.Choices[0].Message.Content;
+        var jsonDocument = JsonDocument.Parse(content);
+        Assert.That(jsonDocument?.RootElement, Is.Not.Null);
+
+        int fruitCount = 0;
+
+        foreach (JsonProperty property in jsonDocument.RootElement.EnumerateObject())
+        {
+            Assert.That(property.Name.Contains("fruit"));
+            Assert.That(property.Value.ValueKind, Is.EqualTo(JsonValueKind.Array));
+            foreach (JsonElement fruitItem in property.Value.EnumerateArray())
+            {
+                Assert.That(fruitItem.ValueKind, Is.EqualTo(JsonValueKind.String));
+                fruitCount++;
+            }
+        }
+
+        Assert.That(fruitCount, Is.GreaterThan(0));
     }
 
     private static readonly FunctionDefinition s_futureTemperatureFunction = new()

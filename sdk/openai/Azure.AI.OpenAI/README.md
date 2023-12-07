@@ -326,33 +326,23 @@ if (responseChoice.FinishReason == CompletionsFinishReason.ToolCalls)
 Additionally: if you would like to control the behavior of tool calls, you can use the `ToolChoice` property on
 `ChatCompletionsOptions` to do so.
 
-- `None` instructs the model to not use any tools and instead always generate a message. Note that the model's
-    generated message may still be informed by the specified tools.
-- `Auto` is the default when tools are provided and instructs the model to determine which, if any, tools it should
-    call. If tools are selected, a `CompletionsFinishReason` of `ToolCalls` will be received on response choices.
-- Providing a reference to a named function, as below, will instruct the model to restrict its response to calling the
-    corresponding tool. Note that, as of the 1106 models, constraining tool selection in this way will result in a
-    finish reason of `stop` (`CompletionsFinishReason.Stopped`) despite populating `ToolCalls` with invocation of the
-    expected function.
+- `ChatCompletionsToolChoice.Auto` is the default behavior when tools are provided and instructs the model to determine
+  which, if any, tools it should call. If tools are selected, a `CompletionsFinishReason` of `ToolCalls` will be
+  received on response `ChatChoice` instances and the corresponding `ToolCalls` properties will be populated.
+- `ChatCompletionsToolChoice.None` instructs the model to not use any tools and instead always generate a message. Note
+  that the model's generated message may still be informed by the provided tools even when they are not or cannot be
+  called.
+- Providing a reference to a named function definition or function tool definition, as below, will instruct the model
+  to restrict its response to calling the corresponding tool. When calling tools in this configuration, response
+  `ChatChoice` instances will report a `FinishReason` of `CompletionsFinishReason.Stopped` and the corresponding
+  `ToolCalls` property will be populated Note that, because the model was constrained to a specific tool, it does
+  **NOT** report the same `CompletionsFinishReason` value of `ToolCalls` expected when using
+  `ChatCompletionsToolChoice.Auto`.
 
 ```C# Snippet:ChatTools:UseToolChoice
-chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.None; // don't call tools
 chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.Auto; // let the model decide
+chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.None; // don't call tools
 chatCompletionsOptions.ToolChoice = getWeatherTool; // only use the specified tool
-
-/* Prior to the introduction of the ChatCompletionsToolChoice type, please use BinaryData, instead:
-
-chatCompletionsOptions.ToolChoice = BinaryData.FromString("none");
-chatCompletionsOptions.ToolChoice = BinaryData.FromString("auto");
-chatCompletionsOptions.ToolChoice = BinaryData.FromObjectAsJson(new
-{
-    type = "function",
-    function = new
-    {
-        name = getWeatherTool.Name,
-    },
-});
-*/
 ```
 
 ### Use chat functions
@@ -474,17 +464,17 @@ response, instead add a new `ChatMessage` instance for history, created from the
 string functionName = null;
 StringBuilder contentBuilder = new();
 StringBuilder functionArgumentsBuilder = new();
-ChatRole streamedRole = default;
-CompletionsFinishReason finishReason = default;
+ChatRole? streamedRole = default;
+CompletionsFinishReason? finishReason = default;
 
 await foreach (StreamingChatCompletionsUpdate update
     in client.GetChatCompletionsStreaming(chatCompletionsOptions))
 {
-    contentBuilder.Append(update.ContentUpdate);
     functionName ??= update.FunctionName;
+    streamedRole ??= update.Role;
+    finishReason ??= update.FinishReason;
+    contentBuilder.Append(update.ContentUpdate);
     functionArgumentsBuilder.Append(update.FunctionArgumentsUpdate);
-    streamedRole = update.Role ?? default;
-    finishReason = update.FinishReason ?? default;
 }
 
 if (finishReason == CompletionsFinishReason.FunctionCall)
@@ -506,6 +496,29 @@ considered complete or confirmed until the `FinishReason` of `FunctionCall` is r
 best-effort attempts at "warm-up" or other speculative preparation based on a function name or particular key/value
 appearing in the accumulated, partial JSON arguments, but no strong assumptions about validity, ordering, or other
 details should be evaluated until the arguments are fully available and confirmed via `FinishReason`.
+
+Additionally, if you would like to customize the way that the model calls provided functions, you can use the
+`FunctionCall` property on `ChatCompletionsOptions` (not to be confused with the `FunctionCall` response message type!)
+to do so.
+
+- `FunctionDefinition.Auto` is the default when functions are provided and instructs the model to freely select between
+  responding with a message or with a function call. When the model calls a function in this way, the
+  `CompletionsFinishReason` value of `FunctionCall` will appear on response `ChatChoice`  instances and the
+  corresponding `FunctionCall` will be populated.
+- `FunctionDefinition.None` will instruct the model to not call functions and instead generate a message. Note that the
+  response message contents may be still be influenced by the provided functions even when they are not or cannot be
+  called.
+- Providing a custom `FunctionDefinition` instance will instruct the model to restrict its response to the entry
+  in `Functions` with a name that matches the one of the `FunctionDefinition`. When the model calls a function in
+  this configuration, the `CompletionsFinishReason` value of `Stopped` will appear on the response `ChatChoice` and
+  the corresponding `FunctionCall` will be populated. Because the model was constrained to the function,
+  `CompletionsFinishReason.FunctionCall` will **NOT** be the `FinishReason` value in this case.
+
+```C# Snippet::ChatFunctions::UseFunctionCall
+chatCompletionsOptions.FunctionCall = FunctionDefinition.Auto; // let the model decide
+chatCompletionsOptions.FunctionCall = FunctionDefinition.None; // don't call functions
+chatCompletionsOptions.FunctionCall = getWeatherFuntionDefinition; // use only the specified function
+```
 
 ### Use your own data with Azure OpenAI
 

@@ -336,7 +336,7 @@ namespace Azure.AI.OpenAI
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatRequestMessage> Messages { get { throw null; } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }
         public float? PresencePenalty { get { throw null; } set { } }
-        public Azure.AI.OpenAI.ChatCompletionsResponseFormat? ResponseFormat { get { throw null; } set { } }
+        public Azure.AI.OpenAI.ChatCompletionsResponseFormat ResponseFormat { get { throw null; } set { } }
         public long? Seed { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StopSequences { get { throw null; } }
         public float? Temperature { get { throw null; } set { } }
@@ -345,23 +345,11 @@ namespace Azure.AI.OpenAI
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatCompletionsToolDefinition> Tools { get { throw null; } }
         public string User { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ChatCompletionsResponseFormat : System.IEquatable<Azure.AI.OpenAI.ChatCompletionsResponseFormat>
+    public abstract partial class ChatCompletionsResponseFormat
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ChatCompletionsResponseFormat(string value) { throw null; }
-        public static Azure.AI.OpenAI.ChatCompletionsResponseFormat JsonObject { get { throw null; } }
-        public static Azure.AI.OpenAI.ChatCompletionsResponseFormat Text { get { throw null; } }
-        public bool Equals(Azure.AI.OpenAI.ChatCompletionsResponseFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.OpenAI.ChatCompletionsResponseFormat left, Azure.AI.OpenAI.ChatCompletionsResponseFormat right) { throw null; }
-        public static implicit operator Azure.AI.OpenAI.ChatCompletionsResponseFormat (string value) { throw null; }
-        public static bool operator !=(Azure.AI.OpenAI.ChatCompletionsResponseFormat left, Azure.AI.OpenAI.ChatCompletionsResponseFormat right) { throw null; }
-        public override string ToString() { throw null; }
+        public static readonly Azure.AI.OpenAI.ChatCompletionsResponseFormat JsonObject;
+        public static readonly Azure.AI.OpenAI.ChatCompletionsResponseFormat Text;
+        protected ChatCompletionsResponseFormat() { }
     }
     public abstract partial class ChatCompletionsToolCall
     {
@@ -376,7 +364,6 @@ namespace Azure.AI.OpenAI
         public ChatCompletionsToolChoice(Azure.AI.OpenAI.FunctionDefinition functionDefinition) { }
         public static implicit operator Azure.AI.OpenAI.ChatCompletionsToolChoice (Azure.AI.OpenAI.ChatCompletionsFunctionToolDefinition functionToolDefinition) { throw null; }
         public static implicit operator Azure.AI.OpenAI.ChatCompletionsToolChoice (Azure.AI.OpenAI.FunctionDefinition functionDefinition) { throw null; }
-        public static implicit operator Azure.AI.OpenAI.ChatCompletionsToolChoice (string functionName) { throw null; }
     }
     public abstract partial class ChatCompletionsToolDefinition
     {

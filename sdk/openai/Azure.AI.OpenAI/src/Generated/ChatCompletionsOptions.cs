@@ -118,7 +118,7 @@ namespace Azure.AI.OpenAI
         /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
         /// <param name="tools"> The available tool definitions that the chat completions request can use, including caller-defined functions. </param>
         /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
-        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, AzureChatEnhancementConfiguration enhancements, long? seed, ChatCompletionsResponseFormat? responseFormat, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice)
+        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, AzureChatEnhancementConfiguration enhancements, long? seed, ChatCompletionsResponseFormat responseFormat, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice)
         {
             Messages = messages;
             Functions = functions;
@@ -157,8 +157,11 @@ namespace Azure.AI.OpenAI
         /// system_fingerprint response parameter to monitor changes in the backend."
         /// </summary>
         public long? Seed { get; set; }
-        /// <summary> An object specifying the format that the model must output. Used to enable JSON mode. </summary>
-        public ChatCompletionsResponseFormat? ResponseFormat { get; set; }
+        /// <summary>
+        /// An object specifying the format that the model must output. Used to enable JSON mode.
+        /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
+        /// </summary>
+        public ChatCompletionsResponseFormat ResponseFormat { get; set; }
         /// <summary>
         /// The available tool definitions that the chat completions request can use, including caller-defined functions.
         /// Please note <see cref="ChatCompletionsToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

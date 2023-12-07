@@ -37,8 +37,22 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         }
         if (Optional.IsDefined(FunctionCall))
         {
+            // CUSTOM CODE NOTE:
+            //   This is an important custom deserialization step for the intended merging of presets (none, auto)
+            //   and named function definitions. Because presets serialize as a string instead of as object contents,
+            //   the customization has to occur at this parent options level.
             writer.WritePropertyName("function_call"u8);
-            writer.WriteObjectValue(FunctionCall);
+            if (FunctionCall.IsPredefined)
+            {
+                writer.WriteStringValue(FunctionCall.Name);
+            }
+            else
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(FunctionCall.Name);
+                writer.WriteEndObject();
+            }
         }
         if (Optional.IsDefined(MaxTokens))
         {
@@ -126,7 +140,7 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         if (Optional.IsDefined(ResponseFormat))
         {
             writer.WritePropertyName("response_format"u8);
-            writer.WriteStringValue(ResponseFormat.Value.ToString());
+            writer.WriteObjectValue(ResponseFormat);
         }
         if (Optional.IsCollectionDefined(Tools))
         {
