@@ -66,6 +66,7 @@ if ($LASTEXITCODE -ne 0)
     Write-Host "Publish failed."
 
     Write-Host $publishOutput
+    dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
 
     Write-Host "Deleting test app files."
 
