@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "AzureMLExecutePipeline";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMLExecutePipelineActivity"/> for deserialization. </summary>
+        internal AzureMLExecutePipelineActivity()
+        {
+        }
+
         /// <summary> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> MLPipelineId { get; set; }
         /// <summary> ID of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </summary>

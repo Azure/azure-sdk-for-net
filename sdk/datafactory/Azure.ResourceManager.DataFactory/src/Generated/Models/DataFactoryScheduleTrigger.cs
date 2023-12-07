@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "ScheduleTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScheduleTrigger"/> for deserialization. </summary>
+        internal DataFactoryScheduleTrigger()
+        {
+        }
+
         /// <summary> Recurrence schedule configuration. </summary>
         public ScheduleTriggerRecurrence Recurrence { get; set; }
     }

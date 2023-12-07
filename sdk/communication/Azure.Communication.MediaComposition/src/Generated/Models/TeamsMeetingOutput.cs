@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -27,11 +28,17 @@ namespace Azure.Communication.MediaComposition
 
         /// <summary> Initializes a new instance of <see cref="TeamsMeetingOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="teamsJoinUrl"> The url from Teams to join the meeting. </param>
-        internal TeamsMeetingOutput(MediaOutputType kind, string teamsJoinUrl) : base(kind)
+        internal TeamsMeetingOutput(MediaOutputType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string teamsJoinUrl) : base(kind, serializedAdditionalRawData)
         {
             TeamsJoinUrl = teamsJoinUrl;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TeamsMeetingOutput"/> for deserialization. </summary>
+        internal TeamsMeetingOutput()
+        {
         }
 
         /// <summary> The url from Teams to join the meeting. </summary>

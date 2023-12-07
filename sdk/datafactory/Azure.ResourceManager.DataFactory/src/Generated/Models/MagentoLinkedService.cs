@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Magento";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MagentoLinkedService"/> for deserialization. </summary>
+        internal MagentoLinkedService()
+        {
+        }
+
         /// <summary> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The access token from Magento. </summary>

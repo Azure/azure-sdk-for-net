@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>

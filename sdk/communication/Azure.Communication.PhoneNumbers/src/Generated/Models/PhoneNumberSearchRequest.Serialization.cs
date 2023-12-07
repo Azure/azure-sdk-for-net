@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class PhoneNumberSearchRequest : IUtf8JsonSerializable
+    internal partial class PhoneNumberSearchRequest : IUtf8JsonSerializable, IJsonModel<PhoneNumberSearchRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhoneNumberSearchRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PhoneNumberSearchRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberSearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PhoneNumberSearchRequest)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("phoneNumberType"u8);
             writer.WriteStringValue(PhoneNumberType.ToString());
@@ -31,7 +43,120 @@ namespace Azure.Communication.PhoneNumbers
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PhoneNumberSearchRequest IJsonModel<PhoneNumberSearchRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberSearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PhoneNumberSearchRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePhoneNumberSearchRequest(document.RootElement, options);
+        }
+
+        internal static PhoneNumberSearchRequest DeserializePhoneNumberSearchRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            PhoneNumberType phoneNumberType = default;
+            PhoneNumberAssignmentType assignmentType = default;
+            PhoneNumberCapabilities capabilities = default;
+            Optional<string> areaCode = default;
+            Optional<int> quantity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("phoneNumberType"u8))
+                {
+                    phoneNumberType = new PhoneNumberType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("assignmentType"u8))
+                {
+                    assignmentType = new PhoneNumberAssignmentType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("capabilities"u8))
+                {
+                    capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("areaCode"u8))
+                {
+                    areaCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("quantity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quantity = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PhoneNumberSearchRequest(phoneNumberType, assignmentType, capabilities, areaCode.Value, Optional.ToNullable(quantity), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<PhoneNumberSearchRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberSearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PhoneNumberSearchRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PhoneNumberSearchRequest IPersistableModel<PhoneNumberSearchRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberSearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePhoneNumberSearchRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PhoneNumberSearchRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PhoneNumberSearchRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

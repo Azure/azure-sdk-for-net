@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> Holds a note about a Program Brief that has gone thru stages of review process. </summary>
     public partial class ReviewNote
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ReviewNote"/>. </summary>
         public ReviewNote()
         {
@@ -20,10 +53,12 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of <see cref="ReviewNote"/>. </summary>
         /// <param name="message"> Note related to a Program Brief that may imply changes needed from the client. </param>
         /// <param name="date"> Date and time when the note was added to the Program Brief. </param>
-        internal ReviewNote(string message, DateTimeOffset? date)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReviewNote(string message, DateTimeOffset? date, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             Date = date;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Note related to a Program Brief that may imply changes needed from the client. </summary>

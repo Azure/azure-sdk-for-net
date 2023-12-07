@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> Contact Information. </summary>
     public partial class ContactInformation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContactInformation"/>. </summary>
         public ContactInformation()
         {
@@ -19,11 +54,13 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="name"> Name of authorized user for purposes of submitting the Program Brief. </param>
         /// <param name="phone"> Contact phone number for the authorized user for the customer. Use E164 format. e.g. +14086111111. </param>
         /// <param name="email"> Contact email address number for the authorized user for the customer. </param>
-        internal ContactInformation(string name, string phone, string email)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContactInformation(string name, string phone, string email, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Phone = phone;
             Email = email;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of authorized user for purposes of submitting the Program Brief. </summary>

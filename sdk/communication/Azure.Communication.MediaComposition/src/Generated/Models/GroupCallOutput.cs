@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -27,11 +28,17 @@ namespace Azure.Communication.MediaComposition
 
         /// <summary> Initializes a new instance of <see cref="GroupCallOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Group call identifier. </param>
-        internal GroupCallOutput(MediaOutputType kind, string id) : base(kind)
+        internal GroupCallOutput(MediaOutputType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string id) : base(kind, serializedAdditionalRawData)
         {
             Id = id;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GroupCallOutput"/> for deserialization. </summary>
+        internal GroupCallOutput()
+        {
         }
 
         /// <summary> Group call identifier. </summary>

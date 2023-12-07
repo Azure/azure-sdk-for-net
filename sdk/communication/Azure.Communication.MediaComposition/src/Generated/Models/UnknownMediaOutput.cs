@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
@@ -14,7 +16,8 @@ namespace Azure.Communication.MediaComposition
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMediaOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
-        internal UnknownMediaOutput(MediaOutputType kind) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMediaOutput(MediaOutputType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             Kind = kind;
         }

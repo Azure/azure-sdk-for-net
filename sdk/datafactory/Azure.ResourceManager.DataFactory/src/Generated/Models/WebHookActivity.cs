@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "WebHook";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WebHookActivity"/> for deserialization. </summary>
+        internal WebHookActivity()
+        {
+        }
+
         /// <summary> Activity policy. </summary>
         public SecureInputOutputPolicy Policy { get; set; }
         /// <summary> Rest API method for target endpoint. </summary>

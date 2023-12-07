@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,6 +14,38 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a phone number capability offering. </summary>
     public partial class PhoneNumberOffering
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PhoneNumberOffering"/>. </summary>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cost"/> is null. </exception>
@@ -28,12 +61,19 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="assignmentType"> Represents the assignment type of the offering. </param>
         /// <param name="availableCapabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
-        internal PhoneNumberOffering(PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, PhoneNumberCapabilities availableCapabilities, PhoneNumberCost cost)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberOffering(PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, PhoneNumberCapabilities availableCapabilities, PhoneNumberCost cost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PhoneNumberType = phoneNumberType;
             AssignmentType = assignmentType;
             AvailableCapabilities = availableCapabilities;
             Cost = cost;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberOffering"/> for deserialization. </summary>
+        internal PhoneNumberOffering()
+        {
         }
 
         /// <summary> Represents the number type of the offering. </summary>

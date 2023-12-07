@@ -6,15 +6,117 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class ArtifactTagProperties
+    public partial class ArtifactTagProperties : IUtf8JsonSerializable, IJsonModel<ArtifactTagProperties>
     {
-        internal static ArtifactTagProperties DeserializeArtifactTagProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactTagProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArtifactTagProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactTagProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArtifactTagProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("registry"u8);
+                writer.WriteStringValue(RegistryLoginServer);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("imageName"u8);
+                writer.WriteStringValue(RepositoryName);
+            }
+            writer.WritePropertyName("tag"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("digest"u8);
+                writer.WriteStringValue(Digest);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn, "O");
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("lastUpdateTime"u8);
+                writer.WriteStringValue(LastUpdatedOn, "O");
+            }
+            writer.WritePropertyName("changeableAttributes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CanDelete))
+            {
+                writer.WritePropertyName("deleteEnabled"u8);
+                writer.WriteBooleanValue(CanDelete.Value);
+            }
+            if (Optional.IsDefined(CanWrite))
+            {
+                writer.WritePropertyName("writeEnabled"u8);
+                writer.WriteBooleanValue(CanWrite.Value);
+            }
+            if (Optional.IsDefined(CanList))
+            {
+                writer.WritePropertyName("listEnabled"u8);
+                writer.WriteBooleanValue(CanList.Value);
+            }
+            if (Optional.IsDefined(CanRead))
+            {
+                writer.WritePropertyName("readEnabled"u8);
+                writer.WriteBooleanValue(CanRead.Value);
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ArtifactTagProperties IJsonModel<ArtifactTagProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactTagProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArtifactTagProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArtifactTagProperties(document.RootElement, options);
+        }
+
+        internal static ArtifactTagProperties DeserializeArtifactTagProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +131,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
             Optional<bool> readEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -121,8 +225,44 @@ namespace Azure.Containers.ContainerRegistry
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArtifactTagProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactTagProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArtifactTagProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArtifactTagProperties IPersistableModel<ArtifactTagProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactTagProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArtifactTagProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArtifactTagProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArtifactTagProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

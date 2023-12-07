@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -12,10 +15,73 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterQueueStatistics
+    public partial class RouterQueueStatistics : IUtf8JsonSerializable, IJsonModel<RouterQueueStatistics>
     {
-        internal static RouterQueueStatistics DeserializeRouterQueueStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterQueueStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouterQueueStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouterQueueStatistics)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("queueId"u8);
+            writer.WriteStringValue(QueueId);
+            writer.WritePropertyName("length"u8);
+            writer.WriteNumberValue(Length);
+            if (Optional.IsCollectionDefined(_estimatedWaitTimeMinutes))
+            {
+                writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
+                writer.WriteStartObject();
+                foreach (var item in _estimatedWaitTimeMinutes)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(LongestJobWaitTimeMinutes))
+            {
+                writer.WritePropertyName("longestJobWaitTimeMinutes"u8);
+                writer.WriteNumberValue(LongestJobWaitTimeMinutes.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouterQueueStatistics IJsonModel<RouterQueueStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouterQueueStatistics)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterQueueStatistics(document.RootElement, options);
+        }
+
+        internal static RouterQueueStatistics DeserializeRouterQueueStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +90,8 @@ namespace Azure.Communication.JobRouter
             int length = default;
             Optional<IDictionary<string, double>> estimatedWaitTimeMinutes = default;
             Optional<double> longestJobWaitTimeMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueId"u8))
@@ -59,9 +127,45 @@ namespace Azure.Communication.JobRouter
                     longestJobWaitTimeMinutes = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouterQueueStatistics(queueId, length, Optional.ToDictionary(estimatedWaitTimeMinutes), Optional.ToNullable(longestJobWaitTimeMinutes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouterQueueStatistics(queueId, length, Optional.ToDictionary(estimatedWaitTimeMinutes), Optional.ToNullable(longestJobWaitTimeMinutes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouterQueueStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouterQueueStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouterQueueStatistics IPersistableModel<RouterQueueStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouterQueueStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouterQueueStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouterQueueStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -69,6 +173,14 @@ namespace Azure.Communication.JobRouter
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeRouterQueueStatistics(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

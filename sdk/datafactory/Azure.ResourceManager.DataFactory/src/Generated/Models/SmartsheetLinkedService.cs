@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Smartsheet";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SmartsheetLinkedService"/> for deserialization. </summary>
+        internal SmartsheetLinkedService()
+        {
+        }
+
         /// <summary> The api token for the Smartsheet source. </summary>
         public DataFactorySecretBaseDefinition ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>

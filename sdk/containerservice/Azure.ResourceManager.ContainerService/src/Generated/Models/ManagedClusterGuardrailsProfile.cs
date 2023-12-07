@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The Guardrails profile. </summary>
     public partial class ManagedClusterGuardrailsProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagedClusterGuardrailsProfile"/>. </summary>
         /// <param name="version"> The version of constraints to use. </param>
         /// <param name="level"> The guardrails level to be used. By default, Guardrails is enabled for all namespaces except those that AKS excludes via systemExcludedNamespaces. </param>
@@ -33,12 +65,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="version"> The version of constraints to use. </param>
         /// <param name="level"> The guardrails level to be used. By default, Guardrails is enabled for all namespaces except those that AKS excludes via systemExcludedNamespaces. </param>
         /// <param name="excludedNamespaces"> List of namespaces excluded from guardrails checks. </param>
-        internal ManagedClusterGuardrailsProfile(IReadOnlyList<string> systemExcludedNamespaces, string version, ManagedClusterGuardrailsProfileLevel level, IList<string> excludedNamespaces)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterGuardrailsProfile(IReadOnlyList<string> systemExcludedNamespaces, string version, ManagedClusterGuardrailsProfileLevel level, IList<string> excludedNamespaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SystemExcludedNamespaces = systemExcludedNamespaces;
             Version = version;
             Level = level;
             ExcludedNamespaces = excludedNamespaces;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterGuardrailsProfile"/> for deserialization. </summary>
+        internal ManagedClusterGuardrailsProfile()
+        {
         }
 
         /// <summary> List of namespaces specified by AKS to be excluded from Guardrails. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Email
@@ -13,6 +14,38 @@ namespace Azure.Communication.Email
     /// <summary> Status of the long running operation. </summary>
     public partial class EmailSendResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EmailSendResult"/>. </summary>
         /// <param name="id"> The unique id of the operation. Use a UUID. </param>
         /// <param name="status"> Status of operation. </param>
@@ -29,11 +62,18 @@ namespace Azure.Communication.Email
         /// <param name="id"> The unique id of the operation. Use a UUID. </param>
         /// <param name="status"> Status of operation. </param>
         /// <param name="error"> Error details when status is a non-success terminal state. </param>
-        internal EmailSendResult(string id, EmailSendStatus status, ErrorDetail error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmailSendResult(string id, EmailSendStatus status, ErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Status = status;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmailSendResult"/> for deserialization. </summary>
+        internal EmailSendResult()
+        {
         }
         /// <summary> Status of operation. </summary>
         public EmailSendStatus Status { get; }

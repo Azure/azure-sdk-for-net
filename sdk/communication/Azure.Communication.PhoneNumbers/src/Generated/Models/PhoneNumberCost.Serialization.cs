@@ -5,14 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberCost
+    public partial class PhoneNumberCost : IUtf8JsonSerializable, IJsonModel<PhoneNumberCost>
     {
-        internal static PhoneNumberCost DeserializePhoneNumberCost(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhoneNumberCost>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PhoneNumberCost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberCost>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PhoneNumberCost)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("amount"u8);
+            writer.WriteNumberValue(Amount);
+            writer.WritePropertyName("currencyCode"u8);
+            writer.WriteStringValue(IsoCurrencySymbol);
+            writer.WritePropertyName("billingFrequency"u8);
+            writer.WriteStringValue(BillingFrequency.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PhoneNumberCost IJsonModel<PhoneNumberCost>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberCost>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PhoneNumberCost)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePhoneNumberCost(document.RootElement, options);
+        }
+
+        internal static PhoneNumberCost DeserializePhoneNumberCost(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -20,6 +74,8 @@ namespace Azure.Communication.PhoneNumbers
             double amount = default;
             string currencyCode = default;
             BillingFrequency billingFrequency = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("amount"u8))
@@ -37,8 +93,44 @@ namespace Azure.Communication.PhoneNumbers
                     billingFrequency = new BillingFrequency(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PhoneNumberCost(amount, currencyCode, billingFrequency);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PhoneNumberCost(amount, currencyCode, billingFrequency, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PhoneNumberCost>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberCost>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PhoneNumberCost)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PhoneNumberCost IPersistableModel<PhoneNumberCost>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PhoneNumberCost>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePhoneNumberCost(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PhoneNumberCost)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PhoneNumberCost>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

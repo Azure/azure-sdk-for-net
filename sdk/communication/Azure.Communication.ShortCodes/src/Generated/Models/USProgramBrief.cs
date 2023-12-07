@@ -18,6 +18,38 @@ namespace Azure.Communication.ShortCodes.Models
     /// </summary>
     public partial class USProgramBrief
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="USProgramBrief"/>. </summary>
         /// <param name="id"> Program Brief Id. </param>
         public USProgramBrief(Guid id)
@@ -42,7 +74,8 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="companyInformation"> CompanyInformation. </param>
         /// <param name="messageDetails"> MessageDetails. </param>
         /// <param name="trafficDetails"> TrafficDetails. </param>
-        internal USProgramBrief(Guid id, ProgramBriefStatus? status, string number, IList<ReviewNote> reviewNotes, IList<ShortCodeCost> costs, DateTimeOffset? submissionDate, DateTimeOffset? statusUpdatedDate, ProgramDetails programDetails, CompanyInformation companyInformation, MessageDetails messageDetails, TrafficDetails trafficDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal USProgramBrief(Guid id, ProgramBriefStatus? status, string number, IList<ReviewNote> reviewNotes, IList<ShortCodeCost> costs, DateTimeOffset? submissionDate, DateTimeOffset? statusUpdatedDate, ProgramDetails programDetails, CompanyInformation companyInformation, MessageDetails messageDetails, TrafficDetails trafficDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Status = status;
@@ -55,6 +88,12 @@ namespace Azure.Communication.ShortCodes.Models
             CompanyInformation = companyInformation;
             MessageDetails = messageDetails;
             TrafficDetails = trafficDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="USProgramBrief"/> for deserialization. </summary>
+        internal USProgramBrief()
+        {
         }
 
         /// <summary> Program Brief Id. </summary>

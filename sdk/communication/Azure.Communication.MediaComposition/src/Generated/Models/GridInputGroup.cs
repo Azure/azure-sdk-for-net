@@ -38,15 +38,21 @@ namespace Azure.Communication.MediaComposition
         /// <param name="height"> The height of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="layer"> The layer this input group should appear on. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
-        internal GridInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode, IList<IList<string>> inputIds, int rows, int columns) : base(kind, position, width, height, layer, scalingMode)
+        internal GridInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IList<string>> inputIds, int rows, int columns) : base(kind, position, width, height, layer, scalingMode, serializedAdditionalRawData)
         {
             InputIds = inputIds;
             Rows = rows;
             Columns = columns;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GridInputGroup"/> for deserialization. </summary>
+        internal GridInputGroup()
+        {
         }
 
         /// <summary> Input and input group ids to be included in this input group. </summary>

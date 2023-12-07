@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,6 +14,38 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a phone number search request to find phone numbers. Found phone numbers are temporarily held for a following purchase. </summary>
     internal partial class PhoneNumberSearchRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchRequest"/>. </summary>
         /// <param name="phoneNumberType"> The type of phone numbers to search for, e.g. geographic, or tollFree. </param>
         /// <param name="assignmentType"> The assignment type of the phone numbers to search for. A phone number can be assigned to a person, or to an application. </param>
@@ -33,13 +66,20 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="areaCode"> The area code of the desired phone number, e.g. 425. </param>
         /// <param name="quantity"> The quantity of desired phone numbers. The default value is 1. </param>
-        internal PhoneNumberSearchRequest(PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, string areaCode, int? quantity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberSearchRequest(PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, string areaCode, int? quantity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PhoneNumberType = phoneNumberType;
             AssignmentType = assignmentType;
             Capabilities = capabilities;
             AreaCode = areaCode;
             Quantity = quantity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchRequest"/> for deserialization. </summary>
+        internal PhoneNumberSearchRequest()
+        {
         }
 
         /// <summary> The type of phone numbers to search for, e.g. geographic, or tollFree. </summary>

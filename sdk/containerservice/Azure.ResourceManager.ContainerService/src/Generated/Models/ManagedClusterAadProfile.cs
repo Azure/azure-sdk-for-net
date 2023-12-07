@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> For more details see [managed AAD on AKS](https://docs.microsoft.com/azure/aks/managed-aad). </summary>
     public partial class ManagedClusterAadProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAadProfile"/>. </summary>
         public ManagedClusterAadProfile()
         {
@@ -28,7 +60,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="serverAppId"> The server AAD application ID. </param>
         /// <param name="serverAppSecret"> The server AAD application secret. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<Guid> adminGroupObjectIds, Guid? clientAppId, Guid? serverAppId, string serverAppSecret, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<Guid> adminGroupObjectIds, Guid? clientAppId, Guid? serverAppId, string serverAppSecret, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsManagedAadEnabled = isManagedAadEnabled;
             IsAzureRbacEnabled = isAzureRbacEnabled;
@@ -37,6 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ServerAppId = serverAppId;
             ServerAppSecret = serverAppSecret;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether to enable managed AAD. </summary>

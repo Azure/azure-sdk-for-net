@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetProperties"/> for deserialization. </summary>
+        internal DataFactoryDatasetProperties()
+        {
+        }
+
         /// <summary> Type of dataset. </summary>
         internal string DatasetType { get; set; }
         /// <summary> Dataset description. </summary>
