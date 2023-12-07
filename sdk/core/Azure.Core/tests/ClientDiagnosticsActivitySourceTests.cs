@@ -14,7 +14,7 @@ using OpenTelemetry.Trace;
 
 namespace Azure.Core.Tests
 {
-    public partial class ClientDiagnosticsTests
+    public class ClientDiagnosticsActivitySourceTests
     {
         [SetUp]
         [TearDown]
