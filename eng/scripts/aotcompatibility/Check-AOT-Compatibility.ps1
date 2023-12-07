@@ -99,7 +99,7 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
 
     Write-Host "The specified file does not exist. Assuming no warnings are expected."
 
-    $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern "##\[warning\]" -notmatch
+    $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch
     $numWarnings = $warnings.Count
 
     if ($numWarnings -gt 0) {
@@ -120,7 +120,7 @@ $numExpectedWarnings = $expectedWarnings.Count
 
 Write-Host "Checking against the list of expected warnings. There are $numExpectedWarnings warnings expected."
 
-$warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern "##\[warning\]" -notmatch | select-string -pattern $expectedWarnings -notmatch
+$warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch | select-string -pattern $expectedWarnings -notmatch
 $numWarnings = $warnings.Count
 if ($numWarnings -gt 0) {
   Write-Host "Found $numWarnings additional warnings that were not expected:`n$warnings"
