@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricAlertMultipleResourceMultipleMetricCriteria : IUtf8JsonSerializable
+    public partial class MetricAlertMultipleResourceMultipleMetricCriteria : IUtf8JsonSerializable, IJsonModel<MetricAlertMultipleResourceMultipleMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertMultipleResourceMultipleMetricCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MetricAlertMultipleResourceMultipleMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllOf))
             {
@@ -44,8 +54,22 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static MetricAlertMultipleResourceMultipleMetricCriteria DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(JsonElement element)
+        MetricAlertMultipleResourceMultipleMetricCriteria IJsonModel<MetricAlertMultipleResourceMultipleMetricCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(document.RootElement, options);
+        }
+
+        internal static MetricAlertMultipleResourceMultipleMetricCriteria DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,5 +104,36 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties = additionalPropertiesDictionary;
             return new MetricAlertMultipleResourceMultipleMetricCriteria(odataType, additionalProperties, Optional.ToList(allOf));
         }
+
+        BinaryData IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MetricAlertMultipleResourceMultipleMetricCriteria IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

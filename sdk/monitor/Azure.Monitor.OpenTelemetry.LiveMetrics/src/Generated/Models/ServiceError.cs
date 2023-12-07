@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> Optional http response body, whose existance carries additional error descriptions. </summary>
     internal partial class ServiceError
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServiceError"/>. </summary>
         internal ServiceError()
         {
@@ -23,13 +56,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="exception"> Message of the exception that triggers the error response. </param>
-        internal ServiceError(string requestId, DateTimeOffset? responseDateTime, string code, string message, string exception)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceError(string requestId, DateTimeOffset? responseDateTime, string code, string message, string exception, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RequestId = requestId;
             ResponseDateTime = responseDateTime;
             Code = code;
             Message = message;
             Exception = exception;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A guid of the request that triggers the service error. </summary>

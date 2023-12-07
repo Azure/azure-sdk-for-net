@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class DataProductNetworkAcls : IUtf8JsonSerializable
+    public partial class DataProductNetworkAcls : IUtf8JsonSerializable, IJsonModel<DataProductNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductNetworkAcls>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataProductNetworkAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProductNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataProductNetworkAcls)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetworkRule"u8);
             writer.WriteStartArray();
@@ -39,11 +50,40 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteEndArray();
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProductNetworkAcls DeserializeDataProductNetworkAcls(JsonElement element)
+        DataProductNetworkAcls IJsonModel<DataProductNetworkAcls>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProductNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataProductNetworkAcls)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProductNetworkAcls(document.RootElement, options);
+        }
+
+        internal static DataProductNetworkAcls DeserializeDataProductNetworkAcls(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +92,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             IList<NetworkAnalyticsIPRules> ipRules = default;
             IList<string> allowedQueryIPRangeList = default;
             NetworkAclDefaultAction defaultAction = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkRule"u8))
@@ -89,8 +131,44 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     defaultAction = new NetworkAclDefaultAction(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataProductNetworkAcls(virtualNetworkRule, ipRules, allowedQueryIPRangeList, defaultAction);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataProductNetworkAcls(virtualNetworkRule, ipRules, allowedQueryIPRangeList, defaultAction, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataProductNetworkAcls>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProductNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataProductNetworkAcls)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataProductNetworkAcls IPersistableModel<DataProductNetworkAcls>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProductNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataProductNetworkAcls(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataProductNetworkAcls)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataProductNetworkAcls>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,5 +26,10 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             CriterionType = criterionType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMultiMetricCriteria"/> for deserialization. </summary>
+        internal UnknownMultiMetricCriteria()
+        {
+        }
     }
 }

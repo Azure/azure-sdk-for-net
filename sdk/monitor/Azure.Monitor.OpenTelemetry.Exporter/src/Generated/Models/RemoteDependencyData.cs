@@ -57,6 +57,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = measurements;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RemoteDependencyData"/> for deserialization. </summary>
+        internal RemoteDependencyData()
+        {
+        }
+
         /// <summary> Identifier of a dependency call instance. Used for correlation with the request telemetry item corresponding to this dependency call. </summary>
         public string Id { get; set; }
         /// <summary> Name of the command initiated with this dependency call. Low cardinality value. Examples are stored procedure name and URL path template. </summary>

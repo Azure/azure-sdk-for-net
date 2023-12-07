@@ -59,6 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Measurements = measurements;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PageViewPerfData"/> for deserialization. </summary>
+        internal PageViewPerfData()
+        {
+        }
+
         /// <summary> Identifier of a page view instance. Used for correlation between page view and other telemetry items. </summary>
         public string Id { get; }
         /// <summary> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </summary>

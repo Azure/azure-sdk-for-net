@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,12 +14,45 @@ namespace Azure.AI.OpenAI
     /// <summary> Optional settings to control how fields are processed when using a configured Pinecone resource. </summary>
     public partial class PineconeFieldMappingOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PineconeFieldMappingOptions"/>. </summary>
         public PineconeFieldMappingOptions()
         {
             ContentFieldNames = new ChangeTrackingList<string>();
             VectorFieldNames = new ChangeTrackingList<string>();
             ImageVectorFieldNames = new ChangeTrackingList<string>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PineconeFieldMappingOptions"/>. </summary>
@@ -29,7 +63,8 @@ namespace Azure.AI.OpenAI
         /// <param name="contentFieldSeparator"> The separator pattern that content fields should use. </param>
         /// <param name="vectorFieldNames"> The names of fields that represent vector data. </param>
         /// <param name="imageVectorFieldNames"> The names of fields that represent image vector data. </param>
-        internal PineconeFieldMappingOptions(string titleFieldName, string urlFieldName, string filepathFieldName, IList<string> contentFieldNames, string contentFieldSeparator, IList<string> vectorFieldNames, IList<string> imageVectorFieldNames)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PineconeFieldMappingOptions(string titleFieldName, string urlFieldName, string filepathFieldName, IList<string> contentFieldNames, string contentFieldSeparator, IList<string> vectorFieldNames, IList<string> imageVectorFieldNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TitleFieldName = titleFieldName;
             UrlFieldName = urlFieldName;
@@ -38,6 +73,7 @@ namespace Azure.AI.OpenAI
             ContentFieldSeparator = contentFieldSeparator;
             VectorFieldNames = vectorFieldNames;
             ImageVectorFieldNames = imageVectorFieldNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the index field to use as a title. </summary>

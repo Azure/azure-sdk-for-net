@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> A tool selection of a specific, named function tool that will limit chat completions to using the named function. </summary>
@@ -18,8 +21,9 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedFunctionToolSelection"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the function that should be called. </param>
-        internal ChatCompletionsNamedFunctionToolSelection(string type, ChatCompletionsNamedFunctionToolSelectionName name) : base(type)
+        internal ChatCompletionsNamedFunctionToolSelection(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ChatCompletionsNamedFunctionToolSelectionName name) : base(type, serializedAdditionalRawData)
         {
             Name = name;
         }

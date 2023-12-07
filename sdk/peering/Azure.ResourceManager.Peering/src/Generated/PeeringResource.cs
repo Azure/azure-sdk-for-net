@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _receivedRoutesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _receivedRoutesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringReceivedRoute.DeserializePeeringReceivedRoute, _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PeeringReceivedRoute.DeserializePeeringReceivedRoute(e), _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _receivedRoutesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _receivedRoutesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringReceivedRoute.DeserializePeeringReceivedRoute, _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PeeringReceivedRoute.DeserializePeeringReceivedRoute(e), _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rpUnbilledPrefixesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rpUnbilledPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix, _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix(e), _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rpUnbilledPrefixesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rpUnbilledPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix, _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix(e), _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
