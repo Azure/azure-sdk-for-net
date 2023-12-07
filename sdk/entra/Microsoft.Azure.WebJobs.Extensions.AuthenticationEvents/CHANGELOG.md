@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (Unreleased)
+
+### Bugs Fixed
+
+- Updated Event Metrics to use GetExecutingAssembly instead of static dll name. This is to resolve the azure function error: Could not load file or assembly 'C:\Program Files (x86)\SiteExtensions\Functions\4.27.5\32bit\Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.dll'. The system cannot find the file specified.
 
 ## 1.0.0-beta.4 (2023-11-23)
 
