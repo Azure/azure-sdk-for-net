@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.11 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.10 (2023-12-06)
 
 Following OpenAI's November Dev Day and Microsoft's 2023 Ignite conference, this update brings a slew of new
