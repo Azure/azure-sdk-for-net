@@ -57,6 +57,8 @@ extends:
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
+      ExpectedWarningsFilepath: /Azure.Core/tests/aotcompatibility/ExpectedAotWarnings.txt
+    - ArtifactName: Azure.Core.Experimental
       ExpectedWarningsFilepath: None
 
     TestSetupSteps:
