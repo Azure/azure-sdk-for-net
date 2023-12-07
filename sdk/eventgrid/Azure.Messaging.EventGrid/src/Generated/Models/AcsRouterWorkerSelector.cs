@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Job Worker Selector. </summary>
     public partial class AcsRouterWorkerSelector
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerSelector"/>. </summary>
         internal AcsRouterWorkerSelector()
         {
@@ -24,7 +57,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="ttlSeconds"> Router Job Worker Selector Time to Live in Seconds. </param>
         /// <param name="selectorState"> Router Job Worker Selector State. </param>
         /// <param name="expirationTime"> Router Job Worker Selector Expiration Time. </param>
-        internal AcsRouterWorkerSelector(string key, AcsRouterLabelOperator? @operator, object labelValue, float? ttlSeconds, AcsRouterWorkerSelectorState? selectorState, DateTimeOffset? expirationTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRouterWorkerSelector(string key, AcsRouterLabelOperator? @operator, object labelValue, float? ttlSeconds, AcsRouterWorkerSelectorState? selectorState, DateTimeOffset? expirationTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Operator = @operator;
@@ -32,6 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             TtlSeconds = ttlSeconds;
             SelectorState = selectorState;
             ExpirationTime = expirationTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Router Job Worker Selector Key. </summary>

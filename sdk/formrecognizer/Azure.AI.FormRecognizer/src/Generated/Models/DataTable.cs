@@ -15,6 +15,38 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Information about the extracted table contained in a page. </summary>
     internal partial class DataTable
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataTable"/>. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
@@ -37,12 +69,19 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
         /// <param name="boundingBox"> Bounding box of the table. </param>
-        internal DataTable(int rows, int columns, IReadOnlyList<DataTableCell> cells, IReadOnlyList<float> boundingBox)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataTable(int rows, int columns, IReadOnlyList<DataTableCell> cells, IReadOnlyList<float> boundingBox, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rows = rows;
             Columns = columns;
             Cells = cells;
             BoundingBox = boundingBox;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataTable"/> for deserialization. </summary>
+        internal DataTable()
+        {
         }
 
         /// <summary> Number of rows. </summary>

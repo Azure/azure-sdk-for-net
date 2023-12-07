@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -13,5 +14,60 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Authorization to copy a document model to the specified target resource and modelId. </summary>
     public partial class DocumentModelCopyAuthorization
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentModelCopyAuthorization"/>. </summary>
+        /// <param name="targetResourceId"> ID of the target Azure resource where the document model should be copied to. </param>
+        /// <param name="targetResourceRegion"> Location of the target Azure resource where the document model should be copied to. </param>
+        /// <param name="targetModelId"> Identifier of the target document model. </param>
+        /// <param name="targetModelLocation"> URL of the copied document model in the target account. </param>
+        /// <param name="accessToken"> Token used to authorize the request. </param>
+        /// <param name="expiresOn"> Date/time when the access token expires. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentModelCopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, Uri targetModelLocation, string accessToken, DateTimeOffset expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetResourceId = targetResourceId;
+            TargetResourceRegion = targetResourceRegion;
+            TargetModelId = targetModelId;
+            TargetModelLocation = targetModelLocation;
+            AccessToken = accessToken;
+            ExpiresOn = expiresOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentModelCopyAuthorization"/> for deserialization. </summary>
+        internal DocumentModelCopyAuthorization()
+        {
+        }
     }
 }

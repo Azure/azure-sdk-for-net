@@ -5,16 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ResourceNotificationsResourceUpdatedDetails
+    public partial class ResourceNotificationsResourceUpdatedDetails : IUtf8JsonSerializable, IJsonModel<ResourceNotificationsResourceUpdatedDetails>
     {
-        internal static ResourceNotificationsResourceUpdatedDetails DeserializeResourceNotificationsResourceUpdatedDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNotificationsResourceUpdatedDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceNotificationsResourceUpdatedDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceNotificationsResourceUpdatedDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ResourceNotificationsResourceUpdatedDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
+            if (Optional.IsCollectionDefined(ResourceTags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in ResourceTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ResourceNotificationsResourceUpdatedDetails IJsonModel<ResourceNotificationsResourceUpdatedDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceNotificationsResourceUpdatedDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ResourceNotificationsResourceUpdatedDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceNotificationsResourceUpdatedDetails(document.RootElement, options);
+        }
+
+        internal static ResourceNotificationsResourceUpdatedDetails DeserializeResourceNotificationsResourceUpdatedDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +118,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<IReadOnlyDictionary<string, object>> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,8 +177,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceNotificationsResourceUpdatedDetails(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceNotificationsResourceUpdatedDetails(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceNotificationsResourceUpdatedDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceNotificationsResourceUpdatedDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ResourceNotificationsResourceUpdatedDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ResourceNotificationsResourceUpdatedDetails IPersistableModel<ResourceNotificationsResourceUpdatedDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceNotificationsResourceUpdatedDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceNotificationsResourceUpdatedDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ResourceNotificationsResourceUpdatedDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceNotificationsResourceUpdatedDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

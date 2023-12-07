@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -12,10 +15,163 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class AnalyzeResult
+    public partial class AnalyzeResult : IUtf8JsonSerializable, IJsonModel<AnalyzeResult>
     {
-        internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnalyzeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnalyzeResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("apiVersion"u8);
+            writer.WriteStringValue(ApiVersion);
+            writer.WritePropertyName("modelId"u8);
+            writer.WriteStringValue(ModelId);
+            writer.WritePropertyName("stringIndexType"u8);
+            writer.WriteStringValue(StringIndexType.ToString());
+            if (Optional.IsDefined(ContentFormat))
+            {
+                writer.WritePropertyName("contentFormat"u8);
+                writer.WriteStringValue(ContentFormat.Value.ToString());
+            }
+            writer.WritePropertyName("content"u8);
+            writer.WriteStringValue(Content);
+            writer.WritePropertyName("pages"u8);
+            writer.WriteStartArray();
+            foreach (var item in Pages)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Paragraphs))
+            {
+                writer.WritePropertyName("paragraphs"u8);
+                writer.WriteStartArray();
+                foreach (var item in Paragraphs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Tables))
+            {
+                writer.WritePropertyName("tables"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tables)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Figures))
+            {
+                writer.WritePropertyName("figures"u8);
+                writer.WriteStartArray();
+                foreach (var item in Figures)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Lists))
+            {
+                writer.WritePropertyName("lists"u8);
+                writer.WriteStartArray();
+                foreach (var item in Lists)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Sections))
+            {
+                writer.WritePropertyName("sections"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(KeyValuePairs))
+            {
+                writer.WritePropertyName("keyValuePairs"u8);
+                writer.WriteStartArray();
+                foreach (var item in KeyValuePairs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Styles))
+            {
+                writer.WritePropertyName("styles"u8);
+                writer.WriteStartArray();
+                foreach (var item in Styles)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Languages))
+            {
+                writer.WritePropertyName("languages"u8);
+                writer.WriteStartArray();
+                foreach (var item in Languages)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Documents))
+            {
+                writer.WritePropertyName("documents"u8);
+                writer.WriteStartArray();
+                foreach (var item in Documents)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnalyzeResult IJsonModel<AnalyzeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnalyzeResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeResult(document.RootElement, options);
+        }
+
+        internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +191,8 @@ namespace Azure.AI.DocumentIntelligence
             Optional<IReadOnlyList<DocumentStyle>> styles = default;
             Optional<IReadOnlyList<DocumentLanguage>> languages = default;
             Optional<IReadOnlyList<AnalyzedDocument>> documents = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiVersion"u8))
@@ -202,9 +360,45 @@ namespace Azure.AI.DocumentIntelligence
                     documents = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnalyzeResult(apiVersion, modelId, stringIndexType, Optional.ToNullable(contentFormat), content, pages, Optional.ToList(paragraphs), Optional.ToList(tables), Optional.ToList(figures), Optional.ToList(lists), Optional.ToList(sections), Optional.ToList(keyValuePairs), Optional.ToList(styles), Optional.ToList(languages), Optional.ToList(documents));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzeResult(apiVersion, modelId, stringIndexType, Optional.ToNullable(contentFormat), content, pages, Optional.ToList(paragraphs), Optional.ToList(tables), Optional.ToList(figures), Optional.ToList(lists), Optional.ToList(sections), Optional.ToList(keyValuePairs), Optional.ToList(styles), Optional.ToList(languages), Optional.ToList(documents), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnalyzeResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnalyzeResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnalyzeResult IPersistableModel<AnalyzeResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalyzeResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnalyzeResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalyzeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -212,6 +406,14 @@ namespace Azure.AI.DocumentIntelligence
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAnalyzeResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

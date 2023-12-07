@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,93 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(StorageBlobRenamedEventDataConverter))]
-    public partial class StorageBlobRenamedEventData
+    public partial class StorageBlobRenamedEventData : IUtf8JsonSerializable, IJsonModel<StorageBlobRenamedEventData>
     {
-        internal static StorageBlobRenamedEventData DeserializeStorageBlobRenamedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageBlobRenamedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageBlobRenamedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBlobRenamedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageBlobRenamedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Api))
+            {
+                writer.WritePropertyName("api"u8);
+                writer.WriteStringValue(Api);
+            }
+            if (Optional.IsDefined(ClientRequestId))
+            {
+                writer.WritePropertyName("clientRequestId"u8);
+                writer.WriteStringValue(ClientRequestId);
+            }
+            if (Optional.IsDefined(RequestId))
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(RequestId);
+            }
+            if (Optional.IsDefined(SourceUrl))
+            {
+                writer.WritePropertyName("sourceUrl"u8);
+                writer.WriteStringValue(SourceUrl);
+            }
+            if (Optional.IsDefined(DestinationUrl))
+            {
+                writer.WritePropertyName("destinationUrl"u8);
+                writer.WriteStringValue(DestinationUrl);
+            }
+            if (Optional.IsDefined(Sequencer))
+            {
+                writer.WritePropertyName("sequencer"u8);
+                writer.WriteStringValue(Sequencer);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteStringValue(Identity);
+            }
+            if (Optional.IsDefined(StorageDiagnostics))
+            {
+                writer.WritePropertyName("storageDiagnostics"u8);
+                writer.WriteObjectValue(StorageDiagnostics);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageBlobRenamedEventData IJsonModel<StorageBlobRenamedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBlobRenamedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageBlobRenamedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageBlobRenamedEventData(document.RootElement, options);
+        }
+
+        internal static StorageBlobRenamedEventData DeserializeStorageBlobRenamedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +115,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> sequencer = default;
             Optional<string> identity = default;
             Optional<object> storageDiagnostics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("api"u8))
@@ -75,15 +163,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageBlobRenamedEventData(api.Value, clientRequestId.Value, requestId.Value, sourceUrl.Value, destinationUrl.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageBlobRenamedEventData(api.Value, clientRequestId.Value, requestId.Value, sourceUrl.Value, destinationUrl.Value, sequencer.Value, identity.Value, storageDiagnostics.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageBlobRenamedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBlobRenamedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageBlobRenamedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageBlobRenamedEventData IPersistableModel<StorageBlobRenamedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBlobRenamedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageBlobRenamedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageBlobRenamedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageBlobRenamedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class StorageBlobRenamedEventDataConverter : JsonConverter<StorageBlobRenamedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageBlobRenamedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override StorageBlobRenamedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

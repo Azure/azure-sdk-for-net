@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Summary of all trained custom models. </summary>
     internal partial class ModelsSummary
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ModelsSummary"/>. </summary>
         /// <param name="count"> Current count of trained custom models. </param>
         /// <param name="limit"> Max number of models that can be trained for this account. </param>
@@ -21,6 +54,24 @@ namespace Azure.AI.FormRecognizer.Models
             Count = count;
             Limit = limit;
             LastUpdatedDateTime = lastUpdatedDateTime;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ModelsSummary"/>. </summary>
+        /// <param name="count"> Current count of trained custom models. </param>
+        /// <param name="limit"> Max number of models that can be trained for this account. </param>
+        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the summary was last updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelsSummary(int count, int limit, DateTimeOffset lastUpdatedDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Count = count;
+            Limit = limit;
+            LastUpdatedDateTime = lastUpdatedDateTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ModelsSummary"/> for deserialization. </summary>
+        internal ModelsSummary()
+        {
         }
 
         /// <summary> Current count of trained custom models. </summary>

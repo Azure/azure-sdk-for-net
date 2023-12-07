@@ -15,5 +15,52 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Bounding polygon on a specific page of the input. </summary>
     public readonly partial struct BoundingRegion
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
+        /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
+        /// <param name="polygon"> Bounding polygon on the page, or the entire page if not specified. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PageNumber = pageNumber;
+            Polygon = polygon;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/> for deserialization. </summary>
+        public BoundingRegion()
+        {
+        }
     }
 }

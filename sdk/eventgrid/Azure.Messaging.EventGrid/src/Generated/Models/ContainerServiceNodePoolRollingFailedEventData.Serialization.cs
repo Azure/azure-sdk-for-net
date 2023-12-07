@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,15 +16,65 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerServiceNodePoolRollingFailedEventDataConverter))]
-    public partial class ContainerServiceNodePoolRollingFailedEventData
+    public partial class ContainerServiceNodePoolRollingFailedEventData : IUtf8JsonSerializable, IJsonModel<ContainerServiceNodePoolRollingFailedEventData>
     {
-        internal static ContainerServiceNodePoolRollingFailedEventData DeserializeContainerServiceNodePoolRollingFailedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceNodePoolRollingFailedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerServiceNodePoolRollingFailedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNodePoolRollingFailedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ContainerServiceNodePoolRollingFailedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NodePoolName))
+            {
+                writer.WritePropertyName("nodePoolName"u8);
+                writer.WriteStringValue(NodePoolName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerServiceNodePoolRollingFailedEventData IJsonModel<ContainerServiceNodePoolRollingFailedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNodePoolRollingFailedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ContainerServiceNodePoolRollingFailedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceNodePoolRollingFailedEventData(document.RootElement, options);
+        }
+
+        internal static ContainerServiceNodePoolRollingFailedEventData DeserializeContainerServiceNodePoolRollingFailedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nodePoolName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodePoolName"u8))
@@ -29,15 +82,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     nodePoolName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceNodePoolRollingFailedEventData(nodePoolName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerServiceNodePoolRollingFailedEventData(nodePoolName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceNodePoolRollingFailedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNodePoolRollingFailedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContainerServiceNodePoolRollingFailedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerServiceNodePoolRollingFailedEventData IPersistableModel<ContainerServiceNodePoolRollingFailedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNodePoolRollingFailedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerServiceNodePoolRollingFailedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContainerServiceNodePoolRollingFailedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerServiceNodePoolRollingFailedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ContainerServiceNodePoolRollingFailedEventDataConverter : JsonConverter<ContainerServiceNodePoolRollingFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerServiceNodePoolRollingFailedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ContainerServiceNodePoolRollingFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

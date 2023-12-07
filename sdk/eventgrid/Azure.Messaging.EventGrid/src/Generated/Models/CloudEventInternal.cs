@@ -62,6 +62,11 @@ namespace Azure.Messaging.EventGrid.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/> for deserialization. </summary>
+        internal CloudEventInternal()
+        {
+        }
+
         /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>
         public string Id { get; }
         /// <summary> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </summary>

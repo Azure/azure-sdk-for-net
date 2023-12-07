@@ -27,6 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
         /// <param name="queueId"> Router Worker Offer Issued Queue Id. </param>
         /// <param name="offerId"> Router Worker Offer Issued Offer Id. </param>
@@ -37,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="workerTags"> Router Worker Offer Issued Worker Tags. </param>
         /// <param name="jobLabels"> Router Worker Offer Issued Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Issued Job Tags. </param>
-        internal AcsRouterWorkerOfferIssuedEventData(string jobId, string channelReference, string channelId, string workerId, string queueId, string offerId, int? jobPriority, IReadOnlyDictionary<string, string> workerLabels, DateTimeOffset? offeredOn, DateTimeOffset? expiresOn, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, workerId)
+        internal AcsRouterWorkerOfferIssuedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string workerId, string queueId, string offerId, int? jobPriority, IReadOnlyDictionary<string, string> workerLabels, DateTimeOffset? offeredOn, DateTimeOffset? expiresOn, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, serializedAdditionalRawData, workerId)
         {
             QueueId = queueId;
             OfferId = offerId;

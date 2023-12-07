@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,88 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(KeyVaultSecretNearExpiryEventDataConverter))]
-    public partial class KeyVaultSecretNearExpiryEventData
+    public partial class KeyVaultSecretNearExpiryEventData : IUtf8JsonSerializable, IJsonModel<KeyVaultSecretNearExpiryEventData>
     {
-        internal static KeyVaultSecretNearExpiryEventData DeserializeKeyVaultSecretNearExpiryEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultSecretNearExpiryEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KeyVaultSecretNearExpiryEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(KeyVaultSecretNearExpiryEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("Id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(VaultName))
+            {
+                writer.WritePropertyName("VaultName"u8);
+                writer.WriteStringValue(VaultName);
+            }
+            if (Optional.IsDefined(ObjectType))
+            {
+                writer.WritePropertyName("ObjectType"u8);
+                writer.WriteStringValue(ObjectType);
+            }
+            if (Optional.IsDefined(ObjectName))
+            {
+                writer.WritePropertyName("ObjectName"u8);
+                writer.WriteStringValue(ObjectName);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("Version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(Nbf))
+            {
+                writer.WritePropertyName("NBF"u8);
+                writer.WriteNumberValue(Nbf.Value);
+            }
+            if (Optional.IsDefined(Exp))
+            {
+                writer.WritePropertyName("EXP"u8);
+                writer.WriteNumberValue(Exp.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        KeyVaultSecretNearExpiryEventData IJsonModel<KeyVaultSecretNearExpiryEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(KeyVaultSecretNearExpiryEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultSecretNearExpiryEventData(document.RootElement, options);
+        }
+
+        internal static KeyVaultSecretNearExpiryEventData DeserializeKeyVaultSecretNearExpiryEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +109,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> version = default;
             Optional<float> nbf = default;
             Optional<float> exp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -73,15 +156,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     exp = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeyVaultSecretNearExpiryEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KeyVaultSecretNearExpiryEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KeyVaultSecretNearExpiryEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(KeyVaultSecretNearExpiryEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KeyVaultSecretNearExpiryEventData IPersistableModel<KeyVaultSecretNearExpiryEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretNearExpiryEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKeyVaultSecretNearExpiryEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(KeyVaultSecretNearExpiryEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KeyVaultSecretNearExpiryEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class KeyVaultSecretNearExpiryEventDataConverter : JsonConverter<KeyVaultSecretNearExpiryEventData>
         {
             public override void Write(Utf8JsonWriter writer, KeyVaultSecretNearExpiryEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override KeyVaultSecretNearExpiryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

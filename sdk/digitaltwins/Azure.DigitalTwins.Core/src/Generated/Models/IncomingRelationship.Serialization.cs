@@ -5,15 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    public partial class IncomingRelationship
+    public partial class IncomingRelationship : IUtf8JsonSerializable, IJsonModel<IncomingRelationship>
     {
-        internal static IncomingRelationship DeserializeIncomingRelationship(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IncomingRelationship>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IncomingRelationship>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IncomingRelationship>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(IncomingRelationship)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RelationshipId))
+            {
+                writer.WritePropertyName("$relationshipId"u8);
+                writer.WriteStringValue(RelationshipId);
+            }
+            if (Optional.IsDefined(SourceId))
+            {
+                writer.WritePropertyName("$sourceId"u8);
+                writer.WriteStringValue(SourceId);
+            }
+            if (Optional.IsDefined(RelationshipName))
+            {
+                writer.WritePropertyName("$relationshipName"u8);
+                writer.WriteStringValue(RelationshipName);
+            }
+            if (Optional.IsDefined(RelationshipLink))
+            {
+                writer.WritePropertyName("$relationshipLink"u8);
+                writer.WriteStringValue(RelationshipLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IncomingRelationship IJsonModel<IncomingRelationship>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IncomingRelationship>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(IncomingRelationship)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIncomingRelationship(document.RootElement, options);
+        }
+
+        internal static IncomingRelationship DeserializeIncomingRelationship(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +89,8 @@ namespace Azure.DigitalTwins.Core
             Optional<string> sourceId = default;
             Optional<string> relationshipName = default;
             Optional<string> relationshipLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$relationshipId"u8))
@@ -44,8 +113,44 @@ namespace Azure.DigitalTwins.Core
                     relationshipLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IncomingRelationship(relationshipId.Value, sourceId.Value, relationshipName.Value, relationshipLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IncomingRelationship(relationshipId.Value, sourceId.Value, relationshipName.Value, relationshipLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IncomingRelationship>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IncomingRelationship>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(IncomingRelationship)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IncomingRelationship IPersistableModel<IncomingRelationship>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IncomingRelationship>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIncomingRelationship(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(IncomingRelationship)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IncomingRelationship>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

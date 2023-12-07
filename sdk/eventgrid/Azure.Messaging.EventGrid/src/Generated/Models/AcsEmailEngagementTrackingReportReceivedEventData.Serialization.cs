@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,88 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsEmailEngagementTrackingReportReceivedEventDataConverter))]
-    public partial class AcsEmailEngagementTrackingReportReceivedEventData
+    public partial class AcsEmailEngagementTrackingReportReceivedEventData : IUtf8JsonSerializable, IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>
     {
-        internal static AcsEmailEngagementTrackingReportReceivedEventData DeserializeAcsEmailEngagementTrackingReportReceivedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsEmailEngagementTrackingReportReceivedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Sender))
+            {
+                writer.WritePropertyName("sender"u8);
+                writer.WriteStringValue(Sender);
+            }
+            if (Optional.IsDefined(Recipient))
+            {
+                writer.WritePropertyName("recipient"u8);
+                writer.WriteStringValue(Recipient);
+            }
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(UserActionTimestamp))
+            {
+                writer.WritePropertyName("userActionTimeStamp"u8);
+                writer.WriteStringValue(UserActionTimestamp.Value, "O");
+            }
+            if (Optional.IsDefined(EngagementContext))
+            {
+                writer.WritePropertyName("engagementContext"u8);
+                writer.WriteStringValue(EngagementContext);
+            }
+            if (Optional.IsDefined(UserAgent))
+            {
+                writer.WritePropertyName("userAgent"u8);
+                writer.WriteStringValue(UserAgent);
+            }
+            if (Optional.IsDefined(Engagement))
+            {
+                writer.WritePropertyName("engagementType"u8);
+                writer.WriteStringValue(Engagement.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsEmailEngagementTrackingReportReceivedEventData IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsEmailEngagementTrackingReportReceivedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement, options);
+        }
+
+        internal static AcsEmailEngagementTrackingReportReceivedEventData DeserializeAcsEmailEngagementTrackingReportReceivedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +109,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> engagementContext = default;
             Optional<string> userAgent = default;
             Optional<AcsUserEngagement> engagementType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sender"u8))
@@ -73,15 +156,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     engagementType = new AcsUserEngagement(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsEmailEngagementTrackingReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Optional.ToNullable(userActionTimeStamp), engagementContext.Value, userAgent.Value, Optional.ToNullable(engagementType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsEmailEngagementTrackingReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Optional.ToNullable(userActionTimeStamp), engagementContext.Value, userAgent.Value, Optional.ToNullable(engagementType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsEmailEngagementTrackingReportReceivedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AcsEmailEngagementTrackingReportReceivedEventData IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsEmailEngagementTrackingReportReceivedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsEmailEngagementTrackingReportReceivedEventDataConverter : JsonConverter<AcsEmailEngagementTrackingReportReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsEmailEngagementTrackingReportReceivedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsEmailEngagementTrackingReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

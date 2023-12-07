@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,83 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ServiceBusActiveMessagesAvailableWithNoListenersEventDataConverter))]
-    public partial class ServiceBusActiveMessagesAvailableWithNoListenersEventData
+    public partial class ServiceBusActiveMessagesAvailableWithNoListenersEventData : IUtf8JsonSerializable, IJsonModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>
     {
-        internal static ServiceBusActiveMessagesAvailableWithNoListenersEventData DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ServiceBusActiveMessagesAvailableWithNoListenersEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NamespaceName))
+            {
+                writer.WritePropertyName("namespaceName"u8);
+                writer.WriteStringValue(NamespaceName);
+            }
+            if (Optional.IsDefined(RequestUri))
+            {
+                writer.WritePropertyName("requestUri"u8);
+                writer.WriteStringValue(RequestUri);
+            }
+            if (Optional.IsDefined(EntityType))
+            {
+                writer.WritePropertyName("entityType"u8);
+                writer.WriteStringValue(EntityType);
+            }
+            if (Optional.IsDefined(QueueName))
+            {
+                writer.WritePropertyName("queueName"u8);
+                writer.WriteStringValue(QueueName);
+            }
+            if (Optional.IsDefined(TopicName))
+            {
+                writer.WritePropertyName("topicName"u8);
+                writer.WriteStringValue(TopicName);
+            }
+            if (Optional.IsDefined(SubscriptionName))
+            {
+                writer.WritePropertyName("subscriptionName"u8);
+                writer.WriteStringValue(SubscriptionName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceBusActiveMessagesAvailableWithNoListenersEventData IJsonModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ServiceBusActiveMessagesAvailableWithNoListenersEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData(document.RootElement, options);
+        }
+
+        internal static ServiceBusActiveMessagesAvailableWithNoListenersEventData DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +103,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> queueName = default;
             Optional<string> topicName = default;
             Optional<string> subscriptionName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namespaceName"u8))
@@ -59,15 +137,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     subscriptionName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceBusActiveMessagesAvailableWithNoListenersEventData(namespaceName.Value, requestUri.Value, entityType.Value, queueName.Value, topicName.Value, subscriptionName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceBusActiveMessagesAvailableWithNoListenersEventData(namespaceName.Value, requestUri.Value, entityType.Value, queueName.Value, topicName.Value, subscriptionName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ServiceBusActiveMessagesAvailableWithNoListenersEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServiceBusActiveMessagesAvailableWithNoListenersEventData IPersistableModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ServiceBusActiveMessagesAvailableWithNoListenersEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceBusActiveMessagesAvailableWithNoListenersEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ServiceBusActiveMessagesAvailableWithNoListenersEventDataConverter : JsonConverter<ServiceBusActiveMessagesAvailableWithNoListenersEventData>
         {
             public override void Write(Utf8JsonWriter writer, ServiceBusActiveMessagesAvailableWithNoListenersEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ServiceBusActiveMessagesAvailableWithNoListenersEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

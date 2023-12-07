@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Text extracted from a page in the input document. </summary>
     internal partial class ReadResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ReadResult"/>. </summary>
         /// <param name="page"> The 1-based page number in the input document. </param>
         /// <param name="angle"> The general orientation of the text in clockwise direction, measured in degrees between (-180, 180]. </param>
@@ -38,7 +71,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="unit"> The unit used by the width, height and boundingBox properties. For images, the unit is "pixel". For PDF, the unit is "inch". </param>
         /// <param name="lines"> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </param>
         /// <param name="selectionMarks"> List of selection marks extracted from the page. </param>
-        internal ReadResult(int page, float angle, float width, float height, LengthUnit unit, IReadOnlyList<TextLine> lines, IReadOnlyList<SelectionMark> selectionMarks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReadResult(int page, float angle, float width, float height, LengthUnit unit, IReadOnlyList<TextLine> lines, IReadOnlyList<SelectionMark> selectionMarks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Page = page;
             Angle = angle;
@@ -47,6 +81,12 @@ namespace Azure.AI.FormRecognizer.Models
             Unit = unit;
             Lines = lines;
             SelectionMarks = selectionMarks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReadResult"/> for deserialization. </summary>
+        internal ReadResult()
+        {
         }
 
         /// <summary> The 1-based page number in the input document. </summary>

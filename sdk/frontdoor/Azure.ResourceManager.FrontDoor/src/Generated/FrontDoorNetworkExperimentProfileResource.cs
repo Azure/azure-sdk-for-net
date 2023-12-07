@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preconfiguredEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(e), _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preconfiguredEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(e), _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
