@@ -34,7 +34,7 @@ You can find the endpoint for your Azure AI Content Safety service resource usin
 az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "properties.endpoint"
 ```
 
-#### Create a ContentSafetyClient with API key
+#### Create a ContentSafetyClient/BlocklistClient with API key
 
 * Step 1: Get the API key
 
@@ -52,12 +52,13 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
     string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
     string key = "<api_key>";
 
-    ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
+    ContentSafetyClient contentSafetyClient = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
+    BlocklistClient blocklistClient = new BlocklistClient(new Uri(endpoint), new AzureKeyCredential(key));
     ```
 
-#### Create a ContentSafetyClient with Microsoft Entra ID credential
+#### Create a ContentSafetyClient/BlocklistClient with Microsoft Entra ID credential
 
-* Step 1: Enable Microsoft Entra ID for your resource. Please refer to this Cognitive Services authentication document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id] for the steps to enable Microsoft Entra ID for your resource.
+* Step 1: Enable Microsoft Entra ID for your resource. Please refer to this document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id] for the steps to enable Microsoft Entra ID for your resource.
 
     The main steps are:
 
@@ -71,28 +72,9 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
    ```csharp
     string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
 
-    ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new DefaultAzureCredential());
+    ContentSafetyClient contentSafetyClient = new ContentSafetyClient(new Uri(endpoint), new DefaultAzureCredential());
+    BlocklistClient blocklistClient = new BlocklistClient(new Uri(endpoint), new DefaultAzureCredential());
     ```
-
-#### Create a BlocklistClient with API key
-
-* Step 1: Get the API key
-
-    The API key can be found in the [Azure Portal][azure_portal] or by running the following [Azure CLI][azure_cli_key_lookup] command:
-
-    ```bash
-    az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
-    ```
-
-* Step 2: Create a BlocklistClient with AzureKeyCredential
-
-    Pass the API key as a string into an instance of `AzureKeyCredential`.
-
-    ```csharp
-    string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
-    string key = "<api_key>";
-
-    BlocklistClient client = new BlocklistClient(new Uri(endpoint), new AzureKeyCredential(key));
 
 ## Key concepts
 
@@ -144,11 +126,11 @@ Following operations are supported to manage your text blocklist:
 * Create or modify a blocklist
 * List all blocklists
 * Get a blocklist by blocklistName
-* Add blockItems to a blocklist
-* Remove blockItems from a blocklist
-* List all blockItems in a blocklist by blocklistName
-* Get a blockItem in a blocklist by blockItemId and blocklistName
-* Delete a blocklist and all of its blockItems
+* Add blocklistItems to a blocklist
+* Remove blocklistItems from a blocklist
+* List all blocklistItems in a blocklist by blocklistName
+* Get a blocklistItem in a blocklist by blocklistItemId and blocklistName
+* Delete a blocklist and all of its blocklistItems
 
 You can set the blocklists you want to use when analyze text, then you can get blocklist match result from returned response.
 
