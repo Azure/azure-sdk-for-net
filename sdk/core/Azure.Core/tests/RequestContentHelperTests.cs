@@ -71,6 +71,18 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void TestNullableGenericFromEnumerable()
+        {
+            List<int> nullableList = null;
+            var content = RequestContentHelper.FromEnumerable(nullableList);
+            Assert.IsNull(content);
+
+            List<BinaryData> nullableBinaryList= null;
+            content = RequestContentHelper.FromEnumerable(nullableBinaryList);
+            Assert.IsNull(content);
+        }
+
+        [Test]
         public void TestBinaryDataFromEnumerable()
         {
             var expectedList = new List<BinaryData> { new BinaryData(1), new BinaryData("\"hello\""), null };
@@ -130,6 +142,18 @@ namespace Azure.Core.Tests
                     Assert.AreEqual(expectedDictionary["k" + count++], property.Value.GetBoolean());
                 }
             }
+        }
+
+        [Test]
+        public void TestNullableGenericFromDictionary()
+        {
+            Dictionary<string, int> nullableDictionary = null;
+            var content = RequestContentHelper.FromDictionary(nullableDictionary);
+            Assert.IsNull(content);
+
+            Dictionary<string, BinaryData> nullableBinaryDictionary = null;
+            content = RequestContentHelper.FromDictionary(nullableBinaryDictionary);
+            Assert.IsNull(content);
         }
 
         [Test]

@@ -11,8 +11,13 @@ namespace Azure.Core
 {
     internal static class RequestContentHelper
     {
-        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable) where T: notnull
+        public static RequestContent? FromEnumerable<T>(IEnumerable<T> enumerable) where T: notnull
         {
+            if (enumerable == null)
+            {
+                return null;
+            }
+
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
@@ -24,8 +29,13 @@ namespace Azure.Core
             return content;
         }
 
-        public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
+        public static RequestContent? FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
+            if (enumerable == null)
+            {
+                return null;
+            }
+
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
@@ -48,8 +58,13 @@ namespace Azure.Core
             return content;
         }
 
-        public static RequestContent FromDictionary<T>(IDictionary<string, T> dictionary) where T : notnull
+        public static RequestContent? FromDictionary<T>(IDictionary<string, T> dictionary) where T : notnull
         {
+            if (dictionary == null)
+            {
+                return null;
+            }
+
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
@@ -62,8 +77,13 @@ namespace Azure.Core
             return content;
         }
 
-        public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
+        public static RequestContent? FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
+            if (dictionary == null)
+            {
+                return null;
+            }
+
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
