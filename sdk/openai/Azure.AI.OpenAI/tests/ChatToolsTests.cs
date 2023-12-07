@@ -9,20 +9,45 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.AI.OpenAI.Tests;
 
 public class ChatToolsTests : OpenAITestBase
 {
     public ChatToolsTests(bool isAsync)
-        : base(Scenario.ChatTools, isAsync)//, RecordedTestMode.Live)
+        : base(Scenario.ChatTools, isAsync) // , RecordedTestMode.Live)
     {
     }
 
+    public enum ToolChoiceTestType
+    {
+        DoNotSpecifyToolChoice,
+        UseAutoPresetToolChoice,
+        UseNonePresetToolChoice,
+        UseFunctionByExplicitToolDefinitionForToolChoice,
+        UseFunctionByExplicitFunctionDefinitionForToolChoice,
+        UseFunctionByImplicitToolDefinitionForToolChoice,
+        UseFunctionByImplicitFunctionDefinitionForToolChoice,
+        UseFunctionByImplicitFunctionNameForToolChoice,
+    }
+
     [RecordedTest]
-    [TestCase(Service.Azure)]
     [TestCase(Service.NonAzure)]
-    public async Task SimpleFunctionToolWorks(Service serviceTarget)
+    [TestCase(Service.NonAzure, ToolChoiceTestType.UseAutoPresetToolChoice)]
+    [TestCase(Service.NonAzure, ToolChoiceTestType.UseNonePresetToolChoice)]
+    [TestCase(Service.NonAzure, ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice)]
+    [TestCase(Service.Azure)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseAutoPresetToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseNonePresetToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByExplicitFunctionDefinitionForToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByImplicitFunctionDefinitionForToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByImplicitFunctionNameForToolChoice)]
+    public async Task SimpleFunctionToolWorks(
+        Service serviceTarget,
+        ToolChoiceTestType toolChoiceType = ToolChoiceTestType.DoNotSpecifyToolChoice)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
@@ -39,6 +64,18 @@ public class ChatToolsTests : OpenAITestBase
             MaxTokens = 512,
         };
 
+        requestOptions.ToolChoice = toolChoiceType switch
+        {
+            ToolChoiceTestType.UseAutoPresetToolChoice => ChatCompletionsToolChoice.Auto,
+            ToolChoiceTestType.UseNonePresetToolChoice => ChatCompletionsToolChoice.None,
+            ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice => new ChatCompletionsToolChoice(s_futureTemperatureTool),
+            ToolChoiceTestType.UseFunctionByExplicitFunctionDefinitionForToolChoice => new ChatCompletionsToolChoice(s_futureTemperatureFunction),
+            ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice => s_futureTemperatureTool,
+            ToolChoiceTestType.UseFunctionByImplicitFunctionDefinitionForToolChoice => s_futureTemperatureFunction,
+            ToolChoiceTestType.UseFunctionByImplicitFunctionNameForToolChoice => s_futureTemperatureFunction.Name,
+            _ => null,
+        };
+
         Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
         Assert.That(response, Is.Not.Null);
 
@@ -46,7 +83,28 @@ public class ChatToolsTests : OpenAITestBase
         Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
 
         ChatChoice choice = response.Value.Choices[0];
-        Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+
+        if (toolChoiceType == ToolChoiceTestType.UseNonePresetToolChoice)
+        {
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(choice.Message.ToolCalls, Is.Null.Or.Empty);
+            // We finish the test here as there's no further exercise for 'none' beyond ensuring we didn't do what we
+            // weren't meant to
+            return;
+        }
+        else if (toolChoiceType == ToolChoiceTestType.UseAutoPresetToolChoice || toolChoiceType == ToolChoiceTestType.DoNotSpecifyToolChoice)
+        {
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+            // and continue the test
+        }
+        else
+        {
+            // NOTE: providing an explicit tool_choice results in an inconsistent finish reason of "stopped" despite
+            //      otherwise behaving as expected with tool_calls. It's unclear if this is intended behavior but we
+            //      cover it here regardless.
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            // and continue the test, as we will have tool_calls
+        }
 
         ChatResponseMessage message = choice.Message;
         Assert.That(message.Role, Is.EqualTo(ChatRole.Assistant));

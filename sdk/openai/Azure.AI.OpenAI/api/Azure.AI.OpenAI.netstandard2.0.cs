@@ -341,7 +341,7 @@ namespace Azure.AI.OpenAI
         public System.Collections.Generic.IList<string> StopSequences { get { throw null; } }
         public float? Temperature { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<int, int> TokenSelectionBiases { get { throw null; } }
-        public System.BinaryData ToolChoice { get { throw null; } set { } }
+        public Azure.AI.OpenAI.ChatCompletionsToolChoice ToolChoice { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatCompletionsToolDefinition> Tools { get { throw null; } }
         public string User { get { throw null; } set { } }
     }
@@ -367,6 +367,16 @@ namespace Azure.AI.OpenAI
     {
         protected ChatCompletionsToolCall(string id) { }
         public string Id { get { throw null; } set { } }
+    }
+    public partial class ChatCompletionsToolChoice
+    {
+        public static readonly Azure.AI.OpenAI.ChatCompletionsToolChoice Auto;
+        public static readonly Azure.AI.OpenAI.ChatCompletionsToolChoice None;
+        public ChatCompletionsToolChoice(Azure.AI.OpenAI.ChatCompletionsFunctionToolDefinition functionToolDefinition) { }
+        public ChatCompletionsToolChoice(Azure.AI.OpenAI.FunctionDefinition functionDefinition) { }
+        public static implicit operator Azure.AI.OpenAI.ChatCompletionsToolChoice (Azure.AI.OpenAI.ChatCompletionsFunctionToolDefinition functionToolDefinition) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.ChatCompletionsToolChoice (Azure.AI.OpenAI.FunctionDefinition functionDefinition) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.ChatCompletionsToolChoice (string functionName) { throw null; }
     }
     public abstract partial class ChatCompletionsToolDefinition
     {

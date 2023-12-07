@@ -117,8 +117,8 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
         /// <param name="tools"> The available tool definitions that the chat completions request can use, including caller-defined functions. </param>
-        /// <param name="toolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
-        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, AzureChatEnhancementConfiguration enhancements, long? seed, ChatCompletionsResponseFormat? responseFormat, IList<ChatCompletionsToolDefinition> tools, BinaryData toolChoice)
+        /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
+        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, AzureChatEnhancementConfiguration enhancements, long? seed, ChatCompletionsResponseFormat? responseFormat, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice)
         {
             Messages = messages;
             Functions = functions;
@@ -139,7 +139,7 @@ namespace Azure.AI.OpenAI
             Seed = seed;
             ResponseFormat = responseFormat;
             Tools = tools;
-            ToolChoice = toolChoice;
+            InternalSuppressedToolChoice = internalSuppressedToolChoice;
         }
 
         /// <summary>
@@ -165,47 +165,5 @@ namespace Azure.AI.OpenAI
         /// The available derived classes include <see cref="ChatCompletionsFunctionToolDefinition"/>.
         /// </summary>
         public IList<ChatCompletionsToolDefinition> Tools { get; }
-        /// <summary>
-        /// If specified, the model will configure which of the provided tools it can use for the chat completions response.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description><see cref="ChatCompletionsToolSelectionPreset"/></description>
-        /// </item>
-        /// <item>
-        /// <description><see cref="ChatCompletionsNamedToolSelection"/></description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ToolChoice { get; set; }
     }
 }

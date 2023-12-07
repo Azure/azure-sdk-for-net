@@ -141,14 +141,7 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         if (Optional.IsDefined(ToolChoice))
         {
             writer.WritePropertyName("tool_choice"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ToolChoice);
-#else
-            using (JsonDocument document = JsonDocument.Parse(ToolChoice))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            writer.WriteObjectValue(ToolChoice);
         }
         writer.WriteEndObject();
     }

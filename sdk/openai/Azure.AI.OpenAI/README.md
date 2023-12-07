@@ -323,6 +323,38 @@ if (responseChoice.FinishReason == CompletionsFinishReason.ToolCalls)
 }
 ```
 
+Additionally: if you would like to control the behavior of tool calls, you can use the `ToolChoice` property on
+`ChatCompletionsOptions` to do so.
+
+- `None` instructs the model to not use any tools and instead always generate a message. Note that the model's
+    generated message may still be informed by the specified tools.
+- `Auto` is the default when tools are provided and instructs the model to determine which, if any, tools it should
+    call. If tools are selected, a `CompletionsFinishReason` of `ToolCalls` will be received on response choices.
+- Providing a reference to a named function, as below, will instruct the model to restrict its response to calling the
+    corresponding tool. Note that, as of the 1106 models, constraining tool selection in this way will result in a
+    finish reason of `stop` (`CompletionsFinishReason.Stopped`) despite populating `ToolCalls` with invocation of the
+    expected function.
+
+```C# Snippet:ChatTools:UseToolChoice
+chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.None; // don't call tools
+chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.Auto; // let the model decide
+chatCompletionsOptions.ToolChoice = getWeatherTool; // only use the specified tool
+
+/* Prior to the introduction of the ChatCompletionsToolChoice type, please use BinaryData, instead:
+
+chatCompletionsOptions.ToolChoice = BinaryData.FromString("none");
+chatCompletionsOptions.ToolChoice = BinaryData.FromString("auto");
+chatCompletionsOptions.ToolChoice = BinaryData.FromObjectAsJson(new
+{
+    type = "function",
+    function = new
+    {
+        name = getWeatherTool.Name,
+    },
+});
+*/
+```
+
 ### Use chat functions
 
 Chat Functions are a legacy form of chat tools. Although still supported by older models, the use of tools is encouraged
