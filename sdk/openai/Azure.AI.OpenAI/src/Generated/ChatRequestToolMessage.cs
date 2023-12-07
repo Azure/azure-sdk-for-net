@@ -13,39 +13,5 @@ namespace Azure.AI.OpenAI
     /// <summary> A request chat message representing requested output from a configured tool. </summary>
     public partial class ChatRequestToolMessage : ChatRequestMessage
     {
-        /// <summary> Initializes a new instance of <see cref="ChatRequestToolMessage"/>. </summary>
-        /// <param name="content"> The content of the message. </param>
-        /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="toolCallId"/> is null. </exception>
-        public ChatRequestToolMessage(string content, string toolCallId)
-        {
-            Argument.AssertNotNull(toolCallId, nameof(toolCallId));
-
-            Role = ChatRole.Tool;
-            Content = content;
-            ToolCallId = toolCallId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ChatRequestToolMessage"/>. </summary>
-        /// <param name="role"> The chat role associated with this message. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
-        internal ChatRequestToolMessage(ChatRole role, string content, string toolCallId) : base(role)
-        {
-            Content = content;
-            ToolCallId = toolCallId;
-        }
-
-        /// <summary> The content of the message. </summary>
-        public string Content { get; set; }
-        /// <summary> The ID of the tool call resolved by the provided content. </summary>
-        public string ToolCallId { get; }
-        /// <summary> Returns the message content as a string. </summary>
-        public override string GetStringContent() => Content;
-        /// <summary> Sets the message content as a string. </summary>
-        public override void SetStringContent(string content)
-        {
-            Content = content;
-        }
     }
 }

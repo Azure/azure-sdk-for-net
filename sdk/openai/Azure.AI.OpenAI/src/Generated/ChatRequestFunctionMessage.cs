@@ -13,39 +13,5 @@ namespace Azure.AI.OpenAI
     /// <summary> A request chat message representing requested output from a configured function. </summary>
     public partial class ChatRequestFunctionMessage : ChatRequestMessage
     {
-        /// <summary> Initializes a new instance of <see cref="ChatRequestFunctionMessage"/>. </summary>
-        /// <param name="name"> The name of the function that was called to produce output. </param>
-        /// <param name="content"> The output of the function as requested by the function call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ChatRequestFunctionMessage(string name, string content)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Role = ChatRole.Function;
-            Name = name;
-            Content = content;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ChatRequestFunctionMessage"/>. </summary>
-        /// <param name="role"> The chat role associated with this message. </param>
-        /// <param name="name"> The name of the function that was called to produce output. </param>
-        /// <param name="content"> The output of the function as requested by the function call. </param>
-        internal ChatRequestFunctionMessage(ChatRole role, string name, string content) : base(role)
-        {
-            Name = name;
-            Content = content;
-        }
-
-        /// <summary> The name of the function that was called to produce output. </summary>
-        public string Name { get; }
-        /// <summary> The output of the function as requested by the function call. </summary>
-        public string Content { get; set; }
-        /// <summary> Returns the message content as a string. </summary>
-        public override string GetStringContent() => Content;
-        /// <summary> Sets the message content as a string. </summary>
-        public override void SetStringContent(string content)
-        {
-            Content = content;
-        }
     }
 }
