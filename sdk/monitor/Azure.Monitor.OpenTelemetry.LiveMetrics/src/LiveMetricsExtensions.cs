@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
