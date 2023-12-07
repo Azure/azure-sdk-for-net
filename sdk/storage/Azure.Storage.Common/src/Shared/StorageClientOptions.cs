@@ -159,8 +159,13 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="credentials">Optional authentication credentials.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+        /// <param name="expectContinue">Options for selecting expect continue policy.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null) =>
-            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri);
+        public static HttpPipeline Build(
+            this ClientOptions options,
+            object credentials,
+            Uri geoRedundantSecondaryStorageUri = null,
+            ExpectContinueOptions expectContinue = null) =>
+            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri, expectContinue);
     }
 }
