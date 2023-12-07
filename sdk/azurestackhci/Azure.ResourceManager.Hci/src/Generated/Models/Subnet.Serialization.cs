@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +15,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class Subnet : IUtf8JsonSerializable
+    public partial class Subnet : IUtf8JsonSerializable, IJsonModel<Subnet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Subnet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<Subnet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(Subnet)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -75,11 +86,40 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteNumberValue(Vlan.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Subnet DeserializeSubnet(JsonElement element)
+        Subnet IJsonModel<Subnet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(Subnet)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubnet(document.RootElement, options);
+        }
+
+        internal static Subnet DeserializeSubnet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +132,8 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<RouteTable> routeTable = default;
             Optional<IList<IPPool>> ipPools = default;
             Optional<int> vlan = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -185,8 +227,44 @@ namespace Azure.ResourceManager.Hci.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Subnet(name.Value, addressPrefix.Value, Optional.ToList(addressPrefixes), Optional.ToNullable(ipAllocationMethod), Optional.ToList(ipConfigurationReferences), routeTable.Value, Optional.ToList(ipPools), Optional.ToNullable(vlan));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Subnet(name.Value, addressPrefix.Value, Optional.ToList(addressPrefixes), Optional.ToNullable(ipAllocationMethod), Optional.ToList(ipConfigurationReferences), routeTable.Value, Optional.ToList(ipPools), Optional.ToNullable(vlan), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Subnet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(Subnet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        Subnet IPersistableModel<Subnet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubnet(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(Subnet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Subnet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual AsyncPageable<CognitiveServicesAccountSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Pageable<CognitiveServicesAccountSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual AsyncPageable<ServiceAccountUsage> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceAccountUsage.DeserializeServiceAccountUsage, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ServiceAccountUsage.DeserializeServiceAccountUsage(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Pageable<ServiceAccountUsage> GetUsages(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ServiceAccountUsage.DeserializeServiceAccountUsage, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ServiceAccountUsage.DeserializeServiceAccountUsage(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual AsyncPageable<CognitiveServicesPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Pageable<CognitiveServicesPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

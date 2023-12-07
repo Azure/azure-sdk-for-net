@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Chaos.Models
             SelectorType = selectorType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ListSelector"/> for deserialization. </summary>
+        internal ListSelector()
+        {
+        }
+
         /// <summary> List of Target references. </summary>
         public IList<TargetReference> Targets { get; }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
@@ -14,6 +15,38 @@ namespace Azure.Communication.Chat
     /// <summary> Content of a chat message. </summary>
     internal partial class ChatMessageContentInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ChatMessageContentInternal"/>. </summary>
         internal ChatMessageContentInternal()
         {
@@ -27,13 +60,15 @@ namespace Azure.Communication.Chat
         /// <param name="participants"> Chat message content for messages of types participantAdded or participantRemoved. </param>
         /// <param name="attachments"> List of attachments for this message. </param>
         /// <param name="initiatorCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
-        internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, IReadOnlyList<ChatAttachmentInternal> attachments, CommunicationIdentifierModel initiatorCommunicationIdentifier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, IReadOnlyList<ChatAttachmentInternal> attachments, CommunicationIdentifierModel initiatorCommunicationIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             Topic = topic;
             Participants = participants;
             Attachments = attachments;
             InitiatorCommunicationIdentifier = initiatorCommunicationIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Chat message content for messages of types text or html. </summary>

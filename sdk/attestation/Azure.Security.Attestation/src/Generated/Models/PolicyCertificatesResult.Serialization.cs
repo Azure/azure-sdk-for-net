@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,15 +16,65 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyCertificatesResultConverter))]
-    internal partial class PolicyCertificatesResult
+    internal partial class PolicyCertificatesResult : IUtf8JsonSerializable, IJsonModel<PolicyCertificatesResult>
     {
-        internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyCertificatesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PolicyCertificatesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyCertificatesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PolicyCertificatesResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(InternalPolicyCertificates))
+            {
+                writer.WritePropertyName("x-ms-policy-certificates"u8);
+                writer.WriteObjectValue(InternalPolicyCertificates);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyCertificatesResult IJsonModel<PolicyCertificatesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyCertificatesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PolicyCertificatesResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyCertificatesResult(document.RootElement, options);
+        }
+
+        internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<JsonWebKeySet> xMsPolicyCertificates = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-policy-certificates"u8))
@@ -33,15 +86,51 @@ namespace Azure.Security.Attestation
                     xMsPolicyCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyCertificatesResult(xMsPolicyCertificates.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PolicyCertificatesResult(xMsPolicyCertificates.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicyCertificatesResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyCertificatesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PolicyCertificatesResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PolicyCertificatesResult IPersistableModel<PolicyCertificatesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyCertificatesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolicyCertificatesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PolicyCertificatesResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicyCertificatesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class PolicyCertificatesResultConverter : JsonConverter<PolicyCertificatesResult>
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificatesResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override PolicyCertificatesResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

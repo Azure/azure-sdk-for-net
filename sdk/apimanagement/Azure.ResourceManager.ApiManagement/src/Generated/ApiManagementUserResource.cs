@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, UserIdentityContract.DeserializeUserIdentityContract, _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UserIdentityContract.DeserializeUserIdentityContract(e), _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, UserIdentityContract.DeserializeUserIdentityContract, _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UserIdentityContract.DeserializeUserIdentityContract(e), _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

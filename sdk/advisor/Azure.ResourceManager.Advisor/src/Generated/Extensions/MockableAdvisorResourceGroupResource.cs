@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>

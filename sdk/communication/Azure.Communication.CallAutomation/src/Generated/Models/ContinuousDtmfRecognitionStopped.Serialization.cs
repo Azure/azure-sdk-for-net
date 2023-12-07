@@ -5,15 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class ContinuousDtmfRecognitionStopped
+    public partial class ContinuousDtmfRecognitionStopped : IUtf8JsonSerializable, IJsonModel<ContinuousDtmfRecognitionStopped>
     {
-        internal static ContinuousDtmfRecognitionStopped DeserializeContinuousDtmfRecognitionStopped(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContinuousDtmfRecognitionStopped>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContinuousDtmfRecognitionStopped>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousDtmfRecognitionStopped>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ContinuousDtmfRecognitionStopped)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResultInformation))
+            {
+                writer.WritePropertyName("resultInformation"u8);
+                writer.WriteObjectValue(ResultInformation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContinuousDtmfRecognitionStopped IJsonModel<ContinuousDtmfRecognitionStopped>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousDtmfRecognitionStopped>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ContinuousDtmfRecognitionStopped)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContinuousDtmfRecognitionStopped(document.RootElement, options);
+        }
+
+        internal static ContinuousDtmfRecognitionStopped DeserializeContinuousDtmfRecognitionStopped(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +95,8 @@ namespace Azure.Communication.CallAutomation
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationContext"u8))
@@ -54,8 +128,44 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContinuousDtmfRecognitionStopped(operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContinuousDtmfRecognitionStopped(operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContinuousDtmfRecognitionStopped>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousDtmfRecognitionStopped>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContinuousDtmfRecognitionStopped)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContinuousDtmfRecognitionStopped IPersistableModel<ContinuousDtmfRecognitionStopped>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousDtmfRecognitionStopped>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContinuousDtmfRecognitionStopped(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContinuousDtmfRecognitionStopped)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContinuousDtmfRecognitionStopped>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

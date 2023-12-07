@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
@@ -14,6 +15,38 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CallConnectionProperties. </summary>
     internal partial class CallConnectionPropertiesInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CallConnectionPropertiesInternal"/>. </summary>
         internal CallConnectionPropertiesInternal()
         {
@@ -29,7 +62,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="subject"> The subject. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="mediaSubscriptionId"> SubscriptionId for media streaming. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, CallSourceInternal source, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri, string mediaSubscriptionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, CallSourceInternal source, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri, string mediaSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -39,6 +73,7 @@ namespace Azure.Communication.CallingServer
             Subject = subject;
             CallbackUri = callbackUri;
             MediaSubscriptionId = mediaSubscriptionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The call connection id. </summary>

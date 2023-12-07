@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -20,8 +21,9 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="SimpleFilter"/>. </summary>
         /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Model that represents the Simple filter parameters. </param>
-        internal SimpleFilter(FilterType filterType, SimpleFilterParameters parameters) : base(filterType)
+        internal SimpleFilter(FilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData, SimpleFilterParameters parameters) : base(filterType, serializedAdditionalRawData)
         {
             Parameters = parameters;
             FilterType = filterType;

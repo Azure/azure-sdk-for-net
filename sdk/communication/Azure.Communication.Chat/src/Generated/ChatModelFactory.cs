@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
         {
             details ??= new List<ChatError>();
 
-            return new ChatError(code, message, target, details?.ToList(), innerError);
+            return new ChatError(code, message, target, details?.ToList(), innerError, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chat.AddChatParticipantsResult"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.Communication.Chat
         {
             invalidParticipants ??= new List<ChatError>();
 
-            return new AddChatParticipantsResult(invalidParticipants?.ToList());
+            return new AddChatParticipantsResult(invalidParticipants?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

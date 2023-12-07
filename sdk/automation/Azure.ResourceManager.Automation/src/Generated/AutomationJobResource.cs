@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
         }
     }
 }
