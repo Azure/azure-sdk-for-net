@@ -57,7 +57,7 @@ extends:
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
-      ExpectedWarningsFilepath: /Azure.Core/tests/aotcompatibility/ExpectedAotWarnings.txt
+      ExpectedWarningsFilepath: None
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
