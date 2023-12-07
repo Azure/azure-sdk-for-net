@@ -1259,12 +1259,12 @@
         "nfvis"
       ]
     },
-	{
+    {
       "filename": "**/sdk/edgemarketplace/**/*.cs",
       "words": [
         "hyperv"
       ]
-    },
+    }
   ],
   "allowCompoundWords": true
 }
