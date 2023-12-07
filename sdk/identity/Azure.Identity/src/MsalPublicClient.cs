@@ -92,7 +92,7 @@ namespace Azure.Identity
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
             var builder = client.AcquireTokenSilent(scopes, account);
 
-            if (claims != null)
+            if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);
             }
@@ -123,7 +123,7 @@ namespace Azure.Identity
             var builder = client.AcquireTokenSilent(scopes, (AuthenticationAccount)record)
                 .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? record.TenantId);
 
-            if (claims != null)
+            if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);
             }
@@ -167,7 +167,7 @@ namespace Azure.Identity
             var builder = client.AcquireTokenInteractive(scopes)
                 .WithPrompt(prompt);
 
-            if (claims != null)
+            if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);
             }
@@ -208,7 +208,7 @@ namespace Azure.Identity
             var builder = client
                 .AcquireTokenByUsernamePassword(scopes, username, password);
 
-            if (claims != null)
+            if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);
             }
@@ -232,7 +232,7 @@ namespace Azure.Identity
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
             var builder = client.AcquireTokenWithDeviceCode(scopes, deviceCodeCallback);
 
-            if (claims != null)
+            if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);
             }
@@ -254,7 +254,7 @@ namespace Azure.Identity
             var builder = ((IByRefreshToken)client).AcquireTokenByRefreshToken(scopes, refreshToken)
                 .WithAuthority(azureCloudInstance, tenant);
 
-            if (claims != null)
+            if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);
             }
