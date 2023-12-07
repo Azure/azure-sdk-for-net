@@ -477,7 +477,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [custom_details]: https://learn.microsoft.com/azure/ai-services/translator/reference/v3-0-reference#authentication-with-microsoft-entra-id
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
-[azure_cli]: https://learn.microsoft.com/en-us/cli/azure/
+[azure_cli]: https://learn.microsoft.com/cli/azure/
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com
