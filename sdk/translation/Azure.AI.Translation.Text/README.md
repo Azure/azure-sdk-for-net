@@ -67,7 +67,7 @@ TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(
 
 #### Create `TextTranslationClient` with Entra Credential
 
-Client API key authentication is used in most of the examples, but you can also authenticate with Entra (Azure Active Directory) using the [Azure Identity library][azure_identity].  To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, please install the Azure.Identity package:
+Client API key authentication is used in most of the examples, but you can also authenticate with Entra ID (Azure Active Directory) using the [Azure Identity library][azure_identity].  To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, please install the Azure.Identity package:
 
 ```dotnetcli
 dotnet add package Azure.Identity
