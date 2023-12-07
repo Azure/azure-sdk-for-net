@@ -16,6 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// A client used to perform cryptographic operations with Azure Key Vault keys.
     /// </summary>
+    [CallerShouldAudit(Reason = CallerShouldAuditReason)]
     public class CryptographyClient : IKeyEncryptionKey
     {
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-keys";
@@ -368,7 +369,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
             await DecryptAsync(new DecryptParameters(algorithm, ciphertext), cancellationToken).ConfigureAwait(false);
 
@@ -387,7 +387,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
             Decrypt(new DecryptParameters(algorithm, ciphertext), cancellationToken);
 
@@ -406,7 +405,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual async Task<DecryptResult> DecryptAsync(DecryptParameters decryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(decryptParameters, nameof(decryptParameters));
@@ -467,7 +465,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual DecryptResult Decrypt(DecryptParameters decryptParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(decryptParameters, nameof(decryptParameters));
@@ -642,7 +639,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual async Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(UnwrapKey)}");
@@ -701,7 +697,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(UnwrapKey)}");
@@ -759,7 +754,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual async Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Sign)}");
@@ -818,7 +812,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Sign)}");
@@ -1008,7 +1001,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -1088,7 +1080,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual SignResult SignData(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -1169,7 +1160,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -1250,7 +1240,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [CallerShouldAudit(Reason = CallerShouldAuditReason)]
         public virtual SignResult SignData(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
