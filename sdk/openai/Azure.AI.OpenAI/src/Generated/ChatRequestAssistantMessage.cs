@@ -43,7 +43,7 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> The content of the message. </summary>
-        public string Content { get; }
+        public string Content { get; set; }
         /// <summary> An optional name for the participant. </summary>
         public string Name { get; set; }
         /// <summary>
@@ -58,5 +58,12 @@ namespace Azure.AI.OpenAI
         /// completions request to resolve as configured.
         /// </summary>
         public FunctionCall FunctionCall { get; set; }
+        /// <summary> Returns the message content as a string. </summary>
+        public override string GetStringContent() => Content;
+        /// <summary> Sets the message content as a string. </summary>
+        public override void SetStringContent(string content)
+        {
+            Content = content;
+        }
     }
 }

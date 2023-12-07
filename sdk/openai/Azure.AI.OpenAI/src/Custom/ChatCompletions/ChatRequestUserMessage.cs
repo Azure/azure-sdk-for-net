@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -85,5 +87,25 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
             }
             writer.WriteEndArray();
         }
+    }
+
+    /// <summary> Returns the message content as a string. </summary>
+    public override string GetStringContent()
+    {
+        if (!string.IsNullOrEmpty(_stringContent))
+            return _stringContent;
+
+        ChatRequestUserMessage message = new ChatRequestUserMessage("Hello, world!");
+
+        using MemoryStream ms = new();
+        using Utf8JsonWriter writer = new(ms);
+        SerializeContent(writer);
+        return Encoding.UTF8.GetString(ms.ToArray());
+    }
+
+    /// <summary> Sets the message content as a string. </summary>
+    public override void SetStringContent(string content)
+    {
+        _stringContent = content;
     }
 }

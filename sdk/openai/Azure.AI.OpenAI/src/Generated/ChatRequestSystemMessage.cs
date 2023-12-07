@@ -38,8 +38,15 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> The contents of the system message. </summary>
-        public string Content { get; }
+        public string Content { get; set; }
         /// <summary> An optional name for the participant. </summary>
         public string Name { get; set; }
+        /// <summary> Returns the message content as a string. </summary>
+        public override string GetStringContent() => Content;
+        /// <summary> Sets the message content as a string. </summary>
+        public override void SetStringContent(string content)
+        {
+            Content = content;
+        }
     }
 }

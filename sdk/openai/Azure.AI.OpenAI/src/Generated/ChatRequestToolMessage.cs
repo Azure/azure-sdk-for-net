@@ -37,8 +37,15 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> The content of the message. </summary>
-        public string Content { get; }
+        public string Content { get; set; }
         /// <summary> The ID of the tool call resolved by the provided content. </summary>
         public string ToolCallId { get; }
+        /// <summary> Returns the message content as a string. </summary>
+        public override string GetStringContent() => Content;
+        /// <summary> Sets the message content as a string. </summary>
+        public override void SetStringContent(string content)
+        {
+            Content = content;
+        }
     }
 }

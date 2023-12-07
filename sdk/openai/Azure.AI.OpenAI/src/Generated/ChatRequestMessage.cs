@@ -28,5 +28,11 @@ namespace Azure.AI.OpenAI
 
         /// <summary> The chat role associated with this message. </summary>
         internal ChatRole Role { get; set; }
+
+        /// <summary> Returns the message content as a string. </summary>
+        public abstract string GetStringContent();
+
+        /// <summary> Sets the message content as a string. </summary>
+        public abstract void SetStringContent(string content);
     }
 }
