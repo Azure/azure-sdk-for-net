@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace System.ClientModel;
@@ -16,18 +17,23 @@ public class RequestOptions
     private PipelinePolicy[]? _perCallPolicies;
     private PipelinePolicy[]? _perTryPolicies;
 
+    private readonly MessageHeaders _requestHeaders;
+
     public RequestOptions()
     {
         CancellationToken = CancellationToken.None;
         ErrorBehavior = ErrorBehavior.Default;
-        RequestHeaders = new PipelineRequestHeaders();
+        _requestHeaders = new PipelineRequestHeaders();
     }
 
     public CancellationToken CancellationToken { get; set; }
 
     public ErrorBehavior ErrorBehavior { get; set; }
 
-    public MessageHeaders RequestHeaders { get; }
+    public void AddHeader(string name, string value)
+    {
+        _requestHeaders.Add(name, value);
+    }
 
     // Set options on the message before sending it through the pipeline.
     protected internal void Apply(PipelineMessage message, MessageClassifier? messageClassifier = default)
@@ -53,6 +59,12 @@ public class RequestOptions
         // Copy custom pipeline policies.
         message.PerCallPolicies = _perCallPolicies;
         message.PerTryPolicies = _perTryPolicies;
+
+        _requestHeaders.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+        foreach (var header in headers)
+        {
+            message.Request.Headers.Add(header.Key, header.Value);
+        }
     }
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)

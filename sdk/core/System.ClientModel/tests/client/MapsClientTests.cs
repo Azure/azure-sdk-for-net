@@ -180,7 +180,7 @@ public class MapsClientTests
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
 
             RequestOptions options = new RequestOptions();
-            options.RequestHeaders.Add("CustomHeader", "CustomHeaderValue");
+            options.AddHeader("CustomHeader", "CustomHeaderValue");
 
             // Call protocol method in order to pass RequestOptions
             OutputMessage output = client.GetCountryCode(ipAddress.ToString(), options);
