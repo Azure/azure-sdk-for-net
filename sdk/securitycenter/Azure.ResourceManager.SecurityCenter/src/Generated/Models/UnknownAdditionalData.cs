@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The UnknownAdditionalData. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAdditionalData"/>. </summary>
         /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
-        internal UnknownAdditionalData(AssessedResourceType assessedResourceType) : base(assessedResourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAdditionalData(AssessedResourceType assessedResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(assessedResourceType, serializedAdditionalRawData)
         {
             AssessedResourceType = assessedResourceType;
         }

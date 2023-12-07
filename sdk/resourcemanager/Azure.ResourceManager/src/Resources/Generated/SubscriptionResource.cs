@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionTagsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PredefinedTag.DeserializePredefinedTag, _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PredefinedTag.DeserializePredefinedTag(e), _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionTagsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PredefinedTag.DeserializePredefinedTag, _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PredefinedTag.DeserializePredefinedTag(e), _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.Resources
         public virtual AsyncPageable<LocationExpanded> GetLocationsAsync(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionRestClient.CreateListLocationsRequest(Id.SubscriptionId, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, LocationExpanded.DeserializeLocationExpanded, _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => LocationExpanded.DeserializeLocationExpanded(e), _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Pageable<LocationExpanded> GetLocations(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionRestClient.CreateListLocationsRequest(Id.SubscriptionId, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, LocationExpanded.DeserializeLocationExpanded, _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => LocationExpanded.DeserializeLocationExpanded(e), _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
         }
 
         /// <summary>

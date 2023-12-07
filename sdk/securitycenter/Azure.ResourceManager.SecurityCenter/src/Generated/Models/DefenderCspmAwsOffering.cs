@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM P1 for Aws offering. </summary>
@@ -19,8 +22,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
-        internal DefenderCspmAwsOffering(OfferingType offeringType, string description, DefenderCspmAwsOfferingVmScanners vmScanners) : base(offeringType, description)
+        internal DefenderCspmAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DefenderCspmAwsOfferingVmScanners vmScanners) : base(offeringType, description, serializedAdditionalRawData)
         {
             VmScanners = vmScanners;
             OfferingType = offeringType;

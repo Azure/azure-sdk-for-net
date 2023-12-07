@@ -14,6 +14,38 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> The error object containing details of why the request failed. </summary>
     public partial class RemoteRenderingServiceError
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RemoteRenderingServiceError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
@@ -34,13 +66,20 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="target"> The target of the particular error (e.g., the name of the property in error). </param>
         /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
-        internal RemoteRenderingServiceError(string code, string message, IReadOnlyList<RemoteRenderingServiceError> details, string target, RemoteRenderingServiceError innerError)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoteRenderingServiceError(string code, string message, IReadOnlyList<RemoteRenderingServiceError> details, string target, RemoteRenderingServiceError innerError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Details = details;
             Target = target;
             InnerError = innerError;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoteRenderingServiceError"/> for deserialization. </summary>
+        internal RemoteRenderingServiceError()
+        {
         }
 
         /// <summary> Error code. </summary>

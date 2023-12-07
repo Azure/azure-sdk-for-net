@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         public virtual AsyncPageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail, SkusClientDiagnostics, Pipeline, "MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail(e), SkusClientDiagnostics, Pipeline, "MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         public virtual Pageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkus(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail, SkusClientDiagnostics, Pipeline, "MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail(e), SkusClientDiagnostics, Pipeline, "MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseSkus", "value", null, cancellationToken);
         }
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownStorageAccountCustomDetails. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStorageAccountCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        internal UnknownStorageAccountCustomDetails(string resourceType) : base(resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownStorageAccountCustomDetails(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, serializedAdditionalRawData)
         {
             ResourceType = resourceType ?? "Unknown";
         }

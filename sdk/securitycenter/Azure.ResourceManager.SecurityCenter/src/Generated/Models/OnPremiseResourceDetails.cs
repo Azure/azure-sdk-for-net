@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -38,17 +39,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="OnPremiseResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
         /// <param name="vmUuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
-        internal OnPremiseResourceDetails(Source source, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName) : base(source)
+        internal OnPremiseResourceDetails(Source source, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName) : base(source, serializedAdditionalRawData)
         {
             WorkspaceId = workspaceId;
             VmUuid = vmUuid;
             SourceComputerId = sourceComputerId;
             MachineName = machineName;
             Source = source;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OnPremiseResourceDetails"/> for deserialization. </summary>
+        internal OnPremiseResourceDetails()
+        {
         }
 
         /// <summary> Azure resource Id of the workspace the machine is attached to. </summary>

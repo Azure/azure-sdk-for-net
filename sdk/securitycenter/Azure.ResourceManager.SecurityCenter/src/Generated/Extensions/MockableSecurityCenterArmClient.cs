@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => InformationProtectionPolicy.DeserializeInformationProtectionPolicy(e), InformationProtectionPoliciesClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => InformationProtectionPolicy.DeserializeInformationProtectionPolicy(e), InformationProtectionPoliciesClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> The SupportedVersion object for appliance. </summary>
     public partial class ApplianceSupportedVersion
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ApplianceSupportedVersion"/>. </summary>
         internal ApplianceSupportedVersion()
         {
@@ -18,10 +53,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <summary> Initializes a new instance of <see cref="ApplianceSupportedVersion"/>. </summary>
         /// <param name="metadata"> This is the metadata of the supported newer version. </param>
         /// <param name="version"> The newer version available for upgrade. </param>
-        internal ApplianceSupportedVersion(ApplianceSupportedVersionMetadata metadata, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceSupportedVersion(ApplianceSupportedVersionMetadata metadata, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metadata = metadata;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This is the metadata of the supported newer version. </summary>

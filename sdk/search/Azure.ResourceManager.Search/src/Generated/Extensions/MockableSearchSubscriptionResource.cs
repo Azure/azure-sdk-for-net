@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Search.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaUsageResult.DeserializeQuotaUsageResult(e), UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Search.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaUsageResult.DeserializeQuotaUsageResult(e), UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

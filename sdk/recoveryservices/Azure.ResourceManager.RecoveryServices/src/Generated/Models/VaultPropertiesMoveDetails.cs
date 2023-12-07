@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> The details of the latest move operation performed on the Azure Resource. </summary>
     public partial class VaultPropertiesMoveDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VaultPropertiesMoveDetails"/>. </summary>
         public VaultPropertiesMoveDetails()
         {
@@ -24,13 +57,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="completedOn"> End Time of the Resource Move Operation. </param>
         /// <param name="sourceResourceId"> Source Resource of the Resource Move Operation. </param>
         /// <param name="targetResourceId"> Target Resource of the Resource Move Operation. </param>
-        internal VaultPropertiesMoveDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? completedOn, ResourceIdentifier sourceResourceId, ResourceIdentifier targetResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultPropertiesMoveDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? completedOn, ResourceIdentifier sourceResourceId, ResourceIdentifier targetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             StartOn = startOn;
             CompletedOn = completedOn;
             SourceResourceId = sourceResourceId;
             TargetResourceId = targetResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> OperationId of the Resource Move Operation. </summary>

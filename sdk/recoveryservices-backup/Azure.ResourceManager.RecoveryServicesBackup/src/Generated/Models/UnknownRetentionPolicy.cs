@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownRetentionPolicy. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRetentionPolicy"/>. </summary>
         /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal UnknownRetentionPolicy(string retentionPolicyType) : base(retentionPolicyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRetentionPolicy(string retentionPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(retentionPolicyType, serializedAdditionalRawData)
         {
             RetentionPolicyType = retentionPolicyType ?? "Unknown";
         }

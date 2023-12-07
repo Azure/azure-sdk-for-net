@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </summary>
     public partial class CostEstimate
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CostEstimate"/>. </summary>
         internal CostEstimate()
         {
@@ -23,11 +56,13 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="currencyCode"> The currency code. </param>
         /// <param name="events"> List of usage events. </param>
         /// <param name="estimatedTotal"> The estimated total. </param>
-        internal CostEstimate(string currencyCode, IReadOnlyList<UsageEvent> events, float? estimatedTotal)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CostEstimate(string currencyCode, IReadOnlyList<UsageEvent> events, float? estimatedTotal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrencyCode = currencyCode;
             Events = events;
             EstimatedTotal = estimatedTotal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The currency code. </summary>

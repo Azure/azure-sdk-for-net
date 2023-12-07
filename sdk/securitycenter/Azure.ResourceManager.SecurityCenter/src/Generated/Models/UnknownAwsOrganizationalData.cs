@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The UnknownAwsOrganizationalData. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAwsOrganizationalData"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
-        internal UnknownAwsOrganizationalData(OrganizationMembershipType organizationMembershipType) : base(organizationMembershipType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAwsOrganizationalData(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(organizationMembershipType, serializedAdditionalRawData)
         {
             OrganizationMembershipType = organizationMembershipType;
         }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The UnknownAlertResourceIdentifier. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAlertResourceIdentifier"/>. </summary>
         /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
-        internal UnknownAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType) : base(resourceIdentifierType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceIdentifierType, serializedAdditionalRawData)
         {
             ResourceIdentifierType = resourceIdentifierType;
         }

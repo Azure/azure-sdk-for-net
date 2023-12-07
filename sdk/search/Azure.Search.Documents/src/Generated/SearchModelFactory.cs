@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Models
         {
             results ??= new List<AutocompleteItem>();
 
-            return new AutocompleteResults(coverage, results?.ToList());
+            return new AutocompleteResults(coverage, results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Models
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
-            return new SearchIndexerStatus(status, lastResult, executionHistory?.ToList(), limits);
+            return new SearchIndexerStatus(status, lastResult, executionHistory?.ToList(), limits, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexerExecutionResult"/>. </summary>
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Models
             errors ??= new List<SearchIndexerError>();
             warnings ??= new List<SearchIndexerWarning>();
 
-            return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+            return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexStatistics"/>. </summary>
@@ -92,7 +92,22 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Indexes.Models.SearchIndexStatistics"/> instance for mocking. </returns>
         public static SearchIndexStatistics SearchIndexStatistics(long documentCount = default, long storageSize = default, long vectorIndexSize = default)
         {
-            return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize);
+            return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.AnalyzeTextOptions"/>. </summary>
+        /// <param name="text"> The text to break into tokens. </param>
+        /// <param name="analyzerName"> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
+        /// <param name="tokenizerName"> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
+        /// <param name="tokenFilters"> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
+        /// <param name="charFilters"> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
+        /// <returns> A new <see cref="Indexes.Models.AnalyzeTextOptions"/> instance for mocking. </returns>
+        public static AnalyzeTextOptions AnalyzeTextOptions(string text = null, LexicalAnalyzerName? analyzerName = null, LexicalTokenizerName? tokenizerName = null, IEnumerable<TokenFilterName> tokenFilters = null, IEnumerable<string> charFilters = null)
+        {
+            tokenFilters ??= new List<TokenFilterName>();
+            charFilters ??= new List<string>();
+
+            return new AnalyzeTextOptions(text, analyzerName, tokenizerName, tokenFilters?.ToList(), charFilters?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchServiceCounters"/>. </summary>
@@ -107,7 +122,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Indexes.Models.SearchServiceCounters"/> instance for mocking. </returns>
         public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter documentCounter = null, SearchResourceCounter indexCounter = null, SearchResourceCounter indexerCounter = null, SearchResourceCounter dataSourceCounter = null, SearchResourceCounter storageSizeCounter = null, SearchResourceCounter synonymMapCounter = null, SearchResourceCounter skillsetCounter = null, SearchResourceCounter vectorIndexSizeCounter = null)
         {
-            return new SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter);
+            return new SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter, serializedAdditionalRawData: null);
         }
     }
 }

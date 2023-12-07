@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
@@ -20,13 +22,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureResourceInfo"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The Id of azure resource. </param>
         /// <param name="resourceProperties">
         /// The azure resource connection related properties.
         /// Please note <see cref="AzureResourceBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
         /// </param>
-        internal AzureResourceInfo(TargetServiceType targetServiceType, ResourceIdentifier id, AzureResourceBaseProperties resourceProperties) : base(targetServiceType)
+        internal AzureResourceInfo(TargetServiceType targetServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier id, AzureResourceBaseProperties resourceProperties) : base(targetServiceType, serializedAdditionalRawData)
         {
             Id = id;
             ResourceProperties = resourceProperties;

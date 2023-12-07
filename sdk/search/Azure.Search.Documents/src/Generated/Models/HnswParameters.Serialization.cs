@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class HnswParameters : IUtf8JsonSerializable
+    public partial class HnswParameters : IUtf8JsonSerializable, IJsonModel<HnswParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HnswParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HnswParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HnswParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HnswParameters)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(M))
             {
@@ -63,11 +75,40 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("metric");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HnswParameters DeserializeHnswParameters(JsonElement element)
+        HnswParameters IJsonModel<HnswParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HnswParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HnswParameters)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHnswParameters(document.RootElement, options);
+        }
+
+        internal static HnswParameters DeserializeHnswParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +117,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<int?> efConstruction = default;
             Optional<int?> efSearch = default;
             Optional<VectorSearchAlgorithmMetric?> metric = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("m"u8))
@@ -118,8 +161,44 @@ namespace Azure.Search.Documents.Indexes.Models
                     metric = new VectorSearchAlgorithmMetric(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HnswParameters(Optional.ToNullable(m), Optional.ToNullable(efConstruction), Optional.ToNullable(efSearch), Optional.ToNullable(metric));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HnswParameters(Optional.ToNullable(m), Optional.ToNullable(efConstruction), Optional.ToNullable(efSearch), Optional.ToNullable(metric), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HnswParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HnswParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HnswParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HnswParameters IPersistableModel<HnswParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HnswParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHnswParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HnswParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HnswParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
