@@ -157,7 +157,7 @@ namespace Azure.Identity
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
             ClientCertificateProvider = certificateProvider;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            ClientCertificateCredentialOptions certCredOptions = (options as ClientCertificateCredentialOptions);
+            ClientCertificateCredentialOptions certCredOptions = options as ClientCertificateCredentialOptions;
 
             Client = client ??
                      new MsalConfidentialClient(
@@ -187,7 +187,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
-                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
+                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -213,7 +213,7 @@ namespace Azure.Identity
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 AuthenticationResult result = await Client
-                    .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.IsCaeEnabled, true, cancellationToken)
+                    .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken)
                     .ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));

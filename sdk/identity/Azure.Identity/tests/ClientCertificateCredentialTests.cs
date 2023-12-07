@@ -38,17 +38,20 @@ namespace Azure.Identity.Tests
 
             var options = new ClientCertificateCredentialOptions
             {
-                Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
             return InstrumentClient(
-                new ClientCertificateCredential(config.TenantId, ClientId, mockCert, options, pipeline, null)
+                new ClientCertificateCredential(config.TenantId, ClientId, mockCert, options, pipeline, config.MockConfidentialMsalClient)
             );
         }
 
