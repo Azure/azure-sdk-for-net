@@ -150,7 +150,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
 
-            _manager._metricsContainer._doubleBuffer.WriteDocument(exceptionDocumentIngress);
+            _manager._metricsContainer._documentBuffer.Instance.WriteDocument(exceptionDocumentIngress);
         }
 
         private void AddRemoteDependencyDocument(Activity activity)
@@ -171,7 +171,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
 
-            _manager._metricsContainer._doubleBuffer.WriteDocument(remoteDependencyDocumentIngress);
+            _manager._metricsContainer._documentBuffer.Instance.WriteDocument(remoteDependencyDocumentIngress);
         }
 
         private void AddRequestDocument(Activity activity, string? statusCodeAttributeValue)
@@ -191,7 +191,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
 
-            _manager._metricsContainer._doubleBuffer.WriteDocument(requestDocumentIngress);
+            _manager._metricsContainer._documentBuffer.Instance.WriteDocument(requestDocumentIngress);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

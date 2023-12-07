@@ -188,7 +188,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     // CollectionConfigurationErrors = null,
                 };
 
-                DocumentBuffer filledBuffer = _metricsContainer._doubleBuffer.FlipDocumentBuffers();
+                DocumentBuffer filledBuffer = _metricsContainer._documentBuffer.FlipBuffers();
                 foreach (var item in filledBuffer.ReadAllAndClear())
                 {
                     dataPoint.Documents.Add(item);

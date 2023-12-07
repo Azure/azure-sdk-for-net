@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         private MeterProvider? _meterProvider;
         private BaseExportingMetricReader _metricReader;
 
-        internal readonly DoubleBuffer _doubleBuffer = new();
+        internal readonly DoubleBuffer<DocumentBuffer> _documentBuffer = new();
 
         private PerformanceCounter _performanceCounter_ProcessorTime = new PerformanceCounter(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
         private PerformanceCounter _performanceCounter_CommittedBytes = new PerformanceCounter(categoryName: "Memory", counterName: "Committed Bytes");

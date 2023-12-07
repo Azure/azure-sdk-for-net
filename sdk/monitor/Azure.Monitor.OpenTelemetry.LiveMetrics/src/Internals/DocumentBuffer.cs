@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         // Atomic counter for the number of documents in the queue.
         private int _count = 0;
 
-        public void Add(DocumentIngress document)
+        public void WriteDocument(DocumentIngress document)
         {
             // Ensure the queue does not exceed capacity.
             if (Interlocked.CompareExchange(ref _count, 0, 0) < _capacity)
