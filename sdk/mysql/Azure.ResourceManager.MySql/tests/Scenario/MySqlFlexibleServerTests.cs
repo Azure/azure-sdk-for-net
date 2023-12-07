@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.Tests
             : base(isAsync)
         {
             BodyKeySanitizers.Add(new BodyKeySanitizer("https://fakeaccout.blob.windows.core.net/fakecontainer") { JsonPath = "properties.importSourceProperties.storageUrl" });
-            BodyKeySanitizers.Add(new BodyKeySanitizer("fakesastoken") { JsonPath = "properties.importSourceProperties.sasToken" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue) { JsonPath = "properties.importSourceProperties.sasToken" });
         }
 
         [TestCase]
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MySql.Tests
             string serverName = Recording.GenerateAssetName("mysqlflexserver");
             string sourceStorageUri = "https://fakeaccout.blob.windows.core.net/fakecontainer";
             string sourceDataDirPath = "e2e-test";
-            string sourceStorageSasToken = "fakesastoken";
+            string sourceStorageSasToken = SanitizeValue;
 
             var data = new MySqlFlexibleServerData(rg.Data.Location)
             {
