@@ -31,15 +31,11 @@ public class MapsClient
         _pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "subscription-key"));
     }
 
-    public virtual OutputMessage<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
+    public virtual OutputMessage<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        RequestOptions options = cancellationToken.CanBeCanceled ?
-            new RequestOptions() { CancellationToken = cancellationToken } :
-            new RequestOptions();
-
-        OutputMessage output = GetCountryCode(ipAddress.ToString(), options);
+        OutputMessage output = GetCountryCode(ipAddress.ToString());
 
         PipelineResponse response = output.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
