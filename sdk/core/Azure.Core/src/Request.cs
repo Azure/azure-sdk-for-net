@@ -193,8 +193,6 @@ namespace Azure.Core
             public AzureCoreMessageHeaders(RequestHeaders headers)
                 => _headers = headers;
 
-            public override int Count => _headers.Count();
-
             public override void Add(string name, string value)
                 => _headers.Add(name, value);
 

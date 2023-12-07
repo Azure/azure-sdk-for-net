@@ -386,8 +386,6 @@ public class MapsClientTests
                 _headers = new Dictionary<string, string>();
             }
 
-            public override int Count => throw new NotImplementedException();
-
             public override void Add(string name, string value)
             {
                 if (_headers.ContainsKey(name))

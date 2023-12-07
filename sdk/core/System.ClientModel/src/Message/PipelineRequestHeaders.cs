@@ -11,8 +11,6 @@ internal class PipelineRequestHeaders : MessageHeaders
 {
     private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
 
-    public override int Count => _headers.Count;
-
     public override bool Remove(string name)
         => _headers.TryRemove(new IgnoreCaseString(name));
 

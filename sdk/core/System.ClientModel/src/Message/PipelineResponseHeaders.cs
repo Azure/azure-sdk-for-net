@@ -19,8 +19,6 @@ internal class PipelineResponseHeaders : MessageHeaders
         _httpResponseContent = responseContent;
     }
 
-    public override int Count => throw new NotSupportedException();
-
     public override void Add(string name, string value)
         => throw new NotSupportedException();
 

@@ -7,9 +7,6 @@ namespace System.ClientModel.Primitives;
 
 public abstract class MessageHeaders
 {
-    // TODO: why do we need this?
-    public abstract int Count { get; }
-
     public abstract void Add(string name, string value);
 
     public abstract void Set(string name, string value);

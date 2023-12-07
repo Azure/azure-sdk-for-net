@@ -133,7 +133,6 @@ namespace System.ClientModel.Primitives
     public abstract partial class MessageHeaders
     {
         protected MessageHeaders() { }
-        public abstract int Count { get; }
         public abstract void Add(string name, string value);
         public abstract bool Remove(string name);
         public abstract void Set(string name, string value);
