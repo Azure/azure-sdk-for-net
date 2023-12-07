@@ -193,6 +193,8 @@ namespace Azure.Core
             public AzureCoreMessageHeaders(RequestHeaders headers)
                 => _headers = headers;
 
+            public override int Count => _headers.Count();
+
             public override void Add(string name, string value)
                 => _headers.Add(name, value);
 
@@ -202,8 +204,11 @@ namespace Azure.Core
             public override void Set(string name, string value)
                 => _headers.SetValue(name, value);
 
-            public override IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator()
-                => GetHeadersEnumerableValues().GetEnumerator();
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+            {
+                headers = GetHeadersEnumerableValues();
+                return true;
+            }
 
             private IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersEnumerableValues()
             {
@@ -215,6 +220,12 @@ namespace Azure.Core
 
             private IEnumerable<string> GetHeaderValues(string compositeHeaderValue)
                 => compositeHeaderValue.Split(';');
+
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+            {
+                headers = GetHeadersCompositeValues();
+                return true;
+            }
 
             private IEnumerable<KeyValuePair<string, string>> GetHeadersCompositeValues()
             {

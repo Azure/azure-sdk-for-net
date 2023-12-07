@@ -101,7 +101,8 @@ public partial class HttpClientPipelineTransport
 
             // TODO: Come back and address this implementation per switching on string/list
             // header values once we reimplement assignment of headers to ResponseHeader directly.
-            foreach (KeyValuePair<string, IEnumerable<string>> header in request.Headers)
+            request.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers);
+            foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
             {
                 object headerValue = header.Value.Count() == 1 ? header.Value.First() : header.Value;
                 switch (headerValue)

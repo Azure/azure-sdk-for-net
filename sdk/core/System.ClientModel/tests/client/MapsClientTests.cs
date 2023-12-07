@@ -386,6 +386,8 @@ public class MapsClientTests
                 _headers = new Dictionary<string, string>();
             }
 
+            public override int Count => throw new NotImplementedException();
+
             public override void Add(string name, string value)
             {
                 if (_headers.ContainsKey(name))
@@ -406,17 +408,22 @@ public class MapsClientTests
             public override void Set(string name, string value)
                 => _headers[name] = value;
 
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+            {
+                throw new NotImplementedException();
+            }
+
             public override bool TryGetValue(string name, out string value)
             {
                 throw new NotImplementedException();
             }
 
             public override bool TryGetValues(string name, out IEnumerable<string> values)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator()
             {
                 throw new NotImplementedException();
             }

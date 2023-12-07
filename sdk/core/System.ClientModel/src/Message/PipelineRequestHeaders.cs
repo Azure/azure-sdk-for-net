@@ -11,6 +11,8 @@ internal class PipelineRequestHeaders : MessageHeaders
 {
     private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
 
+    public override int Count => _headers.Count;
+
     public override bool Remove(string name)
         => _headers.TryRemove(new IgnoreCaseString(name));
 
@@ -59,8 +61,17 @@ internal class PipelineRequestHeaders : MessageHeaders
         return false;
     }
 
-    public override IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator()
-        => GetHeadersListValues().GetEnumerator();
+    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+    {
+        headers = GetHeadersStringValues();
+        return true;
+    }
+
+    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+    {
+        headers = GetHeadersListValues();
+        return true;
+    }
 
     #region Implementation
     private IEnumerable<KeyValuePair<string, string>> GetHeadersStringValues()
