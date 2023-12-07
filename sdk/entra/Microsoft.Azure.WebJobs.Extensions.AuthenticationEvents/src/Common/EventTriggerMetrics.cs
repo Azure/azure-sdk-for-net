@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -20,9 +21,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         private EventTriggerMetrics()
         {
-            var assembly = AssemblyName.GetAssemblyName("Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.dll");
+            var assembly = Assembly.GetExecutingAssembly();
 
-            ProductVersion = assembly.Version.ToString();
+            ProductVersion = FileVersionInfo.GetVersionInfo(assembly.Location)?.FileVersion;
             Framework = RuntimeInformation.FrameworkDescription;
             Platform = RuntimeInformation.OSDescription ?? "unknown";
         }
