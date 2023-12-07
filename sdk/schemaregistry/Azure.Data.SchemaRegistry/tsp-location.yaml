@@ -1,0 +1,4 @@
+repo: Azure/azure-rest-api-specs
+directory: specification/schemaregistry/SchemaRegistry
+additionalDirectories: []
+commit: 496ef847bd63aab7c10b2225701b125ff161ea05

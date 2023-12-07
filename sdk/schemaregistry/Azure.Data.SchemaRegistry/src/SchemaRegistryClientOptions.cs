@@ -7,9 +7,11 @@ using Azure.Core;
 namespace Azure.Data.SchemaRegistry
 {
     /// <summary>
-    /// The options for <see cref="SchemaRegistryClient"/>
+    /// The options for <see cref="SchemaRegistryClient"/>.
     /// </summary>
-    public class SchemaRegistryClientOptions : ClientOptions
+    //[CodeGenSuppress("SchemaRegistryClientOptions")]
+    //[CodeGenModel("SchemaRegistryClientOptions")]
+    public partial class SchemaRegistryClientOptions : ClientOptions
     {
         internal string Version { get; }
 

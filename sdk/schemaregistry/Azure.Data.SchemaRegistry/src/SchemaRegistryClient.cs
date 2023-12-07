@@ -14,10 +14,8 @@ namespace Azure.Data.SchemaRegistry
     /// <summary>
     /// The Schema Registry client provides operations to interact with the Schema Registry service.
     /// </summary>
-    public class SchemaRegistryClient
+    public partial class SchemaRegistryClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        internal SchemaRestClient RestClient { get; }
         private const string CredentialScope = "https://eventhubs.azure.net/.default";
 
         /// <summary>
@@ -30,12 +28,9 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryClient"/>.
         /// </summary>
-        public SchemaRegistryClient(string fullyQualifiedNamespace, TokenCredential credential, SchemaRegistryClientOptions options) : this(
-            new ClientDiagnostics(options),
-            HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, CredentialScope)),
-            fullyQualifiedNamespace,
-            options.Version)
+        public SchemaRegistryClient(string fullyQualifiedNamespace, TokenCredential credential, SchemaRegistryClientOptions options) : this(new Uri($"https://{fullyQualifiedNamespace}"), credential, options)
         {
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
         }
 
         /// <summary>
@@ -47,18 +42,6 @@ namespace Azure.Data.SchemaRegistry
         ///</remarks>
         protected SchemaRegistryClient()
         {
-        }
-
-        /// <summary>Initializes a new instance of <see cref="SchemaRegistryClient"/>.</summary>
-        /// <param name="clientDiagnostics">The handler for diagnostic messaging in the client.</param>
-        /// <param name="pipeline">The HTTP pipeline for sending and receiving REST requests and responses.</param>
-        /// <param name="fullyQualifiedNamespace">The fully qualified namespace. For example, myschemaregistry.servicebus.windows.net.</param>
-        /// <param name="apiVersion">The API version of the service.</param>
-        internal SchemaRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string fullyQualifiedNamespace, string apiVersion)
-        {
-            RestClient = new SchemaRestClient(clientDiagnostics, pipeline, fullyQualifiedNamespace, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            FullyQualifiedNamespace = fullyQualifiedNamespace;
         }
 
         /// <summary>
@@ -116,21 +99,26 @@ namespace Azure.Data.SchemaRegistry
             bool async,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(RegisterSchemaScopeName);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(RegisterSchemaScopeName);
             scope.Start();
             try
             {
-                ResponseWithHeaders<SchemaRegisterHeaders> response;
+                Response response;
                 if (async)
                 {
-                    response = await RestClient.RegisterAsync(groupName, schemaName, format.ToContentType().ToString(), new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
+                    response = await RegisterSchemaAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType().ToString(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.Register(groupName, schemaName, format.ToContentType().ToString(), new BinaryData(schemaDefinition).ToStream(), cancellationToken);
+                    response = RegisterSchema(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType().ToString(), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
+                var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
+                var schemaGroupNameHeader = response.Headers.TryGetValue("Schema-Group-Name", out string groupNameHeader) ? groupNameHeader : null;
+                var schemaNameHeader = response.Headers.TryGetValue("Schema-Name", out string nameHeader) ? nameHeader : null;
+                var schemaVersionHeader = response.Headers.TryGetValue("Schema-Version", out int? versionHeader) ? versionHeader : null;
+
+                var properties = new SchemaProperties(format, schemaIdHeader, schemaGroupNameHeader, schemaNameHeader, schemaVersionHeader!.Value);
 
                 return Response.FromValue(properties, response);
             }
@@ -188,21 +176,26 @@ namespace Azure.Data.SchemaRegistry
             bool async,
             CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaIdScopeName);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(GetSchemaIdScopeName);
             scope.Start();
             try
             {
-                ResponseWithHeaders<SchemaQueryIdByContentHeaders> response;
+                Response response;
                 if (async)
                 {
-                    response = await RestClient.QueryIdByContentAsync(groupName, schemaName, format.ToContentType() , new BinaryData(schemaDefinition).ToStream(), cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaIdByContentAsync(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.QueryIdByContent(groupName, schemaName, format.ToContentType(), new BinaryData(schemaDefinition).ToStream(), cancellationToken);
+                    response = GetSchemaIdByContent(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
+                var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
+                var schemaGroupNameHeader = response.Headers.TryGetValue("Schema-Group-Name", out string groupNameHeader) ? groupNameHeader : null;
+                var schemaNameHeader = response.Headers.TryGetValue("Schema-Name", out string nameHeader) ? nameHeader : null;
+                var schemaVersionHeader = response.Headers.TryGetValue("Schema-Version", out int? versionHeader) ? versionHeader : null;
+
+                var properties = new SchemaProperties(format, schemaIdHeader, schemaGroupNameHeader, schemaNameHeader, schemaVersionHeader!.Value);
 
                 return Response.FromValue(properties, response);
             }
@@ -263,24 +256,30 @@ namespace Azure.Data.SchemaRegistry
 
         private async Task<Response<SchemaRegistrySchema>> GetSchemaInternalAsync(string groupName, string schemaName, int version, bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaScopeName);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(GetSchemaScopeName);
             scope.Start();
             try
             {
-                ResponseWithHeaders<Stream, SchemaGetSchemaVersionHeaders> response;
+                Response<BinaryData> response;
                 if (async)
                 {
-                    response = await RestClient.GetSchemaVersionAsync(groupName, schemaName, version, cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaByVersionAsync(groupName, schemaName, version, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.GetSchemaVersion(groupName, schemaName, version, cancellationToken);
+                    response = GetSchemaByVersion(groupName, schemaName, version, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(SchemaFormat.FromContentType(response.Headers.ContentType.Value.ToString()), response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
-                var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
+                var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
+                var schemaGroupNameHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Group-Name", out string groupNameHeader) ? groupNameHeader : null;
+                var schemaNameHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Name", out string nameHeader) ? nameHeader : null;
+                var schemaVersionHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Version", out int? versionHeader) ? versionHeader : null;
+                var schemaContentTypeHeader = response.GetRawResponse().Headers.TryGetValue("Content-Type", out string contentTypeHeader) ? contentTypeHeader : null;
 
-                return Response.FromValue(schema, response);
+                var properties = new SchemaProperties(SchemaFormat.FromContentType(schemaContentTypeHeader), schemaIdHeader, schemaGroupNameHeader, schemaNameHeader, schemaVersionHeader!.Value);
+                var schema = new SchemaRegistrySchema(properties, response.Value.ToString());
+
+                return Response.FromValue(schema, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,24 +290,30 @@ namespace Azure.Data.SchemaRegistry
 
         private async Task<Response<SchemaRegistrySchema>> GetSchemaInternalAsync(string schemaId, bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaScopeName);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(GetSchemaScopeName);
             scope.Start();
             try
             {
-                ResponseWithHeaders<Stream, SchemaGetByIdHeaders> response;
+                Response<BinaryData> response;
                 if (async)
                 {
-                    response = await RestClient.GetByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RestClient.GetById(schemaId, cancellationToken);
+                    response = GetSchemaById(schemaId, cancellationToken);
                 }
 
-                var properties = new SchemaProperties(SchemaFormat.FromContentType(response.Headers.ContentType.Value.ToString()), response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
-                var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
+                var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
+                var schemaGroupNameHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Group-Name", out string groupNameHeader) ? groupNameHeader : null;
+                var schemaNameHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Name", out string nameHeader) ? nameHeader : null;
+                var schemaVersionHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Version", out int? versionHeader) ? versionHeader : null;
+                var schemaContentTypeHeader = response.GetRawResponse().Headers.TryGetValue("Content-Type", out string contentTypeHeader) ? contentTypeHeader : null;
 
-                return Response.FromValue(schema, response);
+                var properties = new SchemaProperties(SchemaFormat.FromContentType(schemaContentTypeHeader), schemaIdHeader, schemaGroupNameHeader, schemaNameHeader, schemaVersionHeader!.Value);
+                var schema = new SchemaRegistrySchema(properties, response.Value.ToString());
+
+                return Response.FromValue(schema, response.GetRawResponse());
             }
             catch (Exception e)
             {

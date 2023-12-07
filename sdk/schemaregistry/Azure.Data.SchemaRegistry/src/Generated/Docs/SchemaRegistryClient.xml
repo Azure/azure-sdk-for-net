@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSchemaByVersionAsync(string,string,int,CancellationToken)">
+      <example>
+This sample shows how to call GetSchemaByVersionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234);
+]]></code>
+This sample shows how to call GetSchemaByVersionAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234);
+]]></code></example>
+    </member>
+    <member name="GetSchemaByVersion(string,string,int,CancellationToken)">
+      <example>
+This sample shows how to call GetSchemaByVersion.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetSchemaByVersion("<groupName>", "<name>", 1234);
+]]></code>
+This sample shows how to call GetSchemaByVersion with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetSchemaByVersion("<groupName>", "<name>", 1234);
+]]></code></example>
+    </member>
+    <member name="GetSchemaByVersionAsync(string,string,int,RequestContext)">
+      <example>
+This sample shows how to call GetSchemaByVersionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+
+Response response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSchemaByVersionAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+
+Response response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetSchemaByVersion(string,string,int,RequestContext)">
+      <example>
+This sample shows how to call GetSchemaByVersion and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+
+Response response = client.GetSchemaByVersion("<groupName>", "<name>", 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSchemaByVersion with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+
+Response response = client.GetSchemaByVersion("<groupName>", "<name>", 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>
