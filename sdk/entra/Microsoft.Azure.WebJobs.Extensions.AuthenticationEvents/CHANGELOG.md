@@ -1,10 +1,10 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2023-12-07)
 
 ### Bugs Fixed
 
-- Updated Event Metrics to use Assembly.GetName instead of static dll name. This is to resolve the azure function error: Could not load file or assembly '...Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.dll'. The system cannot find the file specified.
+- Updated Event Metrics to use Assembly.GetName instead of static dll name.
 
 ## 1.0.0-beta.4 (2023-11-23)
 
