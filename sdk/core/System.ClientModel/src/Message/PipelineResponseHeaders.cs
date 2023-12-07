@@ -34,17 +34,8 @@ internal class PipelineResponseHeaders : MessageHeaders
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
         => TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out values);
 
-    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
-    {
-        headers = GetHeadersStringValues(_httpResponse.Headers, _httpResponseContent);
-        return true;
-    }
-
-    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
-    {
-        headers = GetHeadersListValues(_httpResponse.Headers, _httpResponseContent);
-        return true;
-    }
+    public override IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator()
+        => GetHeadersListValues(_httpResponse.Headers, _httpResponseContent).GetEnumerator();
 
     #region Performance-optimized/Platform-specific implementation
     private static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)

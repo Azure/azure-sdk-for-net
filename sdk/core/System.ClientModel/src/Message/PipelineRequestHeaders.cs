@@ -59,17 +59,8 @@ internal class PipelineRequestHeaders : MessageHeaders
         return false;
     }
 
-    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
-    {
-        headers = GetHeadersStringValues();
-        return true;
-    }
-
-    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
-    {
-        headers = GetHeadersListValues();
-        return true;
-    }
+    public override IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator()
+        => GetHeadersListValues().GetEnumerator();
 
     #region Implementation
     private IEnumerable<KeyValuePair<string, string>> GetHeadersStringValues()

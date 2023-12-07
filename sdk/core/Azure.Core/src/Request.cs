@@ -202,11 +202,8 @@ namespace Azure.Core
             public override void Set(string name, string value)
                 => _headers.SetValue(name, value);
 
-            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
-            {
-                headers = GetHeadersEnumerableValues();
-                return true;
-            }
+            public override IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator()
+                => GetHeadersEnumerableValues().GetEnumerator();
 
             private IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersEnumerableValues()
             {
@@ -218,12 +215,6 @@ namespace Azure.Core
 
             private IEnumerable<string> GetHeaderValues(string compositeHeaderValue)
                 => compositeHeaderValue.Split(';');
-
-            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
-            {
-                headers = GetHeadersCompositeValues();
-                return true;
-            }
 
             private IEnumerable<KeyValuePair<string, string>> GetHeadersCompositeValues()
             {

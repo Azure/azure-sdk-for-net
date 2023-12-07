@@ -46,11 +46,10 @@ namespace Azure.Core.Pipeline
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                _pipelineResponse.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
-
-                foreach (KeyValuePair<string, string> header in headers)
+                // TODO: revisit for perf
+                foreach (KeyValuePair<string, IEnumerable<string>> header in _pipelineResponse.Headers)
                 {
-                    yield return new HttpHeader(header.Key, header.Value);
+                    yield return new HttpHeader(header.Key, string.Join(",", header.Value));
                 }
             }
 

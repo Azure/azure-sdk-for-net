@@ -130,14 +130,14 @@ namespace System.ClientModel.Primitives
         protected internal MessageClassifier() { }
         public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
-    public abstract partial class MessageHeaders
+    public abstract partial class MessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>>, System.Collections.IEnumerable
     {
         protected MessageHeaders() { }
         public abstract void Add(string name, string value);
+        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> GetEnumerator();
         public abstract bool Remove(string name);
         public abstract void Set(string name, string value);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public abstract bool TryGetValue(string name, out string? value);
         public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
