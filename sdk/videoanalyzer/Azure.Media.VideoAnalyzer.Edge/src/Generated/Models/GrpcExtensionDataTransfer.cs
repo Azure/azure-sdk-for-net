@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Describes how media is transferred to the extension plugin. </summary>
     public partial class GrpcExtensionDataTransfer
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GrpcExtensionDataTransfer"/>. </summary>
         /// <param name="mode"> Data transfer mode: embedded or sharedMemory. </param>
         public GrpcExtensionDataTransfer(GrpcExtensionDataTransferMode mode)
@@ -20,10 +55,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="GrpcExtensionDataTransfer"/>. </summary>
         /// <param name="sharedMemorySizeMiB"> The share memory buffer for sample transfers, in mebibytes. It can only be used with the 'SharedMemory' transfer mode. </param>
         /// <param name="mode"> Data transfer mode: embedded or sharedMemory. </param>
-        internal GrpcExtensionDataTransfer(string sharedMemorySizeMiB, GrpcExtensionDataTransferMode mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GrpcExtensionDataTransfer(string sharedMemorySizeMiB, GrpcExtensionDataTransferMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SharedMemorySizeMiB = sharedMemorySizeMiB;
             Mode = mode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GrpcExtensionDataTransfer"/> for deserialization. </summary>
+        internal GrpcExtensionDataTransfer()
+        {
         }
 
         /// <summary> The share memory buffer for sample transfers, in mebibytes. It can only be used with the 'SharedMemory' transfer mode. </summary>

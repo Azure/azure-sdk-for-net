@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkSession. </summary>
     public partial class SparkSession
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SparkSession"/>. </summary>
         /// <param name="id"></param>
         internal SparkSession(int id)
@@ -43,7 +76,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="appInfo"> Dictionary of &lt;string&gt;. </param>
         /// <param name="state"> The session state. </param>
         /// <param name="logLines"></param>
-        internal SparkSession(SparkSessionState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkSessionResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, LivyStates? state, IReadOnlyList<string> logLines)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkSession(SparkSessionState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkSessionResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, LivyStates? state, IReadOnlyList<string> logLines, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LivyInfo = livyInfo;
             Name = name;
@@ -63,6 +97,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             AppInfo = appInfo;
             State = state;
             LogLines = logLines;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkSession"/> for deserialization. </summary>
+        internal SparkSession()
+        {
         }
 
         /// <summary> Gets the livy info. </summary>

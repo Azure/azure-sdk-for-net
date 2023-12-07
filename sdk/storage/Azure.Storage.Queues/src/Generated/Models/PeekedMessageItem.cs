@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
@@ -13,6 +14,38 @@ namespace Azure.Storage.Queues.Models
     /// <summary> The object returned in the QueueMessageList array when calling Peek Messages on a Queue. </summary>
     internal partial class PeekedMessageItem
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PeekedMessageItem"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
@@ -30,6 +63,28 @@ namespace Azure.Storage.Queues.Models
             ExpirationTime = expirationTime;
             DequeueCount = dequeueCount;
             MessageText = messageText;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeekedMessageItem"/>. </summary>
+        /// <param name="messageId"> The Id of the Message. </param>
+        /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
+        /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>
+        /// <param name="dequeueCount"> The number of times the message has been dequeued. </param>
+        /// <param name="messageText"> The content of the Message. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeekedMessageItem(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, long dequeueCount, string messageText, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MessageId = messageId;
+            InsertionTime = insertionTime;
+            ExpirationTime = expirationTime;
+            DequeueCount = dequeueCount;
+            MessageText = messageText;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeekedMessageItem"/> for deserialization. </summary>
+        internal PeekedMessageItem()
+        {
         }
 
         /// <summary> The Id of the Message. </summary>

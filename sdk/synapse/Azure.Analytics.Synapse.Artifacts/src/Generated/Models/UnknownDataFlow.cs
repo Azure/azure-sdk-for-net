@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -17,7 +18,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
-        internal UnknownDataFlow(string type, string description, IList<object> annotations, DataFlowFolder folder) : base(type, description, annotations, folder)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataFlow(string type, string description, IList<object> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, description, annotations, folder, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
         }

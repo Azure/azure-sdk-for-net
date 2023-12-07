@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TabularTranslatorConverter))]
-    public partial class TabularTranslator : IUtf8JsonSerializable
+    public partial class TabularTranslator : IUtf8JsonSerializable, IJsonModel<TabularTranslator>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TabularTranslator>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TabularTranslator>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TabularTranslator>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TabularTranslator)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnMappings))
             {
@@ -64,8 +74,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static TabularTranslator DeserializeTabularTranslator(JsonElement element)
+        TabularTranslator IJsonModel<TabularTranslator>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TabularTranslator>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TabularTranslator)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTabularTranslator(document.RootElement, options);
+        }
+
+        internal static TabularTranslator DeserializeTabularTranslator(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +179,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new TabularTranslator(type, additionalProperties, columnMappings.Value, schemaMapping.Value, collectionReference.Value, mapComplexValuesToString.Value, mappings.Value, typeConversion.Value, typeConversionSettings.Value);
         }
+
+        BinaryData IPersistableModel<TabularTranslator>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TabularTranslator>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TabularTranslator)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TabularTranslator IPersistableModel<TabularTranslator>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TabularTranslator>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTabularTranslator(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TabularTranslator)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TabularTranslator>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class TabularTranslatorConverter : JsonConverter<TabularTranslator>
         {

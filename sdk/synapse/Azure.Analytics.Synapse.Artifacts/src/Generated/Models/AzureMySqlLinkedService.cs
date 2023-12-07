@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureMySql";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMySqlLinkedService"/> for deserialization. </summary>
+        internal AzureMySqlLinkedService()
+        {
+        }
+
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>

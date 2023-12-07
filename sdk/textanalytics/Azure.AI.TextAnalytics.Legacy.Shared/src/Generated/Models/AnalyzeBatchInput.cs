@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -28,12 +29,18 @@ namespace Azure.AI.TextAnalytics.Legacy
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeBatchInput"/>. </summary>
         /// <param name="displayName"> Optional display name for the analysis job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="analysisInput"> Contains a set of input documents to be analyzed by the service. </param>
         /// <param name="tasks"> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </param>
-        internal AnalyzeBatchInput(string displayName, MultiLanguageBatchInput analysisInput, JobManifestTasks tasks) : base(displayName)
+        internal AnalyzeBatchInput(string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData, MultiLanguageBatchInput analysisInput, JobManifestTasks tasks) : base(displayName, serializedAdditionalRawData)
         {
             AnalysisInput = analysisInput;
             Tasks = tasks;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchInput"/> for deserialization. </summary>
+        internal AnalyzeBatchInput()
+        {
         }
 
         /// <summary> Contains a set of input documents to be analyzed by the service. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownEndpointBase. </summary>
@@ -18,9 +21,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
         /// </param>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
-        internal UnknownEndpointBase(string type, CredentialsBase credentials, string url) : base(type, credentials, url)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEndpointBase(string type, CredentialsBase credentials, string url, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, credentials, url, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownEndpointBase"/> for deserialization. </summary>
+        internal UnknownEndpointBase()
+        {
         }
     }
 }

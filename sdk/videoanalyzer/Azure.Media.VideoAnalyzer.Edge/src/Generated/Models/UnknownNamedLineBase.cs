@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownNamedLineBase. </summary>
@@ -13,9 +16,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="UnknownNamedLineBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="name"> Line name. Must be unique within the node. </param>
-        internal UnknownNamedLineBase(string type, string name) : base(type, name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNamedLineBase(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, name, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownNamedLineBase"/> for deserialization. </summary>
+        internal UnknownNamedLineBase()
+        {
         }
     }
 }

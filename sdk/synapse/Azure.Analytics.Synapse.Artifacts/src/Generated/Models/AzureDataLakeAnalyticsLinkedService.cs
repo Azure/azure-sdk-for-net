@@ -60,6 +60,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureDataLakeAnalytics";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeAnalyticsLinkedService"/> for deserialization. </summary>
+        internal AzureDataLakeAnalyticsLinkedService()
+        {
+        }
+
         /// <summary> The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string). </summary>
         public object AccountName { get; set; }
         /// <summary> The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string). </summary>

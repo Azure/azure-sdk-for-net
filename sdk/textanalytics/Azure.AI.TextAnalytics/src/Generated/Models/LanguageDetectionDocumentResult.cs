@@ -32,10 +32,16 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="detectedLanguage"> Detected Language. </param>
-        internal LanguageDetectionDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, DetectedLanguageInternal detectedLanguage) : base(id, warnings, statistics)
+        internal LanguageDetectionDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, DetectedLanguageInternal detectedLanguage) : base(id, warnings, statistics, serializedAdditionalRawData)
         {
             DetectedLanguage = detectedLanguage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionDocumentResult"/> for deserialization. </summary>
+        internal LanguageDetectionDocumentResult()
+        {
         }
 
         /// <summary> Detected Language. </summary>

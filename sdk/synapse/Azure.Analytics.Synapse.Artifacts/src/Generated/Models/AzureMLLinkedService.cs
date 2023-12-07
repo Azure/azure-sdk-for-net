@@ -68,6 +68,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureML";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/> for deserialization. </summary>
+        internal AzureMLLinkedService()
+        {
+        }
+
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
         public object MlEndpoint { get; set; }
         /// <summary>

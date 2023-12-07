@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Single page of the search results. </summary>
     internal partial class SearchInstancesResponsePage
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SearchInstancesResponsePage"/>. </summary>
         internal SearchInstancesResponsePage()
         {
@@ -18,10 +53,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of <see cref="SearchInstancesResponsePage"/>. </summary>
         /// <param name="instances"> The instances matching the query based on the input. May be empty or null. </param>
         /// <param name="hierarchyNodes"> The hierarchy nodes which contains the instances matching the query based on the input. May be empty or null. </param>
-        internal SearchInstancesResponsePage(SearchInstancesResponse instances, SearchHierarchyNodesResponse hierarchyNodes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchInstancesResponsePage(SearchInstancesResponse instances, SearchHierarchyNodesResponse hierarchyNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Instances = instances;
             HierarchyNodes = hierarchyNodes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The instances matching the query based on the input. May be empty or null. </summary>

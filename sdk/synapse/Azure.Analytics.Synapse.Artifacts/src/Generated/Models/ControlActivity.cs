@@ -41,5 +41,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Type = type ?? "Container";
         }
+
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/> for deserialization. </summary>
+        internal ControlActivity()
+        {
+        }
     }
 }

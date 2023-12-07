@@ -55,6 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureMLUpdateResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMLUpdateResourceActivity"/> for deserialization. </summary>
+        internal AzureMLUpdateResourceActivity()
+        {
+        }
+
         /// <summary> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </summary>
         public object TrainedModelName { get; set; }
         /// <summary> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </summary>

@@ -50,7 +50,7 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             timeSeriesIdProperties ??= new List<TimeSeriesIdProperty>();
 
-            return new TimeSeriesModelSettings(name, timeSeriesIdProperties?.ToList(), defaultTypeId);
+            return new TimeSeriesModelSettings(name, timeSeriesIdProperties?.ToList(), defaultTypeId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeSeriesInsights.TimeSeriesIdProperty"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesIdProperty"/> instance for mocking. </returns>
         public static TimeSeriesIdProperty TimeSeriesIdProperty(string name = null, TimeSeriesIdPropertyType? type = null)
         {
-            return new TimeSeriesIdProperty(name, type);
+            return new TimeSeriesIdProperty(name, type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeSeriesInsights.InstancesOperationResult"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <returns> A new <see cref="TimeSeriesInsights.InstancesOperationResult"/> instance for mocking. </returns>
         public static InstancesOperationResult InstancesOperationResult(TimeSeriesInstance instance = null, TimeSeriesOperationError error = null)
         {
-            return new InstancesOperationResult(instance, error);
+            return new InstancesOperationResult(instance, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeSeriesInsights.TimeSeriesTypeOperationResult"/>. </summary>
@@ -77,7 +77,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesTypeOperationResult"/> instance for mocking. </returns>
         public static TimeSeriesTypeOperationResult TimeSeriesTypeOperationResult(TimeSeriesType timeSeriesType = null, TimeSeriesOperationError error = null)
         {
-            return new TimeSeriesTypeOperationResult(timeSeriesType, error);
+            return new TimeSeriesTypeOperationResult(timeSeriesType, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeSeriesInsights.TimeSeriesHierarchyOperationResult"/>. </summary>
@@ -86,7 +86,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesHierarchyOperationResult"/> instance for mocking. </returns>
         public static TimeSeriesHierarchyOperationResult TimeSeriesHierarchyOperationResult(TimeSeriesHierarchy hierarchy = null, TimeSeriesOperationError error = null)
         {
-            return new TimeSeriesHierarchyOperationResult(hierarchy, error);
+            return new TimeSeriesHierarchyOperationResult(hierarchy, error, serializedAdditionalRawData: null);
         }
     }
 }

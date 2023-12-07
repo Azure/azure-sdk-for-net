@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TypeConversionSettingsConverter))]
-    public partial class TypeConversionSettings : IUtf8JsonSerializable
+    public partial class TypeConversionSettings : IUtf8JsonSerializable, IJsonModel<TypeConversionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TypeConversionSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TypeConversionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TypeConversionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TypeConversionSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowDataTruncation))
             {
@@ -48,11 +59,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("culture"u8);
                 writer.WriteObjectValue(Culture);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TypeConversionSettings DeserializeTypeConversionSettings(JsonElement element)
+        TypeConversionSettings IJsonModel<TypeConversionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TypeConversionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TypeConversionSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTypeConversionSettings(document.RootElement, options);
+        }
+
+        internal static TypeConversionSettings DeserializeTypeConversionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +103,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> dateTimeOffsetFormat = default;
             Optional<object> timeSpanFormat = default;
             Optional<object> culture = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowDataTruncation"u8))
@@ -119,9 +161,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     culture = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TypeConversionSettings(allowDataTruncation.Value, treatBooleanAsNumber.Value, dateTimeFormat.Value, dateTimeOffsetFormat.Value, timeSpanFormat.Value, culture.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TypeConversionSettings(allowDataTruncation.Value, treatBooleanAsNumber.Value, dateTimeFormat.Value, dateTimeOffsetFormat.Value, timeSpanFormat.Value, culture.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TypeConversionSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TypeConversionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TypeConversionSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TypeConversionSettings IPersistableModel<TypeConversionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TypeConversionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTypeConversionSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TypeConversionSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TypeConversionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class TypeConversionSettingsConverter : JsonConverter<TypeConversionSettings>
         {

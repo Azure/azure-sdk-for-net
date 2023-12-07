@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(QueryTableStatusRequestConverter))]
-    public partial class QueryTableStatusRequest : IUtf8JsonSerializable
+    public partial class QueryTableStatusRequest : IUtf8JsonSerializable, IJsonModel<QueryTableStatusRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryTableStatusRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QueryTableStatusRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryTableStatusRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(QueryTableStatusRequest)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxSegmentCount))
             {
@@ -28,8 +39,107 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteObjectValue(ContinuationToken);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        QueryTableStatusRequest IJsonModel<QueryTableStatusRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryTableStatusRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(QueryTableStatusRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryTableStatusRequest(document.RootElement, options);
+        }
+
+        internal static QueryTableStatusRequest DeserializeQueryTableStatusRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> maxSegmentCount = default;
+            Optional<object> continuationToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("maxSegmentCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxSegmentCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("continuationToken"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    continuationToken = property.Value.GetObject();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QueryTableStatusRequest(Optional.ToNullable(maxSegmentCount), continuationToken.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<QueryTableStatusRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryTableStatusRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueryTableStatusRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueryTableStatusRequest IPersistableModel<QueryTableStatusRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryTableStatusRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQueryTableStatusRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueryTableStatusRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryTableStatusRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class QueryTableStatusRequestConverter : JsonConverter<QueryTableStatusRequest>
         {
@@ -39,7 +149,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override QueryTableStatusRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeQueryTableStatusRequest(document.RootElement);
             }
         }
     }

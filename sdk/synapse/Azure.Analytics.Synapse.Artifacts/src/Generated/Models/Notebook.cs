@@ -58,6 +58,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="Notebook"/> for deserialization. </summary>
+        internal Notebook()
+        {
+        }
+
         /// <summary> The description of the notebook. </summary>
         public string Description { get; set; }
         /// <summary> Big data pool reference. </summary>

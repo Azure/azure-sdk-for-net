@@ -54,6 +54,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Quickbase";
         }
 
+        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/> for deserialization. </summary>
+        internal QuickbaseLinkedService()
+        {
+        }
+
         /// <summary> The url to connect Quickbase source. Type: string (or Expression with resultType string). </summary>
         public object Url { get; set; }
         /// <summary>

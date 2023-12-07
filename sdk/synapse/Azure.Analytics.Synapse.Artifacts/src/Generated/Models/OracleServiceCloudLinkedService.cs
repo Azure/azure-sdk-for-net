@@ -65,6 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "OracleServiceCloud";
         }
 
+        /// <summary> Initializes a new instance of <see cref="OracleServiceCloudLinkedService"/> for deserialization. </summary>
+        internal OracleServiceCloudLinkedService()
+        {
+        }
+
         /// <summary> The URL of the Oracle Service Cloud instance. </summary>
         public object Host { get; set; }
         /// <summary> The user name that you use to access Oracle Service Cloud server. </summary>

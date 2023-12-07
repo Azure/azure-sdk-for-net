@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Wait";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WaitActivity"/> for deserialization. </summary>
+        internal WaitActivity()
+        {
+        }
+
         /// <summary> Duration in seconds. </summary>
         public object WaitTimeInSeconds { get; set; }
     }

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionResourceConverter))]
-    public partial class LinkConnectionResource : IUtf8JsonSerializable
+    public partial class LinkConnectionResource : IUtf8JsonSerializable, IJsonModel<LinkConnectionResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkConnectionResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LinkConnectionResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkConnectionResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LinkConnectionResource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -40,11 +51,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkConnectionResource DeserializeLinkConnectionResource(JsonElement element)
+        LinkConnectionResource IJsonModel<LinkConnectionResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkConnectionResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LinkConnectionResource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkConnectionResource(document.RootElement, options);
+        }
+
+        internal static LinkConnectionResource DeserializeLinkConnectionResource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> type = default;
             LinkConnection properties = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -81,9 +123,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkConnectionResource(id.Value, name.Value, type.Value, properties, description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkConnectionResource(id.Value, name.Value, type.Value, properties, description.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkConnectionResource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkConnectionResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LinkConnectionResource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LinkConnectionResource IPersistableModel<LinkConnectionResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkConnectionResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLinkConnectionResource(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LinkConnectionResource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LinkConnectionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class LinkConnectionResourceConverter : JsonConverter<LinkConnectionResource>
         {

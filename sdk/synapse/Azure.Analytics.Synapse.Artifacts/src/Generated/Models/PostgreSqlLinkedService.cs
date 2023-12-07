@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "PostgreSql";
         }
 
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLinkedService"/> for deserialization. </summary>
+        internal PostgreSqlLinkedService()
+        {
+        }
+
         /// <summary> The connection string. </summary>
         public object ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>

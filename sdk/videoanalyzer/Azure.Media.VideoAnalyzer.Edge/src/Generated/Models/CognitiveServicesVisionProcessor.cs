@@ -44,6 +44,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint">
         /// Endpoint to which this processor should connect.
         /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -56,13 +57,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// Please note <see cref="SpatialAnalysisOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SpatialAnalysisCustomOperation"/>, <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/>, <see cref="SpatialAnalysisPersonZoneCrossingOperation"/> and <see cref="SpatialAnalysisTypedOperationBase"/>.
         /// </param>
-        internal CognitiveServicesVisionProcessor(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions, SpatialAnalysisOperationBase operation) : base(type, name, inputs)
+        internal CognitiveServicesVisionProcessor(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions, SpatialAnalysisOperationBase operation) : base(type, name, inputs, serializedAdditionalRawData)
         {
             Endpoint = endpoint;
             Image = image;
             SamplingOptions = samplingOptions;
             Operation = operation;
             Type = type ?? "#Microsoft.VideoAnalyzer.CognitiveServicesVisionProcessor";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesVisionProcessor"/> for deserialization. </summary>
+        internal CognitiveServicesVisionProcessor()
+        {
         }
 
         /// <summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownWebLinkedServiceTypeProperties. </summary>
@@ -13,9 +16,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of <see cref="UnknownWebLinkedServiceTypeProperties"/>. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
-        internal UnknownWebLinkedServiceTypeProperties(object url, WebAuthenticationType authenticationType) : base(url, authenticationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownWebLinkedServiceTypeProperties(object url, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(url, authenticationType, serializedAdditionalRawData)
         {
             AuthenticationType = authenticationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownWebLinkedServiceTypeProperties"/> for deserialization. </summary>
+        internal UnknownWebLinkedServiceTypeProperties()
+        {
         }
     }
 }

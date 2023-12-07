@@ -39,6 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "ScheduleTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ScheduleTrigger"/> for deserialization. </summary>
+        internal ScheduleTrigger()
+        {
+        }
+
         /// <summary> Recurrence schedule configuration. </summary>
         public ScheduleTriggerRecurrence Recurrence { get; set; }
     }

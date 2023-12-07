@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    public partial class TableRetentionPolicy : IXmlSerializable
+    public partial class TableRetentionPolicy : IXmlSerializable, IPersistableModel<TableRetentionPolicy>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "RetentionPolicy");
             writer.WriteStartElement("Enabled");
@@ -28,7 +32,9 @@ namespace Azure.Data.Tables
             writer.WriteEndElement();
         }
 
-        internal static TableRetentionPolicy DeserializeTableRetentionPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static TableRetentionPolicy DeserializeTableRetentionPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             bool enabled = default;
             int? days = default;
@@ -40,7 +46,48 @@ namespace Azure.Data.Tables
             {
                 days = (int?)daysElement;
             }
-            return new TableRetentionPolicy(enabled, days);
+            return new TableRetentionPolicy(enabled, days, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<TableRetentionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TableRetentionPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TableRetentionPolicy IPersistableModel<TableRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeTableRetentionPolicy(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TableRetentionPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TableRetentionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

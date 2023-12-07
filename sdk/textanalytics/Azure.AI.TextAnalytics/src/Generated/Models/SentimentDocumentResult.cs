@@ -39,14 +39,20 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
         /// <param name="confidenceScores"> Document level sentiment confidence scores between 0 and 1 for each sentiment class. </param>
         /// <param name="sentences"> Sentence level sentiment analysis. </param>
-        internal SentimentDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, TextSentiment sentiment, SentimentConfidenceScores confidenceScores, IList<SentenceSentimentInternal> sentences) : base(id, warnings, statistics)
+        internal SentimentDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, TextSentiment sentiment, SentimentConfidenceScores confidenceScores, IList<SentenceSentimentInternal> sentences) : base(id, warnings, statistics, serializedAdditionalRawData)
         {
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;
             Sentences = sentences;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentDocumentResult"/> for deserialization. </summary>
+        internal SentimentDocumentResult()
+        {
         }
 
         /// <summary> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </summary>

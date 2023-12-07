@@ -37,10 +37,16 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="documents"> Response by document. </param>
-        internal CustomEntitiesResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IList<CustomEntitiesResultDocumentsItem> documents) : base(errors, statistics, projectName, deploymentName)
+        internal CustomEntitiesResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<CustomEntitiesResultDocumentsItem> documents) : base(errors, statistics, projectName, deploymentName, serializedAdditionalRawData)
         {
             Documents = documents;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesResult"/> for deserialization. </summary>
+        internal CustomEntitiesResult()
+        {
         }
 
         /// <summary> Response by document. </summary>

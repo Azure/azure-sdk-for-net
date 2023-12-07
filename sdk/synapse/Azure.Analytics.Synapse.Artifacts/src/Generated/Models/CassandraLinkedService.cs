@@ -53,6 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Cassandra";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CassandraLinkedService"/> for deserialization. </summary>
+        internal CassandraLinkedService()
+        {
+        }
+
         /// <summary> Host name for connection. Type: string (or Expression with resultType string). </summary>
         public object Host { get; set; }
         /// <summary> AuthenticationType to be used for connection. Type: string (or Expression with resultType string). </summary>

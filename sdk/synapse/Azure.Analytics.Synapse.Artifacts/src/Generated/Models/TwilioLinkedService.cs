@@ -52,6 +52,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Twilio";
         }
 
+        /// <summary> Initializes a new instance of <see cref="TwilioLinkedService"/> for deserialization. </summary>
+        internal TwilioLinkedService()
+        {
+        }
+
         /// <summary> The Account SID of Twilio service. </summary>
         public object UserName { get; set; }
         /// <summary>

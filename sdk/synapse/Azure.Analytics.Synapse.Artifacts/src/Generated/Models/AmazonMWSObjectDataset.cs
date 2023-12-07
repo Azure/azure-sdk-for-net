@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AmazonMWSObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonMWSObjectDataset"/> for deserialization. </summary>
+        internal AmazonMWSObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

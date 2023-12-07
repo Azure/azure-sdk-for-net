@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "PowerBIWorkspace";
         }
 
+        /// <summary> Initializes a new instance of <see cref="PowerBIWorkspaceLinkedService"/> for deserialization. </summary>
+        internal PowerBIWorkspaceLinkedService()
+        {
+        }
+
         /// <summary> The Power BI workspace id. </summary>
         public string WorkspaceId { get; set; }
         /// <summary> The tenant id to which the Power BI workspace belongs. </summary>

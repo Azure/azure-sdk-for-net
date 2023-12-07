@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to perform a single operation on a batch of instances. Exactly one of "get", "put", "update" or "delete" must be set. </summary>
     internal partial class InstancesBatchRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InstancesBatchRequest"/>. </summary>
         public InstancesBatchRequest()
         {
@@ -25,12 +58,14 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="put"> Time series instances to be created or updated. </param>
         /// <param name="update"> Time series instance to be updated. If instance does not exist, an error is returned. </param>
         /// <param name="delete"> Time series instances to be deleted. Time series ID or name may be specified. </param>
-        internal InstancesBatchRequest(InstancesRequestBatchGetOrDelete @get, IList<TimeSeriesInstance> put, IList<TimeSeriesInstance> update, InstancesRequestBatchGetOrDelete delete)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancesBatchRequest(InstancesRequestBatchGetOrDelete @get, IList<TimeSeriesInstance> put, IList<TimeSeriesInstance> update, InstancesRequestBatchGetOrDelete delete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Get = @get;
             Put = put;
             Update = update;
             Delete = delete;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Time series IDs or names of time series instances to return. </summary>

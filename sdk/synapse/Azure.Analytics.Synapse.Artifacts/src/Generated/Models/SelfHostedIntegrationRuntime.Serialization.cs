@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SelfHostedIntegrationRuntimeConverter))]
-    public partial class SelfHostedIntegrationRuntime : IUtf8JsonSerializable
+    public partial class SelfHostedIntegrationRuntime : IUtf8JsonSerializable, IJsonModel<SelfHostedIntegrationRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHostedIntegrationRuntime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SelfHostedIntegrationRuntime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -42,8 +52,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SelfHostedIntegrationRuntime DeserializeSelfHostedIntegrationRuntime(JsonElement element)
+        SelfHostedIntegrationRuntime IJsonModel<SelfHostedIntegrationRuntime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelfHostedIntegrationRuntime(document.RootElement, options);
+        }
+
+        internal static SelfHostedIntegrationRuntime DeserializeSelfHostedIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +115,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SelfHostedIntegrationRuntime(type, description.Value, additionalProperties, linkedInfo.Value);
         }
+
+        BinaryData IPersistableModel<SelfHostedIntegrationRuntime>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SelfHostedIntegrationRuntime IPersistableModel<SelfHostedIntegrationRuntime>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSelfHostedIntegrationRuntime(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SelfHostedIntegrationRuntime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SelfHostedIntegrationRuntimeConverter : JsonConverter<SelfHostedIntegrationRuntime>
         {

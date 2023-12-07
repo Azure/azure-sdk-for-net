@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -19,11 +21,12 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="modelVersion"></param>
         /// <param name="sentenceCount"></param>
         /// <param name="sortBy"> The sorting criteria to use for the results of Extractive Summarization. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal ExtractiveSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, int? sentenceCount, ExtractiveSummarySentencesOrder? sortBy, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        internal ExtractiveSummarizationTaskParameters(bool? loggingOptOut, IDictionary<string, BinaryData> serializedAdditionalRawData, string modelVersion, int? sentenceCount, ExtractiveSummarySentencesOrder? sortBy, StringIndexType? stringIndexType) : base(loggingOptOut, serializedAdditionalRawData, modelVersion)
         {
             SentenceCount = sentenceCount;
             SortBy = sortBy;

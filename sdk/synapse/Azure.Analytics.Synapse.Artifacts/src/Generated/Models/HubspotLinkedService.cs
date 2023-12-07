@@ -65,6 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Hubspot";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HubspotLinkedService"/> for deserialization. </summary>
+        internal HubspotLinkedService()
+        {
+        }
+
         /// <summary> The client ID associated with your Hubspot application. </summary>
         public object ClientId { get; set; }
         /// <summary>

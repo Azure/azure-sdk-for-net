@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AmazonRdsForOracleTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleTableDataset"/> for deserialization. </summary>
+        internal AmazonRdsForOracleTableDataset()
+        {
+        }
+
         /// <summary> The schema name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </summary>
         public object SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </summary>

@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "MarketoObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MarketoObjectDataset"/> for deserialization. </summary>
+        internal MarketoObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

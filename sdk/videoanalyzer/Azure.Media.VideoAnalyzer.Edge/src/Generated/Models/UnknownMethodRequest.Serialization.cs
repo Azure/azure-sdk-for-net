@@ -5,32 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownMethodRequest : IUtf8JsonSerializable
+    internal partial class UnknownMethodRequest : IUtf8JsonSerializable, IJsonModel<MethodRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MethodRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MethodRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MethodRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MethodRequest)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("methodName"u8);
+                writer.WriteStringValue(MethodName);
+            }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownMethodRequest DeserializeUnknownMethodRequest(JsonElement element)
+        MethodRequest IJsonModel<MethodRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MethodRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MethodRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMethodRequest(document.RootElement, options);
+        }
+
+        internal static UnknownMethodRequest DeserializeUnknownMethodRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string methodName = "Unknown";
             Optional<string> apiVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("methodName"u8))
@@ -43,8 +91,44 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownMethodRequest(methodName, apiVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownMethodRequest(methodName, apiVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MethodRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MethodRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MethodRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MethodRequest IPersistableModel<MethodRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MethodRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUnknownMethodRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MethodRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MethodRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

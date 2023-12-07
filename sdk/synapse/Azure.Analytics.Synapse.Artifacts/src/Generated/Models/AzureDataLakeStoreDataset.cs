@@ -51,6 +51,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureDataLakeStoreFile";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreDataset"/> for deserialization. </summary>
+        internal AzureDataLakeStoreDataset()
+        {
+        }
+
         /// <summary> Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
         public object FolderPath { get; set; }
         /// <summary> The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>

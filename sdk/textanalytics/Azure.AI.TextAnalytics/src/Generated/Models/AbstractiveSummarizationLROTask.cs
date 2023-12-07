@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -26,12 +27,18 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROTask"/>. </summary>
         /// <param name="taskName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for the pre-build Abstractive Summarization task. </param>
-        internal AbstractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, AbstractiveSummarizationTaskParameters parameters) : base(taskName, kind)
+        internal AbstractiveSummarizationLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, AbstractiveSummarizationTaskParameters parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROTask"/> for deserialization. </summary>
+        internal AbstractiveSummarizationLROTask()
+        {
         }
 
         /// <summary> Supported parameters for the pre-build Abstractive Summarization task. </summary>

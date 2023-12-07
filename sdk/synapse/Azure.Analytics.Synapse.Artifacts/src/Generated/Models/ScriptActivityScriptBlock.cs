@@ -14,6 +14,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Script block of scripts. </summary>
     public partial class ScriptActivityScriptBlock
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of the query. Type: string. </param>
@@ -31,11 +63,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of the query. Type: string. </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>
-        internal ScriptActivityScriptBlock(object text, ScriptType type, IList<ScriptActivityParameter> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActivityScriptBlock(object text, ScriptType type, IList<ScriptActivityParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Type = type;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/> for deserialization. </summary>
+        internal ScriptActivityScriptBlock()
+        {
         }
 
         /// <summary> The query text. Type: string (or Expression with resultType string). </summary>

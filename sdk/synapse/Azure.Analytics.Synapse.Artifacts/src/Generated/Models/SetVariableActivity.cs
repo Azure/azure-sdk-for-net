@@ -46,6 +46,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SetVariable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/> for deserialization. </summary>
+        internal SetVariableActivity()
+        {
+        }
+
         /// <summary> Activity policy. </summary>
         public SecureInputOutputPolicy Policy { get; set; }
         /// <summary> Name of the variable whose value needs to be set. </summary>

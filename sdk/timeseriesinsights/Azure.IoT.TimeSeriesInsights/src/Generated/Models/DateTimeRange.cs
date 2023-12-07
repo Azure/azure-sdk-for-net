@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The range of time. Cannot be null or negative. </summary>
     internal partial class DateTimeRange
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DateTimeRange"/>. </summary>
         /// <param name="from"> Start timestamp of the time range. Start timestamp is inclusive when used in time series query requests. Events that have this timestamp are included. </param>
         /// <param name="to"> End timestamp of the time range. End timestamp is exclusive when used in time series query requests. Events that match this timestamp are excluded. Note that end timestamp is inclusive when returned by Get Availability (meaning that there is an event with this exact "to" timestamp). </param>
@@ -19,6 +52,22 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             From = @from;
             To = to;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DateTimeRange"/>. </summary>
+        /// <param name="from"> Start timestamp of the time range. Start timestamp is inclusive when used in time series query requests. Events that have this timestamp are included. </param>
+        /// <param name="to"> End timestamp of the time range. End timestamp is exclusive when used in time series query requests. Events that match this timestamp are excluded. Note that end timestamp is inclusive when returned by Get Availability (meaning that there is an event with this exact "to" timestamp). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DateTimeRange(DateTimeOffset @from, DateTimeOffset to, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            From = @from;
+            To = to;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DateTimeRange"/> for deserialization. </summary>
+        internal DateTimeRange()
+        {
         }
 
         /// <summary> Start timestamp of the time range. Start timestamp is inclusive when used in time series query requests. Events that have this timestamp are included. </summary>

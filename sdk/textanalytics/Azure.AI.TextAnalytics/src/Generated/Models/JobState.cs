@@ -15,6 +15,38 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The JobState. </summary>
     internal partial class JobState
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
@@ -41,7 +73,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="status"></param>
         /// <param name="errors"></param>
         /// <param name="nextLink"></param>
-        internal JobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             CreatedDateTime = createdDateTime;
@@ -51,6 +84,12 @@ namespace Azure.AI.TextAnalytics.Models
             Status = status;
             Errors = errors;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobState"/> for deserialization. </summary>
+        internal JobState()
+        {
         }
 
         /// <summary> Gets the display name. </summary>

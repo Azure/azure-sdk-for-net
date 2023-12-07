@@ -5,16 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesOperationError
+    public partial class TimeSeriesOperationError : IUtf8JsonSerializable, IJsonModel<TimeSeriesOperationError>
     {
-        internal static TimeSeriesOperationError DeserializeTimeSeriesOperationError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TimeSeriesOperationError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TimeSeriesOperationError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesOperationError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TimeSeriesOperationError)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                writer.WriteStringValue(Target);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InnerError))
+            {
+                writer.WritePropertyName("innerError"u8);
+                writer.WriteObjectValue(InnerError);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        TimeSeriesOperationError IJsonModel<TimeSeriesOperationError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesOperationError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TimeSeriesOperationError)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTimeSeriesOperationError(document.RootElement, options);
+        }
+
+        internal static TimeSeriesOperationError DeserializeTimeSeriesOperationError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,5 +137,36 @@ namespace Azure.IoT.TimeSeriesInsights
             additionalProperties = additionalPropertiesDictionary;
             return new TimeSeriesOperationError(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
         }
+
+        BinaryData IPersistableModel<TimeSeriesOperationError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesOperationError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TimeSeriesOperationError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TimeSeriesOperationError IPersistableModel<TimeSeriesOperationError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesOperationError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTimeSeriesOperationError(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TimeSeriesOperationError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TimeSeriesOperationError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

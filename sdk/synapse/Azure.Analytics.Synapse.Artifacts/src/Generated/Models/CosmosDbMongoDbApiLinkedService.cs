@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "CosmosDbMongoDbApi";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosDbMongoDbApiLinkedService"/> for deserialization. </summary>
+        internal CosmosDbMongoDbApiLinkedService()
+        {
+        }
+
         /// <summary> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </summary>

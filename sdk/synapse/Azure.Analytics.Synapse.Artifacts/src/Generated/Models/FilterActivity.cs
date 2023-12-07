@@ -48,6 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Filter";
         }
 
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/> for deserialization. </summary>
+        internal FilterActivity()
+        {
+        }
+
         /// <summary> Input array on which filter should be applied. </summary>
         public Expression Items { get; set; }
         /// <summary> Condition to be used for filtering the input. </summary>

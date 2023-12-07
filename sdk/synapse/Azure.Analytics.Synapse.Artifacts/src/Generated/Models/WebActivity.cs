@@ -63,6 +63,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "WebActivity";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WebActivity"/> for deserialization. </summary>
+        internal WebActivity()
+        {
+        }
+
         /// <summary> Rest API method for target endpoint. </summary>
         public WebActivityMethod Method { get; set; }
         /// <summary> Web activity target endpoint and path. Type: string (or Expression with resultType string). </summary>

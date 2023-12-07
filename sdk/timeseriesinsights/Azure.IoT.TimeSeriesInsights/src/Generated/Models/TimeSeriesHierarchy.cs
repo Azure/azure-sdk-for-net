@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -13,6 +14,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series hierarchy organizes time series instances into a tree. </summary>
     public partial class TimeSeriesHierarchy
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchy"/>. </summary>
         /// <param name="name"> User-given unique name for the type. It is mutable and not null. </param>
         /// <param name="source"> Definition of how time series hierarchy tree levels are created. </param>
@@ -30,11 +63,18 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="id"> Case-sensitive unique hierarchy identifier. Can be null while creating hierarchy objects and then server generates the id, not null on get and delete operations. </param>
         /// <param name="name"> User-given unique name for the type. It is mutable and not null. </param>
         /// <param name="source"> Definition of how time series hierarchy tree levels are created. </param>
-        internal TimeSeriesHierarchy(string id, string name, TimeSeriesHierarchySource source)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesHierarchy(string id, string name, TimeSeriesHierarchySource source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Source = source;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchy"/> for deserialization. </summary>
+        internal TimeSeriesHierarchy()
+        {
         }
 
         /// <summary> Case-sensitive unique hierarchy identifier. Can be null while creating hierarchy objects and then server generates the id, not null on get and delete operations. </summary>

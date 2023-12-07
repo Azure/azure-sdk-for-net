@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class RateControl : IUtf8JsonSerializable
+    public partial class RateControl : IUtf8JsonSerializable, IJsonModel<RateControl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RateControl>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RateControl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RateControl>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RateControl)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BitRateLimit))
             {
@@ -35,11 +47,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("guaranteedFrameRate"u8);
                 writer.WriteBooleanValue(GuaranteedFrameRate.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RateControl DeserializeRateControl(JsonElement element)
+        RateControl IJsonModel<RateControl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RateControl>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RateControl)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRateControl(document.RootElement, options);
+        }
+
+        internal static RateControl DeserializeRateControl(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +89,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<float> encodingInterval = default;
             Optional<float> frameRateLimit = default;
             Optional<bool> guaranteedFrameRate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bitRateLimit"u8))
@@ -86,8 +129,44 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     guaranteedFrameRate = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RateControl(Optional.ToNullable(bitRateLimit), Optional.ToNullable(encodingInterval), Optional.ToNullable(frameRateLimit), Optional.ToNullable(guaranteedFrameRate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RateControl(Optional.ToNullable(bitRateLimit), Optional.ToNullable(encodingInterval), Optional.ToNullable(frameRateLimit), Optional.ToNullable(guaranteedFrameRate), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RateControl>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RateControl>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RateControl)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RateControl IPersistableModel<RateControl>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RateControl>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRateControl(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RateControl)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RateControl>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

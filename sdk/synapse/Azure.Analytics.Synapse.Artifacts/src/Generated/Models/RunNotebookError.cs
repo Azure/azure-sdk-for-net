@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook error. </summary>
     public partial class RunNotebookError
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RunNotebookError"/>. </summary>
         internal RunNotebookError()
         {
@@ -23,11 +56,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="ename"> Error name. </param>
         /// <param name="evalue"> Error message. </param>
         /// <param name="traceback"> Error trace. </param>
-        internal RunNotebookError(string ename, string evalue, IReadOnlyList<string> traceback)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookError(string ename, string evalue, IReadOnlyList<string> traceback, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ename = ename;
             Evalue = evalue;
             Traceback = traceback;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error name. </summary>

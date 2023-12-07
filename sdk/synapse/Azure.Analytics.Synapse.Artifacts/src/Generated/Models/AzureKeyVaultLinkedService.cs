@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureKeyVault";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/> for deserialization. </summary>
+        internal AzureKeyVaultLinkedService()
+        {
+        }
+
         /// <summary> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </summary>
         public object BaseUrl { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>

@@ -57,6 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "IfCondition";
         }
 
+        /// <summary> Initializes a new instance of <see cref="IfConditionActivity"/> for deserialization. </summary>
+        internal IfConditionActivity()
+        {
+        }
+
         /// <summary> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </summary>
         public Expression Expression { get; set; }
         /// <summary>

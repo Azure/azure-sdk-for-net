@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> Response for batch list operation. </summary>
     public partial class SparkBatchJobCollection
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SparkBatchJobCollection"/>. </summary>
         /// <param name="from"> The start index of fetched sessions. </param>
         /// <param name="total"> Number of sessions fetched. </param>
@@ -27,11 +60,18 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="from"> The start index of fetched sessions. </param>
         /// <param name="total"> Number of sessions fetched. </param>
         /// <param name="sessions"> Batch list. </param>
-        internal SparkBatchJobCollection(int @from, int total, IReadOnlyList<SparkBatchJob> sessions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkBatchJobCollection(int @from, int total, IReadOnlyList<SparkBatchJob> sessions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             From = @from;
             Total = total;
             Sessions = sessions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJobCollection"/> for deserialization. </summary>
+        internal SparkBatchJobCollection()
+        {
         }
 
         /// <summary> The start index of fetched sessions. </summary>

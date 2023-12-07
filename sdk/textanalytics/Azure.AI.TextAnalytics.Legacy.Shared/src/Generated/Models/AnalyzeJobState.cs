@@ -36,17 +36,23 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="jobId"></param>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="displayName"></param>
         /// <param name="tasks"></param>
         /// <param name="errors"></param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="nextLink"></param>
-        internal AnalyzeJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, string displayName, TasksStateTasks tasks, IReadOnlyList<TextAnalyticsError> errors, RequestStatistics statistics, string nextLink) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, displayName)
+        internal AnalyzeJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, IDictionary<string, BinaryData> serializedAdditionalRawData, string displayName, TasksStateTasks tasks, IReadOnlyList<TextAnalyticsError> errors, RequestStatistics statistics, string nextLink) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, serializedAdditionalRawData, displayName)
         {
             Tasks = tasks;
             Errors = errors;
             Statistics = statistics;
             NextLink = nextLink;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobState"/> for deserialization. </summary>
+        internal AnalyzeJobState()
+        {
         }
 
         /// <summary> Gets the tasks. </summary>

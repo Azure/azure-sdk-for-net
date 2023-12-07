@@ -45,6 +45,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "OracleTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="OracleTableDataset"/> for deserialization. </summary>
+        internal OracleTableDataset()
+        {
+        }
+
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
         public object TableName { get; set; }
         /// <summary> The schema name of the on-premises Oracle database. Type: string (or Expression with resultType string). </summary>

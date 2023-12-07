@@ -5,20 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class DocumentStatistics
+    internal partial class DocumentStatistics : IUtf8JsonSerializable, IJsonModel<DocumentStatistics>
     {
-        internal static DocumentStatistics DeserializeDocumentStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DocumentStatistics)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("charactersCount"u8);
+            writer.WriteNumberValue(CharactersCount);
+            writer.WritePropertyName("transactionsCount"u8);
+            writer.WriteNumberValue(TransactionsCount);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentStatistics IJsonModel<DocumentStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DocumentStatistics)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentStatistics(document.RootElement, options);
+        }
+
+        internal static DocumentStatistics DeserializeDocumentStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int charactersCount = default;
             int transactionsCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("charactersCount"u8))
@@ -31,8 +85,44 @@ namespace Azure.AI.TextAnalytics.Legacy
                     transactionsCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentStatistics(charactersCount, transactionsCount);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentStatistics(charactersCount, transactionsCount, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DocumentStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DocumentStatistics IPersistableModel<DocumentStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DocumentStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

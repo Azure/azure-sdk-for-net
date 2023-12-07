@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Supported parameters for an Entity Recognition task. </summary>
@@ -17,9 +20,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="EntitiesTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="modelVersion"></param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal EntitiesTaskParameters(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        internal EntitiesTaskParameters(bool? loggingOptOut, IDictionary<string, BinaryData> serializedAdditionalRawData, string modelVersion, StringIndexType? stringIndexType) : base(loggingOptOut, serializedAdditionalRawData, modelVersion)
         {
             StringIndexType = stringIndexType;
         }

@@ -48,6 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SapOpenHubTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubTableDataset"/> for deserialization. </summary>
+        internal SapOpenHubTableDataset()
+        {
+        }
+
         /// <summary> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </summary>
         public object OpenHubDestinationName { get; set; }
         /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>

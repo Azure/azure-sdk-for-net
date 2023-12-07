@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
     internal partial class RequestStatistics
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RequestStatistics"/>. </summary>
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
@@ -21,6 +56,26 @@ namespace Azure.AI.TextAnalytics.Legacy
             ValidDocumentsCount = validDocumentsCount;
             ErroneousDocumentsCount = erroneousDocumentsCount;
             TransactionsCount = transactionsCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestStatistics"/>. </summary>
+        /// <param name="documentsCount"> Number of documents submitted in the request. </param>
+        /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
+        /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
+        /// <param name="transactionsCount"> Number of transactions for the request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DocumentsCount = documentsCount;
+            ValidDocumentsCount = validDocumentsCount;
+            ErroneousDocumentsCount = erroneousDocumentsCount;
+            TransactionsCount = transactionsCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestStatistics"/> for deserialization. </summary>
+        internal RequestStatistics()
+        {
         }
 
         /// <summary> Number of documents submitted in the request. </summary>

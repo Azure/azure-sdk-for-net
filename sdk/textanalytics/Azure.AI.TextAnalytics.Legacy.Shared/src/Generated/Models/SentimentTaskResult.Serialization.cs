@@ -5,20 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class SentimentTaskResult
+    internal partial class SentimentTaskResult : IUtf8JsonSerializable, IJsonModel<SentimentTaskResult>
     {
-        internal static SentimentTaskResult DeserializeSentimentTaskResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SentimentTaskResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SentimentTaskResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SentimentTaskResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SentimentTaskResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteObjectValue(Results);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SentimentTaskResult IJsonModel<SentimentTaskResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SentimentTaskResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SentimentTaskResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSentimentTaskResult(document.RootElement, options);
+        }
+
+        internal static SentimentTaskResult DeserializeSentimentTaskResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SentimentResponse> results = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -30,8 +84,44 @@ namespace Azure.AI.TextAnalytics.Legacy
                     results = SentimentResponse.DeserializeSentimentResponse(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SentimentTaskResult(results.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SentimentTaskResult(results.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SentimentTaskResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SentimentTaskResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SentimentTaskResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SentimentTaskResult IPersistableModel<SentimentTaskResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SentimentTaskResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSentimentTaskResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SentimentTaskResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SentimentTaskResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

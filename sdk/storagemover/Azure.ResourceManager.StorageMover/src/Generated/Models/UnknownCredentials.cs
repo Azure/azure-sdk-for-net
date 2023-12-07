@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The UnknownCredentials. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCredentials"/>. </summary>
         /// <param name="credentialType"> The Credentials type. </param>
-        internal UnknownCredentials(CredentialType credentialType) : base(credentialType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCredentials(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(credentialType, serializedAdditionalRawData)
         {
             CredentialType = credentialType;
         }

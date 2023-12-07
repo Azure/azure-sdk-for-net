@@ -51,6 +51,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "BlobEventsTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="BlobEventsTrigger"/> for deserialization. </summary>
+        internal BlobEventsTrigger()
+        {
+        }
+
         /// <summary> The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
         public string BlobPathBeginsWith { get; set; }
         /// <summary> The blob path must end with the pattern provided for trigger to fire. For example, 'december/boxes.csv' will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>

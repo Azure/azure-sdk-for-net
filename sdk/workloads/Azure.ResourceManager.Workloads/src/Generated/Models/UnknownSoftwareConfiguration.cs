@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The UnknownSoftwareConfiguration. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSoftwareConfiguration"/>. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
-        internal UnknownSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType) : base(softwareInstallationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(softwareInstallationType, serializedAdditionalRawData)
         {
             SoftwareInstallationType = softwareInstallationType;
         }

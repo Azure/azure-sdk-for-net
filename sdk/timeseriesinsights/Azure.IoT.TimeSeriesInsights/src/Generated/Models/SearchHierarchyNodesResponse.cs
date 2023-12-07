@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> The hierarchy nodes which contains the instances matching the query based on the input. May be empty or null. </summary>
     internal partial class SearchHierarchyNodesResponse
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SearchHierarchyNodesResponse"/>. </summary>
         internal SearchHierarchyNodesResponse()
         {
@@ -23,11 +56,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="hits"> The list of hierarchy nodes which contains the instances matching the query based on the input. May be empty. </param>
         /// <param name="hitCount"> Total number of hierarchy nodes which contains the instances matching the query based on the input. </param>
         /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </param>
-        internal SearchHierarchyNodesResponse(IReadOnlyList<HierarchyHit> hits, int? hitCount, string continuationToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchHierarchyNodesResponse(IReadOnlyList<HierarchyHit> hits, int? hitCount, string continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hits = hits;
             HitCount = hitCount;
             ContinuationToken = continuationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of hierarchy nodes which contains the instances matching the query based on the input. May be empty. </summary>

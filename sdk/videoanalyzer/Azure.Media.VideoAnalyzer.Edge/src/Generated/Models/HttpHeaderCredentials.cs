@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -29,13 +30,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Initializes a new instance of <see cref="HttpHeaderCredentials"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="headerName"> HTTP header name. </param>
         /// <param name="headerValue"> HTTP header value. It is recommended that this value is parameterized as a secret string in order to prevent this value to be returned as part of the resource on API requests. </param>
-        internal HttpHeaderCredentials(string type, string headerName, string headerValue) : base(type)
+        internal HttpHeaderCredentials(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string headerName, string headerValue) : base(type, serializedAdditionalRawData)
         {
             HeaderName = headerName;
             HeaderValue = headerValue;
             Type = type ?? "#Microsoft.VideoAnalyzer.HttpHeaderCredentials";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HttpHeaderCredentials"/> for deserialization. </summary>
+        internal HttpHeaderCredentials()
+        {
         }
 
         /// <summary> HTTP header name. </summary>

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RecurrenceScheduleOccurrenceConverter))]
-    public partial class RecurrenceScheduleOccurrence : IUtf8JsonSerializable
+    public partial class RecurrenceScheduleOccurrence : IUtf8JsonSerializable, IJsonModel<RecurrenceScheduleOccurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecurrenceScheduleOccurrence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecurrenceScheduleOccurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecurrenceScheduleOccurrence>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RecurrenceScheduleOccurrence)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Day))
             {
@@ -37,8 +47,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static RecurrenceScheduleOccurrence DeserializeRecurrenceScheduleOccurrence(JsonElement element)
+        RecurrenceScheduleOccurrence IJsonModel<RecurrenceScheduleOccurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecurrenceScheduleOccurrence>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RecurrenceScheduleOccurrence)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecurrenceScheduleOccurrence(document.RootElement, options);
+        }
+
+        internal static RecurrenceScheduleOccurrence DeserializeRecurrenceScheduleOccurrence(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +96,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new RecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence), additionalProperties);
         }
+
+        BinaryData IPersistableModel<RecurrenceScheduleOccurrence>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecurrenceScheduleOccurrence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RecurrenceScheduleOccurrence)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RecurrenceScheduleOccurrence IPersistableModel<RecurrenceScheduleOccurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecurrenceScheduleOccurrence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecurrenceScheduleOccurrence(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RecurrenceScheduleOccurrence)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecurrenceScheduleOccurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class RecurrenceScheduleOccurrenceConverter : JsonConverter<RecurrenceScheduleOccurrence>
         {

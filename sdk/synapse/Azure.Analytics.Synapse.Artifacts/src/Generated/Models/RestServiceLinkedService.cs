@@ -87,6 +87,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "RestService";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RestServiceLinkedService"/> for deserialization. </summary>
+        internal RestServiceLinkedService()
+        {
+        }
+
         /// <summary> The base URL of the REST service. </summary>
         public object Url { get; set; }
         /// <summary> Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with resultType boolean). </summary>

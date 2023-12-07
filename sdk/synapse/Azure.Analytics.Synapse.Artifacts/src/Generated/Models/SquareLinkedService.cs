@@ -65,6 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Square";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/> for deserialization. </summary>
+        internal SquareLinkedService()
+        {
+        }
+
         /// <summary> Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
         public object ConnectionProperties { get; set; }
         /// <summary> The URL of the Square instance. (i.e. mystore.mysquare.com). </summary>

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,18 +16,111 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ArtifactRenameRequestConverter))]
-    public partial class ArtifactRenameRequest : IUtf8JsonSerializable
+    public partial class ArtifactRenameRequest : IUtf8JsonSerializable, IJsonModel<ArtifactRenameRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactRenameRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArtifactRenameRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactRenameRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArtifactRenameRequest)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NewName))
             {
                 writer.WritePropertyName("newName"u8);
                 writer.WriteStringValue(NewName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ArtifactRenameRequest IJsonModel<ArtifactRenameRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactRenameRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArtifactRenameRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArtifactRenameRequest(document.RootElement, options);
+        }
+
+        internal static ArtifactRenameRequest DeserializeArtifactRenameRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> newName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("newName"u8))
+                {
+                    newName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArtifactRenameRequest(newName.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ArtifactRenameRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactRenameRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArtifactRenameRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArtifactRenameRequest IPersistableModel<ArtifactRenameRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactRenameRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArtifactRenameRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArtifactRenameRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArtifactRenameRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ArtifactRenameRequestConverter : JsonConverter<ArtifactRenameRequest>
         {
@@ -34,7 +130,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override ArtifactRenameRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeArtifactRenameRequest(document.RootElement);
             }
         }
     }

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Skip error file. </summary>
     public partial class SkipErrorFile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SkipErrorFile"/>. </summary>
         public SkipErrorFile()
         {
@@ -18,10 +53,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of <see cref="SkipErrorFile"/>. </summary>
         /// <param name="fileMissing"> Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dataInconsistency"> Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal SkipErrorFile(object fileMissing, object dataInconsistency)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SkipErrorFile(object fileMissing, object dataInconsistency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileMissing = fileMissing;
             DataInconsistency = dataInconsistency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean). </summary>

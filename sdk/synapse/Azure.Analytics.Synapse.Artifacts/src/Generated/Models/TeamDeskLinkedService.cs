@@ -59,6 +59,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "TeamDesk";
         }
 
+        /// <summary> Initializes a new instance of <see cref="TeamDeskLinkedService"/> for deserialization. </summary>
+        internal TeamDeskLinkedService()
+        {
+        }
+
         /// <summary> The authentication type to use. </summary>
         public TeamDeskAuthenticationType AuthenticationType { get; set; }
         /// <summary> The url to connect TeamDesk source. Type: string (or Expression with resultType string). </summary>

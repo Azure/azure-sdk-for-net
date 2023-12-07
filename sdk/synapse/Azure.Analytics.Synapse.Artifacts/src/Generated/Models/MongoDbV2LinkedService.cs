@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "MongoDbV2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDbV2LinkedService"/> for deserialization. </summary>
+        internal MongoDbV2LinkedService()
+        {
+        }
+
         /// <summary> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </summary>

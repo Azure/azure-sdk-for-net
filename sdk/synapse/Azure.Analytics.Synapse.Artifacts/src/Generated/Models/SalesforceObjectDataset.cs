@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SalesforceObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SalesforceObjectDataset"/> for deserialization. </summary>
+        internal SalesforceObjectDataset()
+        {
+        }
+
         /// <summary> The Salesforce object API name. Type: string (or Expression with resultType string). </summary>
         public object ObjectApiName { get; set; }
     }

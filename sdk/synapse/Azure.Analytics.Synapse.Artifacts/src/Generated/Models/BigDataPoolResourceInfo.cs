@@ -28,6 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The state of the Big Data pool. </param>
@@ -48,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nodeSize"> The level of compute power that each node in the Big Data pool has. </param>
         /// <param name="nodeSizeFamily"> The kind of nodes that the Big Data pool provides. </param>
         /// <param name="lastSucceededTimestamp"> The time when the Big Data pool was updated successfully. </param>
-        internal BigDataPoolResourceInfo(string id, string name, string type, IDictionary<string, string> tags, string location, string provisioningState, AutoScaleProperties autoScale, DateTimeOffset? creationDate, AutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? sessionLevelPackagesEnabled, int? cacheSize, DynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, IList<LibraryInfo> customLibraries, LibraryRequirements sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily, DateTimeOffset? lastSucceededTimestamp) : base(id, name, type, tags, location)
+        internal BigDataPoolResourceInfo(string id, string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, string location, string provisioningState, AutoScaleProperties autoScale, DateTimeOffset? creationDate, AutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? sessionLevelPackagesEnabled, int? cacheSize, DynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, IList<LibraryInfo> customLibraries, LibraryRequirements sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily, DateTimeOffset? lastSucceededTimestamp) : base(id, name, type, serializedAdditionalRawData, tags, location)
         {
             ProvisioningState = provisioningState;
             AutoScale = autoScale;
@@ -68,6 +69,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             NodeSize = nodeSize;
             NodeSizeFamily = nodeSizeFamily;
             LastSucceededTimestamp = lastSucceededTimestamp;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolResourceInfo"/> for deserialization. </summary>
+        internal BigDataPoolResourceInfo()
+        {
         }
 
         /// <summary> The state of the Big Data pool. </summary>

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,108 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionDetailedStatusConverter))]
-    public partial class LinkConnectionDetailedStatus
+    public partial class LinkConnectionDetailedStatus : IUtf8JsonSerializable, IJsonModel<LinkConnectionDetailedStatus>
     {
-        internal static LinkConnectionDetailedStatus DeserializeLinkConnectionDetailedStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkConnectionDetailedStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LinkConnectionDetailedStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkConnectionDetailedStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LinkConnectionDetailedStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(IsApplyingChanges))
+            {
+                writer.WritePropertyName("isApplyingChanges"u8);
+                writer.WriteBooleanValue(IsApplyingChanges.Value);
+            }
+            if (Optional.IsDefined(IsPartiallyFailed))
+            {
+                writer.WritePropertyName("isPartiallyFailed"u8);
+                writer.WriteBooleanValue(IsPartiallyFailed.Value);
+            }
+            if (Optional.IsDefined(StartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteObjectValue(StartTime);
+            }
+            if (Optional.IsDefined(StopTime))
+            {
+                writer.WritePropertyName("stopTime"u8);
+                writer.WriteObjectValue(StopTime);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(ContinuousRunId))
+            {
+                writer.WritePropertyName("continuousRunId"u8);
+                writer.WriteStringValue(ContinuousRunId);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (Optional.IsDefined(RefreshStatus))
+            {
+                writer.WritePropertyName("refreshStatus"u8);
+                writer.WriteObjectValue(RefreshStatus);
+            }
+            if (Optional.IsDefined(LandingZoneCredentialExpireTime))
+            {
+                writer.WritePropertyName("landingZoneCredentialExpireTime"u8);
+                writer.WriteStringValue(LandingZoneCredentialExpireTime.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinkConnectionDetailedStatus IJsonModel<LinkConnectionDetailedStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkConnectionDetailedStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LinkConnectionDetailedStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkConnectionDetailedStatus(document.RootElement, options);
+        }
+
+        internal static LinkConnectionDetailedStatus DeserializeLinkConnectionDetailedStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +133,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> error = default;
             Optional<LinkConnectionRefreshStatus> refreshStatus = default;
             Optional<DateTimeOffset> landingZoneCredentialExpireTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,15 +220,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     landingZoneCredentialExpireTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkConnectionDetailedStatus(id.Value, name.Value, Optional.ToNullable(isApplyingChanges), Optional.ToNullable(isPartiallyFailed), startTime.Value, stopTime.Value, status.Value, continuousRunId.Value, error.Value, refreshStatus.Value, Optional.ToNullable(landingZoneCredentialExpireTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkConnectionDetailedStatus(id.Value, name.Value, Optional.ToNullable(isApplyingChanges), Optional.ToNullable(isPartiallyFailed), startTime.Value, stopTime.Value, status.Value, continuousRunId.Value, error.Value, refreshStatus.Value, Optional.ToNullable(landingZoneCredentialExpireTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkConnectionDetailedStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkConnectionDetailedStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LinkConnectionDetailedStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LinkConnectionDetailedStatus IPersistableModel<LinkConnectionDetailedStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkConnectionDetailedStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLinkConnectionDetailedStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LinkConnectionDetailedStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LinkConnectionDetailedStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class LinkConnectionDetailedStatusConverter : JsonConverter<LinkConnectionDetailedStatus>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionDetailedStatus model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override LinkConnectionDetailedStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

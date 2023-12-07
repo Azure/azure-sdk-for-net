@@ -39,12 +39,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="videoName"> Name of a new or existing Video Analyzer video resource used for the media recording. </param>
         /// <param name="videoCreationProperties"> Optional video properties to be used in case a new video resource needs to be created on the service. </param>
         /// <param name="videoPublishingOptions"> Optional video publishing options to be used for changing publishing behavior of the output video. </param>
         /// <param name="localMediaCachePath"> Path to a local file system directory for caching of temporary media files. This will also be used to store content which cannot be immediately uploaded to Azure due to Internet connectivity issues. </param>
         /// <param name="localMediaCacheMaximumSizeMiB"> Maximum amount of disk space that can be used for caching of temporary media files. Once this limit is reached, the oldest segments of the media archive will be continuously deleted in order to make space for new media, thus leading to gaps in the cloud recorded content. </param>
-        internal VideoSink(string type, string name, IList<NodeInput> inputs, string videoName, VideoCreationProperties videoCreationProperties, VideoPublishingOptions videoPublishingOptions, string localMediaCachePath, string localMediaCacheMaximumSizeMiB) : base(type, name, inputs)
+        internal VideoSink(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string videoName, VideoCreationProperties videoCreationProperties, VideoPublishingOptions videoPublishingOptions, string localMediaCachePath, string localMediaCacheMaximumSizeMiB) : base(type, name, inputs, serializedAdditionalRawData)
         {
             VideoName = videoName;
             VideoCreationProperties = videoCreationProperties;
@@ -52,6 +53,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             LocalMediaCachePath = localMediaCachePath;
             LocalMediaCacheMaximumSizeMiB = localMediaCacheMaximumSizeMiB;
             Type = type ?? "#Microsoft.VideoAnalyzer.VideoSink";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VideoSink"/> for deserialization. </summary>
+        internal VideoSink()
+        {
         }
 
         /// <summary> Name of a new or existing Video Analyzer video resource used for the media recording. </summary>

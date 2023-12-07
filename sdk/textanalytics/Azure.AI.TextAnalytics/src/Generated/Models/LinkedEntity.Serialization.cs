@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial struct LinkedEntity : IUtf8JsonSerializable
+    public partial struct LinkedEntity : IUtf8JsonSerializable, IJsonModel<LinkedEntity>, IJsonModel<object>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LinkedEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LinkedEntity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -42,11 +52,44 @@ namespace Azure.AI.TextAnalytics
                 writer.WritePropertyName("bingId"u8);
                 writer.WriteStringValue(BingEntitySearchApiId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkedEntity DeserializeLinkedEntity(JsonElement element)
+        LinkedEntity IJsonModel<LinkedEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LinkedEntity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkedEntity(document.RootElement, options);
+        }
+
+        void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LinkedEntity>)this).Write(writer, options);
+
+        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LinkedEntity>)this).Create(ref reader, options);
+
+        internal static LinkedEntity DeserializeLinkedEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             string name = default;
             IEnumerable<LinkedEntityMatch> matches = default;
             string language = default;
@@ -54,6 +97,8 @@ namespace Azure.AI.TextAnalytics
             Uri url = default;
             string dataSource = default;
             Optional<string> bingId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -96,8 +141,50 @@ namespace Azure.AI.TextAnalytics
                     bingId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkedEntity(name, matches, language, id.Value, url, dataSource, bingId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkedEntity(name, matches, language, id.Value, url, dataSource, bingId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkedEntity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LinkedEntity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LinkedEntity IPersistableModel<LinkedEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLinkedEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LinkedEntity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LinkedEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options) => ((IPersistableModel<LinkedEntity>)this).Write(options);
+
+        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options) => ((IPersistableModel<LinkedEntity>)this).Create(data, options);
+
+        string IPersistableModel<object>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LinkedEntity>)this).GetFormatFromOptions(options);
     }
 }

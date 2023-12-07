@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDatabricksDeltaLakeSinkConverter))]
-    public partial class AzureDatabricksDeltaLakeSink : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeSink : IUtf8JsonSerializable, IJsonModel<AzureDatabricksDeltaLakeSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDatabricksDeltaLakeSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureDatabricksDeltaLakeSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreCopyScript))
             {
@@ -64,8 +74,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDatabricksDeltaLakeSink DeserializeAzureDatabricksDeltaLakeSink(JsonElement element)
+        AzureDatabricksDeltaLakeSink IJsonModel<AzureDatabricksDeltaLakeSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDatabricksDeltaLakeSink(document.RootElement, options);
+        }
+
+        internal static AzureDatabricksDeltaLakeSink DeserializeAzureDatabricksDeltaLakeSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +179,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDatabricksDeltaLakeSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, preCopyScript.Value, importSettings.Value);
         }
+
+        BinaryData IPersistableModel<AzureDatabricksDeltaLakeSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureDatabricksDeltaLakeSink IPersistableModel<AzureDatabricksDeltaLakeSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDatabricksDeltaLakeSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AzureDatabricksDeltaLakeSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDatabricksDeltaLakeSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureDatabricksDeltaLakeSinkConverter : JsonConverter<AzureDatabricksDeltaLakeSink>
         {

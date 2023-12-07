@@ -71,6 +71,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "GoogleBigQuery";
         }
 
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/> for deserialization. </summary>
+        internal GoogleBigQueryLinkedService()
+        {
+        }
+
         /// <summary> The default BigQuery project to query against. </summary>
         public object Project { get; set; }
         /// <summary> A comma-separated list of public BigQuery projects to access. </summary>

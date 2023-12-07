@@ -46,6 +46,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Execution";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecutionActivity"/> for deserialization. </summary>
+        internal ExecutionActivity()
+        {
+        }
+
         /// <summary> Linked service reference. </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> Activity policy. </summary>

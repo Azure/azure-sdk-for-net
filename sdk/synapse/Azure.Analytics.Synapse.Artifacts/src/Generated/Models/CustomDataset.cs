@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "CustomDataset";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomDataset"/> for deserialization. </summary>
+        internal CustomDataset()
+        {
+        }
+
         /// <summary> Custom dataset properties. </summary>
         public object TypeProperties { get; set; }
     }

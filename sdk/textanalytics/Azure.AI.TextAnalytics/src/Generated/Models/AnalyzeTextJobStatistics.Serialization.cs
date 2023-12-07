@@ -5,21 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AnalyzeTextJobStatistics
+    internal partial class AnalyzeTextJobStatistics : IUtf8JsonSerializable, IJsonModel<AnalyzeTextJobStatistics>
     {
-        internal static AnalyzeTextJobStatistics DeserializeAnalyzeTextJobStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextJobStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnalyzeTextJobStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnalyzeTextJobStatistics)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue(Statistics);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnalyzeTextJobStatistics IJsonModel<AnalyzeTextJobStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnalyzeTextJobStatistics)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextJobStatistics(document.RootElement, options);
+        }
+
+        internal static AnalyzeTextJobStatistics DeserializeAnalyzeTextJobStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<TextDocumentBatchStatistics> statistics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statistics"u8))
@@ -31,8 +85,44 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnalyzeTextJobStatistics(statistics.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzeTextJobStatistics(statistics.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnalyzeTextJobStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnalyzeTextJobStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnalyzeTextJobStatistics IPersistableModel<AnalyzeTextJobStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalyzeTextJobStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnalyzeTextJobStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalyzeTextJobStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

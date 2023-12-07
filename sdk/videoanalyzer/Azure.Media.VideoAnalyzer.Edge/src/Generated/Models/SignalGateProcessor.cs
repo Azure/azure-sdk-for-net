@@ -30,17 +30,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="activationEvaluationWindow"> The period of time over which the gate gathers input events before evaluating them. </param>
         /// <param name="activationSignalOffset"> Signal offset once the gate is activated (can be negative). It determines the how much farther behind of after the signal will be let through based on the activation time. A negative offset indicates that data prior the activation time must be included on the signal that is let through, once the gate is activated. When used upstream of a file or video sink, this allows for scenarios such as recording buffered media prior an event, such as: record video 5 seconds prior motions is detected. </param>
         /// <param name="minimumActivationTime"> The minimum period for which the gate remains open in the absence of subsequent triggers (events). When used upstream of a file or video sink, it determines the minimum length of the recorded video clip. </param>
         /// <param name="maximumActivationTime"> The maximum period for which the gate remains open in the presence of subsequent triggers (events). When used upstream of a file or video sink, it determines the maximum length of the recorded video clip. </param>
-        internal SignalGateProcessor(string type, string name, IList<NodeInput> inputs, string activationEvaluationWindow, string activationSignalOffset, string minimumActivationTime, string maximumActivationTime) : base(type, name, inputs)
+        internal SignalGateProcessor(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string activationEvaluationWindow, string activationSignalOffset, string minimumActivationTime, string maximumActivationTime) : base(type, name, inputs, serializedAdditionalRawData)
         {
             ActivationEvaluationWindow = activationEvaluationWindow;
             ActivationSignalOffset = activationSignalOffset;
             MinimumActivationTime = minimumActivationTime;
             MaximumActivationTime = maximumActivationTime;
             Type = type ?? "#Microsoft.VideoAnalyzer.SignalGateProcessor";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalGateProcessor"/> for deserialization. </summary>
+        internal SignalGateProcessor()
+        {
         }
 
         /// <summary> The period of time over which the gate gathers input events before evaluating them. </summary>

@@ -49,6 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Asana";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/> for deserialization. </summary>
+        internal AsanaLinkedService()
+        {
+        }
+
         /// <summary>
         /// The api token for the Asana source.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

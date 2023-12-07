@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> An object representing the task definition for an Entity Linking task. </summary>
@@ -18,9 +21,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="EntityLinkingLROTask"/>. </summary>
         /// <param name="taskName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for an Entity Linking task. </param>
-        internal EntityLinkingLROTask(string taskName, AnalyzeTextLROTaskKind kind, EntityLinkingTaskParameters parameters) : base(taskName, kind)
+        internal EntityLinkingLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, EntityLinkingTaskParameters parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
             Kind = kind;

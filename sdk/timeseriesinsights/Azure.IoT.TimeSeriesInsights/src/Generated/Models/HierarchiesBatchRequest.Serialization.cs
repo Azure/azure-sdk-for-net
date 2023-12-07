@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class HierarchiesBatchRequest : IUtf8JsonSerializable
+    internal partial class HierarchiesBatchRequest : IUtf8JsonSerializable, IJsonModel<HierarchiesBatchRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HierarchiesBatchRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HierarchiesBatchRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HierarchiesBatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HierarchiesBatchRequest)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Get))
             {
@@ -35,7 +47,121 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        HierarchiesBatchRequest IJsonModel<HierarchiesBatchRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HierarchiesBatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HierarchiesBatchRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHierarchiesBatchRequest(document.RootElement, options);
+        }
+
+        internal static HierarchiesBatchRequest DeserializeHierarchiesBatchRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<HierarchiesRequestBatchGetDelete> @get = default;
+            Optional<IList<TimeSeriesHierarchy>> put = default;
+            Optional<HierarchiesRequestBatchGetDelete> delete = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("get"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @get = HierarchiesRequestBatchGetDelete.DeserializeHierarchiesRequestBatchGetDelete(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("put"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesHierarchy> array = new List<TimeSeriesHierarchy>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesHierarchy.DeserializeTimeSeriesHierarchy(item));
+                    }
+                    put = array;
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delete = HierarchiesRequestBatchGetDelete.DeserializeHierarchiesRequestBatchGetDelete(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HierarchiesBatchRequest(@get.Value, Optional.ToList(put), delete.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<HierarchiesBatchRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HierarchiesBatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HierarchiesBatchRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HierarchiesBatchRequest IPersistableModel<HierarchiesBatchRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HierarchiesBatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHierarchiesBatchRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HierarchiesBatchRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HierarchiesBatchRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

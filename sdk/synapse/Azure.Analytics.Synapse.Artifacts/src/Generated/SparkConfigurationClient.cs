@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkConfigurationsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkConfigurationsByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SparkConfigurationResource.DeserializeSparkConfigurationResource(e), _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists sparkconfigurations. </summary>
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkConfigurationsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkConfigurationsByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SparkConfigurationResource.DeserializeSparkConfigurationResource(e), _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a sparkconfiguration. </summary>

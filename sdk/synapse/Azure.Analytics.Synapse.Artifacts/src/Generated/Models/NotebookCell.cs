@@ -50,6 +50,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NotebookCell"/> for deserialization. </summary>
+        internal NotebookCell()
+        {
+        }
+
         /// <summary> String identifying the type of cell. </summary>
         public string CellType { get; set; }
         /// <summary> Cell-level metadata. </summary>

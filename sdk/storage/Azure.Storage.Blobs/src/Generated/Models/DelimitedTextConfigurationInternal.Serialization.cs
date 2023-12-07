@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class DelimitedTextConfigurationInternal : IXmlSerializable
+    internal partial class DelimitedTextConfigurationInternal : IXmlSerializable, IPersistableModel<DelimitedTextConfigurationInternal>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "DelimitedTextConfiguration");
             if (Optional.IsDefined(ColumnSeparator))
@@ -47,5 +52,78 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static DelimitedTextConfigurationInternal DeserializeDelimitedTextConfigurationInternal(XElement element, ModelReaderWriterOptions options = null)
+        {
+            string columnSeparator = default;
+            string fieldQuote = default;
+            string recordSeparator = default;
+            string escapeChar = default;
+            bool? headersPresent = default;
+            if (element.Element("ColumnSeparator") is XElement columnSeparatorElement)
+            {
+                columnSeparator = (string)columnSeparatorElement;
+            }
+            if (element.Element("FieldQuote") is XElement fieldQuoteElement)
+            {
+                fieldQuote = (string)fieldQuoteElement;
+            }
+            if (element.Element("RecordSeparator") is XElement recordSeparatorElement)
+            {
+                recordSeparator = (string)recordSeparatorElement;
+            }
+            if (element.Element("EscapeChar") is XElement escapeCharElement)
+            {
+                escapeChar = (string)escapeCharElement;
+            }
+            if (element.Element("HasHeaders") is XElement hasHeadersElement)
+            {
+                headersPresent = (bool?)hasHeadersElement;
+            }
+            return new DelimitedTextConfigurationInternal(columnSeparator, fieldQuote, recordSeparator, escapeChar, headersPresent, serializedAdditionalRawData: null);
+        }
+
+        BinaryData IPersistableModel<DelimitedTextConfigurationInternal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DelimitedTextConfigurationInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DelimitedTextConfigurationInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DelimitedTextConfigurationInternal IPersistableModel<DelimitedTextConfigurationInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DelimitedTextConfigurationInternal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeDelimitedTextConfigurationInternal(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DelimitedTextConfigurationInternal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DelimitedTextConfigurationInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

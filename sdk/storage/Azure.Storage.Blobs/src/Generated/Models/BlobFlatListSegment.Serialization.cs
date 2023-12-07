@@ -5,14 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlobFlatListSegment
+    internal partial class BlobFlatListSegment : IXmlSerializable, IPersistableModel<BlobFlatListSegment>
     {
-        internal static BlobFlatListSegment DeserializeBlobFlatListSegment(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "Blobs");
+            foreach (var item in BlobItems)
+            {
+                writer.WriteObjectValue(item, "Blob");
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobFlatListSegment DeserializeBlobFlatListSegment(XElement element, ModelReaderWriterOptions options = null)
         {
             IReadOnlyList<BlobItemInternal> blobItems = default;
             var array = new List<BlobItemInternal>();
@@ -21,7 +39,48 @@ namespace Azure.Storage.Blobs.Models
                 array.Add(BlobItemInternal.DeserializeBlobItemInternal(e));
             }
             blobItems = array;
-            return new BlobFlatListSegment(blobItems);
+            return new BlobFlatListSegment(blobItems, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobFlatListSegment>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobFlatListSegment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobFlatListSegment)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobFlatListSegment IPersistableModel<BlobFlatListSegment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobFlatListSegment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobFlatListSegment(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobFlatListSegment)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobFlatListSegment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

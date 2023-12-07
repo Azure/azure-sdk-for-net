@@ -62,6 +62,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Db2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="Db2LinkedService"/> for deserialization. </summary>
+        internal Db2LinkedService()
+        {
+        }
+
         /// <summary> The connection string. It is mutually exclusive with server, database, authenticationType, userName, packageCollection and certificateCommonName property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary> Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>

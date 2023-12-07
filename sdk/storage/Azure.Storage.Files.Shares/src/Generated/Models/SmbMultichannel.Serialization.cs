@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class SmbMultichannel : IXmlSerializable
+    public partial class SmbMultichannel : IXmlSerializable, IPersistableModel<SmbMultichannel>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Multichannel");
             if (Optional.IsDefined(Enabled))
@@ -25,14 +29,57 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static SmbMultichannel DeserializeSmbMultichannel(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static SmbMultichannel DeserializeSmbMultichannel(XElement element, ModelReaderWriterOptions options = null)
         {
             bool? enabled = default;
             if (element.Element("Enabled") is XElement enabledElement)
             {
                 enabled = (bool?)enabledElement;
             }
-            return new SmbMultichannel(enabled);
+            return new SmbMultichannel(enabled, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<SmbMultichannel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SmbMultichannel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SmbMultichannel)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SmbMultichannel IPersistableModel<SmbMultichannel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SmbMultichannel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeSmbMultichannel(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SmbMultichannel)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SmbMultichannel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

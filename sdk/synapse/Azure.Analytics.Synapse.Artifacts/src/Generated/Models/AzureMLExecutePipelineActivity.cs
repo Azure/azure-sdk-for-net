@@ -53,6 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureMLExecutePipeline";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMLExecutePipelineActivity"/> for deserialization. </summary>
+        internal AzureMLExecutePipelineActivity()
+        {
+        }
+
         /// <summary> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </summary>
         public object MlPipelineId { get; set; }
         /// <summary> Run history experiment name of the pipeline run. This information will be passed in the ExperimentName property of the published pipeline execution request. Type: string (or Expression with resultType string). </summary>

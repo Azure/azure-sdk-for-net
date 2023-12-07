@@ -16,6 +16,38 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The DocumentSentiment. </summary>
     internal partial class DocumentSentiment
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DocumentSentiment"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
@@ -44,7 +76,8 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="confidenceScores"> Document level sentiment confidence scores between 0 and 1 for each sentiment class. </param>
         /// <param name="sentences"> Sentence level sentiment analysis. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        internal DocumentSentiment(string id, DocumentSentimentValue sentiment, DocumentStatistics statistics, SentimentConfidenceScorePerLabel confidenceScores, IReadOnlyList<SentenceSentiment> sentences, IReadOnlyList<TextAnalyticsWarning> warnings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentSentiment(string id, DocumentSentimentValue sentiment, DocumentStatistics statistics, SentimentConfidenceScorePerLabel confidenceScores, IReadOnlyList<SentenceSentiment> sentences, IReadOnlyList<TextAnalyticsWarning> warnings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Sentiment = sentiment;
@@ -52,6 +85,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             ConfidenceScores = confidenceScores;
             Sentences = sentences;
             Warnings = warnings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentSentiment"/> for deserialization. </summary>
+        internal DocumentSentiment()
+        {
         }
 
         /// <summary> Unique, non-empty document identifier. </summary>

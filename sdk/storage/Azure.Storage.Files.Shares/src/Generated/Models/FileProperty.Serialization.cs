@@ -6,14 +6,65 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileProperty
+    internal partial class FileProperty : IXmlSerializable, IPersistableModel<FileProperty>
     {
-        internal static FileProperty DeserializeFileProperty(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "FileProperty");
+            writer.WriteStartElement("Content-Length");
+            writer.WriteValue(ContentLength);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(CreationTime))
+            {
+                writer.WriteStartElement("CreationTime");
+                writer.WriteValue(CreationTime.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastAccessTime))
+            {
+                writer.WriteStartElement("LastAccessTime");
+                writer.WriteValue(LastAccessTime.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastWriteTime))
+            {
+                writer.WriteStartElement("LastWriteTime");
+                writer.WriteValue(LastWriteTime.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ChangeTime))
+            {
+                writer.WriteStartElement("ChangeTime");
+                writer.WriteValue(ChangeTime.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastModified))
+            {
+                writer.WriteStartElement("Last-Modified");
+                writer.WriteValue(LastModified.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Etag))
+            {
+                writer.WriteStartElement("Etag");
+                writer.WriteValue(Etag);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static FileProperty DeserializeFileProperty(XElement element, ModelReaderWriterOptions options = null)
         {
             long contentLength = default;
             DateTimeOffset? creationTime = default;
@@ -50,7 +101,48 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 etag = (string)etagElement;
             }
-            return new FileProperty(contentLength, creationTime, lastAccessTime, lastWriteTime, changeTime, lastModified, etag);
+            return new FileProperty(contentLength, creationTime, lastAccessTime, lastWriteTime, changeTime, lastModified, etag, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<FileProperty>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(FileProperty)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FileProperty IPersistableModel<FileProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeFileProperty(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(FileProperty)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FileProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

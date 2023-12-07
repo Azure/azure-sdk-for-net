@@ -30,6 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Identity of the workspace. </param>
@@ -49,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
         /// <param name="purviewConfiguration"> Purview Configuration. </param>
         /// <param name="adlaResourceId"> The ADLA resource ID. </param>
-        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string adlaResourceId) : base(id, name, type, tags, location)
+        internal Workspace(string id, string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string adlaResourceId) : base(id, name, type, serializedAdditionalRawData, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -68,6 +69,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
             PurviewConfiguration = purviewConfiguration;
             AdlaResourceId = adlaResourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Workspace"/> for deserialization. </summary>
+        internal Workspace()
+        {
         }
 
         /// <summary> Identity of the workspace. </summary>

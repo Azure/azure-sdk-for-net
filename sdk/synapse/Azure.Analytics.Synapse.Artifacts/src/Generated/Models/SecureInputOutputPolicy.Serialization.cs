@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SecureInputOutputPolicyConverter))]
-    public partial class SecureInputOutputPolicy : IUtf8JsonSerializable
+    public partial class SecureInputOutputPolicy : IUtf8JsonSerializable, IJsonModel<SecureInputOutputPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureInputOutputPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecureInputOutputPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecureInputOutputPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SecureInputOutputPolicy)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SecureInput))
             {
@@ -28,17 +39,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(SecureOutput.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecureInputOutputPolicy DeserializeSecureInputOutputPolicy(JsonElement element)
+        SecureInputOutputPolicy IJsonModel<SecureInputOutputPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecureInputOutputPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SecureInputOutputPolicy)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecureInputOutputPolicy(document.RootElement, options);
+        }
+
+        internal static SecureInputOutputPolicy DeserializeSecureInputOutputPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> secureInput = default;
             Optional<bool> secureOutput = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secureInput"u8))
@@ -59,9 +101,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     secureOutput = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecureInputOutputPolicy(Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecureInputOutputPolicy(Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecureInputOutputPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecureInputOutputPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SecureInputOutputPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SecureInputOutputPolicy IPersistableModel<SecureInputOutputPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecureInputOutputPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecureInputOutputPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SecureInputOutputPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecureInputOutputPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SecureInputOutputPolicyConverter : JsonConverter<SecureInputOutputPolicy>
         {

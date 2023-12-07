@@ -49,6 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureMLBatchExecution";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/> for deserialization. </summary>
+        internal AzureMLBatchExecutionActivity()
+        {
+        }
+
         /// <summary> Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request. </summary>
         public IDictionary<string, object> GlobalParameters { get; }
         /// <summary> Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations. This information will be passed in the WebServiceOutputs property of the Azure ML batch execution request. </summary>

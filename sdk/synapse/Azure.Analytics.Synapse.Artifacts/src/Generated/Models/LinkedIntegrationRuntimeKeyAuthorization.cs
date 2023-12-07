@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -26,11 +27,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key used for authorization. </param>
-        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, SecureString key) : base(authorizationType)
+        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, IDictionary<string, BinaryData> serializedAdditionalRawData, SecureString key) : base(authorizationType, serializedAdditionalRawData)
         {
             Key = key;
             AuthorizationType = authorizationType ?? "Key";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> for deserialization. </summary>
+        internal LinkedIntegrationRuntimeKeyAuthorization()
+        {
         }
 
         /// <summary> The key used for authorization. </summary>

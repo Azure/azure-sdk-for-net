@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
         /// <param name="folder"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineResource(string id, string name, string type, string etag, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<object> annotations, IDictionary<string, object> runDimensions, PipelineFolder folder, IDictionary<string, object> additionalProperties) : base(id, name, type, etag)
+        internal PipelineResource(string id, string name, string type, string etag, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<object> annotations, IDictionary<string, object> runDimensions, PipelineFolder folder, IDictionary<string, object> additionalProperties) : base(id, name, type, null, etag)
         {
             Description = description;
             Activities = activities;

@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobMetrics : IXmlSerializable
+    public partial class BlobMetrics : IXmlSerializable, IPersistableModel<BlobMetrics>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Metrics");
             if (Optional.IsDefined(Version))
@@ -38,7 +42,9 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobMetrics DeserializeBlobMetrics(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobMetrics DeserializeBlobMetrics(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool enabled = default;
@@ -60,7 +66,48 @@ namespace Azure.Storage.Blobs.Models
             {
                 retentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(retentionPolicyElement);
             }
-            return new BlobMetrics(version, enabled, includeApis, retentionPolicy);
+            return new BlobMetrics(version, enabled, includeApis, retentionPolicy, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobMetrics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobMetrics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobMetrics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobMetrics IPersistableModel<BlobMetrics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobMetrics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobMetrics(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobMetrics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobMetrics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

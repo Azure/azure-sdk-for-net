@@ -82,6 +82,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureDatabricks";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedService"/> for deserialization. </summary>
+        internal AzureDatabricksLinkedService()
+        {
+        }
+
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
         public object Domain { get; set; }
         /// <summary>

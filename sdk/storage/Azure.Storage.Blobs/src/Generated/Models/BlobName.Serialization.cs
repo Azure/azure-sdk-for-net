@@ -5,13 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlobName
+    internal partial class BlobName : IXmlSerializable, IPersistableModel<BlobName>
     {
-        internal static BlobName DeserializeBlobName(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "BlobName");
+            if (Optional.IsDefined(Encoded))
+            {
+                writer.WriteStartAttribute("Encoded");
+                writer.WriteValue(Encoded.Value);
+                writer.WriteEndAttribute();
+            }
+            writer.WriteValue(Content);
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static BlobName DeserializeBlobName(XElement element, ModelReaderWriterOptions options = null)
         {
             bool? encoded = default;
             string content = default;
@@ -20,7 +41,48 @@ namespace Azure.Storage.Blobs.Models
                 encoded = (bool?)encodedAttribute;
             }
             content = (string)element;
-            return new BlobName(encoded, content);
+            return new BlobName(encoded, content, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<BlobName>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobName IPersistableModel<BlobName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializeBlobName(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BlobName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

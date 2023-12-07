@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuName(skuName) : null, zones?.ToList(), storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, keyEncryptionKey != null ? new AmlFileSystemEncryptionSettings(keyEncryptionKey) : null, maintenanceWindow, hsm);
+            return new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuName(skuName, serializedAdditionalRawData: null) : null, zones?.ToList(), storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, keyEncryptionKey != null ? new AmlFileSystemEncryptionSettings(keyEncryptionKey, serializedAdditionalRawData: null) : null, maintenanceWindow, hsm, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemHealth"/>. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.AmlFileSystemHealth"/> instance for mocking. </returns>
         public static AmlFileSystemHealth AmlFileSystemHealth(AmlFileSystemHealthStateType? state = null, string statusCode = null, string statusDescription = null)
         {
-            return new AmlFileSystemHealth(state, statusCode, statusDescription);
+            return new AmlFileSystemHealth(state, statusCode, statusDescription, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemClientInfo"/>. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.AmlFileSystemClientInfo"/> instance for mocking. </returns>
         public static AmlFileSystemClientInfo AmlFileSystemClientInfo(string mgsAddress = null, string mountCommand = null, string lustreVersion = null, AmlFileSystemContainerStorageInterface containerStorageInterface = null)
         {
-            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface);
+            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemContainerStorageInterface"/>. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.AmlFileSystemContainerStorageInterface"/> instance for mocking. </returns>
         public static AmlFileSystemContainerStorageInterface AmlFileSystemContainerStorageInterface(string persistentVolumeClaim = null, string persistentVolume = null, string storageClass = null)
         {
-            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass);
+            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemPropertiesHsm"/>. </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
             archiveStatus ??= new List<AmlFileSystemArchive>();
 
-            return new AmlFileSystemPropertiesHsm(settings, archiveStatus?.ToList());
+            return new AmlFileSystemPropertiesHsm(settings, archiveStatus?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemArchive"/>. </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.AmlFileSystemArchive"/> instance for mocking. </returns>
         public static AmlFileSystemArchive AmlFileSystemArchive(string filesystemPath = null, AmlFileSystemArchiveStatus status = null)
         {
-            return new AmlFileSystemArchive(filesystemPath, status);
+            return new AmlFileSystemArchive(filesystemPath, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemArchiveStatus"/>. </summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.AmlFileSystemArchiveStatus"/> instance for mocking. </returns>
         public static AmlFileSystemArchiveStatus AmlFileSystemArchiveStatus(ArchiveStatusType? state = null, DateTimeOffset? lastCompletionOn = null, DateTimeOffset? lastStartedOn = null, int? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
-            return new AmlFileSystemArchiveStatus(state, lastCompletionOn, lastStartedOn, percentComplete, errorCode, errorMessage);
+            return new AmlFileSystemArchiveStatus(state, lastCompletionOn, lastStartedOn, percentComplete, errorCode, errorMessage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RequiredAmlFileSystemSubnetsSize"/>. </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.RequiredAmlFileSystemSubnetsSize"/> instance for mocking. </returns>
         public static RequiredAmlFileSystemSubnetsSize RequiredAmlFileSystemSubnetsSize(int? filesystemSubnetSize = null)
         {
-            return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize);
+            return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheSku"/>. </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             locationInfo ??= new List<StorageCacheSkuLocationInfo>();
             restrictions ??= new List<StorageCacheRestriction>();
 
-            return new StorageCacheSku(resourceType, capabilities?.ToList(), locations?.ToList(), locationInfo?.ToList(), name, restrictions?.ToList());
+            return new StorageCacheSku(resourceType, capabilities?.ToList(), locations?.ToList(), locationInfo?.ToList(), name, restrictions?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheSkuCapability"/>. </summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheSkuCapability"/> instance for mocking. </returns>
         public static StorageCacheSkuCapability StorageCacheSkuCapability(string name = null, string value = null)
         {
-            return new StorageCacheSkuCapability(name, value);
+            return new StorageCacheSkuCapability(name, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheSkuLocationInfo"/>. </summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
             zones ??= new List<string>();
 
-            return new StorageCacheSkuLocationInfo(location, zones?.ToList());
+            return new StorageCacheSkuLocationInfo(location, zones?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheRestriction"/>. </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
             values ??= new List<string>();
 
-            return new StorageCacheRestriction(restrictionType, values?.ToList(), reasonCode);
+            return new StorageCacheRestriction(restrictionType, values?.ToList(), reasonCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUsageModel"/>. </summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheUsageModel"/> instance for mocking. </returns>
         public static StorageCacheUsageModel StorageCacheUsageModel(string displayDescription = null, string modelName = null, string targetType = null)
         {
-            return new StorageCacheUsageModel(displayDescription != null ? new StorageCacheUsageModelDisplay(displayDescription) : null, modelName, targetType);
+            return new StorageCacheUsageModel(displayDescription != null ? new StorageCacheUsageModelDisplay(displayDescription, serializedAdditionalRawData: null) : null, modelName, targetType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUsage"/>. </summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheUsage"/> instance for mocking. </returns>
         public static StorageCacheUsage StorageCacheUsage(int? limit = null, string unit = null, int? currentValue = null, StorageCacheUsageName name = null)
         {
-            return new StorageCacheUsage(limit, unit, currentValue, name);
+            return new StorageCacheUsage(limit, unit, currentValue, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUsageName"/>. </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheUsageName"/> instance for mocking. </returns>
         public static StorageCacheUsageName StorageCacheUsageName(string value = null, string localizedValue = null)
         {
-            return new StorageCacheUsageName(value, localizedValue);
+            return new StorageCacheUsageName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageCache.StorageCacheData"/>. </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             primingJobs ??= new List<PrimingJob>();
             spaceAllocation ??= new List<StorageTargetSpaceAllocation>();
 
-            return new StorageCacheData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuInfo(skuName) : null, cacheSizeGB, health, mountAddresses?.ToList(), provisioningState, subnet, upgradeStatus, upgradeSettings, networkSettings, encryptionSettings, securityAccessPolicies != null ? new StorageCacheSecuritySettings(securityAccessPolicies?.ToList()) : null, directoryServicesSettings, zones?.ToList(), primingJobs?.ToList(), spaceAllocation?.ToList());
+            return new StorageCacheData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuInfo(skuName, serializedAdditionalRawData: null) : null, cacheSizeGB, health, mountAddresses?.ToList(), provisioningState, subnet, upgradeStatus, upgradeSettings, networkSettings, encryptionSettings, securityAccessPolicies != null ? new StorageCacheSecuritySettings(securityAccessPolicies?.ToList(), serializedAdditionalRawData: null) : null, directoryServicesSettings, zones?.ToList(), primingJobs?.ToList(), spaceAllocation?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheHealth"/>. </summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
             conditions ??= new List<OutstandingCondition>();
 
-            return new StorageCacheHealth(state, statusDescription, conditions?.ToList());
+            return new StorageCacheHealth(state, statusDescription, conditions?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OutstandingCondition"/>. </summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.OutstandingCondition"/> instance for mocking. </returns>
         public static OutstandingCondition OutstandingCondition(DateTimeOffset? timestamp = null, string message = null)
         {
-            return new OutstandingCondition(timestamp, message);
+            return new OutstandingCondition(timestamp, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUpgradeStatus"/>. </summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheUpgradeStatus"/> instance for mocking. </returns>
         public static StorageCacheUpgradeStatus StorageCacheUpgradeStatus(string currentFirmwareVersion = null, StorageCacheFirmwareStatusType? firmwareUpdateStatus = null, DateTimeOffset? firmwareUpdateDeadline = null, DateTimeOffset? lastFirmwareUpdate = null, string pendingFirmwareVersion = null)
         {
-            return new StorageCacheUpgradeStatus(currentFirmwareVersion, firmwareUpdateStatus, firmwareUpdateDeadline, lastFirmwareUpdate, pendingFirmwareVersion);
+            return new StorageCacheUpgradeStatus(currentFirmwareVersion, firmwareUpdateStatus, firmwareUpdateDeadline, lastFirmwareUpdate, pendingFirmwareVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheNetworkSettings"/>. </summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             utilityAddresses ??= new List<IPAddress>();
             dnsServers ??= new List<IPAddress>();
 
-            return new StorageCacheNetworkSettings(mtu, utilityAddresses?.ToList(), dnsServers?.ToList(), dnsSearchDomain, ntpServer);
+            return new StorageCacheNetworkSettings(mtu, utilityAddresses?.ToList(), dnsServers?.ToList(), dnsSearchDomain, ntpServer, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheActiveDirectorySettings"/>. </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheActiveDirectorySettings"/> instance for mocking. </returns>
         public static StorageCacheActiveDirectorySettings StorageCacheActiveDirectorySettings(IPAddress primaryDnsIPAddress = null, IPAddress secondaryDnsIPAddress = null, string domainName = null, string domainNetBiosName = null, string cacheNetBiosName = null, DomainJoinedType? domainJoined = null, StorageCacheActiveDirectorySettingsCredentials credentials = null)
         {
-            return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress, domainName, domainNetBiosName, cacheNetBiosName, domainJoined, credentials);
+            return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress, domainName, domainNetBiosName, cacheNetBiosName, domainJoined, credentials, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUsernameDownloadSettings"/>. </summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheUsernameDownloadSettings"/> instance for mocking. </returns>
         public static StorageCacheUsernameDownloadSettings StorageCacheUsernameDownloadSettings(bool? enableExtendedGroups = null, StorageCacheUsernameSourceType? usernameSource = null, Uri groupFileUri = null, Uri userFileUri = null, string ldapServer = null, string ldapBaseDN = null, bool? encryptLdapConnection = null, bool? requireValidCertificate = null, bool? autoDownloadCertificate = null, Uri caCertificateUri = null, StorageCacheUsernameDownloadedType? usernameDownloaded = null, StorageCacheUsernameDownloadCredential credentials = null)
         {
-            return new StorageCacheUsernameDownloadSettings(enableExtendedGroups, usernameSource, groupFileUri, userFileUri, ldapServer, ldapBaseDN, encryptLdapConnection, requireValidCertificate, autoDownloadCertificate, caCertificateUri, usernameDownloaded, credentials);
+            return new StorageCacheUsernameDownloadSettings(enableExtendedGroups, usernameSource, groupFileUri, userFileUri, ldapServer, ldapBaseDN, encryptLdapConnection, requireValidCertificate, autoDownloadCertificate, caCertificateUri, usernameDownloaded, credentials, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrimingJob"/>. </summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.PrimingJob"/> instance for mocking. </returns>
         public static PrimingJob PrimingJob(string primingJobName = null, Uri primingManifestUri = null, string primingJobId = null, PrimingJobState? primingJobState = null, string primingJobStatus = null, string primingJobDetails = null, double? primingJobPercentComplete = null)
         {
-            return new PrimingJob(primingJobName, primingManifestUri, primingJobId, primingJobState, primingJobStatus, primingJobDetails, primingJobPercentComplete);
+            return new PrimingJob(primingJobName, primingManifestUri, primingJobId, primingJobState, primingJobStatus, primingJobDetails, primingJobPercentComplete, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageCache.StorageTargetData"/>. </summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             junctions ??= new List<NamespaceJunction>();
             unknownAttributes ??= new Dictionary<string, string>();
 
-            return new StorageTargetData(id, name, resourceType, systemData, junctions?.ToList(), targetType, provisioningState, state, nfs3, clfsTarget != null ? new ClfsTarget(clfsTarget) : null, unknownAttributes != null ? new UnknownTarget(unknownAttributes) : null, blobNfs, allocationPercentage, location);
+            return new StorageTargetData(id, name, resourceType, systemData, junctions?.ToList(), targetType, provisioningState, state, nfs3, clfsTarget != null ? new ClfsTarget(clfsTarget, serializedAdditionalRawData: null) : null, unknownAttributes != null ? new UnknownTarget(unknownAttributes, serializedAdditionalRawData: null) : null, blobNfs, allocationPercentage, location, serializedAdditionalRawData: null);
         }
     }
 }

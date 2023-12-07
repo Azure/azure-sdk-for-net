@@ -53,6 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SapHana";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapHanaLinkedService"/> for deserialization. </summary>
+        internal SapHanaLinkedService()
+        {
+        }
+
         /// <summary> SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </summary>

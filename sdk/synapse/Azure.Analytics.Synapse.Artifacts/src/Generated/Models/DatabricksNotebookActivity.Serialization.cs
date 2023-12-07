@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,18 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DatabricksNotebookActivityConverter))]
-    public partial class DatabricksNotebookActivity : IUtf8JsonSerializable
+    public partial class DatabricksNotebookActivity : IUtf8JsonSerializable, IJsonModel<DatabricksNotebookActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabricksNotebookActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatabricksNotebookActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabricksNotebookActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DatabricksNotebookActivity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -123,8 +133,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DatabricksNotebookActivity DeserializeDatabricksNotebookActivity(JsonElement element)
+        DatabricksNotebookActivity IJsonModel<DatabricksNotebookActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabricksNotebookActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DatabricksNotebookActivity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabricksNotebookActivity(document.RootElement, options);
+        }
+
+        internal static DatabricksNotebookActivity DeserializeDatabricksNotebookActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -300,6 +324,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DatabricksNotebookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, notebookPath, Optional.ToDictionary(baseParameters), Optional.ToList(libraries));
         }
+
+        BinaryData IPersistableModel<DatabricksNotebookActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabricksNotebookActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DatabricksNotebookActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DatabricksNotebookActivity IPersistableModel<DatabricksNotebookActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabricksNotebookActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatabricksNotebookActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DatabricksNotebookActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatabricksNotebookActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class DatabricksNotebookActivityConverter : JsonConverter<DatabricksNotebookActivity>
         {

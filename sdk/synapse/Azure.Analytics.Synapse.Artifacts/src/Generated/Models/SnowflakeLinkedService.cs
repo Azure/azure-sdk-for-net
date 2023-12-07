@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Snowflake";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SnowflakeLinkedService"/> for deserialization. </summary>
+        internal SnowflakeLinkedService()
+        {
+        }
+
         /// <summary> The connection string of snowflake. Type: string, SecureString. </summary>
         public object ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>

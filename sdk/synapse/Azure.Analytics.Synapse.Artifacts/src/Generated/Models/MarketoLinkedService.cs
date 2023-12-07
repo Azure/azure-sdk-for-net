@@ -58,6 +58,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Marketo";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MarketoLinkedService"/> for deserialization. </summary>
+        internal MarketoLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Marketo server. (i.e. 123-ABC-321.mktorest.com). </summary>
         public object Endpoint { get; set; }
         /// <summary> The client Id of your Marketo service. </summary>

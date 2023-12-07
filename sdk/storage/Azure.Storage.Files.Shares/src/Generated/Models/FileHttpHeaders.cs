@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Parameter group. </summary>
     internal partial class FileHttpHeaders
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FileHttpHeaders"/>. </summary>
         public FileHttpHeaders()
         {
@@ -24,7 +57,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
         /// <param name="fileContentMD5"> Sets the file's MD5 hash. </param>
         /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
-        internal FileHttpHeaders(string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, byte[] fileContentMD5, string fileContentDisposition)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileHttpHeaders(string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, byte[] fileContentMD5, string fileContentDisposition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileContentType = fileContentType;
             FileContentEncoding = fileContentEncoding;
@@ -32,6 +66,7 @@ namespace Azure.Storage.Files.Shares.Models
             FileCacheControl = fileCacheControl;
             FileContentMD5 = fileContentMD5;
             FileContentDisposition = fileContentDisposition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </summary>

@@ -57,6 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureSqlDW";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSqlDWLinkedService"/> for deserialization. </summary>
+        internal AzureSqlDWLinkedService()
+        {
+        }
+
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>

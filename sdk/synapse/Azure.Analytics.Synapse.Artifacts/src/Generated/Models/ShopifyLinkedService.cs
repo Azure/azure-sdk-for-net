@@ -53,6 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Shopify";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ShopifyLinkedService"/> for deserialization. </summary>
+        internal ShopifyLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </summary>
         public object Host { get; set; }
         /// <summary>

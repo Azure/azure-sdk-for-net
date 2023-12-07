@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -21,8 +22,9 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <summary> Initializes a new instance of <see cref="GetTypesPage"/>. </summary>
         /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="types"> Partial list of time series types returned in a single request. Can be empty if server was unable to fill the page with more types in this request, or there is no more types when continuation token is null. </param>
-        internal GetTypesPage(string continuationToken, IReadOnlyList<TimeSeriesType> types) : base(continuationToken)
+        internal GetTypesPage(string continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<TimeSeriesType> types) : base(continuationToken, serializedAdditionalRawData)
         {
             Types = types;
         }

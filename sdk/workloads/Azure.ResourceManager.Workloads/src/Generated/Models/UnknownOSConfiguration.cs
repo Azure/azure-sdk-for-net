@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The UnknownOSConfiguration. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOSConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
-        internal UnknownOSConfiguration(SapOSType osType) : base(osType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownOSConfiguration(SapOSType osType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(osType, serializedAdditionalRawData)
         {
             OSType = osType;
         }

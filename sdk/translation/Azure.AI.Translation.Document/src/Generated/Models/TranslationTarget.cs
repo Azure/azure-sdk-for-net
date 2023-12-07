@@ -14,6 +14,38 @@ namespace Azure.AI.Translation.Document
     /// <summary> Destination for the finished translated documents. </summary>
     public partial class TranslationTarget
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
         /// <param name="targetUri"> Location of the folder / container with your documents. </param>
         /// <param name="languageCode"> Target Language. </param>
@@ -34,13 +66,20 @@ namespace Azure.AI.Translation.Document
         /// <param name="languageCode"> Target Language. </param>
         /// <param name="glossaries"> List of Glossary. </param>
         /// <param name="storageSource"> Storage Source. </param>
-        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, string storageSource)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, string storageSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetUri = targetUri;
             CategoryId = categoryId;
             LanguageCode = languageCode;
             Glossaries = glossaries;
             StorageSource = storageSource;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/> for deserialization. </summary>
+        internal TranslationTarget()
+        {
         }
         /// <summary> List of Glossary. </summary>
         public IList<TranslationGlossary> Glossaries { get; }

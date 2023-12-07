@@ -58,6 +58,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Responsys";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResponsysLinkedService"/> for deserialization. </summary>
+        internal ResponsysLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Responsys server. </summary>
         public object Endpoint { get; set; }
         /// <summary> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </summary>

@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "MicrosoftAccessTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessTableDataset"/> for deserialization. </summary>
+        internal MicrosoftAccessTableDataset()
+        {
+        }
+
         /// <summary> The Microsoft Access table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }

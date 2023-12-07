@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to execute a time series query over events. Exactly one of "getEvents", "getSeries" or "aggregateSeries" must be set. </summary>
     internal partial class QueryRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
         public QueryRequest()
         {
@@ -19,11 +54,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="getEvents"> Get Events query. Allows to retrieve raw events for a given Time Series ID and search span. </param>
         /// <param name="getSeries"> Get Series query. Allows to retrieve time series of calculated variable values from events for a given Time Series ID and search span. </param>
         /// <param name="aggregateSeries"> Aggregate Series query. Allows to calculate an aggregated time series from events for a given Time Series ID and search span. </param>
-        internal QueryRequest(GetEvents getEvents, GetSeries getSeries, AggregateSeries aggregateSeries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryRequest(GetEvents getEvents, GetSeries getSeries, AggregateSeries aggregateSeries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GetEvents = getEvents;
             GetSeries = getSeries;
             AggregateSeries = aggregateSeries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Get Events query. Allows to retrieve raw events for a given Time Series ID and search span. </summary>

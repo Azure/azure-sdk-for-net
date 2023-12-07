@@ -44,6 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "DynamicsAXResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXResourceDataset"/> for deserialization. </summary>
+        internal DynamicsAXResourceDataset()
+        {
+        }
+
         /// <summary> The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string). </summary>
         public object Path { get; set; }
     }

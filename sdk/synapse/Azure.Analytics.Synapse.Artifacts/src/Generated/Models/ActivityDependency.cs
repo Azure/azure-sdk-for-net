@@ -40,6 +40,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ActivityDependency"/> for deserialization. </summary>
+        internal ActivityDependency()
+        {
+        }
+
         /// <summary> Activity name. </summary>
         public string Activity { get; set; }
         /// <summary> Match-Condition for the dependency. </summary>

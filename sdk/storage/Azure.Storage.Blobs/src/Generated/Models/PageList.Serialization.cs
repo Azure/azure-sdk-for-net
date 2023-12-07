@@ -5,14 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class PageList
+    internal partial class PageList : IXmlSerializable, IPersistableModel<PageList>
     {
-        internal static PageList DeserializePageList(XElement element)
+        private void WriteInternal(XmlWriter writer, string nameHint, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "PageList");
+            if (Optional.IsDefined(NextMarker))
+            {
+                writer.WriteStartElement("NextMarker");
+                writer.WriteValue(NextMarker);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(PageRange))
+            {
+                foreach (var item in PageRange)
+                {
+                    writer.WriteObjectValue(item, "PageRange");
+                }
+            }
+            if (Optional.IsCollectionDefined(ClearRange))
+            {
+                foreach (var item in ClearRange)
+                {
+                    writer.WriteObjectValue(item, "ClearRange");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteInternal(writer, nameHint, new ModelReaderWriterOptions("W"));
+
+        internal static PageList DeserializePageList(XElement element, ModelReaderWriterOptions options = null)
         {
             string nextMarker = default;
             IReadOnlyList<PageRange> pageRange = default;
@@ -33,7 +67,48 @@ namespace Azure.Storage.Blobs.Models
                 array0.Add(Models.ClearRange.DeserializeClearRange(e));
             }
             clearRange = array0;
-            return new PageList(pageRange, clearRange, nextMarker);
+            return new PageList(pageRange, clearRange, nextMarker, serializedAdditionalRawData: null);
         }
+
+        BinaryData IPersistableModel<PageList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PageList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        using XmlWriter writer = XmlWriter.Create(stream);
+                        WriteInternal(writer, null, options);
+                        writer.Flush();
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PageList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PageList IPersistableModel<PageList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PageList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "X":
+                    return DeserializePageList(XElement.Load(data.ToStream()), options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PageList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PageList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

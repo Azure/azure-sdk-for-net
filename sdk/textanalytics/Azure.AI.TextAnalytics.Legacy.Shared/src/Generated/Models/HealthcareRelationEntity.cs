@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -13,6 +14,38 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The HealthcareRelationEntity. </summary>
     internal partial class HealthcareRelationEntity
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HealthcareRelationEntity"/>. </summary>
         /// <param name="ref"> Reference link object, using a JSON pointer RFC 6901 (URI Fragment Identifier Representation), pointing to the entity . </param>
         /// <param name="role"> Role of entity in the relationship. For example: 'CD20-positive diffuse large B-cell lymphoma' has the following entities with their roles in parenthesis:  CD20 (GeneOrProtein), Positive (Expression), diffuse large B-cell lymphoma (Diagnosis). </param>
@@ -24,6 +57,22 @@ namespace Azure.AI.TextAnalytics.Legacy
 
             Ref = @ref;
             Role = role;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelationEntity"/>. </summary>
+        /// <param name="ref"> Reference link object, using a JSON pointer RFC 6901 (URI Fragment Identifier Representation), pointing to the entity . </param>
+        /// <param name="role"> Role of entity in the relationship. For example: 'CD20-positive diffuse large B-cell lymphoma' has the following entities with their roles in parenthesis:  CD20 (GeneOrProtein), Positive (Expression), diffuse large B-cell lymphoma (Diagnosis). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareRelationEntity(string @ref, string role, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Ref = @ref;
+            Role = role;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelationEntity"/> for deserialization. </summary>
+        internal HealthcareRelationEntity()
+        {
         }
 
         /// <summary> Reference link object, using a JSON pointer RFC 6901 (URI Fragment Identifier Representation), pointing to the entity . </summary>

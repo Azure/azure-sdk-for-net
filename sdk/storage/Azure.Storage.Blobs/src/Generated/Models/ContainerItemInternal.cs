@@ -14,6 +14,38 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An Azure Storage container. </summary>
     internal partial class ContainerItemInternal
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> Properties of a container. </param>
@@ -34,13 +66,20 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="version"></param>
         /// <param name="properties"> Properties of a container. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Deleted = deleted;
             Version = version;
             Properties = properties;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/> for deserialization. </summary>
+        internal ContainerItemInternal()
+        {
         }
 
         /// <summary> Gets the name. </summary>

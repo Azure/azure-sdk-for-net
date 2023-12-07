@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> An item of the notebook cell execution output. </summary>
     public partial class NotebookCellOutputItem
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NotebookCellOutputItem"/>. </summary>
         /// <param name="outputType"> Execution, display, or stream outputs. </param>
         public NotebookCellOutputItem(CellOutputType outputType)
@@ -24,7 +59,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="text"> For output_type=stream, the stream's text output, represented as a string or an array of strings. </param>
         /// <param name="data"> Output data. Use MIME type as key, and content as value. </param>
         /// <param name="metadata"> Metadata for the output item. </param>
-        internal NotebookCellOutputItem(string name, int? executionCount, CellOutputType outputType, object text, object data, object metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotebookCellOutputItem(string name, int? executionCount, CellOutputType outputType, object text, object data, object metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ExecutionCount = executionCount;
@@ -32,6 +68,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Text = text;
             Data = data;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotebookCellOutputItem"/> for deserialization. </summary>
+        internal NotebookCellOutputItem()
+        {
         }
 
         /// <summary> For output_type=stream, determines the name of stream (stdout / stderr). </summary>

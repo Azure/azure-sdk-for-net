@@ -6,16 +6,91 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class QueryResultPage
+    internal partial class QueryResultPage : IUtf8JsonSerializable, IJsonModel<QueryResultPage>
     {
-        internal static QueryResultPage DeserializeQueryResultPage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryResultPage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QueryResultPage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryResultPage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(QueryResultPage)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Timestamps))
+            {
+                writer.WritePropertyName("timestamps"u8);
+                writer.WriteStartArray();
+                foreach (var item in Timestamps)
+                {
+                    writer.WriteStringValue(item, "O");
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartArray();
+                foreach (var item in Properties)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Progress))
+            {
+                writer.WritePropertyName("progress"u8);
+                writer.WriteNumberValue(Progress.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContinuationToken))
+            {
+                writer.WritePropertyName("continuationToken"u8);
+                writer.WriteStringValue(ContinuationToken);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        QueryResultPage IJsonModel<QueryResultPage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryResultPage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(QueryResultPage)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryResultPage(document.RootElement, options);
+        }
+
+        internal static QueryResultPage DeserializeQueryResultPage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +99,8 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<IReadOnlyList<PropertyValues>> properties = default;
             Optional<double> progress = default;
             Optional<string> continuationToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamps"u8))
@@ -68,8 +145,44 @@ namespace Azure.IoT.TimeSeriesInsights
                     continuationToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QueryResultPage(continuationToken.Value, Optional.ToList(timestamps), Optional.ToList(properties), Optional.ToNullable(progress));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QueryResultPage(continuationToken.Value, serializedAdditionalRawData, Optional.ToList(timestamps), Optional.ToList(properties), Optional.ToNullable(progress));
         }
+
+        BinaryData IPersistableModel<QueryResultPage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryResultPage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueryResultPage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueryResultPage IPersistableModel<QueryResultPage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryResultPage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQueryResultPage(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(QueryResultPage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryResultPage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

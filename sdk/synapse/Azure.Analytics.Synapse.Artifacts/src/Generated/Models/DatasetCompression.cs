@@ -36,6 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatasetCompression"/> for deserialization. </summary>
+        internal DatasetCompression()
+        {
+        }
+
         /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>
         public object Type { get; set; }
         /// <summary> The dataset compression level. Type: string (or Expression with resultType string). </summary>

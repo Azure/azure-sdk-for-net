@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "PaypalObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="PaypalObjectDataset"/> for deserialization. </summary>
+        internal PaypalObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public object TableName { get; set; }
     }
