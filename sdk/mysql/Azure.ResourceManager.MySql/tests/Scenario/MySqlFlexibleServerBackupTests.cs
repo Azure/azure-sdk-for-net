@@ -65,26 +65,10 @@ namespace Azure.ResourceManager.MySql.Tests
                 new MySqlFlexibleServerFullBackupStoreDetails(list1)
             );
 
-            var lroBackupAndExport = await server1.CreateBackupAndExportAsync(Azure.WaitUntil.Started, backupAndExportContent);
-            Assert.AreEqual(HttpStatusCode.Accepted, (HttpStatusCode)lroBackupAndExport.GetRawResponse().Status);
-
-            //get operation id
-            string operationId = lroBackupAndExport.GetRawResponse().Headers.RequestId;
-
-            OperationStatusExtendedResult operationResult = await Subscription.GetOperationResultAsync(server1.Data.Location, operationId);
-
-            do
-            {
-                //print response from operationresults
-                Console.WriteLine(operationResult.ToString());
-                Console.WriteLine(operationResult.PercentComplete.ToString());
-                Thread.Sleep(10000);//sleep for 10 seconds
-
-                //get the updated status again
-                operationResult = await Subscription.GetOperationResultAsync(server1.Data.Location, operationId);
-            } while (operationResult.Status.Equals("InProgress"));//get response until operation is in progress
-
-            Assert.AreEqual("Succeeded", operationResult.Status);
+            var lroBackupAndExport = await server1.CreateBackupAndExportAsync(Azure.WaitUntil.Completed, backupAndExportContent);
+            MySqlFlexibleServerBackupAndExportResult resultBackupAndExport = lroBackupAndExport.Value;
+            Assert.AreEqual("Succeeded", resultBackupAndExport.Status.ToString());
+            Assert.AreEqual("100", resultBackupAndExport.PercentComplete.ToString());
         }
     }
 }
