@@ -1,10 +1,11 @@
 # Release History
 
-## 1.4.0-beta.1 (2023-12-12)
+## 1.4.0-beta.1 (2023-12-13)
 
 ### Features Added
 
 - Update API version to 2023-11-01
+- Add property `string JobIdentifier` to class `DataProtectionOperationJobExtendedInfo`, and now since the "jobId" returned by service is not always a resource identifier, `JobResourceId` will be null when `JobIdentifier` is not parsable to a resource identifier.
 
 ## 1.3.0 (2023-11-27)
 
