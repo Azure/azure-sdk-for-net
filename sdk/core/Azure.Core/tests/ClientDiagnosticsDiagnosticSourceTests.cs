@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public partial class ClientDiagnosticsTests
+    public partial class ClientDiagnosticsDiagnosticSourceTests
     {
         [Test]
         public void CreatesActivityWithNameAndTags()
