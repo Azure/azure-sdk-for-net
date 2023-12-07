@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownLabelingJobMediaProperties. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLabelingJobMediaProperties"/>. </summary>
         /// <param name="mediaType"> [Required] Media type of the job. </param>
-        internal UnknownLabelingJobMediaProperties(MediaType mediaType) : base(mediaType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownLabelingJobMediaProperties(MediaType mediaType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mediaType, serializedAdditionalRawData)
         {
             MediaType = mediaType;
         }

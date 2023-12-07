@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +15,133 @@ using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class SearchAddressResultItem
+    public partial class SearchAddressResultItem : IUtf8JsonSerializable, IJsonModel<SearchAddressResultItem>
     {
-        internal static SearchAddressResultItem DeserializeSearchAddressResultItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchAddressResultItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SearchAddressResultItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchAddressResultItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SearchAddressResultItem)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(SearchAddressResultType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(SearchAddressResultType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Score))
+            {
+                writer.WritePropertyName("score"u8);
+                writer.WriteNumberValue(Score.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DistanceInMeters))
+            {
+                writer.WritePropertyName("dist"u8);
+                writer.WriteNumberValue(DistanceInMeters.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataSourceInfo))
+            {
+                writer.WritePropertyName("info"u8);
+                writer.WriteStringValue(DataSourceInfo);
+            }
+            if (Optional.IsDefined(EntityType))
+            {
+                writer.WritePropertyName("entityType"u8);
+                writer.WriteStringValue(EntityType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PointOfInterest))
+            {
+                writer.WritePropertyName("poi"u8);
+                writer.WriteObjectValue(PointOfInterest);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteObjectValue(Address);
+            }
+            if (Optional.IsDefined(PositionInternal))
+            {
+                writer.WritePropertyName("position"u8);
+                writer.WriteObjectValue(PositionInternal);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ViewportInternal))
+            {
+                writer.WritePropertyName("viewport"u8);
+                writer.WriteObjectValue(ViewportInternal);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(EntryPoints))
+            {
+                writer.WritePropertyName("entryPoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in EntryPoints)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(AddressRanges))
+            {
+                writer.WritePropertyName("addressRanges"u8);
+                writer.WriteObjectValue(AddressRanges);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataSources))
+            {
+                writer.WritePropertyName("dataSources"u8);
+                writer.WriteObjectValue(DataSources);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MatchType))
+            {
+                writer.WritePropertyName("matchType"u8);
+                writer.WriteStringValue(MatchType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DetourTimeInternal))
+            {
+                writer.WritePropertyName("detourTime"u8);
+                writer.WriteNumberValue(DetourTimeInternal.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SearchAddressResultItem IJsonModel<SearchAddressResultItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchAddressResultItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SearchAddressResultItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchAddressResultItem(document.RootElement, options);
+        }
+
+        internal static SearchAddressResultItem DeserializeSearchAddressResultItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +161,8 @@ namespace Azure.Maps.Search.Models
             Optional<MapsDataSource> dataSources = default;
             Optional<MapsSearchMatchType> matchType = default;
             Optional<int> detourTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -169,8 +297,44 @@ namespace Azure.Maps.Search.Models
                     detourTime = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchAddressResultItem(Optional.ToNullable(type), id.Value, Optional.ToNullable(score), Optional.ToNullable(dist), info.Value, Optional.ToNullable(entityType), poi.Value, address.Value, position.Value, viewport.Value, Optional.ToList(entryPoints), addressRanges.Value, dataSources.Value, Optional.ToNullable(matchType), Optional.ToNullable(detourTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SearchAddressResultItem(Optional.ToNullable(type), id.Value, Optional.ToNullable(score), Optional.ToNullable(dist), info.Value, Optional.ToNullable(entityType), poi.Value, address.Value, position.Value, viewport.Value, Optional.ToList(entryPoints), addressRanges.Value, dataSources.Value, Optional.ToNullable(matchType), Optional.ToNullable(detourTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SearchAddressResultItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchAddressResultItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SearchAddressResultItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SearchAddressResultItem IPersistableModel<SearchAddressResultItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchAddressResultItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSearchAddressResultItem(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SearchAddressResultItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchAddressResultItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The SAS definition management attributes. </summary>
     public partial class SasDefinitionAttributes
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SasDefinitionAttributes"/>. </summary>
         public SasDefinitionAttributes()
         {
@@ -23,13 +56,15 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <param name="updated"> Last updated time in UTC. </param>
         /// <param name="recoverableDays"> softDelete data retention days. Value should be &gt;=7 and &lt;=90 when softDelete enabled, otherwise 0. </param>
         /// <param name="recoveryLevel"> Reflects the deletion recovery level currently in effect for SAS definitions in the current vault. If it contains 'Purgeable' the SAS definition can be permanently deleted by a privileged user; otherwise, only the system can purge the SAS definition, at the end of the retention interval. </param>
-        internal SasDefinitionAttributes(bool? enabled, DateTimeOffset? created, DateTimeOffset? updated, int? recoverableDays, DeletionRecoveryLevel? recoveryLevel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SasDefinitionAttributes(bool? enabled, DateTimeOffset? created, DateTimeOffset? updated, int? recoverableDays, DeletionRecoveryLevel? recoveryLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Created = created;
             Updated = updated;
             RecoverableDays = recoverableDays;
             RecoveryLevel = recoveryLevel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the enabled state of the object. </summary>

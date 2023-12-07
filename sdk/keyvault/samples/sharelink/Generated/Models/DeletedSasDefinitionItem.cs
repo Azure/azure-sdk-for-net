@@ -23,10 +23,11 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <param name="secretId"> The storage account SAS definition secret id. </param>
         /// <param name="attributes"> The SAS definition management attributes. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryId"> The url of the recovery object, used to identify and recover the deleted SAS definition. </param>
         /// <param name="scheduledPurgeDate"> The time when the SAS definition is scheduled to be purged, in UTC. </param>
         /// <param name="deletedDate"> The time when the SAS definition was deleted, in UTC. </param>
-        internal DeletedSasDefinitionItem(string id, string secretId, SasDefinitionAttributes attributes, IReadOnlyDictionary<string, string> tags, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate) : base(id, secretId, attributes, tags)
+        internal DeletedSasDefinitionItem(string id, string secretId, SasDefinitionAttributes attributes, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate) : base(id, secretId, attributes, tags, serializedAdditionalRawData)
         {
             RecoveryId = recoveryId;
             ScheduledPurgeDate = scheduledPurgeDate;

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Administration;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -17,9 +19,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="id"> Unique id of data source credential. </param>
         /// <param name="name"> Name of data source credential. </param>
         /// <param name="description"> Description of data source credential. </param>
-        internal UnknownDataSourceCredential(DataSourceCredentialKind credentialKind, string id, string name, string description) : base(credentialKind, id, name, description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataSourceCredential(DataSourceCredentialKind credentialKind, string id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(credentialKind, id, name, description, serializedAdditionalRawData)
         {
             CredentialKind = credentialKind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataSourceCredential"/> for deserialization. </summary>
+        internal UnknownDataSourceCredential()
+        {
         }
     }
 }

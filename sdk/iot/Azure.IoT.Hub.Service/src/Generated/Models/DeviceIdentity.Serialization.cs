@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class DeviceIdentity : IUtf8JsonSerializable
+    public partial class DeviceIdentity : IUtf8JsonSerializable, IJsonModel<DeviceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeviceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DeviceIdentity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DeviceId))
             {
@@ -81,11 +92,40 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeviceIdentity DeserializeDeviceIdentity(JsonElement element)
+        DeviceIdentity IJsonModel<DeviceIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DeviceIdentity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceIdentity(document.RootElement, options);
+        }
+
+        internal static DeviceIdentity DeserializeDeviceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,6 +143,8 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<AuthenticationMechanism> authentication = default;
             Optional<DeviceCapabilities> capabilities = default;
             Optional<string> deviceScope = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -202,8 +244,44 @@ namespace Azure.IoT.Hub.Service.Models
                     deviceScope = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceIdentity(deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(statusUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, capabilities.Value, deviceScope.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeviceIdentity(deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(statusUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, capabilities.Value, deviceScope.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DeviceIdentity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DeviceIdentity IPersistableModel<DeviceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeviceIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DeviceIdentity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeviceIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

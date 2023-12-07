@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The ExportImportDevice. </summary>
     public partial class ExportImportDevice
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ExportImportDevice"/>. </summary>
         public ExportImportDevice()
         {
@@ -32,7 +65,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="properties"> The desired and reported properties for the device. </param>
         /// <param name="capabilities"> The status of capabilities enabled on the device. </param>
         /// <param name="deviceScope"> The scope of the device. </param>
-        internal ExportImportDevice(string id, string moduleId, string eTag, ExportImportDeviceImportMode? importMode, ExportImportDeviceStatus? status, string statusReason, AuthenticationMechanism authentication, string twinETag, IDictionary<string, object> tags, PropertyContainer properties, DeviceCapabilities capabilities, string deviceScope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportImportDevice(string id, string moduleId, string eTag, ExportImportDeviceImportMode? importMode, ExportImportDeviceStatus? status, string statusReason, AuthenticationMechanism authentication, string twinETag, IDictionary<string, object> tags, PropertyContainer properties, DeviceCapabilities capabilities, string deviceScope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ModuleId = moduleId;
@@ -46,6 +80,7 @@ namespace Azure.IoT.Hub.Service.Models
             Properties = properties;
             Capabilities = capabilities;
             DeviceScope = deviceScope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the device. </summary>

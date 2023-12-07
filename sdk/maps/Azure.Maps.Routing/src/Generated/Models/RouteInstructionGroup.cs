@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Groups a sequence of instruction elements which are related to each other. The sequence range is constrained with firstInstructionIndex and lastInstructionIndex. When human-readable text messages are requested for guidance (instructionType=text or tagged), then the instructionGroup has a summary message returned when available. </summary>
     public partial class RouteInstructionGroup
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouteInstructionGroup"/>. </summary>
         internal RouteInstructionGroup()
         {
@@ -20,12 +55,14 @@ namespace Azure.Maps.Routing.Models
         /// <param name="lastInstructionIndex"> Index of the last instruction in the instructions and belonging to this group. </param>
         /// <param name="groupLengthInMeters"> Length of the group. </param>
         /// <param name="groupMessage"> Summary message when human-readable text messages are requested for guidance (instructionType=text or tagged). </param>
-        internal RouteInstructionGroup(int? firstInstructionIndex, int? lastInstructionIndex, int? groupLengthInMeters, string groupMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteInstructionGroup(int? firstInstructionIndex, int? lastInstructionIndex, int? groupLengthInMeters, string groupMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstInstructionIndex = firstInstructionIndex;
             LastInstructionIndex = lastInstructionIndex;
             GroupLengthInMeters = groupLengthInMeters;
             GroupMessage = groupMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Index of the first instruction in the instructions and belonging to this group. </summary>

@@ -5,15 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class AddressRanges
+    public partial class AddressRanges : IUtf8JsonSerializable, IJsonModel<AddressRanges>
     {
-        internal static AddressRanges DeserializeAddressRanges(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddressRanges>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AddressRanges>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AddressRanges>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AddressRanges)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RangeLeft))
+            {
+                writer.WritePropertyName("rangeLeft"u8);
+                writer.WriteStringValue(RangeLeft);
+            }
+            if (Optional.IsDefined(RangeRight))
+            {
+                writer.WritePropertyName("rangeRight"u8);
+                writer.WriteStringValue(RangeRight);
+            }
+            if (Optional.IsDefined(FromInternal))
+            {
+                writer.WritePropertyName("from"u8);
+                writer.WriteObjectValue(FromInternal);
+            }
+            if (Optional.IsDefined(ToInternal))
+            {
+                writer.WritePropertyName("to"u8);
+                writer.WriteObjectValue(ToInternal);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AddressRanges IJsonModel<AddressRanges>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddressRanges>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AddressRanges)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddressRanges(document.RootElement, options);
+        }
+
+        internal static AddressRanges DeserializeAddressRanges(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +89,8 @@ namespace Azure.Maps.Search.Models
             Optional<string> rangeRight = default;
             Optional<LatLongPairAbbreviated> @from = default;
             Optional<LatLongPairAbbreviated> to = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rangeLeft"u8))
@@ -52,8 +121,44 @@ namespace Azure.Maps.Search.Models
                     to = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AddressRanges(rangeLeft.Value, rangeRight.Value, @from.Value, to.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AddressRanges(rangeLeft.Value, rangeRight.Value, @from.Value, to.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AddressRanges>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddressRanges>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AddressRanges)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AddressRanges IPersistableModel<AddressRanges>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddressRanges>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAddressRanges(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AddressRanges)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AddressRanges>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

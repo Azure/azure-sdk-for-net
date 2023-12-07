@@ -23,7 +23,7 @@ namespace Azure.Maps.Routing.Models
         {
             matrix ??= new List<IList<RouteMatrix>>();
 
-            return new RouteMatrixResult(formatVersion, matrix?.ToList(), summary);
+            return new RouteMatrixResult(formatVersion, matrix?.ToList(), summary, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteLegSummary"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.RouteLegSummary"/> instance for mocking. </returns>
         public static RouteLegSummary RouteLegSummary(int? lengthInMeters = null, int? travelTimeInSeconds = null, int? trafficDelayInSeconds = null, DateTimeOffset? departureTime = null, DateTimeOffset? arrivalTime = null, int? noTrafficTravelTimeInSeconds = null, int? historicTrafficTravelTimeInSeconds = null, int? liveTrafficIncidentsTravelTimeInSeconds = null, double? fuelConsumptionInLiters = null, double? batteryConsumptionInKwH = null)
         {
-            return new RouteLegSummary(lengthInMeters, travelTimeInSeconds, trafficDelayInSeconds, departureTime, arrivalTime, noTrafficTravelTimeInSeconds, historicTrafficTravelTimeInSeconds, liveTrafficIncidentsTravelTimeInSeconds, fuelConsumptionInLiters, batteryConsumptionInKwH);
+            return new RouteLegSummary(lengthInMeters, travelTimeInSeconds, trafficDelayInSeconds, departureTime, arrivalTime, noTrafficTravelTimeInSeconds, historicTrafficTravelTimeInSeconds, liveTrafficIncidentsTravelTimeInSeconds, fuelConsumptionInLiters, batteryConsumptionInKwH, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteMatrixSummary"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.RouteMatrixSummary"/> instance for mocking. </returns>
         public static RouteMatrixSummary RouteMatrixSummary(int? successfulRoutes = null, int? totalRoutes = null)
         {
-            return new RouteMatrixSummary(successfulRoutes, totalRoutes);
+            return new RouteMatrixSummary(successfulRoutes, totalRoutes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteDirections"/>. </summary>
@@ -75,7 +75,7 @@ namespace Azure.Maps.Routing.Models
             routes ??= new List<RouteData>();
             optimizedWaypoints ??= new List<RouteOptimizedWaypoint>();
 
-            return new RouteDirections(formatVersion, routes?.ToList(), optimizedWaypoints?.ToList(), report);
+            return new RouteDirections(formatVersion, routes?.ToList(), optimizedWaypoints?.ToList(), report, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteData"/>. </summary>
@@ -89,7 +89,7 @@ namespace Azure.Maps.Routing.Models
             legs ??= new List<RouteLeg>();
             sections ??= new List<RouteSection>();
 
-            return new RouteData(summary, legs?.ToList(), sections?.ToList(), guidance);
+            return new RouteData(summary, legs?.ToList(), sections?.ToList(), guidance, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteSection"/>. </summary>
@@ -105,7 +105,7 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.RouteSection"/> instance for mocking. </returns>
         public static RouteSection RouteSection(int? startPointIndex = null, int? endPointIndex = null, ResponseSectionType? sectionType = null, ResponseTravelMode? travelMode = null, TrafficIncidentCategory? simpleCategory = null, int? effectiveSpeedInKmh = null, int? delayInSeconds = null, DelayMagnitude? delayMagnitude = null, RouteSectionTec tec = null)
         {
-            return new RouteSection(startPointIndex, endPointIndex, sectionType, travelMode, simpleCategory, effectiveSpeedInKmh, delayInSeconds, delayMagnitude, tec);
+            return new RouteSection(startPointIndex, endPointIndex, sectionType, travelMode, simpleCategory, effectiveSpeedInKmh, delayInSeconds, delayMagnitude, tec, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteSectionTec"/>. </summary>
@@ -116,7 +116,7 @@ namespace Azure.Maps.Routing.Models
         {
             causes ??= new List<RouteSectionTecCause>();
 
-            return new RouteSectionTec(effectCode, causes?.ToList());
+            return new RouteSectionTec(effectCode, causes?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteSectionTecCause"/>. </summary>
@@ -125,7 +125,7 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.RouteSectionTecCause"/> instance for mocking. </returns>
         public static RouteSectionTecCause RouteSectionTecCause(int? mainCauseCode = null, int? subCauseCode = null)
         {
-            return new RouteSectionTecCause(mainCauseCode, subCauseCode);
+            return new RouteSectionTecCause(mainCauseCode, subCauseCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteGuidance"/>. </summary>
@@ -137,7 +137,7 @@ namespace Azure.Maps.Routing.Models
             instructions ??= new List<RouteInstruction>();
             instructionGroups ??= new List<RouteInstructionGroup>();
 
-            return new RouteGuidance(instructions?.ToList(), instructionGroups?.ToList());
+            return new RouteGuidance(instructions?.ToList(), instructionGroups?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteInstructionGroup"/>. </summary>
@@ -148,7 +148,7 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.RouteInstructionGroup"/> instance for mocking. </returns>
         public static RouteInstructionGroup RouteInstructionGroup(int? firstInstructionIndex = null, int? lastInstructionIndex = null, int? groupLengthInMeters = null, string groupMessage = null)
         {
-            return new RouteInstructionGroup(firstInstructionIndex, lastInstructionIndex, groupLengthInMeters, groupMessage);
+            return new RouteInstructionGroup(firstInstructionIndex, lastInstructionIndex, groupLengthInMeters, groupMessage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteOptimizedWaypoint"/>. </summary>
@@ -157,7 +157,7 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.RouteOptimizedWaypoint"/> instance for mocking. </returns>
         public static RouteOptimizedWaypoint RouteOptimizedWaypoint(int? providedIndex = null, int? optimizedIndex = null)
         {
-            return new RouteOptimizedWaypoint(providedIndex, optimizedIndex);
+            return new RouteOptimizedWaypoint(providedIndex, optimizedIndex, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteReport"/>. </summary>
@@ -167,7 +167,7 @@ namespace Azure.Maps.Routing.Models
         {
             effectiveSettings ??= new List<EffectiveSetting>();
 
-            return new RouteReport(effectiveSettings?.ToList());
+            return new RouteReport(effectiveSettings?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EffectiveSetting"/>. </summary>
@@ -176,7 +176,7 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.EffectiveSetting"/> instance for mocking. </returns>
         public static EffectiveSetting EffectiveSetting(string key = null, string value = null)
         {
-            return new EffectiveSetting(key, value);
+            return new EffectiveSetting(key, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteRangeResult"/>. </summary>
@@ -186,7 +186,7 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.RouteRangeResult"/> instance for mocking. </returns>
         public static RouteRangeResult RouteRangeResult(string formatVersion = null, RouteRange reachableRange = null, RouteReport report = null)
         {
-            return new RouteRangeResult(formatVersion, reachableRange, report);
+            return new RouteRangeResult(formatVersion, reachableRange, report, serializedAdditionalRawData: null);
         }
     }
 }

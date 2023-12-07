@@ -5,26 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    internal partial class CloudMetadata : IUtf8JsonSerializable
+    internal partial class CloudMetadata : IUtf8JsonSerializable, IJsonModel<CloudMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudMetadata)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Provider))
+            {
+                writer.WritePropertyName("provider"u8);
+                writer.WriteStringValue(Provider);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudMetadata DeserializeCloudMetadata(JsonElement element)
+        CloudMetadata IJsonModel<CloudMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudMetadata)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudMetadata(document.RootElement, options);
+        }
+
+        internal static CloudMetadata DeserializeCloudMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> provider = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"u8))
@@ -32,8 +80,44 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     provider = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudMetadata(provider.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudMetadata(provider.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudMetadata)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CloudMetadata IPersistableModel<CloudMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudMetadata)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

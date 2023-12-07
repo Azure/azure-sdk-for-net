@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The UnknownVirtualNetworkFunctionTemplate. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVirtualNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
-        internal UnknownVirtualNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType) : base(nfviType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownVirtualNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(nfviType, serializedAdditionalRawData)
         {
             NfviType = nfviType;
         }

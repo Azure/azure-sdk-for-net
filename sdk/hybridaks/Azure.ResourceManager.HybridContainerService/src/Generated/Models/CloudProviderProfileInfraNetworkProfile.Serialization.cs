@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class CloudProviderProfileInfraNetworkProfile : IUtf8JsonSerializable
+    internal partial class CloudProviderProfileInfraNetworkProfile : IUtf8JsonSerializable, IJsonModel<CloudProviderProfileInfraNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudProviderProfileInfraNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudProviderProfileInfraNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudProviderProfileInfraNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudProviderProfileInfraNetworkProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VnetSubnetIds))
             {
@@ -26,16 +37,47 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudProviderProfileInfraNetworkProfile DeserializeCloudProviderProfileInfraNetworkProfile(JsonElement element)
+        CloudProviderProfileInfraNetworkProfile IJsonModel<CloudProviderProfileInfraNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudProviderProfileInfraNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudProviderProfileInfraNetworkProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudProviderProfileInfraNetworkProfile(document.RootElement, options);
+        }
+
+        internal static CloudProviderProfileInfraNetworkProfile DeserializeCloudProviderProfileInfraNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> vnetSubnetIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetSubnetIds"u8))
@@ -52,8 +94,44 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     vnetSubnetIds = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudProviderProfileInfraNetworkProfile(Optional.ToList(vnetSubnetIds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudProviderProfileInfraNetworkProfile(Optional.ToList(vnetSubnetIds), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudProviderProfileInfraNetworkProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudProviderProfileInfraNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudProviderProfileInfraNetworkProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CloudProviderProfileInfraNetworkProfile IPersistableModel<CloudProviderProfileInfraNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudProviderProfileInfraNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudProviderProfileInfraNetworkProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudProviderProfileInfraNetworkProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudProviderProfileInfraNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

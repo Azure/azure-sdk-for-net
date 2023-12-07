@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Maps.Routing.Models
     /// <summary> This object is returned from a successful Route Directions call. </summary>
     public partial class RouteDirections
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouteDirections"/>. </summary>
         internal RouteDirections()
         {
@@ -37,12 +70,14 @@ namespace Azure.Maps.Routing.Models
         /// means that the original sequence is [0, 1, 2] and optimized sequence is [1, 2, 0]. Since the index starts by 0 the original is "first, second, third" while the optimized is "second, third, first".
         /// </param>
         /// <param name="report"> Reports the effective settings used in the current call. </param>
-        internal RouteDirections(string formatVersion, IReadOnlyList<RouteData> routes, IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints, RouteReport report)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteDirections(string formatVersion, IReadOnlyList<RouteData> routes, IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints, RouteReport report, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FormatVersion = formatVersion;
             Routes = routes;
             OptimizedWaypoints = optimizedWaypoints;
             Report = report;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Format Version property. </summary>

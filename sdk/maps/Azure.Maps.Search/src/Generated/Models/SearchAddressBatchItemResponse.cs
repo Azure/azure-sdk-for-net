@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Maps.Search.Models
@@ -15,6 +16,16 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="SearchAddressBatchItemResponse"/>. </summary>
         internal SearchAddressBatchItemResponse()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchAddressBatchItemResponse"/>. </summary>
+        /// <param name="summary"> Summary object for a Search API response. </param>
+        /// <param name="results"> A list of Search API results. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="errorDetail"> The error object. </param>
+        internal SearchAddressBatchItemResponse(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results, IDictionary<string, BinaryData> serializedAdditionalRawData, ErrorDetail errorDetail) : base(summary, results, serializedAdditionalRawData)
+        {
+            ErrorDetail = errorDetail;
         }
     }
 }

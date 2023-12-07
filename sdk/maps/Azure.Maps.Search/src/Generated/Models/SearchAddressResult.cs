@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Maps.Search.Models
     /// <summary> This object is returned from a successful Search calls. </summary>
     public partial class SearchAddressResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SearchAddressResult"/>. </summary>
         internal SearchAddressResult()
         {
@@ -22,10 +55,12 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="SearchAddressResult"/>. </summary>
         /// <param name="summary"> Summary object for a Search API response. </param>
         /// <param name="results"> A list of Search API results. </param>
-        internal SearchAddressResult(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchAddressResult(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Summary = summary;
             Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> A list of Search API results. </summary>
         public IReadOnlyList<SearchAddressResultItem> Results { get; }

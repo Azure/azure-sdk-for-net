@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricSingleSeriesDetectionCondition : IUtf8JsonSerializable
+    public partial class MetricSingleSeriesDetectionCondition : IUtf8JsonSerializable, IJsonModel<MetricSingleSeriesDetectionCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricSingleSeriesDetectionCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MetricSingleSeriesDetectionCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricSingleSeriesDetectionCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MetricSingleSeriesDetectionCondition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("series"u8);
             writer.WriteObjectValue(Series);
@@ -37,11 +49,40 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("changeThresholdCondition"u8);
                 writer.WriteObjectValue(ChangeThresholdCondition);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MetricSingleSeriesDetectionCondition DeserializeMetricSingleSeriesDetectionCondition(JsonElement element)
+        MetricSingleSeriesDetectionCondition IJsonModel<MetricSingleSeriesDetectionCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricSingleSeriesDetectionCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MetricSingleSeriesDetectionCondition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricSingleSeriesDetectionCondition(document.RootElement, options);
+        }
+
+        internal static MetricSingleSeriesDetectionCondition DeserializeMetricSingleSeriesDetectionCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +92,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<SmartDetectionCondition> smartDetectionCondition = default;
             Optional<HardThresholdCondition> hardThresholdCondition = default;
             Optional<ChangeThresholdCondition> changeThresholdCondition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("series"u8))
@@ -94,8 +137,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     changeThresholdCondition = Models.ChangeThresholdCondition.DeserializeChangeThresholdCondition(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MetricSingleSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, series);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MetricSingleSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, serializedAdditionalRawData, series);
         }
+
+        BinaryData IPersistableModel<MetricSingleSeriesDetectionCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricSingleSeriesDetectionCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MetricSingleSeriesDetectionCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MetricSingleSeriesDetectionCondition IPersistableModel<MetricSingleSeriesDetectionCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricSingleSeriesDetectionCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMetricSingleSeriesDetectionCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MetricSingleSeriesDetectionCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MetricSingleSeriesDetectionCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

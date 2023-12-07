@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
@@ -30,6 +31,7 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeature"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="geometry">
         /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -38,13 +40,18 @@ namespace Azure.Maps.Search.Models
         /// <param name="properties"> Properties can contain any additional metadata about the `Feature`. Value can be any JSON object or a JSON null value. </param>
         /// <param name="id"> Identifier for the feature. </param>
         /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
-        internal GeoJsonFeature(GeoJsonObjectType type, GeoJsonGeometry geometry, object properties, string id, string featureType) : base(type)
+        internal GeoJsonFeature(GeoJsonObjectType type, IDictionary<string, BinaryData> serializedAdditionalRawData, GeoJsonGeometry geometry, object properties, string id, string featureType) : base(type, serializedAdditionalRawData)
         {
             Geometry = geometry;
             Properties = properties;
             Id = id;
             FeatureType = featureType;
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonFeature"/> for deserialization. </summary>
+        internal GeoJsonFeature()
+        {
         }
 
         /// <summary>

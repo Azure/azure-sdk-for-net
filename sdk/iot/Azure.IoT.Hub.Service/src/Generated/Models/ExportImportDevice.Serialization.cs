@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ExportImportDevice : IUtf8JsonSerializable
+    public partial class ExportImportDevice : IUtf8JsonSerializable, IJsonModel<ExportImportDevice>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportImportDevice>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExportImportDevice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportImportDevice>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ExportImportDevice)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -86,7 +98,194 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ExportImportDevice IJsonModel<ExportImportDevice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportImportDevice>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ExportImportDevice)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportImportDevice(document.RootElement, options);
+        }
+
+        internal static ExportImportDevice DeserializeExportImportDevice(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> id = default;
+            Optional<string> moduleId = default;
+            Optional<string> eTag = default;
+            Optional<ExportImportDeviceImportMode> importMode = default;
+            Optional<ExportImportDeviceStatus> status = default;
+            Optional<string> statusReason = default;
+            Optional<AuthenticationMechanism> authentication = default;
+            Optional<string> twinETag = default;
+            Optional<IDictionary<string, object>> tags = default;
+            Optional<PropertyContainer> properties = default;
+            Optional<DeviceCapabilities> capabilities = default;
+            Optional<string> deviceScope = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("moduleId"u8))
+                {
+                    moduleId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("eTag"u8))
+                {
+                    eTag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("importMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    importMode = new ExportImportDeviceImportMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new ExportImportDeviceStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("statusReason"u8))
+                {
+                    statusReason = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authentication"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authentication = AuthenticationMechanism.DeserializeAuthenticationMechanism(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("twinETag"u8))
+                {
+                    twinETag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PropertyContainer.DeserializePropertyContainer(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("capabilities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capabilities = DeviceCapabilities.DeserializeDeviceCapabilities(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("deviceScope"u8))
+                {
+                    deviceScope = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExportImportDevice(id.Value, moduleId.Value, eTag.Value, Optional.ToNullable(importMode), Optional.ToNullable(status), statusReason.Value, authentication.Value, twinETag.Value, Optional.ToDictionary(tags), properties.Value, capabilities.Value, deviceScope.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ExportImportDevice>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportImportDevice>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ExportImportDevice)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExportImportDevice IPersistableModel<ExportImportDevice>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportImportDevice>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExportImportDevice(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ExportImportDevice)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExportImportDevice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

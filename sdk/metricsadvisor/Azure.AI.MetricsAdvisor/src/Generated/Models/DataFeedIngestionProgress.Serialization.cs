@@ -6,21 +6,93 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class DataFeedIngestionProgress
+    public partial class DataFeedIngestionProgress : IUtf8JsonSerializable, IJsonModel<DataFeedIngestionProgress>
     {
-        internal static DataFeedIngestionProgress DeserializeDataFeedIngestionProgress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFeedIngestionProgress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFeedIngestionProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedIngestionProgress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFeedIngestionProgress)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(LatestSuccessTimestamp))
+            {
+                if (LatestSuccessTimestamp != null)
+                {
+                    writer.WritePropertyName("latestSuccessTimestamp"u8);
+                    writer.WriteStringValue(LatestSuccessTimestamp.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("latestSuccessTimestamp");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(LatestActiveTimestamp))
+            {
+                if (LatestActiveTimestamp != null)
+                {
+                    writer.WritePropertyName("latestActiveTimestamp"u8);
+                    writer.WriteStringValue(LatestActiveTimestamp.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("latestActiveTimestamp");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataFeedIngestionProgress IJsonModel<DataFeedIngestionProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedIngestionProgress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DataFeedIngestionProgress)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFeedIngestionProgress(document.RootElement, options);
+        }
+
+        internal static DataFeedIngestionProgress DeserializeDataFeedIngestionProgress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset?> latestSuccessTimestamp = default;
             Optional<DateTimeOffset?> latestActiveTimestamp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestSuccessTimestamp"u8))
@@ -43,8 +115,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     latestActiveTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFeedIngestionProgress(Optional.ToNullable(latestSuccessTimestamp), Optional.ToNullable(latestActiveTimestamp));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataFeedIngestionProgress(Optional.ToNullable(latestSuccessTimestamp), Optional.ToNullable(latestActiveTimestamp), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataFeedIngestionProgress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedIngestionProgress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFeedIngestionProgress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFeedIngestionProgress IPersistableModel<DataFeedIngestionProgress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFeedIngestionProgress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFeedIngestionProgress(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DataFeedIngestionProgress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFeedIngestionProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

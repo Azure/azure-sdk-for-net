@@ -5,22 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteRange
+    public partial class RouteRange : IUtf8JsonSerializable, IJsonModel<RouteRange>
     {
-        internal static RouteRange DeserializeRouteRange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteRange)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CenterInternal))
+            {
+                writer.WritePropertyName("center"u8);
+                writer.WriteObjectValue(CenterInternal);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(BoundaryInternal))
+            {
+                writer.WritePropertyName("boundary"u8);
+                writer.WriteStartArray();
+                foreach (var item in BoundaryInternal)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteRange IJsonModel<RouteRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteRange)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteRange(document.RootElement, options);
+        }
+
+        internal static RouteRange DeserializeRouteRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<LatLongPair> center = default;
             Optional<IReadOnlyList<LatLongPair>> boundary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("center"u8))
@@ -46,8 +109,44 @@ namespace Azure.Maps.Routing.Models
                     boundary = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteRange(center.Value, Optional.ToList(boundary));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteRange(center.Value, Optional.ToList(boundary), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouteRange IPersistableModel<RouteRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteRange(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

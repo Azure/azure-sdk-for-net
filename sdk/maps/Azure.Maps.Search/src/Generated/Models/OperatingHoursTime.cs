@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Represents a date and time. </summary>
     internal partial class OperatingHoursTime
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OperatingHoursTime"/>. </summary>
         internal OperatingHoursTime()
         {
@@ -19,11 +54,13 @@ namespace Azure.Maps.Search.Models
         /// <param name="date"> Represents current calendar date in POI time zone, e.g. "2019-02-07". </param>
         /// <param name="hour"> Hours are in the 24 hour format in the local time of a POI; possible values are 0 - 23. </param>
         /// <param name="minute"> Minutes are in the local time of a POI; possible values are 0 - 59. </param>
-        internal OperatingHoursTime(string date, int? hour, int? minute)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperatingHoursTime(string date, int? hour, int? minute, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Date = date;
             Hour = hour;
             Minute = minute;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represents current calendar date in POI time zone, e.g. "2019-02-07". </summary>

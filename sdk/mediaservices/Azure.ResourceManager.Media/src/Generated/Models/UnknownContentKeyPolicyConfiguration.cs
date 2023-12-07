@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The UnknownContentKeyPolicyConfiguration. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.Media.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownContentKeyPolicyConfiguration"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownContentKeyPolicyConfiguration(string odataType) : base(odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownContentKeyPolicyConfiguration(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
         }

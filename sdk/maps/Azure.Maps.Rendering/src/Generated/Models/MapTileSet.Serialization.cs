@@ -5,16 +5,162 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Rendering
 {
-    public partial class MapTileSet
+    public partial class MapTileSet : IUtf8JsonSerializable, IJsonModel<MapTileSet>
     {
-        internal static MapTileSet DeserializeMapTileSet(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapTileSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MapTileSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapTileSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MapTileSet)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TileJsonVersion))
+            {
+                writer.WritePropertyName("tilejson"u8);
+                writer.WriteStringValue(TileJsonVersion);
+            }
+            if (Optional.IsDefined(TileSetName))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(TileSetName);
+            }
+            if (Optional.IsDefined(TileSetDescription))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(TileSetDescription);
+            }
+            if (Optional.IsDefined(TileSetVersion))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(TileSetVersion);
+            }
+            if (Optional.IsDefined(CopyrightAttribution))
+            {
+                writer.WritePropertyName("attribution"u8);
+                writer.WriteStringValue(CopyrightAttribution);
+            }
+            if (Optional.IsDefined(Template))
+            {
+                writer.WritePropertyName("template"u8);
+                writer.WriteStringValue(Template);
+            }
+            if (Optional.IsDefined(MapTileLegend))
+            {
+                writer.WritePropertyName("legend"u8);
+                writer.WriteStringValue(MapTileLegend);
+            }
+            if (Optional.IsDefined(SchemeInternal))
+            {
+                writer.WritePropertyName("scheme"u8);
+                writer.WriteStringValue(SchemeInternal);
+            }
+            if (Optional.IsCollectionDefined(TileEndpoints))
+            {
+                writer.WritePropertyName("tiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in TileEndpoints)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Grids))
+            {
+                writer.WritePropertyName("grids"u8);
+                writer.WriteStartArray();
+                foreach (var item in Grids)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(GeoJsonDataFiles))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteStartArray();
+                foreach (var item in GeoJsonDataFiles)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MinZoomLevel))
+            {
+                writer.WritePropertyName("minzoom"u8);
+                writer.WriteNumberValue(MinZoomLevel.Value);
+            }
+            if (Optional.IsDefined(MaxZoomLevel))
+            {
+                writer.WritePropertyName("maxzoom"u8);
+                writer.WriteNumberValue(MaxZoomLevel.Value);
+            }
+            if (Optional.IsCollectionDefined(BoundsInternal))
+            {
+                writer.WritePropertyName("bounds"u8);
+                writer.WriteStartArray();
+                foreach (var item in BoundsInternal)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(CenterInternal))
+            {
+                writer.WritePropertyName("center"u8);
+                writer.WriteStartArray();
+                foreach (var item in CenterInternal)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MapTileSet IJsonModel<MapTileSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapTileSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MapTileSet)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapTileSet(document.RootElement, options);
+        }
+
+        internal static MapTileSet DeserializeMapTileSet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +180,8 @@ namespace Azure.Maps.Rendering
             Optional<int> maxzoom = default;
             Optional<IReadOnlyList<float>> bounds = default;
             Optional<IReadOnlyList<float>> center = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tilejson"u8))
@@ -164,8 +312,44 @@ namespace Azure.Maps.Rendering
                     center = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MapTileSet(tilejson.Value, name.Value, description.Value, version.Value, attribution.Value, template.Value, legend.Value, scheme.Value, Optional.ToList(tiles), Optional.ToList(grids), Optional.ToList(data), Optional.ToNullable(minzoom), Optional.ToNullable(maxzoom), Optional.ToList(bounds), Optional.ToList(center));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MapTileSet(tilejson.Value, name.Value, description.Value, version.Value, attribution.Value, template.Value, legend.Value, scheme.Value, Optional.ToList(tiles), Optional.ToList(grids), Optional.ToList(data), Optional.ToNullable(minzoom), Optional.ToNullable(maxzoom), Optional.ToList(bounds), Optional.ToList(center), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MapTileSet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapTileSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MapTileSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MapTileSet IPersistableModel<MapTileSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapTileSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMapTileSet(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MapTileSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MapTileSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

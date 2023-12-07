@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.Maps.Geolocation
@@ -12,5 +14,47 @@ namespace Azure.Maps.Geolocation
     /// <summary> This object is returned from a successful call to IP Address to country/region API. </summary>
     public partial class CountryRegionResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CountryRegionResult"/>. </summary>
+        /// <param name="countryRegion"> The object containing the country/region information. </param>
+        /// <param name="ipAddress"> The IP Address of the request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CountryRegionResult(CountryRegion countryRegion, IPAddress ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CountryRegion = countryRegion;
+            IpAddress = ipAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
     }
 }

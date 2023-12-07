@@ -6,15 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Summary object. </summary>
     public partial class RouteSummary
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouteSummary"/>. </summary>
         internal RouteSummary()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouteSummary"/>. </summary>
+        /// <param name="lengthInMeters"> Length In Meters property. </param>
+        /// <param name="travelTimeInSeconds"> Estimated travel time in seconds property that includes the delay due to real-time traffic. Note that even when traffic=false travelTimeInSeconds still includes the delay due to traffic. If DepartAt is in the future, travel time is calculated using time-dependent historic traffic data. </param>
+        /// <param name="trafficDelayInSeconds"> Estimated delay in seconds caused by the real-time incident(s) according to traffic information. For routes planned with departure time in the future, delays is always 0. To return additional travel times using different types of traffic information, parameter computeTravelTimeFor=all needs to be added. </param>
+        /// <param name="departureTime"> The estimated departure time for the route or leg. </param>
+        /// <param name="arrivalTime"> The estimated arrival time for the route or leg. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteSummary(int? lengthInMeters, int? travelTimeInSeconds, int? trafficDelayInSeconds, DateTimeOffset? departureTime, DateTimeOffset? arrivalTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LengthInMeters = lengthInMeters;
+            TravelTimeInSeconds = travelTimeInSeconds;
+            TrafficDelayInSeconds = trafficDelayInSeconds;
+            DepartureTime = departureTime;
+            ArrivalTime = arrivalTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Length In Meters property. </summary>

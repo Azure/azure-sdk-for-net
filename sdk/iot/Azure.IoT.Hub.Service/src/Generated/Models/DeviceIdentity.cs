@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The Device. </summary>
     public partial class DeviceIdentity
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DeviceIdentity"/>. </summary>
         public DeviceIdentity()
         {
@@ -31,7 +64,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="authentication"> The authentication mechanism used by the device. </param>
         /// <param name="capabilities"> The set of capabilities of the device. For example, if this device is an edge device or not. </param>
         /// <param name="deviceScope"> The scope of the device. Auto generated and immutable for edge devices and modifiable in leaf devices to create child/parent relationship. </param>
-        internal DeviceIdentity(string deviceId, string generationId, string etag, DeviceConnectionState? connectionState, DeviceStatus? status, string statusReason, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? statusUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication, DeviceCapabilities capabilities, string deviceScope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceIdentity(string deviceId, string generationId, string etag, DeviceConnectionState? connectionState, DeviceStatus? status, string statusReason, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? statusUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication, DeviceCapabilities capabilities, string deviceScope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceId = deviceId;
             GenerationId = generationId;
@@ -46,6 +80,7 @@ namespace Azure.IoT.Hub.Service.Models
             Authentication = authentication;
             Capabilities = capabilities;
             DeviceScope = deviceScope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the device. </summary>

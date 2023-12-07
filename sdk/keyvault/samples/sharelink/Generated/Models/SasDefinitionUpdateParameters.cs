@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The SAS definition update parameters. </summary>
     internal partial class SasDefinitionUpdateParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SasDefinitionUpdateParameters"/>. </summary>
         public SasDefinitionUpdateParameters()
         {
@@ -25,13 +58,15 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <param name="validityPeriod"> The validity period of SAS tokens created according to the SAS definition. </param>
         /// <param name="sasDefinitionAttributes"> The attributes of the SAS definition. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        internal SasDefinitionUpdateParameters(string templateUri, SasTokenType? sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes, IDictionary<string, string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SasDefinitionUpdateParameters(string templateUri, SasTokenType? sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TemplateUri = templateUri;
             SasType = sasType;
             ValidityPeriod = validityPeriod;
             SasDefinitionAttributes = sasDefinitionAttributes;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template. </summary>

@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Logic
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListKeyVaultKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey, _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(e), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Logic
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListKeyVaultKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey, _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(e), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
         }
 
         /// <summary>

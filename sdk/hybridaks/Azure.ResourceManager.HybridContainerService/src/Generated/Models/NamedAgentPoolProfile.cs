@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
@@ -30,8 +31,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="nodeImageVersion"> The version of node image. </param>
         /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
         /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Unique name of the agent pool profile in the context of the subscription and resource group. </param>
-        internal NamedAgentPoolProfile(int? count, IList<string> availabilityZones, int? maxCount, int? maxPods, int? minCount, Mode? mode, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, OSType? osType, string nodeImageVersion, string vmSize, CloudProviderProfile cloudProviderProfile, string name) : base(count, availabilityZones, maxCount, maxPods, minCount, mode, nodeLabels, nodeTaints, osType, nodeImageVersion, vmSize, cloudProviderProfile)
+        internal NamedAgentPoolProfile(int? count, IList<string> availabilityZones, int? maxCount, int? maxPods, int? minCount, Mode? mode, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, OSType? osType, string nodeImageVersion, string vmSize, CloudProviderProfile cloudProviderProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(count, availabilityZones, maxCount, maxPods, minCount, mode, nodeLabels, nodeTaints, osType, nodeImageVersion, vmSize, cloudProviderProfile, serializedAdditionalRawData)
         {
             Name = name;
         }

@@ -5,16 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class StorageBundle
+    public partial class StorageBundle : IUtf8JsonSerializable, IJsonModel<StorageBundle>
     {
-        internal static StorageBundle DeserializeStorageBundle(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageBundle>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageBundle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBundle>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageBundle)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActiveKeyName))
+            {
+                writer.WritePropertyName("activeKeyName"u8);
+                writer.WriteStringValue(ActiveKeyName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AutoRegenerateKey))
+            {
+                writer.WritePropertyName("autoRegenerateKey"u8);
+                writer.WriteBooleanValue(AutoRegenerateKey.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RegenerationPeriod))
+            {
+                writer.WritePropertyName("regenerationPeriod"u8);
+                writer.WriteStringValue(RegenerationPeriod);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Attributes))
+            {
+                writer.WritePropertyName("attributes"u8);
+                writer.WriteObjectValue(Attributes);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageBundle IJsonModel<StorageBundle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBundle>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageBundle)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageBundle(document.RootElement, options);
+        }
+
+        internal static StorageBundle DeserializeStorageBundle(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +113,8 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<string> regenerationPeriod = default;
             Optional<StorageAccountAttributes> attributes = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -80,8 +169,44 @@ namespace Azure.Security.KeyVault.Storage.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageBundle>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBundle>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageBundle)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageBundle IPersistableModel<StorageBundle>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBundle>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageBundle(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageBundle)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageBundle>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,20 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ServiceStatistics
+    public partial class ServiceStatistics : IUtf8JsonSerializable, IJsonModel<ServiceStatistics>
     {
-        internal static ServiceStatistics DeserializeServiceStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ServiceStatistics)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectedDeviceCount))
+            {
+                writer.WritePropertyName("connectedDeviceCount"u8);
+                writer.WriteNumberValue(ConnectedDeviceCount.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceStatistics IJsonModel<ServiceStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ServiceStatistics)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceStatistics(document.RootElement, options);
+        }
+
+        internal static ServiceStatistics DeserializeServiceStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<long> connectedDeviceCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectedDeviceCount"u8))
@@ -30,8 +84,44 @@ namespace Azure.IoT.Hub.Service.Models
                     connectedDeviceCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceStatistics(Optional.ToNullable(connectedDeviceCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceStatistics(Optional.ToNullable(connectedDeviceCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ServiceStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServiceStatistics IPersistableModel<ServiceStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ServiceStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

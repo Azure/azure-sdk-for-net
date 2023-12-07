@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> AAD Profile specifies attributes for Azure Active Directory integration. </summary>
     public partial class AADProfileResponse
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AADProfileResponse"/>. </summary>
         public AADProfileResponse()
         {
@@ -27,7 +59,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="managed"> Whether to enable managed AAD. </param>
         /// <param name="serverAppId"> The server AAD application ID. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        internal AADProfileResponse(IList<string> adminGroupObjectIds, string clientAppId, bool? enableAzureRbac, bool? managed, string serverAppId, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AADProfileResponse(IList<string> adminGroupObjectIds, string clientAppId, bool? enableAzureRbac, bool? managed, string serverAppId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminGroupObjectIds = adminGroupObjectIds;
             ClientAppId = clientAppId;
@@ -35,6 +68,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Managed = managed;
             ServerAppId = serverAppId;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of AAD group object IDs that will have admin role of the cluster. </summary>

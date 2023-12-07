@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included. </summary>
     public partial class AddressRanges
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AddressRanges"/>. </summary>
         internal AddressRanges()
         {
@@ -20,12 +55,14 @@ namespace Azure.Maps.Search.Models
         /// <param name="rangeRight"> Address range on the right side of the street. </param>
         /// <param name="fromInternal"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>
         /// <param name="toInternal"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>
-        internal AddressRanges(string rangeLeft, string rangeRight, LatLongPairAbbreviated fromInternal, LatLongPairAbbreviated toInternal)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddressRanges(string rangeLeft, string rangeRight, LatLongPairAbbreviated fromInternal, LatLongPairAbbreviated toInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RangeLeft = rangeLeft;
             RangeRight = rangeRight;
             FromInternal = fromInternal;
             ToInternal = toInternal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Address range on the left side of the street. </summary>

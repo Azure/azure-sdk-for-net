@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, count, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, count, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail, _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail(e), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, count, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, count, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail, _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail(e), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

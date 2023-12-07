@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Summary object. </summary>
     public partial class RouteMatrixSummary
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouteMatrixSummary"/>. </summary>
         internal RouteMatrixSummary()
         {
@@ -18,10 +53,12 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of <see cref="RouteMatrixSummary"/>. </summary>
         /// <param name="successfulRoutes"> Number of successful routes in the response. </param>
         /// <param name="totalRoutes"> Total number of routes requested. Number of cells in the input matrix. </param>
-        internal RouteMatrixSummary(int? successfulRoutes, int? totalRoutes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteMatrixSummary(int? successfulRoutes, int? totalRoutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SuccessfulRoutes = successfulRoutes;
             TotalRoutes = totalRoutes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of successful routes in the response. </summary>

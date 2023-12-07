@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Summary object for a Search API response. </summary>
     internal partial class SearchSummary
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SearchSummary"/>. </summary>
         internal SearchSummary()
         {
@@ -25,7 +60,8 @@ namespace Azure.Maps.Search.Models
         /// <param name="totalResults"> The total number of Results found. </param>
         /// <param name="fuzzyLevel"> The maximum fuzzy level required to provide Results. </param>
         /// <param name="geoBiasInternal"> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </param>
-        internal SearchSummary(string query, MapsQueryType? queryType, int? queryTime, int resultCount, int? top, int? skip, int? totalResults, int? fuzzyLevel, LatLongPairAbbreviated geoBiasInternal)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchSummary(string query, MapsQueryType? queryType, int? queryTime, int resultCount, int? top, int? skip, int? totalResults, int? fuzzyLevel, LatLongPairAbbreviated geoBiasInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Query = query;
             QueryType = queryType;
@@ -36,6 +72,7 @@ namespace Azure.Maps.Search.Models
             TotalResults = totalResults;
             FuzzyLevel = fuzzyLevel;
             GeoBiasInternal = geoBiasInternal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The query parameter that was used to produce these search results. </summary>

@@ -28,11 +28,17 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollection"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
-        internal GeoJsonFeatureCollection(GeoJsonObjectType type, IList<GeoJsonFeature> features) : base(type)
+        internal GeoJsonFeatureCollection(GeoJsonObjectType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<GeoJsonFeature> features) : base(type, serializedAdditionalRawData)
         {
             Features = features;
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollection"/> for deserialization. </summary>
+        internal GeoJsonFeatureCollection()
+        {
         }
 
         /// <summary> Contains a list of valid `GeoJSON Feature` objects. </summary>

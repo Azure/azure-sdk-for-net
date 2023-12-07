@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class IncidentProperty
+    internal partial class IncidentProperty : IUtf8JsonSerializable, IJsonModel<IncidentProperty>
     {
-        internal static IncidentProperty DeserializeIncidentProperty(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IncidentProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IncidentProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IncidentProperty>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(IncidentProperty)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("maxSeverity"u8);
+            writer.WriteStringValue(MaxSeverity.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("incidentStatus"u8);
+                writer.WriteStringValue(IncidentStatus.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("valueOfRootNode"u8);
+                writer.WriteNumberValue(ValueOfRootNode);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpectedValueOfRootNode))
+            {
+                if (ExpectedValueOfRootNode != null)
+                {
+                    writer.WritePropertyName("expectedValueOfRootNode"u8);
+                    writer.WriteNumberValue(ExpectedValueOfRootNode.Value);
+                }
+                else
+                {
+                    writer.WriteNull("expectedValueOfRootNode");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IncidentProperty IJsonModel<IncidentProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IncidentProperty>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(IncidentProperty)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIncidentProperty(document.RootElement, options);
+        }
+
+        internal static IncidentProperty DeserializeIncidentProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +93,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             AnomalyIncidentStatus incidentStatus = default;
             double valueOfRootNode = default;
             Optional<double?> expectedValueOfRootNode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxSeverity"u8))
@@ -49,8 +122,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     expectedValueOfRootNode = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IncidentProperty(maxSeverity, incidentStatus, valueOfRootNode, Optional.ToNullable(expectedValueOfRootNode));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IncidentProperty(maxSeverity, incidentStatus, valueOfRootNode, Optional.ToNullable(expectedValueOfRootNode), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IncidentProperty>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IncidentProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(IncidentProperty)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IncidentProperty IPersistableModel<IncidentProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IncidentProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIncidentProperty(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(IncidentProperty)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IncidentProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

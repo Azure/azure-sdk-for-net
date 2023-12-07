@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,6 +14,38 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricFeedbackFilter. </summary>
     internal partial class MetricFeedbackFilter
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricFeedbackFilter"/>. </summary>
         /// <param name="metricId"> filter feedbacks by metric id. </param>
         public MetricFeedbackFilter(Guid metricId)
@@ -27,7 +60,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="startTime"> start time filter under chosen time mode. </param>
         /// <param name="endTime"> end time filter under chosen time mode. </param>
         /// <param name="timeMode"> time mode to filter feedback. </param>
-        internal MetricFeedbackFilter(Guid metricId, FeedbackFilter dimensionFilter, MetricFeedbackKind? feedbackType, DateTimeOffset? startTime, DateTimeOffset? endTime, FeedbackQueryTimeMode? timeMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricFeedbackFilter(Guid metricId, FeedbackFilter dimensionFilter, MetricFeedbackKind? feedbackType, DateTimeOffset? startTime, DateTimeOffset? endTime, FeedbackQueryTimeMode? timeMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetricId = metricId;
             DimensionFilter = dimensionFilter;
@@ -35,6 +69,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             StartTime = startTime;
             EndTime = endTime;
             TimeMode = timeMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricFeedbackFilter"/> for deserialization. </summary>
+        internal MetricFeedbackFilter()
+        {
         }
 
         /// <summary> filter feedbacks by metric id. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DataFeedList. </summary>
     internal partial class DataFeedList
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataFeedList"/>. </summary>
         internal DataFeedList()
         {
@@ -25,10 +58,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Please note <see cref="DataFeedDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureApplicationInsightsDataFeed"/>, <see cref="AzureBlobDataFeed"/>, <see cref="AzureCosmosDBDataFeed"/>, <see cref="AzureDataExplorerDataFeed"/>, <see cref="AzureDataLakeStorageGen2DataFeed"/>, <see cref="AzureEventHubsDataFeed"/>, <see cref="AzureLogAnalyticsDataFeed"/>, <see cref="AzureTableDataFeed"/>, <see cref="InfluxDBDataFeed"/>, <see cref="MongoDBDataFeed"/>, <see cref="MySqlDataFeed"/>, <see cref="PostgreSqlDataFeed"/> and <see cref="SQLServerDataFeed"/>.
         /// </param>
-        internal DataFeedList(string nextLink, IReadOnlyList<DataFeedDetail> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFeedList(string nextLink, IReadOnlyList<DataFeedDetail> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the next link. </summary>

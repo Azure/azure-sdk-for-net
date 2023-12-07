@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
@@ -12,6 +14,38 @@ namespace Azure.Maps.Routing
     /// <summary> An object with a matrix of coordinates. </summary>
     public partial class RouteMatrixQuery
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouteMatrixQuery"/>. </summary>
         public RouteMatrixQuery()
         {
@@ -20,10 +54,12 @@ namespace Azure.Maps.Routing
         /// <summary> Initializes a new instance of <see cref="RouteMatrixQuery"/>. </summary>
         /// <param name="geoJsonMultiPointOrigins"> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </param>
         /// <param name="geoJsonMultiPointDestinations"> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </param>
-        internal RouteMatrixQuery(GeoJsonMultiPoint geoJsonMultiPointOrigins, GeoJsonMultiPoint geoJsonMultiPointDestinations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteMatrixQuery(GeoJsonMultiPoint geoJsonMultiPointOrigins, GeoJsonMultiPoint geoJsonMultiPointDestinations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GeoJsonMultiPointOrigins = geoJsonMultiPointOrigins;
             GeoJsonMultiPointDestinations = geoJsonMultiPointDestinations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

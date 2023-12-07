@@ -15,6 +15,38 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricDataItem. </summary>
     public partial class MetricSeriesData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricSeriesData"/>. </summary>
         /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
@@ -35,11 +67,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>
-        internal MetricSeriesData(MetricSeriesDefinition definition, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> metricValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricSeriesData(MetricSeriesDefinition definition, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> metricValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Definition = definition;
             Timestamps = timestamps;
             MetricValues = metricValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesData"/> for deserialization. </summary>
+        internal MetricSeriesData()
+        {
         }
     }
 }
