@@ -27,14 +27,8 @@ namespace System.ClientModel
             protected set => _status = value;
         }
 
-        // Main constructor from Response
-        public ClientRequestException(PipelineResponse response)
-            : this(response, default, default)
-        {
-        }
-
         // Constructor from Response and InnerException
-        public ClientRequestException(PipelineResponse response, string? message, Exception? innerException)
+        public ClientRequestException(PipelineResponse response, string? message = default, Exception? innerException = default)
             : base(GetMessage(message, response), innerException)
         {
             _response = response;
