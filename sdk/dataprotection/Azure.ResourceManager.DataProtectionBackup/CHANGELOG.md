@@ -5,6 +5,7 @@
 ### Features Added
 
 - Update API version to 2023-11-01
+- Add property `string JobIdentifier` to class `DataProtectionOperationJobExtendedInfo`, and now since the "jobId" returned by service is not always a resource identifier, `JobResourceId` will be null when `JobIdentifier` is not parsable to a resource identifier.
 
 ## 1.3.0 (2023-11-27)
 
