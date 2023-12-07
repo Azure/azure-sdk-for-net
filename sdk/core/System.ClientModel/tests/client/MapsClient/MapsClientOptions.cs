@@ -6,7 +6,7 @@ using System.ClientModel;
 
 namespace Maps;
 
-public class MapsClientOptions : ServiceClientOptions
+public class MapsClientOptions : PipelineOptions
 {
     private const ServiceVersion LatestVersion = ServiceVersion.V1;
 

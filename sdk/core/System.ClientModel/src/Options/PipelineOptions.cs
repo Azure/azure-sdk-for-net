@@ -12,7 +12,7 @@ namespace System.ClientModel;
 // TODO: we've made this non-abstract in ClientModel, so to make sure service
 // clients always inherit from it rather than using it directly, we will need to
 // add an analyzer to validate it via static analysis.
-public class ServiceClientOptions
+public class PipelineOptions
 {
     #region Pipeline creation: User-specified policies
 

@@ -5,6 +5,6 @@ using System.ClientModel;
 
 namespace OpenAI;
 
-public class OpenAIClientOptions : ServiceClientOptions
+public class OpenAIClientOptions : PipelineOptions
 {
 }

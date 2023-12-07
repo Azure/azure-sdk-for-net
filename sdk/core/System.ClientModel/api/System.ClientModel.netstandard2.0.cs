@@ -61,6 +61,14 @@ namespace System.ClientModel
         public sealed override bool HasValue { get { throw null; } }
         public sealed override T Value { get { throw null; } }
     }
+    public partial class PipelineOptions
+    {
+        public PipelineOptions() { }
+        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
+        public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+    }
     public partial class RequestOptions
     {
         public RequestOptions() { }
@@ -70,22 +78,14 @@ namespace System.ClientModel
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
         protected internal void Apply(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.MessageClassifier? messageClassifier = null) { }
     }
-    public partial class ServiceClientOptions
-    {
-        public ServiceClientOptions() { }
-        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
-        public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
-    }
 }
 namespace System.ClientModel.Primitives
 {
     public partial class ClientPipeline
     {
         internal ClientPipeline() { }
-        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.ServiceClientOptions options, params System.ClientModel.Primitives.PipelinePolicy[] perCallPolicies) { throw null; }
-        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.ServiceClientOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies) { throw null; }
+        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.PipelineOptions options, params System.ClientModel.Primitives.PipelinePolicy[] perCallPolicies) { throw null; }
+        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.PipelineOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies) { throw null; }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }

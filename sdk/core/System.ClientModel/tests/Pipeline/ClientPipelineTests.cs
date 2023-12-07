@@ -14,7 +14,7 @@ public class ClientPipelineTests
     [Test]
     public void RequestOptionsCanCustomizePipeline()
     {
-        ServiceClientOptions clientOptions = new SimpleClientOptions();
+        PipelineOptions clientOptions = new SimpleClientOptions();
         clientOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
         clientOptions.Transport = new ObservableTransport("Transport");
 
@@ -42,7 +42,7 @@ public class ClientPipelineTests
     }
 
     #region Helpers
-    private class SimpleClientOptions : ServiceClientOptions { }
+    private class SimpleClientOptions : PipelineOptions { }
 
     private class ObservableTransport : PipelineTransport
     {
