@@ -194,8 +194,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     dataPoint.Documents.Add(item);
                 }
 
-                var metricPoints = _metricsContainer.Collect();
-                foreach (var metricPoint in metricPoints)
+                foreach (var metricPoint in _metricsContainer.CollectMetricPoints())
                 {
                     dataPoint.Metrics.Add(metricPoint);
                 }

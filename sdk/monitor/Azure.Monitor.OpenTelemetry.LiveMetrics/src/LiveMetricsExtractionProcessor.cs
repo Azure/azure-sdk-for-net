@@ -52,36 +52,32 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
-                _manager._metricsContainer._requests.Add(1);
                 // Export needs to divide by count to get the average.
                 // this.AIRequestDurationAveInMs = requestCount > 0 ? (double)requestDurationInTicks / TimeSpan.TicksPerMillisecond / requestCount : 0;
-                _manager._metricsContainer._requestDuration.Record(activity.Duration.TotalMilliseconds);
                 if (IsSuccess(activity, statusCodeAttributeValue))
                 {
-                    _manager._metricsContainer._requestSucceededPerSecond.Add(1);
+                    _manager._metricsContainer._liveMetricsBuffer.Instance.RecordRequestSucceeded(activity.Duration.TotalMilliseconds);
                 }
                 else
                 {
-                    _manager._metricsContainer._requestFailedPerSecond.Add(1);
+                    _manager._metricsContainer._liveMetricsBuffer.Instance.RecordRequestFailed(activity.Duration.TotalMilliseconds);
                 }
 
                 AddRequestDocument(activity, statusCodeAttributeValue);
             }
             else
             {
-                _manager._metricsContainer._dependency.Add(1);
                 // Export needs to divide by count to get the average.
                 // this.AIDependencyCallDurationAveInMs = dependencyCount > 0 ? (double)dependencyDurationInTicks / TimeSpan.TicksPerMillisecond / dependencyCount : 0;
                 // Export DependencyDurationLiveMetric, Meter: LiveMetricMeterName
                 // (2023 - 11 - 03T23: 20:56.0282406Z, 2023 - 11 - 03T23: 21:00.9830153Z] Histogram Value: Sum: 798.9463000000001 Count: 7 Min: 4.9172 Max: 651.8997
-                _manager._metricsContainer._dependencyDuration.Record(activity.Duration.TotalMilliseconds);
                 if (IsSuccess(activity, statusCodeAttributeValue))
                 {
-                    _manager._metricsContainer._dependencySucceededPerSecond.Add(1);
+                    _manager._metricsContainer._liveMetricsBuffer.Instance.RecordDependencySucceeded(activity.Duration.TotalMilliseconds);
                 }
                 else
                 {
-                    _manager._metricsContainer._dependencyFailedPerSecond.Add(1);
+                    _manager._metricsContainer._liveMetricsBuffer.Instance.RecordDependencyFailed(activity.Duration.TotalMilliseconds);
                 }
 
                 AddRemoteDependencyDocument(activity);
@@ -93,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 {
                     if (@event.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        _manager._metricsContainer._exceptionsPerSecond.Add(1);
+                        _manager._metricsContainer._liveMetricsBuffer.Instance.RecordException();
                     }
 
                     string? exceptionType = null;

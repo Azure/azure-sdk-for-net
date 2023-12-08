@@ -36,43 +36,43 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 {
                     //Debug.WriteLine(LiveMetricConstants.Mappings[metric.Name]);
 
-                    switch (metric.MetricType)
-                    {
-                        case MetricType.LongSum:
-                            list.Add(new Models.MetricPoint
-                            {
-                                Name = LiveMetricConstants.InstrumentNameToMetricId[metric.Name],
-                                // potential for minor precision loss implicitly going from long->double
-                                // see: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#implicit-numeric-conversions
-                                Value = metricPoint.GetSumLong(),
-                                Weight = 1
-                            });
-                            break;
-                        case MetricType.Histogram:
-                            long histogramCount = metricPoint.GetHistogramCount();
+                    //switch (metric.MetricType)
+                    //{
+                    //    case MetricType.LongSum:
+                    //        list.Add(new Models.MetricPoint
+                    //        {
+                    //            Name = LiveMetricConstants.InstrumentNameToMetricId[metric.Name],
+                    //            // potential for minor precision loss implicitly going from long->double
+                    //            // see: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#implicit-numeric-conversions
+                    //            Value = metricPoint.GetSumLong(),
+                    //            Weight = 1
+                    //        });
+                    //        break;
+                    //    case MetricType.Histogram:
+                    //        long histogramCount = metricPoint.GetHistogramCount();
 
-                            list.Add(new Models.MetricPoint
-                            {
-                                Name = LiveMetricConstants.InstrumentNameToMetricId[metric.Name],
-                                // When you convert double to float, the double value is rounded to the nearest float value.
-                                // If the double value is too small or too large to fit into the float type, the result is zero or infinity.
-                                // see: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#explicit-numeric-conversions
-                                Value = (float)(metricPoint.GetHistogramSum() / histogramCount),
-                                Weight = histogramCount <= int.MaxValue ? (int?)histogramCount : null // TODO: POSSIBLE OVERFLOW EXCEPTION (long -> int)
-                            });
-                            break;
-                        case MetricType.DoubleGauge:
-                            list.Add(new Models.MetricPoint
-                            {
-                                Name = LiveMetricConstants.InstrumentNameToMetricId[metric.Name],
-                                Value = (float)metricPoint.GetGaugeLastValueDouble(),
-                                Weight = 1
-                            });
-                            break;
-                        default:
-                            Debug.WriteLine($"Unsupported Metric Type {metric.MetricType} {metric.Name}");
-                            break;
-                    }
+                    //        list.Add(new Models.MetricPoint
+                    //        {
+                    //            Name = LiveMetricConstants.InstrumentNameToMetricId[metric.Name],
+                    //            // When you convert double to float, the double value is rounded to the nearest float value.
+                    //            // If the double value is too small or too large to fit into the float type, the result is zero or infinity.
+                    //            // see: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#explicit-numeric-conversions
+                    //            Value = (float)(metricPoint.GetHistogramSum() / histogramCount),
+                    //            Weight = histogramCount <= int.MaxValue ? (int?)histogramCount : null // TODO: POSSIBLE OVERFLOW EXCEPTION (long -> int)
+                    //        });
+                    //        break;
+                    //    case MetricType.DoubleGauge:
+                    //        list.Add(new Models.MetricPoint
+                    //        {
+                    //            Name = LiveMetricConstants.InstrumentNameToMetricId[metric.Name],
+                    //            Value = (float)metricPoint.GetGaugeLastValueDouble(),
+                    //            Weight = 1
+                    //        });
+                    //        break;
+                    //    default:
+                    //        Debug.WriteLine($"Unsupported Metric Type {metric.MetricType} {metric.Name}");
+                    //        break;
+                    //}
                 }
             }
 

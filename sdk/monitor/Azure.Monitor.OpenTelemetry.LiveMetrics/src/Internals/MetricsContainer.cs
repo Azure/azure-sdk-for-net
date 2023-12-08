@@ -1,12 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Diagnostics;
-using OpenTelemetry.Metrics;
-using OpenTelemetry;
 using System.Collections.Concurrent;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
@@ -18,77 +14,106 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     {
         private readonly ConcurrentQueue<List<Models.MetricPoint>> _queue = new();
 
-        private Meter? _meter;
-        private string _meterName;
-        private MeterProvider? _meterProvider;
-        private BaseExportingMetricReader _metricReader;
-
         internal readonly DoubleBuffer<DocumentBuffer> _documentBuffer = new();
+
+        internal readonly DoubleBuffer<LiveMetricsBuffer> _liveMetricsBuffer = new();
 
         private PerformanceCounter _performanceCounter_ProcessorTime = new PerformanceCounter(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
         private PerformanceCounter _performanceCounter_CommittedBytes = new PerformanceCounter(categoryName: "Memory", counterName: "Committed Bytes");
 
-        internal readonly Counter<long> _requests;
-        internal readonly Histogram<double> _requestDuration;
-        internal readonly Counter<long> _requestSucceededPerSecond;
-        internal readonly Counter<long> _requestFailedPerSecond;
-        internal readonly Counter<long> _dependency;
-        internal readonly Histogram<double> _dependencyDuration;
-        internal readonly Counter<long> _dependencySucceededPerSecond;
-        internal readonly Counter<long> _dependencyFailedPerSecond;
-        internal readonly Counter<long> _exceptionsPerSecond;
-
-        private readonly Instrument _myObservableGauge1;
-        private readonly Instrument _myObservableGauge2;
-
-        public MetricsContainer()
+        public IEnumerable<Models.MetricPoint> CollectMetricPoints()
         {
-            var uniqueId = Guid.NewGuid();
-            _meterName = $"{LiveMetricConstants.LiveMetricMeterName}{uniqueId}";
-            _meter = new Meter(_meterName, "1.0");
+            var liveMetricsBuffer = _liveMetricsBuffer.FlipBuffers();
 
-            // REQUEST
-            _requests = _meter.CreateCounter<long>(LiveMetricConstants.InstrumentName.RequestsInstrumentName);
-            _requestDuration = _meter.CreateHistogram<double>(LiveMetricConstants.InstrumentName.RequestDurationInstrumentName);
-            _requestSucceededPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.InstrumentName.RequestsSucceededPerSecondInstrumentName);
-            _requestFailedPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.InstrumentName.RequestsFailedPerSecondInstrumentName);
+            // REQUESTS
+            if (liveMetricsBuffer.RequestsCount > 0)
+            {
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.RequestsPerSecondMetricIdValue,
+                    Value = liveMetricsBuffer.RequestsCount,
+                    Weight = 1
+                };
 
-            // DEPENDENCY
-            _dependency = _meter.CreateCounter<long>(LiveMetricConstants.InstrumentName.DependencyInstrumentName);
-            _dependencyDuration = _meter.CreateHistogram<double>(LiveMetricConstants.InstrumentName.DependencyDurationInstrumentName);
-            _dependencySucceededPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.InstrumentName.DependencySucceededPerSecondInstrumentName);
-            _dependencyFailedPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.InstrumentName.DependencyFailedPerSecondInstrumentName);
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.RequestDurationMetricIdValue,
+                    Value = (float)(liveMetricsBuffer.RequestsDuration / liveMetricsBuffer.RequestsCount),
+                    Weight = 1
+                };
+
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.RequestsSucceededPerSecondMetricIdValue,
+                    Value = liveMetricsBuffer.RequestsSuccededCount,
+                    Weight = 1
+                };
+
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.RequestsFailedPerSecondMetricIdValue,
+                    Value = liveMetricsBuffer.RequestsFailedCount,
+                    Weight = 1
+                };
+            }
+
+            // DEPENDENCIES
+            if (liveMetricsBuffer.DependenciesCount > 0)
+            {
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.DependenciesPerSecondMetricIdValue,
+                    Value = liveMetricsBuffer.DependenciesCount,
+                    Weight = 1
+                };
+
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.DependencyDurationMetricIdValue,
+                    Value = (float)(liveMetricsBuffer.DependenciesDuration / liveMetricsBuffer.DependenciesCount),
+                    Weight = 1
+                };
+
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.DependencySucceededPerSecondMetricIdValue,
+                    Value = liveMetricsBuffer.DependenciesSuccededCount,
+                    Weight = 1
+                };
+
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.DependencyFailedPerSecondMetricIdValue,
+                    Value = liveMetricsBuffer.DependenciesFailedCount,
+                    Weight = 1
+                };
+            }
 
             // EXCEPTIONS
-            _exceptionsPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.InstrumentName.ExceptionsPerSecondInstrumentName);
+            if (liveMetricsBuffer.ExceptionsCount > 0)
+            {
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.ExceptionsPerSecondMetricIdValue,
+                    Value = liveMetricsBuffer.ExceptionsCount,
+                    Weight = 1
+                };
+            }
 
             // PERFORMANCE COUNTERS
-            _myObservableGauge1 = _meter.CreateObservableGauge(LiveMetricConstants.InstrumentName.MemoryCommittedBytesInstrumentName, () =>
+            yield return new Models.MetricPoint
             {
-                return new Measurement<float>(value: _performanceCounter_CommittedBytes.NextValue());
-            });
+                Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
+                Value = _performanceCounter_CommittedBytes.NextValue(),
+                Weight = 1
+            };
 
-            _myObservableGauge2 = _meter.CreateObservableGauge(LiveMetricConstants.InstrumentName.ProcessorTimeInstrumentName, () =>
+            yield return new Models.MetricPoint
             {
-                return new Measurement<float>(value: _performanceCounter_ProcessorTime.NextValue());
-            });
-
-            // INITIALIZE METRICS SDK
-            _metricReader = new BaseExportingMetricReader(new LiveMetricsMetricExporter(_queue));
-
-            _meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(_meterName)
-                .AddReader(_metricReader)
-                .Build();
-        }
-
-        public IEnumerable<Models.MetricPoint> Collect()
-        {
-            _metricReader.Collect();
-
-            return _queue.TryDequeue(out var metricPoint)
-                ? metricPoint
-                : Array.Empty<Models.MetricPoint>();
+                Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
+                Value = _performanceCounter_ProcessorTime.NextValue(),
+                Weight = 1
+            };
         }
     }
 }
