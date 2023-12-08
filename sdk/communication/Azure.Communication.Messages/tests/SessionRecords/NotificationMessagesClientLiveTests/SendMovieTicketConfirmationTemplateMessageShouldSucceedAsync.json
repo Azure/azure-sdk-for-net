@@ -8,13 +8,13 @@
         "Authorization": "Sanitized",
         "Content-Length": "679",
         "Content-Type": "application/json",
-        "Repeatability-First-Sent": "2023-12-08T02:03:55.9220125Z",
-        "Repeatability-Request-Id": "7a658846-8243-45ca-9996-4ef36959e4d9",
-        "traceparent": "00-f51ac802f3bd6f83a78ab714c8c43af2-ae07de51e21f7b7c-00",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-Id": "Sanitized",
+        "traceparent": "00-4bc9d1f6c7ee0049433336b65e7d96f1-7f5223dab2474d48-00",
         "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231207.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "6ac041f8fbb3bd2574991aba38605cdf",
+        "x-ms-client-request-id": "a8f3b6eeb52deceeca8521f1512a750f",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 08 Dec 2023 02:03:55 GMT",
+        "x-ms-date": "Fri, 08 Dec 2023 03:52:51 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -88,18 +88,18 @@
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 08 Dec 2023 02:03:57 GMT",
-        "MS-CV": "OSVDquoa7UKxEnSeNdmXgg.0",
+        "Date": "Fri, 08 Dec 2023 03:52:52 GMT",
+        "MS-CV": "osKLjwnfQEOFd6XWM8fQFA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0jXlyZQAAAACJcsq\u002BS3TISoZMn7CMXDUMV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0FZNyZQAAAACXuvBgtXrLTLmrz6EnuoywV1NURURHRTAxMTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "329ms"
+        "X-Processing-Time": "368ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "907bb1d7-0312-409e-ada2-867cefc77a8f",
+            "messageId": "347f6d23-f5c8-4f50-84c0-81f893f3d8d6",
             "to": "\u002B16041234567"
           }
         ]
@@ -108,7 +108,7 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "353864867",
+    "RandomSeed": "1309308727",
     "RECIPIENT_IDENTIFIER": "\u002B16041234567",
     "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
   }

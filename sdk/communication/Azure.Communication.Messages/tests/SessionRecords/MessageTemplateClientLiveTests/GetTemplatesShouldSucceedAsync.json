@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3b4df98ce3abe0e7b873f9de9c0682e6-0af54e973b1279c6-00",
+        "traceparent": "00-89c0028254aaea2c532bfc103401836d-ae479417c3d438dc-00",
         "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231207.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "c98dc57a2d6047de7fd690d8bfc69497",
+        "x-ms-client-request-id": "0bcd4b9b8175f5808227231939408ca3",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 08 Dec 2023 02:03:46 GMT",
+        "x-ms-date": "Fri, 08 Dec 2023 03:52:42 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,13 +19,13 @@
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
         "Content-Length": "9833",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 08 Dec 2023 02:03:48 GMT",
-        "MS-CV": "q2E1CR\u002B820yk7LRXFzNEEA.0",
+        "Date": "Fri, 08 Dec 2023 03:52:44 GMT",
+        "MS-CV": "a67xK/pufU63vk4/uTDIrg.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0hHlyZQAAAADp5LZ\u002B3vQ7QoUtWeXa5XXxV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0DJNyZQAAAADQ4bkmALfESoq\u002BTYb/4fOmV1NURURHRTAxMTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "209ms"
+        "X-Processing-Time": "273ms"
       },
       "ResponseBody": {
         "value": [
@@ -689,11 +689,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c2344b89c924cabbcd085989ae2b74ed-040ea8b7a88cb14e-00",
+        "traceparent": "00-e3daf7af92f96703adcf29114167627f-d07d3073e7f2e436-00",
         "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231207.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "66c30d129c1b7987fd02ac5ab542f68b",
+        "x-ms-client-request-id": "bdaa00f7672d01412420ae7b68ad2101",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 08 Dec 2023 02:03:47 GMT",
+        "x-ms-date": "Fri, 08 Dec 2023 03:52:42 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -702,13 +702,13 @@
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
         "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 08 Dec 2023 02:03:48 GMT",
-        "MS-CV": "ImTcEnhX1Ei9n8g\u002B6Bm9Pg.0",
+        "Date": "Fri, 08 Dec 2023 03:52:44 GMT",
+        "MS-CV": "ZSGHHKC9Vk\u002Bfz0bX8Mcj9g.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0hHlyZQAAAAAoe3LRYYRzQptdm5rTTNnKV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0DJNyZQAAAAAM3S60JrgsTKc/M2TcepuiV1NURURHRTAxMTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "143ms"
+        "X-Processing-Time": "155ms"
       },
       "ResponseBody": {
         "value": []
@@ -717,7 +717,7 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1946604591",
+    "RandomSeed": "1727316383",
     "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
   }
 }
