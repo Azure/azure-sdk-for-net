@@ -1,0 +1,2756 @@
+{
+ "$id": "1",
+ "Name": "AzureHealthInsights",
+ "Description": "Azure Health Insights provides an API that serves insight models, specific for Health & Life Sciences, that perform analysis and provide inferences to be used by a human.",
+ "ApiVersions": [
+  "2023-03-01-preview"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Name": "PatientInfoSex",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "Female",
+     "Value": "female"
+    },
+    {
+     "$id": "4",
+     "Name": "Male",
+     "Value": "male"
+    },
+    {
+     "$id": "5",
+     "Name": "Unspecified",
+     "Value": "unspecified"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The patient's sex.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "6",
+   "Name": "DocumentType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "7",
+     "Name": "Note",
+     "Value": "note"
+    },
+    {
+     "$id": "8",
+     "Name": "FhirBundle",
+     "Value": "fhirBundle"
+    },
+    {
+     "$id": "9",
+     "Name": "Dicom",
+     "Value": "dicom"
+    },
+    {
+     "$id": "10",
+     "Name": "GenomicSequencing",
+     "Value": "genomicSequencing"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document).",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "11",
+   "Name": "ClinicalDocumentType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "12",
+     "Name": "Consultation",
+     "Value": "consultation"
+    },
+    {
+     "$id": "13",
+     "Name": "DischargeSummary",
+     "Value": "dischargeSummary"
+    },
+    {
+     "$id": "14",
+     "Name": "HistoryAndPhysical",
+     "Value": "historyAndPhysical"
+    },
+    {
+     "$id": "15",
+     "Name": "Procedure",
+     "Value": "procedure"
+    },
+    {
+     "$id": "16",
+     "Name": "Progress",
+     "Value": "progress"
+    },
+    {
+     "$id": "17",
+     "Name": "Imaging",
+     "Value": "imaging"
+    },
+    {
+     "$id": "18",
+     "Name": "Laboratory",
+     "Value": "laboratory"
+    },
+    {
+     "$id": "19",
+     "Name": "Pathology",
+     "Value": "pathology"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The type of the clinical document.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "20",
+   "Name": "DocumentContentSourceType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "21",
+     "Name": "Inline",
+     "Value": "inline"
+    },
+    {
+     "$id": "22",
+     "Name": "Reference",
+     "Value": "reference"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The type of the content's source. \nIn case the source type is 'inline', the content is given as a string (for instance, text). \nIn case the source type is 'reference', the content is given as a URI.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "23",
+   "Name": "ClinicalTrialAcceptedSex",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "24",
+     "Name": "All",
+     "Value": "all"
+    },
+    {
+     "$id": "25",
+     "Name": "Female",
+     "Value": "female"
+    },
+    {
+     "$id": "26",
+     "Name": "Male",
+     "Value": "male"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Possible values for the Sex eligibility criterion as accepted by clinical trials, which indicates the sex of people who may participate in a clinical study.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "27",
+   "Name": "AgeUnit",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "28",
+     "Name": "Years",
+     "Value": "years"
+    },
+    {
+     "$id": "29",
+     "Name": "Months",
+     "Value": "months"
+    },
+    {
+     "$id": "30",
+     "Name": "Days",
+     "Value": "days"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Possible units for a person's age.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "31",
+   "Name": "ClinicalTrialPhase",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "32",
+     "Name": "NotApplicable",
+     "Value": "notApplicable"
+    },
+    {
+     "$id": "33",
+     "Name": "EarlyPhase1",
+     "Value": "earlyPhase1"
+    },
+    {
+     "$id": "34",
+     "Name": "Phase1",
+     "Value": "phase1"
+    },
+    {
+     "$id": "35",
+     "Name": "Phase2",
+     "Value": "phase2"
+    },
+    {
+     "$id": "36",
+     "Name": "Phase3",
+     "Value": "phase3"
+    },
+    {
+     "$id": "37",
+     "Name": "Phase4",
+     "Value": "phase4"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Possible phases of a clinical trial.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "RoundTrip"
+  },
+  {
+   "$id": "38",
+   "Name": "ClinicalTrialStudyType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "39",
+     "Name": "Interventional",
+     "Value": "interventional"
+    },
+    {
+     "$id": "40",
+     "Name": "Observational",
+     "Value": "observational"
+    },
+    {
+     "$id": "41",
+     "Name": "ExpandedAccess",
+     "Value": "expandedAccess"
+    },
+    {
+     "$id": "42",
+     "Name": "PatientRegistries",
+     "Value": "patientRegistries"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Possible study types of a clinical trial.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "RoundTrip"
+  },
+  {
+   "$id": "43",
+   "Name": "ClinicalTrialRecruitmentStatus",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "44",
+     "Name": "UnknownStatus",
+     "Value": "unknownStatus"
+    },
+    {
+     "$id": "45",
+     "Name": "NotYetRecruiting",
+     "Value": "notYetRecruiting"
+    },
+    {
+     "$id": "46",
+     "Name": "Recruiting",
+     "Value": "recruiting"
+    },
+    {
+     "$id": "47",
+     "Name": "EnrollingByInvitation",
+     "Value": "enrollingByInvitation"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Possible recruitment status of a clinical trial.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "RoundTrip"
+  },
+  {
+   "$id": "48",
+   "Name": "ClinicalTrialPurpose",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "49",
+     "Name": "NotApplicable",
+     "Value": "notApplicable"
+    },
+    {
+     "$id": "50",
+     "Name": "Screening",
+     "Value": "screening"
+    },
+    {
+     "$id": "51",
+     "Name": "Diagnostic",
+     "Value": "diagnostic"
+    },
+    {
+     "$id": "52",
+     "Name": "Prevention",
+     "Value": "prevention"
+    },
+    {
+     "$id": "53",
+     "Name": "HealthServicesResearch",
+     "Value": "healthServicesResearch"
+    },
+    {
+     "$id": "54",
+     "Name": "Treatment",
+     "Value": "treatment"
+    },
+    {
+     "$id": "55",
+     "Name": "DeviceFeasibility",
+     "Value": "deviceFeasibility"
+    },
+    {
+     "$id": "56",
+     "Name": "SupportiveCare",
+     "Value": "supportiveCare"
+    },
+    {
+     "$id": "57",
+     "Name": "BasicScience",
+     "Value": "basicScience"
+    },
+    {
+     "$id": "58",
+     "Name": "Other",
+     "Value": "other"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Possible purposes of a clinical trial.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "59",
+   "Name": "ClinicalTrialSource",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "60",
+     "Name": "Custom",
+     "Value": "custom"
+    },
+    {
+     "$id": "61",
+     "Name": "ClinicaltrialsGov",
+     "Value": "clinicaltrials.gov"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Possible sources of a clinical trial.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "RoundTrip"
+  },
+  {
+   "$id": "62",
+   "Name": "GeoJsonType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "63",
+     "Name": "Feature",
+     "Value": "Feature"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "`GeoJSON` type.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "64",
+   "Name": "GeoJsonGeometryType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "65",
+     "Name": "Point",
+     "Value": "Point"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "`GeoJSON` geometry type.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "66",
+   "Name": "GeoJsonPropertiesSubType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "67",
+     "Name": "Circle",
+     "Value": "Circle"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "`GeoJSON` object sub-type.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "68",
+   "Name": "JobStatus",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "69",
+     "Name": "NotStarted",
+     "Value": "notStarted"
+    },
+    {
+     "$id": "70",
+     "Name": "Running",
+     "Value": "running"
+    },
+    {
+     "$id": "71",
+     "Name": "Succeeded",
+     "Value": "succeeded"
+    },
+    {
+     "$id": "72",
+     "Name": "Failed",
+     "Value": "failed"
+    },
+    {
+     "$id": "73",
+     "Name": "PartiallyCompleted",
+     "Value": "partiallyCompleted"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The status of the processing job.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "74",
+   "Name": "TrialMatcherInferenceType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "75",
+     "Name": "TrialEligibility",
+     "Value": "trialEligibility"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The type of the Trial Matcher inference.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "76",
+   "Name": "ApiVersion",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "77",
+     "Name": "v2023_03_01_preview",
+     "Value": "2023-03-01-preview"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "78",
+   "Name": "TrialMatcherData",
+   "Namespace": "AzureHealthInsights",
+   "Description": "The body of the Trial Matcher request.",
+   "IsNullable": false,
+   "Usage": "Input",
+   "Properties": [
+    {
+     "$id": "79",
+     "Name": "patients",
+     "SerializedName": "patients",
+     "Description": "The list of patients, including their clinical information and data.",
+     "Type": {
+      "$id": "80",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "81",
+       "Name": "PatientRecord",
+       "Namespace": "AzureHealthInsights",
+       "Description": "A patient record, including their clinical information and data.",
+       "IsNullable": false,
+       "Usage": "Input",
+       "Properties": [
+        {
+         "$id": "82",
+         "Name": "id",
+         "SerializedName": "id",
+         "Description": "A given identifier for the patient. Has to be unique across all patients in a single request.",
+         "Type": {
+          "$id": "83",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "84",
+         "Name": "info",
+         "SerializedName": "info",
+         "Description": "Patient structured information, including demographics and known structured clinical information.",
+         "Type": {
+          "$id": "85",
+          "Name": "PatientInfo",
+          "Namespace": "AzureHealthInsights",
+          "Description": "Patient structured information, including demographics and known structured clinical information.",
+          "IsNullable": false,
+          "Usage": "Input",
+          "Properties": [
+           {
+            "$id": "86",
+            "Name": "sex",
+            "SerializedName": "sex",
+            "Description": "The patient's sex.",
+            "Type": {
+             "$ref": "2"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "87",
+            "Name": "birthDate",
+            "SerializedName": "birthDate",
+            "Description": "The patient's date of birth.",
+            "Type": {
+             "$id": "88",
+             "Name": "plainDate",
+             "Kind": "Date",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "89",
+            "Name": "clinicalInfo",
+            "SerializedName": "clinicalInfo",
+            "Description": "Known clinical information for the patient, structured.",
+            "Type": {
+             "$id": "90",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "91",
+              "Name": "ClinicalCodedElement",
+              "Namespace": "AzureHealthInsights",
+              "Description": "A piece of clinical information, expressed as a code in a clinical coding system.",
+              "IsNullable": false,
+              "Usage": "RoundTrip",
+              "Properties": [
+               {
+                "$id": "92",
+                "Name": "system",
+                "SerializedName": "system",
+                "Description": "The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS.",
+                "Type": {
+                 "$id": "93",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "94",
+                "Name": "code",
+                "SerializedName": "code",
+                "Description": "The code within the given clinical coding system.",
+                "Type": {
+                 "$id": "95",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "96",
+                "Name": "name",
+                "SerializedName": "name",
+                "Description": "The name of this coded concept in the coding system.",
+                "Type": {
+                 "$id": "97",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "98",
+                "Name": "value",
+                "SerializedName": "value",
+                "Description": "A value associated with the code within the given clinical coding system.",
+                "Type": {
+                 "$id": "99",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "100",
+         "Name": "data",
+         "SerializedName": "data",
+         "Description": "Patient unstructured clinical data, given as documents.",
+         "Type": {
+          "$id": "101",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "102",
+           "Name": "PatientDocument",
+           "Namespace": "AzureHealthInsights",
+           "Description": "A clinical document related to a patient. Document here is in the wide sense - not just a text document (note).",
+           "IsNullable": false,
+           "Usage": "Input",
+           "Properties": [
+            {
+             "$id": "103",
+             "Name": "type",
+             "SerializedName": "type",
+             "Description": "The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document).",
+             "Type": {
+              "$ref": "6"
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "104",
+             "Name": "clinicalType",
+             "SerializedName": "clinicalType",
+             "Description": "The type of the clinical document.",
+             "Type": {
+              "$ref": "11"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "105",
+             "Name": "id",
+             "SerializedName": "id",
+             "Description": "A given identifier for the document. Has to be unique across all documents for a single patient.",
+             "Type": {
+              "$id": "106",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "107",
+             "Name": "language",
+             "SerializedName": "language",
+             "Description": "A 2 letter ISO 639-1 representation of the language of the document.",
+             "Type": {
+              "$id": "108",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "109",
+             "Name": "createdDateTime",
+             "SerializedName": "createdDateTime",
+             "Description": "The date and time when the document was created.",
+             "Type": {
+              "$id": "110",
+              "Name": "utcDateTime",
+              "Kind": "DateTime",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "111",
+             "Name": "content",
+             "SerializedName": "content",
+             "Description": "The content of the patient document.",
+             "Type": {
+              "$id": "112",
+              "Name": "DocumentContent",
+              "Namespace": "AzureHealthInsights",
+              "Description": "The content of the patient document.",
+              "IsNullable": false,
+              "Usage": "Input",
+              "Properties": [
+               {
+                "$id": "113",
+                "Name": "sourceType",
+                "SerializedName": "sourceType",
+                "Description": "The type of the content's source.\nIn case the source type is 'inline', the content is given as a string (for instance, text).\nIn case the source type is 'reference', the content is given as a URI.",
+                "Type": {
+                 "$ref": "20"
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "114",
+                "Name": "value",
+                "SerializedName": "value",
+                "Description": "The content of the document, given either inline (as a string) or as a reference (URI).",
+                "Type": {
+                 "$id": "115",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "116",
+     "Name": "configuration",
+     "SerializedName": "configuration",
+     "Description": "Configuration affecting the Trial Matcher model's inference.",
+     "Type": {
+      "$id": "117",
+      "Name": "TrialMatcherModelConfiguration",
+      "Namespace": "AzureHealthInsights",
+      "Description": "Configuration affecting the Trial Matcher model's inference.",
+      "IsNullable": false,
+      "Usage": "Input",
+      "Properties": [
+       {
+        "$id": "118",
+        "Name": "verbose",
+        "SerializedName": "verbose",
+        "Description": "An indication whether the model should produce verbose output.",
+        "Type": {
+         "$id": "119",
+         "Name": "boolean",
+         "Kind": "Boolean",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "120",
+        "Name": "includeEvidence",
+        "SerializedName": "includeEvidence",
+        "Description": "An indication whether the model's output should include evidence for the inferences.",
+        "Type": {
+         "$id": "121",
+         "Name": "boolean",
+         "Kind": "Boolean",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "122",
+        "Name": "clinicalTrials",
+        "SerializedName": "clinicalTrials",
+        "Description": "The clinical trials that the patient(s) should be matched to. <br />The trial\nselection can be given as a list of custom clinical trials and/or a list of\nfilters to known clinical trial registries. In case both are given, the\nresulting trial set is a union of the two sets.",
+        "Type": {
+         "$id": "123",
+         "Name": "ClinicalTrials",
+         "Namespace": "AzureHealthInsights",
+         "Description": "The clinical trials that the patient(s) should be matched to. \nThe trial selection can be given as a list of custom clinical trials and/or a list of filters to known clinical trial registries.\nIn case both are given, the resulting trial set is a union of the two sets.",
+         "IsNullable": false,
+         "Usage": "Input",
+         "Properties": [
+          {
+           "$id": "124",
+           "Name": "customTrials",
+           "SerializedName": "customTrials",
+           "Description": "A list of clinical trials.",
+           "Type": {
+            "$id": "125",
+            "Name": "Array",
+            "ElementType": {
+             "$id": "126",
+             "Name": "ClinicalTrialDetails",
+             "Namespace": "AzureHealthInsights",
+             "Description": "A description of a clinical trial.",
+             "IsNullable": false,
+             "Usage": "Input",
+             "Properties": [
+              {
+               "$id": "127",
+               "Name": "id",
+               "SerializedName": "id",
+               "Description": "A given identifier for the clinical trial. Has to be unique within a list of clinical trials.",
+               "Type": {
+                "$id": "128",
+                "Name": "string",
+                "Kind": "String",
+                "IsNullable": false
+               },
+               "IsRequired": true,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "129",
+               "Name": "eligibilityCriteriaText",
+               "SerializedName": "eligibilityCriteriaText",
+               "Description": "The eligibility criteria of the clinical trial (inclusion and exclusion), given as text.",
+               "Type": {
+                "$id": "130",
+                "Name": "string",
+                "Kind": "String",
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "131",
+               "Name": "demographics",
+               "SerializedName": "demographics",
+               "Description": "Demographic criteria for a clinical trial.",
+               "Type": {
+                "$id": "132",
+                "Name": "ClinicalTrialDemographics",
+                "Namespace": "AzureHealthInsights",
+                "Description": "Demographic criteria for a clinical trial.",
+                "IsNullable": false,
+                "Usage": "Input",
+                "Properties": [
+                 {
+                  "$id": "133",
+                  "Name": "acceptedSex",
+                  "SerializedName": "acceptedSex",
+                  "Description": "Indication of the sex of people who may participate in the clinical trial.",
+                  "Type": {
+                   "$ref": "23"
+                  },
+                  "IsRequired": false,
+                  "IsReadOnly": false
+                 },
+                 {
+                  "$id": "134",
+                  "Name": "acceptedAgeRange",
+                  "SerializedName": "acceptedAgeRange",
+                  "Description": "A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age.",
+                  "Type": {
+                   "$id": "135",
+                   "Name": "AcceptedAgeRange",
+                   "Namespace": "AzureHealthInsights",
+                   "Description": "A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age.",
+                   "IsNullable": false,
+                   "Usage": "Input",
+                   "Properties": [
+                    {
+                     "$id": "136",
+                     "Name": "minimumAge",
+                     "SerializedName": "minimumAge",
+                     "Description": "A person's age, given as a number (value) and a unit (e.g. years, months)",
+                     "Type": {
+                      "$id": "137",
+                      "Name": "AcceptedAge",
+                      "Namespace": "AzureHealthInsights",
+                      "Description": "A person's age, given as a number (value) and a unit (e.g. years, months)",
+                      "IsNullable": false,
+                      "Usage": "Input",
+                      "Properties": [
+                       {
+                        "$id": "138",
+                        "Name": "unit",
+                        "SerializedName": "unit",
+                        "Description": "Possible units for a person's age.",
+                        "Type": {
+                         "$ref": "27"
+                        },
+                        "IsRequired": true,
+                        "IsReadOnly": false
+                       },
+                       {
+                        "$id": "139",
+                        "Name": "value",
+                        "SerializedName": "value",
+                        "Description": "The number of years/months/days that represents the person's age.",
+                        "Type": {
+                         "$id": "140",
+                         "Name": "float32",
+                         "Kind": "Float32",
+                         "IsNullable": false
+                        },
+                        "IsRequired": true,
+                        "IsReadOnly": false
+                       }
+                      ]
+                     },
+                     "IsRequired": false,
+                     "IsReadOnly": false
+                    },
+                    {
+                     "$id": "141",
+                     "Name": "maximumAge",
+                     "SerializedName": "maximumAge",
+                     "Description": "A person's age, given as a number (value) and a unit (e.g. years, months)",
+                     "Type": {
+                      "$ref": "137"
+                     },
+                     "IsRequired": false,
+                     "IsReadOnly": false
+                    }
+                   ]
+                  },
+                  "IsRequired": false,
+                  "IsReadOnly": false
+                 }
+                ]
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "142",
+               "Name": "metadata",
+               "SerializedName": "metadata",
+               "Description": "Trial data which is of interest to the potential participant.",
+               "Type": {
+                "$id": "143",
+                "Name": "ClinicalTrialMetadata",
+                "Namespace": "AzureHealthInsights",
+                "Description": "Trial data which is of interest to the potential participant.",
+                "IsNullable": false,
+                "Usage": "RoundTrip",
+                "Properties": [
+                 {
+                  "$id": "144",
+                  "Name": "phases",
+                  "SerializedName": "phases",
+                  "Description": "Phases which are relevant for the clinical trial.\nEach clinical trial can be in a certain phase or in multiple phases.",
+                  "Type": {
+                   "$id": "145",
+                   "Name": "Array",
+                   "ElementType": {
+                    "$ref": "31"
+                   },
+                   "IsNullable": false
+                  },
+                  "IsRequired": false,
+                  "IsReadOnly": false
+                 },
+                 {
+                  "$id": "146",
+                  "Name": "studyType",
+                  "SerializedName": "studyType",
+                  "Description": "Possible study types of a clinical trial.",
+                  "Type": {
+                   "$ref": "38"
+                  },
+                  "IsRequired": false,
+                  "IsReadOnly": false
+                 },
+                 {
+                  "$id": "147",
+                  "Name": "recruitmentStatus",
+                  "SerializedName": "recruitmentStatus",
+                  "Description": "Possible recruitment status of a clinical trial.",
+                  "Type": {
+                   "$ref": "43"
+                  },
+                  "IsRequired": false,
+                  "IsReadOnly": false
+                 },
+                 {
+                  "$id": "148",
+                  "Name": "conditions",
+                  "SerializedName": "conditions",
+                  "Description": "Medical conditions and their synonyms which are relevant for the clinical trial, given as strings.",
+                  "Type": {
+                   "$id": "149",
+                   "Name": "Array",
+                   "ElementType": {
+                    "$id": "150",
+                    "Name": "string",
+                    "Kind": "String",
+                    "IsNullable": false
+                   },
+                   "IsNullable": false
+                  },
+                  "IsRequired": true,
+                  "IsReadOnly": false
+                 },
+                 {
+                  "$id": "151",
+                  "Name": "sponsors",
+                  "SerializedName": "sponsors",
+                  "Description": "Sponsors/collaborators involved with the trial.",
+                  "Type": {
+                   "$id": "152",
+                   "Name": "Array",
+                   "ElementType": {
+                    "$id": "153",
+                    "Name": "string",
+                    "Kind": "String",
+                    "IsNullable": false
+                   },
+                   "IsNullable": false
+                  },
+                  "IsRequired": false,
+                  "IsReadOnly": false
+                 },
+                 {
+                  "$id": "154",
+                  "Name": "contacts",
+                  "SerializedName": "contacts",
+                  "Description": "Contact details of the trial administrators, for patients that want to participate in the trial.",
+                  "Type": {
+                   "$id": "155",
+                   "Name": "Array",
+                   "ElementType": {
+                    "$id": "156",
+                    "Name": "ContactDetails",
+                    "Namespace": "AzureHealthInsights",
+                    "Description": "A person's contact details.",
+                    "IsNullable": false,
+                    "Usage": "RoundTrip",
+                    "Properties": [
+                     {
+                      "$id": "157",
+                      "Name": "name",
+                      "SerializedName": "name",
+                      "Description": "The person's name.",
+                      "Type": {
+                       "$id": "158",
+                       "Name": "string",
+                       "Kind": "String",
+                       "IsNullable": false
+                      },
+                      "IsRequired": false,
+                      "IsReadOnly": false
+                     },
+                     {
+                      "$id": "159",
+                      "Name": "email",
+                      "SerializedName": "email",
+                      "Description": "The person's email.",
+                      "Type": {
+                       "$id": "160",
+                       "Name": "string",
+                       "Kind": "String",
+                       "IsNullable": false
+                      },
+                      "IsRequired": false,
+                      "IsReadOnly": false
+                     },
+                     {
+                      "$id": "161",
+                      "Name": "phone",
+                      "SerializedName": "phone",
+                      "Description": "A person's phone number.",
+                      "Type": {
+                       "$id": "162",
+                       "Name": "string",
+                       "Kind": "String",
+                       "IsNullable": false
+                      },
+                      "IsRequired": false,
+                      "IsReadOnly": false
+                     }
+                    ]
+                   },
+                   "IsNullable": false
+                  },
+                  "IsRequired": false,
+                  "IsReadOnly": false
+                 },
+                 {
+                  "$id": "163",
+                  "Name": "facilities",
+                  "SerializedName": "facilities",
+                  "Description": "Research facilities where the clinical trial is conducted.",
+                  "Type": {
+                   "$id": "164",
+                   "Name": "Array",
+                   "ElementType": {
+                    "$id": "165",
+                    "Name": "ClinicalTrialResearchFacility",
+                    "Namespace": "AzureHealthInsights",
+                    "Description": "Details of a research facility where a clinical trial is conducted.",
+                    "IsNullable": false,
+                    "Usage": "RoundTrip",
+                    "Properties": [
+                     {
+                      "$id": "166",
+                      "Name": "name",
+                      "SerializedName": "name",
+                      "Description": "The facility's name.",
+                      "Type": {
+                       "$id": "167",
+                       "Name": "string",
+                       "Kind": "String",
+                       "IsNullable": false
+                      },
+                      "IsRequired": true,
+                      "IsReadOnly": false
+                     },
+                     {
+                      "$id": "168",
+                      "Name": "city",
+                      "SerializedName": "city",
+                      "Description": "City name.",
+                      "Type": {
+                       "$id": "169",
+                       "Name": "string",
+                       "Kind": "String",
+                       "IsNullable": false
+                      },
+                      "IsRequired": false,
+                      "IsReadOnly": false
+                     },
+                     {
+                      "$id": "170",
+                      "Name": "state",
+                      "SerializedName": "state",
+                      "Description": "State name.",
+                      "Type": {
+                       "$id": "171",
+                       "Name": "string",
+                       "Kind": "String",
+                       "IsNullable": false
+                      },
+                      "IsRequired": false,
+                      "IsReadOnly": false
+                     },
+                     {
+                      "$id": "172",
+                      "Name": "countryOrRegion",
+                      "SerializedName": "countryOrRegion",
+                      "Description": "Country/region name.",
+                      "Type": {
+                       "$id": "173",
+                       "Name": "string",
+                       "Kind": "String",
+                       "IsNullable": false
+                      },
+                      "IsRequired": true,
+                      "IsReadOnly": false
+                     }
+                    ]
+                   },
+                   "IsNullable": false
+                  },
+                  "IsRequired": false,
+                  "IsReadOnly": false
+                 }
+                ]
+               },
+               "IsRequired": true,
+               "IsReadOnly": false
+              }
+             ]
+            },
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "174",
+           "Name": "registryFilters",
+           "SerializedName": "registryFilters",
+           "Description": "A list of filters, each one creating a selection of trials from a given\nclinical trial registry.",
+           "Type": {
+            "$id": "175",
+            "Name": "Array",
+            "ElementType": {
+             "$id": "176",
+             "Name": "ClinicalTrialRegistryFilter",
+             "Namespace": "AzureHealthInsights",
+             "Description": "A filter defining a subset of clinical trials from a given clinical trial registry (e.g. clinicaltrials.gov).",
+             "IsNullable": false,
+             "Usage": "Input",
+             "Properties": [
+              {
+               "$id": "177",
+               "Name": "conditions",
+               "SerializedName": "conditions",
+               "Description": "Trials with any of the given medical conditions will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the medical conditions.",
+               "Type": {
+                "$id": "178",
+                "Name": "Array",
+                "ElementType": {
+                 "$id": "179",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "180",
+               "Name": "studyTypes",
+               "SerializedName": "studyTypes",
+               "Description": "Trials with any of the given study types will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the study types.",
+               "Type": {
+                "$id": "181",
+                "Name": "Array",
+                "ElementType": {
+                 "$ref": "38"
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "182",
+               "Name": "recruitmentStatuses",
+               "SerializedName": "recruitmentStatuses",
+               "Description": "Trials with any of the given recruitment statuses will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the recruitment statuses.",
+               "Type": {
+                "$id": "183",
+                "Name": "Array",
+                "ElementType": {
+                 "$ref": "43"
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "184",
+               "Name": "sponsors",
+               "SerializedName": "sponsors",
+               "Description": "Trials with any of the given sponsors will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the sponsors.",
+               "Type": {
+                "$id": "185",
+                "Name": "Array",
+                "ElementType": {
+                 "$id": "186",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "187",
+               "Name": "phases",
+               "SerializedName": "phases",
+               "Description": "Trials with any of the given phases will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the phases.",
+               "Type": {
+                "$id": "188",
+                "Name": "Array",
+                "ElementType": {
+                 "$ref": "31"
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "189",
+               "Name": "purposes",
+               "SerializedName": "purposes",
+               "Description": "Trials with any of the given purposes will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the purposes.",
+               "Type": {
+                "$id": "190",
+                "Name": "Array",
+                "ElementType": {
+                 "$ref": "48"
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "191",
+               "Name": "ids",
+               "SerializedName": "ids",
+               "Description": "Trials with any of the given identifiers will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the trial identifiers.",
+               "Type": {
+                "$id": "192",
+                "Name": "Array",
+                "ElementType": {
+                 "$id": "193",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "194",
+               "Name": "sources",
+               "SerializedName": "sources",
+               "Description": "Trials with any of the given sources will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the sources.",
+               "Type": {
+                "$id": "195",
+                "Name": "Array",
+                "ElementType": {
+                 "$ref": "59"
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "196",
+               "Name": "facilityNames",
+               "SerializedName": "facilityNames",
+               "Description": "Trials with any of the given facility names will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the trial facility names.",
+               "Type": {
+                "$id": "197",
+                "Name": "Array",
+                "ElementType": {
+                 "$id": "198",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "199",
+               "Name": "facilityLocations",
+               "SerializedName": "facilityLocations",
+               "Description": "Trials with any of the given facility locations will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the trial facility locations.",
+               "Type": {
+                "$id": "200",
+                "Name": "Array",
+                "ElementType": {
+                 "$id": "201",
+                 "Name": "GeographicLocation",
+                 "Namespace": "AzureHealthInsights",
+                 "Description": "A location given as a combination of city, state and country/region. It could specify a city, a state or a country/region.\nIn case a city is specified, either state +country/region or country/region (for countries/regions where there are no states) should be added.\nIn case a state is specified (without a city), country/region should be added.",
+                 "IsNullable": false,
+                 "Usage": "Input",
+                 "Properties": [
+                  {
+                   "$id": "202",
+                   "Name": "city",
+                   "SerializedName": "city",
+                   "Description": "City name.",
+                   "Type": {
+                    "$id": "203",
+                    "Name": "string",
+                    "Kind": "String",
+                    "IsNullable": false
+                   },
+                   "IsRequired": false,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "204",
+                   "Name": "state",
+                   "SerializedName": "state",
+                   "Description": "State name.",
+                   "Type": {
+                    "$id": "205",
+                    "Name": "string",
+                    "Kind": "String",
+                    "IsNullable": false
+                   },
+                   "IsRequired": false,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "206",
+                   "Name": "countryOrRegion",
+                   "SerializedName": "countryOrRegion",
+                   "Description": "Country/region name.",
+                   "Type": {
+                    "$id": "207",
+                    "Name": "string",
+                    "Kind": "String",
+                    "IsNullable": false
+                   },
+                   "IsRequired": true,
+                   "IsReadOnly": false
+                  }
+                 ]
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "208",
+               "Name": "facilityAreas",
+               "SerializedName": "facilityAreas",
+               "Description": "Trials with any of the given facility area boundaries will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the trial facility area boundaries.",
+               "Type": {
+                "$id": "209",
+                "Name": "Array",
+                "ElementType": {
+                 "$id": "210",
+                 "Name": "GeographicArea",
+                 "Namespace": "AzureHealthInsights",
+                 "Description": "A geographic area, expressed as a `Circle` geometry represented using a `GeoJSON Feature` (see [GeoJSON spec](https://tools.ietf.org/html/rfc7946)).",
+                 "IsNullable": false,
+                 "Usage": "Input",
+                 "Properties": [
+                  {
+                   "$id": "211",
+                   "Name": "type",
+                   "SerializedName": "type",
+                   "Description": "`GeoJSON` type.",
+                   "Type": {
+                    "$ref": "62"
+                   },
+                   "IsRequired": true,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "212",
+                   "Name": "geometry",
+                   "SerializedName": "geometry",
+                   "Description": "`GeoJSON` geometry, representing the area circle's center.",
+                   "Type": {
+                    "$id": "213",
+                    "Name": "AreaGeometry",
+                    "Namespace": "AzureHealthInsights",
+                    "Description": "`GeoJSON` geometry, representing the area circle's center.",
+                    "IsNullable": false,
+                    "Usage": "Input",
+                    "Properties": [
+                     {
+                      "$id": "214",
+                      "Name": "type",
+                      "SerializedName": "type",
+                      "Description": "`GeoJSON` geometry type.",
+                      "Type": {
+                       "$ref": "64"
+                      },
+                      "IsRequired": true,
+                      "IsReadOnly": false
+                     },
+                     {
+                      "$id": "215",
+                      "Name": "coordinates",
+                      "SerializedName": "coordinates",
+                      "Description": "Coordinates of the area circle's center, represented according to the `GeoJSON` standard.\nThis is an array of 2 decimal numbers, longitude and latitude (precisely in this order).",
+                      "Type": {
+                       "$id": "216",
+                       "Name": "Array",
+                       "ElementType": {
+                        "$id": "217",
+                        "Name": "float32",
+                        "Kind": "Float32",
+                        "IsNullable": false
+                       },
+                       "IsNullable": false
+                      },
+                      "IsRequired": true,
+                      "IsReadOnly": false
+                     }
+                    ]
+                   },
+                   "IsRequired": true,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "218",
+                   "Name": "properties",
+                   "SerializedName": "properties",
+                   "Description": "`GeoJSON` object properties.",
+                   "Type": {
+                    "$id": "219",
+                    "Name": "AreaProperties",
+                    "Namespace": "AzureHealthInsights",
+                    "Description": "`GeoJSON` object properties.",
+                    "IsNullable": false,
+                    "Usage": "Input",
+                    "Properties": [
+                     {
+                      "$id": "220",
+                      "Name": "subType",
+                      "SerializedName": "subType",
+                      "Description": "`GeoJSON` object sub-type.",
+                      "Type": {
+                       "$ref": "66"
+                      },
+                      "IsRequired": true,
+                      "IsReadOnly": false
+                     },
+                     {
+                      "$id": "221",
+                      "Name": "radius",
+                      "SerializedName": "radius",
+                      "Description": "The radius of the area's circle, in meters.",
+                      "Type": {
+                       "$id": "222",
+                       "Name": "float64",
+                       "Kind": "Float64",
+                       "IsNullable": false
+                      },
+                      "IsRequired": true,
+                      "IsReadOnly": false
+                     }
+                    ]
+                   },
+                   "IsRequired": true,
+                   "IsReadOnly": false
+                  }
+                 ]
+                },
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              }
+             ]
+            },
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          }
+         ]
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "81"
+  },
+  {
+   "$ref": "85"
+  },
+  {
+   "$ref": "91"
+  },
+  {
+   "$ref": "102"
+  },
+  {
+   "$ref": "112"
+  },
+  {
+   "$ref": "117"
+  },
+  {
+   "$ref": "123"
+  },
+  {
+   "$ref": "126"
+  },
+  {
+   "$ref": "132"
+  },
+  {
+   "$ref": "135"
+  },
+  {
+   "$ref": "137"
+  },
+  {
+   "$ref": "143"
+  },
+  {
+   "$ref": "156"
+  },
+  {
+   "$ref": "165"
+  },
+  {
+   "$ref": "176"
+  },
+  {
+   "$ref": "201"
+  },
+  {
+   "$ref": "210"
+  },
+  {
+   "$ref": "213"
+  },
+  {
+   "$ref": "219"
+  },
+  {
+   "$id": "223",
+   "Name": "TrialMatcherResult",
+   "Namespace": "AzureHealthInsights",
+   "Description": "The response for the Trial Matcher request.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "224",
+     "Name": "jobId",
+     "SerializedName": "jobId",
+     "Description": "A processing job identifier.",
+     "Type": {
+      "$id": "225",
+      "Name": "string",
+      "Kind": "Guid",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "226",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The date and time when the processing job was created.",
+     "Type": {
+      "$id": "227",
+      "Name": "utcDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "228",
+     "Name": "expirationDateTime",
+     "SerializedName": "expirationDateTime",
+     "Description": "The date and time when the processing job is set to expire.",
+     "Type": {
+      "$id": "229",
+      "Name": "utcDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "230",
+     "Name": "lastUpdateDateTime",
+     "SerializedName": "lastUpdateDateTime",
+     "Description": "The date and time when the processing job was last updated.",
+     "Type": {
+      "$id": "231",
+      "Name": "utcDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "232",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "The status of the processing job.",
+     "Type": {
+      "$ref": "68"
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "233",
+     "Name": "errors",
+     "SerializedName": "errors",
+     "Description": "An array of errors, if any errors occurred during the processing job.",
+     "Type": {
+      "$id": "234",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "235",
+       "Name": "Error",
+       "Namespace": "Azure.Core.Foundations",
+       "Description": "The error object.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "236",
+         "Name": "code",
+         "SerializedName": "code",
+         "Description": "One of a server-defined set of error codes.",
+         "Type": {
+          "$id": "237",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "238",
+         "Name": "message",
+         "SerializedName": "message",
+         "Description": "A human-readable representation of the error.",
+         "Type": {
+          "$id": "239",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "240",
+         "Name": "target",
+         "SerializedName": "target",
+         "Description": "The target of the error.",
+         "Type": {
+          "$id": "241",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "242",
+         "Name": "details",
+         "SerializedName": "details",
+         "Description": "An array of details about specific errors that led to this reported error.",
+         "Type": {
+          "$id": "243",
+          "Name": "Array",
+          "ElementType": {
+           "$ref": "235"
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "244",
+         "Name": "innererror",
+         "SerializedName": "innererror",
+         "Description": "An object containing more specific information than the current object about the error.",
+         "Type": {
+          "$id": "245",
+          "Name": "InnerError",
+          "Namespace": "Azure.Core.Foundations",
+          "Description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "246",
+            "Name": "code",
+            "SerializedName": "code",
+            "Description": "One of a server-defined set of error codes.",
+            "Type": {
+             "$id": "247",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "248",
+            "Name": "InnerErrorObject",
+            "SerializedName": "innererror",
+            "Description": "Inner error.",
+            "Type": {
+             "$ref": "245"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "249",
+     "Name": "results",
+     "SerializedName": "results",
+     "Description": "The inference results for the Trial Matcher request.",
+     "Type": {
+      "$id": "250",
+      "Name": "TrialMatcherResults",
+      "Namespace": "AzureHealthInsights",
+      "Description": "The inference results for the Trial Matcher request.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "251",
+        "Name": "patients",
+        "SerializedName": "patients",
+        "Description": "Results for the patients given in the request.",
+        "Type": {
+         "$id": "252",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "253",
+          "Name": "TrialMatcherPatientResult",
+          "Namespace": "AzureHealthInsights",
+          "Description": "The results of the model's work for a single patient.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "254",
+            "Name": "id",
+            "SerializedName": "id",
+            "Description": "The identifier given for the patient in the request.",
+            "Type": {
+             "$id": "255",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "256",
+            "Name": "inferences",
+            "SerializedName": "inferences",
+            "Description": "The model's inferences for the given patient.",
+            "Type": {
+             "$id": "257",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "258",
+              "Name": "TrialMatcherInference",
+              "Namespace": "AzureHealthInsights",
+              "Description": "An inference made by the Trial Matcher model regarding a patient.",
+              "IsNullable": false,
+              "Usage": "Output",
+              "Properties": [
+               {
+                "$id": "259",
+                "Name": "type",
+                "SerializedName": "type",
+                "Description": "The type of the Trial Matcher inference.",
+                "Type": {
+                 "$ref": "74"
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "260",
+                "Name": "value",
+                "SerializedName": "value",
+                "Description": "The value of the inference, as relevant for the given inference type.",
+                "Type": {
+                 "$id": "261",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "262",
+                "Name": "description",
+                "SerializedName": "description",
+                "Description": "The description corresponding to the inference value.",
+                "Type": {
+                 "$id": "263",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "264",
+                "Name": "confidenceScore",
+                "SerializedName": "confidenceScore",
+                "Description": "Confidence score for this inference.",
+                "Type": {
+                 "$id": "265",
+                 "Name": "float32",
+                 "Kind": "Float32",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "266",
+                "Name": "evidence",
+                "SerializedName": "evidence",
+                "Description": "The evidence corresponding to the inference value.",
+                "Type": {
+                 "$id": "267",
+                 "Name": "Array",
+                 "ElementType": {
+                  "$id": "268",
+                  "Name": "TrialMatcherInferenceEvidence",
+                  "Namespace": "AzureHealthInsights",
+                  "Description": "A piece of evidence corresponding to a Trial Matcher inference.",
+                  "IsNullable": false,
+                  "Usage": "Output",
+                  "Properties": [
+                   {
+                    "$id": "269",
+                    "Name": "eligibilityCriteriaEvidence",
+                    "SerializedName": "eligibilityCriteriaEvidence",
+                    "Description": "A piece of evidence from the eligibility criteria text of a clinical trial.",
+                    "Type": {
+                     "$id": "270",
+                     "Name": "string",
+                     "Kind": "String",
+                     "IsNullable": false
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "271",
+                    "Name": "patientDataEvidence",
+                    "SerializedName": "patientDataEvidence",
+                    "Description": "A piece of evidence from a clinical note (text document).",
+                    "Type": {
+                     "$id": "272",
+                     "Name": "ClinicalNoteEvidence",
+                     "Namespace": "AzureHealthInsights",
+                     "Description": "A piece of evidence from a clinical note (text document).",
+                     "IsNullable": false,
+                     "Usage": "Output",
+                     "Properties": [
+                      {
+                       "$id": "273",
+                       "Name": "id",
+                       "SerializedName": "id",
+                       "Description": "The identifier of the document containing the evidence.",
+                       "Type": {
+                        "$id": "274",
+                        "Name": "string",
+                        "Kind": "String",
+                        "IsNullable": false
+                       },
+                       "IsRequired": true,
+                       "IsReadOnly": false
+                      },
+                      {
+                       "$id": "275",
+                       "Name": "text",
+                       "SerializedName": "text",
+                       "Description": "The actual text span which is evidence for the inference.",
+                       "Type": {
+                        "$id": "276",
+                        "Name": "string",
+                        "Kind": "String",
+                        "IsNullable": false
+                       },
+                       "IsRequired": false,
+                       "IsReadOnly": false
+                      },
+                      {
+                       "$id": "277",
+                       "Name": "offset",
+                       "SerializedName": "offset",
+                       "Description": "The start index of the evidence text span in the document (0 based).",
+                       "Type": {
+                        "$id": "278",
+                        "Name": "int32",
+                        "Kind": "Int32",
+                        "IsNullable": false
+                       },
+                       "IsRequired": true,
+                       "IsReadOnly": false
+                      },
+                      {
+                       "$id": "279",
+                       "Name": "length",
+                       "SerializedName": "length",
+                       "Description": "The length of the evidence text span.",
+                       "Type": {
+                        "$id": "280",
+                        "Name": "int32",
+                        "Kind": "Int32",
+                        "IsNullable": false
+                       },
+                       "IsRequired": true,
+                       "IsReadOnly": false
+                      }
+                     ]
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "281",
+                    "Name": "patientInfoEvidence",
+                    "SerializedName": "patientInfoEvidence",
+                    "Description": "A piece of clinical information, expressed as a code in a clinical coding\nsystem.",
+                    "Type": {
+                     "$ref": "91"
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "282",
+                    "Name": "importance",
+                    "SerializedName": "importance",
+                    "Description": "A value indicating how important this piece of evidence is for the inference.",
+                    "Type": {
+                     "$id": "283",
+                     "Name": "float32",
+                     "Kind": "Float32",
+                     "IsNullable": false
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   }
+                  ]
+                 },
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "284",
+                "Name": "id",
+                "SerializedName": "id",
+                "Description": "The identifier of the clinical trial.",
+                "Type": {
+                 "$id": "285",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "286",
+                "Name": "source",
+                "SerializedName": "source",
+                "Description": "Possible sources of a clinical trial.",
+                "Type": {
+                 "$ref": "59"
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "287",
+                "Name": "metadata",
+                "SerializedName": "metadata",
+                "Description": "Trial data which is of interest to the potential participant.",
+                "Type": {
+                 "$ref": "143"
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "288",
+            "Name": "neededClinicalInfo",
+            "SerializedName": "neededClinicalInfo",
+            "Description": "Clinical information which is needed to provide better trial matching results for the patient.",
+            "Type": {
+             "$id": "289",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "290",
+              "Name": "ExtendedClinicalCodedElement",
+              "Namespace": "AzureHealthInsights",
+              "Description": "A piece of clinical information, expressed as a code in a clinical coding system, extended by semantic information.",
+              "IsNullable": false,
+              "Usage": "Output",
+              "Properties": [
+               {
+                "$id": "291",
+                "Name": "system",
+                "SerializedName": "system",
+                "Description": "The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS.",
+                "Type": {
+                 "$id": "292",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "293",
+                "Name": "code",
+                "SerializedName": "code",
+                "Description": "The code within the given clinical coding system.",
+                "Type": {
+                 "$id": "294",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "295",
+                "Name": "name",
+                "SerializedName": "name",
+                "Description": "The name of this coded concept in the coding system.",
+                "Type": {
+                 "$id": "296",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "297",
+                "Name": "value",
+                "SerializedName": "value",
+                "Description": "A value associated with the code within the given clinical coding system.",
+                "Type": {
+                 "$id": "298",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "299",
+                "Name": "semanticType",
+                "SerializedName": "semanticType",
+                "Description": "The [UMLS semantic type](https://www.nlm.nih.gov/research/umls/META3_current_semantic_types.html) associated with the coded concept.",
+                "Type": {
+                 "$id": "300",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "301",
+                "Name": "category",
+                "SerializedName": "category",
+                "Description": "The bio-medical category related to the coded concept, e.g. Diagnosis, Symptom, Medication, Examination.",
+                "Type": {
+                 "$id": "302",
+                 "Name": "string",
+                 "Kind": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "303",
+        "Name": "modelVersion",
+        "SerializedName": "modelVersion",
+        "Description": "The version of the model used for inference, expressed as the model date.",
+        "Type": {
+         "$id": "304",
+         "Name": "ModelVersion",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "305",
+        "Name": "knowledgeGraphLastUpdateDate",
+        "SerializedName": "knowledgeGraphLastUpdateDate",
+        "Description": "The date when the clinical trials knowledge graph was last updated.",
+        "Type": {
+         "$id": "306",
+         "Name": "plainDate",
+         "Kind": "Date",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$ref": "235"
+  },
+  {
+   "$ref": "245"
+  },
+  {
+   "$ref": "250"
+  },
+  {
+   "$ref": "253"
+  },
+  {
+   "$ref": "258"
+  },
+  {
+   "$ref": "268"
+  },
+  {
+   "$ref": "272"
+  },
+  {
+   "$ref": "290"
+  },
+  {
+   "$id": "307",
+   "Name": "Inference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "An inference made by the model regarding a patient.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "308",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The value of the inference, as relevant for the given inference type.",
+     "Type": {
+      "$id": "309",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "310",
+     "Name": "description",
+     "SerializedName": "description",
+     "Description": "The description corresponding to the inference value.",
+     "Type": {
+      "$id": "311",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "312",
+     "Name": "confidenceScore",
+     "SerializedName": "confidenceScore",
+     "Description": "Confidence score for this inference.",
+     "Type": {
+      "$id": "313",
+      "Name": "float32",
+      "Kind": "Float32",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "314",
+   "Name": "InferenceEvidence",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A piece of evidence corresponding to an inference.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "315",
+     "Name": "patientDataEvidence",
+     "SerializedName": "patientDataEvidence",
+     "Description": "A piece of evidence from a clinical note (text document).",
+     "Type": {
+      "$ref": "272"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "316",
+     "Name": "patientInfoEvidence",
+     "SerializedName": "patientInfoEvidence",
+     "Description": "A piece of clinical information, expressed as a code in a clinical coding\nsystem.",
+     "Type": {
+      "$ref": "91"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "317",
+     "Name": "importance",
+     "SerializedName": "importance",
+     "Description": "A value indicating how important this piece of evidence is for the inference.",
+     "Type": {
+      "$id": "318",
+      "Name": "float32",
+      "Kind": "Float32",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "319",
+   "Name": "ClinicalMatchingClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "320",
+     "Name": "matchTrials",
+     "ResourceName": "ClinicalMatchingClient",
+     "Summary": "Create Trial Matcher job",
+     "Description": "Creates a Trial Matcher job with the given request body.",
+     "Parameters": [
+      {
+       "$id": "321",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Description": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com).",
+       "Type": {
+        "$id": "322",
+        "Name": "Uri",
+        "Kind": "Uri",
+        "IsNullable": false
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "323",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "",
+       "Type": {
+        "$id": "324",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "IsResourceParameter": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "325",
+        "Type": {
+         "$id": "326",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "2023-03-01-preview"
+       }
+      },
+      {
+       "$id": "327",
+       "Name": "repeatabilityRequestId",
+       "NameInRequest": "Repeatability-Request-ID",
+       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "328",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "329",
+       "Name": "repeatabilityFirstSent",
+       "NameInRequest": "Repeatability-First-Sent",
+       "Description": "Specifies the date and time at which the request was first created.",
+       "Type": {
+        "$id": "330",
+        "Name": "utcDateTime",
+        "Kind": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "331",
+       "Name": "TrialMatcherData",
+       "NameInRequest": "TrialMatcherData",
+       "Description": "The body of the Trial Matcher request.",
+       "Type": {
+        "$ref": "78"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "332",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "333",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "334",
+        "Type": {
+         "$ref": "333"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "335",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "336",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "337",
+        "Type": {
+         "$ref": "336"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "338",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "339",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "340",
+          "Name": "ResourceLocation",
+          "Kind": "Uri",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "341",
+         "Name": "Retry-After",
+         "NameInResponse": "retryAfter",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "342",
+          "Name": "int32",
+          "Kind": "Int32",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "343",
+         "Name": "Repeatability-Result",
+         "NameInResponse": "repeatabilityResult",
+         "Description": "Indicates whether the repeatable request was accepted or rejected.",
+         "Type": {
+          "$id": "344",
+          "Name": "Union",
+          "UnionItemTypes": [
+           {
+            "$id": "345",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "346",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "accepted",
+            "IsNullable": false
+           },
+           {
+            "$id": "347",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "348",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "rejected",
+            "IsNullable": false
+           }
+          ],
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "349",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "223"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}/healthinsights",
+     "Path": "/trialmatcher/jobs",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "350",
+      "FinalStateVia": 3,
+      "FinalResponse": {
+       "$id": "351",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "223"
+       },
+       "BodyMediaType": "Json"
+      },
+      "ResultPath": "result"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "352"
+   },
+   "Creatable": true
+  }
+ ],
+ "Auth": {
+  "$id": "353",
+  "ApiKey": {
+   "$id": "354",
+   "Name": "Ocp-Apim-Subscription-Key"
+  }
+ }
+}
