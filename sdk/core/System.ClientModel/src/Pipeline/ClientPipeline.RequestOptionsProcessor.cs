@@ -63,7 +63,7 @@ public partial class ClientPipeline
             _length = _fixedPolicies.Length +
                 _customPerCallPolicies.Length +
                 _customPerTryPolicies.Length +
-                _beforeTransportIndex;
+                _customBeforeTransportPolicies.Length;
         }
 
         public override bool ProcessNext()
