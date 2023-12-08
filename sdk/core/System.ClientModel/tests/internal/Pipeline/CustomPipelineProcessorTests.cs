@@ -623,7 +623,7 @@ public class CustomPipelineProcessorTests
             throw new NotImplementedException();
         }
 
-        protected override InputContent? GetContentCore()
+        protected override BinaryContent? GetContentCore()
         {
             throw new NotImplementedException();
         }
@@ -643,7 +643,7 @@ public class CustomPipelineProcessorTests
             throw new NotImplementedException();
         }
 
-        protected override void SetContentCore(InputContent? content)
+        protected override void SetContentCore(BinaryContent? content)
         {
             throw new NotImplementedException();
         }

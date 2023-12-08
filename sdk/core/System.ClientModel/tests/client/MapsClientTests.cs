@@ -329,7 +329,7 @@ public class MapsClientTests
             protected override MessageHeaders GetHeadersCore()
                 => _headers;
 
-            protected override InputContent GetContentCore()
+            protected override BinaryContent GetContentCore()
             {
                 throw new NotImplementedException();
             }
@@ -340,7 +340,7 @@ public class MapsClientTests
             protected override void SetUriCore(Uri uri)
                 => _uri = uri;
 
-            protected override void SetContentCore(InputContent content)
+            protected override void SetContentCore(BinaryContent content)
             {
                 throw new NotImplementedException();
             }

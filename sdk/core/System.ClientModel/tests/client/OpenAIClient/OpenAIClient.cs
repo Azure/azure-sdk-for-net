@@ -34,7 +34,7 @@ public class OpenAIClient
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
         if (completionsOptions is null) throw new ArgumentNullException(nameof(completionsOptions));
 
-        InputContent content = InputContent.Create(completionsOptions);
+        BinaryContent content = BinaryContent.Create(completionsOptions);
         ClientResult result = GetCompletions(deploymentId, content);
 
         PipelineResponse response = result.GetRawResponse();
@@ -43,7 +43,7 @@ public class OpenAIClient
         return ClientResult.FromValue(completions, response);
     }
 
-    public virtual ClientResult GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
+    public virtual ClientResult GetCompletions(string deploymentId, BinaryContent content, RequestOptions options = null)
     {
         if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
@@ -63,7 +63,7 @@ public class OpenAIClient
         return ClientResult.FromResponse(response);
     }
 
-    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)
+    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, BinaryContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
         message.Apply(options, MessageClassifier200);

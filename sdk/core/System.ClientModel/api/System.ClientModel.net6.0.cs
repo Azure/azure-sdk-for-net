@@ -1,5 +1,15 @@
 namespace System.ClientModel
 {
+    public abstract partial class BinaryContent : System.IDisposable
+    {
+        protected BinaryContent() { }
+        public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
+        public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public abstract void Dispose();
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+    }
     public partial class ClientRequestException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response, string? message = null, System.Exception? innerException = null) { }
@@ -23,16 +33,6 @@ namespace System.ClientModel
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public sealed override bool HasValue { get { throw null; } }
         public sealed override T Value { get { throw null; } }
-    }
-    public abstract partial class InputContent : System.IDisposable
-    {
-        protected InputContent() { }
-        public static System.ClientModel.InputContent Create(System.BinaryData value) { throw null; }
-        public static System.ClientModel.InputContent Create<T>(T model, System.ClientModel.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
-        public abstract void Dispose();
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
     }
     public partial class KeyCredential
     {
@@ -192,16 +192,16 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public System.ClientModel.InputContent? Content { get { throw null; } set { } }
+        public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
         public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
         public string Method { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public abstract void Dispose();
-        protected abstract System.ClientModel.InputContent? GetContentCore();
+        protected abstract System.ClientModel.BinaryContent? GetContentCore();
         protected abstract System.ClientModel.Primitives.MessageHeaders GetHeadersCore();
         protected abstract string GetMethodCore();
         protected abstract System.Uri GetUriCore();
-        protected abstract void SetContentCore(System.ClientModel.InputContent? content);
+        protected abstract void SetContentCore(System.ClientModel.BinaryContent? content);
         protected abstract void SetMethodCore(string method);
         protected abstract void SetUriCore(System.Uri uri);
     }

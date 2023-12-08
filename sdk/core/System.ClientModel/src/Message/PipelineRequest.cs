@@ -32,15 +32,15 @@ public abstract class PipelineRequest : IDisposable
 
     protected abstract MessageHeaders GetHeadersCore();
 
-    public InputContent? Content
+    public BinaryContent? Content
     {
         get => GetContentCore();
         set => SetContentCore(value);
     }
 
-    protected abstract InputContent? GetContentCore();
+    protected abstract BinaryContent? GetContentCore();
 
-    protected abstract void SetContentCore(InputContent? content);
+    protected abstract void SetContentCore(BinaryContent? content);
 
     public abstract void Dispose();
 }

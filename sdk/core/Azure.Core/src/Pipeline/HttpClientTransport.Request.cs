@@ -67,10 +67,10 @@ namespace Azure.Core.Pipeline
                 _pipelineRequest.Uri = uri;
             }
 
-            protected override InputContent? GetContentCore()
+            protected override BinaryContent? GetContentCore()
                 => _pipelineRequest.Content;
 
-            protected override void SetContentCore(InputContent? content)
+            protected override void SetContentCore(BinaryContent? content)
             {
                 // Update Content fields on both Request and PipelineRequest.
                 base.SetContentCore(content);

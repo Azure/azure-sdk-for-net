@@ -523,19 +523,19 @@ namespace Azure.Core
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
-        protected override System.ClientModel.InputContent? GetContentCore() { throw null; }
+        protected override System.ClientModel.BinaryContent? GetContentCore() { throw null; }
         protected override System.ClientModel.Primitives.MessageHeaders GetHeadersCore() { throw null; }
         protected override string GetMethodCore() { throw null; }
         protected override System.Uri GetUriCore() { throw null; }
         protected internal abstract bool RemoveHeader(string name);
-        protected override void SetContentCore(System.ClientModel.InputContent? content) { }
+        protected override void SetContentCore(System.ClientModel.BinaryContent? content) { }
         protected internal virtual void SetHeader(string name, string value) { }
         protected override void SetMethodCore(string method) { }
         protected override void SetUriCore(System.Uri uri) { }
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class RequestContent : System.ClientModel.InputContent
+    public abstract partial class RequestContent : System.ClientModel.BinaryContent
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
