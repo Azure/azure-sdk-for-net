@@ -12,11 +12,11 @@ internal class ExpectContinueOnThrottlePolicy : HttpPipelineSynchronousPolicy
 {
     private long _lastThrottleTicks = 0;
 
-    private long _autoEnabledIntervalTicks = TimeSpan.TicksPerMinute;
-    public TimeSpan AutoEnabledInterval
+    private long _throttleIntervalTicks = TimeSpan.TicksPerMinute;
+    public TimeSpan ThrottleInterval
     {
-        get => TimeSpan.FromTicks(_autoEnabledIntervalTicks);
-        set => _autoEnabledIntervalTicks = value.Ticks;
+        get => TimeSpan.FromTicks(_throttleIntervalTicks);
+        set => _throttleIntervalTicks = value.Ticks;
     }
 
     public long ContentLengthThreshold { get; set; }
@@ -29,7 +29,7 @@ internal class ExpectContinueOnThrottlePolicy : HttpPipelineSynchronousPolicy
             return;
         }
         long lastThrottleTicks = Interlocked.Read(ref _lastThrottleTicks);
-        if (DateTimeOffset.UtcNow.Ticks - lastThrottleTicks < _autoEnabledIntervalTicks)
+        if (DateTimeOffset.UtcNow.Ticks - lastThrottleTicks < _throttleIntervalTicks)
         {
             message.Request.Headers.SetValue("Expect", "100-continue");
         }

@@ -26,7 +26,7 @@ namespace Azure.Storage
             /// Response codes that trigger this behavior are 429, 500, and 503.
             /// </para>
             /// </summary>
-            Auto = 0,
+            ApplyOnThrottle = 0,
 
             /// <summary>
             /// Expect-continue will be applied regardless of recent error status. There may be
@@ -51,9 +51,9 @@ namespace Azure.Storage
         public long ContentLengthThreshold { get; set; }
 
         /// <summary>
-        /// In mode <see cref="ApplyHeaderMode.Auto"/>, the time interval to apply the header
+        /// In mode <see cref="ApplyHeaderMode.ApplyOnThrottle"/>, the time interval to apply the header
         /// after recieving a triggering error. The default time is one minute.
         /// </summary>
-        public TimeSpan AutoEnabledInterval { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan ThrottleInterval { get; set; } = TimeSpan.FromMinutes(1);
     }
 }
