@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Tests
     public class BotServiceTest : BotServiceManagementTestBase
     {
         public BotServiceTest(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BotService.Tests
             //2.Update
             var patch = new BotData(new AzureLocation("global"))
             {
-                Properties = new BotProperties("TestBot", new Uri("https://mybot.coffee"), "E7C3FD33-6B3F-9FE8-490E-46FA9BAEF703")
+                Properties = new BotProperties("TestBot", new Uri("https://mybot.coffee"), resource.Data.Properties.MsaAppId)
                 {
                     Description = "The description of the bot",
                 },

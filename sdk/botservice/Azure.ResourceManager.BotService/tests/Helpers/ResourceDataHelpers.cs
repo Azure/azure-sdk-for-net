@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         {
             var data = new BotData(new AzureLocation("global"))
             {
-                Properties = new BotProperties("TestBot", new Uri("https://mybot.coffee"), "A2083202-8969-118D-5270-9C861668095C")
+                Properties = new BotProperties("TestBot", new Uri("https://mybot.coffee"), Guid.NewGuid().ToString())
                 {
                     Description = "The description of the bot",
                 },
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         #region BotChannel
         public static BotChannelData GetEmailChannelData()
         {
-            BotChannelData data = new BotChannelData(AzureLocation.WestUS)
+            BotChannelData data = new BotChannelData(new AzureLocation("global"))
             {
                 Properties = new EmailChannel()
                 {
-                    Properties = new EmailChannelProperties("a@b.com", true)
+                    Properties = new EmailChannelProperties("carlostestsdk2@outlook.com", true)
                     {
                         Password = "123456"
                     }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
 
         public static BotChannelData GetDirectLineSpeechChannelData()
         {
-            BotChannelData data = new BotChannelData(AzureLocation.WestUS)
+            BotChannelData data = new BotChannelData(new AzureLocation("global"))
             {
                 Properties = new DirectLineSpeechChannel()
                 {
@@ -119,17 +119,16 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         }
         #endregion
 
-        #region
+        #region ConnectionSetting
         public static BotConnectionSettingData GetBotConnectionSettingData()
         {
-            BotConnectionSettingData data = new BotConnectionSettingData(AzureLocation.WestUS)
+            BotConnectionSettingData data = new BotConnectionSettingData(new AzureLocation("global"))
             {
                 Properties = new BotConnectionSettingProperties()
                 {
-                    ClientId = "sampleclientid",
-                    ClientSecret = "samplesecret",
-                    Scopes = "samplescope",
-                    ServiceProviderId = "serviceproviderid",
+                    ClientId = "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+                    ClientSecret = "aCL8Q~tRxT~r3yyWr5~UUIpS47KbbgvQfMnekaKT",
+                    ServiceProviderId = "facebook",
                     Parameters =
                     {
                         new BotConnectionSettingParameter()

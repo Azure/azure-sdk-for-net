@@ -12,9 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.BotService.Tests
 {
-    public class EmailChannelTest : BotServiceManagementTestBase
+    internal class BotDirectLneChannelTest : BotServiceManagementTestBase
     {
-        public EmailChannelTest(bool isAsync)
+        public BotDirectLneChannelTest(bool isAsync)
             : base(isAsync, RecordedTestMode.Record)
         {
         }
@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.BotService.Tests
         {
             //1.Create
             var botName = Recording.GenerateAssetName("testbotService");
-            var channelName = Recording.GenerateAssetName("testemailchannel");
-            var channelName2 = Recording.GenerateAssetName("testemailchannel");
-            var channelName3 = Recording.GenerateAssetName("testemailchannel");
+            var channelName = Recording.GenerateAssetName("testchannel");
+            var channelName2 = Recording.GenerateAssetName("testchannel");
+            var channelName3 = Recording.GenerateAssetName("testchannel");
             var resourceGroup = await CreateResourceGroupAsync();
             var botCollection = resourceGroup.GetBots();
             var botInput = ResourceDataHelpers.GetBotData();
             var botResource = (await botCollection.CreateOrUpdateAsync(WaitUntil.Completed, botName, botInput)).Value;
             var collection = botResource.GetBotChannels();
-            var input = ResourceDataHelpers.GetEmailChannelData();
+            var input = ResourceDataHelpers.GetDirectLineSpeechChannelData();
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, channelName, input)).Value;
             Assert.AreEqual(channelName, resource.Data.Name);
             //2.Get
@@ -59,14 +59,16 @@ namespace Azure.ResourceManager.BotService.Tests
             var rResource3 = (await resource.GetAsync()).Value;
             ResourceDataHelpers.AssertBotChannel(resource.Data, rResource3.Data);
             //2.Update
-            var patch = new BotChannelData(AzureLocation.WestUS)
+            var patch = new BotChannelData(new AzureLocation("global"))
             {
-                Properties = new EmailChannel()
+                Properties = new DirectLineSpeechChannel()
                 {
-                    Properties = new EmailChannelProperties("a@b.com", true)
+                    Properties = new DirectLineSpeechChannelProperties()
                     {
-                        Password = "123456789"
-                    }
+                        CognitiveServiceRegion = "XupdatecognitiveServiceRegionX",
+                        CognitiveServiceSubscriptionKey = "XcognitiveServiceSubscriptionKeyX",
+                        IsEnabled = true,
+                    },
                 }
             };
             var resource4 = (await rResource3.UpdateAsync(patch)).Value;
