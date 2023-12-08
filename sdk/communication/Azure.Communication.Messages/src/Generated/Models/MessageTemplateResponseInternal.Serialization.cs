@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class TemplateResponseInternal
+    internal partial class MessageTemplateResponseInternal
     {
-        internal static TemplateResponseInternal DeserializeTemplateResponseInternal(JsonElement element)
+        internal static MessageTemplateResponseInternal DeserializeMessageTemplateResponseInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -20,9 +20,9 @@ namespace Azure.Communication.Messages
             }
             Optional<string> name = default;
             Optional<string> language = default;
-            Optional<CommunicationMessagesChannelType> channelType = default;
-            Optional<TemplateStatus> status = default;
-            Optional<TemplateResponseWhatsAppInternal> whatsApp = default;
+            Optional<CommunicationMessagesChannel> channelType = default;
+            Optional<MessageTemplateStatus> status = default;
+            Optional<WhatsAppMessageTemplateResponse> whatsApp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    channelType = new CommunicationMessagesChannelType(property.Value.GetString());
+                    channelType = new CommunicationMessagesChannel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -50,7 +50,7 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    status = new TemplateStatus(property.Value.GetString());
+                    status = new MessageTemplateStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("whatsApp"u8))
@@ -59,11 +59,11 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    whatsApp = TemplateResponseWhatsAppInternal.DeserializeTemplateResponseWhatsAppInternal(property.Value);
+                    whatsApp = WhatsAppMessageTemplateResponse.DeserializeWhatsAppMessageTemplateResponse(property.Value);
                     continue;
                 }
             }
-            return new TemplateResponseInternal(name.Value, language.Value, Optional.ToNullable(channelType), Optional.ToNullable(status), whatsApp.Value);
+            return new MessageTemplateResponseInternal(name.Value, language.Value, Optional.ToNullable(channelType), Optional.ToNullable(status), whatsApp.Value);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="ListTemplatesResponse"/>. </summary>
         /// <param name="value"> The collection of elements. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ListTemplatesResponse(IEnumerable<TemplateResponseInternal> value)
+        internal ListTemplatesResponse(IEnumerable<MessageTemplateResponseInternal> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,14 +28,14 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="ListTemplatesResponse"/>. </summary>
         /// <param name="value"> The collection of elements. </param>
         /// <param name="nextLink"></param>
-        internal ListTemplatesResponse(IReadOnlyList<TemplateResponseInternal> value, string nextLink)
+        internal ListTemplatesResponse(IReadOnlyList<MessageTemplateResponseInternal> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The collection of elements. </summary>
-        public IReadOnlyList<TemplateResponseInternal> Value { get; }
+        public IReadOnlyList<MessageTemplateResponseInternal> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

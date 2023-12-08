@@ -16,7 +16,7 @@ namespace Azure.Communication.Messages
         /// <param name="channelRegistrationId"></param>
         /// <param name="to"></param>
         /// <param name="content"></param>
-        public SendMessageOptions(string channelRegistrationId, IEnumerable<string> to, string content)
+        public SendMessageOptions(Guid channelRegistrationId, IList<string> to, string content)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
@@ -34,7 +34,7 @@ namespace Azure.Communication.Messages
         /// <param name="to"></param>
         /// <param name="mediaUri"></param>
         /// <param name="content"></param>
-        public SendMessageOptions(string channelRegistrationId, IEnumerable<string> to, Uri mediaUri, string content = null)
+        public SendMessageOptions(Guid channelRegistrationId, IList<string> to, Uri mediaUri, string content = null)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(mediaUri, nameof(mediaUri));
@@ -52,7 +52,7 @@ namespace Azure.Communication.Messages
         /// <param name="channelRegistrationId"></param>
         /// <param name="to"></param>
         /// <param name="template"></param>
-        public SendMessageOptions(string channelRegistrationId, IEnumerable<string> to, MessageTemplate template) // type implicitly Template
+        public SendMessageOptions(Guid channelRegistrationId, IList<string> to, MessageTemplate template) // type implicitly Template
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(template, nameof(template));
@@ -64,9 +64,9 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> The Channel Registration ID for the Business Identifier. </summary>
-        public string ChannelRegistrationId { get; }
+        public Guid ChannelRegistrationId { get; }
         /// <summary> The native external platform user identifiers of the recipient. </summary>
-        public IEnumerable<string> To { get; }
+        public IList<string> To { get; }
         /// <summary> The cross-platform threadless message type. </summary>
         public CommunicationMessageType MessageType { get; }
         /// <summary> Threadless message content. </summary>

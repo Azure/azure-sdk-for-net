@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class TemplateResponseWhatsAppInternal
+    internal partial class WhatsAppMessageTemplateResponse
     {
-        internal static TemplateResponseWhatsAppInternal DeserializeTemplateResponseWhatsAppInternal(JsonElement element)
+        internal static WhatsAppMessageTemplateResponse DeserializeWhatsAppMessageTemplateResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
                     continue;
                 }
             }
-            return new TemplateResponseWhatsAppInternal(content.Value);
+            return new WhatsAppMessageTemplateResponse(content.Value);
         }
     }
 }

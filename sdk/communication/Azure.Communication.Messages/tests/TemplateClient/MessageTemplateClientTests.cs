@@ -42,7 +42,7 @@ namespace Azure.Communication.Messages.Tests
                 Assert.IsNotNull(template.Name);
                 Assert.IsNotNull(template.Language);
                 Assert.IsNotNull(template.Status);
-                Assert.AreEqual(template.ChannelType, CommunicationMessagesChannelType.WhatsApp);
+                Assert.AreEqual(template.ChannelType, CommunicationMessagesChannel.WhatsApp);
             }
         }
 

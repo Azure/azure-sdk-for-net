@@ -32,7 +32,7 @@ namespace Azure.Communication.Messages
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public NotificationMessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-08-24-preview")
+        public NotificationMessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-02-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -40,7 +40,7 @@ namespace Azure.Communication.Messages
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateSendMessageRequest(string channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type, string content, string mediaUri, MessageTemplateInternal template)
+        internal HttpMessage CreateSendMessageRequest(Guid channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type, string content, string mediaUri, MessageTemplateInternal template)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -71,13 +71,9 @@ namespace Azure.Communication.Messages
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
         /// <param name="template"> The template object used to create templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelRegistrationId"/> or <paramref name="to"/> is null. </exception>
-        public async Task<Response<SendMessageResult>> SendMessageAsync(string channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type, string content = null, string mediaUri = null, MessageTemplateInternal template = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
+        public async Task<Response<SendMessageResult>> SendMessageAsync(Guid channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type, string content = null, string mediaUri = null, MessageTemplateInternal template = null, CancellationToken cancellationToken = default)
         {
-            if (channelRegistrationId == null)
-            {
-                throw new ArgumentNullException(nameof(channelRegistrationId));
-            }
             if (to == null)
             {
                 throw new ArgumentNullException(nameof(to));
@@ -106,13 +102,9 @@ namespace Azure.Communication.Messages
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
         /// <param name="template"> The template object used to create templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelRegistrationId"/> or <paramref name="to"/> is null. </exception>
-        public Response<SendMessageResult> SendMessage(string channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type, string content = null, string mediaUri = null, MessageTemplateInternal template = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
+        public Response<SendMessageResult> SendMessage(Guid channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type, string content = null, string mediaUri = null, MessageTemplateInternal template = null, CancellationToken cancellationToken = default)
         {
-            if (channelRegistrationId == null)
-            {
-                throw new ArgumentNullException(nameof(channelRegistrationId));
-            }
             if (to == null)
             {
                 throw new ArgumentNullException(nameof(to));

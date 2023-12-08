@@ -17,12 +17,12 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsInternal"/>. </summary>
         /// <param name="whatsApp"> The template bindings for WhatsApp. </param>
-        internal MessageTemplateBindingsInternal(MessageTemplateBindingsWhatsApp whatsApp)
+        internal MessageTemplateBindingsInternal(WhatsAppMessageTemplateBindingsInternal whatsApp)
         {
             WhatsApp = whatsApp;
         }
 
         /// <summary> The template bindings for WhatsApp. </summary>
-        public MessageTemplateBindingsWhatsApp WhatsApp { get; set; }
+        public WhatsAppMessageTemplateBindingsInternal WhatsApp { get; set; }
     }
 }

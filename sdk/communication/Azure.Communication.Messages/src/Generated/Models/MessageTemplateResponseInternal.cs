@@ -7,21 +7,21 @@
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The TemplateResponse. </summary>
-    internal partial class TemplateResponseInternal
+    /// <summary> The MessageTemplateResponse. </summary>
+    internal partial class MessageTemplateResponseInternal
     {
-        /// <summary> Initializes a new instance of <see cref="TemplateResponseInternal"/>. </summary>
-        internal TemplateResponseInternal()
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateResponseInternal"/>. </summary>
+        internal MessageTemplateResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemplateResponseInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateResponseInternal"/>. </summary>
         /// <param name="name"> Get the template's Name. </param>
         /// <param name="language"> Get the template's language. </param>
         /// <param name="channelType"></param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="whatsApp"> The WhatsApp-specific template response contract. </param>
-        internal TemplateResponseInternal(string name, string language, CommunicationMessagesChannelType? channelType, TemplateStatus? status, TemplateResponseWhatsAppInternal whatsApp)
+        internal MessageTemplateResponseInternal(string name, string language, CommunicationMessagesChannel? channelType, MessageTemplateStatus? status, WhatsAppMessageTemplateResponse whatsApp)
         {
             Name = name;
             Language = language;
@@ -35,10 +35,10 @@ namespace Azure.Communication.Messages
         /// <summary> Get the template's language. </summary>
         public string Language { get; }
         /// <summary> Gets the channel type. </summary>
-        public CommunicationMessagesChannelType? ChannelType { get; }
+        public CommunicationMessagesChannel? ChannelType { get; }
         /// <summary> The aggregated template status. </summary>
-        public TemplateStatus? Status { get; }
+        public MessageTemplateStatus? Status { get; }
         /// <summary> The WhatsApp-specific template response contract. </summary>
-        public TemplateResponseWhatsAppInternal WhatsApp { get; }
+        public WhatsAppMessageTemplateResponse WhatsApp { get; }
     }
 }

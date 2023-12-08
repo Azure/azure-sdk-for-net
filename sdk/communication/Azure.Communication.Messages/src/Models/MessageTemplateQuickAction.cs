@@ -9,10 +9,8 @@ namespace Azure.Communication.Messages
     public class MessageTemplateQuickAction: MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateQuickAction(string name, string text = null, string payload = null) : base(name)
+        public MessageTemplateQuickAction(string name) : base(name)
         {
-            Text = text;
-            Payload = payload;
         }
 
         /// <summary> The quick action text. </summary>

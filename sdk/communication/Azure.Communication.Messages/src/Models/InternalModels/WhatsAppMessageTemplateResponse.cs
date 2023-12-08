@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    [CodeGenModel("MessageTemplateBindingsWhatsApp")]
-    internal partial class MessageTemplateBindingsWhatsApp
+    [CodeGenModel("WhatsAppMessageTemplateResponse")]
+    internal partial class WhatsAppMessageTemplateResponse
     {
     }
 }

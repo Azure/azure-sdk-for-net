@@ -9,15 +9,13 @@ namespace Azure.Communication.Messages
     public class MessageTemplateDocument: MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateDocument(string name, Uri uri, string caption = null, string fileName = null) : base(name)
+        public MessageTemplateDocument(string name, Uri uri) : base(name)
         {
             Uri = uri;
-            Caption = caption;
-            FileName = fileName;
         }
 
         /// <summary> The (public) URL of the document media. </summary>
-        public Uri Uri { get; set; }
+        public Uri Uri { get; }
         /// <summary> The [optional] caption of the media object. </summary>
         public string Caption { get; set; }
         /// <summary> The [optional] filename of the media file. </summary>

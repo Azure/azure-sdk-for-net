@@ -11,30 +11,30 @@ using Azure.Core;
 namespace Azure.Communication.Messages
 {
     /// <summary> The template bindings component button for WhatsApp. </summary>
-    internal partial class MessageTemplateBindingsWhatsAppButton
+    internal partial class WhatsAppMessageTemplateBindingsButton
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppButton"/>. </summary>
-        /// <param name="refValue"> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </param>
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
+        /// <param name="refValue"> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.VNext.Notifications.Requests.MessageTemplate.Values dictionary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
-        public MessageTemplateBindingsWhatsAppButton(string refValue)
+        public WhatsAppMessageTemplateBindingsButton(string refValue)
         {
             Argument.AssertNotNull(refValue, nameof(refValue));
 
             RefValue = refValue;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppButton"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
         /// <param name="subType"> The WhatsApp button sub type. </param>
         /// <param name="refValue"> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </param>
-        internal MessageTemplateBindingsWhatsAppButton(MessageTemplateValueWhatsAppSubType? subType, string refValue)
+        internal WhatsAppMessageTemplateBindingsButton(WhatsAppMessageTemplateValueSubType? subType, string refValue)
         {
             SubType = subType;
             RefValue = refValue;
         }
 
         /// <summary> The WhatsApp button sub type. </summary>
-        public MessageTemplateValueWhatsAppSubType? SubType { get; set; }
-        /// <summary> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </summary>
+        public WhatsAppMessageTemplateValueSubType? SubType { get; set; }
+        /// <summary> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.VNext.Notifications.Requests.MessageTemplate.Values dictionary. </summary>
         public string RefValue { get; }
     }
 }
