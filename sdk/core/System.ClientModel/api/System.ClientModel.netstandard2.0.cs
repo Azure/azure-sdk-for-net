@@ -149,13 +149,12 @@ namespace System.ClientModel.Primitives
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineMessageClassifier? MessageClassifier { get { throw null; } protected internal set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
-        public System.ClientModel.Primitives.PipelineResponse Response { get { throw null; } protected internal set { } }
+        public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
         public void Apply(System.ClientModel.RequestOptions options, System.ClientModel.Primitives.PipelineMessageClassifier? messageClassifier = null) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
-        public bool TryGetResponse(out System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
     public partial class PipelineMessageClassifier
     {
